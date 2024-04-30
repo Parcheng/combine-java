@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.parch.combine.common.exception.CommonErrorEnum;
 import com.parch.combine.common.exception.SysException;
@@ -28,7 +29,27 @@ public class JsonUtil {
     public JsonUtil() {
     }
 
-    @SuppressWarnings("unchecked")
+    public static <T> String serialize(T value, Class<T> clazz, JsonSerializer<T> serializer) {
+        if (value == null) {
+            return null;
+        } else if (value instanceof String) {
+            return (String)value;
+        } else {
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+                SimpleModule module = new SimpleModule();
+                module.addSerializer(clazz, serializer);
+                mapper.registerModule(module);
+
+                return mapper.writeValueAsString(value);
+            } catch (JsonProcessingException e) {
+                throw new SysException(CommonErrorEnum.JSON_SERIALIZE_ERROR, e.getMessage());
+            }
+        }
+    }
+
     public static <T> String serialize(T value) {
         if (value == null) {
             return null;
@@ -38,12 +59,11 @@ public class JsonUtil {
             try {
                 return OBJECT_MAPPER.writeValueAsString(value);
             } catch (JsonProcessingException e) {
-                throw new SysException(CommonErrorEnum.JSON_SERIALIZE_ERROR, new Object[]{e.getMessage()});
+                throw new SysException(CommonErrorEnum.JSON_SERIALIZE_ERROR, e.getMessage());
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T deserialize(String value, Class<T> valueClass) {
         if (value == null) {
             return null;
@@ -51,7 +71,7 @@ public class JsonUtil {
             try {
                 return OBJECT_MAPPER.readValue(value, valueClass);
             } catch (JsonProcessingException e) {
-                throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, new Object[]{e.getMessage()});
+                throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, e.getMessage());
             }
         }
     }
@@ -64,7 +84,7 @@ public class JsonUtil {
             try {
                 return (List)OBJECT_MAPPER.readValue(jsonArrayStr, getGenericsType(List.class, valueClass));
             } catch (JsonProcessingException e) {
-                throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, new Object[]{e.getMessage()});
+                throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, e.getMessage());
             }
         }
     }
@@ -76,7 +96,7 @@ public class JsonUtil {
             try {
                 return OBJECT_MAPPER.readValue(data, getGenericsType(clazz, elementClasses));
             } catch (IOException e) {
-                throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, new Object[]{e.getMessage()});
+                throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, e.getMessage());
             }
         }
     }
@@ -85,7 +105,7 @@ public class JsonUtil {
         try {
             return OBJECT_MAPPER.getTypeFactory().constructParametricType(clazz, elementClasses);
         } catch (Exception e) {
-            throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, new Object[]{e.getMessage()});
+            throw new SysException(CommonErrorEnum.JSON_DESERIALIZE_ERROR, e.getMessage());
         }
     }
 

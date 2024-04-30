@@ -15,7 +15,6 @@ $combineWebUI.element.register("TABLE", (function () {
         const checkbox = config.checkbox;
         const headNames = config.settings.headNames;
         const hasChecked = config.settings.hasChecked;
-        const hasIndex = config.settings.hasIndex;
 
         let body = [];
         if (!headNames || headNames.length === 0) {
@@ -39,6 +38,7 @@ $combineWebUI.element.register("TABLE", (function () {
         const checkbox = config.checkbox;
         const rowOpts = config.settings.rowOpts;
         const fieldNames = config.settings.fieldNames;
+        const dataFieldNames = config.settings.dataFieldNames;
         const minLength = config.settings.minLength ? config.settings.minLength : 10;
         const hasChecked = config.settings.hasChecked;
         const hasIndex = config.settings.hasIndex;
@@ -56,8 +56,15 @@ $combineWebUI.element.register("TABLE", (function () {
         for (let d = 0; d < buildData.length; d++) {
             let rowBody = [];
             let rowData = {};
-
             const currData = buildData[d];
+
+            if (dataFieldNames && dataFieldNames.length > 0) {
+                for (let i = 0; i < dataFieldNames.length; i++) {
+                    const fieldName = dataFieldNames[i];
+                    rowData[fieldName] = currData[fieldName];
+                }
+            }
+
             if (hasChecked) {
                 rowBody.push(domFns.build(col, domFns.build(checkbox, null)));
             }
@@ -66,7 +73,7 @@ $combineWebUI.element.register("TABLE", (function () {
             }
             if (currData instanceof Array) {
                 for (let i = 0; i < currData.length; i++) {
-                    rowData[i + ""] = currData[i];
+                    rowData["$" + i] = currData[i];
                     rowBody.push(domFns.build(col, currData[i]));
                 }
             } else if (currData && typeof currData === "object" && fieldNames?.length > 0) {

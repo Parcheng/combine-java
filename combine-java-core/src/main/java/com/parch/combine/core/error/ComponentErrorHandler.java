@@ -60,16 +60,11 @@ public class ComponentErrorHandler {
      * @param e 异常对象
      */
     public static void print(AbsComponent<?, ?> component, String msg, Exception e) {
-        // 获取当前时间
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS");
-        LocalDateTime dateTime = LocalDateTime.now();
-        String formattedDateTime = dateTime.format(formatter);
-
         // 拼接错误信息字符串
         if (component == null) {
-            PrintUtil.printError("【" + formattedDateTime + "】【未知组件】" + msg);
+            PrintUtil.printError("【未知组件】" + msg);
         } else {
-            PrintUtil.printError("【" + formattedDateTime + "】【" + component.getId() + "】【" + component.getType() + "】" + msg);
+            PrintUtil.printError("【" + component.getId() + "】【" + component.getType() + "】" + msg);
         }
 
         // 打印异常信息

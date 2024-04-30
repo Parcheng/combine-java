@@ -1,7 +1,7 @@
 package com.parch.combine.test.handler;
 
 import com.parch.combine.CombineWebStarter;
-import com.parch.combine.common.util.SystemFileUtil;
+import com.parch.combine.common.util.ResourceFileUtil;
 
 
 /**
@@ -16,7 +16,7 @@ public class FlowHandler {
      */
     public static void init(String path) {
         // 读取配置文件
-        String jsonDataStr = SystemFileUtil.read(path);
+        String jsonDataStr = ResourceFileUtil.read(path);
 
         // 初始化流程
         PrintHandler.init(path);

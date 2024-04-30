@@ -10,16 +10,16 @@
           "conditions": ["#{$v.$logicLoop.$index} EQ 0"],
           "components": [{
             "type": "data.reset",
-            "items": [
-              "#{data.[#{$v.$logicLoop.$index}]} string 100"
-            ]
+            "items": [{
+              "resets": ["#{data.[#{$v.$logicLoop.$index}]} string 100"]
+            }]
           }]
         },{
           "components": [{
             "type": "data.reset",
-            "items": [
-              "#{data.[#{$v.$logicLoop.$index}]} string 200"
-            ]
+            "items": [{
+              "resets": ["#{data.[#{$v.$logicLoop.$index}]} string 200"]
+            }]
           }]
         }],
         "flags": "STATIC"

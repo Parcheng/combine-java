@@ -1,7 +1,6 @@
 $combineWebUI.element.register("NAV_BAR", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
-    const configFns = $combineWebUI.config;
     const elementFns = $combineWebUI.element;
     const triggerFns = $combineWebUI.trigger;
 
@@ -75,7 +74,7 @@ $combineWebUI.element.register("NAV_BAR", (function () {
 
                     const defaultData = {
                         $isDefaultNav: true,
-                        $trigger: defaultNav.trigger,
+                        $triggers: defaultNav.triggers,
                         $text: dataFns.parseVariable(defaultNav.text, buildData),
                         $children: dataFns.parseVariable(defaultNav.children, buildData)
                     };
@@ -97,9 +96,9 @@ $combineWebUI.element.register("NAV_BAR", (function () {
             const isChecked = checkedIndex == i;
             let itemBody;
             if (currData.$isDefaultNav) {
-                itemBody = buildBodyNavItem(config, sourceBuildData, currData.$trigger, currData.$text, currData.$children, level, i, isChecked, isCheckTrigger);
+                itemBody = buildBodyNavItem(config, sourceBuildData, currData.$triggers, currData.$text, currData.$children, level, i, isChecked, isCheckTrigger);
             } else {
-                itemBody = buildBodyNavItem(config, currData, navSettings.trigger, text, children, level, i, isChecked, isCheckTrigger);
+                itemBody = buildBodyNavItem(config, currData, navSettings.triggers, text, children, level, i, isChecked, isCheckTrigger);
             }
             body.push(domFns.build(config.bodyNavItem, itemBody));
         }
@@ -107,14 +106,14 @@ $combineWebUI.element.register("NAV_BAR", (function () {
         return body;
     }
 
-    function buildBodyNavItem(config, currData, trigger, text, children, level, index, checked, isCheckTrigger) {
+    function buildBodyNavItem(config, currData, triggers, text, children, level, index, checked, isCheckTrigger) {
         const itemBody = [];
 
         text = dataFns.parseVariable(text, currData);
         const textDom = domFns.build(checked ? config.bodyNavItemTextActive : config.bodyNavItemText, text);
-        triggerFns.build(trigger, textDom, currData);
+        triggerFns.build(triggers, textDom, currData);
         if (checked && isCheckTrigger) {
-            triggerFns.trigger(trigger, textDom);
+            triggerFns.trigger(triggers, textDom);
         }
         if (level == 0) {
             domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(config.id, "checked", index));
@@ -137,7 +136,7 @@ $combineWebUI.element.register("NAV_BAR", (function () {
                 const buttonConfig = config.settings.buttons[i];
                 const text = dataFns.parseVariable(buttonConfig.text, buildData);
                 const buttonDom = domFns.build(config.bodyRightItem, domFns.build(config.bodyRightItemButton, text));
-                triggerFns.build(buttonConfig.trigger, buttonDom, buildData);
+                triggerFns.build(buttonConfig.triggers, buttonDom, buildData);
                 body.push(buttonDom);
             }
         }

@@ -59,13 +59,13 @@ public class CompareHelper {
      * @param config 条件组配置
      * @return 是否通过
      */
-    public static boolean isPass(CompareGroupConfig config) {
+    public static boolean isPass(CompareGroupConfig config, boolean defaultIsPass) {
         List<CompareConfig> conditions = config.getConditions();
         String relationStr = config.getRelation();
 
         // 无条件配置，默认不通过
         if (CheckEmptyUtil.isEmpty(conditions)) {
-            return false;
+            return defaultIsPass;
         }
 
         // 条件的逻辑关系（且|或）

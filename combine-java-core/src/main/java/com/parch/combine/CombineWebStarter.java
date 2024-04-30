@@ -25,10 +25,10 @@ public class CombineWebStarter {
     public static void init(String path) {
         SERVICE = new CombineWebService();
 
-        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
-        PrintHelper.printInit("初始化全局设置 >>>");
         GlobalContextHandler.init(path);
         GlobalContext context = GlobalContextHandler.get();
+        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
+        PrintHelper.printInit("初始化全局设置 >>>");
         PrintHelper.printInit("加载配置文件设置   -> " + StringUtil.join(context.getInitConfigs(), ","));
         PrintHelper.printInit("初始化流程设置     -> " + StringUtil.join(context.getInitFlows(), ","));
         PrintHelper.printInit("是否开放配置注册   -> " + context.getOpenRegisterConfig());

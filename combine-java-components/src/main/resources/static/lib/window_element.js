@@ -1,9 +1,11 @@
 $combineWebUI.element.register("WINDOW", (function () {
+    const windowsDomId = "$combine-web-windows";
     const domFns = $combineWebUI.dom;
     const instanceFns = $combineWebUI.instance;
     const dataFns = $combineWebUI.data;
     const elementFns = $combineWebUI.element;
     const configFns = $combineWebUI.config;
+    const triggerFns = $combineWebUI.trigger;
 
     const data = {};
 
@@ -19,7 +21,11 @@ $combineWebUI.element.register("WINDOW", (function () {
         body.push(domFns.build(config.headTitle, title ? title : config.headTitle.text));
 
         const colseDom = domFns.build(config.headClose, config.headClose.text)
-        domFns.appendProtity(colseDom, "onclick", elementFns.buildCallFnCode(config.id, "close", "'" + config.external.id + "'"));
+        domFns.appendProtity(colseDom, "onclick", elementFns.buildCallFnCode(config.id, "close", null));
+        if (settings.closeTriggers) {
+            triggerFns.build(settings.closeTriggers, colseDom, buildData);
+        }
+
         body.push(colseDom);
 
         return domFns.build(config.head, body);
@@ -30,9 +36,36 @@ $combineWebUI.element.register("WINDOW", (function () {
         return configFns.buildSubElement(settings.body, config.body, buildData);
     }
 
+    function refreshBody(id, config, data) {
+        config = init(config, data);
+
+        if (config.settings?.body?.elements) {
+            for (let i = 0; i < config.settings.body.elements?.length; i++) {
+                instanceFns.refresh(config.settings.body.elements[i].id, data);``
+            }
+        } else if (config.settings?.body?.text) {
+            let externalDom = document.getElementById(id);
+            if (externalDom) {
+                const text = dataFns.parseVariableText(config.settings.body.text, data);
+                domFns.setBody(externalDom.children[0].children[1], text);
+            }
+        }
+    }
+
+    function initWindowsDom() {
+        let windowsDom = document.getElementById(windowsDomId);
+        if (!windowsDom) {
+            windowsDom = document.createElement("div");
+            windowsDom.setAttribute("id", windowsDomId);
+            document.body.appendChild(windowsDom);
+        }
+        return windowsDom;
+    }
+
     return {
-        build: function build(config, data) {
+        build: function (config, data) {
             config = init(config, data);
+            const windowsDom = initWindowsDom();
 
             const headBody = buildHead(config, data);
             const contentBody = buildContent(config, data);
@@ -40,28 +73,28 @@ $combineWebUI.element.register("WINDOW", (function () {
 
             const externalDom = domFns.build(config.external, windowBody);
             externalDom.style.display = "none";
-            return externalDom;
-        },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
 
-            if (data.elements) {
-                for (let i = 0; i < config.body.elements.length; i++) {
-                    instanceFns.refresh(config.body.elements[i].id, parentData);
-                }
-            } else if (data.text) {
-                let externalDom = document.getElementById(id);
-                if (externalDom) {
-                    domFns.setBody(externalDom.children[1], data.text);
-                }
-            }
+            windowsDom.appendChild(externalDom);
+            return null;
         },
-        getData: function getData(id) {
+        refresh: function (id, config, parentData) {
+            refreshBody(id, config, parentData);
+        },
+        getData: function (id) {
             return null;
         },
         call: {
-            close: function (config, domId) {
-                domFns.hide(domId);
+            open: function (config, data) {
+                if (data) {
+                    refreshBody(config.id, config, data);
+                }
+                domFns.show(config.id);
+            },
+            close: function (config, data) {
+                if (data) {
+                    refreshBody(config.id, config, data);
+                }
+                domFns.hide(config.id);
             }
         }
     }

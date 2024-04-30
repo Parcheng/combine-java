@@ -1,9 +1,8 @@
 package com.parch.combine.core.handler;
 
 import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.base.ComponentFlagEnum;
+import com.parch.combine.core.base.*;
 import com.parch.combine.core.context.ComponentContextHandler;
-import com.parch.combine.core.base.AbsComponent;
 import com.parch.combine.core.context.GlobalContextHandler;
 import com.parch.combine.core.tools.PrintHelper;
 import com.parch.combine.core.vo.DataResult;
@@ -71,7 +70,13 @@ public class ComponentHandler {
     private static void registerComponent(Map<String, Object> logicConfig, List<String> componentIds, List<String> staticComponentIds, List<String> errorMsgList, List<String> registerComponentIds) {
         // 获取组件ID（重复ID不重复解析）
         Object componentIdObj = logicConfig.get(ID_FIELD);
-        String componentId = componentIdObj == null ? UUID.randomUUID().toString() : componentIdObj.toString();
+        String componentId;
+        if (componentIdObj == null) {
+            componentId = UUID.randomUUID().toString();
+            logicConfig.put(ID_FIELD, componentId);
+        } else {
+            componentId = componentIdObj.toString();
+        }
 
         // 判断组件是否已经构建过
         AbsComponent<?,?> component = COMPONENT_MAP.get(componentId);
@@ -133,9 +138,22 @@ public class ComponentHandler {
      * @return 结果集
      */
     public static DataResult execute(String key, Map<String, Object> params, Map<String, String> headers, List<String> componentIds, Function func) {
+        return execute(key, params, headers, null, componentIds, func);
+    }
+
+    /**
+     * 执行业务逻辑集合
+     *
+     * @param params 参数
+     * @param componentIds 业务逻辑中-需要执行的组件ID集合
+     * @param func 自定义函数
+     * @return 结果集
+     */
+    public static DataResult execute(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, Function func) {
         // 初始化流程上下文
-        ComponentContextHandler.init(key, params, headers);
-        // 日志打印参数信息
+        ComponentContextHandler.init(key, params, headers, file);
+        // 打印请求头和参数信息
+        PrintHelper.printComponentHeader();
         PrintHelper.printComponentParam();
 
         // 前置函数
@@ -147,7 +165,7 @@ public class ComponentHandler {
         DataResult result = FlowAspectHandler.executeBefore(key);
 
         // 执行流程逻辑
-        if (result.getSuccess() && CheckEmptyUtil.isNotEmpty(componentIds)) {
+        if (result.getSuccess() && !result.isStop() && CheckEmptyUtil.isNotEmpty(componentIds)) {
             result = executeComponents(componentIds);
         }
 
@@ -177,7 +195,7 @@ public class ComponentHandler {
 
         for (String componentKey : componentIds) {
             dataResult = executeComponent(getComponent(componentKey));
-            if (!dataResult.getSuccess()) {
+            if (!dataResult.getSuccess() || dataResult.isStop()) {
                 break;
             }
         }
@@ -199,16 +217,19 @@ public class ComponentHandler {
     public static DataResult executeComponent(AbsComponent<?,?> component) {
         // 运行组件逻辑
         DataResult result = component.run();
+        LogicConfig logicConfig = component.getLogicConfig();
 
         // 如果配置中定义了报错提示语，则使用配置的报错提示语
-        if (CheckEmptyUtil.isNotEmpty(component.getLogicConfig().getShowMsg())) {
-            result.setShowMsg(component.getLogicConfig().getShowMsg());
+        if (CheckEmptyUtil.isNotEmpty(logicConfig.getShowMsg())) {
+            result.setShowMsg(logicConfig.getShowMsg());
         }
 
         // 打印日志
-        if (GlobalContextHandler.get().getPrintComponentResult()) {
+        boolean isPrint = logicConfig.getPrintResult() == null ? GlobalContextHandler.get().getPrintComponentResult() : logicConfig.getPrintResult();
+        if (isPrint) {
             PrintHelper.printComponentResult(component, result);
         }
+
         return result;
     }
 

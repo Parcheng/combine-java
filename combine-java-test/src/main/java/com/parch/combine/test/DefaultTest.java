@@ -28,7 +28,7 @@ public class DefaultTest {
         FlowHandler.init("default/data_reset_flow.json");
         FlowHandler.init("default/data_verify_flow.json");
         FlowHandler.init("default/file_input_flow.json");
-        FlowHandler.init("default/file_read_flow.json");
+        FlowHandler.init("default/file_parse_flow.json");
         FlowHandler.init("default/file_build_flow.json");
         FlowHandler.init("default/file_output_flow.json");
         //FlowHandler.init("default/call_api_flow.json");
@@ -54,7 +54,7 @@ public class DefaultTest {
         TestHandler.test("default/data_reset_test.json");
         TestHandler.test("default/data_verify_test.json");
         TestHandler.test("default/file_input_test.json");
-        TestHandler.test("default/file_read_test.json");
+        TestHandler.test("default/file_parse_test.json");
         TestHandler.test("default/file_build_test.json");
         TestHandler.test("default/file_output_test.json");
         //TestHandler.test("default/call_api_test.json");

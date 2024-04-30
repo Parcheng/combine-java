@@ -63,6 +63,7 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
             logicConfig = new HashMap<>();
         }
         this.logicConfig = TypeConversionUtil.parseJava(logicConfig, logicConfigClass);
+        this.logicConfig.init();
         this.initConfig = InitConfigHandler.get(this.logicConfig.getRef(), this.logicConfig.getType(), initConfigClass);
     }
 

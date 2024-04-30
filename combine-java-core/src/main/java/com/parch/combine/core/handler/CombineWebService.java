@@ -5,7 +5,8 @@ import com.parch.combine.common.exception.SysException;
 import com.parch.combine.common.util.CheckEmptyUtil;
 import com.parch.combine.common.util.FlowKeyUtil;
 import com.parch.combine.common.util.JsonUtil;
-import com.parch.combine.common.util.SystemFileUtil;
+import com.parch.combine.common.util.ResourceFileUtil;
+import com.parch.combine.core.base.FileInfo;
 import com.parch.combine.core.context.GlobalContext;
 import com.parch.combine.core.context.GlobalContextHandler;
 import com.parch.combine.core.service.ICombineWebService;
@@ -38,7 +39,7 @@ public class CombineWebService implements ICombineWebService {
      * @param func 自定义函数
      */
     public void registerFlowAsPath(String path, Consumer<FlowInitVO> func) {
-        String configJson = SystemFileUtil.read(path);
+        String configJson = ResourceFileUtil.read(path);
         registerFlow(configJson, func);
     }
 
@@ -92,20 +93,30 @@ public class CombineWebService implements ICombineWebService {
 
     @Override
     public DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers) {
+        return execute(domain, function, params, headers, (FileInfo) null);
+    }
+
+    @Override
+    public DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
         GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
         if (CheckEmptyUtil.isNotEmpty(flagConfigs.getInnerFlow()) && domain.startsWith(flagConfigs.getInnerFlow())) {
             throw new SysException(CommonErrorEnum.FLOW_IS_PROTECTED);
         }
-        return executeAny(domain, function, params, headers);
+        return executeAny(domain, function, params, headers, fileInfo);
     }
 
     @Override
     public DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers) {
+        return executeAny(domain, function, params, headers, null);
+    }
+
+    @Override
+    public DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
         List<String> componentIds = this.getComponentIds(domain, function);
         if (CheckEmptyUtil.isEmpty(componentIds)) {
             throw new SysException(CommonErrorEnum.FLOW_COMPONENT_IS_NULL);
         }
-        return execute(domain, function, params, headers, componentIds);
+        return execute(domain, function, params, headers, fileInfo, componentIds);
     }
 
     /**
@@ -115,9 +126,9 @@ public class CombineWebService implements ICombineWebService {
      * @param componentIds 业务逻辑中-需要执行的组件ID集合
      * @return 结果集
      */
-    private DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, List<String> componentIds) {
+    private DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo, List<String> componentIds) {
         String key = FlowKeyUtil.getKey(domain, function);
-        return ComponentHandler.execute(key, params, headers, componentIds, null);
+        return ComponentHandler.execute(key, params, headers, fileInfo, componentIds, null);
     }
 
     /**

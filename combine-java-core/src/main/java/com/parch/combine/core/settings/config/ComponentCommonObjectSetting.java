@@ -7,9 +7,13 @@ import java.util.List;
  */
 public class ComponentCommonObjectSetting {
 
+    private int order;
+
     private String key;
 
     private String name;
+
+    private Class<?> classType;
 
     private List<String> desc;
 
@@ -45,5 +49,21 @@ public class ComponentCommonObjectSetting {
 
     public void setProperties(List<ComponentPropertySetting> properties) {
         this.properties = properties;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public Class<?> thisClassType() {
+        return classType;
+    }
+
+    public void setClassType(Class<?> classType) {
+        this.classType = classType;
     }
 }

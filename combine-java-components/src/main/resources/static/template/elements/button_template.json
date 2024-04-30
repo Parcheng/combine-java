@@ -8,37 +8,37 @@
   "normal": {
     "tag": "button",
     "class": "btn btn-default",
-    "style": "",
+    "style": "margin-right:5px;",
     "properties": {}
   },
   "primary": {
     "tag": "button",
     "class": "btn btn-primary",
-    "style": "",
+    "style": "margin-right:5px;",
     "properties": {}
   },
   "success": {
     "tag": "button",
     "class": "btn btn-success",
-    "style": "",
+    "style": "margin-right:5px;",
     "properties": {}
   },
   "info": {
     "tag": "button",
     "class": "btn btn-info",
-    "style": "",
+    "style": "margin-right:5px;",
     "properties": {}
   },
   "warn": {
     "tag": "button",
     "class": "btn btn-warning",
-    "style": "",
+    "style": "margin-right:5px;",
     "properties": {}
   },
   "error": {
     "tag": "button",
     "class": "btn btn-danger",
-    "style": "",
+    "style": "margin-right:5px;",
     "properties": {}
   }
 }

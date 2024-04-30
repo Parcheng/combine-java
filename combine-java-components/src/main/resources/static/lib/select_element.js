@@ -15,32 +15,49 @@ $combineWebUI.element.register("SELECT", (function () {
     function buildSelect(config, settings, buildData) {
         const selectBody = [];
 
-        const value = dataFns.parseVariable(settings.value ? settings.value : settings.value, buildData);
-        const text = dataFns.parseVariable(settings.text ? settings.text : settings.defaultText, buildData);
-        const selectValueDom = domFns.build(config.selectValue, buildSelectValueText(config, text));
+        const key = dataFns.parseVariableText(settings.key, buildData);
+        const value = dataFns.parseVariable(settings.defaultValue, buildData);
+        const optionTextField = settings.option.text;
+        const optionValueField = settings.option.value;
+
+        let optionData = dataFns.parseVariable(settings.option.data, buildData);
+        optionData = optionData instanceof Array ? optionData : [optionData];
+
+        let checkedText;
+        const selectOptionBody = [];
+
+        for (let i = 0; i < optionData.length; i++) {
+            const currOptionData = optionData[i];
+            if (!currOptionData) {
+                continue;
+            }
+
+            const optionText = dataFns.parseVariableText(optionTextField, currOptionData);
+            const optionValue = dataFns.parseVariableText(optionValueField, currOptionData);
+
+            const optionDom = domFns.build(config.selectOptionItem, domFns.build(config.selectOptionItemText, optionText));
+            optionDom.setAttribute("value", optionValue);
+            domFns.appendProtity(optionDom, "onclick", elementFns.buildCallFnCode(config.id, "checked", i));
+            selectOptionBody.push(optionDom);
+
+            if (optionValue == value) {
+                checkedText = optionText;
+            }
+        }
+
+        if (!checkedText) {
+            checkedText = dataFns.parseVariable(settings.text ? settings.text : settings.defaultText, buildData);
+        }
+        const selectValueDom = domFns.build(config.selectValue, buildSelectValueText(config, checkedText));
         if (value) {
             selectValueDom.setAttribute("value", value);
         }
-        if (settings.key) {
-            selectValueDom.name = settings.key;
+        if (key) {
+            selectValueDom.name = key;
         }
+
         selectBody.push(selectValueDom);
-
-        const selectOptionBody = [];
-        if (settings.options) {
-            for (let i = 0; i < settings.options.length; i++) {
-                const option = settings.options[i];
-                const optionValue = dataFns.parseVariable(option.value, buildData);
-                const optionText = dataFns.parseVariable(option.text, buildData);
-
-                const optionDom = domFns.build(config.selectOptionItem, domFns.build(config.selectOptionItemText, optionText));
-                optionDom.setAttribute("value", optionValue);
-                domFns.appendProtity(optionDom, "onclick", elementFns.buildCallFnCode(config.id, "checked", i));
-                selectOptionBody.push(optionDom);
-            }
-        }
         selectBody.push(domFns.build(config.selectOptions, selectOptionBody));
-
         return domFns.build(config.select, selectBody);
     }
 

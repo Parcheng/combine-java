@@ -31,7 +31,7 @@ public class SqlHelper {
 
         StringBuilder sql = new StringBuilder();
         for (SqlItem item : sqlConfigs) {
-            if (CheckEmptyUtil.isEmpty(item.getConditions()) || CompareHelper.isPass(item)) {
+            if (CheckEmptyUtil.isEmpty(item.getConditions()) || CompareHelper.isPass(item, false)) {
                 sql.append(CheckEmptyUtil.SPACE).append(item.getSql());
             }
         }
@@ -53,22 +53,22 @@ public class SqlHelper {
 
             String paramFieldStr = paramStr.substring(2, paramStr.length() -1);
             Object value = DataFindHandler.find(paramFieldStr);
-            if (value != null) {
-                if (value instanceof Collection) {
-                    StringBuilder valueItems = new StringBuilder();
-                    Collection<Object> collectionValue = (Collection<Object>) value;
-                    for (int i = 0; i < collectionValue.size(); i++) {
-                        sqlParams.add(value);
-                        valueItems.append(SymbolConstant.QUESTION_SIGN);
-                        if (i != collectionValue.size() - 1) {
-                            valueItems.append(SymbolConstant.COMMA);
-                        }
+            if (value instanceof Collection) {
+                StringBuilder valueItems = new StringBuilder();
+                Collection<Object> collectionValue = (Collection<Object>) value;
+                int i = 0;
+                for (Object valueItem : collectionValue) {
+                    sqlParams.add(valueItem);
+                    valueItems.append(SymbolConstant.QUESTION_SIGN);
+                    if (i != collectionValue.size() - 1) {
+                        valueItems.append(SymbolConstant.COMMA);
                     }
-                    sqlArr[0] = sqlArr[0].replace(paramStr, valueItems.toString());
-                } else {
-                    sqlParams.add(value);
-                    sqlArr[0] = sqlArr[0].replace(paramStr, SymbolConstant.QUESTION_SIGN);
+                    i++;
                 }
+                sqlArr[0] = sqlArr[0].replace(paramStr, valueItems.toString());
+            } else {
+                sqlParams.add(value);
+                sqlArr[0] = sqlArr[0].replace(paramStr, SymbolConstant.QUESTION_SIGN);
             }
         });
 
@@ -81,9 +81,7 @@ public class SqlHelper {
 
             String paramFieldStr = paramStr.substring(2, paramStr.length() -1);
             Object value = DataFindHandler.find(paramFieldStr);
-            if (value != null) {
-                sqlArr[0] = sqlArr[0].replace(paramStr, value.toString());
-            }
+            sqlArr[0] = sqlArr[0].replace(paramStr, value == null ? "null" : value.toString());
         });
 
         return sqlArr[0];

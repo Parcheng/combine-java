@@ -1,7 +1,6 @@
 package com.parch.combine.core.settings.spi;
 
-import com.parch.combine.common.constant.SymbolConstant;
-import com.parch.combine.core.settings.handler.ComponentSettingHelper;
+import com.parch.combine.core.settings.builder.ComponentClassifySettingBuilder;
 import com.parch.combine.core.settings.config.ComponentClassifySetting;
 import com.parch.combine.core.settings.config.ComponentSetting;
 import com.parch.combine.core.vo.ComponentInitVO;
@@ -12,29 +11,17 @@ import java.util.List;
 /**
  * 获取组件接口
  */
-public abstract class AbsGetComponents implements IGetComponents{
+public abstract class AbsGetComponents implements IGetComponents {
 
     private ComponentClassifySetting setting;
 
-    public AbsGetComponents(String key, String desc) {
-        setting = ComponentSettingHelper.buildClassify(key, desc);
-        List<ComponentSetting> items = init();
-        if (items != null) {
-            for (ComponentSetting item : items) {
-                if (item.getKey().indexOf(key) != 0) {
-                    item.setKey(key + SymbolConstant.DOT + item.getKey());
-                }
-            }
-            setting.setSettings(items);
-        }
+    public AbsGetComponents(String key, String name, Class<?> baseClass) {
+        setting = ComponentClassifySettingBuilder.build(key, name, baseClass);
     }
 
-    /**
-     * 初始化设置
-     *
-     * @return 组件设置信息集合
-     */
-    public abstract List<ComponentSetting> init();
+    public AbsGetComponents(String key, String name, String packagePath) {
+        setting = ComponentClassifySettingBuilder.build(key, name, packagePath);
+    }
 
     /**
      * 获取组件
@@ -45,9 +32,7 @@ public abstract class AbsGetComponents implements IGetComponents{
     public List<ComponentInitVO> get() {
         List<ComponentInitVO> components = new ArrayList<>();
         for (ComponentSetting setting : setting.getSettings()) {
-            components.add(new ComponentInitVO(setting.getKey(), setting.getComponentClass()));
-            // 防止返回到API DOC中
-            setting.setComponentClass(null);
+            components.add(new ComponentInitVO(setting.getKey(), setting.thisComponentClass()));
         }
         return components;
     };

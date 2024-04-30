@@ -19,7 +19,7 @@
         "path": "default/file/outputTest.txt"
       },{
         "id": "exportDiskFileOpenRead",
-        "type": "file.read.text",
+        "type": "file.parse.txt",
         "source": "$r.exportDiskFileOpen"
       }
     ],

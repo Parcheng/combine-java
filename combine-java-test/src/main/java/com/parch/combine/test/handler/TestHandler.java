@@ -22,7 +22,7 @@ public class TestHandler {
      */
     public static void test(String path) {
         // 获取配置
-        String testConfigJson = SystemFileUtil.read(path);
+        String testConfigJson = ResourceFileUtil.read(path);
         List<TestConfigVO> testConfigs = JsonUtil.parseArray(testConfigJson, TestConfigVO.class);
         if (CheckEmptyUtil.isEmpty(testConfigs)) {
             return;
