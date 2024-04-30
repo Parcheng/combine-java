@@ -1,0 +1,19 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataCalc/test": [
+      {
+        "id": "dataCalcTest",
+        "type": "data.calc",
+        "items": [
+          "- CALC 100-20*2+(30/2+26%20)-30",
+          "#{min} MIN a 10 b 34",
+          "#{max} MAX #{list} 100",
+          "#{random} RANDOM 100",
+          "#{uuid} UUID"
+        ]
+      }
+    ]
+  }
+}

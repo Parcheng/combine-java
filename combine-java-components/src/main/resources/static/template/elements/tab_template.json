@@ -1,0 +1,51 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "tab": {
+    "tag": "ul",
+    "class": "nav nav-tabs",
+    "style": "",
+    "properties": {}
+  },
+  "item": {
+    "tag": "li",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "itemActive": {
+    "tag": "li",
+    "class": "active",
+    "style": "",
+    "properties": {}
+  },
+  "title": {
+    "tag": "a",
+    "class": "",
+    "style": "cursor:default;",
+    "properties": {}
+  },
+  "titleText": {
+    "tag": "span",
+    "class": "",
+    "style": "block:inline-block;",
+    "properties": {}
+  },
+  "titleClose": {
+    "tag": "span",
+    "class": "",
+    "style": "block:inline-block;margin-left:8px;cursor:pointer;",
+    "text": "x",
+    "properties": {}
+  },
+  "content": {
+    "tag": "div",
+    "class": "",
+    "style": "margin-top:30px;",
+    "properties": {}
+  }
+}

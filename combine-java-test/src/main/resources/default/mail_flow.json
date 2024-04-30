@@ -1,0 +1,44 @@
+{
+  "constant": {},
+  "init": [
+    {
+      "type": "mail.send",
+      "host": "smtp.qq.com",
+      "port": "465",
+      "mail": "3058055587@qq.com",
+      "authCode": "uyosrjzdsfajdeaj"
+    },{
+      "type": "mail.receive",
+      "host": "imap.qq.com",
+      "port": "993",
+      "mail": "3058055587@qq.com",
+      "authCode": "uyosrjzdsfajdeaj"
+    }
+  ],
+  "flows": {
+    "mail/send": [
+      {
+        "id": "mailSend",
+        "type": "mail.send",
+        "to": ["3058055587@qq.com"],
+        "subject": "TEST",
+        "body": [
+          {
+            "type": "TEXT",
+            "content": "11111"
+          },{
+            "type": "FILE",
+            "fileName": "test.txt",
+            "content": "11111"
+          }
+        ]
+      }
+    ],
+    "mail/receive": [
+      {
+        "id": "mailReceive",
+        "type": "mail.receive"
+      }
+    ]
+  }
+}

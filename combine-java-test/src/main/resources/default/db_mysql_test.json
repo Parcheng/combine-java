@@ -1,0 +1,123 @@
+[{
+  "domain": "db",
+  "function": "add",
+  "params": {
+    "id": 100,
+    "name": "test_db_add",
+    "size": 1,
+    "data": "X"
+  },
+  "items": [{
+    "id": "1-1",
+    "source": "#{$r.addData}",
+    "compareType": "EQ",
+    "target": "1"
+  }]
+},{
+  "domain": "db",
+  "function": "update",
+  "params": {
+    "id": 100,
+    "name": "test_db_update",
+    "size": 2
+  },
+  "items": [{
+    "id": "2-1",
+    "source": "#{$r.updateData}",
+    "compareType": "EQ",
+    "target": "1"
+  },{
+    "id": "2-2",
+    "source": "#{$r.queryOneData.name}",
+    "compareType": "EQ",
+    "target": "test_db_update",
+    "refId": "2-1"
+  },{
+    "id": "2-3",
+    "source": "#{$r.queryOneData.size}",
+    "compareType": "EQ",
+    "target": "2",
+    "refId": "2-1"
+  },{
+    "id": "2-4",
+    "source": "#{$r.queryOneData.data}",
+    "compareType": "EQ",
+    "target": "X",
+    "refId": "2-1"
+  }]
+},{
+  "domain": "db",
+  "function": "list",
+  "params": {},
+  "items": [{
+    "id": "3-1",
+    "source": "#{$r.queryData.[0].id}",
+    "compareType": "EQ",
+    "target": "1"
+  },{
+    "id": "3-2",
+    "source": "#{$r.queryData.[1].id}",
+    "compareType": "EQ",
+    "target": "100"
+  }]
+},{
+  "domain": "db",
+  "function": "page",
+  "params": {
+    "page": 2,
+    "pageSize": 1
+  },
+  "items": [{
+    "id": "4-1",
+    "source": "#{$r.pageData.maxPage}",
+    "compareType": "EQ",
+    "target": "2"
+  },{
+    "id": "4-2",
+    "source": "#{$r.pageData.totalCount}",
+    "compareType": "EQ",
+    "target": "2"
+  },{
+    "id": "4-3",
+    "source": "#{$r.pageData.data.[0].id}",
+    "compareType": "EQ",
+    "target": "100"
+  }]
+},{
+  "domain": "db",
+  "function": "condition",
+  "params": {
+    "id": 100
+  },
+  "items": [{
+    "id": "5-1",
+    "source": "#{$r.conditionData.id}",
+    "compareType": "EQ",
+    "target": "100"
+  }]
+},{
+  "domain": "db",
+  "function": "condition",
+  "params": {
+    "size": 28
+  },
+  "items": [{
+    "id": "6-1",
+    "source": "#{$r.conditionData.id}",
+    "compareType": "EQ",
+    "target": "1"
+  }]
+},{
+  "domain": "db",
+  "function": "delete",
+  "params": {
+    "id": 100,
+    "name": "test_db_delete"
+  },
+  "items": [{
+    "id": "7-1",
+    "source": "#{$r.deleteData}",
+    "compareType": "EQ",
+    "target": "1"
+  }]
+}]

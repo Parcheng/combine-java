@@ -1,0 +1,41 @@
+package com.parch.combine.core.base;
+
+import com.parch.combine.core.settings.annotations.ComponentField;
+import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
+import com.parch.combine.core.settings.annotations.ComponentFieldEg;
+import com.parch.combine.core.settings.config.FieldTypeEnum;
+
+public abstract class InitConfig {
+
+    @ComponentField(key = "id", name = "组件初始化配置ID", type = FieldTypeEnum.TEXT)
+    @ComponentFieldDesc("同一类型的组件可以存在多个初始化配置，可以再逻辑配置中通过ref字段来指定使用哪一个初始化配置")
+    @ComponentFieldEg(eg = "component_init_config_001")
+    private String id;
+
+    /**
+     * 组件类型
+     */
+    @ComponentField(key = "type", name = "组件类型", type = FieldTypeEnum.TEXT, isRequired = true)
+    private String type;
+
+    /**
+     * 用于设置默认值
+     */
+    public void init() {}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+}

@@ -1,0 +1,18 @@
+{
+  "lang": "en",
+  "metas": [],
+  "links": [
+    {
+      "rel": "stylesheet",
+      "href": "${systemUrl}/bootstrap/bootstrap.min.css"
+    },
+    {
+      "rel": "stylesheet",
+      "href": "${systemUrl}/bootstrap/bootstrap-theme.min.css"
+    }
+  ],
+  "scripts": [
+    "${systemUrl}/bootstrap/jquery.min.js",
+    "${systemUrl}/bootstrap/bootstrap.min.js"
+  ]
+}

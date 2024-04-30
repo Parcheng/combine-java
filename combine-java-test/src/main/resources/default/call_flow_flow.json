@@ -1,0 +1,24 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "callFlow/invoked": [
+      {
+        "id": "callFlowInvoked",
+        "type": "access.mysql",
+        "sqlType": "SELECT_ONE",
+        "sql": "select * from t_component_test where id = ${id};"
+      }
+    ],
+    "callFlow/call": [
+      {
+        "id": "callFlowCall",
+        "type": "call.flow",
+        "url": "callFlow/invoked",
+        "params": {
+          "id": "#{id}"
+        }
+      }
+    ]
+  }
+}

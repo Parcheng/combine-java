@@ -1,0 +1,136 @@
+[{
+  "domain": "dataFormat",
+  "function": "init",
+  "params": {},
+  "items": []
+},{
+  "domain": "dataFormat",
+  "function": "json",
+  "params": {},
+  "items": [{
+    "id": "1-1",
+    "source": "#{$r.dataFormatJson3.[0].id}",
+    "compareType": "EQ",
+    "target": "1"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "clear",
+  "params": {},
+  "items": [{
+    "id": "2-1",
+    "source": "#{$r.dataFormatClear.[0].[1].id}",
+    "compareType": "EQ",
+    "target": "20"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "sort",
+  "params": {},
+  "items": [{
+    "id": "3-1",
+    "source": "#{$r.dataFormatSort.[0].[0].id}",
+    "compareType": "EQ",
+    "target": "10"
+  },{
+    "id": "3-2",
+    "source": "#{$r.dataFormatSort2.[0].[0].id}",
+    "compareType": "EQ",
+    "target": "30"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "convert1",
+  "params": {},
+  "items": [{
+    "id": "4-1",
+    "source": "#{$r.dataFormatConvert31.[0].id}",
+    "compareType": "EQ",
+    "target": "10"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "convert2",
+  "params": {},
+  "items": [{
+    "id": "5-1",
+    "source": "#{$r.dataFormatConvert4.[0].[0].id}",
+    "compareType": "EQ",
+    "target": "10"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "convert3",
+  "params": {},
+  "items": [{
+    "id": "6-1",
+    "source": "#{$r.dataFormatConvert32.[0].[0].id}",
+    "compareType": "EQ",
+    "target": "10"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "group",
+  "params": {},
+  "items": [{
+    "id": "7-1",
+    "source": "#{$r.dataFormatGroup.[0].INIT2.[0].id}",
+    "compareType": "EQ",
+    "target": "20"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "map",
+  "params": {},
+  "items": [{
+    "id": "8-1",
+    "source": "#{$r.dataFormatMap.[0].10}",
+    "compareType": "EQ",
+    "target": "[{\"id\":1}]"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "tree",
+  "params": {
+    "list": [
+      { "id": 1, "name": "1" },
+      { "id": 2, "name": "2" },
+      { "id": 3, "name": "3" },
+      { "id": 4, "parentId": 1, "name": "4" },
+      { "id": 5, "parentId": 2, "name": "5" },
+      { "id": 6, "parentId": 3, "name": "6" },
+      { "id": 7, "parentId": 4, "name": "7" },
+      { "id": 8, "parentId": 5, "name": "8" },
+      { "id": 9, "parentId": 6, "name": "9" },
+      { "id": 10, "parentId": 7, "name": "10" }
+    ]
+  },
+  "items": [{
+    "id": "9-1",
+    "source": "#{$r.dataFormatTree.[0].[1].children.[0].children.[0].name}",
+    "compareType": "EQ",
+    "target": "8"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "rang",
+  "params": {},
+  "items": [{
+    "id": "10-1",
+    "source": "#{$r.dataFormatRang.[0].[0].id}",
+    "compareType": "EQ",
+    "target": "10"
+  }]
+},{
+  "domain": "dataFormat",
+  "function": "md5",
+  "params": {
+    "data": "123456"
+  },
+  "items": [{
+    "id": "11-1",
+    "source": "#{data}",
+    "compareType": "EQ",
+    "target": "e10adc3949ba59abbe56e057f20f883e"
+  }]
+}]

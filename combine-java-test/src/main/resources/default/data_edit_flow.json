@@ -1,0 +1,73 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataEdit/base": [
+      {
+        "id": "dataEditTest1",
+        "type": "data.edit",
+        "items": [
+          "id SET NUMBER :101",
+          "name SET STRING :TEST",
+          "time SET DATE :20231101180000"
+        ]
+      }
+    ],
+    "dataEdit/list": [
+      {
+        "id": "dataEditListData",
+        "type": "data.create",
+        "items": [
+          "$v.val1 NUMBER 30",
+          "$v.val2 STRING c",
+          "$v.delVal1 NUMBER 130",
+          "$v.delVal2 STRING aaa",
+          "$v.addData1 LIST 110 120 130 140",
+          "$v.addData2 LIST aaa bbb ccc ddd",
+          "$v.delData1 LIST 110 120",
+          "$v.delData2 LIST bbb ccc"
+        ]
+      }, {
+        "id": "dataEditTest2",
+        "type": "data.edit",
+        "items": [
+          "list1 ADD NUMBER 70",
+          "list1 ADD_ALL NUMBER 80 90 100 #{$v.addData1}",
+          "list1 SET NUMBER 0:10",
+          "list1 SET_ALL NUMBER 1:20 2:#{$v.val1}",
+          "list1 REMOVE_INDEX 4",
+          "list1 REMOVE 40",
+          "list1 REMOVE_ALL 60 #{$v.delVal1} #{$v.delData1}",
+
+          "list2 ADD STRING aa",
+          "list2 ADD_ALL STRING bb cc dd #{$v.addData2}",
+          "list2 SET STRING 0:a",
+          "list2 SET_ALL STRING 1:b 2:#{$v.val2}",
+          "list2 REMOVE XD",
+          "list2 REMOVE_ALL XE #{$v.delVal2} #{$v.delData2}"
+        ]
+      }
+    ],
+    "dataEdit/object": [
+      {
+        "id": "dataEditObjectData",
+        "type": "data.create",
+        "items": [
+          "$v.addData OBJECT id:1 code:001 code2:002 code3:003 code4:004 name:test type:init flag:1",
+          "$v.delData OBJECT id:1 name:test",
+          "$v.delData2 LIST code3 code4"
+        ]
+      }, {
+        "id": "dataEditTest3",
+        "type": "data.edit",
+        "items": [
+          "data PUT STRING:dataType:txt",
+          "data PUT_ALL NUMBER:status:1 #{$v.addData}",
+          "data REMOVE code",
+          "data REMOVE_INDEX code2",
+          "data REMOVE_ALL flag #{$v.delData} #{$v.delData2}"
+        ]
+      }
+    ]
+  }
+}
