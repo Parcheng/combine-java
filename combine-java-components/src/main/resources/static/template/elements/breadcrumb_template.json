@@ -1,0 +1,26 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "breadcrumb": {
+    "tag": "ol",
+    "class": "breadcrumb",
+    "style": "",
+    "properties": {}
+  },
+  "item": {
+    "tag": "li",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "content": {
+    "tag": "a",
+    "class": "",
+    "style": "",
+    "properties": {}
+  }
+}

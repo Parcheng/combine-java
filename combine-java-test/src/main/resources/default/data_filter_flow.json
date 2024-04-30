@@ -1,0 +1,29 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataFilter/test": [
+      {
+        "id": "dataFilterTestData",
+        "type": "access.mysql",
+        "sqlType": "SELECT_ONE",
+        "sql": "select * from t_component_test where id = 1;"
+      },{
+        "id": "dataFilterClearTest",
+        "type": "data.filter",
+        "items": [
+          "#{$r.dataFilterTestData.data}",
+          "#{data1}"
+        ]
+      },{
+        "id": "dataFilterReplaceTest",
+        "type": "data.filter",
+        "items": [
+          "#{$r.dataFilterTestData.name} replace name_replace_test",
+          "#{$r.dataFilterTestData.delete_flag} replace #{deleteFlag}",
+          "#{data2} replace data_replace_test"
+        ]
+      }
+    ]
+  }
+}

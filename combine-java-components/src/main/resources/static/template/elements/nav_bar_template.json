@@ -1,0 +1,92 @@
+{
+  "external": {
+    "tag": "nav",
+    "class": "navbar navbar-default",
+    "style": "",
+    "properties": {}
+  },
+  "navBar": {
+    "tag": "div",
+    "class": "container-fluid",
+    "style": "",
+    "properties": {}
+  },
+  "brand": {
+    "tag": "div",
+    "class": "navbar-header",
+    "style": "",
+    "properties": {}
+  },
+  "brandContent": {
+    "tag": "a",
+    "class": "navbar-brand",
+    "style": "",
+    "properties": {}
+  },
+  "brandImgContent": {
+    "tag": "img ",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "brandTextContent": {
+    "tag": "span",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "body": {
+    "tag": "div",
+    "class": "collapse navbar-collapse",
+    "style": "",
+    "properties": {}
+  },
+  "bodyNav": {
+    "tag": "ul",
+    "class": "nav navbar-nav",
+    "style": "",
+    "properties": {}
+  },
+  "bodyNavItem": {
+    "tag": "li",
+    "class": "",
+    "style": "cursor:pointer;",
+    "properties": {}
+  },
+  "bodyNavItemText": {
+    "tag": "a",
+    "class": "dropdown-toggle",
+    "style": "",
+    "properties": {}
+  },
+  "bodyNavItemTextActive": {
+    "tag": "a",
+    "class": "dropdown-toggle",
+    "style": "font-weight:bold;",
+    "properties": {}
+  },
+  "bodyNavItemChildren": {
+    "tag": "ul",
+    "class": "dropdown-menu",
+    "style": "",
+    "properties": {}
+  },
+  "bodyRight": {
+    "tag": "ul",
+    "class": "nav navbar-nav navbar-right",
+    "style": "",
+    "properties": {}
+  },
+  "bodyRightItem": {
+    "tag": "li",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "bodyRightItemButton": {
+    "tag": "a",
+    "class": "",
+    "style": "cursor:pointer;",
+    "properties": {}
+  }
+}

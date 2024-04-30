@@ -1,0 +1,48 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataVerify/test": [
+      {
+        "id": "dataVerify",
+        "type": "data.verify",
+        "mode": "ALL",
+        "items": [{
+          "conditions": ["#{id} gte 1"],
+          "msg": "ID必须大于等于1"
+        },{
+          "conditions": ["#{id} lte 10"],
+          "msg": "ID必须小于等于10"
+        },{
+          "conditions": ["#{desc} no_empty"],
+          "msg": "描述不能为空"
+        },{
+          "conditions": ["#{name} contains verify"],
+          "msg": "名称未包含verify"
+        }]
+      }
+    ],
+    "dataVerify/test2": [
+      {
+        "id": "dataVerifyTestData",
+        "type": "access.mysql",
+        "sqlType": "SELECT_ONE",
+        "sql": "select * from t_component_test where id = 1;"
+      },{
+        "id": "dataVerify2",
+        "type": "data.verify",
+        "mode": "ALL",
+        "items": [{
+          "conditions": ["#{$r.dataVerifyTestData.id} gte 10"],
+          "msg": "ID必须大于等于10"
+        },{
+          "conditions": ["#{$r.dataVerifyTestData.name} contains verify"],
+          "msg": "名称未包含verify"
+        },{
+          "conditions": ["#{$r.dataVerifyTestData.desc} no_empty"],
+          "msg": "描述不能为空"
+        }]
+      }
+    ]
+  }
+}

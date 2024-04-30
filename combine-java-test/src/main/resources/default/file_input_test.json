@@ -1,0 +1,35 @@
+[{
+  "domain": "fileOpen",
+  "function": "diskToText",
+  "params": {},
+  "items": [{
+    "id": "1-1",
+    "source": "#{$r.fileOpenData1}",
+    "compareType": "NO_EMPTY"
+  }]
+},{
+  "domain": "fileOpen",
+  "function": "diskToXlsx",
+  "params": {},
+  "items": [{
+    "id": "2-1",
+    "source": "#{$r.fileOpenData2}",
+    "compareType": "NO_EMPTY"
+  }]
+},{
+  "domain": "fileOpen",
+  "function": "upload",
+  "params": {
+    "$file": {
+      "name": "text",
+      "type": "txt",
+      "size": 9,
+      "data": "TEST_TEXT"
+    }
+  },
+  "items": [{
+    "id": "3-1",
+    "source": "#{$r.fileOpenData3}",
+    "compareType": "NO_EMPTY"
+  }]
+}]

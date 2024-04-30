@@ -1,0 +1,15 @@
+[{
+  "domain": "dataCalc",
+  "function": "test",
+  "params": {
+    "list": [1,40,50,70,80]
+  },
+  "items": [
+    { "id": "1-1", "source": "#{$r.dataCalcTest.[0]}", "compareType": "EQ", "target": "51" },
+    { "id": "1-1", "source": "#{min}", "compareType": "EQ", "target": "10" },
+    { "id": "1-1", "source": "#{max}", "compareType": "EQ", "target": "100" },
+    { "id": "1-1", "source": "#{random}", "compareType": "GT", "target": "1" },
+    { "id": "1-1", "source": "#{random}", "compareType": "LT", "target": "100" },
+    { "id": "1-1", "source": "#{uuid}", "compareType": "NO_EMPTY" }
+  ]
+}]

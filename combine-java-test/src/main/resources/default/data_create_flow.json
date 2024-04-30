@@ -1,0 +1,20 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataCreate/test": [
+      {
+        "id": "dataCreateTest",
+        "type": "data.create",
+        "items": [
+          "id NUMBER 100000",
+          "name STRING zhangsan",
+          "deleteFlag BOOLEAN true",
+          "updateTime DATE 20231023180000",
+          "items LIST a a b c",
+          "settings OBJECT id:1 type:a"
+        ]
+      }
+    ]
+  }
+}
