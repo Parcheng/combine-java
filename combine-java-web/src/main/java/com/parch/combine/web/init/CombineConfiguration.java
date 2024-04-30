@@ -28,12 +28,4 @@ public class CombineConfiguration {
         factory.setMaxRequestSize(DataSize.of(10, DataUnit.MEGABYTES));
         return factory.createMultipartConfig();
     }
-
-//    @Bean
-//    public Filter characterEncodingFilter() {
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setForceEncoding(true);
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        return characterEncodingFilter;
-//    }
 }
