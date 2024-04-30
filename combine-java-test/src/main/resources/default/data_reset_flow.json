@@ -11,14 +11,12 @@
       },{
         "id": "dataResetTest",
         "type": "data.reset",
-        "items": [{
-          "resets": [
-            "#{$r.dataResetTestData.name} string name_reset_test",
-            "#{$r.dataResetTestData.data} string #{data}",
-            "#{$r.dataResetTestData.delete_flag} number 1",
-            "#{data} string data_reset_test"
-          ]
-        }]
+        "items": [
+          "#{$r.dataResetTestData.name} string name_reset_test",
+          "#{$r.dataResetTestData.data} string #{data}",
+          "#{$r.dataResetTestData.delete_flag} number 1",
+          "#{data} string data_reset_test"
+        ]
       }
     ]
   }

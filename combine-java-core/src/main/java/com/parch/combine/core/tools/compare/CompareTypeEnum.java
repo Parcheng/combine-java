@@ -76,11 +76,16 @@ public enum CompareTypeEnum implements IOptionSetting {
 
     @Override
     public String getName() {
-        return this.name;
+        return null;
+    }
+
+    @Override
+    public String getDesc() {
+        return null;
     }
 
     @Override
     public boolean isValid() {
-        return isValid;
+        return false;
     }
 }

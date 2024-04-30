@@ -29,7 +29,7 @@ $combineWebUI.element.register("CHECKBOX", (function () {
 
     function buildCheckbox(config, layoutConfig, isDisabled, settings, buildData) {
         const body = [];
-        if (!settings.option) {
+        if (!settings.options) {
             return body;
         }
 
@@ -37,34 +37,20 @@ $combineWebUI.element.register("CHECKBOX", (function () {
             layoutConfig = configFns.initElement(layoutConfig, config.disabled, buildData);
         }
 
-        const key = dataFns.parseVariableText(settings.key, buildData);
         let value = dataFns.parseVariable(settings.value, buildData);
         value = value ? (value instanceof Array ? value : [value]) : [];
-
-        const optionTextField = settings.option.text;
-        const optionValueField = settings.option.value;
-
-        let optionData = dataFns.parseVariable(settings.option.data, buildData);
-        optionData = optionData instanceof Array ? optionData : [optionData];
-
-        for (let i = 0; i < optionData.length; i++) {
-            const currOptionData = optionData[i];
-            if (!currOptionData) {
-                continue;
-            }
-
-            const optionText = dataFns.parseVariableText(optionTextField, currOptionData);
-            const optionValue = dataFns.parseVariableText(optionValueField, currOptionData);
+        for (let i = 0; i < settings.options.length; i++) {
+            const option = settings.options[i];
 
             const inputDom = domFns.build(config.option, null);
-            const checkboxItemDom = domFns.build(layoutConfig, optionText ? [inputDom, optionText] : inputDom);
-            if (key) {
-                inputDom.name = key;
+            const checkboxItemDom = domFns.build(layoutConfig, option.text ? [inputDom, option.text] : inputDom);
+            if (settings.key) {
+                inputDom.name = settings.key;
             }
-            if (optionValue) {
-                inputDom.value = optionValue;
+            if (option.value) {
+                inputDom.value = option.value;
             }
-            if (value.indexOf(optionValue) >= 0) {
+            if (value.indexOf(option.value) >= 0) {
                 inputDom.checked = true;
             }
 

@@ -11,8 +11,6 @@ public class ComponentSetting {
 
     private Class<? extends AbsComponent<?, ?>> componentClass;
 
-    private int order;
-
     private String key;
 
     private String name;
@@ -93,12 +91,12 @@ public class ComponentSetting {
         this.key = key;
     }
 
-    public void setComponentClass(Class<? extends AbsComponent<?, ?>> componentClass) {
-        this.componentClass = componentClass;
+    public Class<? extends AbsComponent<?, ?>> getComponentClass() {
+        return componentClass;
     }
 
-    public Class<? extends AbsComponent<?, ?>> thisComponentClass() {
-        return componentClass;
+    public void setComponentClass(Class<? extends AbsComponent<?, ?>> componentClass) {
+        this.componentClass = componentClass;
     }
 
     public List<ComponentCommonObjectSetting> getCommonObjects() {
@@ -107,13 +105,5 @@ public class ComponentSetting {
 
     public void setCommonObjects(List<ComponentCommonObjectSetting> commonObjects) {
         this.commonObjects = commonObjects;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
     }
 }

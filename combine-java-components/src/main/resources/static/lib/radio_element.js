@@ -28,7 +28,7 @@ $combineWebUI.element.register("RADIO", (function () {
 
     function buildRadio(config, layoutConfig, isDisabled, settings, buildData) {
         const body = [];
-        if (!settings.option) {
+        if (!settings.options) {
             return body;
         }
 
@@ -36,31 +36,19 @@ $combineWebUI.element.register("RADIO", (function () {
             layoutConfig = configFns.initElement(layoutConfig, config.disabled, buildData);
         }
 
-        const key = dataFns.parseVariableText(settings.key, buildData);
         const value = dataFns.parseVariable(settings.value, buildData);
-        const optionTextField = settings.option.text;
-        const optionValueField = settings.option.value;
-
-        let optionData = dataFns.parseVariable(settings.option.data, buildData);
-        optionData = optionData instanceof Array ? optionData : [optionData];
-        for (let i = 0; i < optionData.length; i++) {
-            const currOptionData = optionData[i];
-            if (!currOptionData) {
-                continue;
-            }
-
-            const currOptionText = dataFns.parseVariableText(optionTextField, currOptionData);
-            const currOptionValue = dataFns.parseVariableText(optionValueField, currOptionData);
+        for (let i = 0; i < settings.options.length; i++) {
+            const option = settings.options[i];
 
             const inputDom = domFns.build(config.option, null);
-            const radioItemDom = domFns.build(layoutConfig, currOptionText ? [inputDom, currOptionText] : inputDom);
-            if (key) {
-                inputDom.name = key;
+            const radioItemDom = domFns.build(layoutConfig, option.text ? [inputDom, option.text] : inputDom);
+            if (settings.key) {
+                inputDom.name = settings.key;
             }
-            if (currOptionValue) {
-                inputDom.value = currOptionValue;
+            if (option.value) {
+                inputDom.value = option.value;
             }
-            if (value == currOptionValue) {
+            if (value == option.value) {
                 inputDom.checked = true;
             }
 

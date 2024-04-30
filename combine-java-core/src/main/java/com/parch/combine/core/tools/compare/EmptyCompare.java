@@ -28,16 +28,16 @@ public class EmptyCompare {
                 break;
             case NO_EMPTY:
                 if (source instanceof Collection) {
-                    success = !((Collection<?>) source).isEmpty();
+                    success = source != null && ((Collection<?>) source).size() > 0;
                 } else if (source instanceof Map) {
-                    success = !((Map<?, ?>) source).isEmpty();
+                    success = source != null && ((Map<?,?>) source).size() > 0;
                 } else {
                     success = source != null && CheckEmptyUtil.isNotEmpty(source.toString());
                 }
                 break;
             case IS_EMPTY:
                 if (source instanceof Collection) {
-                    success = ((Collection<?>) source).isEmpty();
+                    success = source == null || ((Collection<?>) source).size() == 0;
                 } else {
                     success = source == null || CheckEmptyUtil.isEmpty(source.toString());
                 }

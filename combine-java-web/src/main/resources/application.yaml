@@ -1,0 +1,8 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /combine
+spring:
+  main:
+    allow-bean-definition-overriding: true
+

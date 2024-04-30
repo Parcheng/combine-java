@@ -9,13 +9,7 @@ public interface IOptionSetting {
 
     String getName();
 
+    String getDesc();
+
     boolean isValid();
-
-    default String getDesc() {
-        return null;
-    }
-
-    default String[] getDetails() {
-        return null;
-    }
 }

@@ -2,7 +2,6 @@ package com.parch.combine.core.tools.variable;
 
 import com.parch.combine.common.util.CheckEmptyUtil;
 import com.parch.combine.common.util.DataTypeIsUtil;
-import com.parch.combine.common.util.StringUtil;
 import com.parch.combine.core.context.ComponentContextHandler;
 import com.parch.combine.core.context.GlobalContext;
 import com.parch.combine.core.context.GlobalContextHandler;
@@ -74,8 +73,11 @@ public class DataFindHandler {
             return null;
         }
 
-        // 解析 path 路径（将 path 中的 #{...} 解析成值）,并解析为数组
-        String[] valuePathArr = parsePath(path);
+        // 解析 path 路径（将 path 中的 #{...} 解析成值）
+        path = parsePath(path);
+
+        // 将参数路径解析为数组
+        String[] valuePathArr = path.split("\\.");
 
         // 全局配置
         GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
@@ -143,77 +145,63 @@ public class DataFindHandler {
         // 集合类型取值（包含左右方括号表示集合类型，要按照下标取值）
         if (param.contains(SymbolConstant.LEFT_SQUARE_BRACKETS) && param.contains(SymbolConstant.RIGHT_SQUARE_BRACKETS)) {
             // 去掉左右括号，并判断是否是数字
-            String dataIndexStr = param.replace(SymbolConstant.LEFT_SQUARE_BRACKETS, CheckEmptyUtil.EMPTY).replace(SymbolConstant.RIGHT_SQUARE_BRACKETS, CheckEmptyUtil.EMPTY);
+            String listIndexStr = param.replace(SymbolConstant.LEFT_SQUARE_BRACKETS, CheckEmptyUtil.EMPTY).replace(SymbolConstant.RIGHT_SQUARE_BRACKETS, CheckEmptyUtil.EMPTY);
 
-            if (CheckEmptyUtil.isEmpty(dataIndexStr)) {
-                return findList(null, currData, path, index);
-            } else if (DataTypeIsUtil.isInteger(dataIndexStr)){
-                return findList(Integer.parseInt(dataIndexStr), currData, path, index);
-            } else if (currData instanceof Map) {
-                Object objectKey = find(dataIndexStr);
-                if (objectKey == null) {
-                    ComponentErrorHandler.print("根据路径查找数据-对象类型的KEY为空 path=" + Arrays.toString(path) + ", index=" + index);
+            // 验证当前数据是否为集合
+            if(!(currData instanceof List)) {
+                ComponentErrorHandler.print("根据路径查找数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
+                return null;
+            }
+            List<Object> currListData = (List<Object>) currData;
+
+            // 根据下标查找数据
+            if (CheckEmptyUtil.isEmpty(listIndexStr)) {
+                List<Object> newCurrData = new ArrayList<>();
+                if (index == path.length - 1) {
+                    newCurrData.addAll(currListData);
+                } else {
+                    for (Object item : currListData) {
+                        newCurrData.add(findData(item, path, index + 1));
+                    }
+                }
+                return newCurrData;
+            } else {
+                boolean isInteger = DataTypeIsUtil.isInteger(listIndexStr);
+                if (!isInteger) {
+                    ComponentErrorHandler.print("根据路径查找数据-集合类型下标不是数字 path=" + Arrays.toString(path) + ", index=" + index);
                     return null;
                 }
-                return findObject(objectKey.toString(), currData, path, index);
-            } else {
-                ComponentErrorHandler.print("根据路径查找数据-非集合/对象类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
-                return null;
-            }
-        } else {
-            // 对象类型取值
-            return findObject(param, currData, path, index);
-        }
-    }
+                int currIndex = Integer.parseInt(listIndexStr);
+                if (currIndex >= currListData.size()) {
+                    ComponentErrorHandler.print("根据路径查找数据-集合类型下标越界 path=" + Arrays.toString(path) + ", index=" + index);
+                    return null;
+                }
+                currData = currListData.get(currIndex);
 
-    private static Object findList(Integer dataIndex, Object currData, String[] path, int index) {
-        // 验证当前数据是否为集合
-        if(!(currData instanceof List)) {
-            ComponentErrorHandler.print("根据路径查找数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
-            return null;
-        }
-        List<Object> currListData = (List<Object>) currData;
-
-        // 根据下标查找数据
-        if (dataIndex == null) {
-            List<Object> newCurrData = new ArrayList<>();
-            if (index == path.length - 1) {
-                newCurrData.addAll(currListData);
-            } else {
-                for (Object item : currListData) {
-                    newCurrData.add(findData(item, path, index + 1));
+                // 当前位置为倒数第二级，可以直接返回值
+                if (index == path.length - 1) {
+                    return currData;
+                } else {
+                    return findData(currData, path, index + 1);
                 }
             }
-            return newCurrData;
-        } else {
-            if (dataIndex >= currListData.size()) {
-                ComponentErrorHandler.print("根据路径查找数据-集合类型下标越界 path=" + Arrays.toString(path) + ", index=" + index);
+        }
+
+        // 对象类型取值
+        else {
+            if(!(currData instanceof Map)) {
+                ComponentErrorHandler.print("根据路径查找数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
                 return null;
             }
-            currData = currListData.get(dataIndex);
+            Map<String, Object> currMapData = (Map<String, Object>) currData;
+            currData = currMapData.get(param);
 
             // 当前位置为倒数第二级，可以直接返回值
             if (index == path.length - 1) {
-                return currData;
+                return currData instanceof DataResult ? ((DataResult) currData).getData() : currData;
             } else {
                 return findData(currData, path, index + 1);
             }
-        }
-    }
-
-    private static Object findObject(String param, Object currData, String[] path, int index) {
-        if(!(currData instanceof Map)) {
-            ComponentErrorHandler.print("根据路径查找数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
-            return null;
-        }
-        Map<String, Object> currMapData = (Map<String, Object>) currData;
-        currData = currMapData.get(param);
-
-        // 当前位置为倒数第二级，可以直接返回值
-        if (index == path.length - 1) {
-            return currData instanceof DataResult ? ((DataResult) currData).getData() : currData;
-        } else {
-            return findData(currData, path, index + 1);
         }
     }
 
@@ -278,11 +266,14 @@ public class DataFindHandler {
             return false;
         }
 
-        // 解析 path 路径（将 path 中的 #{...} 解析成值），并解析为数组
-        String[] valuePathArr = parsePath(path);
+        // 解析 path 路径（将 path 中的 #{...} 解析成值）
+        path = parsePath(path);
 
         // 全局配置
         GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
+
+        // 将参数路径解析为数组
+        String[] valuePathArr = path.split("\\.");
 
         // 解析多级数据（数据来源可能是入参，可能是其他组件结果）
         int startIndex;
@@ -314,6 +305,7 @@ public class DataFindHandler {
      * @param index 当前字段路径索引
      * @param func 新值获取函数
      */
+    @SuppressWarnings("unchecked")
     private static boolean replaceData(Object data, String[] path, int index, GetDataFunction<?> func) {
         String param = path[index];
         if (data == null) {
@@ -328,115 +320,98 @@ public class DataFindHandler {
 
         // 集合类型取值（包含左右方括号表示集合类型，要按照下标取值）
         if (param.contains(SymbolConstant.LEFT_SQUARE_BRACKETS) && param.contains(SymbolConstant.RIGHT_SQUARE_BRACKETS)) {
-            // 去掉左右括号，并判断是否是数字
-            String dataIndexStr = param.replace(SymbolConstant.LEFT_SQUARE_BRACKETS, "").replace(SymbolConstant.RIGHT_SQUARE_BRACKETS, "");
-
-            // 如果是 [] 结果，标识对所有项做处理
-            if (CheckEmptyUtil.EMPTY.equals(dataIndexStr)) {
-                return replaceList(null, data, path, index, func);
-            } else if (DataTypeIsUtil.isInteger(dataIndexStr)){
-                return replaceList(Integer.parseInt(dataIndexStr), data, path, index, func);
-            } else if (data instanceof Map) {
-                Object objectKey = find(dataIndexStr);
-                if (objectKey == null) {
-                    ComponentErrorHandler.print("根据路径替换数据-对象类型的KEY为空 path=" + Arrays.toString(path) + ", index=" + index);
-                    return false;
-                }
-                return replaceObject(objectKey.toString(), data, path, index, func);
-            } else {
-                ComponentErrorHandler.print("根据路径替换数据-非集合/对象类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
+            // 判断集合数据是否合法
+            if(!(data instanceof List)) {
+                ComponentErrorHandler.print("根据路径替换数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
                 return false;
             }
-        } else {
-            // 对象类型取值
-            return replaceObject(param, data, path, index, func);
-        }
-    }
+            List<Object> listData = (List<Object>) data;
 
-    @SuppressWarnings("unchecked")
-    private static boolean replaceList(Integer listIndex, Object data, String[] path, int index, GetDataFunction<?> func) {
-        // 判断集合数据是否合法
-        if(!(data instanceof List)) {
-            ComponentErrorHandler.print("根据路径替换数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
-            return false;
-        }
-        List<Object> listData = (List<Object>) data;
+            // 去掉左右括号，并判断是否是数字
+            String listIndexStr = param.replace(SymbolConstant.LEFT_SQUARE_BRACKETS, "").replace(SymbolConstant.RIGHT_SQUARE_BRACKETS, "");
 
-        // 如果是 [] 结果，标识对所有项做处理
-        if (listIndex == null) {
-            // 当前位置为倒数第二级，可以直接返回值
-            if (index == path.length - 1) {
-                Object newValue;
-                try {
-                    newValue = func.get(listData);
-                } catch (Exception e) {
-                    ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
-                    return false;
-                }
+            // 如果是 [] 结果，标识对所有项做处理
+            if (CheckEmptyUtil.EMPTY.equals(listIndexStr)) {
+                // 当前位置为倒数第二级，可以直接返回值
+                if (index == path.length - 1) {
+                    Object newValue;
+                    try {
+                        newValue = func.get(listData);
+                    } catch (Exception e) {
+                        ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
+                        return false;
+                    }
 
-                if (newValue == null) {
-                    listData.clear();
+                    if (newValue == null) {
+                        listData.clear();
+                    } else {
+                        for (int i = 0; i < listData.size(); i++) {
+                            listData.set(i, newValue);
+                        }
+                    }
                 } else {
-                    for (int i = 0; i < listData.size(); i++) {
-                        listData.set(i, newValue);
+                    for (Object item : listData) {
+                        replaceData(item, path, index + 1, func);
                     }
                 }
             } else {
-                for (Object item : listData) {
-                    replaceData(item, path, index + 1, func);
+                boolean isInteger = DataTypeIsUtil.isInteger(listIndexStr);
+                if (!isInteger) {
+                    ComponentErrorHandler.print("根据路径替换数据-集合类型下标不是数字 path=" + Arrays.toString(path) + ", index=" + index);
+                    return false;
+                }
+                int currIndex = Integer.parseInt(listIndexStr);
+
+                // 当前位置为倒数第二级，可以直接返回值
+                if (index == path.length - 1) {
+                    Object newValue;
+                    try {
+                        newValue = func.get(listData);
+                    } catch (Exception e) {
+                        ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
+                        return false;
+                    }
+
+                    if (newValue == null) {
+                        listData.remove(currIndex);
+                    } else {
+                        listData.set(currIndex, newValue);
+                    }
+
+                } else {
+                    Object currData = listData.get(currIndex);
+                    replaceData(currData, path, index+1, func);
                 }
             }
-        } else {
+        }
+
+        // 对象类型取值
+        else {
+            if(!(data instanceof Map)) {
+                ComponentErrorHandler.print("根据路径替换数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
+                return false;
+            }
+            Map<String, Object> currMapData = (Map<String, Object>) data;
+            Object currData = currMapData.get(param);
+
             // 当前位置为倒数第二级，可以直接返回值
             if (index == path.length - 1) {
                 Object newValue;
                 try {
-                    newValue = func.get(listData);
+                    newValue = func.get(currData);
                 } catch (Exception e) {
                     ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
                     return false;
                 }
 
                 if (newValue == null) {
-                    listData.remove(listIndex);
+                    currMapData.remove(param);
                 } else {
-                    listData.set(listIndex, newValue);
+                    currMapData.put(param, newValue);
                 }
             } else {
-                Object currData = listData.get(listIndex);
                 replaceData(currData, path, index+1, func);
             }
-        }
-
-        return true;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static boolean replaceObject(String param, Object data, String[] path, int index, GetDataFunction<?> func) {
-        if(!(data instanceof Map)) {
-            ComponentErrorHandler.print("根据路径替换数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
-            return false;
-        }
-        Map<String, Object> currMapData = (Map<String, Object>) data;
-        Object currData = currMapData.get(param);
-
-        // 当前位置为倒数第二级，可以直接返回值
-        if (index == path.length - 1) {
-            Object newValue;
-            try {
-                newValue = func.get(currData);
-            } catch (Exception e) {
-                ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
-                return false;
-            }
-
-            if (newValue == null) {
-                currMapData.remove(param);
-            } else {
-                currMapData.put(param, newValue);
-            }
-        } else {
-            replaceData(currData, path, index+1, func);
         }
 
         return true;
@@ -482,7 +457,7 @@ public class DataFindHandler {
      * @param path 路径
      * @return 解析后的路径
      */
-    public static String[] parsePath(String path) {
+    public static String parsePath(String path) {
         String regex2 = "#\\{(.*?)}";
         Pattern pattern2 = Pattern.compile(regex2);
         Matcher matcher2 = pattern2.matcher(path);
@@ -499,30 +474,6 @@ public class DataFindHandler {
             }
         }
 
-        return splitPath(path);
-    }
-
-    private static String[] splitPath(String path) {
-        char[] chars = path.toCharArray();
-
-        List<String> pathList = new ArrayList<>();
-        StringBuilder currPath = new StringBuilder();
-        boolean inSquareBrackets = false;
-        for (char item : chars) {
-            if (item == '[') {
-                inSquareBrackets = true;
-            } else if (item == ']') {
-                inSquareBrackets = false;
-            } else if (!inSquareBrackets && item == '.') {
-                pathList.add(currPath.toString());
-                currPath = new StringBuilder();
-                continue;
-            }
-
-            currPath.append(item);
-        }
-        pathList.add(currPath.toString());
-
-        return pathList.toArray(new String[0]);
+        return path;
     }
 }

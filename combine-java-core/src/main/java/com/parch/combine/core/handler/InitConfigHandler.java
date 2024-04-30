@@ -65,19 +65,16 @@ public class InitConfigHandler {
             return (T) initConfig;
         }
 
-        T initConfigObj;
         Map<String, Object> preInitConfig = PRE_INIT_CONFIGS.get(key);
         if (preInitConfig == null) {
             try {
-                initConfigObj = initConfigClass.getDeclaredConstructor().newInstance();
+                return initConfigClass.getDeclaredConstructor().newInstance();
             } catch (Exception e) {
                 return null;
             }
-        } else {
-            initConfigObj = TypeConversionUtil.parseJava(preInitConfig, initConfigClass);
         }
 
-        initConfigObj.init();
+        T initConfigObj = TypeConversionUtil.parseJava(preInitConfig, initConfigClass);
         INIT_CONFIGS.put(key, initConfigObj);
         PRE_INIT_CONFIGS.remove(key);
 

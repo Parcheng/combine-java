@@ -15,16 +15,11 @@ public class EquivalentCompare {
     public static CompareResult compare(CompareConfig config) {
         Object source = config.parseSourceValue();
         Object target = config.parseTargetValue();
-
-        boolean isEquivalent;
-        if (source == null && target == null) {
-            isEquivalent = true;
-        } else if (source == null || target == null) {
-            isEquivalent = false;
-        } else {
-            isEquivalent = ValueHelper.compareTo(source, target, null) == 0;
+        if (source == null || target == null) {
+            return CompareResult.fail();
         }
 
+        boolean isEquivalent = ValueHelper.compareTo(source, target, null) == 0;
         boolean success = (CompareTypeEnum.EQ == config.getCompareType()) == isEquivalent;
         return success ? CompareResult.success() : CompareResult.fail();
     }

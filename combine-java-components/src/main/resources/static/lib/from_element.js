@@ -7,7 +7,7 @@ $combineWebUI.element.register("FROM", (function () {
     const data = {};
 
     function init(config, parentData) {
-        const layout = config.settings.layout ? config.settings.layout.toUpperCase() : null;
+        const layout = config.layout && config.settings.layout ? config.settings.layout.toUpperCase() : null;
         switch (layout) {
             case "VERTICAL":
                 config.from = configFns.initElement(config.from, config.vertical);
@@ -26,11 +26,13 @@ $combineWebUI.element.register("FROM", (function () {
     function buildFromBody(config, buildData) {
         let body = [];
         const settings = config.settings;
-        buildData = buildData ? buildData : {};
+        if (!buildData || buildData instanceof Array || !(buildData instanceof Object)) {
+            return;
+        }
+
         for (let i = 0; i < settings.items.length; i++) {
             const currItem = settings.items[i];
             const currKey = currItem.fieldKey;
-            const hide = currItem.hide === true;
 
             const itemBodys = [];
             if (currItem.fieldName) {
@@ -44,17 +46,11 @@ $combineWebUI.element.register("FROM", (function () {
                 }
             } else {
                 const text = dataFns.parseVariable(currItem.text, buildData);
-                setData(config.id, currKey, text);
                 itemBodys.push(domFns.build(config.content, text));
+                setData(config.id, currKey, text);
             }
 
-            const groupDom = domFns.build(config.item, itemBodys)
-            groupDom.setAttribute("id", dataFns.parseVariableText(currItem.id, buildData));
-            if (hide) {
-                domFns.hide(groupDom);
-            }
-
-            body.push(groupDom);
+            body.push(domFns.build(config.item, itemBodys));
         }
 
         return body;
@@ -69,12 +65,8 @@ $combineWebUI.element.register("FROM", (function () {
     }
 
     function setData(id, key, text, elementId) {
-        if (!key) {
-            return;
-        }
-
         let currData = data[id];
-        if (!currData) {
+        if (!currData || !key) {
             currData = data[id] = [];
         }
 
@@ -93,9 +85,11 @@ $combineWebUI.element.register("FROM", (function () {
             config = init(config, data);
 
             let fromDom;
+            const formTemp = config[config.settings.layout];
             if (config.from) {
                 const fromBody = buildFromBody(config, data);
-                fromDom = domFns.build(config.from, fromBody);
+                const formConfig = configFns.initElement(config.from, formTemp, data);
+                fromDom = domFns.build(formConfig, fromBody);
             }
 
             return domFns.build(config.external, fromDom);
@@ -121,13 +115,13 @@ $combineWebUI.element.register("FROM", (function () {
                 }
 
                 let itemValue = null;
-                if (dataItem.elementId) {
+                if (dataItem.value) {
+                    itemValue = dataItem.value;
+                } else if (dataItem.elementId) {
                     const elementDataResult = instanceFns.getData(dataItem.elementId);
                     if (elementDataResult.success) {
                         itemValue = elementDataResult.data;
                     }
-                } else if (dataItem.value){
-                    itemValue = dataItem.value;
                 }
 
                 result[dataItem.key] = itemValue;

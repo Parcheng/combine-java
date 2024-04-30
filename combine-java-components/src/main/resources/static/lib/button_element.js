@@ -23,8 +23,8 @@ $combineWebUI.element.register("BUTTON", (function () {
                 const text = dataFns.parseVariable(item.text, buildData);
                 const itemConfig = configFns.initElement(config.button, itemTemp, buildData);
                 const buttonDom = domFns.build(itemConfig, text);
-                if (item.triggers) {
-                    triggerFns.build(item.triggers, buttonDom, buildData);
+                if (item.trigger) {
+                    triggerFns.build(item.trigger, buttonDom, buildData);
                 }
                 body.push(buttonDom);
             }

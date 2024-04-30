@@ -1,6 +1,5 @@
 package com.parch.combine.core.service;
 
-import com.parch.combine.core.base.FileInfo;
 import com.parch.combine.core.vo.DataResult;
 import com.parch.combine.core.vo.FlowInitVO;
 import java.util.List;
@@ -47,18 +46,6 @@ public interface ICombineWebService {
     DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers);
 
     /**
-     * 执行业务逻辑集合
-     *
-     * @param domain 域
-     * @param function 功能
-     * @param params 参数
-     * @param headers 请求头
-     * @param fileInfo 文件信息
-     * @return 结果集
-     */
-    DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo);
-
-    /**
      * 执行任何业务逻辑集合（包括不允许外部触发的）
      *
      * @param domain 域
@@ -68,16 +55,4 @@ public interface ICombineWebService {
      * @return 结果集
      */
     DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers);
-
-    /**
-     * 执行任何业务逻辑集合（包括不允许外部触发的）
-     *
-     * @param domain 域
-     * @param function 功能
-     * @param params 参数
-     * @param headers 请求头
-     * @param fileInfo 文件信息
-     * @return 结果集
-     */
-    DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo);
 }

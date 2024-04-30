@@ -1,10 +1,6 @@
 package com.parch.combine.core.context;
 
-import com.parch.combine.common.util.FileNameUtil;
 import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.base.FileInfo;
-import com.parch.combine.core.base.FileParamKey;
-import com.parch.combine.core.tools.PrintHelper;
 import com.parch.combine.core.vo.DataResult;
 
 import java.util.*;
@@ -28,10 +24,10 @@ public class ComponentContextHandler {
      * @param params 入参
      * @return 上下文对象
      */
-    public static void init(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file) {
+    public static void init(String key, Map<String, Object> params, Map<String, String> headers) {
         ComponentContext context = new ComponentContext();
         context.setFlowKey(key);
-        context.setParams(params == null ? new HashMap<>(1) : params);
+        context.setParams(params == null ? new HashMap<>(0) : params);
         context.setHeaders(headers == null ? new HashMap<>(0) : headers);
         context.setResultMap(new LinkedHashMap<>());
         context.setData(new HashMap<>());
@@ -46,16 +42,6 @@ public class ComponentContextHandler {
             context.setRequestId((String) context.getParams().get(requestIdKey));
         } else {
             context.setRequestId(UUID.randomUUID().toString());
-        }
-
-        // 上传的文件信息
-        if (file != null) {
-            Map<String, Object> fileParams = new HashMap<>(4);
-            fileParams.put(FileParamKey.PARAM_FILE_NAME_KEY, file.getName());
-            fileParams.put(FileParamKey.PARAM_FILE_SIZE_KEY, file.getSize());
-            fileParams.put(FileParamKey.PARAM_FILE_DATA_KEY, file.getData());
-            fileParams.put(FileParamKey.PARAM_FILE_TYPE_KEY, file.getType());
-            context.getParams().put(FileParamKey.FILE_OBJ_KEY, fileParams);
         }
 
         CACHE.set(context);

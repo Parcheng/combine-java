@@ -1,5 +1,6 @@
 $combineWebUI.element.register("TREE", (function () {
     const domFns = $combineWebUI.dom;
+    const configFns = $combineWebUI.config;
     const triggerFns = $combineWebUI.trigger;
     const elementFns = $combineWebUI.element;
 
@@ -45,10 +46,10 @@ $combineWebUI.element.register("TREE", (function () {
 
             const textDom = domFns.build(config.itemText, text ? text : "未知");
             domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(config.id, "checked", currCheckPath));
-            if (settings.triggers) {
-                triggerFns.build(settings.triggers, textDom, currData);
+            if (settings.trigger) {
+                triggerFns.build(settings.trigger, textDom, currData);
                 if (isChecked) {
-                    triggerFns.trigger(settings.triggers, textDom);
+                    triggerFns.trigger(settings.trigger, textDom);
                 }
             }
             itemBody.push(textDom);

@@ -96,7 +96,7 @@ public class FlowAspectHandler {
      * @return 结果
      */
     private static DataResult execute(String flowKey, List<AspectConfig> aspectList) {
-        DataResult result = null;
+        DataResult result;
         for (AspectConfig item : aspectList) {
             if (item.contain(flowKey)) {
                 result = ComponentHandler.executeComponents(item.getComponents());
@@ -106,7 +106,7 @@ public class FlowAspectHandler {
             }
         }
 
-        return result == null ? DataResult.success(true) : result;
+        return DataResult.success(true);
     }
 
     /**
@@ -144,8 +144,10 @@ public class FlowAspectHandler {
             String[] flowKeyArr = FlowKeyUtil.parseKey(flowKey);
             if (CheckEmptyUtil.isNotEmpty(includes)) {
                 for (String[] include : includes) {
-                    if (match(flowKeyArr, include)) {
-                        return false;
+                    boolean domainPass = SymbolConstant.ASTERISK.equals(include[0]) || flowKeyArr[0].equals(include[0]);
+                    boolean functionPass = SymbolConstant.ASTERISK.equals(include[1]) || flowKeyArr[1].equals(include[1]);
+                    if (domainPass && functionPass) {
+                        return true;
                     }
                 }
 
@@ -154,7 +156,9 @@ public class FlowAspectHandler {
 
             if (CheckEmptyUtil.isNotEmpty(excludes)) {
                 for (String[] exclude : excludes) {
-                    if (match(flowKeyArr, exclude)) {
+                    boolean domainPass = SymbolConstant.ASTERISK.equals(exclude[0]) || flowKeyArr[0].equals(exclude[0]);
+                    boolean functionPass = SymbolConstant.ASTERISK.equals(exclude[1]) || flowKeyArr[1].equals(exclude[1]);
+                    if (domainPass && functionPass) {
                         return false;
                     }
                 }
@@ -163,13 +167,6 @@ public class FlowAspectHandler {
             }
 
             return true;
-        }
-
-        private boolean match(String[] flowArr, String[] config) {
-            boolean domainPass = (SymbolConstant.DOLLAR_SIGN.equals(config[0]) && flowArr[0].startsWith(SymbolConstant.DOLLAR_SIGN))
-                    || SymbolConstant.ASTERISK.equals(config[0]) || flowArr[0].equals(config[0]);
-            boolean functionPass = SymbolConstant.ASTERISK.equals(config[1]) || flowArr[1].equals(config[1]);
-            return domainPass && functionPass;
         }
 
         public String getId() {

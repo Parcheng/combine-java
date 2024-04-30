@@ -82,12 +82,8 @@ public class SubComponentHelper {
     public static DataResult execute(List<Object> componentIds) {
         for (Object componentIdObj : componentIds) {
             DataResult result = execute(componentIdObj);
-            if (result != null) {
-                if (!result.getSuccess()) {
-                    return DataResult.fail(result.getErrMsg(), result.getShowMsg());
-                } else if (result.isStop()) {
-                    return DataResult.successAndStop(result.getData());
-                }
+            if (result != null && !result.getSuccess()) {
+                return DataResult.fail(result.getErrMsg(), result.getShowMsg());
             }
         }
 

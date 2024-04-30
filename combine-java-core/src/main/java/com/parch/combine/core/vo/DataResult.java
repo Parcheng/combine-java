@@ -16,8 +16,6 @@ public class DataResult {
 
     private boolean download = false;
 
-    private boolean stop = false;
-
     private String showMsg;
 
     private String errMsg;
@@ -78,18 +76,6 @@ public class DataResult {
         this.download = download;
     }
 
-    public boolean isStop() {
-        return stop;
-    }
-
-    public void setStop(boolean stop) {
-        this.stop = stop;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
     /**
      * 文件下载
      *
@@ -113,18 +99,6 @@ public class DataResult {
         result.setSuccess(true);
         result.setData(data);
         result.setErrMsg(null);
-        return result;
-    }
-
-    /**
-     * 成功
-     *
-     * @param data 结果数据
-     * @return 结果对象
-     */
-    public static DataResult successAndStop(Object data) {
-        DataResult result = success(data);
-        result.setStop(true);
         return result;
     }
 
@@ -165,7 +139,7 @@ public class DataResult {
     public static DataResult fail(IComponentError error, Object ... msgParams) {
         DataResult result = build();
         result.setSuccess(false);
-        result.setErrMsg(String.format(error.getMsg(), msgParams));
+        result.setErrMsg(String.format(result.getErrMsg(), msgParams) + ": " + error.getMsg());
         result.setShowMsg(String.format(error.getShowMsg(), msgParams));
         return result;
     }

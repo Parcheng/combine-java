@@ -12,13 +12,8 @@ public class FileNameUtil {
      * @return 后缀
      */
     public static String getName(String path) {
-        if (path == null) {
-            return null;
-        }
-
-        int lastIndexOf = path.lastIndexOf("/");
-        if (lastIndexOf != -1) {
-            String name = path.substring(lastIndexOf + 1);
+        if (path != null && path.lastIndexOf("/") != -1) {
+            String name = path.substring(path.lastIndexOf("/") + 1);
             String postfix = getPostfix(name);
             if (postfix != null) {
                 name = name.replace("." + postfix, "");
@@ -32,25 +27,15 @@ public class FileNameUtil {
     /**
      * 获取文件后缀
      *
-     * @param path 文件路径
+     * @param name 文件名
      * @return 后缀
      */
-    public static String getPostfix(String path) {
-        if (path == null) {
-            return null;
+    public static String getPostfix(String name) {
+        if (name != null && name.lastIndexOf(".") != -1) {
+            String suffix = name.substring(name.lastIndexOf(".") + 1);
+            return suffix.toLowerCase();
         }
 
-        int lastIndexOf = path.lastIndexOf("/");
-        if (lastIndexOf != -1) {
-            path = path.substring(lastIndexOf + 1);
-        }
-
-        int dotIndexOf = path.lastIndexOf(".");
-        if (dotIndexOf == -1) {
-            return null;
-        }
-
-        String suffix = path.substring(dotIndexOf + 1);
-        return suffix.toLowerCase();
+        return null;
     }
 }

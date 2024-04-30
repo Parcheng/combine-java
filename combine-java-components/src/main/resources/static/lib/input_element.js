@@ -29,16 +29,11 @@ $combineWebUI.element.register("INPUT", (function () {
     function buildInput(config, type, settings, buildData) {
         const inputDom = domFns.build(config.input, null);
         inputDom.type = type;
-
-        const key = dataFns.parseVariableText(settings.key, buildData);
-        if (key) {
-            inputDom.name = key;
+        if (settings.key) {
+            inputDom.name = settings.key;
         }
         if (settings.value) {
-            const val = dataFns.parseVariable(settings.value, buildData);
-            if (val) {
-                inputDom.value = val;
-            }
+            inputDom.value = dataFns.parseVariable(settings.value, buildData);
         }
         return inputDom;
     }
@@ -68,13 +63,7 @@ $combineWebUI.element.register("INPUT", (function () {
                 for (let i = 0; i < externalDom.children.length; i++) {
                     const inputDom = externalDom.children[i];
                     if (inputDom.tagName == 'INPUT') {
-                        if (inputDom.getAttribute("type") == "file") {
-                            return inputDom.files[0];
-                        } else {
-                            return inputDom.value;
-                        }
-                    } else {
-                        return inputDom.innerText;
+                        return inputDom.value;
                     }
                 }
             }

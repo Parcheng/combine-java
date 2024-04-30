@@ -4,15 +4,15 @@
   "links": [
     {
       "rel": "stylesheet",
-      "href": "${systemUrl}/bootstrap/bootstrap.min.css"
+      "href": "./bootstrap/bootstrap.min.css"
     },
     {
       "rel": "stylesheet",
-      "href": "${systemUrl}/bootstrap/bootstrap-theme.min.css"
+      "href": "./bootstrap/bootstrap-theme.min.css"
     }
   ],
   "scripts": [
-    "${systemUrl}/bootstrap/jquery.min.js",
-    "${systemUrl}/bootstrap/bootstrap.min.js"
+    "./bootstrap/jquery.min.js",
+    "./bootstrap/bootstrap.min.js"
   ]
 }

@@ -12,27 +12,24 @@
 
     <groupId>com.parch.combine</groupId>
     <artifactId>combine-java</artifactId>
-    <version>0.4.0</version>
+    <version>0.3.0</version>
     <name>combine-java</name>
     <description>Combine Java</description>
 
     <properties>
         <java.version>17</java.version>
         <poi.version>4.1.2</poi.version>
-        <jackson.version>2.13.5</jackson.version>
+        <jackson.version>2.10.5</jackson.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         <hutool.version>5.8.12</hutool.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
         <mail-api.version>1.4.7</mail-api.version>
-        <compress.version>1.20</compress.version>
-<!--        <junrar.version>7.4.0</junrar.version>-->
-<!--        <sevenzipjbinding.version>16.02-2.01</sevenzipjbinding.version>-->
         <mysql-connector.version>8.0.33</mysql-connector.version>
         <hikari.version>4.0.3</hikari.version>
         <jedis.version>3.6.3</jedis.version>
         <rocketmq.version>4.9.4</rocketmq.version>
-        <pdfbox.version>2.0.24</pdfbox.version>
     </properties>
 
     <dependencyManagement>
@@ -48,11 +45,6 @@
                 <version>${poi.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.pdfbox</groupId>
-                <artifactId>pdfbox</artifactId>
-                <version>${pdfbox.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
@@ -61,6 +53,11 @@
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -87,28 +84,6 @@
                 <artifactId>mail</artifactId>
                 <version>${mail-api.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${compress.version}</version>
-            </dependency>
-<!--            <dependency>-->
-<!--                <groupId>com.github.junrar</groupId>-->
-<!--                <artifactId>junrar</artifactId>-->
-<!--                <version>${junrar.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>net.sf.sevenzipjbinding</groupId>-->
-<!--                <artifactId>sevenzipjbinding</artifactId>-->
-<!--                <version>${sevenzipjbinding.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>net.sf.sevenzipjbinding</groupId>-->
-<!--                <artifactId>sevenzipjbinding-all-platforms</artifactId>-->
-<!--                <version>${sevenzipjbinding.version}</version>-->
-<!--            </dependency>-->
-
             <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
@@ -124,7 +99,6 @@
                 <artifactId>rocketmq-client</artifactId>
                 <version>${rocketmq.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
@@ -140,8 +114,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.0</version>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>1.17</source>
+                    <target>1.17</target>
                 </configuration>
             </plugin>
         </plugins>

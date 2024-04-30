@@ -26,25 +26,25 @@ $combineWebUI.element.register("PAGE_TURNING", (function () {
         if (currPage <= 1) {
             body.push(buildItem(config.id, config.lastDisabled, config.lastContent, config.lastContent.text));
         } else {
-            body.push(buildItem(config.id, config.last, config.lastContent, config.lastContent.text, settings.triggers, buildData, true, currPage - 1));
+            body.push(buildItem(config.id, config.last, config.lastContent, config.lastContent.text, settings.trigger, buildData, true, currPage - 1));
         }
 
         if (currPage >= maxPage) {
             body.push(buildItem(config.id, config.nextDisabled, config.nextContent, config.nextContent.text));
         } else {
-            body.push(buildItem(config.id, config.next, config.nextContent, config.nextContent.text, settings.triggers, buildData, true, currPage + 1));
+            body.push(buildItem(config.id, config.next, config.nextContent, config.nextContent.text, settings.trigger, buildData, true, currPage + 1));
         }
 
         return domFns.build(config.pageTurning, body);
     }
 
-    function buildItem(id, item, content, body, triggers, buildData, hasChecked, targetPage) {
+    function buildItem(id, item, content, body, trigger, buildData, hasChecked, targetPage) {
         const itemDom = domFns.build(item, domFns.build(content, body));
         if (hasChecked && hasChecked == true) {
             domFns.appendProtity(itemDom, "onclick", elementFns.buildCallFnCode(id, "checked", targetPage));
         }
-        if (triggers) {
-            triggerFns.build(triggers, itemDom, buildData);
+        if (trigger) {
+            triggerFns.build(trigger, itemDom, buildData);
         }
         return itemDom;
     }
@@ -72,7 +72,7 @@ $combineWebUI.element.register("PAGE_TURNING", (function () {
                     domFns.setBody(externalDom, buildPage(config, {
                         currPage: pageNum,
                         maxPage: data[config.id].maxPage,
-                        triggers: config.settings.triggers
+                        trigger: config.settings.trigger
                     }));
                 }
             }

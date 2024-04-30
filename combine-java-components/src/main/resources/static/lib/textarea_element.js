@@ -13,11 +13,10 @@ $combineWebUI.element.register("TEXTAREA", (function () {
     }
 
     function buildTextarea(config, item, buildData) {
-        const key = dataFns.parseVariableText(item.key, buildData);
         const value = dataFns.parseVariable(item.value, buildData);
         const textDom = domFns.build(config.textarea, value);
-        if (key) {
-            textDom.name = key;
+        if (item.key) {
+            textDom.name = item.key;
         }
         return textDom;
     }

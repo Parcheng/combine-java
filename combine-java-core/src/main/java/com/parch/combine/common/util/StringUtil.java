@@ -1,5 +1,7 @@
 package com.parch.combine.common.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Collection;
 
 /**
@@ -18,15 +20,6 @@ public class StringUtil {
         if (CheckEmptyUtil.isEmpty(list)) {
             return CheckEmptyUtil.EMPTY;
         }
-        int index = 0;
-        StringBuilder result = new StringBuilder(CheckEmptyUtil.EMPTY);
-        for (Object item : list) {
-            result.append(item == null ? CheckEmptyUtil.EMPTY : item.toString());
-            if (index != list.size() -1) {
-                result.append(separator);
-            }
-            index++;
-        }
-        return result.toString();
+        return StringUtils.join(list, separator);
     }
 }

@@ -2,7 +2,6 @@ $combineWebUI = (function () {
     const triggersDomId = "$combine-web-triggers";
     const groups = {};
     const instances = {};
-    const instanceRefs = {};
     const elements = {};
     const temps = {};
     const loads = {};
@@ -67,12 +66,8 @@ $combineWebUI = (function () {
             }
         },
         registerAndBuild: function (config, data) {
-            this.register(config, null, data);
-            const buildResult = this.build(config.id, data);
-            if (buildResult.loadId) {
-                loadDataFns.load(buildResult.loadId, data);
-            }
-            return buildResult;
+            this.register(config, null, null, data);
+            return this.build(config.id, data);
         },
         build: function (id, data) {
             const configResult = this.getConfig(id);
@@ -95,9 +90,7 @@ $combineWebUI = (function () {
                 data = data instanceof Object ? data[dataField] : null;
             }
 
-            this.initConfig(config, data);
-            const loadId = config.load && config.defaultLoad !== false ? config.load.id : null;
-            return resultFns.success(element.build(config, data), loadId);
+            return resultFns.success(element.build(config, data), config.load ? config.load.id : null);
         },
         refresh: function (id, parentData) {
             const configResult = this.getConfig(id);
@@ -111,10 +104,6 @@ $combineWebUI = (function () {
                 return resultFns.fail("Refresh fail", "No element: " + instance.type);
             }
 
-            const dataField = instance.settings.dataField;
-            if (dataField) {
-                parentData = parentData instanceof Object ? parentData[dataField] : null;
-            }
             if (instance.refresh) {
                 element.refresh(id, instance, parentData);
             }
@@ -153,52 +142,13 @@ $combineWebUI = (function () {
             const fn = element.call[name];
             return resultFns.success(fn(instance, params));
         },
-        initConfig: function (config, data) {
-            if (!dataFns.hasVariable(config.id)) {
-                return;
-            }
-
-            const sourceConfigId = config.id;
-            const newConfigId = dataFns.parseVariableText(sourceConfigId, data);
-            if (!newConfigId) {
-                return;
-            }
-
-            config.id = newConfigId;
-            instanceRefs[newConfigId] = sourceConfigId;
-        },
         getConfig: function (id) {
-            let instance = instances[id];
-            if (!instance) {
-                const instanceRefId = instanceRefs[id];
-                if (instanceRefId) {
-                    instance = instances[instanceRefId];
-                }
-            }
-
+            const instance = instances[id];
             if (!instance) {
                 return resultFns.fail("Get config fail", "No config: " + id);
             }
 
-            const config = JSON.parse(instance);
-            config.id = id;
-            return resultFns.success(config);
-        },
-        getConfigIds: function (sourceId) {
-            if (!dataFns.hasVariable(sourceId)) {
-                return [sourceId];
-            }
-
-            const ids = [];
-            for (const key in instanceRefs) {
-                if (Object.hasOwnProperty.call(instanceRefs, key)) {
-                    const refId = instanceRefs[key];
-                    if (sourceId == refId) {
-                        ids.push(refId);
-                    }
-                }
-            }
-            return ids;
+            return resultFns.success(JSON.parse(instance));
         }
     };
 
@@ -264,101 +214,93 @@ $combineWebUI = (function () {
         successFiledKey: "success",
         failFiledKey: "fail",
         errorFiledKey: "error",
-        build: function (triggers, dom, data) {
-            if (!triggers || !dom) {
+        build: function (trigger, dom, data) {
+            if (!trigger || !dom) {
                 return;
             }
 
-            triggers = triggers instanceof Array ? triggers : [triggers];
-            for (let i = 0; i < triggers.length; i++) {
-                let trigger = triggers[i];
+            const successElement = trigger[this.successFiledKey];
+            const failElement = trigger[this.failFiledKey];
+            const errorElement = trigger[this.errorFiledKey];
+            this.buildAlert(successElement, failElement, errorElement);
 
-                const successElement = trigger[this.successFiledKey];
-                const failElement = trigger[this.failFiledKey];
-                const errorElement = trigger[this.errorFiledKey];
-                this.buildAlert(successElement, failElement, errorElement);
+            const successFn = this.buildAlertFn(successElement);
+            const failFn = this.buildAlertFn(failElement);
+            const errorFn = errorElement ? this.buildAlertFn(errorElement) : null;
 
-                const successFn = this.buildAlertFn(successElement);
-                const failFn = this.buildAlertFn(failElement);
-                const errorFn = errorElement ? this.buildAlertFn(errorElement) : null;
+            const eventKey = trigger.event ? trigger.event : "click";
+            switch (trigger.type) {
+                case "CALL":
+                    dom.addEventListener(eventKey, function () {
+                        trigger = combineWebUI.trigger.parseVariable(trigger, data);
+                        combineWebUI.call.flow(trigger.flow, trigger.params, successFn, failFn, errorFn);
+                    });
+                    break;
+                case "CALL_URL":
+                    dom.addEventListener(eventKey, function () {
+                        trigger = combineWebUI.trigger.parseVariable(trigger, data);
+                        combineWebUI.call.url(trigger.url, trigger.mode, trigger.params, trigger.headers, successFn, failFn, errorFn);
+                    });
+                    break;
+                case "CALL_FUNC":
+                    dom.addEventListener(eventKey, function () {
+                        trigger = combineWebUI.trigger.parseVariable(trigger, data);
+                        combineWebUI.instance.call(trigger.id, trigger.name, trigger.params);
+                    });
+                    break;
+                case "LOAD":
+                    dom.addEventListener(eventKey, function () {
+                        trigger = combineWebUI.trigger.parseVariable(trigger, data);
+                        combineWebUI.instance.load(trigger.groupId, trigger.parentId, trigger.params);
+                    });
+                    break;
+                case "LOAD_DATA":
+                    dom.addEventListener(eventKey, function () {
+                        trigger = combineWebUI.trigger.parseVariable(trigger, data);
+                        combineWebUI.loadData.loads(trigger.loadIds);
+                    });
+                    break;
+                case "SKIP":
+                    dom.addEventListener(eventKey, function () {
+                        trigger = combineWebUI.trigger.parseVariable(trigger, data);
+                        combineWebUI.tools.linkTo(trigger.url);
+                    });
+                    break;
+                case "CUSTOM":
+                    dom.addEventListener(eventKey, function () {
+                        trigger = combineWebUI.trigger.parseVariable(trigger, data);
 
-                const eventKey = trigger.event ? trigger.event : "click";
-                switch (trigger.type) {
-                    case "CALL":
-                        dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.call.flow(curr.flow, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
-                        });
-                        break;
-                    case "CALL_URL":
-                        dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.call.url(curr.url, curr.mode, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
-                        });
-                        break;
-                    case "CALL_FUNC":
-                        dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.instance.call(curr.id, curr.name, curr.params);
-                        });
-                        break;
-                    case "LOAD":
-                        dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.instance.load(curr.groupId, curr.parentId, curr.params);
-                        });
-                        break;
-                    case "LOAD_DATA":
-                        dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.loadData.loads(curr.loadIds, data, failFn);
-                        });
-                        break;
-                    case "SKIP":
-                        dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.tools.linkTo(curr.url);
-                        });
-                        break;
-                    case "CUSTOM":
-                        dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-
-                            let funcCode = curr.functionName + "(";
-                            if (curr.functionParams && curr.functionParams.length > 0) {
-                                for (let i = 0; i < curr.functionParams.length; i++) {
-                                    funcCode += ("\"" + curr.functionParams[i] + "\",")
-                                }
+                        let funcCode = trigger.functionName + "(";
+                        if (trigger.functionParams && trigger.functionParams.length > 0) {
+                            for (let i = 0; i < trigger.functionParams.length; i++) {
+                                funcCode += ("\"" + trigger.functionParams[i] + "\",")
                             }
-                            funcCode += "null)";
+                        }
+                        funcCode += "null)";
 
-                            try {
-                                const funcResult = (new Function(funcCode))();
-                                if (funcResult && funcResult.success) {
-                                    if (successFn) successFn(funcResult);
-                                } else {
-                                    if (failFn) failFn(funcResult);
-                                }
-                            } catch (err) {
-                                if (errorFn) errorFn(funcResult);
+                        try {
+                            const funcResult = (new Function(funcCode))();
+                            if (funcResult && funcResult.success) {
+                                if (successFn) successFn(funcResult);
+                            } else {
+                                if (failFn) failFn(funcResult);
                             }
-                        });
-                        break;
-                    default:
-                        console.error("Unknow trigger type!");
-                        break;
-                }
+                        } catch (err) {
+                            if (errorFn) errorFn(funcResult);
+                        }
+                    });
+                    break;
+                default:
+                    console.error("Unknow trigger type!");
+                    break;
             }
         },
-        trigger: function (triggers, dom) {
-            if (!dom || !(dom instanceof Element) || !triggers) {
+        trigger: function (trigger, dom) {
+            if (!dom || !(dom instanceof Element) || !trigger) {
                 return;
             }
 
-            triggers = triggers instanceof Array ? triggers : [triggers];
-            for (let i = 0; i < triggers.length; i++) {
-                dom.dispatchEvent(new Event(triggers[i].event));
-            }
+            dom.dispatchEvent(new Event(trigger.event));
         },
         buildAlert(successElement, failElement, errorElement) {
             const triggersDom = document.getElementById(triggersDomId);
@@ -407,7 +349,7 @@ $combineWebUI = (function () {
         },
         parseVariable(trigger, data) {
             if (!data || !trigger) {
-                return trigger;
+                return;
             }
             return dataFns.parseVariable(trigger, data, null, [this.successFiledKey, this.failFiledKey, this.errorFiledKey]);
         }
@@ -429,17 +371,17 @@ $combineWebUI = (function () {
                 }
             }
         },
-        loads: function (loadIds, data, failFn) {
+        loads: function (loadIds, data) {
             const loaded = [];
             for (let i = 0; i < loadIds.length; i++) {
                 const loadId = loadIds[i];
                 if (loadId && loaded.indexOf(loadId) === -1) {
-                    this.load(loadId, data, failFn);
+                    this.load(loadId);
                     loaded.push(loadId);
                 }
             }
         },
-        load: function (loadId, data, failFn) {
+        load: function (loadId, data) {
             const loadConfig = loads[loadId];
             if (!loadConfig) {
                 return;
@@ -453,20 +395,18 @@ $combineWebUI = (function () {
             switch (config.type) {
                 case "FLOW":
                     if (config.flow) {
-                        const newHeaders = dataFns.parseVariable(config.headers, data);
                         const newParams = dataFns.parseVariable(config.params, data);
-                        callFns.flow(config.flow, false, newParams, newHeaders, function (data) {
+                        callFns.flow(config.flow, newParams, function (data) {
                             combineWebUI.loadData.loadSuccess(loadConfig, data, true);
-                        }, failFn, null, config.localStorageKey);
+                        });
                     }
                     break;
                 case "API":
                     if (config.url) {
-                        const newHeaders = dataFns.parseVariable(config.headers, data);
                         const newParams = dataFns.parseVariable(config.params, data);
-                        callFns.url(config.url, config.mode, false, newParams, newHeaders, function (data) {
+                        callFns.url(config.url, config.mode, newParams, function (data) {
                             combineWebUI.loadData.loadSuccess(loadConfig, data, true);
-                        }, failFn, null, config.localStorageKey);
+                        });
                     }
                     break;
                 case "FILE":
@@ -538,10 +478,7 @@ $combineWebUI = (function () {
             }
 
             for (let i = 0; i < instances.length; i++) {
-                const instanceIds = instanceFns.getConfigIds(instances[i]);
-                for (let j = 0; j < instanceIds.length; j++) {
-                    instanceFns.refresh(instanceIds[j], data);
-                }
+                instanceFns.refresh(instances[i], data);
             }
         },
         loadCache: function (loadConfig) {
@@ -576,7 +513,7 @@ $combineWebUI = (function () {
         },
         setGlobal: function (loadConfig, newData) {
             const load = loadConfig.config;
-            if (!load || !load.toGlobal) {
+            if (!load || !loadConfig.toGlobal) {
                 return;
             }
 
@@ -818,8 +755,8 @@ $combineWebUI = (function () {
     };
 
     const dataFns = {
-        hasVariable: function (variable) {
-            return !!variable.match(/#\{(.*?)}/g);
+        isVariable: function (variable) {
+            return variable.startsWith("#{") && variable.endsWith("}");
         },
         parseVariable: function (variable, data, defaultText, excludeFields) {
             if (!variable) {
@@ -854,7 +791,7 @@ $combineWebUI = (function () {
                 return null;
             }
 
-            const variables = text.match(/#\{(.*?)}/g);
+            const variables = text.match(/#\{(.*?)\}/g);
             if (!variables) {
                 return text;
             }
@@ -911,7 +848,7 @@ $combineWebUI = (function () {
                 }
 
                 const currPath = pathArr[i];
-                if (i === pathArr.length - 1) {
+                if (i == pathArr.length - 1) {
                     const isFunc = valueOrFn instanceof Function;
                     if (currData instanceof Array) {
                         for (let j = 0; j < currData.length; j++) {
@@ -948,7 +885,7 @@ $combineWebUI = (function () {
             }
 
             const first = variablePath.shift();
-            if (first === "$e") {
+            if (first == "$e") {
                 const dataResult = instanceFns.getData(variablePath.shift());
                 if (dataResult.success) {
                     return dataResult.data;
@@ -956,39 +893,29 @@ $combineWebUI = (function () {
                     console.error(dataResult.showMsg, dataResult.errorMsg);
                     return null;
                 }
-            } else if (first === "$ld") {
+            } else if (first == "$ld") {
                 return loadGlobals;
-            } else if (first === "$ls") {
-                const second = variablePath.shift();
-                if (second) {
-                    const localData = localStorage.getItem(second);
-                    if (localData) {
-                        return JSON.parse(localData);
-                    }
-                }
             }
 
             console.error("根据标识解析数据失败", "根据标识解析数据-未知的");
             return null;
         },
         hasDataFlag: function (variableText) {
-            return variableText === "$e" || variableText === "$ld" || variableText === "$ls";
+            return variableText == "$e" || variableText == "$ld";
         },
     };
 
     const callFns = {
-        url: function (url, type, fromSubmit, params, headers, successFn, failFn, errorFn, localStorageKey) {
+        url: function (url, type, params, headers, successFn, failFn, errorFn) {
             const xhr = new XMLHttpRequest();
             xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
 
-            headers = headers ? headers : {};
-            const contentType = headers["Content-Type"];
-            if (!contentType && !(fromSubmit && fromSubmit === true)) {
-                headers["Content-Type"] = "application/json";
-            }
-            for (const key in headers) {
-                if (Object.hasOwnProperty.call(headers, key)) {
-                    xhr.setRequestHeader(key, headers[key]);
+            if (headers) {
+                for (const key in headers) {
+                    if (Object.hasOwnProperty.call(headers, key)) {
+                        xhr.setRequestHeader(key, headers[key]);
+                    }
+
                 }
             }
 
@@ -996,9 +923,6 @@ $combineWebUI = (function () {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     if (successFn) {
                         successFn(xhr.response);
-                        if (localStorageKey) {
-                            localStorage.setItem(localStorageKey, JSON.stringify(xhr.response));
-                        }
                     }
                 } else {
                     console.log("Request fail:", url, type, params, xhr);
@@ -1017,24 +941,9 @@ $combineWebUI = (function () {
                 }
             };
 
-            let sendData = null;
-            if (fromSubmit && fromSubmit === true) {
-                sendData = new FormData();
-                if (params) {
-                    for (const key in params) {
-                        if (Object.hasOwnProperty.call(params, key)) {
-                            let value = params[key];
-                            sendData.append(key, value instanceof Object && !(value instanceof File) ? JSON.stringify(value) : value);
-                        }
-                    }
-                }
-            } else if (params){
-                sendData = JSON.stringify(params)
-            }
-
-            xhr.send(sendData);
+            xhr.send(params ? JSON.stringify(params) : null);
         },
-        flow: function (flowKey, fromSubmit, params, headers, successFn, failFn, errorFn, localStorageKey) {
+        flow: function (flowKey, params, successFn, failFn, errorFn) {
             params = params ? params : {};
             errorFn = errorFn ? errorFn : function () {
                 console.log("Request error: ", flowKey, params);
@@ -1042,21 +951,12 @@ $combineWebUI = (function () {
             };
 
             const newBaseUrl = baseUrl === "http://127.0.0.1:5500" ? "http://127.0.0.1:8888/combine" : baseUrl;
-            this.url(newBaseUrl + "/api/" + flowKey, 'POST', fromSubmit, params, headers,
+            this.url(newBaseUrl + "/api/" + flowKey, 'POST', params, { "Content-Type": "application/json" },
                 function (data) {
                     data = JSON.parse(data);
                     if (data.success) {
-                        if (typeof data.data === "string") {
-                            if (data.data.startsWith("$web-component-redirect:")) {
-                                toolFns.linkTo(data.data.replace("$web-component-redirect:", ""));
-                                return;
-                            }
-                        }
                         if (successFn) {
                             successFn(data.data);
-                            if (localStorageKey) {
-                                localStorage.setItem(localStorageKey, JSON.stringify(data.data));
-                            }
                         }
                     } else {
                         console.log("Request fail: ", flowKey, params, data);
@@ -1064,7 +964,7 @@ $combineWebUI = (function () {
                             alert("Request fail: " + data.showMsg + "！");
                         };
                     }
-                }, errorFn, null);
+                }, errorFn);
         },
         file: function (path, isSync, successFn, failFn) {
             const xhr = new XMLHttpRequest();
@@ -1093,7 +993,7 @@ $combineWebUI = (function () {
 
     const toolFns = {
         linkTo: function (path) {
-            window.location.href = path.startsWith("http") ? path : baseUrl + path;
+            location.href = path;
         },
         generateUUID: function () {
             var d = new Date().getTime();

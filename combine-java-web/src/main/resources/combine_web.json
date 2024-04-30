@@ -1,0 +1,14 @@
+{
+  "initConfigs": [
+    "configs/apidoc.json",
+    "configs/q-question-bank/init.json",
+    "configs/q-question-bank/import.json",
+    "configs/q-question-bank/exercise.json",
+    "configs/q-question-bank/page.json",
+    "configs/q-question-bank/user.json"
+  ],
+  "initFlows": ["$build/api", "$build/login", "$build/page", "$init"],
+  "openRegisterConfig": false,
+  "requestIdKey": "requestID",
+  "printComponentResult": true
+}

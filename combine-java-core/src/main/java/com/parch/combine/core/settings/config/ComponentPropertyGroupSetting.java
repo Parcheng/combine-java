@@ -8,8 +8,6 @@ import java.util.List;
  */
 public class ComponentPropertyGroupSetting {
 
-    private Integer index;
-
     private String name;
 
     private FieldTypeEnum type;
@@ -48,13 +46,5 @@ public class ComponentPropertyGroupSetting {
 
     public void setOptions(List<IOptionSetting> options) {
         this.options = options;
-    }
-
-    public Integer getIndex() {
-        return index;
-    }
-
-    public void setIndex(Integer index) {
-        this.index = index;
     }
 }

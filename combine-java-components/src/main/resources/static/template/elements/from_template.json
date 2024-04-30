@@ -6,19 +6,19 @@
     "properties": {}
   },
   "vertical": {
-    "tag": "div",
+    "tag": "form",
     "class": "",
     "style": "",
     "properties": {}
   },
   "inline": {
-    "tag": "div",
+    "tag": "form",
     "class": "form-inline",
     "style": "",
     "properties": {}
   },
   "horizontal": {
-    "tag": "div",
+    "tag": "form",
     "class": "form-horizontal",
     "style": "",
     "properties": {}
@@ -26,7 +26,7 @@
   "item": {
     "tag": "div",
     "class": "form-group",
-    "style": "margin-left:10px;margin-top:8px;margin-bottom:8px;text-align:left;",
+    "style": "margin-left:10px;",
     "properties": {}
   },
   "label": {
