@@ -2,8 +2,8 @@ package com.parch.combine.web.service;
 
 import com.parch.combine.common.util.CheckEmptyUtil;
 import com.parch.combine.core.service.ICombineWebService;
-import com.parch.combine.dto.JsonConfigInitDTO;
-import com.parch.combine.util.ResourceFileUtil;
+import com.parch.combine.web.dto.JsonConfigInitDTO;
+import com.parch.combine.web.util.ResourceFileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

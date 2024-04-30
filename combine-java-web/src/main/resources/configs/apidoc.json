@@ -3,7 +3,8 @@
   "init": [{
     "id": "system_web_page_management",
     "type": "web.page.management",
-    "baseUrl": "http://127.0.0.1:8888/combine"
+    "baseUrl": "http://127.0.0.1:8888/combine",
+    "systemUrl": "http://127.0.0.1:8888/combine"
   }],
   "flows": {
     "settings/list": [

@@ -1,7 +1,7 @@
 package com.parch.combine.web.controller;
 
-import com.parch.combine.dto.JsonConfigInitDTO;
-import com.parch.combine.service.FlowConfigService;
+import com.parch.combine.web.dto.JsonConfigInitDTO;
+import com.parch.combine.web.service.FlowConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

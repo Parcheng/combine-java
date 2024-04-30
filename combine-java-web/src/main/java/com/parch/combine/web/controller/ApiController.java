@@ -5,7 +5,6 @@ import com.parch.combine.common.util.FileNameUtil;
 import com.parch.combine.common.util.JsonUtil;
 import com.parch.combine.core.base.FileInfo;
 import com.parch.combine.core.vo.DataResult;
-import com.parch.combine.service.FlowExecuteService;
 import com.parch.combine.web.service.FlowExecuteService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -86,7 +85,8 @@ public class ApiController {
      */
     private void responseHandler(DataResult result, HttpServletResponse response) {
         try {
-            if (result.isDownload() && result.getData() instanceof FileInfo fileInfo) {
+            if (result.isDownload() && result.getData() instanceof FileInfo) {
+                FileInfo fileInfo = (FileInfo) result.getData();
                 response.reset();
                 response.setCharacterEncoding("UTF-8");
                 response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileInfo.getName(), StandardCharsets.UTF_8));
