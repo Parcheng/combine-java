@@ -1,6 +1,6 @@
 package com.parch.combine.test.handler;
 
-import com.parch.combine.CombineWebStarter;
+import com.parch.combine.CombineJavaStarter;
 import com.parch.combine.common.util.*;
 import com.parch.combine.core.tools.compare.CompareHelper;
 import com.parch.combine.core.tools.compare.CompareResult;
@@ -34,7 +34,7 @@ public class TestHandler {
             PrintHandler.flowComponent(testConfig.getDomain(), testConfig.getFunction());
 
             // 获取组件集合
-            List<String> componentIds = CombineWebStarter.getService().getComponentIds(testConfig.getDomain(), testConfig.getFunction());
+            List<String> componentIds = CombineJavaStarter.getService().getComponentIds(testConfig.getDomain(), testConfig.getFunction());
 
             // 执行组件
             String key = FlowKeyUtil.getKey(testConfig.getDomain(), testConfig.getFunction());

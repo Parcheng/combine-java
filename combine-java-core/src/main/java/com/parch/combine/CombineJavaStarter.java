@@ -13,7 +13,7 @@ import com.parch.combine.core.vo.ComponentInitVO;
 import java.util.HashMap;
 import java.util.List;
 
-public class CombineWebStarter {
+public class CombineJavaStarter {
 
     private static CombineWebService SERVICE;
 

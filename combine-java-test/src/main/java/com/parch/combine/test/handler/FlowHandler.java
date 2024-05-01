@@ -1,6 +1,6 @@
 package com.parch.combine.test.handler;
 
-import com.parch.combine.CombineWebStarter;
+import com.parch.combine.CombineJavaStarter;
 import com.parch.combine.common.util.ResourceFileUtil;
 
 
@@ -20,7 +20,7 @@ public class FlowHandler {
 
         // 初始化流程
         PrintHandler.init(path);
-        CombineWebStarter.getService().registerFlow(jsonDataStr, PrintHandler::flowInit);
+        CombineJavaStarter.getService().registerFlow(jsonDataStr, PrintHandler::flowInit);
         PrintHandler.hr();
     }
 }

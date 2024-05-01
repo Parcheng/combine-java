@@ -1,15 +1,16 @@
-package com.parch.combine.web.controller;
+package com.parch.combine.web.service;
 
+import com.parch.combine.CombineJavaStarter;
 import com.parch.combine.common.util.CheckEmptyUtil;
 import com.parch.combine.common.util.FileNameUtil;
 import com.parch.combine.common.util.JsonUtil;
 import com.parch.combine.core.base.FileInfo;
+import com.parch.combine.core.service.ICombineWebService;
 import com.parch.combine.core.vo.DataResult;
-import com.parch.combine.web.service.FlowExecuteService;
+import com.parch.combine.web.dto.JsonConfigInitDTO;
+import com.parch.combine.web.util.ResourceFileUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -17,26 +18,23 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-@RestController
-@RequestMapping("/api")
-public class ApiController {
+public abstract class AbstractCombineWebService {
 
-    @Autowired
-    private FlowExecuteService flowExecuteService;
+    private ICombineWebService service;
 
-    @PostMapping("/{domain}/{function}")
-    public DataResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
-        DataResult result = flowExecuteService.execute(params, getHeaders(request), null, domain, function);
-        responseHandler(result, response);
-        return result;
+    public AbstractCombineWebService(String configPath) {
+        CombineJavaStarter.init(configPath);
+        service = CombineJavaStarter.getService();
     }
 
-    @PostMapping("/file/{domain}/{function}")
-    public DataResult upload(@RequestParam("params") String paramJson, @RequestParam("file") MultipartFile file, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public DataResult call(Map<String, Object> params, String domain, String function, HttpServletRequest request, HttpServletResponse response) {
+        return execute(params, null, domain, function, request, response);
+    }
+
+    @SuppressWarnings("unchecked")
+    public DataResult uploadAndCall(String paramJson, MultipartFile file, String domain, String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 入参
         Map<String, Object> params;
         if (CheckEmptyUtil.isEmpty(paramJson)) {
@@ -53,7 +51,42 @@ public class ApiController {
         fileInfo.setData(file.getBytes());
 
         // 执行业务逻辑
-        DataResult result = flowExecuteService.execute(params, getHeaders(request), fileInfo, domain, function);
+        return execute(params, fileInfo, domain, function, request, response);
+    }
+
+    public List<JsonConfigInitDTO> register(String path) {
+        List<JsonConfigInitDTO> result = new ArrayList<>();
+        if (CheckEmptyUtil.isEmpty(path)) {
+            return result;
+        }
+
+        try {
+            // 读取配置文件
+            String jsonDataStr = ResourceFileUtil.readFile(path);
+            service.registerFlow(jsonDataStr, vo -> {
+                // 保存每个接口的初始化结果
+                JsonConfigInitDTO initDTO = new JsonConfigInitDTO();
+                initDTO.setKey(vo.getFlowKey());
+                initDTO.setSuccess(vo.isSuccess());
+                initDTO.setErrorList(vo.getErrorList());
+                initDTO.setComponentIds(vo.getComponentIds());
+                initDTO.setStaticComponentIds(vo.getStaticComponentIds());
+                result.add(initDTO);
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private DataResult execute(Map<String, Object> params, FileInfo fileInfo, String domain, String function, HttpServletRequest request, HttpServletResponse response) {
+        List<String> componentIds = service.getComponentIds(domain, function);
+        if (componentIds == null) {
+            return DataResult.fail("接口未注册", "接口不存在");
+        }
+
+        DataResult result = service.execute(domain, function, params, getHeaders(request), fileInfo);
         responseHandler(result, response);
         return result;
     }
