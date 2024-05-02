@@ -1,20 +1,20 @@
 # 介绍
-combine-java 是一个轻量级低代码框架，在框架中一切的功能皆为组件，用户可以自由将各种组件组合在一起进行编排，实现自己的业务功能。
-JDK版本：17
-
-工程包含四个模块：
-combine-java-core：核心包，组件的所有操作都在这里
-combine-java-components：系统自带的组件包，封装了几十个公共组件
-combine-java-test：自动化测试模块
-combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程也可以直接启动，启动后访问 http://127.0.0.1:8888/combine/api.html 可查看API
-
-组件（component）包含三部分：
-初始化配置：相当于同类型组件的全局配置，如：MySql 执行组件的数据库连接配置就是初始化配置
-逻辑配置：相当于组件独立配置，会直接影响组件的执行结果，如：MySql 执行组件要执行的具体SQL和增删改查就是逻辑配置
-组件执行结果：是组件直接完成后输出的结果
-
+combine-java 是一个轻量级低代码框架，在框架中一切的功能皆为组件，用户可以自由将各种组件组合在一起进行编排，实现自己的业务功能。<br>
+JDK版本：17<br>
+<br>
+工程包含四个模块：<br>
+combine-java-core：核心包，组件的所有操作都在这里<br>
+combine-java-components：系统自带的组件包，封装了几十个公共组件<br>
+combine-java-test：自动化测试模块<br>
+combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程也可以直接启动，启动后访问 http://127.0.0.1:8888/combine/api.html 可查看API<br>
+<br>
+组件（component）包含三部分：<br>
+初始化配置：相当于同类型组件的全局配置，如：MySql 执行组件的数据库连接配置就是初始化配置<br>
+逻辑配置：相当于组件独立配置，会直接影响组件的执行结果，如：MySql 执行组件要执行的具体SQL和增删改查就是逻辑配置<br>
+组件执行结果：是组件直接完成后输出的结果<br>
+<br>
 # 如何使用？
-通过 POM 引用 combine-java-web-starter
+通过 POM 引用 combine-java-web-starter<br>
 ```
 <dependency>
     <artifactId>combine-java-web-starter</artifactId>
@@ -23,7 +23,7 @@ combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目�
 </dependency>
 ```
 
-编写一个Service，继承 starter 包提供的 AbstractCombineWebService：
+<br>编写一个Service，继承 starter 包提供的 AbstractCombineWebService：<br>
 ```
 @Service
 public class CombineWebService extends AbstractCombineWebService {
@@ -34,8 +34,8 @@ public class CombineWebService extends AbstractCombineWebService {
 }
 ```
 
-编写一个 Controller
-其中 call 方法是常规接口，uploadAndCall 方法是包含文件上次的接口
+<br>编写一个 Controller<br>
+其中 call 方法是常规接口，uploadAndCall 方法是包含文件上次的接口<br>
 ```
 @RestController
 @RequestMapping("/api")
@@ -56,7 +56,7 @@ public class CombineWebController {
 }
 ```
 
-编写配置文件 config.json 放在 resource 根目录下：
+<br>编写配置文件 config.json 放在 resource 根目录下：<br>
 ```
 {
   "initConfigs": [
@@ -74,19 +74,19 @@ public class CombineWebController {
 }
 ```
 
-编写流程配置文件 configs/my_business.json 放在 resource 根目录下：
-通过在该文件编写组件配置，来实现自己的业务功能，详见API
-
+<br>编写流程配置文件 configs/my_business.json 放在 resource 根目录下：<br>
+通过在该文件编写组件配置，来实现自己的业务功能，详见API<br>
+<br>
 # 自定义组件
-通过 SPI 加载
-在 resource/META_INFO/services 下创建文件 com.parch.combine.core.settings.spi.AbsGetComponents
+通过 SPI 加载<br>
+在 resource/META_INFO/services 下创建文件 com.parch.combine.core.settings.spi.AbsGetComponents<br>
 ```
 com.test.components.GetMyComponents
 ```
 
-创建 GetMyComponents 类：
-提示：这里创建的是组件包，一个组件包里会包含多个组件，系统会在加载时会自动扫描 GetMyComponents 类的所在包，获取该包下的所有组件
-注意：这个类必须要继承 com.parch.combine.core.settings.spi.AbsGetComponents
+<br>创建 GetMyComponents 类：<br>
+提示：这里创建的是组件包，一个组件包里会包含多个组件，系统会在加载时会自动扫描 GetMyComponents 类的所在包，获取该包下的所有组件<br>
+注意：这个类必须要继承 com.parch.combine.core.settings.spi.AbsGetComponents<br>
 ```
 public class GetMyComponents extends AbsGetComponents {
     public GetMyComponents() {
@@ -95,8 +95,8 @@ public class GetMyComponents extends AbsGetComponents {
 }
 ```
 
-创建自定义的组件1： My1Component 类
-提示：系统是根据 Component 直接来识别组件，该注解定义了组件的类型KEY、组件名称、组件的初始化配置和逻辑配置类
+<br>创建自定义的组件1： My1Component 类<br>
+提示：系统是根据 Component 直接来识别组件，该注解定义了组件的类型KEY、组件名称、组件的初始化配置和逻辑配置类<br>
 ```
 @Component(key = "test1", name = "我的组件1", logicConfigClass = My1LogicConfig.class, initConfigClass = My1InitConfig.class)
 @ComponentResult(name = "我的组件1执行结果")
