@@ -90,7 +90,7 @@ com.test.components.GetMyComponents
 ```
 public class GetMyComponents extends AbsGetComponents {
     public GetMyComponents() {
-        super("my", "我的组件包", GetMy1Components.class);
+        super("my", "我的组件包", GetMyComponents.class);
     }
 }
 ```
