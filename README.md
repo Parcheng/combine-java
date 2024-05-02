@@ -3,15 +3,15 @@ combine-java 是一个轻量级低代码框架，在框架中一切的功能皆�
 JDK版本：17<br>
 <br>
 工程包含四个模块：<br>
-combine-java-core：核心包，组件的所有操作都在这里<br>
-combine-java-components：系统自带的组件包，封装了几十个公共组件<br>
-combine-java-test：自动化测试模块<br>
-combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程也可以直接启动，启动后访问 http://127.0.0.1:8888/combine/api.html 可查看API<br>
+combine-java-core：核心包，组件的所有操作都在这里；<br>
+combine-java-components：系统自带的组件包，封装了几十个公共组件；<br>
+combine-java-test：自动化测试模块；<br>
+combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程也可以直接启动，启动后访问 http://127.0.0.1:8888/combine/api.html 可查看API。<br>
 <br>
 组件（component）包含三部分：<br>
-初始化配置：相当于同类型组件的全局配置，如：MySql 执行组件的数据库连接配置就是初始化配置<br>
-逻辑配置：相当于组件独立配置，会直接影响组件的执行结果，如：MySql 执行组件要执行的具体SQL和增删改查就是逻辑配置<br>
-组件执行结果：是组件直接完成后输出的结果<br>
+初始化配置：相当于同类型组件的全局配置，如：MySql 执行组件的数据库连接配置就是初始化配置；<br>
+逻辑配置：相当于组件独立配置，会直接影响组件的执行结果，如：MySql 执行组件要执行的具体SQL和增删改查就是逻辑配置；<br>
+组件执行结果：是组件直接完成后输出的结果。<br>
 <br>
 # 如何使用？
 通过 POM 引用 combine-java-web-starter<br>
@@ -19,7 +19,7 @@ combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目�
 <dependency>
     <artifactId>combine-java-web-starter</artifactId>
     <groupId>com.parch.combine</groupId>
-    <version>1.0.0</version>
+    <version>0.4.0</version>
 </dependency>
 ```
 
@@ -28,14 +28,14 @@ combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目�
 @Service
 public class CombineWebService extends AbstractCombineWebService {
     public CombineWebService() {
-        // 这里传入传入全局配置的JSON文件（配置项可参考API）
+        // 这里传入全局配置的JSON文件（配置项可参考API）
         super("config.json");
     }
 }
 ```
 
 <br>编写一个 Controller<br>
-其中 call 方法是常规接口，uploadAndCall 方法是包含文件上次的接口<br>
+其中 call 方法是常规接口，uploadAndCall 方法是包含文件上传的接口<br>
 ```
 @RestController
 @RequestMapping("/api")
