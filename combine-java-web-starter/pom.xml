@@ -39,31 +39,31 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <!--指定命令行 java -jar XXX.jar 运行程序的主类入口 -->
-                            <!--不配置就会报错-->
-                            <mainClass>com.parch.com.parch.combine.web.CombineJavaWebApplication</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <!--配置含有全部依赖的jar包后缀，用于区别默认的jar包-->
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals><goal>single</goal></goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            &lt;!&ndash;指定命令行 java -jar XXX.jar 运行程序的主类入口 &ndash;&gt;-->
+<!--                            &lt;!&ndash;不配置就会报错&ndash;&gt;-->
+<!--                            <mainClass>com.parch.com.parch.combine.web.CombineJavaWebApplication</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+<!--                    <descriptorRefs>-->
+<!--                        &lt;!&ndash;配置含有全部依赖的jar包后缀，用于区别默认的jar包&ndash;&gt;-->
+<!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--                    </descriptorRefs>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals><goal>single</goal></goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 </project>
