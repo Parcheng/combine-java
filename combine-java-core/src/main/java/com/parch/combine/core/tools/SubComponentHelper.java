@@ -2,7 +2,7 @@ package com.parch.combine.core.tools;
 
 import com.parch.combine.common.util.CheckEmptyUtil;
 import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.handler.ComponentHandler;
+import com.parch.combine.core.manager.CombineManager;
 import com.parch.combine.core.vo.DataResult;
 import com.parch.combine.core.vo.FlowInitVO;
 
@@ -21,7 +21,7 @@ public class SubComponentHelper {
      * @return 异常信息
      */
     @SuppressWarnings("unchecked")
-    public static List<String> init(List<Object> components) {
+    public static List<String> init(CombineManager combineManager, List<Object> components) {
         List<String> errorMsg = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(components)) {
             return errorMsg;
@@ -35,7 +35,7 @@ public class SubComponentHelper {
 
             if (componentObj instanceof Map) {
                 // 初始化组件
-                FlowInitVO initVO = ComponentHandler.init(Collections.singletonList((Map<String, Object>) componentObj));
+                FlowInitVO initVO = combineManager.getComponent().init(combineManager.getScopeKey(), Collections.singletonList((Map<String, Object>) componentObj));
                 // 判断是否初始化成功
                 if (initVO.isSuccess()) {
                     // 获取组件ID，并将组件配置替换为组件ID
@@ -46,7 +46,7 @@ public class SubComponentHelper {
                     errorMsg.addAll(initVO.getErrorList());
                 }
             } else {
-                AbsComponent<?,?> component = ComponentHandler.getComponent(componentObj.toString());
+                AbsComponent<?,?> component = combineManager.getComponent().getComponent(componentObj.toString());
                 if (component == null) {
                     errorMsg.add("ID【" + componentObj.toString() + "】的组件不存在");
                 }
@@ -63,13 +63,13 @@ public class SubComponentHelper {
      *
      * @return 结果
      */
-    public static DataResult execute(Object componentId) {
+    public static DataResult execute(CombineManager combineManager, Object componentId) {
         if (componentId == null) {
             return null;
         }
 
-        AbsComponent<?,?> component = ComponentHandler.getComponent(componentId.toString());
-        return ComponentHandler.executeComponent(component);
+        AbsComponent<?,?> component = combineManager.getComponent().getComponent(componentId.toString());
+        return combineManager.getComponent().executeComponent(component);
     }
 
     /**
@@ -79,9 +79,9 @@ public class SubComponentHelper {
      *
      * @return 结果
      */
-    public static DataResult execute(List<Object> componentIds) {
+    public static DataResult execute(CombineManager combineManager, List<Object> componentIds) {
         for (Object componentIdObj : componentIds) {
-            DataResult result = execute(componentIdObj);
+            DataResult result = execute(combineManager, componentIdObj);
             if (result != null) {
                 if (!result.getSuccess()) {
                     return DataResult.fail(result.getErrMsg(), result.getShowMsg());
@@ -102,7 +102,7 @@ public class SubComponentHelper {
      * @param componentIds 组件ID集合
      * @return 结果
      */
-    public static DataResult execute(String key, Map<String, Object> data, List<Object> componentIds) {
-        return ComponentHandler.execute(key, data, new HashMap<>(0), componentIds.stream().map(Object::toString).collect(Collectors.toList()), null);
+    public static DataResult execute(CombineManager combineManager, String key, Map<String, Object> data, List<Object> componentIds) {
+        return combineManager.execute(key, data, new HashMap<>(0), componentIds.stream().map(Object::toString).collect(Collectors.toList()), null);
     }
 }

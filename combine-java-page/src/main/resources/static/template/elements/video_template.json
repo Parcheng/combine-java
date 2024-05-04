@@ -1,0 +1,47 @@
+{
+    "external": {
+        "tag": "div",
+        "class": "",
+        "style": "",
+        "properties": {}
+    },
+    "video": {
+        "tag": "video",
+        "class": "",
+        "style": "",
+        "properties": {
+            "controls": true
+        }
+    },
+    "mp4": {
+        "tag": "source",
+        "class": "",
+        "style": "",
+        "properties": {
+            "type": "video/mp4"
+        }
+    },
+    "ogg": {
+        "tag": "source",
+        "class": "",
+        "style": "",
+        "properties": {
+            "type": "video/ogg"
+        }
+    },
+    "webm": {
+        "tag": "source",
+        "class": "",
+        "style": "",
+        "properties": {
+            "type": "video/webm"
+        }
+    },
+    "content": {
+        "tag": "span",
+        "class": "",
+        "style": "",
+        "text": "Your browser does not support this video format.",
+        "properties": {}
+    }
+}

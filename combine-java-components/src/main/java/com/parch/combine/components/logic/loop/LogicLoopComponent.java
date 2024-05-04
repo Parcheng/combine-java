@@ -46,7 +46,7 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
 
         // 初始化循环中使用的组件
         if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentHelper.init(logicConfig.getComponents());
+            List<String> initErrorMsgs = SubComponentHelper.init(manager, logicConfig.getComponents());
             for (String initErrorMsg : initErrorMsgs) {
                 result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
             }
@@ -108,7 +108,7 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
             }
 
             // 执行组件逻辑
-            DataResult result = SubComponentHelper.execute(logicConfig.getComponents());
+            DataResult result = SubComponentHelper.execute(manager, logicConfig.getComponents());
             if (logicConfig.getFailStop() && !result.getSuccess()) {
                 return DataResult.fail(result.getErrMsg(), result.getShowMsg());
             }

@@ -22,7 +22,7 @@ public class ComponentClassHandler {
     /**
      * 初始化组件
      */
-    protected static List<ComponentInitVO> init() {
+    public static List<ComponentInitVO> init() {
         // 所有组件
         List<ComponentInitVO> components = ComponentSettingHandler.getComponents();
 
@@ -50,14 +50,15 @@ public class ComponentClassHandler {
      * @param id 组件ID
      * @param type 组件类型
      */
-    public static AbsComponent<?,?> build(String id, String type, Map<String, Object> logicConfig) {
+    public static AbsComponent<?,?> build(String id, String type, String scopeKey, Map<String, Object> logicConfig) {
         AbsComponent<?,?> component = null;
         try {
             Class<? extends AbsComponent<?, ?>> clazz = COMPONENT_CLASS_MAP.get(type);
             component = clazz.getDeclaredConstructor().newInstance();
-            component.initConfig(logicConfig);
             component.setId(id);
             component.setType(type);
+            component.setScopeKey(scopeKey);
+            component.initConfig(logicConfig);
         } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             SystemErrorHandler.print(SystemErrorEnum.COMPONENT_BUILD_ERROR, e);
             return null;

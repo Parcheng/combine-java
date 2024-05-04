@@ -15,6 +15,11 @@ import java.util.Map;
 public class ComponentContext {
 
     /**
+     * 作用域Key
+     */
+    private String scopeKey;
+
+    /**
      * 流程Key
      */
     private String flowKey;
@@ -142,5 +147,13 @@ public class ComponentContext {
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
+    }
+
+    public String getScopeKey() {
+        return scopeKey;
+    }
+
+    public void setScopeKey(String scopeKey) {
+        this.scopeKey = scopeKey;
     }
 }

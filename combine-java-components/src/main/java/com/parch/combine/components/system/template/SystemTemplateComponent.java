@@ -4,7 +4,7 @@ import com.parch.combine.common.util.CheckEmptyUtil;
 import com.parch.combine.core.base.AbsComponent;
 import com.parch.combine.core.context.ComponentContextHandler;
 import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.handler.ComponentHandler;
+import com.parch.combine.core.manager.ComponentManager;
 import com.parch.combine.core.settings.annotations.Component;
 import com.parch.combine.core.settings.annotations.ComponentResult;
 import com.parch.combine.core.tools.variable.DataVariableHelper;
@@ -42,13 +42,13 @@ public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConf
         } else {
             // 初始化ID
             for (Map<String, Object> config : configs) {
-                if (config.get(ComponentHandler.ID_FIELD) == null) {
-                    config.put(ComponentHandler.ID_FIELD, UUID.randomUUID().toString());
+                if (config.get(ComponentManager.ID_FIELD) == null) {
+                    config.put(ComponentManager.ID_FIELD, UUID.randomUUID().toString());
                 }
             }
 
             // 初始化模板使用的组件
-            FlowInitVO initVO = ComponentHandler.init(configs);
+            FlowInitVO initVO = manager.getComponent().init(getScopeKey(), configs);
             if (!initVO.isSuccess()) {
                 for (String initError : initVO.getErrorList()) {
                     errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "模板中组件初始化失败: " + initError));
@@ -72,7 +72,7 @@ public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConf
         }
 
         ComponentContextHandler.getVariables().put(initConfig.getVariableKey(), configs);
-        DataResult result = ComponentHandler.executeComponents(logicConfig.getComponentIds());
+        DataResult result = manager.getComponent().executeComponents(logicConfig.getComponentIds());
         if (!result.getSuccess()) {
             return DataResult.fail(result.getErrMsg(), result.getShowMsg());
         }

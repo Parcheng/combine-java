@@ -43,7 +43,7 @@ public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQCons
 
         // 初始化逻辑中使用的组件
         if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentHelper.init(logicConfig.getComponents());
+            List<String> initErrorMsgs = SubComponentHelper.init(manager, logicConfig.getComponents());
             for (String initErrorMsg : initErrorMsgs) {
                 errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
             }
@@ -73,7 +73,7 @@ public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQCons
                     data.put("msgId", msg.getMsgId());
                     data.put("body", JsonUtil.deserialize(new String(msg.getBody()), HashMap.class));
 
-                    DataResult result = SubComponentHelper.execute(listenFlowKey, data, logicConfig.getComponents());
+                    DataResult result = SubComponentHelper.execute(manager, listenFlowKey, data, logicConfig.getComponents());
                     if (!result.getSuccess()) {
                         ComponentErrorHandler.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic.toString()
                                 + " expression=" + expression.toString() + " error=" + result.getErrMsg(), null);

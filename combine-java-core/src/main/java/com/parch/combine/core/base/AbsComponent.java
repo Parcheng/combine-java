@@ -3,7 +3,8 @@ package com.parch.combine.core.base;
 import com.parch.combine.core.context.ComponentContextHandler;
 import com.parch.combine.core.error.ComponentErrorHandler;
 import com.parch.combine.core.error.SystemErrorEnum;
-import com.parch.combine.core.handler.InitConfigHandler;
+import com.parch.combine.core.handler.CombineManagerHandler;
+import com.parch.combine.core.manager.CombineManager;
 import com.parch.combine.core.vo.DataResult;
 import com.parch.combine.common.util.TypeConversionUtil;
 import java.util.*;
@@ -17,6 +18,8 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
 
     private String type;
 
+    private String scopeKey;
+
     private String name;
 
     private T initConfig;
@@ -27,19 +30,21 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
 
     private Class<R> logicConfigClass;
 
-    /**
-     * 构造器
-     *
-     * @param initConfig 初始化配置对象
-     * @param logicConfig 业务配置对象
-     */
-    @SuppressWarnings("unchecked")
-    public AbsComponent(T initConfig, R logicConfig) {
-        this.initConfig = initConfig ;
-        this.logicConfig = logicConfig;
-        this.initConfigClass = (Class<T>) initConfig.getClass();
-        this.logicConfigClass = (Class<R>) logicConfig.getClass();
-    }
+    protected CombineManager manager;
+
+//    /**
+//     * 构造器
+//     *
+//     * @param initConfig 初始化配置对象
+//     * @param logicConfig 业务配置对象
+//     */
+//    @SuppressWarnings("unchecked")
+//    public AbsComponent(T initConfig, R logicConfig) {
+//        this.initConfig = initConfig ;
+//        this.logicConfig = logicConfig;
+//        this.initConfigClass = (Class<T>) initConfig.getClass();
+//        this.logicConfigClass = (Class<R>) logicConfig.getClass();
+//    }
 
     /**
      * 构造器
@@ -64,7 +69,7 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
         }
         this.logicConfig = TypeConversionUtil.parseJava(logicConfig, logicConfigClass);
         this.logicConfig.init();
-        this.initConfig = InitConfigHandler.get(this.logicConfig.getRef(), this.logicConfig.getType(), initConfigClass);
+        this.initConfig = manager.getInitConfig().get(this.logicConfig.getRef(), this.logicConfig.getType(), initConfigClass);
     }
 
     /**
@@ -157,5 +162,14 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getScopeKey() {
+        return scopeKey;
+    }
+
+    public void setScopeKey(String scopeKey) {
+        this.scopeKey = scopeKey;
+        manager = CombineManagerHandler.get(scopeKey);
     }
 }

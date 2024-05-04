@@ -6,7 +6,8 @@ import com.parch.combine.common.util.PrintUtil;
 import com.parch.combine.common.util.StringUtil;
 import com.parch.combine.core.context.GlobalContext;
 import com.parch.combine.core.context.GlobalContextHandler;
-import com.parch.combine.core.handler.CombineWebService;
+import com.parch.combine.core.service.CombineWebService;
+import com.parch.combine.core.handler.ComponentClassHandler;
 import com.parch.combine.core.service.ICombineWebService;
 import com.parch.combine.core.tools.PrintHelper;
 import com.parch.combine.core.vo.ComponentInitVO;
@@ -15,15 +16,23 @@ import java.util.List;
 
 public class CombineJavaStarter {
 
-    private static CombineWebService SERVICE;
+    static {
+        PrintHelper.printInit("=======================================================================================================================================================");
+        PrintHelper.printInit("初始化组件 >>>");
+        List<ComponentInitVO> components = ComponentClassHandler.init();
+        for (ComponentInitVO vo : components) {
+            PrintHelper.printInit("组件【" + vo.getKey() + "】初始化完成");
+        }
+        PrintHelper.printInit("=======================================================================================================================================================");
+    }
 
     /**
      * 初始化
      *
      * @param path 初始化文件相对路径
      */
-    public static void init(String path) {
-        SERVICE = new CombineWebService();
+    public static ICombineWebService init(String path) {
+        CombineWebService combineWebService = new CombineWebService();
 
         GlobalContextHandler.init(path);
         GlobalContext context = GlobalContextHandler.get();
@@ -37,19 +46,9 @@ public class CombineJavaStarter {
         PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
-
-        PrintHelper.printInit("初始化组件 >>>");
-        List<ComponentInitVO> components = SERVICE.init();
-        for (ComponentInitVO vo : components) {
-            PrintHelper.printInit("组件【" + vo.getKey() + "】初始化完成");
-        }
-        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-
-
         PrintHelper.printInit("初始化流程 >>>");
         for (String initConfigPath : context.getInitConfigs()) {
-            SERVICE.registerFlowAsPath(initConfigPath, vo -> {
+            combineWebService.registerFlowAsPath(initConfigPath, vo -> {
                 PrintHelper.printInit(vo.getFlowKey() + " | " + StringUtil.join(vo.getComponentIds(), ", "));
                 if (CheckEmptyUtil.isNotEmpty(vo.getStaticComponentIds())) {
                     PrintHelper.printInit(vo.getFlowKey() + " STATIC | " + StringUtil.join(vo.getStaticComponentIds(), ", "));
@@ -69,26 +68,19 @@ public class CombineJavaStarter {
         for (String initFlowKey : context.getInitFlows()) {
             // 获取功能的组件配置集合
             String[] keyArr = FlowKeyUtil.parseKey(initFlowKey);
-            List<String> componentIds = SERVICE.getComponentIds(keyArr[0], keyArr[1]);
+            List<String> componentIds = combineWebService.getComponentIds(keyArr[0], keyArr[1]);
             if (componentIds == null) {
                 PrintUtil.printError(initFlowKey + " Error：流程未注册");
             } else {
                 PrintHelper.printInit("执行流程：" + initFlowKey);
-                SERVICE.executeAny(keyArr[0], keyArr[1], new HashMap<>(0), new HashMap<>(0));
+                combineWebService.executeAny(keyArr[0], keyArr[1], new HashMap<>(0), new HashMap<>(0));
             }
         }
         PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
-        SERVICE.setOpenRegister(context.getOpenRegisterConfig());
-    }
+        combineWebService.setOpenRegister(context.getOpenRegisterConfig());
 
-    /**
-     * 获取 Service 服务类（必须先初始化）
-     *
-     * @return Service 服务类
-     */
-    public static ICombineWebService getService() {
-        return SERVICE;
+        return combineWebService;
     }
 }

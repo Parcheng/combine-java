@@ -48,7 +48,7 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
 
                 // 初始化逻辑中使用的组件
                 if (CheckEmptyUtil.isNotEmpty(item.getComponents())) {
-                    List<String> initErrorMsgs = SubComponentHelper.init(item.getComponents());
+                    List<String> initErrorMsgs = SubComponentHelper.init(manager, item.getComponents());
                     for (String initErrorMsg : initErrorMsgs) {
                         result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + initErrorMsg));
                     }
@@ -75,7 +75,7 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
                 }
 
                 // 逻辑判断通过，返回执行结果
-                return SubComponentHelper.execute(item.getComponents());
+                return SubComponentHelper.execute(manager, item.getComponents());
             }
         }
 

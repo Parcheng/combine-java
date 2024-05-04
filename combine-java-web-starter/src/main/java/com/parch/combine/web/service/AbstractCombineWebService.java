@@ -25,8 +25,7 @@ public abstract class AbstractCombineWebService {
     private ICombineWebService service;
 
     public AbstractCombineWebService(String configPath) {
-        CombineJavaStarter.init(configPath);
-        service = CombineJavaStarter.getService();
+        service = CombineJavaStarter.init(configPath);
     }
 
     public DataResult call(Map<String, Object> params, String domain, String function, HttpServletRequest request, HttpServletResponse response) {

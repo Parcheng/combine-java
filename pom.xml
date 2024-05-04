@@ -8,6 +8,7 @@
         <module>combine-java-core</module>
         <module>combine-java-test</module>
         <module>combine-java-components</module>
+<!--        <module>combine-java-page</module>-->
     </modules>
 
     <groupId>com.parch.combine</groupId>

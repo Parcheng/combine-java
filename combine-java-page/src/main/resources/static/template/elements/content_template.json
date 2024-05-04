@@ -1,0 +1,56 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "media",
+    "style": "",
+    "properties": {}
+  },
+  "left": {
+    "tag": "div",
+    "class": "media-left",
+    "style": "",
+    "properties": {}
+  },
+  "leftImg": {
+    "tag": "img",
+    "class": "media-object",
+    "style": "",
+    "properties": {}
+  },
+  "right": {
+    "tag": "div",
+    "class": "media-right",
+    "style": "",
+    "properties": {}
+  },
+  "rightImg": {
+    "tag": "img",
+    "class": "media-object",
+    "style": "",
+    "properties": {}
+  },
+  "body": {
+    "tag": "div",
+    "class": "media-body",
+    "style": "",
+    "properties": {}
+  },
+  "bodyTitle": {
+    "tag": "h4",
+    "class": "media-heading",
+    "style": "",
+    "properties": {}
+  },
+  "bodyContent": {
+    "tag": "p",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "bodyChildren": {
+    "tag": "div",
+    "class": "media",
+    "style": "padding-left:3%;",
+    "properties": {}
+  }
+}

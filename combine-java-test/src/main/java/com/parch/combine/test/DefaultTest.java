@@ -1,6 +1,7 @@
 package com.parch.combine.test;
 
 import com.parch.combine.CombineJavaStarter;
+import com.parch.combine.test.context.TestContext;
 import com.parch.combine.test.handler.FlowHandler;
 import com.parch.combine.test.handler.PrintHandler;
 import com.parch.combine.test.handler.TestHandler;
@@ -12,7 +13,7 @@ public class DefaultTest {
 
     public static void main(String[] args) {
         // 初始化组件
-        CombineJavaStarter.init("combine_web.json");
+        TestContext.SERVICE = CombineJavaStarter.init("combine_web.json");
 
         // 流程初始化
         PrintHandler.start();

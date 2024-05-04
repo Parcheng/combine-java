@@ -45,7 +45,7 @@ public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, To
 
         // 初始化逻辑中使用的组件
         if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentHelper.init(logicConfig.getComponents());
+            List<String> initErrorMsgs = SubComponentHelper.init(manager, logicConfig.getComponents());
             for (String initErrorMsg : initErrorMsgs) {
                 errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
             }
@@ -80,7 +80,7 @@ public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, To
 
     protected void executeSubComponents() {
         ToolCrontabLogicConfig logicConfig = getLogicConfig();
-        SubComponentHelper.execute(logicConfig.getJobFlowKey(), new HashMap<>(0), logicConfig.getComponents());
+        SubComponentHelper.execute(manager, logicConfig.getJobFlowKey(), new HashMap<>(0), logicConfig.getComponents());
     }
 
     protected ScheduledExecutorService getService() {

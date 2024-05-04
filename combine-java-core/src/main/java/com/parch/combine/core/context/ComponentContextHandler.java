@@ -28,9 +28,10 @@ public class ComponentContextHandler {
      * @param params 入参
      * @return 上下文对象
      */
-    public static void init(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file) {
+    public static void init(String scopeKey, String key, Map<String, Object> params, Map<String, String> headers, FileInfo file) {
         ComponentContext context = new ComponentContext();
         context.setFlowKey(key);
+        context.setScopeKey(scopeKey);
         context.setParams(params == null ? new HashMap<>(1) : params);
         context.setHeaders(headers == null ? new HashMap<>(0) : headers);
         context.setResultMap(new LinkedHashMap<>());
@@ -68,6 +69,15 @@ public class ComponentContextHandler {
      */
     public static ComponentContext getContext() {
         return CACHE.get();
+    }
+
+    /**
+     * 获取流程作用域KEY
+     *
+     * @return 作用域KEY
+     */
+    public static String getScopeKey() {
+        return CACHE.get().getScopeKey();
     }
 
     /**

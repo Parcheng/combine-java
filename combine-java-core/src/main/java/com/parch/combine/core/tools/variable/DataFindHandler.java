@@ -2,13 +2,12 @@ package com.parch.combine.core.tools.variable;
 
 import com.parch.combine.common.util.CheckEmptyUtil;
 import com.parch.combine.common.util.DataTypeIsUtil;
-import com.parch.combine.common.util.StringUtil;
 import com.parch.combine.core.context.ComponentContextHandler;
 import com.parch.combine.core.context.GlobalContext;
 import com.parch.combine.core.context.GlobalContextHandler;
 import com.parch.combine.core.error.ComponentErrorHandler;
 import com.parch.combine.common.constant.SymbolConstant;
-import com.parch.combine.core.handler.ConstantHandler;
+import com.parch.combine.core.handler.CombineManagerHandler;
 import com.parch.combine.core.vo.DataResult;
 
 import java.util.*;
@@ -90,7 +89,7 @@ public class DataFindHandler {
             startIndex = 1;
         } else if (firstKey.equals(flagConfigs.getFlowConstant())) {
             // 当前数据为常量池数据
-            currData = ConstantHandler.get();
+            currData = CombineManagerHandler.get(ComponentContextHandler.getScopeKey()).getConstant().get();
             startIndex = 1;
         } else if (firstKey.equals(flagConfigs.getFlowVariable())) {
             // 当前数据为流程中变量

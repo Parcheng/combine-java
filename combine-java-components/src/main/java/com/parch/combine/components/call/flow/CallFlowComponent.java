@@ -5,8 +5,6 @@ import com.parch.combine.common.util.FlowKeyUtil;
 import com.parch.combine.core.context.ComponentContext;
 import com.parch.combine.core.context.ComponentContextHandler;
 import com.parch.combine.components.call.CallComponent;
-import com.parch.combine.core.handler.ComponentHandler;
-import com.parch.combine.core.handler.FlowHandler;
 import com.parch.combine.core.settings.annotations.Component;
 import com.parch.combine.core.settings.annotations.ComponentResult;
 import com.parch.combine.core.vo.DataResult;
@@ -43,11 +41,11 @@ public class CallFlowComponent extends CallComponent<CallFlowInitConfig, CallFlo
         ComponentContext context = ComponentContextHandler.getContext();
 
         // 执行流程
-        List<String> componentIds = FlowHandler.list(domain, function);
+        List<String> componentIds = manager.getFlow().list(domain, function);
         if (CheckEmptyUtil.isEmpty(componentIds)) {
             return DataResult.fail(CallFlowErrorEnum.FLOW_IS_NULL);
         }
-        DataResult result = ComponentHandler.execute(url, params, headers, componentIds, null);
+        DataResult result = manager.execute(url, params, headers, componentIds, null);
 
         // 还原上下文对象
         ComponentContextHandler.resetContext(context);
