@@ -1,6 +1,6 @@
 package com.parch.combine.components.data.text.replace;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum DataTextReplaceErrorEnum implements IComponentError {
 

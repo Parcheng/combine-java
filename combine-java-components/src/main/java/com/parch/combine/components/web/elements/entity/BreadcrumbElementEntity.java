@@ -4,8 +4,11 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.BreadcrumbSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.settings.annotations.*;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 配置类
@@ -13,24 +16,24 @@ import com.parch.combine.core.settings.config.FieldTypeEnum;
 @ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "面包削页面元素", desc = "当 TYPE = BREADCRUMB 时的参数列表")
 public class BreadcrumbElementEntity extends ElementEntity<BreadcrumbSettings> {
 
-    @ComponentField(key = "breadcrumb", name = "面包削DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "breadcrumb", name = "面包削DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig breadcrumb;
 
-    @ComponentField(key = "itemActive", name = "选中元素项DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "itemActive", name = "选中元素项DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig itemActive;
 
-    @ComponentField(key = "content", name = "元素项内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "content", name = "元素项内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig content;
 
-    @ComponentField(key = "item", name = "元素项DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "item", name = "元素项DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig item;
 
-    @ComponentField(key = "settings", name = "元素配置（暂无）", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = BreadcrumbSettings.class)
+    @Field(key = "settings", name = "元素配置（暂无）", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = BreadcrumbSettings.class)
     private BreadcrumbSettings settings;
 
     public BreadcrumbElementEntity() {

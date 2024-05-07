@@ -2,10 +2,10 @@ package com.parch.combine.components.web.elements.settings;
 
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.trigger.TriggerEntity;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -14,39 +14,39 @@ import java.util.List;
  */
 public class NavBarSettings extends BaseSettings{
 
-    @ComponentField(key = "brandText", name = "商标文本", type = FieldTypeEnum.TEXT)
+    @Field(key = "brandText", name = "商标文本", type = FieldTypeEnum.TEXT)
     private String brandText;
 
-    @ComponentField(key = "brandImg", name = "商标LOGO图片地址", type = FieldTypeEnum.TEXT)
+    @Field(key = "brandImg", name = "商标LOGO图片地址", type = FieldTypeEnum.TEXT)
     private String brandImg;
 
-    @ComponentField(key = "defaultChecked", name = "默认选择项索引（从0开始）", type = FieldTypeEnum.NUMBER)
+    @Field(key = "defaultChecked", name = "默认选择项索引（从0开始）", type = FieldTypeEnum.NUMBER)
     private Integer defaultChecked;
 
-    @ComponentField(key = "nav", name = "导航项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-    @ComponentFieldObject(type = NavSettings.class)
+    @Field(key = "nav", name = "导航项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @FieldObject(type = NavSettings.class)
     private NavSettings nav;
 
-    @ComponentField(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
     private List<NavData> defaultNavs;
 
-    @ComponentField(key = "buttons", name = "导航右栏按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @ComponentFieldObject(type = ButtonSettings.ButtonItemSettings.class)
+    @Field(key = "buttons", name = "导航右栏按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(type = ButtonSettings.ButtonItemSettings.class)
     private List<ButtonSettings.ButtonItemSettings> buttons;
 
     public static class NavData {
 
-        @ComponentField(key = "text", name = "默认项文本", type = FieldTypeEnum.TEXT)
+        @Field(key = "text", name = "默认项文本", type = FieldTypeEnum.TEXT)
         private String text;
 
-        @ComponentField(key = "index", name = "默认项位置索引（从0开始）", type = FieldTypeEnum.NUMBER)
+        @Field(key = "index", name = "默认项位置索引（从0开始）", type = FieldTypeEnum.NUMBER)
         private Integer index;
 
-        @ComponentField(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.OBJECT, isArray = true)
+        @Field(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.OBJECT, isArray = true)
         private List<NavData> children;
 
-        @ComponentField(key = "triggers", name = "默认项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
-        @ComponentFieldRef(key = WebSettingCanstant.TRIGGER_KEY)
+        @Field(key = "triggers", name = "默认项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+        @FieldRef(key = WebSettingCanstant.TRIGGER_KEY)
         private List<TriggerEntity> triggers;
 
         public String getText() {
@@ -84,14 +84,14 @@ public class NavBarSettings extends BaseSettings{
 
     public static class NavSettings {
 
-        @ComponentField(key = "text", name = "导航项文本", type = FieldTypeEnum.OBJECT, isRequired = true)
+        @Field(key = "text", name = "导航项文本", type = FieldTypeEnum.OBJECT, isRequired = true)
         private String text;
 
-        @ComponentField(key = "children", name = "导航项子项", type = FieldTypeEnum.OBJECT)
+        @Field(key = "children", name = "导航项子项", type = FieldTypeEnum.OBJECT)
         private String children;
 
-        @ComponentField(key = "triggers", name = "导航项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
-        @ComponentFieldRef(key = WebSettingCanstant.TRIGGER_KEY)
+        @Field(key = "triggers", name = "导航项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+        @FieldRef(key = WebSettingCanstant.TRIGGER_KEY)
         private List<TriggerEntity> triggers;
 
         public String getText() {

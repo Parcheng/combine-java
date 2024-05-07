@@ -1,7 +1,7 @@
 package com.parch.combine.components.web.page;
 
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class WebPageLogicCacheConfig extends WebPageLogicConfig {
 
-    @ComponentField(key = "configs", name = "页面元素配置集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @Field(key = "configs", name = "页面元素配置集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
     private List<WebPageLogicConfig.HtmlElementConfig> configs;
 
     public List<WebPageLogicConfig.HtmlElementConfig> getConfigs() {

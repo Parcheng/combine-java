@@ -1,6 +1,6 @@
 package com.parch.combine.web.controller;
 
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.web.service.DefaultCombineWebService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,12 +1,12 @@
 package com.parch.combine.components.system.doc.components;
 
-import com.parch.combine.common.util.JsonUtil;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.settings.ComponentSettingHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.settings.config.ComponentClassifySetting;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.settings.ComponentSettingHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
 package com.parch.combine.components.file.input.open;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 /**
  * 文件保存异常信息

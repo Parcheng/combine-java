@@ -1,7 +1,7 @@
 package com.parch.combine.components.web.elements.enums;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.settings.config.IOptionSetting;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.config.IOptionSetting;
 
 /**
  * 数据加载类型

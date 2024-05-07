@@ -1,10 +1,10 @@
 package com.parch.combine.components.data.general.verify;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.base.LogicConfig;
-import com.parch.combine.core.settings.annotations.*;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
-import com.parch.combine.core.tools.compare.CompareGroupConfig;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.annotations.*;
+import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,24 +14,24 @@ import java.util.List;
  */
 public class DataVerifyLogicConfig extends LogicConfig {
 
-    @ComponentField(key = "mode", name = "验证模式", type = FieldTypeEnum.SELECT, defaultValue = "false")
-    @ComponentFieldSelect(enumClass = VerifyModeEnum.class)
+    @Field(key = "mode", name = "验证模式", type = FieldTypeEnum.SELECT, defaultValue = "false")
+    @FieldSelect(enumClass = VerifyModeEnum.class)
     private String mode;
 
-    @ComponentField(key = "defaultMsg", name = "默认错误提示信息", type = FieldTypeEnum.TEXT)
-    @ComponentFieldDesc("会拼接在 items 中配置错误提示信息之前")
+    @Field(key = "defaultMsg", name = "默认错误提示信息", type = FieldTypeEnum.TEXT)
+    @FieldDesc("会拼接在 items 中配置错误提示信息之前")
     private String defaultMsg;
 
-    @ComponentField(key = "items", name = "格式化配置集合，", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
-    @ComponentFieldObject(type = DataVerifyItem.class)
+    @Field(key = "items", name = "格式化配置集合，", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @FieldObject(type = DataVerifyItem.class)
     private List<DataVerifyItem> items = new ArrayList<>();
 
     public static class DataVerifyItem extends CompareGroupConfig {
 
-        @ComponentField(key = "msg", name = "错误提示信息，", type = FieldTypeEnum.TEXT, isRequired = true)
-        @ComponentFieldObject(type = DataVerifyItem.class)
-        @ComponentFieldEg(eg = "名称不正确", desc = "条件成立时，返回“名称不正确”错误信息")
-        @ComponentFieldEg(eg = "#{$r.data001.error}", desc = "条件成立时，返回 data001 组件返回结果的 error 字段的值")
+        @Field(key = "msg", name = "错误提示信息，", type = FieldTypeEnum.TEXT, isRequired = true)
+        @FieldObject(type = DataVerifyItem.class)
+        @FieldEg(eg = "名称不正确", desc = "条件成立时，返回“名称不正确”错误信息")
+        @FieldEg(eg = "#{$r.data001.error}", desc = "条件成立时，返回 data001 组件返回结果的 error 字段的值")
         String msg;
 
         public String getMsg() {

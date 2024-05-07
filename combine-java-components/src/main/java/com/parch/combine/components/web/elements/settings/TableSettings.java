@@ -2,10 +2,10 @@ package com.parch.combine.components.web.elements.settings;
 
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.entity.ElementEntity;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -14,27 +14,27 @@ import java.util.List;
  */
 public class TableSettings extends BaseSettings{
 
-    @ComponentField(key = "fieldNames", name = "每列对应的字段名配置集合", type = FieldTypeEnum.TEXT, isArray = true)
+    @Field(key = "fieldNames", name = "每列对应的字段名配置集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> fieldNames;
 
-    @ComponentField(key = "dataFieldNames", name = "数据字段集合", type = FieldTypeEnum.TEXT)
-    @ComponentFieldDesc("这些字段会被保存到表格数据中，但不显示在表格上，可以通过获取表格数据得到这些字段的值")
+    @Field(key = "dataFieldNames", name = "数据字段集合", type = FieldTypeEnum.TEXT)
+    @FieldDesc("这些字段会被保存到表格数据中，但不显示在表格上，可以通过获取表格数据得到这些字段的值")
     private List<String> dataFieldNames;
 
-    @ComponentField(key = "headNames", name = "表头文本集合", type = FieldTypeEnum.TEXT, isArray = true)
+    @Field(key = "headNames", name = "表头文本集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> headNames;
 
-    @ComponentField(key = "minLength", name = "最小行数（数据不够空行补全）", type = FieldTypeEnum.NUMBER, defaultValue = "10")
+    @Field(key = "minLength", name = "最小行数（数据不够空行补全）", type = FieldTypeEnum.NUMBER, defaultValue = "10")
     private Integer minLength;
 
-    @ComponentField(key = "hasChecked", name = "是否允许选择行", type = FieldTypeEnum.BOOLEAN)
+    @Field(key = "hasChecked", name = "是否允许选择行", type = FieldTypeEnum.BOOLEAN)
     private Boolean hasChecked;
 
-    @ComponentField(key = "hasIndex", name = "是否显示行号", type = FieldTypeEnum.BOOLEAN)
+    @Field(key = "hasIndex", name = "是否显示行号", type = FieldTypeEnum.BOOLEAN)
     private Boolean hasIndex;
 
-    @ComponentField(key = "rowOpts", name = "操作栏的操作元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
+    @Field(key = "rowOpts", name = "操作栏的操作元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
     public ElementEntity<?> rowOpts;
 
     public List<String> getFieldNames() {

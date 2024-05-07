@@ -1,12 +1,11 @@
 package com.parch.combine.components.data.enums.mapping;
 
-import com.parch.combine.components.data.enums.EnumCacheHandler;
-import com.parch.combine.core.base.LogicConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.annotations.ComponentFieldGroup;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
-import com.parch.combine.core.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.annotations.FieldGroup;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.tools.ConfigGroupHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +15,17 @@ import java.util.List;
  */
 public class DataEnumMappingLogicConfig extends LogicConfig {
 
-    @ComponentField(key = "source", name = "数据来源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据来源", type = FieldTypeEnum.TEXT, isRequired = true)
     private String source;
 
-    @ComponentField(key = "source", name = "输出指定组件ID的执行结果", type = FieldTypeEnum.TEXT)
-    @ComponentFieldDesc("默认输出 source 的数据")
+    @Field(key = "source", name = "输出指定组件ID的执行结果", type = FieldTypeEnum.TEXT)
+    @FieldDesc("默认输出 source 的数据")
     private String resultId;
 
-    @ComponentField(key = "items", name = "映射配置集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
-    @ComponentFieldGroup(index = 0, name = "枚举KEY", type = FieldTypeEnum.TEXT)
-    @ComponentFieldGroup(index = 1, name = "源的字段名", type = FieldTypeEnum.TEXT)
-    @ComponentFieldGroup(index = 2, name = "目标字段名（默认写到源字段中）", type = FieldTypeEnum.TEXT, isRequired = false)
+    @Field(key = "items", name = "映射配置集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
+    @FieldGroup(index = 0, name = "枚举KEY", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 1, name = "源的字段名", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 2, name = "目标字段名（默认写到源字段中）", type = FieldTypeEnum.TEXT, isRequired = false)
     private List<MappingItem> items = new ArrayList<>();
 
     public String getSource() {

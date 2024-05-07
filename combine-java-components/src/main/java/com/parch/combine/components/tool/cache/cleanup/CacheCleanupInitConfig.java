@@ -1,9 +1,7 @@
 package com.parch.combine.components.tool.cache.cleanup;
 
-import com.parch.combine.core.base.InitConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.Invalid;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.common.settings.annotations.Invalid;
 
 /**
  * 初始化配置类

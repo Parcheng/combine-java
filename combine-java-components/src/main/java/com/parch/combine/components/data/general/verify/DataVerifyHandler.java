@@ -1,8 +1,8 @@
 package com.parch.combine.components.data.general.verify;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.tools.compare.CompareHelper;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.tools.compare.CompareHelper;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import java.util.List;
 
 /**

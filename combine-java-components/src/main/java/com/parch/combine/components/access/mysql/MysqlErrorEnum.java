@@ -1,6 +1,6 @@
 package com.parch.combine.components.access.mysql;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum MysqlErrorEnum implements IComponentError {
 

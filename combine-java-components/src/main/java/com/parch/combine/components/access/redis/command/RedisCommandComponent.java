@@ -1,14 +1,14 @@
 package com.parch.combine.components.access.redis.command;
 
-import com.parch.combine.common.constant.SymbolConstant;
-import com.parch.combine.common.util.*;
+import com.parch.combine.core.common.canstant.SymbolConstant;
+import com.parch.combine.core.common.util.*;
 import com.parch.combine.components.access.redis.AbsRedisComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.variable.ArrayGetHelper;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.ArrayGetHelper;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.vo.DataResult;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.params.SetParams;
 

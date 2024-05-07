@@ -1,23 +1,23 @@
 package com.parch.combine.components.data.text.split;
 
-import com.parch.combine.core.base.LogicConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 逻辑配置类
  */
 public class DataTextSplitLogicConfig extends LogicConfig {
 
-    @ComponentField(key = "isReplace", name = "是否替换掉源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    @Field(key = "isReplace", name = "是否替换掉源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean isReplace;
 
-    @ComponentField(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, isRequired = true)
-    @ComponentFieldDesc("注意：非文本类型会先转成JSON再处理")
+    @Field(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @FieldDesc("注意：非文本类型会先转成JSON再处理")
     private String source;
 
-    @ComponentField(key = "regex", name = "拆分的正则表达式", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "regex", name = "拆分的正则表达式", type = FieldTypeEnum.TEXT, isRequired = true)
     private String regex;
 
     public String getSource() {

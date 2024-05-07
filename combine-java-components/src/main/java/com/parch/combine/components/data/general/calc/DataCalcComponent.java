@@ -1,17 +1,17 @@
 package com.parch.combine.components.data.general.calc;
 
-import com.parch.combine.common.constant.CommonConstant;
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.DataTypeIsUtil;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.ValueHelper;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.common.util.MatcherUtil;
-import com.parch.combine.core.tools.ExpressionCalcHelper;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.canstant.CommonConstant;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataTypeIsUtil;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.ValueHelper;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.common.util.MatcherUtil;
+import com.parch.combine.core.component.tools.ExpressionCalcHelper;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.vo.DataResult;
 import java.util.*;
 
 /**

@@ -2,9 +2,9 @@ package com.parch.combine.components.web.elements.settings;
 
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.trigger.TriggerEntity;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -13,17 +13,17 @@ import java.util.List;
  */
 public class PaginationSettings extends BaseSettings{
 
-    @ComponentField(key = "currPage", name = "当前页", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "currPage", name = "当前页", type = FieldTypeEnum.TEXT, isRequired = true)
     private String currPage;
 
-    @ComponentField(key = "maxPage", name = "最大页", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "maxPage", name = "最大页", type = FieldTypeEnum.TEXT, isRequired = true)
     private String maxPage;
 
-    @ComponentField(key = "maxLength", name = "可选页最大长度", type = FieldTypeEnum.TEXT, defaultValue = "10")
+    @Field(key = "maxLength", name = "可选页最大长度", type = FieldTypeEnum.TEXT, defaultValue = "10")
     private Integer maxLength = 10;
 
-    @ComponentField(key = "triggers", name = "选页触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
-    @ComponentFieldRef(key = WebSettingCanstant.TRIGGER_KEY)
+    @Field(key = "triggers", name = "选页触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldRef(key = WebSettingCanstant.TRIGGER_KEY)
     private List<TriggerEntity> triggers;
 
     public String getCurrPage() {

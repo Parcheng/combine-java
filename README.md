@@ -79,14 +79,14 @@ public class CombineWebController {
 <br>
 # 自定义组件
 通过 SPI 加载<br>
-在 resource/META_INFO/services 下创建文件 com.parch.combine.core.settings.spi.AbsGetComponents<br>
+在 resource/META_INFO/services 下创建文件 AbsGetComponents<br>
 ```
 com.test.components.GetMyComponents
 ```
 
 <br>创建 GetMyComponents 类：<br>
 提示：这里创建的是组件包，一个组件包里会包含多个组件，系统会在加载时会自动扫描 GetMyComponents 类的所在包，获取该包下的所有组件<br>
-注意：这个类必须要继承 com.parch.combine.core.settings.spi.AbsGetComponents<br>
+注意：这个类必须要继承 AbsGetComponents<br>
 ```
 public class GetMyComponents extends AbsGetComponents {
     public GetMyComponents() {

@@ -1,10 +1,10 @@
 package com.parch.combine.test.handler;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.JsonUtil;
-import com.parch.combine.common.util.PrintUtil;
-import com.parch.combine.common.util.StringUtil;
-import com.parch.combine.core.vo.FlowInitVO;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.component.vo.FlowInitVO;
 import com.parch.combine.test.vo.TestConfigItemVO;
 
 /**

@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.format.func;
 
-import com.parch.combine.common.util.JsonUtil;
-import com.parch.combine.core.error.ComponentErrorHandler;
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

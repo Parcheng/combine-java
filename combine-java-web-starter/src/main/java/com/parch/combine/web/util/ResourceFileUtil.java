@@ -1,6 +1,6 @@
 package com.parch.combine.web.util;
 
-import com.parch.combine.common.util.StringUtil;
+import com.parch.combine.core.common.util.StringUtil;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 

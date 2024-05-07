@@ -1,33 +1,33 @@
 package com.parch.combine.components.web.page.management;
 
 import com.parch.combine.components.web.page.WebPageLogicConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 逻辑配置类
  */
 public class PageManagementLogicConfig extends WebPageLogicConfig {
 
-    @ComponentField(key = "header", name = "页面头部元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = HtmlElement.class)
+    @Field(key = "header", name = "页面头部元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = HtmlElement.class)
     private HtmlElement header;
 
-    @ComponentField(key = "footer", name = "页面底部元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = HtmlElement.class)
+    @Field(key = "footer", name = "页面底部元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = HtmlElement.class)
     private HtmlElement footer;
 
-    @ComponentField(key = "left", name = "页面左侧元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = HtmlElement.class)
+    @Field(key = "left", name = "页面左侧元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = HtmlElement.class)
     private HtmlElement left;
 
-    @ComponentField(key = "right", name = "页面右侧元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = HtmlElement.class)
+    @Field(key = "right", name = "页面右侧元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = HtmlElement.class)
     private HtmlElement right;
 
-    @ComponentField(key = "content", name = "页面内容（中间）元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = HtmlElement.class)
+    @Field(key = "content", name = "页面内容（中间）元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = HtmlElement.class)
     private HtmlElement content;
 
     public HtmlElement getHeader() {

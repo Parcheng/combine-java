@@ -1,9 +1,9 @@
 package com.parch.combine.test.handler;
 
-import com.parch.combine.common.util.*;
-import com.parch.combine.core.manager.ComponentManager;
-import com.parch.combine.core.tools.compare.CompareHelper;
-import com.parch.combine.core.tools.compare.CompareResult;
+import com.parch.combine.core.common.util.*;
+import com.parch.combine.core.component.manager.ComponentManager;
+import com.parch.combine.core.component.tools.compare.CompareHelper;
+import com.parch.combine.core.component.tools.compare.CompareResult;
 import com.parch.combine.test.context.TestContext;
 import com.parch.combine.test.vo.TestConfigItemVO;
 import com.parch.combine.test.vo.TestConfigVO;

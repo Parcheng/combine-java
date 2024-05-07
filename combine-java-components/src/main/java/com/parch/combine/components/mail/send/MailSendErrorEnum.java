@@ -1,6 +1,6 @@
 package com.parch.combine.components.mail.send;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum MailSendErrorEnum implements IComponentError {
 

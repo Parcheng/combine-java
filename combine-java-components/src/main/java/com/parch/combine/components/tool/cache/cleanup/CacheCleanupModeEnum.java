@@ -1,7 +1,7 @@
 package com.parch.combine.components.tool.cache.cleanup;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.settings.config.IOptionSetting;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.config.IOptionSetting;
 
 public enum CacheCleanupModeEnum implements IOptionSetting {
 

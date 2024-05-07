@@ -1,12 +1,12 @@
 package com.parch.combine.components.access.mysql;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.tools.PrintHelper;
-import com.parch.combine.core.tools.pool.DbConnPoolHandler;
-import com.parch.combine.core.vo.DataResult;
-import com.parch.combine.core.tools.sql.SqlHelper;
-import com.parch.combine.common.util.TypeConversionUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintHelper;
+import com.parch.combine.core.component.tools.pool.DbConnPoolHandler;
+import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.tools.sql.SqlHelper;
+import com.parch.combine.core.common.util.TypeConversionUtil;
 
 import javax.sql.DataSource;
 import java.sql.*;

@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.filter;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.settings.config.IOptionSetting;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.config.IOptionSetting;
 
 public enum DataFilterRuleEnum implements IOptionSetting {
     CLEAR("清除数据", "无参数", true),

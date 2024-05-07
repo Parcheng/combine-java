@@ -1,12 +1,12 @@
 package com.parch.combine.web.service;
 
-import com.parch.combine.CombineJavaStarter;
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.FileNameUtil;
-import com.parch.combine.common.util.JsonUtil;
-import com.parch.combine.core.base.FileInfo;
-import com.parch.combine.core.service.ICombineWebService;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.CombineJavaStarter;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.FileNameUtil;
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.base.FileInfo;
+import com.parch.combine.core.component.service.ICombineWebService;
+import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.web.dto.JsonConfigInitDTO;
 import com.parch.combine.web.util.ResourceFileUtil;
 import jakarta.servlet.http.HttpServletRequest;

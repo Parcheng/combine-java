@@ -1,13 +1,13 @@
 package com.parch.combine.components.call.flow;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.FlowKeyUtil;
-import com.parch.combine.core.context.ComponentContext;
-import com.parch.combine.core.context.ComponentContextHandler;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.FlowKeyUtil;
+import com.parch.combine.core.component.context.ComponentContext;
+import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.components.call.CallComponent;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.vo.DataResult;
 import java.util.List;
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package com.parch.combine.components.web;
 
 import com.parch.combine.components.web.helper.DomConfig;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
 
 /**
  * HTML元素配置

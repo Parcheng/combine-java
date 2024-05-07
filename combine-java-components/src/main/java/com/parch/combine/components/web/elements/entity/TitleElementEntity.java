@@ -4,11 +4,11 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.TitleSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 配置类
@@ -16,40 +16,40 @@ import com.parch.combine.core.settings.config.FieldTypeEnum;
 @ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "标题页面元素", desc = "当 TYPE = TITLE 时的参数列表")
 public class TitleElementEntity extends ElementEntity<TitleSettings> {
 
-    @ComponentField(key = "h1", name = "级别一标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "h1", name = "级别一标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig h1;
 
-    @ComponentField(key = "h2", name = "级别二标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "h2", name = "级别二标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig h2;
 
-    @ComponentField(key = "h3", name = "级别三标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "h3", name = "级别三标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig h3;
 
-    @ComponentField(key = "h4", name = "级别四标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "h4", name = "级别四标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig h4;
 
-    @ComponentField(key = "h5", name = "级别五标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "h5", name = "级别五标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig h5;
 
-    @ComponentField(key = "h6", name = "级别六标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "h6", name = "级别六标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig h6;
 
-    @ComponentField(key = "top", name = "上分割线DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "top", name = "上分割线DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig top;
 
-    @ComponentField(key = "bottom", name = "下分割线DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bottom", name = "下分割线DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bottom;
 
-    @ComponentField(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = TitleSettings.class)
+    @Field(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = TitleSettings.class)
     private TitleSettings settings;
 
     public TitleElementEntity() {

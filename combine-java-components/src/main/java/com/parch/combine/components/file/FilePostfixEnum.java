@@ -1,6 +1,6 @@
 package com.parch.combine.components.file;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 /**
  * 文件后缀枚举

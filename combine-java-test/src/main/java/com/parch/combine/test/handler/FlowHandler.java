@@ -1,7 +1,6 @@
 package com.parch.combine.test.handler;
 
-import com.parch.combine.CombineJavaStarter;
-import com.parch.combine.common.util.ResourceFileUtil;
+import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.test.context.TestContext;
 
 

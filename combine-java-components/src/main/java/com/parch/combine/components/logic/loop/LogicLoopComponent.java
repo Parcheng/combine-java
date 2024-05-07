@@ -1,16 +1,16 @@
 package com.parch.combine.components.logic.loop;
 
-import com.parch.combine.common.constant.SymbolConstant;
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.SubComponentHelper;
-import com.parch.combine.core.tools.compare.CompareHelper;
-import com.parch.combine.core.context.ComponentContextHandler;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.canstant.SymbolConstant;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.SubComponentHelper;
+import com.parch.combine.core.component.tools.compare.CompareHelper;
+import com.parch.combine.core.component.context.ComponentContextHandler;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 

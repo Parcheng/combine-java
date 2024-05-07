@@ -1,8 +1,8 @@
 package com.parch.combine.components.web.elements.settings;
 
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -11,17 +11,17 @@ import java.util.List;
  */
 public class ThumbnailSettings extends BaseSettings{
 
-    @ComponentField(key = "path", name = "图片路径", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "path", name = "图片路径", type = FieldTypeEnum.TEXT, isRequired = true)
     private String path;
 
-    @ComponentField(key = "title", name = "内容标题", type = FieldTypeEnum.TEXT)
+    @Field(key = "title", name = "内容标题", type = FieldTypeEnum.TEXT)
     private String title;
 
-    @ComponentField(key = "text", name = "内容的每行文本", type = FieldTypeEnum.TEXT, isArray = true)
+    @Field(key = "text", name = "内容的每行文本", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> text;
 
-    @ComponentField(key = "buttons", name = "操作按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @ComponentFieldObject(type = ButtonSettings.ButtonItemSettings.class)
+    @Field(key = "buttons", name = "操作按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(type = ButtonSettings.ButtonItemSettings.class)
     private List<ButtonSettings.ButtonItemSettings> buttons;
 
     public String getPath() {

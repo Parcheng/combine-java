@@ -1,6 +1,6 @@
 package com.parch.combine.components.access.redis.command;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum RedisCommandErrorEnum implements IComponentError {
     UNKNOWN_ERROR("执行失败", "执行失败"),

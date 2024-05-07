@@ -5,11 +5,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.TriggerTypeEnum;
 import com.parch.combine.components.web.elements.entity.ElementEntity;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.annotations.ComponentFieldSelect;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.annotations.FieldSelect;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 事件触发配置
@@ -26,23 +25,23 @@ import com.parch.combine.core.settings.config.FieldTypeEnum;
 })
 public class TriggerEntity {
 
-    @ComponentField(key = "event", name = "触发要监听的事件", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "event", name = "触发要监听的事件", type = FieldTypeEnum.TEXT, isRequired = true)
     private String event;
 
-    @ComponentField(key = "type", name = "事件类型", type = FieldTypeEnum.SELECT, isRequired = true)
-    @ComponentFieldSelect(enumClass = TriggerTypeEnum.class)
+    @Field(key = "type", name = "事件类型", type = FieldTypeEnum.SELECT, isRequired = true)
+    @FieldSelect(enumClass = TriggerTypeEnum.class)
     private TriggerTypeEnum type;
 
-    @ComponentField(key = "success", name = "触发执行成功后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
+    @Field(key = "success", name = "触发执行成功后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
     private ElementEntity<?> success;
 
-    @ComponentField(key = "fail", name = "触发执行失败后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
+    @Field(key = "fail", name = "触发执行失败后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
     private ElementEntity<?> fail;
 
-    @ComponentField(key = "error", name = "触发执行异常后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
+    @Field(key = "error", name = "触发执行异常后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
     private ElementEntity<?> error;
 
     public TriggerTypeEnum getType() {

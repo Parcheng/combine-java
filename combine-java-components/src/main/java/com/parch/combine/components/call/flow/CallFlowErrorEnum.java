@@ -1,6 +1,6 @@
 package com.parch.combine.components.call.flow;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum CallFlowErrorEnum implements IComponentError {
 

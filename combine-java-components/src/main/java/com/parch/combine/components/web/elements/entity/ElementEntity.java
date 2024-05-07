@@ -3,17 +3,17 @@ package com.parch.combine.components.web.elements.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.parch.combine.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.web.ElementDomConfig;
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.dataload.DataLoadEntity;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.BaseSettings;
 import com.parch.combine.components.web.page.WebPageInitConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.annotations.ComponentFieldSelect;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.annotations.FieldSelect;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import java.util.UUID;
 
 /**
@@ -49,35 +49,35 @@ import java.util.UUID;
 })
 public abstract class ElementEntity<S extends BaseSettings> {
 
-    @ComponentField(key = "id", name = "元素ID", type = FieldTypeEnum.TEXT, defaultValue = "随机字符粗")
+    @Field(key = "id", name = "元素ID", type = FieldTypeEnum.TEXT, defaultValue = "随机字符粗")
     private String id;
 
     @JsonIgnore
-    @ComponentField(key = "type", name = "元素类型", type = FieldTypeEnum.SELECT, isRequired = true)
-    @ComponentFieldSelect(enumClass = ElementTypeEnum.class)
+    @Field(key = "type", name = "元素类型", type = FieldTypeEnum.SELECT, isRequired = true)
+    @FieldSelect(enumClass = ElementTypeEnum.class)
     private ElementTypeEnum type;
 
-    @ComponentField(key = "tempPath", name = "模板文件路径", type = FieldTypeEnum.TEXT, defaultValue = "系统内置模板")
+    @Field(key = "tempPath", name = "模板文件路径", type = FieldTypeEnum.TEXT, defaultValue = "系统内置模板")
     private String tempPath;
 
-    @ComponentField(key = "data", name = "初始数据", type = FieldTypeEnum.OBJECT)
+    @Field(key = "data", name = "初始数据", type = FieldTypeEnum.OBJECT)
     private Object data;
 
-    @ComponentField(key = "defaultData", name = "默认数据", type = FieldTypeEnum.OBJECT)
+    @Field(key = "defaultData", name = "默认数据", type = FieldTypeEnum.OBJECT)
     private Object defaultData;
 
-    @ComponentField(key = "load", name = "数据加载配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DATA_LOAD_KEY)
+    @Field(key = "load", name = "数据加载配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DATA_LOAD_KEY)
     private DataLoadEntity load;
 
-    @ComponentField(key = "defaultLoad", name = "是否默认加载（构建元素时加载数据）", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    @Field(key = "defaultLoad", name = "是否默认加载（构建元素时加载数据）", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean defaultLoad;
 
-    @ComponentField(key = "refresh", name = "是否支持刷新", type = FieldTypeEnum.BOOLEAN)
+    @Field(key = "refresh", name = "是否支持刷新", type = FieldTypeEnum.BOOLEAN)
     private Boolean refresh;
 
-    @ComponentField(key = "external", name = "外部DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "external", name = "外部DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig external;
 
     public ElementEntity(ElementTypeEnum type) {

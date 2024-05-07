@@ -1,6 +1,6 @@
 package com.parch.combine.components.access;
 
-import com.parch.combine.core.settings.spi.AbsGetComponents;
+import com.parch.combine.core.component.settings.spi.AbsGetComponents;
 
 /**
  * 获取DB组件实现类

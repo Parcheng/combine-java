@@ -1,6 +1,6 @@
 package com.parch.combine.test.vo;
 
-import com.parch.combine.core.tools.compare.CompareConfig;
+import com.parch.combine.core.component.tools.compare.CompareConfig;
 
 /**
  * 检测项VO

@@ -1,6 +1,6 @@
 package com.parch.combine.components.web.helper;
 
-import com.parch.combine.common.util.StringUtil;
+import com.parch.combine.core.common.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.List;

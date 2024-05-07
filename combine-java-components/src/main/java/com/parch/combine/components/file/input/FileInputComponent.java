@@ -1,11 +1,11 @@
 package com.parch.combine.components.file.input;
 
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.base.InitConfig;
-import com.parch.combine.core.base.LogicConfig;
-import com.parch.combine.core.error.IComponentError;
-import com.parch.combine.core.base.FileInfo;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.error.IComponentError;
+import com.parch.combine.core.component.base.FileInfo;
+import com.parch.combine.core.component.vo.DataResult;
 
 /**
  * 文件输入组件基类

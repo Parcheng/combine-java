@@ -4,11 +4,11 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.ContentSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 配置类
@@ -16,40 +16,40 @@ import com.parch.combine.core.settings.config.FieldTypeEnum;
 @ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "内容页面元素", desc = "当 TYPE = CONTENT 时的参数列表")
 public class ContentElementEntity extends ElementEntity<ContentSettings> {
 
-    @ComponentField(key = "left", name = "内容左元素DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "left", name = "内容左元素DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig left;
 
-    @ComponentField(key = "leftImg", name = "内容左元素中图片DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "leftImg", name = "内容左元素中图片DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig leftImg;
 
-    @ComponentField(key = "right", name = "内容右元素DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "right", name = "内容右元素DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig right;
 
-    @ComponentField(key = "rightImg", name = "内容右边元素中图片DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "rightImg", name = "内容右边元素中图片DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig rightImg;
 
-    @ComponentField(key = "body", name = "内容元素DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "body", name = "内容元素DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig body;
 
-    @ComponentField(key = "bodyTitle", name = "内容标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyTitle", name = "内容标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyTitle;
 
-    @ComponentField(key = "bodyContent", name = "内容文本DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyContent", name = "内容文本DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyContent;
 
-    @ComponentField(key = "bodyChildren", name = "DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyChildren", name = "DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyChildren;
 
-    @ComponentField(key = "settings", name = "子内容外部DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = ContentSettings.class)
+    @Field(key = "settings", name = "子内容外部DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = ContentSettings.class)
     private ContentSettings settings;
 
     public ContentElementEntity() {

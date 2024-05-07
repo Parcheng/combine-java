@@ -1,24 +1,24 @@
 package com.parch.combine.components.access.rocketmq.consumer;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.access.rocketmq.RocketMQLogicConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
 public class RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
 
-    @ComponentField(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
+    @Field(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
     private String listenFlowKey;
 
-    @ComponentField(key = "consumerGroup", name = "消费者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
+    @Field(key = "consumerGroup", name = "消费者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
     private String consumerGroup;
 
-    @ComponentField(key = "expression", name = "表达式", type = FieldTypeEnum.TEXT, defaultValue = "*")
+    @Field(key = "expression", name = "表达式", type = FieldTypeEnum.TEXT, defaultValue = "*")
     private String expression;
 
-    @ComponentField(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.OBJECT, isRequired = true)
     private List<Object> components;
 
     public String getListenFlowKey() {

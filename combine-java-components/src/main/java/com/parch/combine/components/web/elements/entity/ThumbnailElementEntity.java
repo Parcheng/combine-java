@@ -4,11 +4,11 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.ThumbnailSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 配置类
@@ -16,28 +16,28 @@ import com.parch.combine.core.settings.config.FieldTypeEnum;
 @ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "缩略图页面元素", desc = "当 TYPE = THUMBNAIL 时的参数列表")
 public class ThumbnailElementEntity extends ElementEntity<ThumbnailSettings> {
 
-    @ComponentField(key = "img", name = "图片DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "img", name = "图片DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig img;
 
-    @ComponentField(key = "content", name = "内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "content", name = "内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig content;
 
-    @ComponentField(key = "contentTitle", name = "内容标题DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "contentTitle", name = "内容标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig contentTitle;
 
-    @ComponentField(key = "contentText", name = "内容段落行DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "contentText", name = "内容段落行DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig contentText;
 
-    @ComponentField(key = "contentButton", name = "内容操作按钮栏DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "contentButton", name = "内容操作按钮栏DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig contentButton;
 
-    @ComponentField(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = ThumbnailSettings.class)
+    @Field(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = ThumbnailSettings.class)
     private ThumbnailSettings settings;
 
     public ThumbnailElementEntity() {

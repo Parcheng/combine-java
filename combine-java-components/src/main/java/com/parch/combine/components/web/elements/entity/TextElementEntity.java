@@ -4,11 +4,11 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.TextSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -18,24 +18,24 @@ import java.util.List;
 @ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "文本集页面元素", desc = "当 TYPE = TEXT 时的参数列表")
 public class TextElementEntity extends ElementEntity<TextSettings> {
 
-    @ComponentField(key = "line", name = "行通用DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "line", name = "行通用DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig line;
 
-    @ComponentField(key = "children", name = "子文本DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "children", name = "子文本DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig children;
 
-    @ComponentField(key = "levels", name = "每个层级的通用DOM配置集合", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "levels", name = "每个层级的通用DOM配置集合", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private List<ElementDomConfig> lines;
 
-    @ComponentField(key = "lines", name = "每行的DOM配置集合", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "lines", name = "每行的DOM配置集合", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private List<ElementDomConfig> levels;
 
-    @ComponentField(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = TextSettings.class)
+    @Field(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = TextSettings.class)
     private TextSettings settings;
 
     public TextElementEntity() {

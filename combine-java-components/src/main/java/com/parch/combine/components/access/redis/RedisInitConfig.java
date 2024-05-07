@@ -1,52 +1,52 @@
 package com.parch.combine.components.access.redis;
 
-import com.parch.combine.core.base.InitConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.annotations.ComponentFieldEg;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.annotations.FieldEg;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import java.util.List;
 
 
 public class RedisInitConfig extends InitConfig {
 
-    @ComponentField(key = "nodes", name = "节点集合", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
-    @ComponentFieldDesc("格式要求：127.0.0.1:8888")
-    @ComponentFieldEg(eg = "[\"127.0.0.1:8888\", \"127.0.0.1:8889\"]", desc = "两个节点，分别为本机的 8888 和 8889 端口")
+    @Field(key = "nodes", name = "节点集合", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
+    @FieldDesc("格式要求：127.0.0.1:8888")
+    @FieldEg(eg = "[\"127.0.0.1:8888\", \"127.0.0.1:8889\"]", desc = "两个节点，分别为本机的 8888 和 8889 端口")
     private List<String> nodes;
 
-    @ComponentField(key = "password", name = "密码", type = FieldTypeEnum.TEXT, isRequired = true)
-    @ComponentFieldEg(eg = "123456", desc = "密码为123456")
+    @Field(key = "password", name = "密码", type = FieldTypeEnum.TEXT, isRequired = true)
+    @FieldEg(eg = "123456", desc = "密码为123456")
     private String password;
 
-    @ComponentField(key = "pool", name = "连接池配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = Pool.class)
+    @Field(key = "pool", name = "连接池配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = Pool.class)
     private Pool pool;
 
-    @ComponentField(key = "timeout", name = "超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "2000")
-    @ComponentFieldEg(eg = "6000", desc = "超时时间为 6 秒")
+    @Field(key = "timeout", name = "超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "2000")
+    @FieldEg(eg = "6000", desc = "超时时间为 6 秒")
     private Integer timeout;
 
-    @ComponentField(key = "maxAttempts", name = "最大重试次数", type = FieldTypeEnum.NUMBER, defaultValue = "10")
-    @ComponentFieldEg(eg = "10", desc = "最大重试次数 10 次")
+    @Field(key = "maxAttempts", name = "最大重试次数", type = FieldTypeEnum.NUMBER, defaultValue = "10")
+    @FieldEg(eg = "10", desc = "最大重试次数 10 次")
     private Integer maxAttempts;
 
-    @ComponentField(key = "printCommand", name = "是否打印命令信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    @Field(key = "printCommand", name = "是否打印命令信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean printCommand;
 
     public static class Pool {
 
-        @ComponentField(key = "max", name = "连接最大数量", type = FieldTypeEnum.NUMBER, defaultValue = "10")
-        @ComponentFieldEg(eg = "10", desc = "连接池最大连接数10")
+        @Field(key = "max", name = "连接最大数量", type = FieldTypeEnum.NUMBER, defaultValue = "10")
+        @FieldEg(eg = "10", desc = "连接池最大连接数10")
         private Integer max;
 
-        @ComponentField(key = "min", name = "连接最小数量", type = FieldTypeEnum.NUMBER, defaultValue = "5")
-        @ComponentFieldEg(eg = "5", desc = "连接池最小连接数5")
+        @Field(key = "min", name = "连接最小数量", type = FieldTypeEnum.NUMBER, defaultValue = "5")
+        @FieldEg(eg = "5", desc = "连接池最小连接数5")
         private Integer min;
 
-        @ComponentField(key = "timeout", name = "连接超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "10000")
-        @ComponentFieldEg(eg = "10000", desc = "连接超时时间为10000毫秒")
+        @Field(key = "timeout", name = "连接超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "10000")
+        @FieldEg(eg = "10000", desc = "连接超时时间为10000毫秒")
         private Long timeout;
 
         public Integer getMax() {

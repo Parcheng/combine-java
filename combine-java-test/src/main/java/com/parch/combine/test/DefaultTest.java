@@ -1,6 +1,6 @@
 package com.parch.combine.test;
 
-import com.parch.combine.CombineJavaStarter;
+import com.parch.combine.core.component.CombineJavaStarter;
 import com.parch.combine.test.context.TestContext;
 import com.parch.combine.test.handler.FlowHandler;
 import com.parch.combine.test.handler.PrintHandler;

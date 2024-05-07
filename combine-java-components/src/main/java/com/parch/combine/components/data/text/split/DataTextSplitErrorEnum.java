@@ -1,6 +1,6 @@
 package com.parch.combine.components.data.text.split;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum DataTextSplitErrorEnum implements IComponentError {
 

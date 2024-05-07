@@ -1,8 +1,8 @@
 package com.parch.combine.components.web.helper;
 
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,40 +13,40 @@ import java.util.Map;
  */
 public class DomConfig {
 
-    @ComponentField(key = "tag", name = "DOM标签", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "tag", name = "DOM标签", type = FieldTypeEnum.TEXT, isRequired = true)
     private String tag;
 
-    @ComponentField(key = "id", name = "DOM的ID", type = FieldTypeEnum.TEXT)
+    @Field(key = "id", name = "DOM的ID", type = FieldTypeEnum.TEXT)
     private String id;
 
-    @ComponentField(key = "name", name = "DOM的name属性", type = FieldTypeEnum.TEXT)
+    @Field(key = "name", name = "DOM的name属性", type = FieldTypeEnum.TEXT)
     private String name;
 
-    @ComponentField(key = "text", name = "DOM的文本内容", type = FieldTypeEnum.TEXT)
+    @Field(key = "text", name = "DOM的文本内容", type = FieldTypeEnum.TEXT)
     private String text;
 
-    @ComponentField(key = "classes", name = "DOM的class属性", type = FieldTypeEnum.TEXT)
+    @Field(key = "classes", name = "DOM的class属性", type = FieldTypeEnum.TEXT)
     private String classes;
 
-    @ComponentField(key = "style", name = "DOM的style属性", type = FieldTypeEnum.TEXT)
+    @Field(key = "style", name = "DOM的style属性", type = FieldTypeEnum.TEXT)
     private String style;
 
-    @ComponentField(key = "trigger", name = "DOM的其他（或自定义）属性", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldDesc("格式为“属性名:属性值”的键值对")
+    @Field(key = "trigger", name = "DOM的其他（或自定义）属性", type = FieldTypeEnum.OBJECT)
+    @FieldDesc("格式为“属性名:属性值”的键值对")
     private Map<String, String> properties;
 
-    @ComponentField(key = "trigger", name = "DOM的事件集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "trigger", name = "DOM的事件集合", type = FieldTypeEnum.OBJECT, isArray = true)
     private List<ElementEvent> events;
 
     public static class ElementEvent {
 
-        @ComponentField(key = "type", name = "事件类型", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "type", name = "事件类型", type = FieldTypeEnum.TEXT, isRequired = true)
         String type;
 
-        @ComponentField(key = "functionName", name = "事件触发调用的函数名称", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "functionName", name = "事件触发调用的函数名称", type = FieldTypeEnum.TEXT, isRequired = true)
         String functionName;
 
-        @ComponentField(key = "functionParams", name = "函数参数集合", type = FieldTypeEnum.TEXT, isArray = true)
+        @Field(key = "functionParams", name = "函数参数集合", type = FieldTypeEnum.TEXT, isArray = true)
         List<String> functionParams;
 
         public String getType() {

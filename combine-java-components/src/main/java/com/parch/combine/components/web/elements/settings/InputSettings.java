@@ -1,30 +1,30 @@
 package com.parch.combine.components.web.elements.settings;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldSelect;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
-import com.parch.combine.core.settings.config.IOptionSetting;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldSelect;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.config.IOptionSetting;
 
 /**
  * 页面元素设置
  */
 public class InputSettings extends BaseSettings{
 
-    @ComponentField(key = "key", name = "输入框字段KEY", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "key", name = "输入框字段KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     private String key;
 
-    @ComponentField(key = "type", name = "输入框类型", type = FieldTypeEnum.SELECT, isRequired = true)
-    @ComponentFieldSelect(enumClass = ControlItemType.class)
+    @Field(key = "type", name = "输入框类型", type = FieldTypeEnum.SELECT, isRequired = true)
+    @FieldSelect(enumClass = ControlItemType.class)
     private ControlItemType type;
 
-    @ComponentField(key = "value", name = "输入框默认值", type = FieldTypeEnum.TEXT)
+    @Field(key = "value", name = "输入框默认值", type = FieldTypeEnum.TEXT)
     private String value;
 
-    @ComponentField(key = "afterText", name = "前置插件文本", type = FieldTypeEnum.TEXT)
+    @Field(key = "afterText", name = "前置插件文本", type = FieldTypeEnum.TEXT)
     private String afterText;
 
-    @ComponentField(key = "beforeText", name = "后置插件文本", type = FieldTypeEnum.TEXT)
+    @Field(key = "beforeText", name = "后置插件文本", type = FieldTypeEnum.TEXT)
     private String beforeText;
 
     public String getKey() {

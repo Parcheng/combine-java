@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.format.func;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.JsonUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

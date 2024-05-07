@@ -1,6 +1,6 @@
 package com.parch.combine.components.data.general.edit;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum DataEditErrorEnum implements IComponentError {
     PARAM_DATA_NOT_OBJECT("参数数据不是结构类型", "数据异常"),

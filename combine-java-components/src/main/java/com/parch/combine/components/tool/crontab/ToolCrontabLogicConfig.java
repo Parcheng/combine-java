@@ -1,10 +1,10 @@
 package com.parch.combine.components.tool.crontab;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.base.LogicConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -13,27 +13,27 @@ import java.util.List;
  */
 public class ToolCrontabLogicConfig extends LogicConfig {
 
-    @ComponentField(key = "jobFlowKey", name = "定时任务流程KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
+    @Field(key = "jobFlowKey", name = "定时任务流程KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
     private String jobFlowKey;
 
-    @ComponentField(key = "startTime", name = "首次执行时间", type = FieldTypeEnum.TEXT, defaultValue = "当前时间")
+    @Field(key = "startTime", name = "首次执行时间", type = FieldTypeEnum.TEXT, defaultValue = "当前时间")
     private String startTime;
 
-    @ComponentField(key = "initialDelay", name = "首次执行延迟毫秒数", type = FieldTypeEnum.NUMBER, defaultValue = "0")
+    @Field(key = "initialDelay", name = "首次执行延迟毫秒数", type = FieldTypeEnum.NUMBER, defaultValue = "0")
     private Integer initialDelay;
 
-    @ComponentField(key = "period", name = "执行间隔（毫秒）", type = FieldTypeEnum.NUMBER, isRequired = true)
+    @Field(key = "period", name = "执行间隔（毫秒）", type = FieldTypeEnum.NUMBER, isRequired = true)
     private Integer period;
 
-    @ComponentField(key = "maxPeriod", name = "最大周期（毫秒）", type = FieldTypeEnum.NUMBER)
-    @ComponentFieldDesc("如果设置了最大周期，则间隔周期会在这个区间中随机")
+    @Field(key = "maxPeriod", name = "最大周期（毫秒）", type = FieldTypeEnum.NUMBER)
+    @FieldDesc("如果设置了最大周期，则间隔周期会在这个区间中随机")
     private Integer maxPeriod;
 
-    @ComponentField(key = "fixedRate", name = "是否固定间隔", type = FieldTypeEnum.BOOLEAN, defaultValue = "如果设置了随机周期该值为 true 否则 false")
-    @ComponentFieldDesc("如果设置了固定间隔，那么时间间隔是按任务开始执行时间算周期，否则按任务执行完成时间算周期")
+    @Field(key = "fixedRate", name = "是否固定间隔", type = FieldTypeEnum.BOOLEAN, defaultValue = "如果设置了随机周期该值为 true 否则 false")
+    @FieldDesc("如果设置了固定间隔，那么时间间隔是按任务开始执行时间算周期，否则按任务执行完成时间算周期")
     private Boolean fixedRate;
 
-    @ComponentField(key = "components", name = "要执行的组件集合（ID或组件配置）", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+    @Field(key = "components", name = "要执行的组件集合（ID或组件配置）", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
     private List<Object> components;
 
     @Override

@@ -1,6 +1,6 @@
 package com.parch.combine.components.data.general.format.func;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import java.util.*;
 
