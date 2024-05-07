@@ -11,7 +11,7 @@ public class PageElementClassifySetting {
 
     private String name;
 
-    private List<Object> settings;
+    private List<PageElementSetting> settings;
 
     public String getKey() {
         return key;
@@ -29,11 +29,11 @@ public class PageElementClassifySetting {
         this.name = name;
     }
 
-    public List<Object> getSettings() {
+    public List<PageElementSetting> getSettings() {
         return settings;
     }
 
-    public void setSettings(List<Object> settings) {
+    public void setSettings(List<PageElementSetting> settings) {
         this.settings = settings;
     }
 }

@@ -6,8 +6,8 @@ import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.settings.builder.ComponentPropertySettingBuilder;
-import com.parch.combine.core.component.settings.config.ComponentPropertySetting;
+import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
+import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.component.vo.DataResult;
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class SystemDocConfigComponent extends AbsComponent<SystemDocConfigInitCo
 
     @Override
     public List<String> init(){
-        List<ComponentPropertySetting> properties = ComponentPropertySettingBuilder.build("global", GlobalContext.class);
+        List<PropertySetting> properties = PropertySettingBuilder.build("global", GlobalContext.class);
         String json = JsonUtil.serialize(properties);
         result = JsonUtil.parseArray(json, HashMap.class);
         return new ArrayList<>();

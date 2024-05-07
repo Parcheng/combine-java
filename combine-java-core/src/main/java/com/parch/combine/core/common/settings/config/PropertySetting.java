@@ -1,13 +1,11 @@
-package com.parch.combine.core.component.settings.config;
-
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+package com.parch.combine.core.common.settings.config;
 
 import java.util.List;
 
 /**
  * 组件属性设置
  */
-public class ComponentPropertySetting {
+public class PropertySetting {
 
     private String key;
 
@@ -25,13 +23,13 @@ public class ComponentPropertySetting {
 
     private FieldTypeEnum type;
 
-    private List<ComponentPropertyGroupSetting> group;
+    private List<PropertyGroupSetting> group;
 
-    private List<ComponentPropertyOptionSetting> options;
+    private List<PropertyOptionSetting> options;
 
-    private List<ComponentPropertyEgSetting> egs;
+    private List<PropertyEgSetting> egs;
 
-    private List<ComponentPropertySetting> children;
+    private List<PropertySetting> children;
 
     public String getKey() {
         return key;
@@ -65,11 +63,11 @@ public class ComponentPropertySetting {
         this.type = type;
     }
 
-    public List<ComponentPropertyOptionSetting> getOptions() {
+    public List<PropertyOptionSetting> getOptions() {
         return options;
     }
 
-    public void setOptions(List<ComponentPropertyOptionSetting> options) {
+    public void setOptions(List<PropertyOptionSetting> options) {
         this.options = options;
     }
 
@@ -97,27 +95,27 @@ public class ComponentPropertySetting {
         this.defaultValue = defaultValue;
     }
 
-    public List<ComponentPropertySetting> getChildren() {
+    public List<PropertySetting> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ComponentPropertySetting> children) {
+    public void setChildren(List<PropertySetting> children) {
         this.children = children;
     }
 
-    public List<ComponentPropertyGroupSetting> getGroup() {
+    public List<PropertyGroupSetting> getGroup() {
         return group;
     }
 
-    public void setGroup(List<ComponentPropertyGroupSetting> group) {
+    public void setGroup(List<PropertyGroupSetting> group) {
         this.group = group;
     }
 
-    public List<ComponentPropertyEgSetting> getEgs() {
+    public List<PropertyEgSetting> getEgs() {
         return egs;
     }
 
-    public void setEgs(List<ComponentPropertyEgSetting> egs) {
+    public void setEgs(List<PropertyEgSetting> egs) {
         this.egs = egs;
     }
 

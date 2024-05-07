@@ -1,9 +1,9 @@
-package com.parch.combine.core.component.settings.config;
+package com.parch.combine.core.common.settings.config;
 
 /**
  * 组件属性设置
  */
-public class ComponentPropertyEgSetting {
+public class PropertyEgSetting {
 
     private String value;
 

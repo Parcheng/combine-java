@@ -1,22 +1,22 @@
-package com.parch.combine.core.component.settings.builder;
+package com.parch.combine.core.ui.settings.builder;
 
 import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.PackageScanUtil;
-import com.parch.combine.core.component.settings.config.ComponentSetting;
+import com.parch.combine.core.ui.settings.config.PageElementSetting;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-public class ComponentSettingScanBuilder {
+public class PageElementSettingScanBuilder {
 
-    public static List<ComponentSetting> scanAndBuild(String scope, Class<?> baseClass) {
+    public static List<PageElementSetting> scanAndBuild(String scope, Class<?> baseClass) {
         return scanAndBuild(scope, baseClass.getPackage().getName());
     }
 
-    public static List<ComponentSetting> scanAndBuild(String scope, String packagePath) {
+    public static List<PageElementSetting> scanAndBuild(String scope, String packagePath) {
         Set<Class<?>> packageClasses = PackageScanUtil.scan(packagePath);
         if (CheckEmptyUtil.isEmpty(packageClasses)) {
             return null;
@@ -24,16 +24,16 @@ public class ComponentSettingScanBuilder {
 
         CommonObjectSettingBuilder.loads(scope, packageClasses);
 
-        List<ComponentSetting> componentSettings = new ArrayList<>();
+        List<PageElementSetting> settings = new ArrayList<>();
         for (Class<?> clazz : packageClasses) {
-            ComponentSetting componentSetting = ComponentSettingBuilder.build(scope, clazz);
-            if (componentSetting != null) {
-                componentSettings.add(componentSetting);
+            PageElementSetting setting = PageElementSettingBuilder.build(scope, clazz);
+            if (setting != null) {
+                settings.add(setting);
             }
         }
 
         CommonObjectSettingBuilder.clear(scope);
-        componentSettings.sort(Comparator.comparing(ComponentSetting::getOrder));
-        return componentSettings;
+        settings.sort(Comparator.comparing(PageElementSetting::getOrder));
+        return settings;
     }
 }

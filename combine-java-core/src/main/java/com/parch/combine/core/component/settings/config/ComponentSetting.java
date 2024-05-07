@@ -1,5 +1,7 @@
 package com.parch.combine.core.component.settings.config;
 
+import com.parch.combine.core.common.settings.config.CommonObjectSetting;
+import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.component.base.AbsComponent;
 
 import java.util.List;
@@ -21,11 +23,11 @@ public class ComponentSetting {
 
     private List<String> important;
 
-    private List<ComponentPropertySetting> initConfig;
+    private List<PropertySetting> initConfig;
 
-    private List<ComponentPropertySetting> logicConfig;
+    private List<PropertySetting> logicConfig;
 
-    private List<ComponentCommonObjectSetting> commonObjects;
+    private List<CommonObjectSetting> commonObjects;
 
     private ComponentResultSetting result;
 
@@ -53,27 +55,27 @@ public class ComponentSetting {
         this.important = important;
     }
 
-    public List<ComponentPropertySetting> getInitConfig() {
+    public List<PropertySetting> getInitConfig() {
         return initConfig;
     }
 
-    public void setInitConfig(List<ComponentPropertySetting> initConfig) {
+    public void setInitConfig(List<PropertySetting> initConfig) {
         this.initConfig = initConfig;
     }
 
-    public void addInitConfig(ComponentPropertySetting initConfig) {
+    public void addInitConfig(PropertySetting initConfig) {
         this.initConfig.add(initConfig);
     }
 
-    public List<ComponentPropertySetting> getLogicConfig() {
+    public List<PropertySetting> getLogicConfig() {
         return logicConfig;
     }
 
-    public void setLogicConfig(List<ComponentPropertySetting> logicConfig) {
+    public void setLogicConfig(List<PropertySetting> logicConfig) {
         this.logicConfig = logicConfig;
     }
 
-    public void addLogicConfig(ComponentPropertySetting logicConfig) {
+    public void addLogicConfig(PropertySetting logicConfig) {
         this.logicConfig.add(logicConfig);
     }
 
@@ -101,11 +103,11 @@ public class ComponentSetting {
         return componentClass;
     }
 
-    public List<ComponentCommonObjectSetting> getCommonObjects() {
+    public List<CommonObjectSetting> getCommonObjects() {
         return commonObjects;
     }
 
-    public void setCommonObjects(List<ComponentCommonObjectSetting> commonObjects) {
+    public void setCommonObjects(List<CommonObjectSetting> commonObjects) {
         this.commonObjects = commonObjects;
     }
 

@@ -4,6 +4,7 @@ import com.parch.combine.core.component.settings.builder.ComponentSettingScanBui
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
 import com.parch.combine.core.component.settings.config.ComponentSetting;
 import com.parch.combine.core.ui.settings.config.PageElementClassifySetting;
+import com.parch.combine.core.ui.settings.config.PageElementSetting;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class PageElementClassifySettingBuilder {
      * @return 组件设置
      */
     public static PageElementClassifySetting build(String key, String name, String packagePath) {
-        return null; // build(key, name, ComponentSettingScanBuilder.scanAndBuild(key, packagePath));
+        return build(key, name, PageElementSettingScanBuilder.scanAndBuild(key, packagePath));
     }
 
     /**
@@ -32,7 +33,7 @@ public class PageElementClassifySettingBuilder {
      * @return 组件设置
      */
     public static PageElementClassifySetting build(String key, String name, Class<?> baseClass) {
-        return null; // build(key, name, ComponentSettingScanBuilder.scanAndBuild(key, baseClass));
+        return build(key, name, PageElementSettingScanBuilder.scanAndBuild(key, baseClass));
     }
 
     /**
@@ -42,7 +43,7 @@ public class PageElementClassifySettingBuilder {
      * @param name 名称
      * @return 组件设置
      */
-    public static PageElementClassifySetting build(String key, String name, List<Object> settings) {
+    public static PageElementClassifySetting build(String key, String name, List<PageElementSetting> settings) {
         PageElementClassifySetting classify = new PageElementClassifySetting();
         classify.setKey(key);
         classify.setName(name);

@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.settings.config;
+package com.parch.combine.core.common.settings.config;
 
 
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 组件属性组设置
  */
-public class ComponentPropertyGroupSetting {
+public class PropertyGroupSetting {
 
     private Integer index;
 

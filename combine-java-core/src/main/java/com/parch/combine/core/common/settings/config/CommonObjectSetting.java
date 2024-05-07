@@ -1,11 +1,11 @@
-package com.parch.combine.core.component.settings.config;
+package com.parch.combine.core.common.settings.config;
 
 import java.util.List;
 
 /**
  * 组件公共对象设置
  */
-public class ComponentCommonObjectSetting {
+public class CommonObjectSetting {
 
     private int order;
 
@@ -17,7 +17,7 @@ public class ComponentCommonObjectSetting {
 
     private List<String> desc;
 
-    private List<ComponentPropertySetting> properties;
+    private List<PropertySetting> properties;
 
     public String getKey() {
         return key;
@@ -43,11 +43,11 @@ public class ComponentCommonObjectSetting {
         this.desc = desc;
     }
 
-    public List<ComponentPropertySetting> getProperties() {
+    public List<PropertySetting> getProperties() {
         return properties;
     }
 
-    public void setProperties(List<ComponentPropertySetting> properties) {
+    public void setProperties(List<PropertySetting> properties) {
         this.properties = properties;
     }
 

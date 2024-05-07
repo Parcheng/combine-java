@@ -1,6 +1,8 @@
 package com.parch.combine.core.component.settings.builder;
 
 import com.parch.combine.core.common.settings.annotations.Invalid;
+import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
+import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.base.InitConfig;
 import com.parch.combine.core.component.settings.annotations.*;
@@ -32,16 +34,16 @@ public class ComponentSettingBuilder {
         }
 
         // 逻辑配置
-        componentSetting.setLogicConfig(ComponentPropertySettingBuilder.build(scope, componentAnnotation.logicConfigClass()));
+        componentSetting.setLogicConfig(PropertySettingBuilder.build(scope, componentAnnotation.logicConfigClass()));
 
         // 初始化配置
         Class<? extends InitConfig> initConfigClass = componentAnnotation.initConfigClass();
         if (initConfigClass.getAnnotation(Invalid.class) == null) {
-            componentSetting.setInitConfig(ComponentPropertySettingBuilder.build(scope, initConfigClass));
+            componentSetting.setInitConfig(PropertySettingBuilder.build(scope, initConfigClass));
         }
 
         // 公共对象
-        componentSetting.setCommonObjects(ComponentCommonObjectSettingBuilder.get(scope));
+        componentSetting.setCommonObjects(CommonObjectSettingBuilder.get(scope));
 
         // 组件结果
         setResult(componentSetting, componentClass);

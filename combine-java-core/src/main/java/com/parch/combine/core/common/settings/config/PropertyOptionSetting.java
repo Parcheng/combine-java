@@ -1,9 +1,9 @@
-package com.parch.combine.core.component.settings.config;
+package com.parch.combine.core.common.settings.config;
 
 /**
  * 组件属性可选值设置
  */
-public class ComponentPropertyOptionSetting {
+public class PropertyOptionSetting {
 
     private String key;
 
