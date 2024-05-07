@@ -21,6 +21,8 @@ public abstract class ElementTemplateConfig {
         this.tempPath = SourcePathCanstant.SYSTEM_URL_FLAG + path;
     }
 
+    public void init() {}
+
     public String getId() {
         return id;
     }

@@ -2,9 +2,6 @@ package com.parch.combine.core.ui.settings.config;
 
 import java.util.List;
 
-/**
- * 组件分类设置
- */
 public class PageElementClassifySetting {
 
     private String key;

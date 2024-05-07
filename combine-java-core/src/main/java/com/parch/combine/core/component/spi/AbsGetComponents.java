@@ -8,9 +8,6 @@ import com.parch.combine.core.component.settings.builder.ComponentClassifySettin
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 获取组件接口
- */
 public abstract class AbsGetComponents implements IGetComponents {
 
     private ComponentClassifySetting setting;

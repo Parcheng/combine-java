@@ -35,6 +35,8 @@ public abstract class ElementLogicConfig {
     @Field(key = "dataField", name = "数据二次取值的字段名", type = FieldTypeEnum.TEXT)
     private String dataField;
 
+    public void init() {}
+
     public String getId() {
         return id;
     }

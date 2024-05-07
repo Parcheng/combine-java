@@ -1,6 +1,6 @@
 package com.parch.combine.core.ui.vo;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.ui.base.element.ElementConfig;
 
 /**
  * 初始化VO
@@ -15,11 +15,11 @@ public class PageElementInitVO {
     /**
      * 组件类描述
      */
-    private Class<? extends AbsComponent<?, ?>> component;
+    private Class<? extends ElementConfig<?, ?>> elementConfigClass;
 
-    public PageElementInitVO(String key, Class<? extends AbsComponent<?, ?>> component) {
+    public PageElementInitVO(String key, Class<? extends ElementConfig<?, ?>> elementConfigClass) {
         this.key = key;
-        this.component = component;
+        this.elementConfigClass = elementConfigClass;
     }
 
     public String getKey() {
@@ -30,11 +30,11 @@ public class PageElementInitVO {
         this.key = key;
     }
 
-    public Class<? extends AbsComponent<?, ?>> getComponent() {
-        return component;
+    public Class<? extends ElementConfig<?, ?>> getElementConfigClass() {
+        return elementConfigClass;
     }
 
-    public void setComponent(Class<? extends AbsComponent<?, ?>> component) {
-        this.component = component;
+    public void setElementConfigClass(Class<? extends ElementConfig<?, ?>> elementConfigClass) {
+        this.elementConfigClass = elementConfigClass;
     }
 }

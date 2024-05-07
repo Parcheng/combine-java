@@ -59,7 +59,7 @@ public class PageElementSetting {
         this.order = order;
     }
 
-    public Class<? extends ElementConfig<?, ?>> getElementClass() {
+    public Class<? extends ElementConfig<?, ?>> thisElementClass() {
         return elementClass;
     }
 

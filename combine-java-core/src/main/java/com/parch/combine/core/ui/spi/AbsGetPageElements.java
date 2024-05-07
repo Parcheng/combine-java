@@ -2,12 +2,12 @@ package com.parch.combine.core.ui.spi;
 
 import com.parch.combine.core.ui.settings.builder.PageElementClassifySettingBuilder;
 import com.parch.combine.core.ui.settings.config.PageElementClassifySetting;
+import com.parch.combine.core.ui.settings.config.PageElementSetting;
 import com.parch.combine.core.ui.vo.PageElementInitVO;
+
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 获取组件接口
- */
 public abstract class AbsGetPageElements implements IGetPageElements {
 
     private PageElementClassifySetting setting;
@@ -27,11 +27,11 @@ public abstract class AbsGetPageElements implements IGetPageElements {
      */
     @Override
     public List<PageElementInitVO> get() {
-//        List<ComponentInitVO> components = new ArrayList<>();
-//        for (ComponentSetting setting : setting.getSettings()) {
-//            components.add(new ComponentInitVO(setting.getKey(), setting.thisComponentClass()));
-//        }
-        return null;
+        List<PageElementInitVO> initVOs = new ArrayList<>();
+        for (PageElementSetting setting : setting.getSettings()) {
+            initVOs.add(new PageElementInitVO(setting.getKey(), setting.thisElementClass()));
+        }
+        return initVOs;
     };
 
     /**
