@@ -1,6 +1,6 @@
 package com.parch.combine.ui.old;
 
-import com.parch.combine.core.component.settings.spi.AbsGetComponents;
+import com.parch.combine.core.component.spi.AbsGetComponents;
 
 /**
  * 获取页面组件实现类

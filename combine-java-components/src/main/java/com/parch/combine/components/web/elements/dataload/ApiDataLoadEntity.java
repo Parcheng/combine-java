@@ -1,7 +1,7 @@
 package com.parch.combine.components.web.elements.dataload;
 
 import com.parch.combine.components.web.WebSettingCanstant;
-import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 数据加载配置
  */
-@ComponentCommonObject(order = 2, key = WebSettingCanstant.DATA_LOAD_KEY, name = "调用外部API数据源配置", desc = "当 TYPE = URL 时的参数列表")
+@CommonObject(order = 2, key = WebSettingCanstant.DATA_LOAD_KEY, name = "调用外部API数据源配置", desc = "当 TYPE = URL 时的参数列表")
 public class ApiDataLoadEntity extends DataLoadEntity {
 
     @Field(key = "url", name = "请求地址", type = FieldTypeEnum.TEXT, isRequired = true)

@@ -4,7 +4,7 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.TextSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "文本集页面元素", desc = "当 TYPE = TEXT 时的参数列表")
+@CommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "文本集页面元素", desc = "当 TYPE = TEXT 时的参数列表")
 public class TextElementEntity extends ElementEntity<TextSettings> {
 
     @Field(key = "line", name = "行通用DOM配置", type = FieldTypeEnum.OBJECT)

@@ -4,7 +4,7 @@ import com.parch.combine.components.web.ElementDomConfig;
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.RadioSettings;
-import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
@@ -13,7 +13,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "单选输入框页面元素", desc = "当 TYPE = RADIO 时的参数列表")
+@CommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "单选输入框页面元素", desc = "当 TYPE = RADIO 时的参数列表")
 public class RadioElementEntity extends ElementEntity<RadioSettings> {
 
     @Field(key = "inline", name = "内联显示时DOM配置", type = FieldTypeEnum.OBJECT)

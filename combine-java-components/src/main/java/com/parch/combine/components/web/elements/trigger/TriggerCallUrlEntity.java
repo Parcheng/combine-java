@@ -1,7 +1,7 @@
 package com.parch.combine.components.web.elements.trigger;
 
 import com.parch.combine.components.web.WebSettingCanstant;
-import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用URL触发配置", desc = "当 TYPE = CALL_URL 时的参数列表")
+@CommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用URL触发配置", desc = "当 TYPE = CALL_URL 时的参数列表")
 public class TriggerCallUrlEntity extends TriggerEntity {
 
     @Field(key = "url", name = "URL地址", type = FieldTypeEnum.TEXT, isRequired = true)

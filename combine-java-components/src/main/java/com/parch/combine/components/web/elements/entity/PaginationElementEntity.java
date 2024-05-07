@@ -4,7 +4,7 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.PaginationSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
@@ -13,7 +13,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "分页页面元素", desc = "当 TYPE = PAGINATION 时的参数列表")
+@CommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "分页页面元素", desc = "当 TYPE = PAGINATION 时的参数列表")
 public class PaginationElementEntity extends ElementEntity<PaginationSettings> {
 
     @Field(key = "pagination", name = "分页DOM配置", type = FieldTypeEnum.OBJECT)

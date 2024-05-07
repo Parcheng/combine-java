@@ -1,7 +1,7 @@
 package com.parch.combine.ui.base.trigger;
 
 import com.parch.combine.components.web.WebSettingCanstant;
-import com.parch.combine.core.component.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用流程触发配置", desc = "当 TYPE = CALL 时的参数列表")
+@CommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用流程触发配置", desc = "当 TYPE = CALL 时的参数列表")
 public class TriggerCallEntity extends TriggerEntity {
 
     @Field(key = "flow", name = "流程KEY", type = FieldTypeEnum.TEXT, isRequired = true)
