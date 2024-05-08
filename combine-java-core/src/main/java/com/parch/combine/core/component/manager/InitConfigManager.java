@@ -1,5 +1,6 @@
 package com.parch.combine.core.component.manager;
 
+import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.component.base.InitConfig;
@@ -16,12 +17,12 @@ public class InitConfigManager {
     /**
      * 初始化配置缓存池
      */
-    private static final Map<String, InitConfig> INIT_CONFIGS = new HashMap<>();
+    private final Map<String, InitConfig> INIT_CONFIGS = new HashMap<>();
 
     /**
      * 预加载的初始化配置缓存池
      */
-    private static final Map<String, Map<String, Object>> PRE_INIT_CONFIGS = new HashMap<>();
+    private final Map<String, Map<String, Object>> PRE_INIT_CONFIGS = new HashMap<>();
 
     /**
      * 加载初始化配置
@@ -32,8 +33,8 @@ public class InitConfigManager {
     protected boolean load(List<Map<String, Object>> initConfigs) {
         if (CheckEmptyUtil.isNotEmpty(initConfigs)) {
             for (Map<String, Object> item : initConfigs) {
-                String id = (String) item.get(ComponentManager.ID_FIELD);
-                String type = (String) item.get(ComponentManager.COMPONENT_TYPE_FIELD);
+                String id = (String) item.get(FieldKeyCanstant.ID);
+                String type = (String) item.get(FieldKeyCanstant.TYPE);
                 if (CheckEmptyUtil.isEmpty(type)) {
                     continue;
                 }

@@ -1,10 +1,10 @@
-package com.parch.combine.core.ui.base.element;
+package com.parch.combine.core.ui.base;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.element.dataload.DataLoadEntity;
+import com.parch.combine.core.ui.base.dataload.DataLoadConfig;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public abstract class ElementLogicConfig {
@@ -22,9 +22,8 @@ public abstract class ElementLogicConfig {
     @Field(key = "defaultData", name = "默认数据", type = FieldTypeEnum.OBJECT)
     private Object defaultData;
 
-    @Field(key = "load", name = "数据加载配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DATA_LOAD_KEY)
-    private DataLoadEntity load;
+    @Field(key = "dataLoadId", name = "数据加载配置ID", type = FieldTypeEnum.TEXT)
+    private String dataLoadId;
 
     @Field(key = "defaultLoad", name = "是否默认加载（构建元素时加载数据）", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean defaultLoad;
@@ -34,6 +33,9 @@ public abstract class ElementLogicConfig {
 
     @Field(key = "dataField", name = "数据二次取值的字段名", type = FieldTypeEnum.TEXT)
     private String dataField;
+
+    @Field(key = "templateId", name = "引用模板ID", type = FieldTypeEnum.TEXT)
+    private String templateId;
 
     public void init() {}
 
@@ -69,12 +71,12 @@ public abstract class ElementLogicConfig {
         this.defaultData = defaultData;
     }
 
-    public DataLoadEntity getLoad() {
-        return load;
+    public String getDataLoadId() {
+        return dataLoadId;
     }
 
-    public void setLoad(DataLoadEntity load) {
-        this.load = load;
+    public void setDataLoadId(String dataLoadId) {
+        this.dataLoadId = dataLoadId;
     }
 
     public Boolean getDefaultLoad() {
@@ -99,5 +101,13 @@ public abstract class ElementLogicConfig {
 
     public void setDataField(String dataField) {
         this.dataField = dataField;
+    }
+
+    public String getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 }

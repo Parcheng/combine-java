@@ -1,10 +1,10 @@
-package com.parch.combine.core.ui.base.element.trigger;
+package com.parch.combine.core.ui.base.trigger;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.element.ElementConfig;
+import com.parch.combine.core.ui.base.ElementConfig;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 /**

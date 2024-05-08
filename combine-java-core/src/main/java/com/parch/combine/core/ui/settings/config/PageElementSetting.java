@@ -1,7 +1,7 @@
 package com.parch.combine.core.ui.settings.config;
 
 import com.parch.combine.core.common.settings.config.CommonObjectSetting;
-import com.parch.combine.core.ui.base.element.ElementConfig;
+import com.parch.combine.core.ui.base.ElementConfig;
 import java.util.List;
 
 public class PageElementSetting {

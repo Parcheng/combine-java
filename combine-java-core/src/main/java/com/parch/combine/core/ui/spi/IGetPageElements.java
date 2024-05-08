@@ -1,7 +1,7 @@
 package com.parch.combine.core.ui.spi;
 
 import com.parch.combine.core.ui.settings.config.PageElementClassifySetting;
-import com.parch.combine.core.ui.vo.PageElementInitVO;
+import com.parch.combine.core.ui.vo.PageElementClassInitVO;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface IGetPageElements {
      *
      * @return 组件集合
      */
-    List<PageElementInitVO> get();
+    List<PageElementClassInitVO> get();
 
     /**
      * 获取组件设置

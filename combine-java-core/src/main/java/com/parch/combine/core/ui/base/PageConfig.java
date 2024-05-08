@@ -1,28 +1,12 @@
-package com.parch.combine.core.ui.base.page;
+package com.parch.combine.core.ui.base;
 
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.ComponentFlagEnum;
-import com.parch.combine.core.component.base.LogicConfig;
-import com.parch.combine.core.ui.base.element.DomConfig;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-/**
- * 逻辑配置类
- */
-public class WebPageLogicConfig {
-
-    @Field(key = "id", name = "逻辑配置ID", type = FieldTypeEnum.TEXT)
-    @FieldDesc("组件ID，默认为随机字符串")
-    @FieldEg(eg = "component_logic_config_001")
-    private String id;
-
-    @Field(key = "type", name = "页面类型（自定义，管理页面）", type = FieldTypeEnum.TEXT, isRequired = true)
-    private String type;
+public class PageConfig {
 
     @Field(key ="lang" , name = "HTML语言", type = FieldTypeEnum.TEXT, defaultValue = "en")
     private String lang;
@@ -41,40 +25,15 @@ public class WebPageLogicConfig {
     @Field(key ="scripts" , name = "加载script脚本集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> scripts;
 
-    @Field(key ="elements" , name = "页面的元素配置ID集合", type = FieldTypeEnum.TEXT, isArray = true)
-    private List<String> elements;
+    @Field(key ="groupIds" , name = "页面元素组ID集合", type = FieldTypeEnum.TEXT, isArray = true)
+    private List<String> groupIds;
 
-    @Field(key ="elements" , name = "指定加载的元素配置ID集合", type = FieldTypeEnum.TEXT, isArray = true, defaultValue = "全部")
-    private List<String> loadElements;
+    @Field(key = "configs", name = "页面元素配置集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    private List<HtmlElementConfig> configs;
 
     public void init() {
         if (CheckEmptyUtil.isEmpty(getTempPath())) {
             setTempPath("/static/template/page/management_template.json");
-        }
-    }
-
-    /**
-     * 页面元素
-     */
-    public static class HtmlElement extends DomConfig {
-
-        @Field(key = "showElement", name = "默认展示的元素组ID", type = FieldTypeEnum.TEXT)
-        public String showElement;
-
-        public String getShowElement() {
-            return showElement;
-        }
-
-        public void setShowElement(String showElement) {
-            this.showElement = showElement;
-        }
-
-        @Override
-        public String getId() {
-            if (CheckEmptyUtil.isEmpty(super.getId())) {
-                super.setId(UUID.randomUUID().toString());
-            }
-            return super.getId();
         }
     }
 
@@ -201,23 +160,20 @@ public class WebPageLogicConfig {
         }
     }
 
-    public static class HtmlElementConfig {
+    public static class HtmlElementConfig extends DomConfig {
 
-        @Field(key = "key", name = "配置KEY（对应模板中configs的KEY）", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "key", name = "配置KEY", type = FieldTypeEnum.TEXT, isRequired = true)
+        @FieldDesc("对应模板中每部分的KEY，系统内置模板包含：header、footer、left、right、content 五部分")
         private String key;
 
-        @Field(key = "config", name = "配置内容", type = FieldTypeEnum.OBJECT, isRequired = true)
-        @FieldObject(type = WebPageLogicConfig.HtmlElement.class)
-        private WebPageLogicConfig.HtmlElement config;
+        @Field(key = "defaultShowGroupId", name = "默认展示的元素组ID", type = FieldTypeEnum.TEXT)
+        public String defaultShowGroupId;
 
         public HtmlElementConfig() {}
 
-        public HtmlElementConfig(String key, WebPageLogicConfig.HtmlElement config) {
+        public HtmlElementConfig(String key, String tag) {
             this.key = key;
-            this.config = config;
-            if (config.getTag() == null) {
-                config.setTag("div");
-            }
+            this.setTag(tag == null ? "div" : tag);
         }
 
         public String getKey() {
@@ -228,12 +184,12 @@ public class WebPageLogicConfig {
             this.key = key;
         }
 
-        public WebPageLogicConfig.HtmlElement getConfig() {
-            return config;
+        public String getDefaultShowGroupId() {
+            return defaultShowGroupId;
         }
 
-        public void setConfig(WebPageLogicConfig.HtmlElement config) {
-            this.config = config;
+        public void setDefaultShowGroupId(String defaultShowGroupId) {
+            this.defaultShowGroupId = defaultShowGroupId;
         }
     }
 
@@ -277,19 +233,19 @@ public class WebPageLogicConfig {
         this.scripts = scripts;
     }
 
-    public List<String> getElements() {
-        return elements;
+    public List<String> getGroupIds() {
+        return groupIds;
     }
 
-    public void setElements(List<String> elements) {
-        this.elements = elements;
+    public void setGroupIds(List<String> groupIds) {
+        this.groupIds = groupIds;
     }
 
-    public List<String> getLoadElements() {
-        return loadElements;
+    public List<HtmlElementConfig> getConfigs() {
+        return configs;
     }
 
-    public void setLoadElements(List<String> loadElements) {
-        this.loadElements = loadElements;
+    public void setConfigs(List<HtmlElementConfig> configs) {
+        this.configs = configs;
     }
 }

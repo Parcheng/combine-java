@@ -1,4 +1,4 @@
-package com.parch.combine.core.ui.base.element.trigger;
+package com.parch.combine.core.ui.base.trigger;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;

@@ -1,5 +1,6 @@
 package com.parch.combine.components.system.template;
 
+import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
@@ -42,8 +43,8 @@ public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConf
         } else {
             // 初始化ID
             for (Map<String, Object> config : configs) {
-                if (config.get(ComponentManager.ID_FIELD) == null) {
-                    config.put(ComponentManager.ID_FIELD, UUID.randomUUID().toString());
+                if (config.get(FieldKeyCanstant.ID) == null) {
+                    config.put(FieldKeyCanstant.ID, UUID.randomUUID().toString());
                 }
             }
 

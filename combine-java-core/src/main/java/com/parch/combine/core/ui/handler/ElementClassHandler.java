@@ -1,6 +1,6 @@
 package com.parch.combine.core.ui.handler;
 
-import com.parch.combine.core.ui.base.element.ElementConfig;
+import com.parch.combine.core.ui.base.ElementConfig;
 
 import java.util.HashMap;
 import java.util.Map;

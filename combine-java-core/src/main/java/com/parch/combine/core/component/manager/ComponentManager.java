@@ -1,6 +1,7 @@
 package com.parch.combine.core.component.manager;
 
 import com.parch.combine.core.common.canstant.CommonConstant;
+import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.base.ComponentFlagEnum;
@@ -24,9 +25,6 @@ public class ComponentManager {
      * 组件池
      */
     private final Map<String, AbsComponent<?,?>> COMPONENT_MAP = new HashMap<>();
-
-    public final static String ID_FIELD = "id";
-    public final static String COMPONENT_TYPE_FIELD = "type";
 
     /**
      * 初始化函数
@@ -95,11 +93,11 @@ public class ComponentManager {
     protected void registerComponent(String scopeKey, Map<String, Object> logicConfig, List<String> componentIds,
                                      List<String> staticComponentIds, List<String> errorMsgList, List<String> registerComponentIds) {
         // 获取组件ID（重复ID不重复解析）
-        Object componentIdObj = logicConfig.get(ID_FIELD);
+        Object componentIdObj = logicConfig.get(FieldKeyCanstant.ID);
         String componentId;
         if (componentIdObj == null) {
             componentId = UUID.randomUUID().toString();
-            logicConfig.put(ID_FIELD, componentId);
+            logicConfig.put(FieldKeyCanstant.ID, componentId);
         } else {
             componentId = componentIdObj.toString();
         }
@@ -112,7 +110,7 @@ public class ComponentManager {
         }
 
         // 获取组件配置
-        Object typeObj = logicConfig.get(COMPONENT_TYPE_FIELD);
+        Object typeObj = logicConfig.get(FieldKeyCanstant.TYPE);
         if (typeObj == null) {
             return;
         }

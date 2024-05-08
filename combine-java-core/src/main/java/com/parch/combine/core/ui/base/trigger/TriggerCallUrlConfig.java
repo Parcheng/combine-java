@@ -1,4 +1,4 @@
-package com.parch.combine.core.ui.base.element.dataload;
+package com.parch.combine.core.ui.base.trigger;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
@@ -9,18 +9,21 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import java.util.Map;
 
 /**
- * 数据加载配置
+ * 配置类
  */
-@CommonObject(order = 2, key = PageSettingCanstant.DATA_LOAD_KEY, name = "调用外部API数据源配置", desc = "当 TYPE = URL 时的参数列表")
-public class ApiDataLoadEntity extends DataLoadEntity {
+@CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "调用URL触发配置", desc = "当 TYPE = CALL_URL 时的参数列表")
+public class TriggerCallUrlConfig extends TriggerEntity {
 
-    @Field(key = "url", name = "请求地址", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "url", name = "URL地址", type = FieldTypeEnum.TEXT, isRequired = true)
     private String url;
 
-    @Field(key = "mode", name = "请求方式 GET | POST", type = FieldTypeEnum.TEXT)
+    @Field(key = "mode", name = "请求方式 POST | GET", type = FieldTypeEnum.TEXT, isRequired = true)
     private String mode;
 
-    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.OBJECT)
+    @Field(key = "fromSubmit", name = "使用FROM表单方式提交", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    private Boolean fromSubmit;
+
+    @Field(key = "headers", name = "请求头", type = FieldTypeEnum.OBJECT)
     private Object params;
 
     @Field(key = "params", name = "请求参数", type = FieldTypeEnum.OBJECT)
@@ -60,6 +63,14 @@ public class ApiDataLoadEntity extends DataLoadEntity {
 
     public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
+    }
+
+    public Boolean getFromSubmit() {
+        return fromSubmit;
+    }
+
+    public void setFromSubmit(Boolean fromSubmit) {
+        this.fromSubmit = fromSubmit;
     }
 
     public String getLocalStorageKey() {

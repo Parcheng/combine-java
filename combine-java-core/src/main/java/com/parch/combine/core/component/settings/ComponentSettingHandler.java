@@ -1,9 +1,9 @@
 package com.parch.combine.core.component.settings;
 
+import com.parch.combine.core.component.spi.AbsGetComponents;
+import com.parch.combine.core.component.spi.IGetComponents;
 import com.parch.combine.core.component.vo.ComponentInitVO;
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
-import com.parch.combine.core.component.settings.spi.AbsGetComponents;
-import com.parch.combine.core.component.settings.spi.IGetComponents;
 
 import java.util.ArrayList;
 import java.util.List;

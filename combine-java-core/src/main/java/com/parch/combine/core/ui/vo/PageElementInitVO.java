@@ -1,40 +1,46 @@
 package com.parch.combine.core.ui.vo;
 
-import com.parch.combine.core.ui.base.element.ElementConfig;
+import java.util.List;
 
-/**
- * 初始化VO
- */
 public class PageElementInitVO {
 
-    /**
-     * 组件KEY
-     */
-    private String key;
+    private String id;
 
-    /**
-     * 组件类描述
-     */
-    private Class<? extends ElementConfig<?, ?>> elementConfigClass;
+    private boolean success;
 
-    public PageElementInitVO(String key, Class<? extends ElementConfig<?, ?>> elementConfigClass) {
-        this.key = key;
-        this.elementConfigClass = elementConfigClass;
+    private List<String> componentIds;
+
+    private List<String> errorList;
+
+    public String getId() {
+        return id;
     }
 
-    public String getKey() {
-        return key;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public Class<? extends ElementConfig<?, ?>> getElementConfigClass() {
-        return elementConfigClass;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public void setElementConfigClass(Class<? extends ElementConfig<?, ?>> elementConfigClass) {
-        this.elementConfigClass = elementConfigClass;
+    public List<String> getComponentIds() {
+        return componentIds;
+    }
+
+    public void setComponentIds(List<String> componentIds) {
+        this.componentIds = componentIds;
+    }
+
+    public List<String> getErrorList() {
+        return errorList;
+    }
+
+    public void setErrorList(List<String> errorList) {
+        this.errorList = errorList;
     }
 }

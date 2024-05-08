@@ -1,4 +1,4 @@
-package com.parch.combine.core.ui.base.element;
+package com.parch.combine.core.ui.base;
 
 import com.parch.combine.core.common.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;

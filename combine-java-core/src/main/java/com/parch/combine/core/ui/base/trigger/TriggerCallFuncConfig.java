@@ -1,15 +1,15 @@
-package com.parch.combine.core.ui.base.element.trigger;
+package com.parch.combine.core.ui.base.trigger;
 
 
-import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
+import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 /**
  * 配置类
  */
-@CommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用页面元素函数触发配置", desc = "当 TYPE = CALL_FUNC 时的参数列表")
+@CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "调用页面元素函数触发配置", desc = "当 TYPE = CALL_FUNC 时的参数列表")
 public class TriggerCallFuncConfig extends TriggerEntity {
 
     @Field(key = "id", name = "页面元素ID", type = FieldTypeEnum.TEXT, isRequired = true)

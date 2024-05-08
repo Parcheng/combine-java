@@ -7,11 +7,15 @@ public class UIConfigVO {
 
     private Map<String, Object> constant;
 
+    private List<Map<String, Object>> dataLoads;
+
     private List<Map<String, Object>> templates;
 
     private List<Map<String, Object>> elements;
 
-    private Map<String, List<Map<String, Object>>> pages;
+    private List<PageElementGroupVO> groups;
+
+    private Map<String, Map<String, Object>> pages;
 
     public Map<String, Object> getConstant() {
         return constant;
@@ -37,11 +41,27 @@ public class UIConfigVO {
         this.elements = elements;
     }
 
-    public Map<String, List<Map<String, Object>>> getPages() {
+    public Map<String, Map<String, Object>> getPages() {
         return pages;
     }
 
-    public void setPages(Map<String, List<Map<String, Object>>> pages) {
+    public void setPages(Map<String, Map<String, Object>> pages) {
         this.pages = pages;
+    }
+
+    public List<Map<String, Object>> getDataLoads() {
+        return dataLoads;
+    }
+
+    public void setDataLoads(List<Map<String, Object>> dataLoads) {
+        this.dataLoads = dataLoads;
+    }
+
+    public List<PageElementGroupVO> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<PageElementGroupVO> groups) {
+        this.groups = groups;
     }
 }

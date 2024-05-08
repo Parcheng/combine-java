@@ -1,4 +1,4 @@
-package com.parch.combine.core.ui.base.element.dataload;
+package com.parch.combine.core.ui.base.dataload;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * 数据加载配置
  */
-public abstract class DataLoadEntity {
+public abstract class DataLoadConfig {
 
     @Field(key = "id", name = "ID", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
     private String id;

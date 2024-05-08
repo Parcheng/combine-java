@@ -1,35 +1,39 @@
-package com.parch.combine.core.ui.base.element.dataload;
+package com.parch.combine.core.ui.base.trigger;
 
 import com.parch.combine.core.common.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 /**
- * 数据加载类型
+ * 页面元素操作类型枚举
  */
-public enum DataLoadTypeEnum implements IOptionSetting {
+public enum TriggerTypeEnum implements IOptionSetting {
 
-    API("外部API", true),
-    FILE("文件数据", true),
-    REF("引用", true);
+    CALL_URL("调用URL", true),
+    CALL_FUNC("调用页面元素函数", true),
+    LOAD("加载元素", true),
+    LOAD_DATA("加载数据", true),
+    SKIP("跳转", true),
+    CUSTOM("自定义", true),
+    NONE("未知", false);
 
     private String name;
     private boolean isValid;
 
-    DataLoadTypeEnum(String name, boolean isValid) {
+    TriggerTypeEnum(String name, boolean isValid) {
         this.name = name;
         this.isValid = isValid;
     }
 
-    public static DataLoadTypeEnum get(String name) {
+    public static TriggerTypeEnum get(String name) {
         if (CheckEmptyUtil.isEmpty(name)) {
-            return REF;
+            return NONE;
         }
-        for (DataLoadTypeEnum value : DataLoadTypeEnum.values()) {
+        for (TriggerTypeEnum value : TriggerTypeEnum.values()) {
             if (value.toString().equals(name.toUpperCase())) {
                 return value;
             }
         }
-        return REF;
+        return NONE;
     }
 
     @Override

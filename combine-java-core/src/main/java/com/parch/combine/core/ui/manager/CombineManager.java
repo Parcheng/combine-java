@@ -1,64 +1,61 @@
-//package com.parch.combine.core.ui.manager;
-//
-//import com.parch.combine.core.common.util.CheckEmptyUtil;
-//import com.parch.combine.core.component.base.FileInfo;
-//import com.parch.combine.core.component.context.ComponentContextHandler;
-//import com.parch.combine.core.component.handler.CombineManagerHandler;
-//import com.parch.combine.core.component.tools.PrintHelper;
-//import com.parch.combine.core.component.vo.DataResult;
-//import com.parch.combine.core.component.vo.FlowConfigVO;
-//import com.parch.combine.core.component.vo.FlowInitVO;
-//
-//import java.util.List;
-//import java.util.Map;
-//import java.util.UUID;
-//import java.util.function.Consumer;
-//
-///**
-// * 核心处理器
-// */
-//public class CombineManager {
-//
-//    private String scopeKey;
-//
-//    private PageElementLogicManager component;
-//
-//    private PageConstantManager constant;
-//
-//    private PageElementManager flowAspect;
-//
-//    private PageGroupManager flow;
-//
-//    private PageTemplateManager initConfig;
-//
-//    public CombineManager() {
-//        scopeKey = UUID.randomUUID().toString();
-//        constant = new PageConstantManager();
-//        initConfig = new PageTemplateManager();
-//        component = new PageElementLogicManager();
-//        flowAspect = new PageElementManager(component);
-//        flow = new PageGroupManager(component);
-//        CombineManagerHandler.register(scopeKey, this);
-//    }
-//
-//    public void init(FlowConfigVO config, Consumer<FlowInitVO> func) {
-//        // 保存常量到常量池
-//        constant.save(config.getConstant());
-//
-//        // 加载初始化配置
-//        initConfig.load(config.getInit());
-//
-//        // 初始化逻辑块
-//        component.initBlock(scopeKey, config.getBlocks(), func);
-//
-//        // 初始化前置和后置逻辑
-//        flowAspect.initBefore(scopeKey, config.getBefore(), func);
-//        flowAspect.initAfter(scopeKey, config.getAfter(), func);
-//
-//        // 初始化每个接口的逻辑
-//        flow.init(scopeKey, config.getFlows(), func);
-//    }
-//
+package com.parch.combine.core.ui.manager;
+
+import com.parch.combine.core.common.manager.ConstantManager;
+import com.parch.combine.core.ui.handler.CombineManagerHandler;
+import com.parch.combine.core.ui.vo.UIConfigVO;
+
+import java.util.UUID;
+
+/**
+ * 核心处理器
+ */
+public class CombineManager {
+
+    private String scopeKey;
+
+    private DataLoadManager dataLoad;
+
+    private PageElementLogicManager pageElementLogic;
+
+    private PageGroupManager pageGroup;
+
+    private PageManager page;
+
+    private PageTemplateManager pageTemplate;
+
+    private ConstantManager constant;
+
+    public CombineManager() {
+        scopeKey = UUID.randomUUID().toString();
+        constant = new ConstantManager();
+        dataLoad = new DataLoadManager();
+        pageElementLogic = new PageElementLogicManager();
+        pageTemplate = new PageTemplateManager();
+        pageGroup = new PageGroupManager(pageElementLogic);
+        page = new PageManager();
+        CombineManagerHandler.register(scopeKey, this);
+    }
+
+    public void init(UIConfigVO config) { // Consumer<FlowInitVO> func
+        // 保存常量到常量池
+        constant.save(config.getConstant());
+
+        // 加载数据加载配置
+        dataLoad.load(config.getDataLoads());
+
+        // 加载DOM模板配置
+        pageElementLogic.load(config.getTemplates());
+
+        // 加载页面元素配置
+        pageElementLogic.load(config.getElements());
+
+        // 初始化页面元素组配置
+        pageGroup.init(config.getGroups());
+
+        // 初始化每个接口的逻辑
+        page.load(config.getPages());
+    }
+
 //    /**
 //     * 执行业务逻辑集合
 //     *
@@ -112,28 +109,32 @@
 //
 //        return result;
 //    }
-//
-//    public String getScopeKey() {
-//        return scopeKey;
-//    }
-//
-//    public PageElementLogicManager getComponent() {
-//        return component;
-//    }
-//
-//    public PageConstantManager getConstant() {
-//        return constant;
-//    }
-//
-//    public PageElementManager getFlowAspect() {
-//        return flowAspect;
-//    }
-//
-//    public PageGroupManager getFlow() {
-//        return flow;
-//    }
-//
-//    public PageTemplateManager getInitConfig() {
-//        return initConfig;
-//    }
-//}
+
+    public String getScopeKey() {
+        return scopeKey;
+    }
+
+    public DataLoadManager getDataLoad() {
+        return dataLoad;
+    }
+
+    public PageElementLogicManager getPageElementLogic() {
+        return pageElementLogic;
+    }
+
+    public PageGroupManager getPageGroup() {
+        return pageGroup;
+    }
+
+    public PageManager getPage() {
+        return page;
+    }
+
+    public PageTemplateManager getPageTemplate() {
+        return pageTemplate;
+    }
+
+    public ConstantManager getConstant() {
+        return constant;
+    }
+}

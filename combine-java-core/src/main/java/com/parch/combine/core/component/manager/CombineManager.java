@@ -1,5 +1,6 @@
 package com.parch.combine.core.component.manager;
 
+import com.parch.combine.core.common.manager.ConstantManager;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.context.ComponentContextHandler;
