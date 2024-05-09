@@ -1,25 +1,28 @@
 package com.parch.combine.core.ui.builder;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.ui.base.HtmlConfig;
+import com.parch.combine.core.ui.tools.HtmlBuileHelper;
+
 import java.util.*;
 
 public class HtmlBuilder {
 
     private final static Map<String, HtmlConfig> TEMP_MAP = new HashMap<>();
 
-    private HtmlConfig configs;
+    private HtmlConfig config;
 
-    public HtmlBuilder(HtmlConfig configs) {
-        this.configs = configs;
+    public HtmlBuilder(HtmlConfig config) {
+        this.config = config;
     }
 
     public String build() {
-
 //        List<ElementResultHelper.ElementResult> elementResults = new ArrayList<>();
 //        Map<String, String> initElements = new HashMap<>(16);
-//
-//        // 构建页面头和页面内容
-//        String head = buildHead();
+
+        // 构建页面头和页面内容
+        String head = buildHead();
 //        String body = buildBody(elementResults, configs, initElements, errorMsg);
 //
 //        // 构建用户定义脚本
@@ -36,6 +39,16 @@ public class HtmlBuilder {
 //        return buildPage(head, body, customScript, elementScript);
 
         return null;
+    }
+
+    private String buildHead() {
+        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(null, config.getLinks());
+        HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(null, config.getMetas());
+
+        String headBody = CheckEmptyUtil.EMPTY;
+        headBody += StringUtil.join(metaBuilder.build(), "");
+        headBody += StringUtil.join(linkBuilder.build(), "");
+        return HtmlBuileHelper.build("head", headBody, null, false);
     }
 
 //    /**
