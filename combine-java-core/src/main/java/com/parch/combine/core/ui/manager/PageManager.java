@@ -1,7 +1,7 @@
 package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.util.*;
-import com.parch.combine.core.ui.builder.config.HtmlConfig;
+import com.parch.combine.core.ui.base.HtmlConfig;
 import java.util.*;
 
 public class PageManager {

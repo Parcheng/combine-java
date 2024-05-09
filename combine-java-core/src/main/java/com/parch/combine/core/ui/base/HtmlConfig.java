@@ -1,4 +1,4 @@
-package com.parch.combine.core.ui.builder.config;
+package com.parch.combine.core.ui.base;
 
 import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.*;

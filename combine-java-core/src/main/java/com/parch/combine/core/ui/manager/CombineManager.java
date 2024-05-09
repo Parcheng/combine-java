@@ -1,7 +1,7 @@
 package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.manager.ConstantManager;
-import com.parch.combine.core.ui.builder.config.HtmlConfig;
+import com.parch.combine.core.ui.base.HtmlConfig;
 import com.parch.combine.core.ui.handler.CombineManagerHandler;
 import com.parch.combine.core.ui.vo.CombineConfigVO;
 import com.parch.combine.core.ui.vo.CombineInitVO;

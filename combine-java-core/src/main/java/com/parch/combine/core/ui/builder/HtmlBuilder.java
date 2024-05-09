@@ -1,6 +1,6 @@
 package com.parch.combine.core.ui.builder;
 
-import com.parch.combine.core.ui.builder.config.HtmlConfig;
+import com.parch.combine.core.ui.base.HtmlConfig;
 import java.util.*;
 
 public class HtmlBuilder {

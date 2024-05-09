@@ -1,7 +1,7 @@
 package com.parch.combine.core.ui.builder;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.ui.builder.config.HtmlHeaderMetaConfig;
+import com.parch.combine.core.ui.base.HtmlHeaderMetaConfig;
 import com.parch.combine.core.ui.tools.HtmlBuileHelper;
 
 import java.util.ArrayList;
