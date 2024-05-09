@@ -6,11 +6,23 @@ import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.ui.manager.CombineManager;
 import com.parch.combine.core.ui.vo.CombineConfigVO;
 import com.parch.combine.core.ui.vo.CombineInitVO;
+import com.parch.combine.core.ui.vo.GlobalConfigVO;
+
 import java.util.function.Consumer;
 
 public class CombineJavaUIService implements ICombineJavaUIService {
 
     private CombineManager combineManager = new CombineManager();
+
+    private GlobalConfigVO globalConfig;
+
+    public CombineJavaUIService(String path) {
+        String testConfigJson = ResourceFileUtil.read(path);
+        globalConfig = JsonUtil.deserialize(testConfigJson, GlobalConfigVO.class);
+        if (globalConfig == null) {
+            globalConfig = new GlobalConfigVO();
+        }
+    }
 
     public void registerAsPath(String path, Consumer<CombineInitVO> func) {
         String configJson = ResourceFileUtil.read(path);
@@ -33,6 +45,10 @@ public class CombineJavaUIService implements ICombineJavaUIService {
 
     @Override
     public String getPage(String key) {
-        return combineManager.getPage();
+        return combineManager.getPage(key);
+    }
+
+    public GlobalConfigVO getGlobalConfig() {
+        return globalConfig;
     }
 }

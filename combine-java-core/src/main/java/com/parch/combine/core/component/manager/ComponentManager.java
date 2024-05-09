@@ -21,10 +21,13 @@ import java.util.function.Consumer;
  */
 public class ComponentManager {
 
-    /**
-     * 组件池
-     */
+    private String scopeKey;
+
     private final Map<String, AbsComponent<?,?>> COMPONENT_MAP = new HashMap<>();
+
+    public ComponentManager(String scopeKey) {
+        this.scopeKey = scopeKey;
+    }
 
     /**
      * 初始化函数
@@ -32,7 +35,7 @@ public class ComponentManager {
      * @param logicConfigs 逻辑配置集合
      * @return 已初始化的组件ID集合
      */
-    public CombineInitVO init(String scopeKey, List<Map<String, Object>> logicConfigs) {
+    public CombineInitVO init(List<Map<String, Object>> logicConfigs) {
         List<String> componentIds = new ArrayList<>();
         List<String> staticComponentIds = new ArrayList<>();
         List<String> errorMsgList = new ArrayList<>();
@@ -40,7 +43,7 @@ public class ComponentManager {
 
         // 根据逻辑配置构建组件集合
         for (Map<String, Object> logicConfig : logicConfigs) {
-            registerComponent(scopeKey, logicConfig, componentIds, staticComponentIds, errorMsgList, registerComponentIds);
+            registerComponent(logicConfig, componentIds, staticComponentIds, errorMsgList, registerComponentIds);
         }
 
         // 组件检测是否成功
@@ -67,9 +70,9 @@ public class ComponentManager {
      * @param configs 配置集合
      * @return 是否成功
      */
-    protected boolean initBlock(String scopeKey, List<Map<String, Object>> configs, Consumer<CombineInitVO> func) {
+    protected boolean initBlock(List<Map<String, Object>> configs, Consumer<CombineInitVO> func) {
         if (CheckEmptyUtil.isNotEmpty(configs)) {
-            CombineInitVO initResult = init(scopeKey, configs);
+            CombineInitVO initResult = init(configs);
             initResult.setFlowKey(CommonConstant.PLACEHOLDER);
 
             // 调用自定义处理函数
@@ -90,7 +93,7 @@ public class ComponentManager {
      * @param errorMsgList 错误信息集合
      * @param registerComponentIds 当前流程已注册的组件ID集合（通过ID引用的不会在这个集合中）
      */
-    protected void registerComponent(String scopeKey, Map<String, Object> logicConfig, List<String> componentIds,
+    protected void registerComponent(Map<String, Object> logicConfig, List<String> componentIds,
                                      List<String> staticComponentIds, List<String> errorMsgList, List<String> registerComponentIds) {
         // 获取组件ID（重复ID不重复解析）
         Object componentIdObj = logicConfig.get(FieldKeyCanstant.ID);
@@ -195,7 +198,7 @@ public class ComponentManager {
         }
 
         // 打印日志
-        boolean isPrint = logicConfig.getPrintResult() == null ? GlobalContextHandler.get().getPrintComponentResult() : logicConfig.getPrintResult();
+        boolean isPrint = logicConfig.getPrintResult() == null ? GlobalContextHandler.get(scopeKey).getPrintComponentResult() : logicConfig.getPrintResult();
         if (isPrint) {
             PrintHelper.printComponentResult(component, result);
         }

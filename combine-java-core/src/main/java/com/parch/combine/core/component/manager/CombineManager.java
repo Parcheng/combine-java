@@ -35,10 +35,10 @@ public class CombineManager {
     public CombineManager() {
         scopeKey = UUID.randomUUID().toString();
         constant = new ConstantManager();
-        initConfig = new InitConfigManager();
-        component = new ComponentManager();
-        flowAspect = new FlowAspectManager(component);
-        flow = new FlowManager(component);
+        initConfig = new InitConfigManager(scopeKey);
+        component = new ComponentManager(scopeKey);
+        flowAspect = new FlowAspectManager(scopeKey, component);
+        flow = new FlowManager(scopeKey, component);
         CombineManagerHandler.register(scopeKey, this);
     }
 
@@ -50,14 +50,14 @@ public class CombineManager {
         initConfig.load(config.getInit());
 
         // 初始化逻辑块
-        component.initBlock(scopeKey, config.getBlocks(), func);
+        component.initBlock(config.getBlocks(), func);
 
         // 初始化前置和后置逻辑
-        flowAspect.initBefore(scopeKey, config.getBefore(), func);
-        flowAspect.initAfter(scopeKey, config.getAfter(), func);
+        flowAspect.initBefore(config.getBefore(), func);
+        flowAspect.initAfter(config.getAfter(), func);
 
         // 初始化每个接口的逻辑
-        flow.init(scopeKey, config.getFlows(), func);
+        flow.init(config.getFlows(), func);
     }
 
     /**

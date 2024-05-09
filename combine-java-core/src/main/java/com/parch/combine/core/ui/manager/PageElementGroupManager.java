@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PageGroupManager {
+public class PageElementGroupManager {
 
     /**
      * 流程组件集合配置缓存池
@@ -15,7 +15,7 @@ public class PageGroupManager {
 
     private PageElementLogicManager pageElementLogicManager;
 
-    public PageGroupManager(PageElementLogicManager pageElementLogicManager) {
+    public PageElementGroupManager(PageElementLogicManager pageElementLogicManager) {
         this.pageElementLogicManager = pageElementLogicManager;
     }
 

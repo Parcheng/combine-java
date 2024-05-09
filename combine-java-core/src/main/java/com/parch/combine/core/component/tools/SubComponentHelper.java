@@ -35,7 +35,7 @@ public class SubComponentHelper {
 
             if (componentObj instanceof Map) {
                 // 初始化组件
-                CombineInitVO initVO = combineManager.getComponent().init(combineManager.getScopeKey(), Collections.singletonList((Map<String, Object>) componentObj));
+                CombineInitVO initVO = combineManager.getComponent().init(Collections.singletonList((Map<String, Object>) componentObj));
                 // 判断是否初始化成功
                 if (initVO.isSuccess()) {
                     // 获取组件ID，并将组件配置替换为组件ID

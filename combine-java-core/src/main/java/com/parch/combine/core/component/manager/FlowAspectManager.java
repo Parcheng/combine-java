@@ -18,6 +18,8 @@ import java.util.function.Consumer;
  */
 class FlowAspectManager {
 
+    private String scopeKey;
+
     /**
      * 前置流程配置
      */
@@ -30,7 +32,8 @@ class FlowAspectManager {
 
     protected ComponentManager component;
 
-    public FlowAspectManager(ComponentManager component) {
+    public FlowAspectManager(String scopeKey, ComponentManager component) {
+        this.scopeKey = scopeKey;
         this.component = component;
     }
 
@@ -40,9 +43,9 @@ class FlowAspectManager {
      * @param interceptors 拦截器配置集合
      * @return 是否成功
      */
-    protected boolean initBefore(String scopeKey, List<FlowAspectVO> interceptors, Consumer<CombineInitVO> func) {
+    protected boolean initBefore(List<FlowAspectVO> interceptors, Consumer<CombineInitVO> func) {
         synchronized(BEFORE_FLOWS) {
-            return init(scopeKey, BEFORE_FLOWS, interceptors, func);
+            return init(BEFORE_FLOWS, interceptors, func);
         }
     }
 
@@ -52,9 +55,9 @@ class FlowAspectManager {
      * @param interceptors 拦截器配置集合
      * @return 是否成功
      */
-    protected boolean initAfter(String scopeKey, List<FlowAspectVO> interceptors, Consumer<CombineInitVO> func) {
+    protected boolean initAfter(List<FlowAspectVO> interceptors, Consumer<CombineInitVO> func) {
         synchronized(AFTER_FLOWS) {
-            return init(scopeKey, AFTER_FLOWS, interceptors, func);
+            return init(AFTER_FLOWS, interceptors, func);
         }
     }
 
@@ -64,11 +67,11 @@ class FlowAspectManager {
      * @param aspects 切面配置集合
      * @return 是否成功
      */
-    private boolean init(String scopeKey, List<AspectConfig> data, List<FlowAspectVO> aspects, Consumer<CombineInitVO> func) {
+    private boolean init(List<AspectConfig> data, List<FlowAspectVO> aspects, Consumer<CombineInitVO> func) {
         if (CheckEmptyUtil.isNotEmpty(aspects)) {
             for (FlowAspectVO aspect : aspects) {
                 // 初始化拦截器的组件
-                CombineInitVO initResult = component.init(scopeKey, aspect.getFlow());
+                CombineInitVO initResult = component.init(aspect.getFlow());
                 initResult.setFlowKey(CheckEmptyUtil.isEmpty(aspect.getId()) ? CommonConstant.PLACEHOLDER : aspect.getId());
 
                 // 构建配置对象并保存

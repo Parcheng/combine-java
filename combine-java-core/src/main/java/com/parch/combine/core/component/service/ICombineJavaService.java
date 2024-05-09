@@ -103,4 +103,7 @@ public interface ICombineJavaService {
      * @return 结果集
      */
     DataResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func);
+
+
+    String getScopeKey();
 }

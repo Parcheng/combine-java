@@ -10,6 +10,12 @@ import java.util.Map;
  */
 public class InitConfigManager extends AbsPreLoadConfigManager<InitConfig> {
 
+    private String scopeKey;
+
+    public InitConfigManager(String scopeKey) {
+        this.scopeKey = scopeKey;
+    }
+
     @Override
     protected <T extends InitConfig> T initConfig(String id, String type, Map<String, Object> configMap, Class<T> clazz) {
         T initConfigObj;

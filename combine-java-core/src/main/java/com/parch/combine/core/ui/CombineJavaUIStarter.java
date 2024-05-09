@@ -1,9 +1,12 @@
 package com.parch.combine.core.ui;
 
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.ui.tools.PrintHelper;
 import com.parch.combine.core.ui.handler.ElementClassHandler;
 import com.parch.combine.core.ui.service.CombineJavaUIService;
 import com.parch.combine.core.ui.service.ICombineJavaUIService;
+import com.parch.combine.core.ui.vo.GlobalConfigVO;
 import com.parch.combine.core.ui.vo.PageElementClassInitVO;
 import java.util.List;
 
@@ -25,10 +28,8 @@ public class CombineJavaUIStarter {
      * @param path 初始化文件相对路径
      */
     public static ICombineJavaUIService init(String path) {
-        CombineJavaUIService service = new CombineJavaUIService();
-
-//        GlobalContextHandler.init(path);
-//        GlobalContext context = GlobalContextHandler.get();
+        CombineJavaUIService service = new CombineJavaUIService(path);
+        GlobalConfigVO globalConfig = service.getGlobalConfig();
 //        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 //        PrintHelper.printInit("初始化全局设置 >>>");
 //        PrintHelper.printInit("加载配置文件设置   -> " + StringUtil.join(context.getInitConfigs(), ","));
@@ -39,9 +40,9 @@ public class CombineJavaUIStarter {
 //        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
-//        PrintHelper.printInit("初始化页面 >>>");
-//        for (String initConfigPath : context.getInitConfigs()) {
-//            combineWebService.registerFlowAsPath(initConfigPath, vo -> {
+        PrintHelper.printInit("初始化页面 >>>");
+        for (String initConfigPath : globalConfig.getInitConfigs()) {
+            service.registerAsPath(initConfigPath, vo -> {
 //                PrintHelper.printInit(vo.getFlowKey() + " | " + StringUtil.join(vo.getComponentIds(), ", "));
 //                if (CheckEmptyUtil.isNotEmpty(vo.getStaticComponentIds())) {
 //                    PrintHelper.printInit(vo.getFlowKey() + " STATIC | " + StringUtil.join(vo.getStaticComponentIds(), ", "));
@@ -51,9 +52,9 @@ public class CombineJavaUIStarter {
 //                        PrintUtil.printError(vo.getFlowKey() + " Error：" + errorMsg);
 //                    }
 //                }
-//            });
-//        }
-//        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
+            });
+        }
+        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
 //        PrintHelper.printInit("执行流程逻辑 >>>");

@@ -1,6 +1,7 @@
 package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.manager.ConstantManager;
+import com.parch.combine.core.ui.builder.config.HtmlConfig;
 import com.parch.combine.core.ui.handler.CombineManagerHandler;
 import com.parch.combine.core.ui.vo.CombineConfigVO;
 import com.parch.combine.core.ui.vo.CombineInitVO;
@@ -19,7 +20,7 @@ public class CombineManager {
 
     private PageElementLogicManager pageElementLogic;
 
-    private PageGroupManager pageGroup;
+    private PageElementGroupManager pageGroup;
 
     private PageManager page;
 
@@ -33,7 +34,7 @@ public class CombineManager {
         dataLoad = new DataLoadManager();
         pageElementLogic = new PageElementLogicManager();
         pageTemplate = new PageTemplateManager();
-        pageGroup = new PageGroupManager(pageElementLogic);
+        pageGroup = new PageElementGroupManager(pageElementLogic);
         page = new PageManager();
         CombineManagerHandler.register(scopeKey, this);
     }
@@ -56,6 +57,14 @@ public class CombineManager {
 
         // 初始化每个接口的逻辑
         page.load(config.getPages());
+    }
+
+    public String getPage(String key) {
+        HtmlConfig pageConfig = page.get(key);
+
+
+
+        return null;
     }
 
 //    /**
@@ -116,7 +125,5 @@ public class CombineManager {
         return scopeKey;
     }
 
-    public String getPage() {
-        return null;
-    }
+
 }

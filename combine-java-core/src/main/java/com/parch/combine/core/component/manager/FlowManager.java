@@ -14,14 +14,14 @@ import java.util.function.Consumer;
  */
 public class FlowManager {
 
-    /**
-     * 流程组件集合配置缓存池
-     */
+    private String scopeKey;
+
     private final Map<String, List<String>> FLOW_COMPONENT_ID_MAP = new HashMap<>();
 
     protected ComponentManager component;
 
-    public FlowManager(ComponentManager component) {
+    public FlowManager(String scopeKey, ComponentManager component) {
+        this.scopeKey = scopeKey;
         this.component = component;
     }
 
@@ -31,11 +31,11 @@ public class FlowManager {
      * @param flowConfigs 流程配置集合
      * @return 是否成功
      */
-    protected boolean init(String scopeKey, Map<String, List<Map<String, Object>>> flowConfigs, Consumer<CombineInitVO> func) {
+    protected boolean init(Map<String, List<Map<String, Object>>> flowConfigs, Consumer<CombineInitVO> func) {
         // 初始化每个接口的逻辑配置
         Set<String> urlPaths = flowConfigs.keySet();
         for (String urlPath : urlPaths) {
-            CombineInitVO initResult = component.init(scopeKey, flowConfigs.get(urlPath));
+            CombineInitVO initResult = component.init(flowConfigs.get(urlPath));
             initResult.setFlowKey(urlPath);
 
             // 成功才保存

@@ -34,8 +34,9 @@ public class CombineJavaStarter {
     public static ICombineJavaService init(String path) {
         CombineJavaService combineWebService = new CombineJavaService();
 
-        GlobalContextHandler.init(path);
-        GlobalContext context = GlobalContextHandler.get();
+        String scopeKey = combineWebService.getScopeKey();
+        GlobalContextHandler.init(scopeKey, path);
+        GlobalContext context = GlobalContextHandler.get(scopeKey);
         PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
         PrintHelper.printInit("初始化全局设置 >>>");
         PrintHelper.printInit("加载配置文件设置   -> " + StringUtil.join(context.getInitConfigs(), ","));

@@ -3,9 +3,8 @@ package com.parch.combine.core.ui.base;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.DomConfig;
-import com.parch.combine.core.ui.base.SourcePathCanstant;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
+import com.parch.combine.core.ui.tools.UrlPathHelper;
 
 public abstract class ElementTemplateConfig {
 
@@ -20,7 +19,7 @@ public abstract class ElementTemplateConfig {
     private DomConfig external;
 
     public ElementTemplateConfig(String path) {
-        this.tempPath = SourcePathCanstant.SYSTEM_URL_FLAG + path;
+        this.tempPath = UrlPathHelper.SYSTEM_URL_FLAG + path;
     }
 
     public void init() {}

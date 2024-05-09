@@ -38,7 +38,7 @@ public class SystemDocConfigComponent extends AbsComponent<SystemDocConfigInitCo
 
     @Override
     public DataResult execute() {
-        GlobalContext context = GlobalContextHandler.get();
+        GlobalContext context = GlobalContextHandler.get(getScopeKey());
         if (context == null) {
             return DataResult.fail(SystemDocConfigErrorEnum.FAIL);
         }

@@ -77,7 +77,7 @@ public class CombineJavaService implements ICombineJavaService {
 
     @Override
     public DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
+        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(getScopeKey()).getFlagConfigs();
         if (CheckEmptyUtil.isNotEmpty(flagConfigs.getInnerFlow()) && domain.startsWith(flagConfigs.getInnerFlow())) {
             throw new SysException(CommonErrorEnum.FLOW_IS_PROTECTED);
         }
@@ -107,6 +107,11 @@ public class CombineJavaService implements ICombineJavaService {
     @Override
     public DataResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func) {
         return combineManager.execute(key, params, headers, file, componentIds, func);
+    }
+
+    @Override
+    public String getScopeKey() {
+        return combineManager.getScopeKey();
     }
 
     /**

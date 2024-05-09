@@ -48,7 +48,7 @@ public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConf
             }
 
             // 初始化模板使用的组件
-            CombineInitVO initVO = manager.getComponent().init(getScopeKey(), configs);
+            CombineInitVO initVO = manager.getComponent().init(configs);
             if (!initVO.isSuccess()) {
                 for (String initError : initVO.getErrorList()) {
                     errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "模板中组件初始化失败: " + initError));

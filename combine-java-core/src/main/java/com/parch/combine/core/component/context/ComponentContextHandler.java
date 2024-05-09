@@ -38,7 +38,7 @@ public class ComponentContextHandler {
         context.setVariables(new HashMap<>());
 
         // 初始化 requestId
-        String requestIdKey = GlobalContextHandler.get().getRequestIdKey();
+        String requestIdKey = GlobalContextHandler.get(scopeKey).getRequestIdKey();
         if (context.getHeaders().containsKey(requestIdKey)) {
             context.setRequestId((context.getHeaders().get(requestIdKey)));
         } else if (context.getParams().containsKey(requestIdKey)) {

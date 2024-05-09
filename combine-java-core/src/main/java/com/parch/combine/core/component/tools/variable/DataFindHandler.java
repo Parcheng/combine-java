@@ -77,7 +77,8 @@ public class DataFindHandler {
         String[] valuePathArr = parsePath(path);
 
         // 全局配置
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
+        String scopeKey = ComponentContextHandler.getScopeKey();
+        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
 
         // 解析多级数据（数据来源可能是入参，可能是其他组件结果，也可能是常量池）
         int startIndex;
@@ -89,7 +90,7 @@ public class DataFindHandler {
             startIndex = 1;
         } else if (firstKey.equals(flagConfigs.getFlowConstant())) {
             // 当前数据为常量池数据
-            currData = CombineManagerHandler.get(ComponentContextHandler.getScopeKey()).getConstant().get();
+            currData = CombineManagerHandler.get(scopeKey).getConstant().get();
             startIndex = 1;
         } else if (firstKey.equals(flagConfigs.getFlowVariable())) {
             // 当前数据为流程中变量
@@ -224,7 +225,8 @@ public class DataFindHandler {
      * @return
      */
     private static Object parseFlag(Object data, String param) {
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
+        String scopeKey = ComponentContextHandler.getScopeKey();
+        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
         if (param.equals(flagConfigs.getSize())) {
             if (data == null) {
                 return 0;
@@ -250,7 +252,8 @@ public class DataFindHandler {
      * @return
      */
     private static Object parseResultDataFlag(DataResult data, String param) {
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
+        String scopeKey = ComponentContextHandler.getScopeKey();
+        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
         if (param.equals(flagConfigs.getComponentResultShowMsg())) {
             return data.getShowMsg();
         } else if (param.equals(flagConfigs.getComponentResultErrorMsg())){
@@ -281,7 +284,8 @@ public class DataFindHandler {
         String[] valuePathArr = parsePath(path);
 
         // 全局配置
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get().getFlagConfigs();
+        String scopeKey = ComponentContextHandler.getScopeKey();
+        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
 
         // 解析多级数据（数据来源可能是入参，可能是其他组件结果）
         int startIndex;
