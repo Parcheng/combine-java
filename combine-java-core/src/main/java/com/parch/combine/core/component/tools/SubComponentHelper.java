@@ -3,7 +3,7 @@ package com.parch.combine.core.component.tools;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.manager.CombineManager;
 
 import java.util.*;
@@ -35,7 +35,7 @@ public class SubComponentHelper {
 
             if (componentObj instanceof Map) {
                 // 初始化组件
-                FlowInitVO initVO = combineManager.getComponent().init(combineManager.getScopeKey(), Collections.singletonList((Map<String, Object>) componentObj));
+                CombineInitVO initVO = combineManager.getComponent().init(combineManager.getScopeKey(), Collections.singletonList((Map<String, Object>) componentObj));
                 // 判断是否初始化成功
                 if (initVO.isSuccess()) {
                     // 获取组件ID，并将组件配置替换为组件ID

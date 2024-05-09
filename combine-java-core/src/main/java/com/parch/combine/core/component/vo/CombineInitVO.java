@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 流程初始化VO
  */
-public class FlowInitVO {
+public class CombineInitVO {
 
     private String flowKey;
 

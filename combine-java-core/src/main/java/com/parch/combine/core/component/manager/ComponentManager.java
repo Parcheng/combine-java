@@ -11,7 +11,7 @@ import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.handler.ComponentClassHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -32,7 +32,7 @@ public class ComponentManager {
      * @param logicConfigs 逻辑配置集合
      * @return 已初始化的组件ID集合
      */
-    public FlowInitVO init(String scopeKey, List<Map<String, Object>> logicConfigs) {
+    public CombineInitVO init(String scopeKey, List<Map<String, Object>> logicConfigs) {
         List<String> componentIds = new ArrayList<>();
         List<String> staticComponentIds = new ArrayList<>();
         List<String> errorMsgList = new ArrayList<>();
@@ -53,7 +53,7 @@ public class ComponentManager {
         }
 
         // 构建结果VO
-        FlowInitVO initVO = new FlowInitVO();
+        CombineInitVO initVO = new CombineInitVO();
         initVO.setSuccess(success);
         initVO.setComponentIds(componentIds);
         initVO.setStaticComponentIds(staticComponentIds);
@@ -67,9 +67,9 @@ public class ComponentManager {
      * @param configs 配置集合
      * @return 是否成功
      */
-    protected boolean initBlock(String scopeKey, List<Map<String, Object>> configs, Consumer<FlowInitVO> func) {
+    protected boolean initBlock(String scopeKey, List<Map<String, Object>> configs, Consumer<CombineInitVO> func) {
         if (CheckEmptyUtil.isNotEmpty(configs)) {
-            FlowInitVO initResult = init(scopeKey, configs);
+            CombineInitVO initResult = init(scopeKey, configs);
             initResult.setFlowKey(CommonConstant.PLACEHOLDER);
 
             // 调用自定义处理函数

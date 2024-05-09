@@ -1,7 +1,7 @@
 package com.parch.combine.test.context;
 
-import com.parch.combine.core.component.service.ICombineWebService;
+import com.parch.combine.core.component.service.ICombineJavaService;
 
 public class TestContext {
-    public static ICombineWebService SERVICE;
+    public static ICombineJavaService SERVICE;
 }

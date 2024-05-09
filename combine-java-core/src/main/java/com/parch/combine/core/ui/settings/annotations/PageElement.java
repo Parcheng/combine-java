@@ -2,6 +2,8 @@ package com.parch.combine.core.ui.settings.annotations;
 
 import com.parch.combine.core.component.base.InitConfig;
 import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.ui.base.ElementLogicConfig;
+import com.parch.combine.core.ui.base.ElementTemplateConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -37,10 +39,10 @@ public @interface PageElement {
     /**
      * 逻辑配置Class
      */
-    Class<? extends LogicConfig> logicConfigClass();
+    Class<? extends ElementLogicConfig> logicConfigClass();
 
     /**
      * 初始化配置Class
      */
-    Class<? extends InitConfig> initConfigClass();
+    Class<? extends ElementTemplateConfig> templateConfigClass();
 }

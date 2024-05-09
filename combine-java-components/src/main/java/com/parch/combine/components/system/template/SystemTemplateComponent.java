@@ -5,12 +5,11 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
-import com.parch.combine.core.component.manager.ComponentManager;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.util.*;
 
@@ -49,7 +48,7 @@ public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConf
             }
 
             // 初始化模板使用的组件
-            FlowInitVO initVO = manager.getComponent().init(getScopeKey(), configs);
+            CombineInitVO initVO = manager.getComponent().init(getScopeKey(), configs);
             if (!initVO.isSuccess()) {
                 for (String initError : initVO.getErrorList()) {
                     errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "模板中组件初始化失败: " + initError));

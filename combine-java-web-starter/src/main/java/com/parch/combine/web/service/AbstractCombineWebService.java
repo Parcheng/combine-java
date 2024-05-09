@@ -5,7 +5,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.service.ICombineWebService;
+import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.web.dto.JsonConfigInitDTO;
 import com.parch.combine.web.util.ResourceFileUtil;
@@ -22,7 +22,7 @@ import java.util.*;
 
 public abstract class AbstractCombineWebService {
 
-    private ICombineWebService service;
+    private ICombineJavaService service;
 
     public AbstractCombineWebService(String configPath) {
         service = CombineJavaStarter.init(configPath);

@@ -6,7 +6,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.vo.FlowAspectVO;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -40,7 +40,7 @@ class FlowAspectManager {
      * @param interceptors 拦截器配置集合
      * @return 是否成功
      */
-    protected boolean initBefore(String scopeKey, List<FlowAspectVO> interceptors, Consumer<FlowInitVO> func) {
+    protected boolean initBefore(String scopeKey, List<FlowAspectVO> interceptors, Consumer<CombineInitVO> func) {
         synchronized(BEFORE_FLOWS) {
             return init(scopeKey, BEFORE_FLOWS, interceptors, func);
         }
@@ -52,7 +52,7 @@ class FlowAspectManager {
      * @param interceptors 拦截器配置集合
      * @return 是否成功
      */
-    protected boolean initAfter(String scopeKey, List<FlowAspectVO> interceptors, Consumer<FlowInitVO> func) {
+    protected boolean initAfter(String scopeKey, List<FlowAspectVO> interceptors, Consumer<CombineInitVO> func) {
         synchronized(AFTER_FLOWS) {
             return init(scopeKey, AFTER_FLOWS, interceptors, func);
         }
@@ -64,11 +64,11 @@ class FlowAspectManager {
      * @param aspects 切面配置集合
      * @return 是否成功
      */
-    private boolean init(String scopeKey, List<AspectConfig> data, List<FlowAspectVO> aspects, Consumer<FlowInitVO> func) {
+    private boolean init(String scopeKey, List<AspectConfig> data, List<FlowAspectVO> aspects, Consumer<CombineInitVO> func) {
         if (CheckEmptyUtil.isNotEmpty(aspects)) {
             for (FlowAspectVO aspect : aspects) {
                 // 初始化拦截器的组件
-                FlowInitVO initResult = component.init(scopeKey, aspect.getFlow());
+                CombineInitVO initResult = component.init(scopeKey, aspect.getFlow());
                 initResult.setFlowKey(CheckEmptyUtil.isEmpty(aspect.getId()) ? CommonConstant.PLACEHOLDER : aspect.getId());
 
                 // 构建配置对象并保存

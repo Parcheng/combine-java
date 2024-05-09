@@ -2,9 +2,11 @@ package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.manager.ConstantManager;
 import com.parch.combine.core.ui.handler.CombineManagerHandler;
-import com.parch.combine.core.ui.vo.UIConfigVO;
+import com.parch.combine.core.ui.vo.CombineConfigVO;
+import com.parch.combine.core.ui.vo.CombineInitVO;
 
 import java.util.UUID;
+import java.util.function.Consumer;
 
 /**
  * 核心处理器
@@ -36,7 +38,7 @@ public class CombineManager {
         CombineManagerHandler.register(scopeKey, this);
     }
 
-    public void init(UIConfigVO config) { // Consumer<FlowInitVO> func
+    public void init(CombineConfigVO config, Consumer<CombineInitVO> func) {
         // 保存常量到常量池
         constant.save(config.getConstant());
 
@@ -114,27 +116,7 @@ public class CombineManager {
         return scopeKey;
     }
 
-    public DataLoadManager getDataLoad() {
-        return dataLoad;
-    }
-
-    public PageElementLogicManager getPageElementLogic() {
-        return pageElementLogic;
-    }
-
-    public PageGroupManager getPageGroup() {
-        return pageGroup;
-    }
-
-    public PageManager getPage() {
-        return page;
-    }
-
-    public PageTemplateManager getPageTemplate() {
-        return pageTemplate;
-    }
-
-    public ConstantManager getConstant() {
-        return constant;
+    public String getPage() {
+        return null;
     }
 }

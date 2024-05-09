@@ -4,7 +4,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.error.SystemErrorHandler;
 import com.parch.combine.core.component.settings.ComponentSettingHandler;
-import com.parch.combine.core.component.vo.ComponentInitVO;
+import com.parch.combine.core.component.vo.ComponentClassInitVO;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -22,12 +22,12 @@ public class ComponentClassHandler {
     /**
      * 初始化组件
      */
-    public static List<ComponentInitVO> init() {
+    public static List<ComponentClassInitVO> init() {
         // 所有组件
-        List<ComponentInitVO> components = ComponentSettingHandler.getComponents();
+        List<ComponentClassInitVO> components = ComponentSettingHandler.getComponents();
 
         // 注册所有组件
-        for (ComponentInitVO vo : components) {
+        for (ComponentClassInitVO vo : components) {
             register(vo.getKey(), vo.getComponent());
         }
 

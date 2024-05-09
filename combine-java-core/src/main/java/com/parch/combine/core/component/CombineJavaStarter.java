@@ -6,11 +6,11 @@ import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
-import com.parch.combine.core.component.service.CombineWebService;
+import com.parch.combine.core.component.service.CombineJavaService;
 import com.parch.combine.core.component.handler.ComponentClassHandler;
-import com.parch.combine.core.component.service.ICombineWebService;
+import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.tools.PrintHelper;
-import com.parch.combine.core.component.vo.ComponentInitVO;
+import com.parch.combine.core.component.vo.ComponentClassInitVO;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,8 +19,8 @@ public class CombineJavaStarter {
     static {
         PrintHelper.printInit("=======================================================================================================================================================");
         PrintHelper.printInit("初始化组件 >>>");
-        List<ComponentInitVO> components = ComponentClassHandler.init();
-        for (ComponentInitVO vo : components) {
+        List<ComponentClassInitVO> components = ComponentClassHandler.init();
+        for (ComponentClassInitVO vo : components) {
             PrintHelper.printInit("组件【" + vo.getKey() + "】初始化完成");
         }
         PrintHelper.printInit("=======================================================================================================================================================");
@@ -31,8 +31,8 @@ public class CombineJavaStarter {
      *
      * @param path 初始化文件相对路径
      */
-    public static ICombineWebService init(String path) {
-        CombineWebService combineWebService = new CombineWebService();
+    public static ICombineJavaService init(String path) {
+        CombineJavaService combineWebService = new CombineJavaService();
 
         GlobalContextHandler.init(path);
         GlobalContext context = GlobalContextHandler.get();

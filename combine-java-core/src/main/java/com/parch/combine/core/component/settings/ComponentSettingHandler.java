@@ -2,7 +2,7 @@ package com.parch.combine.core.component.settings;
 
 import com.parch.combine.core.component.spi.AbsGetComponents;
 import com.parch.combine.core.component.spi.IGetComponents;
-import com.parch.combine.core.component.vo.ComponentInitVO;
+import com.parch.combine.core.component.vo.ComponentClassInitVO;
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
 
 import java.util.ArrayList;
@@ -19,9 +19,9 @@ public class ComponentSettingHandler {
      *
      * @return 组件集合
      */
-    public static List<ComponentInitVO> getComponents() {
+    public static List<ComponentClassInitVO> getComponents() {
         // 通过SPI加在所有组件
-        List<ComponentInitVO> components = new ArrayList<>();
+        List<ComponentClassInitVO> components = new ArrayList<>();
         ServiceLoader<AbsGetComponents> spiList = ServiceLoader.load(AbsGetComponents.class);
         for (IGetComponents service : spiList) {
             components.addAll(service.get());

@@ -4,7 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.StringUtil;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.test.vo.TestConfigItemVO;
 
 /**
@@ -48,7 +48,7 @@ public class PrintHandler {
      *
      * @param vo 初始化VO
      */
-    public static void flowInit(FlowInitVO vo) {
+    public static void flowInit(CombineInitVO vo) {
         PrintUtil.printInfo(("> 初始化流程【" + vo.getFlowKey() + "】 -> " + StringUtil.join(vo.getComponentIds(), ",")));
         if (CheckEmptyUtil.isNotEmpty(vo.getStaticComponentIds())) {
             PrintUtil.printInfo("> 初始化流程【" + vo.getFlowKey() + "】中静态逻辑块 -> " + StringUtil.join(vo.getStaticComponentIds(), ","));

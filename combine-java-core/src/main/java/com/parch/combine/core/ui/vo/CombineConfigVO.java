@@ -3,7 +3,7 @@ package com.parch.combine.core.ui.vo;
 import java.util.List;
 import java.util.Map;
 
-public class UIConfigVO {
+public class CombineConfigVO {
 
     private Map<String, Object> constant;
 

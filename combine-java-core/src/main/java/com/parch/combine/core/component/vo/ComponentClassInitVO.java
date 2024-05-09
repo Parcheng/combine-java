@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 /**
  * 组件初始化VO
  */
-public class ComponentInitVO {
+public class ComponentClassInitVO {
 
     /**
      * 组件KEY
@@ -17,7 +17,7 @@ public class ComponentInitVO {
      */
     private Class<? extends AbsComponent<?, ?>> component;
 
-    public ComponentInitVO(String key, Class<? extends AbsComponent<?, ?>> component) {
+    public ComponentClassInitVO(String key, Class<? extends AbsComponent<?, ?>> component) {
         this.key = key;
         this.component = component;
     }

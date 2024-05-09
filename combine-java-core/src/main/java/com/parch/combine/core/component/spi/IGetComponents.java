@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.spi;
 
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
-import com.parch.combine.core.component.vo.ComponentInitVO;
+import com.parch.combine.core.component.vo.ComponentClassInitVO;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface IGetComponents {
      *
      * @return 组件集合
      */
-    List<ComponentInitVO> get();
+    List<ComponentClassInitVO> get();
 
     /**
      * 获取组件设置

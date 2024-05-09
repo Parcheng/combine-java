@@ -2,7 +2,7 @@ package com.parch.combine.core.component.spi;
 
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
 import com.parch.combine.core.component.settings.config.ComponentSetting;
-import com.parch.combine.core.component.vo.ComponentInitVO;
+import com.parch.combine.core.component.vo.ComponentClassInitVO;
 import com.parch.combine.core.component.settings.builder.ComponentClassifySettingBuilder;
 
 import java.util.ArrayList;
@@ -26,10 +26,10 @@ public abstract class AbsGetComponents implements IGetComponents {
      * @return 组件集合
      */
     @Override
-    public List<ComponentInitVO> get() {
-        List<ComponentInitVO> components = new ArrayList<>();
+    public List<ComponentClassInitVO> get() {
+        List<ComponentClassInitVO> components = new ArrayList<>();
         for (ComponentSetting setting : setting.getSettings()) {
-            components.add(new ComponentInitVO(setting.getKey(), setting.thisComponentClass()));
+            components.add(new ComponentClassInitVO(setting.getKey(), setting.thisComponentClass()));
         }
         return components;
     };

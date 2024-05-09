@@ -1,5 +1,7 @@
 package com.parch.combine.core.ui.manager;
 
+import com.parch.combine.core.common.canstant.FieldKeyCanstant;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.dataload.ApiDataLoadConfig;
@@ -7,12 +9,47 @@ import com.parch.combine.core.ui.base.dataload.DataLoadConfig;
 import com.parch.combine.core.ui.base.dataload.DataLoadTypeEnum;
 import com.parch.combine.core.ui.base.dataload.FileDataLoadConfig;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class DataLoadManager extends AbsPreLoadConfigManager<DataLoadConfig>{
+public class DataLoadManager  {
 
-    @Override
-    protected DataLoadConfig initConfig(String id, String type, Map<String, Object> configMap) {
+    private final Map<String, DataLoadConfig> CONFIGS = new HashMap<>();
+
+    protected List<String> load(List<Map<String, Object>> configs) {
+        List<String> ids = new ArrayList<>();
+        if (CheckEmptyUtil.isNotEmpty(configs)) {
+            for (Map<String, Object> item : configs) {
+                ids.add(load(item));
+            }
+        }
+
+        return ids;
+    }
+
+    protected String load(Map<String, Object> configMap) {
+        String id = (String) configMap.get(FieldKeyCanstant.ID);
+        String type = (String) configMap.get(FieldKeyCanstant.TYPE);
+        if (CheckEmptyUtil.isEmpty(type)) {
+            return null;
+        }
+
+        String key = getKey(id, type);
+        if (CONFIGS.containsKey(key)) {
+            return id;
+        }
+
+        CONFIGS.put(key, build(id, type, configMap));
+        return id;
+    }
+
+    private String getKey(String id, String type) {
+        return type + (id == null ? CheckEmptyUtil.EMPTY : id);
+    }
+
+    private DataLoadConfig build(String id, String type, Map<String, Object> configMap) {
         if (configMap == null) {
             PrintUtil.printError("【ui】【dataLoad】【" + id + "】【" + type + "】配置为空");
             return null;

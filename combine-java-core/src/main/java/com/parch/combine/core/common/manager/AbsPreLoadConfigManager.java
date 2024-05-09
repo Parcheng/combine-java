@@ -1,4 +1,4 @@
-package com.parch.combine.core.ui.manager;
+package com.parch.combine.core.common.manager;
 
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -14,7 +14,7 @@ public abstract class AbsPreLoadConfigManager<C> {
 
     private final Map<String, Map<String, Object>> PRE_CONFIGS = new HashMap<>();
 
-    protected List<String> load(List<Map<String, Object>> configs) {
+    public List<String> load(List<Map<String, Object>> configs) {
         List<String> ids = new ArrayList<>();
         if (CheckEmptyUtil.isNotEmpty(configs)) {
             for (Map<String, Object> item : configs) {
@@ -25,7 +25,7 @@ public abstract class AbsPreLoadConfigManager<C> {
         return ids;
     }
 
-    protected String load(Map<String, Object> item) {
+    public String load(Map<String, Object> item) {
         String id = (String) item.get(FieldKeyCanstant.ID);
         String type = (String) item.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
@@ -40,15 +40,16 @@ public abstract class AbsPreLoadConfigManager<C> {
         return id;
     }
 
-    public C get(String id, String type) {
+    @SuppressWarnings("unchecked")
+    public <T extends C> T get(String id, String type, Class<T> clazz) {
         String key = getKey(id, type);
-        C config = CONFIGS.get(key);
+        T config = (T) CONFIGS.get(key);
         if (config != null) {
             return config;
         }
 
         Map<String, Object> preConfig = PRE_CONFIGS.get(key);
-        C newConfig = CONFIGS.put(key, this.initConfig(id, type, preConfig));;
+        T newConfig = this.initConfig(id, type, preConfig, clazz);
         if (newConfig == null) {
             return null;
         }
@@ -73,5 +74,5 @@ public abstract class AbsPreLoadConfigManager<C> {
         return type + (id == null ? CheckEmptyUtil.EMPTY : id);
     }
 
-    protected abstract C initConfig(String id, String type, Map<String, Object> configMap);
+    protected abstract <T extends C> T initConfig(String id, String type, Map<String, Object> configMap, Class<T> clazz);
 }

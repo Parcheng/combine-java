@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 配置JSON实体类
  */
-public class FlowConfigVO {
+public class CombineConfigVO {
 
     private Map<String, Object> constant;
 

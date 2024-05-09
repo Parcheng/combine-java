@@ -7,8 +7,8 @@ import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.core.component.vo.FlowConfigVO;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineConfigVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +42,7 @@ public class CombineManager {
         CombineManagerHandler.register(scopeKey, this);
     }
 
-    public void init(FlowConfigVO config, Consumer<FlowInitVO> func) {
+    public void init(CombineConfigVO config, Consumer<CombineInitVO> func) {
         // 保存常量到常量池
         constant.save(config.getConstant());
 

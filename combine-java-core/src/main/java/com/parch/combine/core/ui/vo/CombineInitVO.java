@@ -2,13 +2,13 @@ package com.parch.combine.core.ui.vo;
 
 import java.util.List;
 
-public class PageElementInitVO {
+public class CombineInitVO {
 
     private String id;
 
     private boolean success;
 
-    private List<String> componentIds;
+    private List<String> elementIds;
 
     private List<String> errorList;
 
@@ -26,14 +26,6 @@ public class PageElementInitVO {
 
     public void setSuccess(boolean success) {
         this.success = success;
-    }
-
-    public List<String> getComponentIds() {
-        return componentIds;
-    }
-
-    public void setComponentIds(List<String> componentIds) {
-        this.componentIds = componentIds;
     }
 
     public List<String> getErrorList() {

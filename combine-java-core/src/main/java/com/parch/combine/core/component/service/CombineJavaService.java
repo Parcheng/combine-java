@@ -10,8 +10,8 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.core.component.vo.FlowConfigVO;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineConfigVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.manager.ComponentManager;
 
@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 /**
  * 流程配置处理器
  */
-public class CombineWebService implements ICombineWebService {
+public class CombineJavaService implements ICombineJavaService {
 
     private boolean openRegister = true;
 
@@ -33,13 +33,13 @@ public class CombineWebService implements ICombineWebService {
      * @param path 配置文件路径
      * @param func 自定义函数
      */
-    public void registerFlowAsPath(String path, Consumer<FlowInitVO> func) {
+    public void registerFlowAsPath(String path, Consumer<CombineInitVO> func) {
         String configJson = ResourceFileUtil.read(path);
         registerFlow(configJson, func);
     }
 
     @Override
-    public void registerFlow(String configJson, Consumer<FlowInitVO> func) {
+    public void registerFlow(String configJson, Consumer<CombineInitVO> func) {
         if (!openRegister) {
             throw new SysException(CommonErrorEnum.FLOW_UN_OPEN_REGISTER);
         }
@@ -48,7 +48,7 @@ public class CombineWebService implements ICombineWebService {
             return;
         }
 
-        FlowConfigVO config = JsonUtil.deserialize(configJson, FlowConfigVO.class);
+        CombineConfigVO config = JsonUtil.deserialize(configJson, CombineConfigVO.class);
         if (config == null) {
             return;
         }

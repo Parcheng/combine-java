@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.manager;
 
 import com.parch.combine.core.common.util.FlowKeyUtil;
-import com.parch.combine.core.component.vo.FlowInitVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +31,11 @@ public class FlowManager {
      * @param flowConfigs 流程配置集合
      * @return 是否成功
      */
-    protected boolean init(String scopeKey, Map<String, List<Map<String, Object>>> flowConfigs, Consumer<FlowInitVO> func) {
+    protected boolean init(String scopeKey, Map<String, List<Map<String, Object>>> flowConfigs, Consumer<CombineInitVO> func) {
         // 初始化每个接口的逻辑配置
         Set<String> urlPaths = flowConfigs.keySet();
         for (String urlPath : urlPaths) {
-            FlowInitVO initResult = component.init(scopeKey, flowConfigs.get(urlPath));
+            CombineInitVO initResult = component.init(scopeKey, flowConfigs.get(urlPath));
             initResult.setFlowKey(urlPath);
 
             // 成功才保存
