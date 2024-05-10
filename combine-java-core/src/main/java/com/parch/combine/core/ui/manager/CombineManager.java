@@ -18,7 +18,7 @@ public class CombineManager {
 
     private DataLoadManager dataLoad;
 
-    private PageElementLogicManager pageElementLogic;
+    private PageElementManager pageElement;
 
     private PageElementGroupManager pageGroup;
 
@@ -28,18 +28,24 @@ public class CombineManager {
 
     private ConstantManager constant;
 
+    private TriggerManager trigger;
+
     public CombineManager() {
         scopeKey = UUID.randomUUID().toString();
         constant = new ConstantManager();
         dataLoad = new DataLoadManager();
-        pageElementLogic = new PageElementLogicManager();
+        trigger = new TriggerManager();
+        pageElement = new PageElementManager();
         pageTemplate = new PageTemplateManager();
-        pageGroup = new PageElementGroupManager(pageElementLogic);
+        pageGroup = new PageElementGroupManager(pageElement);
         page = new PageManager();
         CombineManagerHandler.register(scopeKey, this);
     }
 
     public void init(CombineConfigVO config, Consumer<CombineInitVO> func) {
+
+        // TODO func
+
         // 保存常量到常量池
         constant.save(config.getConstant());
 
@@ -47,10 +53,10 @@ public class CombineManager {
         dataLoad.load(config.getDataLoads());
 
         // 加载DOM模板配置
-        pageElementLogic.load(config.getTemplates());
+        pageElement.load(config.getTemplates());
 
         // 加载页面元素配置
-        pageElementLogic.load(config.getElements());
+        pageElement.load(config.getElements());
 
         // 初始化页面元素组配置
         pageGroup.init(config.getGroups());
@@ -67,59 +73,33 @@ public class CombineManager {
         return null;
     }
 
-//    /**
-//     * 执行业务逻辑集合
-//     *
-//     * @param params 参数
-//     * @param componentIds 业务逻辑中-需要执行的组件ID集合
-//     * @param func 自定义函数
-//     * @return 结果集
-//     */
-//    public DataResult execute(String key, Map<String, Object> params, Map<String, String> headers, List<String> componentIds, PageElementLogicManager.Function func) {
-//        return execute(key, params, headers, null, componentIds, func);
-//    }
-//
-//    /**
-//     * 执行业务逻辑集合
-//     *
-//     * @param params 参数
-//     * @param componentIds 业务逻辑中-需要执行的组件ID集合
-//     * @param func 自定义函数
-//     * @return 结果集
-//     */
-//    public DataResult execute(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, PageElementLogicManager.Function func) {
-//        // 初始化流程上下文
-//        ComponentContextHandler.init(scopeKey, key, params, headers, file);
-//        // 打印请求头和参数信息
-//        PrintHelper.printComponentHeader();
-//        PrintHelper.printComponentParam();
-//
-//        // 前置函数
-//        if (func != null) {
-//            func.before();
-//        }
-//
-//        // 执行前置逻辑
-//        DataResult result = flowAspect.executeBefore(key);
-//
-//        // 执行流程逻辑
-//        if (result.getSuccess() && !result.isStop() && CheckEmptyUtil.isNotEmpty(componentIds)) {
-//            result = component.executeComponents(componentIds);
-//        }
-//
-//        // 执行后置逻辑
-//        flowAspect.executeAfter(key);
-//
-//        // 后置函数
-//        if (func != null) {
-//            func.after();
-//        }
-//
-//        // 清除缓存
-//        ComponentContextHandler.clear();
-//
-//        return result;
-//    }
+    public DataLoadManager getDataLoad() {
+        return dataLoad;
+    }
+
+    public PageElementManager getPageElement() {
+        return pageElement;
+    }
+
+    public PageElementGroupManager getPageGroup() {
+        return pageGroup;
+    }
+
+    public PageManager getPage() {
+        return page;
+    }
+
+    public PageTemplateManager getPageTemplate() {
+        return pageTemplate;
+    }
+
+    public ConstantManager getConstant() {
+        return constant;
+    }
+
+    public TriggerManager getTrigger() {
+        return trigger;
+    }
 
     public String getScopeKey() {
         return scopeKey;

@@ -1,12 +1,16 @@
 package com.parch.combine.core.ui.context;
 
-public class ConfigLoadContext {
+import com.parch.combine.core.ui.manager.CombineManager;
+
+public class ConfigLoadingContext {
 
     private String scopeKey;
 
     private String systemUrl;
 
     private String baseUrl;
+
+    private CombineManager manager;
 
     public String getScopeKey() {
         return scopeKey;
@@ -30,5 +34,13 @@ public class ConfigLoadContext {
 
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
+    }
+
+    public CombineManager getManager() {
+        return manager;
+    }
+
+    public void setManager(CombineManager manager) {
+        this.manager = manager;
     }
 }

@@ -2,7 +2,7 @@ package com.parch.combine.core.ui.builder;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.ui.base.HtmlHeaderLinkConfig;
-import com.parch.combine.core.ui.tools.HtmlBuileHelper;
+import com.parch.combine.core.ui.tools.HtmlBuildTool;
 import com.parch.combine.core.ui.tools.UrlPathHelper;
 
 import java.util.ArrayList;
@@ -12,19 +12,21 @@ import java.util.Map;
 
 public class HtmlHeaderLinkBuilder {
 
-    private HtmlHeaderLinkConfig templateConfig;
+    private List<HtmlHeaderLinkConfig> templateConfigs;
 
     private List<HtmlHeaderLinkConfig> configs;
 
-    public HtmlHeaderLinkBuilder(HtmlHeaderLinkConfig templateConfig, List<HtmlHeaderLinkConfig> configs) {
-        this.templateConfig = templateConfig;
+    public HtmlHeaderLinkBuilder(List<HtmlHeaderLinkConfig> templateConfigs, List<HtmlHeaderLinkConfig> configs) {
+        this.templateConfigs = templateConfigs;
         this.configs = configs;
     }
 
     public List<String> build() {
         List<String> linkList = new ArrayList<>();
-        if (templateConfig != null) {
-            buildItem(linkList, templateConfig);
+        if (CheckEmptyUtil.isNotEmpty(templateConfigs)) {
+            for (HtmlHeaderLinkConfig templateConfig : templateConfigs) {
+                buildItem(linkList, templateConfig);
+            }
         }
 
         if (CheckEmptyUtil.isNotEmpty(configs)) {
@@ -45,31 +47,6 @@ public class HtmlHeaderLinkBuilder {
         linkProperties.put("media", config.getMedia());
         linkProperties.put("preload", config.getPreload());
         linkProperties.put("sizes", config.getSizes());
-        linkList.add(HtmlBuileHelper.build("link", null, linkProperties, true));
-    }
-
-    public List<String> check() {
-        List<String> msg = new ArrayList<>();
-        if (templateConfig != null) {
-            checkItem(msg, templateConfig, "[LINK]-模板-");
-        }
-
-        if (CheckEmptyUtil.isNotEmpty(configs)) {
-            for (int i = 0; i < configs.size(); i++) {
-                HtmlHeaderLinkConfig config = configs.get(i);
-                checkItem(msg, config, "[LINK]-第<" + (i + 1) + ">条-");
-            }
-        }
-
-        return msg;
-    }
-
-    private void checkItem(List<String> msg, HtmlHeaderLinkConfig config, String baseMsg) {
-        if (CheckEmptyUtil.isEmpty(config.getRel())) {
-            msg.add(baseMsg + "rel属性不能为空");
-        }
-        if (CheckEmptyUtil.isEmpty(config.getHref())) {
-            msg.add(baseMsg + "href属性不能为空");
-        }
+        linkList.add(HtmlBuildTool.build("link", null, linkProperties, true));
     }
 }

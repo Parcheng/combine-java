@@ -12,7 +12,7 @@ import java.util.List;
  * 配置类
  */
 @CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "自定义触发配置", desc = "当 TYPE = CUSTOM 时的参数列表")
-public class TriggerCustomEntity extends TriggerEntity {
+public class TriggerCustomEntity extends TriggerConfig {
 
     @Field(key = "functionName", name = "自定义函数名", type = FieldTypeEnum.TEXT, isRequired = true)
     private String functionName;
@@ -23,6 +23,14 @@ public class TriggerCustomEntity extends TriggerEntity {
     @Field(key = "toLocalStorage", name = "是否将结果保存到浏览器本地存储", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     @FieldDesc("缓存KEY为当前“Trigger配置ID”")
     private Boolean toLocalStorage;
+
+    @Override
+    public void init() {}
+
+    @Override
+    public List<String> check() {
+        return null;
+    }
 
     public String getFunctionName() {
         return functionName;

@@ -2,7 +2,7 @@ package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.manager.AbsPreLoadConfigManager;
 import com.parch.combine.core.common.util.TypeConversionUtil;
-import com.parch.combine.core.ui.base.ElementTemplateConfig;
+import com.parch.combine.core.ui.base.element.ElementTemplateConfig;
 import java.util.Map;
 
 public class PageTemplateManager extends AbsPreLoadConfigManager<ElementTemplateConfig> {

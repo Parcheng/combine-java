@@ -1,9 +1,13 @@
 package com.parch.combine.core.ui.builder;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.common.util.*;
+import com.parch.combine.core.ui.context.ConfigLoadingContext;
+import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
+import com.parch.combine.core.ui.tools.PrintTool;
 import com.parch.combine.core.ui.base.HtmlConfig;
-import com.parch.combine.core.ui.tools.HtmlBuileHelper;
+import com.parch.combine.core.ui.tools.HtmlBuildTool;
+import com.parch.combine.core.ui.tools.ScriptBuildTool;
+import com.parch.combine.core.ui.tools.UrlPathHelper;
 
 import java.util.*;
 
@@ -11,79 +15,68 @@ public class HtmlBuilder {
 
     private final static Map<String, HtmlConfig> TEMP_MAP = new HashMap<>();
 
+    private String key;
+
     private HtmlConfig config;
 
-    public HtmlBuilder(HtmlConfig config) {
+    private ElementGroupBuilder groupBuilder;
+
+    private HtmlConfig templateConfig;
+    public HtmlBuilder(String key, HtmlConfig config) {
+        this.key = key;
         this.config = config;
+        this.groupBuilder = new ElementGroupBuilder(config.getGroupIds());
+        loadTemplate();
+    }
+
+    public List<String> check() {
+        config.check();
+        groupBuilder.check();
+        if (templateConfig == null) {
+
+        }
+
+        return null;
     }
 
     public String build() {
 //        List<ElementResultHelper.ElementResult> elementResults = new ArrayList<>();
 //        Map<String, String> initElements = new HashMap<>(16);
 
-        // 构建页面头和页面内容
         String head = buildHead();
-//        String body = buildBody(elementResults, configs, initElements, errorMsg);
-//
-//        // 构建用户定义脚本
-//        String customScript = buildCustomScript();
-//
-//        // 构建元素组件脚本代码
-//        String elementScript = buildElementScript(elementResults, initElements);
-//
-//        if (CheckEmptyUtil.isNotEmpty(errorMsg)) {
-//            return null;
-//        }
-//
-//        // 生成页面
-//        return buildPage(head, body, customScript, elementScript);
+        String body = buildBody();
+        String script = buildScript(null, null);
 
-        return null;
+        // 生成页面
+        return buildPage(head, null, script);
     }
 
     private String buildHead() {
-        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(null, config.getLinks());
-        HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(null, config.getMetas());
+        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(templateConfig.getLinks(), config.getLinks());
+        HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateConfig.getMetas(), config.getMetas());
 
         String headBody = CheckEmptyUtil.EMPTY;
         headBody += StringUtil.join(metaBuilder.build(), "");
         headBody += StringUtil.join(linkBuilder.build(), "");
-        return HtmlBuileHelper.build("head", headBody, null, false);
+        return HtmlBuildTool.build("head", headBody, null, false);
     }
 
-//    /**
-//     * 构建页面
-//     *
-//     * @param head 头
-//     * @param body 内容体
-//     * @param importScript JS导入
-//     * @param codeScript JS编码
-//     * @return 页面代码
-//     */
-//    private String buildPage(String head, String body, String importScript, String codeScript) {
-//        HtmlConfig pageConfig = getpageConfig();
-//        HtmlConfig tempConfig = TEMP_MAP.get(pageConfig.getTempPath());
-//
-//        Map<String, String> htmlProperties = new HashMap<>();
-//        htmlProperties.put("lang", CheckEmptyUtil.isEmpty(pageConfig.getLang()) ? tempConfig.getLang() : pageConfig.getLang());
-//
-//        String htmlCode = HtmlBuileHelper.build("html", head + body + importScript + codeScript, htmlProperties, false);
-//        return CharacterUtil.replaceChinese(htmlCode).replaceAll("\\\\{2}", "\\\\\\\\\\\\");
-//    }
-//
-//    /**
-//     * 构建页面体
-//     *
-//     * @return 页面体内容
-//     */
-//    private String buildBody(List<ElementResultHelper.ElementResult> elementResults,
-//                             List<HtmlConfig.HtmlElementConfig> configs,
-//                             Map<String, String> initElement, List<String> errorMsg) {
-//        HtmlConfig pageConfig = getpageConfig();
-//        List<String> body = new ArrayList<>();
-//
+    private String buildPage(String head, String body, String script) {
+        Map<String, String> htmlProperties = new HashMap<>();
+        htmlProperties.put("lang", CheckEmptyUtil.isEmpty(config.getLang()) ? templateConfig.getLang() : config.getLang());
+
+        String htmlCode = HtmlBuildTool.build("html", head + body + script, htmlProperties, false);
+        return CharacterUtil.replaceChinese(htmlCode).replaceAll("\\\\{2}", "\\\\\\\\\\\\");
+    }
+
+    private String buildBody() {
+        List<String> body = new ArrayList<>();
+        ElementGroupBuilder.ElementGroupResult groupResult = groupBuilder.build();
+
+
+
 //        // 解析出元素组结果
-//        List<String> groupIds = pageConfig.getElements();
+//        List<String> groupIds = config.getGroupIds();
 //        for (String componentGroupId : groupIds) {
 //            DataResult componentResult = ComponentContextHandler.getResultData(componentGroupId);
 //            if (componentResult == null) {
@@ -91,9 +84,9 @@ public class HtmlBuilder {
 //                continue;
 //            }
 //
-//            List<ElementResultHelper.ElementResult> results = new ArrayList<>();
+//            List<ElementGroupBuilder.ElementResult> results = new ArrayList<>();
 //            buildElementResult(componentResult.getData(), results, body);
-//            for (ElementResultHelper.ElementResult result : results) {
+//            for (ElementGroupBuilder.ElementResult result : results) {
 //                result.setGroupId(componentGroupId);
 //            }
 //            elementResults.addAll(results);
@@ -120,7 +113,7 @@ public class HtmlBuilder {
 //                continue;
 //            }
 //
-//            body.add(HtmlBuileHelper.build(htmlElement, tempDomConfig, false));
+//            body.add(HtmlBuildTool.build(htmlElement, tempDomConfig, false));
 //            if (htmlElement != null) {
 //                if (CheckEmptyUtil.isNotEmpty(htmlElement.getShowElement()) && !groupIds.contains(htmlElement.getShowElement())) {
 //                    errorMsg.add("【" + htmlElement.getShowElement() + "】不存在");
@@ -129,94 +122,63 @@ public class HtmlBuilder {
 //                }
 //            }
 //        }
-//
-//        // 添加弹窗使用的DIV元素
-//        Map<String, String> properties = new HashMap<>();
-//        properties.put("id", "$combine-web-triggers");
-//        body.add(HtmlBuileHelper.build("div", null, properties, false));
-//
-//        // 构建页面
-//        return HtmlBuileHelper.build("body", StringUtil.join(body, ""), null, false);
-//    }
-//
-//    /**
-//     * 构建元素结果
-//     *
-//     * @param data 数据
-//     * @param results 结构集
-//     * @param body 方法体
-//     */
-//    @SuppressWarnings("unchecked")
-//    protected void buildElementResult(Object data, List<ElementResultHelper.ElementResult> results, List<String> body) {
+
+        // 添加弹窗使用的DIV元素
+        Map<String, String> properties = new HashMap<>();
+        properties.put("id", "$combine-web-triggers");
+        body.add(HtmlBuildTool.build("div", null, properties, false));
+
+        // 构建页面
+        return HtmlBuildTool.build("body", StringUtil.join(body, ""), null, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void buildElementResult(Object data, List<ElementGroupBuilder.ElementGroupResult> results, List<String> body) {
 //        if (data instanceof Collection) {
 //            for (Object itemData : (Collection<Object>) data) {
-//                if (itemData instanceof Map && ElementResultHelper.isElementResult((Map<?,?>) itemData)) {
-//                    ElementResultHelper.ElementResult result = new ElementResultHelper.ElementResult();
-//                    ElementResultHelper.convert(result, (Map<?,?>) itemData);
+//                if (itemData instanceof Map && ElementGroupBuilder.isElementResult((Map<?,?>) itemData)) {
+//                    ElementGroupBuilder.ElementResult result = new ElementGroupBuilder.ElementResult();
+//                    ElementGroupBuilder.convert(result, (Map<?,?>) itemData);
 //                    results.add(result);
 //                } else {
 //                    body.add(JsonUtil.serialize(itemData));
 //                }
 //            }
-//        } else if (data instanceof Map && ElementResultHelper.isElementResult((Map<?,?>) data)) {
-//            ElementResultHelper.ElementResult result = new ElementResultHelper.ElementResult();
-//            ElementResultHelper.convert(result, (Map<?,?>) data);
+//        } else if (data instanceof Map && ElementGroupBuilder.isElementResult((Map<?,?>) data)) {
+//            ElementGroupBuilder.ElementResult result = new ElementGroupBuilder.ElementResult();
+//            ElementGroupBuilder.convert(result, (Map<?,?>) data);
 //            results.add(result);
 //        } else {
 //            body.add(JsonUtil.serialize(data));
 //        }
-//    }
-//
-//    /**
-//     * 构建script脚本
-//     *
-//     * @return script脚本内容
-//     */
-//    protected String buildCustomScript() {
-//        WebPageInitConfig initConfig = getInitConfig();
-//        HtmlConfig pageConfig = getpageConfig();
-//        HtmlConfig tempConfig = TEMP_MAP.get(pageConfig.getTempPath());
-//
-//        List<String> scripts = new ArrayList<>();
-//
-//        // 添加模板脚本
-//        if (CheckEmptyUtil.isNotEmpty(tempConfig.getScripts())) {
-//            for (String scriptSrc : tempConfig.getScripts()) {
-//                scripts.add(ScriptBuildHelper.build(replaceUrlFlag(scriptSrc)));
-//            }
-//        }
-//
-//        // 添加用户配置脚本
-//        if (CheckEmptyUtil.isNotEmpty(pageConfig.getScripts())) {
-//            for (String scriptSrc : pageConfig.getScripts()) {
-//                scripts.add(ScriptBuildHelper.build(this.replaceUrlFlag((scriptSrc))));
-//            }
-//        }
-//
-//        return StringUtil.join(scripts, "");
-//    }
-//
-//    /**
-//     * 构建脚本编码
-//     *
-//     * @param elementResults 元素结果集合
-//     * @return 脚本编码集合
-//     */
-//    protected String buildElementScript(List<ElementResultHelper.ElementResult> elementResults, Map<String, String> initElements) {
-//        if (CheckEmptyUtil.isEmpty(elementResults)) {
-//            return CheckEmptyUtil.EMPTY;
-//        }
-//
-//        WebPageInitConfig initConfig = getInitConfig();
-//        List<String> scripts = new ArrayList<>();
-//
-//        // 添加框架核心功能引用脚本
-//        scripts.add(ScriptBuildHelper.build(initConfig.getSystemUrl() + "/lib/base.js"));
-//        for (ElementTypeEnum typeEnum : ElementTypeEnum.values()) {
-//            scripts.add(ScriptBuildHelper.build(initConfig.getSystemUrl() + "/lib/" + typeEnum.name().toLowerCase() + "_element.js"));
-//        }
-//
-//        // 添加框架组件实例注册代码
+    }
+
+    protected String buildScript(List<String> elementScripts, Map<String, String> initElements) {
+        ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
+
+        List<String> scripts = new ArrayList<>();
+
+        // 添加模板脚本
+        if (CheckEmptyUtil.isNotEmpty(templateConfig.getScripts())) {
+            for (String scriptSrc : templateConfig.getScripts()) {
+                scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(scriptSrc)));
+            }
+        }
+
+        // 添加用户配置脚本
+        if (CheckEmptyUtil.isNotEmpty(config.getScripts())) {
+            for (String scriptSrc : config.getScripts()) {
+                scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag((scriptSrc))));
+            }
+        }
+
+        // 添加框架核心功能引用脚本
+        scripts.add(ScriptBuildTool.build(context.getSystemUrl() + "/lib/base.js"));
+        for (String elementScript : elementScripts) {
+            scripts.add(ScriptBuildTool.build(elementScript));
+        }
+
+        // 添加框架组件实例注册代码
 //        List<String> scriptCodeList = new ArrayList<>();
 //        scriptCodeList.add("\n$combineWebUI.init(\"" + initConfig.getBaseUrl() + "\");");
 //        for (ElementResultHelper.ElementResult item : elementResults) {
@@ -230,32 +192,23 @@ public class HtmlBuilder {
 //            }
 //        });
 //        scripts.add(ScriptBuildHelper.build(scriptCodeList));
-//
-//        return StringUtil.join(scripts, "");
-//    }
 
-    public List<String> check() {
-
-        // mate
-        // link
-
-//        // 加载模板配置
-//        if (!TEMP_MAP.containsKey(pageConfig.getTempPath())) {
-//            try {
-//                String testConfigJson = ResourceFileUtil.read(pageConfig.getTempPath());
-//                if (CheckEmptyUtil.isEmpty(testConfigJson)) {
-//                    result.add(PageErrorHandler.buildCheckMsg(key, "加载模板数据为空: " + pageConfig.getTempPath()));
-//                } else {
-//                    HtmlConfig tempConfig = JsonUtil.deserialize(testConfigJson, HtmlConfig.class);
-//                    TEMP_MAP.put(pageConfig.getTempPath(), tempConfig);
-//                }
-//            } catch (Exception e) {
-//                result.add(PageErrorHandler.buildCheckMsg(key, "加载模板失败: " + e.getMessage()));
-//            }
-//        }
-
-        return null;
+        return StringUtil.join(scripts, "");
     }
 
-
+    private void loadTemplate() {
+        if (!TEMP_MAP.containsKey(config.getTempPath())) {
+            try {
+                String testConfigJson = ResourceFileUtil.read(config.getTempPath());
+                if (CheckEmptyUtil.isNotEmpty(testConfigJson)) {
+                    templateConfig = JsonUtil.deserialize(testConfigJson, HtmlConfig.class);
+                    TEMP_MAP.put(config.getTempPath(), templateConfig);
+                } else {
+                    PrintTool.printInit("【PAGE-TEMPLATE】【" + config.getTempPath() + "】【加载模板数据为空】");
+                }
+            } catch (Exception e) {
+                PrintTool.printInit("【PAGE-TEMPLATE】【" + config.getTempPath() + "】【加载模板失败】");
+            }
+        }
+    }
 }

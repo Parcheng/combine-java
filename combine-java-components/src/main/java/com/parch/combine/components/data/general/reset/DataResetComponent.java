@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.compare.CompareHelper;
+import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.vo.DataResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +60,7 @@ public class DataResetComponent extends AbsComponent<DataResetInitConfig, DataRe
                     continue;
                 }
 
-                boolean isTrue = CompareHelper.isPass(item, true);
+                boolean isTrue = CompareTool.isPass(item, true);
                 if (!isTrue) {
                     continue;
                 }

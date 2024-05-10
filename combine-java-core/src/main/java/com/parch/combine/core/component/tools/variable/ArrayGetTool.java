@@ -6,7 +6,7 @@ import com.parch.combine.core.common.util.DataParseUtil;
 /**
  * 参数数据获取工具类
  */
-public class ArrayGetHelper {
+public class ArrayGetTool {
 
     public static String[] splitToString(Object[] arr, int startIndex, int endIndex) {
         Object[] splitArr = ArrayUtil.split(arr, Object.class, startIndex, endIndex);

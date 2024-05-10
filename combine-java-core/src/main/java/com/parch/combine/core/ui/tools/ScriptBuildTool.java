@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 脚本构建
  */
-public class ScriptBuildHelper {
+public class ScriptBuildTool {
 
     /**
      * 构建script
@@ -20,7 +20,7 @@ public class ScriptBuildHelper {
     public static String build(String src) {
         Map<String, String> properties = new HashMap<>();
         properties.put("src", src);
-        return HtmlBuileHelper.build("script", null, properties, false);
+        return HtmlBuildTool.build("script", null, properties, false);
     }
 
     /**
@@ -30,6 +30,6 @@ public class ScriptBuildHelper {
      * @return 脚本代码
      */
     public static String build(List<String> body) {
-        return HtmlBuileHelper.build("script", StringUtil.join(body, "\n"), null, false);
+        return HtmlBuildTool.build("script", StringUtil.join(body, "\n"), null, false);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 比较处理器
  */
-public class CompareHelper {
+public class CompareTool {
 
     /**
      * 比较
@@ -75,7 +75,7 @@ public class CompareHelper {
         if (relation == RelationEnum.AND) {
             // 全部满足才行
             for (CompareConfig condition : conditions) {
-                CompareResult result = CompareHelper.compare(condition);
+                CompareResult result = CompareTool.compare(condition);
                 if (!result.isSuccess()) {
                     return false;
                 }
@@ -85,7 +85,7 @@ public class CompareHelper {
         } else {
             // 只满足一项即可
             for (CompareConfig condition : conditions) {
-                CompareResult result = CompareHelper.compare(condition);
+                CompareResult result = CompareTool.compare(condition);
                 if (result.isSuccess()) {
                     return true;
                 }

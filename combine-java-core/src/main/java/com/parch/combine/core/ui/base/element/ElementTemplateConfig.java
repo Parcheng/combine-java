@@ -1,8 +1,9 @@
-package com.parch.combine.core.ui.base;
+package com.parch.combine.core.ui.base.element;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.DomConfig;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.tools.UrlPathHelper;
 

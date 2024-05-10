@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * HTTP请求帮助类
  */
-public class HttpHelper {
+public class HttpTool {
 
     /**
      * 发送GET请求

@@ -3,7 +3,7 @@ package com.parch.combine.components.data.general.reset;
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.tools.ConfigGroupTool;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 
@@ -45,11 +45,11 @@ public class DataResetLogicConfig extends LogicConfig {
         }
 
         public void setResets(List<String> items) {
-            this.resets = ConfigGroupHelper.buildItemList(items, itemStr -> {
+            this.resets = ConfigGroupTool.buildItemList(items, itemStr -> {
                 DataResetConfig item = new DataResetConfig();
-                item.setFieldName(ConfigGroupHelper.getConfigByIndex(itemStr,0));
-                item.setType(ConfigGroupHelper.getConfigByIndex(itemStr,1));
-                item.setValue(ConfigGroupHelper.getConfigByIndex(itemStr,2));
+                item.setFieldName(ConfigGroupTool.getConfigByIndex(itemStr,0));
+                item.setType(ConfigGroupTool.getConfigByIndex(itemStr,1));
+                item.setValue(ConfigGroupTool.getConfigByIndex(itemStr,2));
                 return item;
             });
         }

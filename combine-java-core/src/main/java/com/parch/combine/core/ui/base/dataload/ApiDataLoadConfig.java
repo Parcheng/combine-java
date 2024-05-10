@@ -6,6 +6,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,6 +30,14 @@ public class ApiDataLoadConfig extends DataLoadConfig {
     @Field(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)
     @FieldDesc("以该值作为KEY将结果保存到浏览器缓存，不设置该值则不保存")
     private String localStorageKey;
+
+    @Override
+    public void init() {}
+
+    @Override
+    public List<String> check() {
+        return null;
+    }
 
     public String getUrl() {
         return url;

@@ -5,6 +5,8 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
+import java.util.List;
+
 /**
  * 数据加载配置
  */
@@ -13,6 +15,14 @@ public class FileDataLoadConfig extends DataLoadConfig {
 
     @Field(key = "path", name = "文件路径", type = FieldTypeEnum.TEXT, isRequired = true)
     private String path;
+
+    @Override
+    public void init() {}
+
+    @Override
+    public List<String> check() {
+        return null;
+    }
 
     public String getPath() {
         return path;

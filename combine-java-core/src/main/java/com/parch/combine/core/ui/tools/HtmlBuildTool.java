@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 页面构建帮助类
  */
-public class HtmlBuileHelper {
+public class HtmlBuildTool {
 
     public static String build(DomConfig domConfig, DomConfig tempDomConfig, boolean isSelfClose) {
         String tagName = null;

@@ -5,7 +5,7 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldGroup;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.tools.ConfigGroupTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +41,11 @@ public class DataEnumMappingLogicConfig extends LogicConfig {
     }
 
     public void setItems(List<String> items) {
-        this.items = ConfigGroupHelper.buildItemList(items, itemStr -> {
+        this.items = ConfigGroupTool.buildItemList(items, itemStr -> {
             MappingItem item = new MappingItem();
-            item.setEnumKey(ConfigGroupHelper.getConfigByIndex(itemStr,0));
-            item.setSourceField(ConfigGroupHelper.getConfigByIndex(itemStr,1));
-            item.setTargetField(ConfigGroupHelper.getConfigByIndex(itemStr,2));
+            item.setEnumKey(ConfigGroupTool.getConfigByIndex(itemStr,0));
+            item.setSourceField(ConfigGroupTool.getConfigByIndex(itemStr,1));
+            item.setTargetField(ConfigGroupTool.getConfigByIndex(itemStr,2));
             return item;
         });
     }

@@ -10,9 +10,9 @@ import java.util.Map;
 
 public abstract class AbsPreLoadConfigManager<C> {
 
-    private final Map<String, C> CONFIGS = new HashMap<>();
+    protected final Map<String, C> CONFIGS = new HashMap<>();
 
-    private final Map<String, Map<String, Object>> PRE_CONFIGS = new HashMap<>();
+    protected final Map<String, Map<String, Object>> PRE_CONFIGS = new HashMap<>();
 
     public List<String> load(List<Map<String, Object>> configs) {
         List<String> ids = new ArrayList<>();
@@ -70,7 +70,7 @@ public abstract class AbsPreLoadConfigManager<C> {
         return CONFIGS.containsKey(key) || PRE_CONFIGS.containsKey(key);
     }
 
-    private String getKey(String id, String type) {
+    protected String getKey(String id, String type) {
         return type + (id == null ? CheckEmptyUtil.EMPTY : id);
     }
 

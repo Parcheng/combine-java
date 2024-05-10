@@ -1,6 +1,6 @@
 package com.parch.combine.core.ui.vo;
 
-import com.parch.combine.core.ui.base.ElementConfig;
+import com.parch.combine.core.ui.base.element.ElementConfig;
 
 /**
  * 初始化VO
@@ -15,9 +15,9 @@ public class PageElementClassInitVO {
     /**
      * 组件类描述
      */
-    private Class<? extends ElementConfig<?, ?>> elementConfigClass;
+    private Class<? extends ElementConfig<?>> elementConfigClass;
 
-    public PageElementClassInitVO(String key, Class<? extends ElementConfig<?, ?>> elementConfigClass) {
+    public PageElementClassInitVO(String key, Class<? extends ElementConfig<?>> elementConfigClass) {
         this.key = key;
         this.elementConfigClass = elementConfigClass;
     }
@@ -30,11 +30,11 @@ public class PageElementClassInitVO {
         this.key = key;
     }
 
-    public Class<? extends ElementConfig<?, ?>> getElementConfigClass() {
+    public Class<? extends ElementConfig<?>> getElementConfigClass() {
         return elementConfigClass;
     }
 
-    public void setElementConfigClass(Class<? extends ElementConfig<?, ?>> elementConfigClass) {
+    public void setElementConfigClass(Class<? extends ElementConfig<?>> elementConfigClass) {
         this.elementConfigClass = elementConfigClass;
     }
 }

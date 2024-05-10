@@ -1,19 +1,14 @@
-package com.parch.combine.core.ui.base;
+package com.parch.combine.core.ui.base.element;
 
 import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldRef;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.dataload.DataLoadConfig;
-import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
-public abstract class ElementLogicConfig {
+public abstract class ElementConfig<T extends ElementTemplateConfig> {
 
     @Field(key = "id", name = "元素ID", type = FieldTypeEnum.TEXT, defaultValue = "随机字符粗")
     private String id;
 
     @Field(key = "type", name = "元素类型", type = FieldTypeEnum.SELECT, isRequired = true)
-    @FieldSelect(enumClass = ElementTypeEnum.class)
     private String type;
 
     @Field(key = "data", name = "初始数据", type = FieldTypeEnum.OBJECT)
@@ -36,6 +31,15 @@ public abstract class ElementLogicConfig {
 
     @Field(key = "templateId", name = "引用模板ID", type = FieldTypeEnum.TEXT)
     private String templateId;
+
+    private String elementJSPath;
+
+    private Class<T> templateConfigClass;
+
+    public ElementConfig(String elementJSPath, Class<T> templateConfigClass) {
+        this.elementJSPath = elementJSPath;
+        this.templateConfigClass = templateConfigClass;
+    }
 
     public void init() {}
 
@@ -109,5 +113,17 @@ public abstract class ElementLogicConfig {
 
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
+    }
+
+    public Class<T> thisTemplateConfigClass() {
+        return templateConfigClass;
+    }
+
+    public String getElementJSPath() {
+        return elementJSPath;
+    }
+
+    public void setElementJSPath(String elementJSPath) {
+        this.elementJSPath = elementJSPath;
     }
 }

@@ -3,7 +3,6 @@ package com.parch.combine.core.ui.base;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.DomConfig;
 
 public class HtmlElementConfig extends DomConfig {
 

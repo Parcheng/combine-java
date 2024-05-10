@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @CommonObject(key = PageSettingCanstant.DOM_KEY, name = "页面DOM元素配置")
-public class DomConfig {
+public class DomConfig{
 
     @Field(key = "tag", name = "DOM标签", type = FieldTypeEnum.TEXT, isRequired = true)
     private String tag;

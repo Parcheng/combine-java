@@ -6,13 +6,14 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * 配置类
  */
 @CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "调用URL触发配置", desc = "当 TYPE = CALL_URL 时的参数列表")
-public class TriggerCallUrlConfig extends TriggerEntity {
+public class TriggerCallUrlConfig extends TriggerConfig {
 
     @Field(key = "url", name = "URL地址", type = FieldTypeEnum.TEXT, isRequired = true)
     private String url;
@@ -32,6 +33,14 @@ public class TriggerCallUrlConfig extends TriggerEntity {
     @Field(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)
     @FieldDesc("以该值作为KEY将结果保存到浏览器缓存，不设置该值则不保存")
     private String localStorageKey;
+
+    @Override
+    public void init() {}
+
+    @Override
+    public List<String> check() {
+        return null;
+    }
 
     public String getUrl() {
         return url;

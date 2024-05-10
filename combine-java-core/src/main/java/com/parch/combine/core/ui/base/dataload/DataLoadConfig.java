@@ -1,5 +1,7 @@
 package com.parch.combine.core.ui.base.dataload;
 
+import com.parch.combine.core.common.base.ICheck;
+import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
@@ -13,7 +15,7 @@ import java.util.UUID;
 /**
  * 数据加载配置
  */
-public abstract class DataLoadConfig {
+public abstract class DataLoadConfig implements IInit, ICheck {
 
     @Field(key = "id", name = "ID", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
     private String id;

@@ -3,7 +3,7 @@ package com.parch.combine.components.data.general.edit;
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.tools.ConfigGroupTool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,11 +42,11 @@ public class DataEditLogicConfig extends LogicConfig {
     }
 
     public void setItems(List<String> items) {
-        this.items = ConfigGroupHelper.buildItemList(items, itemStr -> {
+        this.items = ConfigGroupTool.buildItemList(items, itemStr -> {
             DataEditItem item = new DataEditItem();
-            item.setSource(ConfigGroupHelper.getConfigByIndex(itemStr,0));
-            item.setType(DataEditTypeEnum.get(ConfigGroupHelper.getConfigByIndex(itemStr,1)));
-            item.setParams(Arrays.asList(ConfigGroupHelper.getConfigsByIndex(itemStr, 2, itemStr.length -1)));
+            item.setSource(ConfigGroupTool.getConfigByIndex(itemStr,0));
+            item.setType(DataEditTypeEnum.get(ConfigGroupTool.getConfigByIndex(itemStr,1)));
+            item.setParams(Arrays.asList(ConfigGroupTool.getConfigsByIndex(itemStr, 2, itemStr.length -1)));
             return item;
         });
     }

@@ -8,7 +8,7 @@ import java.util.Stack;
 /**
  * 表达式计算帮助类
  */
-public class ExpressionCalcHelper {
+public class ExpressionCalcTool {
 
     /**
      * 计算
@@ -16,15 +16,13 @@ public class ExpressionCalcHelper {
      * @param expression 表达式
      * @return
      */
-    public static <Doublic> Double calc(String expression) throws Exception {
+    public static Double calc(String expression) throws Exception {
         if (CheckEmptyUtil.isEmpty(expression)) {
             return null;
         }
 
         // 过滤掉空格
         expression = expression.replaceAll("\\s*", "");
-        Double result = calc(expression.toCharArray());
-
         return calc(expression.toCharArray());
     }
 

@@ -41,7 +41,13 @@ public class DataLoadManager  {
             return id;
         }
 
-        CONFIGS.put(key, build(id, type, configMap));
+        DataLoadConfig dataLoad = build(id, type, configMap);
+        if (dataLoad == null) {
+            return null;
+        }
+
+        dataLoad.init();
+        CONFIGS.put(key, dataLoad);
         return id;
     }
 
@@ -65,5 +71,9 @@ public class DataLoadManager  {
                 PrintUtil.printError("【ui】【dataLoad】【" + id + "】【" + type + "】类型不存在");
                 return null;
         }
+    }
+
+    public DataLoadConfig get(String id) {
+        return CONFIGS.get(id);
     }
 }

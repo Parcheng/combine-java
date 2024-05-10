@@ -11,10 +11,18 @@ import java.util.List;
  * 配置类
  */
 @CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "页面元素加载数据触发配置", desc = "当 TYPE = LOAD_DATA 时的参数列表")
-public class TriggerLoadDataEntity extends TriggerEntity {
+public class TriggerLoadDataEntity extends TriggerConfig {
 
     @Field(key = "loadIds", name = "要加载的LOAD ID集合", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
     private List<String> loadIds;
+
+    @Override
+    public void init() {}
+
+    @Override
+    public List<String> check() {
+        return null;
+    }
 
     public List<String> getLoadIds() {
         return loadIds;

@@ -2,7 +2,7 @@ package com.parch.combine.core.ui.settings.builder;
 
 import com.parch.combine.core.common.settings.annotations.Invalid;
 import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
-import com.parch.combine.core.ui.base.ElementConfig;
+import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.core.ui.settings.annotations.PageElementDesc;
 import com.parch.combine.core.ui.settings.config.PageElementSetting;
@@ -25,7 +25,7 @@ public class PageElementSettingBuilder {
         setting.setKey(scope + "." + annotation.key());
         setting.setName(annotation.name());
         setting.setDesc(new ArrayList<>());
-        setting.setElementClass((Class<? extends ElementConfig<?, ?>>) pageElementClass);
+        setting.setElementClass((Class<? extends ElementConfig<?>>) pageElementClass);
 
         PageElementDesc descAnnotation = pageElementClass.getAnnotation(PageElementDesc.class);
         if (descAnnotation != null) {

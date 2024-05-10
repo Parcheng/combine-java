@@ -3,7 +3,7 @@ package com.parch.combine.components.access.redis.command;
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.tools.ConfigGroupTool;
 
 import java.util.List;
 
@@ -57,10 +57,10 @@ public class RedisCommandLogicConfig extends LogicConfig {
     }
 
     public void setCommands(List<String> commands) {
-        this.commands = ConfigGroupHelper.buildItemList(commands, itemStr -> {
+        this.commands = ConfigGroupTool.buildItemList(commands, itemStr -> {
             RedisCommand item = new RedisCommand();
-            item.setType(RedisCommandTypeEnum.get(ConfigGroupHelper.getConfigByIndex(itemStr,0)));
-            item.setParams(ConfigGroupHelper.getConfigsByIndex(itemStr, 1, itemStr.length -1));
+            item.setType(RedisCommandTypeEnum.get(ConfigGroupTool.getConfigByIndex(itemStr,0)));
+            item.setParams(ConfigGroupTool.getConfigsByIndex(itemStr, 1, itemStr.length -1));
             return item;
         });
     }

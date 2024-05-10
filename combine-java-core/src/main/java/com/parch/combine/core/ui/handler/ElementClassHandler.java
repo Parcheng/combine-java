@@ -1,6 +1,6 @@
 package com.parch.combine.core.ui.handler;
 
-import com.parch.combine.core.ui.base.ElementConfig;
+import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.PageElementSettingHandler;
 import com.parch.combine.core.ui.vo.PageElementClassInitVO;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ElementClassHandler {
 
-    private final static Map<String, Class<? extends ElementConfig<?,?>>> ELEMENT_CLASS_MAP = new HashMap<>(16);
+    private final static Map<String, Class<? extends ElementConfig<?>>> ELEMENT_CLASS_MAP = new HashMap<>(16);
 
     public static List<PageElementClassInitVO> init() {
         // 所有组件
@@ -24,11 +24,11 @@ public class ElementClassHandler {
         return elements;
     }
 
-    public synchronized static void register(String key, Class<? extends ElementConfig<?,?>> elementConfigClass) {
+    public synchronized static void register(String key, Class<? extends ElementConfig<?>> elementConfigClass) {
         ELEMENT_CLASS_MAP.put(key, elementConfigClass);
     }
 
-    public static Class<? extends ElementConfig<?,?>> get(String key) {
+    public static Class<? extends ElementConfig<?>> get(String key) {
         return ELEMENT_CLASS_MAP.get(key);
     }
 }

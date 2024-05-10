@@ -3,7 +3,7 @@ package com.parch.combine.components.data.general.calc;
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.tools.ConfigGroupTool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,11 +32,11 @@ public class DataCalcLogicConfig extends LogicConfig {
     }
 
     public void setItems(List<String> items) {
-        this.items = ConfigGroupHelper.buildItemList(items, itemStr -> {
+        this.items = ConfigGroupTool.buildItemList(items, itemStr -> {
             DataCalcItem item = new DataCalcItem();
-            item.setTarget(ConfigGroupHelper.getConfigByIndex(itemStr,0));
-            item.setMode(ConfigGroupHelper.getConfigByIndex(itemStr,1));
-            item.setParams(Arrays.asList(ConfigGroupHelper.getConfigsByIndex(itemStr, 2, itemStr.length -1)));
+            item.setTarget(ConfigGroupTool.getConfigByIndex(itemStr,0));
+            item.setMode(ConfigGroupTool.getConfigByIndex(itemStr,1));
+            item.setParams(Arrays.asList(ConfigGroupTool.getConfigsByIndex(itemStr, 2, itemStr.length -1)));
             return item;
         });
     }

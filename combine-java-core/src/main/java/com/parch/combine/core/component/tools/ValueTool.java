@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 数据处理工具
  */
-public class ValueHelper {
+public class ValueTool {
 
     /**
      * 解析值到集合中

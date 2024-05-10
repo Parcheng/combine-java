@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldGroup;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.tools.ConfigGroupTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,11 @@ public class DataEnumRegisterLogicConfig extends LogicConfig {
     }
 
     public void setItems(List<String> items) {
-        this.items = ConfigGroupHelper.buildItemList(items, itemStr -> {
+        this.items = ConfigGroupTool.buildItemList(items, itemStr -> {
             EnumCacheHandler.EnumItem item = new EnumCacheHandler.EnumItem();
-            item.setCode(ConfigGroupHelper.getConfigByIndex(itemStr,0));
-            item.setName(ConfigGroupHelper.getConfigByIndex(itemStr,1));
-            item.setDesc(ConfigGroupHelper.getConfigByIndex(itemStr,2));
+            item.setCode(ConfigGroupTool.getConfigByIndex(itemStr,0));
+            item.setName(ConfigGroupTool.getConfigByIndex(itemStr,1));
+            item.setDesc(ConfigGroupTool.getConfigByIndex(itemStr,2));
             return item;
         });
     }

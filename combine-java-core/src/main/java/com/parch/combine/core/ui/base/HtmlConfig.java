@@ -1,13 +1,16 @@
 package com.parch.combine.core.ui.base;
 
+import com.parch.combine.core.common.base.ICheck;
 import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.ui.tools.ConfigErrorMsgTool;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class HtmlConfig implements IInit {
+public class HtmlConfig implements IInit, ICheck {
 
     @Field(key ="lang" , name = "HTML语言", type = FieldTypeEnum.TEXT, defaultValue = "en")
     private String lang;
@@ -40,6 +43,30 @@ public class HtmlConfig implements IInit {
         if (CheckEmptyUtil.isEmpty(tempPath)) {
             tempPath = "/static/template/page/management_template.json";
         }
+    }
+
+    @Override
+    public List<String> check() {
+        List<String> result = new ArrayList<>();
+        if (CheckEmptyUtil.isEmpty(this.configs)) {
+            result.add(ConfigErrorMsgTool.fieldCheckError("configs", "配置集合不能为空"));
+        }
+        if (CheckEmptyUtil.isNotEmpty(this.metas)) {
+            for (int i = 0; i < this.metas.size(); i++) {
+                for (String item : this.metas.get(i).check()) {
+                    result.add(ConfigErrorMsgTool.fieldCheckError("mates", i + 1, item));
+                }
+            }
+        }
+        if (CheckEmptyUtil.isNotEmpty(this.links)) {
+            for (int i = 0; i < this.links.size(); i++) {
+                for (String item : this.links.get(i).check()) {
+                    result.add(ConfigErrorMsgTool.fieldCheckError("links", i + 1, item));
+                }
+            }
+        }
+
+        return result;
     }
 
     public String getLang() {

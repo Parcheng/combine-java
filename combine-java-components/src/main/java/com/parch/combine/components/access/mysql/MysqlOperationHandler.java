@@ -3,9 +3,9 @@ package com.parch.combine.components.access.mysql;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
-import com.parch.combine.core.component.tools.pool.DbConnPoolHandler;
+import com.parch.combine.core.component.tools.pool.DbConnPoolTool;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.core.component.tools.sql.SqlHelper;
+import com.parch.combine.core.component.tools.sql.SqlTool;
 import com.parch.combine.core.common.util.TypeConversionUtil;
 
 import javax.sql.DataSource;
@@ -69,8 +69,8 @@ public class MysqlOperationHandler {
         ResultSet rsCount = null;
         try {
             List<Object> sqlParams = new ArrayList<>();
-            String sqlStr = SqlHelper.buildSql(logicConfig.getSqlConfigs());
-            String changeSql = SqlHelper.replaceByParam(sqlStr, sqlParams);
+            String sqlStr = SqlTool.buildSql(logicConfig.getSqlConfigs());
+            String changeSql = SqlTool.replaceByParam(sqlStr, sqlParams);
             if (initConfig.getPrintSql()) {
                 PrintHelper.printSql(changeSql, sqlParams);
             }
@@ -109,13 +109,13 @@ public class MysqlOperationHandler {
                     break;
                 case SELECT_LIMIT:
                     // 分页查询
-                    String limitSql = SqlHelper.setLimit(changeSql, CURR_PAGE_NAME, PAGE_SIZE_NAME);
+                    String limitSql = SqlTool.setLimit(changeSql, CURR_PAGE_NAME, PAGE_SIZE_NAME);
                     ps = getPreparedStatement(conn, limitSql, sqlParams);
                     rs = ps.executeQuery();
                     dataList = getResultData(rs);
 
                     // count 查询
-                    String countSql = SqlHelper.replaceCount(changeSql, COUNT_NAME);
+                    String countSql = SqlTool.replaceCount(changeSql, COUNT_NAME);
                     if (initConfig.getPrintSql()) {
                         PrintHelper.printSql(countSql, sqlParams);
                     }
@@ -204,10 +204,10 @@ public class MysqlOperationHandler {
             conn = DriverManager.getConnection(url, initConfig.getUsername(), initConfig.getPassword());
         } else {
             String key = "Mysql_" + (CheckEmptyUtil.isEmpty(initConfig.getId()) ? CheckEmptyUtil.EMPTY : initConfig.getId());
-            DataSource data = DbConnPoolHandler.getPool(key);
+            DataSource data = DbConnPoolTool.getPool(key);
             if (data == null) {
                 MysqlInitConfig.Pool poolConfig = initConfig.getPool();
-                data = DbConnPoolHandler.initAndGet(key, url, initConfig.getUsername(), initConfig.getPassword(), driver, poolConfig.getMax(), poolConfig.getMin(), poolConfig.getTimeout());
+                data = DbConnPoolTool.initAndGet(key, url, initConfig.getUsername(), initConfig.getPassword(), driver, poolConfig.getMax(), poolConfig.getMin(), poolConfig.getTimeout());
             }
             conn = data.getConnection();
         }

@@ -13,9 +13,9 @@ public class PageElementGroupManager {
      */
     private final Map<String, List<String>> ELEMENT_IDS_MAP = new HashMap<>();
 
-    private PageElementLogicManager pageElementLogicManager;
+    private PageElementManager pageElementLogicManager;
 
-    public PageElementGroupManager(PageElementLogicManager pageElementLogicManager) {
+    public PageElementGroupManager(PageElementManager pageElementLogicManager) {
         this.pageElementLogicManager = pageElementLogicManager;
     }
 
@@ -60,7 +60,7 @@ public class PageElementGroupManager {
      * @param id id
      * @return 流程配置集合
      */
-    private List<String> list(String id) {
+    public List<String> get(String id) {
         return ELEMENT_IDS_MAP.get(id);
     }
 }

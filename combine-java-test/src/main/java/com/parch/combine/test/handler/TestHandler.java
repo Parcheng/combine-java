@@ -2,7 +2,7 @@ package com.parch.combine.test.handler;
 
 import com.parch.combine.core.common.util.*;
 import com.parch.combine.core.component.manager.ComponentManager;
-import com.parch.combine.core.component.tools.compare.CompareHelper;
+import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.tools.compare.CompareResult;
 import com.parch.combine.test.context.TestContext;
 import com.parch.combine.test.vo.TestConfigItemVO;
@@ -56,7 +56,7 @@ public class TestHandler {
                             if (!checkRefResult(testItem, checkResultMap)) {
                                 putResult(testItem, false, checkResultMap);
                             } else {
-                                CompareResult result = CompareHelper.compare(testItem);
+                                CompareResult result = CompareTool.compare(testItem);
                                 if (CheckEmptyUtil.isNotEmpty(result.getErrorMsg())) {
                                     PrintHandler.compareError(testItem.getId(), result.getErrorMsg());
                                 } else {

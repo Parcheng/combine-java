@@ -1,12 +1,12 @@
 package com.parch.combine.core.ui.settings.config;
 
 import com.parch.combine.core.common.settings.config.CommonObjectSetting;
-import com.parch.combine.core.ui.base.ElementConfig;
+import com.parch.combine.core.ui.base.element.ElementConfig;
 import java.util.List;
 
 public class PageElementSetting {
 
-    private Class<? extends ElementConfig<?, ?>> elementClass;
+    private Class<? extends ElementConfig<?>> elementClass;
 
     private int order;
 
@@ -59,11 +59,11 @@ public class PageElementSetting {
         this.order = order;
     }
 
-    public Class<? extends ElementConfig<?, ?>> thisElementClass() {
+    public Class<? extends ElementConfig<?>> thisElementClass() {
         return elementClass;
     }
 
-    public void setElementClass(Class<? extends ElementConfig<?, ?>> elementClass) {
+    public void setElementClass(Class<? extends ElementConfig<?>> elementClass) {
         this.elementClass = elementClass;
     }
 

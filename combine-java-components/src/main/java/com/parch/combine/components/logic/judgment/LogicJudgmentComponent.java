@@ -4,8 +4,8 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.SubComponentHelper;
-import com.parch.combine.core.component.tools.compare.CompareHelper;
+import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.tools.compare.CompareConfig;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.vo.DataResult;
@@ -48,7 +48,7 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
 
                 // 初始化逻辑中使用的组件
                 if (CheckEmptyUtil.isNotEmpty(item.getComponents())) {
-                    List<String> initErrorMsgs = SubComponentHelper.init(manager, item.getComponents());
+                    List<String> initErrorMsgs = SubComponentTool.init(manager, item.getComponents());
                     for (String initErrorMsg : initErrorMsgs) {
                         result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + initErrorMsg));
                     }
@@ -75,7 +75,7 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
                 }
 
                 // 逻辑判断通过，返回执行结果
-                return SubComponentHelper.execute(manager, item.getComponents());
+                return SubComponentTool.execute(manager, item.getComponents());
             }
         }
 
@@ -89,6 +89,6 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
      * @return 是否通过
      */
     private boolean isPass(LogicJudgmentLogicConfig.LogicJudgmentItem item) {
-        return CompareHelper.isPass(item, true);
+        return CompareTool.isPass(item, true);
     }
 }

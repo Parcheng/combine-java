@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 数据库连接池帮助类
  */
-public class DbConnPoolHandler {
+public class DbConnPoolTool {
 
     private final static Map<String, DataSource> POOL_MAP = new HashMap<>(16);
 

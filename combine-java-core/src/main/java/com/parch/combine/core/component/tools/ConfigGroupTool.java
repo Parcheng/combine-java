@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class ConfigGroupHelper {
+public class ConfigGroupTool {
 
     /**
      * 配置分隔符
@@ -79,7 +79,7 @@ public class ConfigGroupHelper {
     public static <T> List<T> buildItemList(List<String> items, Function<String[], T> func) {
         List<T> result = new ArrayList<>();
         for (String itemStr : items) {
-            String[] itemArr = ConfigGroupHelper.split(itemStr);
+            String[] itemArr = ConfigGroupTool.split(itemStr);
             result.add(func.apply(itemArr));
         }
 

@@ -6,7 +6,7 @@ import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.MatcherUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
-import com.parch.combine.core.component.tools.compare.CompareHelper;
+import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * SQL语句操作帮助类
  */
-public class SqlHelper {
+public class SqlTool {
 
     /**
      * 根据配置构建SQL语句
@@ -31,7 +31,7 @@ public class SqlHelper {
 
         StringBuilder sql = new StringBuilder();
         for (SqlItem item : sqlConfigs) {
-            if (CheckEmptyUtil.isEmpty(item.getConditions()) || CompareHelper.isPass(item, false)) {
+            if (CheckEmptyUtil.isEmpty(item.getConditions()) || CompareTool.isPass(item, false)) {
                 sql.append(CheckEmptyUtil.SPACE).append(item.getSql());
             }
         }

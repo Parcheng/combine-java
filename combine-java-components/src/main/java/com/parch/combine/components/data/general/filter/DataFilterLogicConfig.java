@@ -3,7 +3,7 @@ package com.parch.combine.components.data.general.filter;
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupHelper;
+import com.parch.combine.core.component.tools.ConfigGroupTool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,11 +42,11 @@ public class DataFilterLogicConfig extends LogicConfig {
     }
 
     public void setItems(List<String> items) {
-        this.items = ConfigGroupHelper.buildItemList(items, itemStr -> {
+        this.items = ConfigGroupTool.buildItemList(items, itemStr -> {
             DataFilterItem item = new DataFilterItem();
-            item.setFieldName(ConfigGroupHelper.getConfigByIndex(itemStr,0));
-            item.setRule(ConfigGroupHelper.getConfigByIndex(itemStr,1));
-            item.setRuleParams(Arrays.asList(ConfigGroupHelper.getConfigsByIndex(itemStr,2)));
+            item.setFieldName(ConfigGroupTool.getConfigByIndex(itemStr,0));
+            item.setRule(ConfigGroupTool.getConfigByIndex(itemStr,1));
+            item.setRuleParams(Arrays.asList(ConfigGroupTool.getConfigsByIndex(itemStr,2)));
             return item;
         });
     }

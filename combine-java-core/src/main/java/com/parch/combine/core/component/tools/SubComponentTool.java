@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * 下级组件帮助类
  */
-public class SubComponentHelper {
+public class SubComponentTool {
 
     /**
      * 初始化组件

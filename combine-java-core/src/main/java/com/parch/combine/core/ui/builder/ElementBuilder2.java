@@ -1,4 +1,4 @@
-package com.parch.combine.core.ui.tools;
+package com.parch.combine.core.ui.builder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 元素结果字段KEY
  */
-public class ElementResultHelper {
+public class ElementBuilder2 {
 
     private final static String ID = "id";
     private final static String TYPE = "TYPE";

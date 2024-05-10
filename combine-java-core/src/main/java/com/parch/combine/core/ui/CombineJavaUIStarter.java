@@ -1,8 +1,8 @@
 package com.parch.combine.core.ui;
 
-import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.common.util.ResourceFileUtil;
-import com.parch.combine.core.ui.tools.PrintHelper;
+import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
+import com.parch.combine.core.ui.manager.CombineManager;
+import com.parch.combine.core.ui.tools.PrintTool;
 import com.parch.combine.core.ui.handler.ElementClassHandler;
 import com.parch.combine.core.ui.service.CombineJavaUIService;
 import com.parch.combine.core.ui.service.ICombineJavaUIService;
@@ -13,13 +13,13 @@ import java.util.List;
 public class CombineJavaUIStarter {
 
     static {
-        PrintHelper.printInit("=======================================================================================================================================================");
-        PrintHelper.printInit("初始化组件 >>>");
+        PrintTool.printInit("=======================================================================================================================================================");
+        PrintTool.printInit("初始化组件 >>>");
         List<PageElementClassInitVO> components = ElementClassHandler.init();
         for (PageElementClassInitVO vo : components) {
-            PrintHelper.printInit("组件【" + vo.getKey() + "】初始化完成");
+            PrintTool.printInit("组件【" + vo.getKey() + "】初始化完成");
         }
-        PrintHelper.printInit("=======================================================================================================================================================");
+        PrintTool.printInit("=======================================================================================================================================================");
     }
 
     /**
@@ -29,6 +29,10 @@ public class CombineJavaUIStarter {
      */
     public static ICombineJavaUIService init(String path) {
         CombineJavaUIService service = new CombineJavaUIService(path);
+
+        CombineManager combineManager = new CombineManager();
+        ConfigLoadingContextHandler.init(combineManager, null, null);
+
         GlobalConfigVO globalConfig = service.getGlobalConfig();
 //        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 //        PrintHelper.printInit("初始化全局设置 >>>");
@@ -40,7 +44,7 @@ public class CombineJavaUIStarter {
 //        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
-        PrintHelper.printInit("初始化页面 >>>");
+        PrintTool.printInit("初始化页面 >>>");
         for (String initConfigPath : globalConfig.getInitConfigs()) {
             service.registerAsPath(initConfigPath, vo -> {
 //                PrintHelper.printInit(vo.getFlowKey() + " | " + StringUtil.join(vo.getComponentIds(), ", "));
@@ -54,7 +58,7 @@ public class CombineJavaUIStarter {
 //                }
             });
         }
-        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
+        PrintTool.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
 //        PrintHelper.printInit("执行流程逻辑 >>>");
@@ -73,6 +77,8 @@ public class CombineJavaUIStarter {
 
 
 //        combineWebService.setOpenRegister(context.getOpenRegisterConfig());
+
+        ConfigLoadingContextHandler.clear();
 
         return service;
     }

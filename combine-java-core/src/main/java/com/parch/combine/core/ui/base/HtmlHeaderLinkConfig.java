@@ -1,10 +1,17 @@
 package com.parch.combine.core.ui.base;
 
+import com.parch.combine.core.common.base.ICheck;
+import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.ui.tools.ConfigErrorMsgTool;
 
-public class HtmlHeaderLinkConfig {
+import java.util.ArrayList;
+import java.util.List;
+
+public class HtmlHeaderLinkConfig implements IInit, ICheck {
 
     @Field(key = "rel", name = "定义当前文档与链接资源之间的关系", type = FieldTypeEnum.TEXT)
     private String rel;
@@ -30,6 +37,22 @@ public class HtmlHeaderLinkConfig {
 
     @Field(key = "preload", name = "用于提前加载重要的资源，例如字体、图片或脚本", type = FieldTypeEnum.TEXT, isRequired = true)
     private String preload;
+
+    @Override
+    public List<String> check() {
+        List<String> result = new ArrayList<>();
+        if (CheckEmptyUtil.isEmpty(this.rel)) {
+            result.add(ConfigErrorMsgTool.fieldCheckError("rel", "不能为空"));
+        }
+        if (CheckEmptyUtil.isEmpty(this.href)) {
+            result.add(ConfigErrorMsgTool.fieldCheckError("href", "不能为空"));
+        }
+
+        return result;
+    }
+
+    @Override
+    public void init() {}
 
     public String getRel() {
         return rel;
