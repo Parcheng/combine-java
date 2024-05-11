@@ -139,10 +139,12 @@ public class HtmlBuilder {
         String content = JsonUtil.serialize(context.getManager().getConstant().get());
         scriptCodeList.add("\n$combineWebUI.content.register(\"" + content + "\");");
 
+        // TODO INIT的模块
+
         // 元素模板注册
         groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.template.register(\"" + k + "\",\"" + v + "\");"));
         // 数据加载配置注册
-        groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.dataLoad.register(\"" + k + "\",\"" + v + "\");"));
+        groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.dataLoad.register(\"" + k + "\",\"" + v + "\", \"" + groupResult.dataLoadToElementIdMap.get(k) + "\");"));
         // trigger事件注册
         groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.trigger.register(\"" + k + "\",\"" + v + "\");"));
         // 页面元素注册

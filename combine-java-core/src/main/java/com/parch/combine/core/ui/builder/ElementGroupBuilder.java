@@ -18,6 +18,7 @@ public class ElementGroupBuilder {
     private Map<String, ElementConfig<?>> elementMap = new HashMap<>();
     private Map<String, ElementTemplateConfig> templateMap = new HashMap<>();
     private Map<String, DataLoadConfig> dataLoadMap = new HashMap<>();
+    private Map<String, Set<String>> dataLoadToElementIdMap = new HashMap<>();
     private Map<String, TriggerConfig> triggerMap = new HashMap<>();
 
     public ElementGroupBuilder(List<String> groupIds) {
@@ -50,7 +51,7 @@ public class ElementGroupBuilder {
             }
 
             initTemplate(element.getTemplateId(), element.getType(), element.thisTemplateConfigClass());
-            initDataLoad(element.getDataLoadId());
+            initDataLoad(element.getDataLoadId(), element.getId());
             initElements(manager.getPageElement().getSubElements(element.getId()));
             initTriggers(manager.getPageElement().getSubTriggers(element.getId()));
         }
@@ -64,12 +65,15 @@ public class ElementGroupBuilder {
         templateMap.put(templateId, manager.getPageTemplate().get(templateId, type, templateClass));
     }
 
-    private void initDataLoad(String dataLoadId) {
+    private void initDataLoad(String dataLoadId, String elementId) {
         if (CheckEmptyUtil.isEmpty(dataLoadId)) {
             return;
         }
 
         dataLoadMap.put(dataLoadId, manager.getDataLoad().get(dataLoadId));
+
+        Set<String> elementIds = dataLoadToElementIdMap.computeIfAbsent(dataLoadId, k -> new HashSet<>());
+        elementIds.add(elementId);
     }
 
     private void initTriggers(List<String> triggerIds) {
@@ -128,9 +132,11 @@ public class ElementGroupBuilder {
 
     public ElementGroupResult build() {
         ElementGroupResult result = new ElementGroupResult();
-        result.groupMap = groupMap;
 
-        result.elementScripts = new HashSet<>();
+        result.groupMap = new HashMap<>();
+        groupMap.forEach((k, v) -> result.groupMap.put(k, JsonUtil.serialize(v)));
+
+        result.elementScripts = new HashSet<>(elementMap.size());
         result.elementMap = new HashMap<>(elementMap.size());
         elementMap.forEach((k, v) -> {
             result.elementScripts.add(v.thisElementJSPath());
@@ -143,6 +149,9 @@ public class ElementGroupBuilder {
         result.dataLoadMap = new HashMap<>(dataLoadMap.size());
         dataLoadMap.forEach((k, v) -> result.dataLoadMap.put(k, JsonUtil.serialize(v)));
 
+        result.dataLoadToElementIdMap = new HashMap<>(dataLoadToElementIdMap.size());
+        dataLoadToElementIdMap.forEach((k, v) -> result.dataLoadToElementIdMap.put(k, JsonUtil.serialize(v)));
+
         result.triggerMap = new HashMap<>(triggerMap.size());
         triggerMap.forEach((k, v) -> result.triggerMap.put(k, JsonUtil.serialize(v)));
 
@@ -153,9 +162,11 @@ public class ElementGroupBuilder {
 
         public Set<String> elementScripts;
 
-        public Map<String, List<String>> groupMap;
+        public Map<String, String> groupMap;
 
         public Map<String, String> dataLoadMap;
+
+        public Map<String, String> dataLoadToElementIdMap;
 
         public Map<String, String> triggerMap;
 

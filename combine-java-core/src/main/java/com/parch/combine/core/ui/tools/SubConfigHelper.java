@@ -56,7 +56,20 @@ public class SubConfigHelper {
             Trigger triggerAnnotation = field.getAnnotation(Trigger.class);
             if (triggerAnnotation != null) {
                 Object value = field.get(config);
-                if (value instanceof Map) {
+                if (value instanceof Iterable) {
+                    List<String> triggerIds = new ArrayList<>();
+                    for (Object item : (Iterable<?>) value) {
+                        if (item instanceof Map) {
+                            String id = manager.getTrigger().load((Map<String, Object>) value);
+                            result.getTriggerIds().add(id);
+                            triggerIds.add(id);
+                        } else {
+                            result.getTriggerIds().add(value.toString());
+                            triggerIds.add(value.toString());
+                        }
+                    }
+                    field.set(config, triggerIds);
+                } else if (value instanceof Map) {
                     String id = manager.getTrigger().load((Map<String, Object>) value);
                     result.getTriggerIds().add(id);
                     field.set(config, id);
