@@ -1,10 +1,13 @@
 $combineWebUI = (function () {
     const triggersDomId = "$combine-web-triggers";
     const groups = {};
+    const canstant = {};
     const instances = {};
     const instanceRefs = {};
+    const instanceTemps = {};
     const elements = {};
     const temps = {};
+    const triggers = {};
     const loads = {};
     const loadCaches = {};
     const loadGlobals = {};
@@ -14,11 +17,20 @@ $combineWebUI = (function () {
         baseUrl = initBaseUrl;
     }
 
-    const instanceFns = {
-        load: function (groupId, parent, data, isAppend) {
-            const group = groups[groupId];
-            if (!group) {
-                return resultFns.fail("Load fail", "No config group: " + groupId);
+    const canstantFns = {
+        register: function (canstantJson) {
+            canstant.data = canstantJson ? JSON.parse(canstantJson) : {};
+        },
+        get: function () {
+            return canstant.data;
+        }
+    }
+
+    const groupFns = {
+        load: function (id, parent, data, isAppend) {
+            const elementIds = groups[id];
+            if (!elementIds) {
+                return resultFns.fail("Load fail", "No config group: " + id);
             }
 
             const parentDom = parent instanceof Element ? parent : document.getElementById(parent);
@@ -28,9 +40,9 @@ $combineWebUI = (function () {
 
             let domData = [];
             let loadIds = [];
-            for (let i = 0; i < group.instances.length; i++) {
-                const instance = group.instances[i];
-                const buildResult = this.build(instance, data);
+            for (let i = 0; i < elementIds.length; i++) {
+                const elementId = elementIds[i];
+                const buildResult = instanceFns.build(elementId, data);
                 domData.push(buildResult.data);
                 if (buildResult.loadId) {
                     loadIds.push(buildResult.loadId);
@@ -46,33 +58,19 @@ $combineWebUI = (function () {
             loadDataFns.loads(loadIds, data);
             return resultFns.success();
         },
-        register: function (config, groupId, data) {
-            if (typeof config === 'string') {
-                config = JSON.parse(config);
-            }
-
-            const id = config.id;
-            if (!instances[id]) {
-                instances[id] = JSON.stringify(configFns.init(config, data));
-            }
-            if (groupId) {
-                let group = groups[groupId];
-                if (!group) {
-                    groups[groupId] = {
-                        instances: [id]
-                    };
-                } else {
-                    group.instances.push(id);
-                }
-            }
+        register: function (groupId, elementIdsJson) {
+            const elementIds = JSON.parse(elementIdsJson);
+            groups[groupId] = elementIds;
         },
-        registerAndBuild: function (config, data) {
-            this.register(config, null, data);
-            const buildResult = this.build(config.id, data);
-            if (buildResult.loadId) {
-                loadDataFns.load(buildResult.loadId, data);
-            }
-            return buildResult;
+        get(groupId) {
+            return groups[groupId];
+        }
+    }
+
+    const instanceFns = {
+        register: function (id, elementJson) {
+            instances[id] = elementJson;
+            return resultFns.success();
         },
         build: function (id, data) {
             const configResult = this.getConfig(id);
@@ -80,24 +78,24 @@ $combineWebUI = (function () {
                 return resultFns.fail("Build Fail", configResult.showMsg);
             }
 
-            const config = configResult.data;
-            const element = elements[config.type];
+            const instance = configResult.data;
+            const element = elements[instance.type];
             if (!element) {
                 return resultFns.fail("Build Fail", "No element: " + config.type);
             }
 
-            data = config.data ? config.data : data;
+            data = instance.data ? instance.data : data;
             if (!data) {
-                data = config.defaultData;
+                data = instance.defaultData;
             }
-            const dataField = config.settings.dataField;
+            const dataField = instance.dataField;
             if (dataField) {
                 data = data instanceof Object ? data[dataField] : null;
             }
 
-            this.initConfig(config, data);
-            const loadId = config.load && config.defaultLoad !== false ? config.load.id : null;
-            return resultFns.success(element.build(config, data), loadId);
+            this.initConfig(instance, data);
+            const dataLoadId = instance.dataLoadId && config.defaultLoad !== false ? instance.dataLoadId : null;
+            return resultFns.success(element.build(instance, data), dataLoadId);
         },
         refresh: function (id, parentData) {
             const configResult = this.getConfig(id);
@@ -111,7 +109,7 @@ $combineWebUI = (function () {
                 return resultFns.fail("Refresh fail", "No element: " + instance.type);
             }
 
-            const dataField = instance.settings.dataField;
+            const dataField = instance.dataField;
             if (dataField) {
                 parentData = parentData instanceof Object ? parentData[dataField] : null;
             }
@@ -153,36 +151,36 @@ $combineWebUI = (function () {
             const fn = element.call[name];
             return resultFns.success(fn(instance, params));
         },
-        initConfig: function (config, data) {
-            if (!dataFns.hasVariable(config.id)) {
+        initConfig: function (instance, data) {
+            if (!dataFns.hasVariable(instance.id)) {
                 return;
             }
 
-            const sourceConfigId = config.id;
+            const sourceConfigId = instance.id;
             const newConfigId = dataFns.parseVariableText(sourceConfigId, data);
             if (!newConfigId) {
                 return;
             }
 
-            config.id = newConfigId;
+            instance.id = newConfigId;
             instanceRefs[newConfigId] = sourceConfigId;
         },
         getConfig: function (id) {
-            let instance = instances[id];
-            if (!instance) {
+            let instanceJson = instances[id];
+            if (!instanceJson) {
                 const instanceRefId = instanceRefs[id];
                 if (instanceRefId) {
-                    instance = instances[instanceRefId];
+                    instanceJson = instances[instanceRefId];
                 }
             }
 
-            if (!instance) {
+            if (!instanceJson) {
                 return resultFns.fail("Get config fail", "No config: " + id);
             }
 
-            const config = JSON.parse(instance);
-            config.id = id;
-            return resultFns.success(config);
+            const instance = JSON.parse(instanceJson);
+            instance.id = id;
+            return resultFns.success(instance);
         },
         getConfigIds: function (sourceId) {
             if (!dataFns.hasVariable(sourceId)) {
@@ -264,14 +262,31 @@ $combineWebUI = (function () {
         successFiledKey: "success",
         failFiledKey: "fail",
         errorFiledKey: "error",
-        build: function (triggers, dom, data) {
-            if (!triggers || !dom) {
+        register: function (id, triggerJson) {
+            triggers[id] = triggerJson;
+        },
+        get: function (id) {
+            const triggerJson = triggers[id];
+            if (triggerJson) {
+                const trigger = JSON.parse(triggerJson);
+                if (trigger) {
+                    return trigger;
+                }
+            }
+
+            return null;
+        },
+        build: function (ids, dom, data) {
+            if (!ids || !dom) {
                 return;
             }
 
-            triggers = triggers instanceof Array ? triggers : [triggers];
-            for (let i = 0; i < triggers.length; i++) {
-                let trigger = triggers[i];
+            const triggerIds = ids instanceof Array ? ids : [ids];
+            for (let i = 0; i < triggerIds.length; i++) {
+                const trigger = this.get(triggerIds[i]);
+                if (!trigger) {
+                    continue;
+                }
 
                 const successElement = trigger[this.successFiledKey];
                 const failElement = trigger[this.failFiledKey];
@@ -350,14 +365,17 @@ $combineWebUI = (function () {
                 }
             }
         },
-        trigger: function (triggers, dom) {
-            if (!dom || !(dom instanceof Element) || !triggers) {
+        trigger: function (ids, dom) {
+            if (!dom || !(dom instanceof Element) || !ids) {
                 return;
             }
 
-            triggers = triggers instanceof Array ? triggers : [triggers];
-            for (let i = 0; i < triggers.length; i++) {
-                dom.dispatchEvent(new Event(triggers[i].event));
+            const triggerIds = ids instanceof Array ? ids : [ids];
+            for (let i = 0; i < triggerIds.length; i++) {
+                const trigger = this.get(triggerIds[i]);
+                if (trigger) {
+                    dom.dispatchEvent(new Event(trigger.event));
+                }
             }
         },
         buildAlert(successElement, failElement, errorElement) {
@@ -414,20 +432,12 @@ $combineWebUI = (function () {
     };
 
     const loadDataFns = {
-        register: function (id, load) {
+        register: function (id, load, elementIds) {
             if (!id || !load || !load.id) {
                 return;
             }
 
-            let loadConfig = loads[load.id];
-            if (!loadConfig) {
-                loads[load.id] = { config: load, instances: [id] };
-            } else {
-                loadConfig.instances.push(id);
-                if (load.type !== 'REF') {
-                    loadConfig.config = load;
-                }
-            }
+            loads[id] = { config: load, instances: elementIds };
         },
         loads: function (loadIds, data, failFn) {
             const loaded = [];
@@ -584,6 +594,15 @@ $combineWebUI = (function () {
             loadGlobals[loadId] = newData;
         }
     };
+
+    const instanceTempFns = {
+        register: function (id, instanceTempJson) {
+            instanceTemps[id] = JSON.parse(instanceTempJson);
+        },
+        get: function (id) {
+            return instanceTemps[id];
+        }
+    }
 
     const configFns = {
         init: function (logicConfig, data) {
@@ -1113,7 +1132,10 @@ $combineWebUI = (function () {
         init: init,
         call: callFns,
         temp: tempFns,
+        canstant: canstantFns,
+        groupFns: groupFns,
         instance: instanceFns,
+        instanceTemp: instanceTempFns,
         element: elementFns,
         trigger: triggerFns,
         loadData: loadDataFns,
