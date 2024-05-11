@@ -34,10 +34,13 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
 
     private String elementJSPath;
 
+    private String elementTemplatePath;
+
     private Class<T> templateConfigClass;
 
-    public ElementConfig(String elementJSPath, Class<T> templateConfigClass) {
+    public ElementConfig(String elementJSPath, String elementTemplatePath, Class<T> templateConfigClass) {
         this.elementJSPath = elementJSPath;
+        this.elementTemplatePath = elementTemplatePath;
         this.templateConfigClass = templateConfigClass;
     }
 
@@ -115,11 +118,15 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
         this.templateId = templateId;
     }
 
-    public Class<T> thisTemplateConfigClass() {
-        return templateConfigClass;
+    public String getElementTemplatePath() {
+        return elementTemplatePath;
     }
 
-    public String thisElementJSPath() {
+    public String getElementJSPath() {
         return elementJSPath;
+    }
+
+    public Class<T> thisTemplateConfigClass() {
+        return templateConfigClass;
     }
 }

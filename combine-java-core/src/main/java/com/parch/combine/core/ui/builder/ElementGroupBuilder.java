@@ -139,7 +139,7 @@ public class ElementGroupBuilder {
         result.elementScripts = new HashSet<>(elementMap.size());
         result.elementMap = new HashMap<>(elementMap.size());
         elementMap.forEach((k, v) -> {
-            result.elementScripts.add(v.thisElementJSPath());
+            result.elementScripts.add(v.getElementJSPath());
             result.elementMap.put(k, JsonUtil.serialize(v));
         });
 
