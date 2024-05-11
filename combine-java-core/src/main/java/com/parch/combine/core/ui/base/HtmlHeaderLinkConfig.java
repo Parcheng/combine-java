@@ -40,7 +40,7 @@ public class HtmlHeaderLinkConfig implements IInit, ICheck {
 
     @Override
     public List<String> check() {
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>(2);
         if (CheckEmptyUtil.isEmpty(this.rel)) {
             result.add(ConfigErrorMsgTool.fieldCheckError("rel", "不能为空"));
         }

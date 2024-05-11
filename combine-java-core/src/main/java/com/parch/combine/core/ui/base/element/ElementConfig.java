@@ -119,11 +119,7 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
         return templateConfigClass;
     }
 
-    public String getElementJSPath() {
+    public String thisElementJSPath() {
         return elementJSPath;
-    }
-
-    public void setElementJSPath(String elementJSPath) {
-        this.elementJSPath = elementJSPath;
     }
 }

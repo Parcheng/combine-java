@@ -20,7 +20,7 @@ public class HtmlHeaderMetaConfig implements IInit, ICheck {
 
     @Override
     public List<String> check() {
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>(2);
         if (CheckEmptyUtil.isEmpty(this.name)) {
             result.add(ConfigErrorMsgTool.fieldCheckError("name", "不能为空"));
         }

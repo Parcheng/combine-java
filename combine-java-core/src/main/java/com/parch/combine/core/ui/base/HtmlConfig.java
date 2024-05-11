@@ -33,7 +33,7 @@ public class HtmlConfig implements IInit, ICheck {
     private List<String> groupIds;
 
     @Field(key = "configs", name = "页面元素配置集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
-    private List<HtmlElementConfig> configs;
+    private List<HtmlElementConfig> modules;
 
     @Override
     public void init() {
@@ -48,9 +48,6 @@ public class HtmlConfig implements IInit, ICheck {
     @Override
     public List<String> check() {
         List<String> result = new ArrayList<>();
-        if (CheckEmptyUtil.isEmpty(this.configs)) {
-            result.add(ConfigErrorMsgTool.fieldCheckError("configs", "配置集合不能为空"));
-        }
         if (CheckEmptyUtil.isNotEmpty(this.metas)) {
             for (int i = 0; i < this.metas.size(); i++) {
                 for (String item : this.metas.get(i).check()) {
@@ -62,6 +59,13 @@ public class HtmlConfig implements IInit, ICheck {
             for (int i = 0; i < this.links.size(); i++) {
                 for (String item : this.links.get(i).check()) {
                     result.add(ConfigErrorMsgTool.fieldCheckError("links", i + 1, item));
+                }
+            }
+        }
+        if (CheckEmptyUtil.isNotEmpty(this.modules)) {
+            for (int i = 0; i < this.modules.size(); i++) {
+                for (String item : this.modules.get(i).check()) {
+                    result.add(ConfigErrorMsgTool.fieldCheckError("modules", i + 1, item));
                 }
             }
         }
@@ -117,11 +121,11 @@ public class HtmlConfig implements IInit, ICheck {
         this.groupIds = groupIds;
     }
 
-    public List<HtmlElementConfig> getConfigs() {
-        return configs;
+    public List<HtmlElementConfig> getModules() {
+        return modules;
     }
 
-    public void setConfigs(List<HtmlElementConfig> configs) {
-        this.configs = configs;
+    public void setModules(List<HtmlElementConfig> modules) {
+        this.modules = modules;
     }
 }

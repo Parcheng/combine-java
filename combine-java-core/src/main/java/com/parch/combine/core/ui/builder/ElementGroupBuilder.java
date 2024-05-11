@@ -9,10 +9,7 @@ import com.parch.combine.core.ui.base.trigger.TriggerConfig;
 import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
 import com.parch.combine.core.ui.manager.CombineManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ElementGroupBuilder {
 
@@ -133,8 +130,12 @@ public class ElementGroupBuilder {
         ElementGroupResult result = new ElementGroupResult();
         result.groupMap = groupMap;
 
+        result.elementScripts = new HashSet<>();
         result.elementMap = new HashMap<>(elementMap.size());
-        elementMap.forEach((k, v) -> result.elementMap.put(k, JsonUtil.serialize(v)));
+        elementMap.forEach((k, v) -> {
+            result.elementScripts.add(v.thisElementJSPath());
+            result.elementMap.put(k, JsonUtil.serialize(v));
+        });
 
         result.templateMap = new HashMap<>(templateMap.size());
         templateMap.forEach((k, v) -> result.templateMap.put(k, JsonUtil.serialize(v)));
@@ -149,6 +150,8 @@ public class ElementGroupBuilder {
     }
 
     public static class ElementGroupResult {
+
+        public Set<String> elementScripts;
 
         public Map<String, List<String>> groupMap;
 
