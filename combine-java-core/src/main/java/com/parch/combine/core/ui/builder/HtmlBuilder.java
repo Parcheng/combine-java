@@ -5,11 +5,8 @@ import com.parch.combine.core.ui.base.HtmlElementConfig;
 import com.parch.combine.core.ui.base.UrlPathCanstant;
 import com.parch.combine.core.ui.context.ConfigLoadingContext;
 import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
-import com.parch.combine.core.ui.tools.PrintTool;
+import com.parch.combine.core.ui.tools.*;
 import com.parch.combine.core.ui.base.HtmlConfig;
-import com.parch.combine.core.ui.tools.HtmlBuildTool;
-import com.parch.combine.core.ui.tools.ScriptBuildTool;
-import com.parch.combine.core.ui.tools.UrlPathHelper;
 
 import java.util.*;
 import java.util.function.Function;
@@ -19,40 +16,33 @@ public class HtmlBuilder {
 
     private final static Map<String, HtmlConfig> TEMP_MAP = new HashMap<>();
 
-    private String key;
-
     private HtmlConfig config;
 
     private ElementGroupBuilder groupBuilder;
 
     private HtmlConfig templateConfig;
-    public HtmlBuilder(String key, HtmlConfig config) {
-        this.key = key;
+
+    public HtmlBuilder(HtmlConfig config) {
         this.config = config;
         this.groupBuilder = new ElementGroupBuilder(config.getGroupIds());
         loadTemplate();
     }
 
     public List<String> check() {
-        config.check();
-        groupBuilder.check();
+        List<String> msg = new ArrayList<>();
+        msg.addAll(config.check());
+        msg.addAll(groupBuilder.check());
         if (templateConfig == null) {
-
+            msg.add(ConfigErrorMsgTool.fieldCheckError("templateConfig", "页面模板不存在"));
         }
-
-        return null;
+        return msg;
     }
 
     public String build() {
-//        List<ElementResultHelper.ElementResult> elementResults = new ArrayList<>();
-//        Map<String, String> initElements = new HashMap<>(16);
-
         String head = buildHead();
         String body = buildBody();
         String script = buildScript();
         String elementScript = buildElementScript();
-
-        // 生成页面
         return buildPage(head, body, script + elementScript);
     }
 
@@ -86,9 +76,11 @@ public class HtmlBuilder {
 
         // 页面模块
         List<HtmlElementConfig> models = config.getModules();
-        for (HtmlElementConfig model : models) {
-            HtmlElementConfig tempDomConfig = templateModelMap.get(model.getKey());
-            body.add(HtmlBuildTool.build(model, tempDomConfig, false));
+        if (CheckEmptyUtil.isNotEmpty(models)) {
+            for (HtmlElementConfig model : models) {
+                HtmlElementConfig tempDomConfig = templateModelMap.get(model.getKey());
+                body.add(HtmlBuildTool.build(model, tempDomConfig, false));
+            }
         }
 
         // 添加弹窗使用的DIV元素
@@ -136,11 +128,9 @@ public class HtmlBuilder {
         List<String> scriptCodeList = new ArrayList<>();
         scriptCodeList.add("\n$combineWebUI.init(\"" + context.getBaseUrl() + "\");");
 
-        String content = JsonUtil.serialize(context.getManager().getConstant().get());
-        scriptCodeList.add("\n$combineWebUI.content.register(\"" + content + "\");");
-
-        // TODO INIT的模块
-
+        // 常量注册
+        String contentJson = JsonUtil.serialize(context.getManager().getConstant().get());
+        scriptCodeList.add("\n$combineWebUI.content.register(\"" + contentJson + "\");");
         // 元素模板注册
         groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.template.register(\"" + k + "\",\"" + v + "\");"));
         // 数据加载配置注册
@@ -151,6 +141,17 @@ public class HtmlBuilder {
         groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.element.register(\"" + k + "\",\"" + v + "\");"));
         // 页面元素组注册
         groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.group.register(\"" + k + "\",\"" + v + "\");"));
+
+        // 页面模块初始化
+        List<HtmlElementConfig> models = config.getModules();
+        if (CheckEmptyUtil.isNotEmpty(models)) {
+            for (HtmlElementConfig model : models) {
+                String showGroupId = model.getDefaultShowGroupId();
+                if (CheckEmptyUtil.isNotEmpty(showGroupId)) {
+                    groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.group.load(\"" + showGroupId + "\",\"" + model.getId() + "\");"));
+                }
+            }
+        }
 
         // 构建
         scripts.add(ScriptBuildTool.build(scriptCodeList));

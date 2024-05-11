@@ -1,21 +1,22 @@
 package com.parch.combine.core.ui.service;
 
+import com.parch.combine.core.ui.base.HtmlConfig;
 import com.parch.combine.core.ui.vo.CombineInitVO;
 
 import java.util.function.Consumer;
 
-public interface ICombineJavaUIService {
+public interface ICombineJavaPageService {
 
     /**
-     * 注册流程配置集合
+     * 注册页面
      *
-     * @param configJson 配置JSON
+     * @param config     页面配置
      * @param func       自定义函数
      */
-    void register(String configJson, Consumer<CombineInitVO> func);
+    void register(String key, HtmlConfig config, Consumer<CombineInitVO> func);
 
     /**
-     * 获取流程配置集合
+     * 获取页面
      *
      * @param key   页面KEY
      * @return 页面文本

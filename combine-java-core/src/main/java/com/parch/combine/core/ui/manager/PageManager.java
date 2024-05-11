@@ -30,4 +30,8 @@ public class PageManager {
     public HtmlConfig get(String id) {
         return CONFIGS.get(id);
     }
+
+    public Map<String, HtmlConfig> get() {
+        return CONFIGS;
+    }
 }

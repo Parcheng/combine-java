@@ -37,11 +37,20 @@ public class HtmlConfig implements IInit, ICheck {
 
     @Override
     public void init() {
-        if (CheckEmptyUtil.isEmpty(lang)) {
-            lang = "en";
+        if (CheckEmptyUtil.isEmpty(this.lang)) {
+            this.lang = "en";
         }
-        if (CheckEmptyUtil.isEmpty(tempPath)) {
-            tempPath = UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_TEMPLATE_NAME;
+        if (CheckEmptyUtil.isEmpty(this.tempPath)) {
+            this.tempPath = UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_TEMPLATE_NAME;
+        }
+        if (CheckEmptyUtil.isNotEmpty(this.metas)) {
+            this.metas.forEach(HtmlHeaderMetaConfig::init);
+        }
+        if (CheckEmptyUtil.isNotEmpty(this.links)) {
+            this.links.forEach(HtmlHeaderLinkConfig::init);
+        }
+        if (CheckEmptyUtil.isNotEmpty(this.modules)) {
+            this.modules.forEach(HtmlElementConfig::init);
         }
     }
 
