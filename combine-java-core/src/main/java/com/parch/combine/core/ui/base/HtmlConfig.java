@@ -41,7 +41,7 @@ public class HtmlConfig implements IInit, ICheck {
             lang = "en";
         }
         if (CheckEmptyUtil.isEmpty(tempPath)) {
-            tempPath = "/static/template/page/management_template.json";
+            tempPath = UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_TEMPLATE_NAME;
         }
     }
 

@@ -2,6 +2,7 @@ package com.parch.combine.core.ui.builder;
 
 import com.parch.combine.core.common.util.*;
 import com.parch.combine.core.ui.base.HtmlElementConfig;
+import com.parch.combine.core.ui.base.UrlPathCanstant;
 import com.parch.combine.core.ui.context.ConfigLoadingContext;
 import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
 import com.parch.combine.core.ui.tools.PrintTool;
@@ -126,7 +127,7 @@ public class HtmlBuilder {
         ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
 
         // 添加框架核心JS和页面元素JS
-        scripts.add(ScriptBuildTool.build(context.getSystemUrl() + "/lib/base.js"));
+        scripts.add(ScriptBuildTool.build(context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_JS_NAME));
         for (String elementScript : groupResult.elementScripts) {
             scripts.add(ScriptBuildTool.build(elementScript));
         }
@@ -139,29 +140,15 @@ public class HtmlBuilder {
         scriptCodeList.add("\n$combineWebUI.content.register(\"" + content + "\");");
 
         // 元素模板注册
-        groupResult.templateMap.forEach((k, v) -> {
-            scriptCodeList.add("\n$combineWebUI.template.register(\"" + k + "\",\"" + v + "\");");
-        });
-
+        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.template.register(\"" + k + "\",\"" + v + "\");"));
         // 数据加载配置注册
-        groupResult.dataLoadMap.forEach((k, v) -> {
-            scriptCodeList.add("\n$combineWebUI.dataLoad.register(\"" + k + "\",\"" + v + "\");");
-        });
-
+        groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.dataLoad.register(\"" + k + "\",\"" + v + "\");"));
         // trigger事件注册
-        groupResult.triggerMap.forEach((k, v) -> {
-            scriptCodeList.add("\n$combineWebUI.trigger.register(\"" + k + "\",\"" + v + "\");");
-        });
-
+        groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.trigger.register(\"" + k + "\",\"" + v + "\");"));
         // 页面元素注册
-        groupResult.elementMap.forEach((k, v) -> {
-            scriptCodeList.add("\n$combineWebUI.element.register(\"" + k + "\",\"" + v + "\");");
-        });
-
+        groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.element.register(\"" + k + "\",\"" + v + "\");"));
         // 页面元素组注册
-        groupResult.groupMap.forEach((k, v) -> {
-            scriptCodeList.add("\n$combineWebUI.group.register(\"" + k + "\",\"" + v + "\");");
-        });
+        groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.group.register(\"" + k + "\",\"" + v + "\");"));
 
         // 构建
         scripts.add(ScriptBuildTool.build(scriptCodeList));
