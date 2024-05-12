@@ -13,16 +13,9 @@ public abstract class ElementTemplateConfig {
     @Field(key = "id", name = "元素模板ID", type = FieldTypeEnum.TEXT)
     private String id;
 
-    @Field(key = "tempPath", name = "模板路径", type = FieldTypeEnum.TEXT)
-    private String tempPath;
-
     @Field(key = "external", name = "外部DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig external;
-
-    public ElementTemplateConfig(String path) {
-        this.tempPath = UrlPathCanstant.SYSTEM_URL_FLAG + path;
-    }
 
     public void init() {}
 
@@ -32,14 +25,6 @@ public abstract class ElementTemplateConfig {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getTempPath() {
-        return tempPath;
-    }
-
-    public void setTempPath(String tempPath) {
-        this.tempPath = tempPath;
     }
 
     public DomConfig getExternal() {

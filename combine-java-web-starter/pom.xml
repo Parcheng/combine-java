@@ -37,6 +37,11 @@
             <artifactId>combine-java-components</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.parch.combine</groupId>
+            <artifactId>combine-java-ui-elements</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 <!--    <build>-->

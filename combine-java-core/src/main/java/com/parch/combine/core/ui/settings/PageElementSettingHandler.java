@@ -1,8 +1,8 @@
 package com.parch.combine.core.ui.settings;
 
 import com.parch.combine.core.ui.settings.config.PageElementClassifySetting;
-import com.parch.combine.core.ui.spi.AbsGetPageElements;
-import com.parch.combine.core.ui.spi.IGetPageElements;
+import com.parch.combine.core.ui.spi.AbsGetUIElements;
+import com.parch.combine.core.ui.spi.IGetUIElements;
 import com.parch.combine.core.ui.vo.PageElementClassInitVO;
 
 import java.util.ArrayList;
@@ -19,8 +19,8 @@ public class PageElementSettingHandler {
     public static List<PageElementClassInitVO> getElements() {
         // 通过SPI加在所有组件
         List<PageElementClassInitVO> elements = new ArrayList<>();
-        ServiceLoader<AbsGetPageElements> spiList = ServiceLoader.load(AbsGetPageElements.class);
-        for (IGetPageElements service : spiList) {
+        ServiceLoader<AbsGetUIElements> spiList = ServiceLoader.load(AbsGetUIElements.class);
+        for (IGetUIElements service : spiList) {
             elements.addAll(service.get());
         }
 
@@ -35,8 +35,8 @@ public class PageElementSettingHandler {
     public static List<PageElementClassifySetting> getSettings() {
         // 通过SPI加在所有组件
         List<PageElementClassifySetting> settings = new ArrayList<>();
-        ServiceLoader<AbsGetPageElements> spiList = ServiceLoader.load(AbsGetPageElements.class);
-        for (IGetPageElements service : spiList) {
+        ServiceLoader<AbsGetUIElements> spiList = ServiceLoader.load(AbsGetUIElements.class);
+        for (IGetUIElements service : spiList) {
             settings.add(service.getSetting());
         }
 

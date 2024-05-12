@@ -119,9 +119,10 @@ public class HtmlBuilder {
         ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
 
         // 添加框架核心JS和页面元素JS
-        scripts.add(ScriptBuildTool.build(context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_JS_NAME));
+        String baseJsPath = context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_JS_NAME;
+        scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseJsPath)));
         for (String elementScript : groupResult.elementScripts) {
-            scripts.add(ScriptBuildTool.build(elementScript));
+            scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(elementScript)));
         }
 
         // 添加框架组件实例注册代码
