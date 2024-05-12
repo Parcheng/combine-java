@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CombineJavaPageService implements ICombineJavaPageService {
+public class CombineJavaUIService implements ICombineJavaUIService {
 
     private ConfigLoadingContext context;
 
@@ -26,7 +26,7 @@ public class CombineJavaPageService implements ICombineJavaPageService {
 
     private Map<String, String> pageMap = new HashMap<>();
 
-    public CombineJavaPageService(ConfigLoadingContext context) {
+    public CombineJavaUIService(ConfigLoadingContext context) {
         this.context = context;
         this.context.setManager(combineManager);
     }

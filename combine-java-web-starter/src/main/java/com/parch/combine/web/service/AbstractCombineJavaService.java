@@ -20,11 +20,11 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public abstract class AbstractCombineWebService {
+public abstract class AbstractCombineJavaService {
 
     private ICombineJavaService service;
 
-    public AbstractCombineWebService(String configPath) {
+    public AbstractCombineJavaService(String configPath) {
         service = CombineJavaStarter.init(configPath);
     }
 

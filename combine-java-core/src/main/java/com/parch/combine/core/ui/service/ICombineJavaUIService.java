@@ -4,7 +4,7 @@ import com.parch.combine.core.ui.vo.CombineConfigVO;
 import com.parch.combine.core.ui.vo.CombineRegisterVO;
 
 
-public interface ICombineJavaPageService {
+public interface ICombineJavaUIService {
 
     /**
      * 注册页面

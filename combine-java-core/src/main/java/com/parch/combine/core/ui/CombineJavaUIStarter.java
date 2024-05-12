@@ -5,8 +5,8 @@ import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
 import com.parch.combine.core.ui.tools.PrintTool;
 import com.parch.combine.core.ui.handler.ElementClassHandler;
-import com.parch.combine.core.ui.service.CombineJavaPageService;
-import com.parch.combine.core.ui.service.ICombineJavaPageService;
+import com.parch.combine.core.ui.service.CombineJavaUIService;
+import com.parch.combine.core.ui.service.ICombineJavaUIService;
 import com.parch.combine.core.ui.vo.CombineLoadVO;
 import com.parch.combine.core.ui.vo.GlobalConfigVO;
 import com.parch.combine.core.ui.vo.PageElementClassInitVO;
@@ -29,7 +29,7 @@ public class CombineJavaUIStarter {
      *
      * @param path 初始化文件相对路径
      */
-    public static ICombineJavaPageService init(String path) {
+    public static ICombineJavaUIService init(String path) {
         GlobalConfigVO config = GlobalConfigVO.build(path);
         PrintTool.printInit("=======================================================================================================================================================");
         PrintTool.printInit("初始化UI全局设置 [" + path + "] >>>");
@@ -38,7 +38,7 @@ public class CombineJavaUIStarter {
         PrintTool.printInit("系统根URL -> " + config.getSystemUrl());
         PrintTool.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-        CombineJavaPageService service = new CombineJavaPageService(ConfigLoadingContextHandler.build(config));
+        CombineJavaUIService service = new CombineJavaUIService(ConfigLoadingContextHandler.build(config));
         CombineLoadVO loadVO = service.batchLoad(config.getConfigs());
 
         PrintTool.printInit("初始化页面 >>>");
