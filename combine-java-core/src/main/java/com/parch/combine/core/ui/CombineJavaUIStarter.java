@@ -1,14 +1,13 @@
 package com.parch.combine.core.ui;
 
-import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.common.util.ResourceFileUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
-import com.parch.combine.core.ui.manager.CombineManager;
 import com.parch.combine.core.ui.tools.PrintTool;
 import com.parch.combine.core.ui.handler.ElementClassHandler;
 import com.parch.combine.core.ui.service.CombineJavaPageService;
 import com.parch.combine.core.ui.service.ICombineJavaPageService;
-import com.parch.combine.core.ui.vo.CombineConfigVO;
+import com.parch.combine.core.ui.vo.CombineLoadVO;
 import com.parch.combine.core.ui.vo.GlobalConfigVO;
 import com.parch.combine.core.ui.vo.PageElementClassInitVO;
 import java.util.List;
@@ -31,51 +30,47 @@ public class CombineJavaUIStarter {
      * @param path 初始化文件相对路径
      */
     public static ICombineJavaPageService init(String path) {
-        CombineJavaPageService service = new CombineJavaPageService();
-
-        CombineManager combineManager = new CombineManager();
-        ConfigLoadingContextHandler.init(combineManager, null, null);
-
-        GlobalConfigVO globalConfig = service.getGlobalConfig();
-//        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
-//        PrintHelper.printInit("初始化全局设置 >>>");
-//        PrintHelper.printInit("加载配置文件设置   -> " + StringUtil.join(context.getInitConfigs(), ","));
-//        PrintHelper.printInit("初始化流程设置     -> " + StringUtil.join(context.getInitFlows(), ","));
-//        PrintHelper.printInit("是否开放配置注册   -> " + context.getOpenRegisterConfig());
-//        PrintHelper.printInit("流程链路请求ID字段 -> " + context.getRequestIdKey());
-//        PrintHelper.printInit("打印组件执行结果   -> " + context.getPrintComponentResult());
-//        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-
-        PrintTool.printInit("初始化页面 >>>");
-        for (String initConfigPath : globalConfig.getInitConfigs()) {
-            CombineConfigVO config = JsonUtil.deserialize(ResourceFileUtil.read(path), CombineConfigVO.class);
-            if (config == null) {
-                PrintTool.printInit("初始化页面 >>>"); // TODO
-                continue;
-            }
-
-            combineManager.init(config, vo -> {
-//                PrintHelper.printInit(vo.getFlowKey() + " | " + StringUtil.join(vo.getComponentIds(), ", "));
-//                if (CheckEmptyUtil.isNotEmpty(vo.getStaticComponentIds())) {
-//                    PrintHelper.printInit(vo.getFlowKey() + " STATIC | " + StringUtil.join(vo.getStaticComponentIds(), ", "));
-//                }
-//                if (CheckEmptyUtil.isNotEmpty(vo.getErrorList())) {
-//                    for (String errorMsg : vo.getErrorList()) {
-//                        PrintUtil.printError(vo.getFlowKey() + " Error：" + errorMsg);
-//                    }
-//                }
-            });
-
-            combineManager.getPage().get().forEach((k, v) -> {
-                service.register(k, v, null);
-            });
-        }
+        GlobalConfigVO config = GlobalConfigVO.build(path);
+        PrintTool.printInit("=======================================================================================================================================================");
+        PrintTool.printInit("初始化UI全局设置 [" + path + "] >>>");
+        PrintTool.printInit("加载配置文件设置   -> " + StringUtil.join(config.getConfigs(), ","));
+        PrintTool.printInit("根URL   -> " + config.getBaseUrl());
+        PrintTool.printInit("系统根URL -> " + config.getSystemUrl());
         PrintTool.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
-//        combineWebService.setOpenRegister(context.getOpenRegisterConfig());
+        CombineJavaPageService service = new CombineJavaPageService(ConfigLoadingContextHandler.build(config));
+        CombineLoadVO loadVO = service.batchLoad(config.getConfigs());
 
-        ConfigLoadingContextHandler.clear();
+        PrintTool.printInit("初始化页面 >>>");
+        if (CheckEmptyUtil.isNotEmpty(loadVO.getDataLoadIds())) {
+            PrintTool.printInit("DATA-LOAD | " + StringUtil.join(loadVO.getDataLoadIds(), ", "));
+        }
+
+        if (CheckEmptyUtil.isNotEmpty(loadVO.getElementTemplateIds())) {
+            PrintTool.printInit("ELEMENT-TEMPLATE | " + StringUtil.join(loadVO.getElementTemplateIds(), ", "));
+        }
+
+        if (CheckEmptyUtil.isNotEmpty(loadVO.getElementIds())) {
+            PrintTool.printInit("ELEMENT | " + StringUtil.join(loadVO.getElementIds(), ", "));
+        }
+
+        loadVO.getGroupElementMap().forEach((k, v) -> {
+            PrintTool.printInit("ELEMENT-GROUP | " + k + " : " + StringUtil.join(v, ", "));
+        });
+
+        if (CheckEmptyUtil.isNotEmpty(loadVO.getPageKeys())) {
+            PrintTool.printInit("PAGE | " + StringUtil.join(loadVO.getPageKeys(), ", "));
+            List<String> buildErrors = service.buildPages(loadVO.getPageKeys());
+            if (CheckEmptyUtil.isNotEmpty(buildErrors)) {
+                for (String buildError : buildErrors) {
+                    PrintTool.printInit("PAGE-BUILD | ERROR : " + buildError);
+                }
+                PrintTool.printInit("PAGE-BUILD | FAIL");
+            } else {
+                PrintTool.printInit("PAGE-BUILD | SUCCESS");
+            }
+        }
+        PrintTool.printInit("=======================================================================================================================================================");
 
         return service;
     }

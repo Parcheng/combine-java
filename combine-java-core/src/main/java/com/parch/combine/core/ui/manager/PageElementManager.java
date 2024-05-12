@@ -1,8 +1,8 @@
 package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
-import com.parch.combine.core.common.manager.AbsPreLoadConfigManager;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.handler.ElementClassHandler;
@@ -30,6 +30,7 @@ public class PageElementManager {
         String id = (String) configMap.get(FieldKeyCanstant.ID);
         String type = (String) configMap.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
+            PrintUtil.printError("【ui】【element】【" + id + "】【" + type + "】配置为空");
             return null;
         }
 
@@ -39,6 +40,7 @@ public class PageElementManager {
 
         Class<? extends ElementConfig<?>> elementClass = ElementClassHandler.get(type);
         if (elementClass == null) {
+            PrintUtil.printError("【ui】【element】【" + id + "】【" + type + "】元素类型未注册");
             return null;
         }
 
@@ -48,6 +50,7 @@ public class PageElementManager {
             subManager.build(id, config);
             CONFIGS.put(id, config);
         } catch (Exception e) {
+            PrintUtil.printError("【ui】【element】【" + id + "】【" + type + "】元素配置构建失败");
             return null;
         }
 

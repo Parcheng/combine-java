@@ -26,7 +26,8 @@ public class PageElementGroupManager {
      * @return 是否成功
      */
     @SuppressWarnings("unchecked")
-    protected boolean init(List<PageElementGroupVO> groups) {
+    protected Map<String, List<String>> init(List<PageElementGroupVO> groups) {
+        Map<String, List<String>> groupElementMap = new HashMap<>();
         for (PageElementGroupVO group : groups) {
             List<String> elementIds = new ArrayList<>();
             for (Object element : group.getElements()) {
@@ -37,10 +38,11 @@ public class PageElementGroupManager {
                 }
             }
 
-            return save(group.getId(), elementIds);
+            save(group.getId(), elementIds);
+            groupElementMap.put(group.getId(), elementIds);
         }
 
-        return true;
+        return groupElementMap;
     }
 
     /**
@@ -49,9 +51,8 @@ public class PageElementGroupManager {
      * @param key KEY
      * @return 是否成功
      */
-    private boolean save(String key, List<String> configs) {
+    private void save(String key, List<String> configs) {
         ELEMENT_IDS_MAP.put(key, configs);
-        return true;
     }
 
     /**

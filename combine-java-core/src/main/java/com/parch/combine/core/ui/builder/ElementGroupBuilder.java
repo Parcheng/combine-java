@@ -62,7 +62,7 @@ public class ElementGroupBuilder {
             return;
         }
 
-        templateMap.put(templateId, manager.getPageTemplate().get(templateId, type, templateClass));
+        templateMap.put(templateId, manager.getPageElementTemplate().get(templateId, type, templateClass));
     }
 
     private void initDataLoad(String dataLoadId, String elementId) {

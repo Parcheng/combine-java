@@ -4,21 +4,11 @@ import com.parch.combine.core.ui.manager.CombineManager;
 
 public class ConfigLoadingContext {
 
-    private String scopeKey;
-
     private String systemUrl;
 
     private String baseUrl;
 
     private CombineManager manager;
-
-    public String getScopeKey() {
-        return scopeKey;
-    }
-
-    public void setScopeKey(String scopeKey) {
-        this.scopeKey = scopeKey;
-    }
 
     public String getSystemUrl() {
         return systemUrl;

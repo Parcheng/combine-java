@@ -33,6 +33,7 @@ public class DataLoadManager  {
         String id = (String) configMap.get(FieldKeyCanstant.ID);
         String type = (String) configMap.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
+            PrintUtil.printError("【ui】【dataLoad】【" + id + "】类型为空");
             return null;
         }
 

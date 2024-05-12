@@ -68,8 +68,10 @@ $combineWebUI = (function () {
     }
 
     const instanceFns = {
-        register: function (id, elementJson) {
-            instances[id] = elementJson;
+        register: function (id, instanceJson) {
+            const instance = JSON.parse(instanceJson);
+            configFns.init(instance);
+            instances[id] = JSON.stringify(instance);
             return resultFns.success();
         },
         build: function (id, data) {
@@ -597,45 +599,45 @@ $combineWebUI = (function () {
 
     const instanceTempFns = {
         register: function (id, instanceTempJson) {
-            instanceTemps[id] = JSON.parse(instanceTempJson);
+            instanceTemps[id] = instanceTempJson;
         },
         get: function (id) {
-            return instanceTemps[id];
+            if (!id || !instanceTemps[id]) {
+                return {};
+            }
+            return JSON.parse(instanceTemps[id]);
         }
     }
 
     const configFns = {
-        init: function (logicConfig, data) {
-            if (!logicConfig.external) {
-                logicConfig.external = {};
+        init: function (instance) {
+            const templateId = instance.templateId;
+            const template = instance.template = instanceTempFns.get(templateId);
+
+            if (!template.external) {
+                template.external = {};
             }
-            logicConfig.external.id = logicConfig.id;
-            logicConfig.settings = logicConfig.settings ? logicConfig.settings : {};
+            template.external.id = instance.id;
 
-            logicConfig.load = logicConfig.load ? logicConfig.load : {};
-            loadDataFns.register(logicConfig.id, logicConfig.load);
+            let elementTemplate = tempFns.load(instance.elementTemplatePath);
+            for (const key in elementTemplate) {
+                if (Object.hasOwnProperty.call(elementTemplate, key)) {
+                    let doms = instance[key] ? instance[key] : {};
+                    const tempDom = elementTemplate[key];
 
-            let tempConfig = tempFns.load(logicConfig.tempPath);
-            for (const key in tempConfig) {
-                if (Object.hasOwnProperty.call(tempConfig, key)) {
-                    let elements = logicConfig[key] ? logicConfig[key] : {};
-                    const elementTemp = tempConfig[key];
-
-                    if (elements instanceof Array) {
-                        const newElements = [];
-                        for (let j = 0; j < elements.length; j++) {
-                            newElements.push(this.initElement(elements[j], elementTemp, data));
+                    if (doms instanceof Array) {
+                        const newDoms = [];
+                        for (let j = 0; j < newDoms.length; j++) {
+                            newDoms.push(this.initElement(doms[j], tempDom));
                         }
-                        logicConfig[key] = newElements;
+                        template[key] = newDoms;
                     } else {
-                        logicConfig[key] = this.initElement(elements, elementTemp, data);
+                        template[key] = this.initElement(doms, tempDom);
                     }
                 }
             }
-
-            return logicConfig;
         },
-        initElement: function (element, elementTemp, data) {
+        initElement: function (element, elementTemp) {
             if (!element) {
                 element = {};
             }
@@ -967,7 +969,9 @@ $combineWebUI = (function () {
             }
 
             const first = variablePath.shift();
-            if (first === "$e") {
+            if (first === "$c") {
+                return canstantFns.get();
+            } else if (first === "$e") {
                 const dataResult = instanceFns.getData(variablePath.shift());
                 if (dataResult.success) {
                     return dataResult.data;
@@ -991,7 +995,8 @@ $combineWebUI = (function () {
             return null;
         },
         hasDataFlag: function (variableText) {
-            return variableText === "$e" || variableText === "$ld" || variableText === "$ls";
+            return variableText === "$c" || variableText === "$e" 
+                || variableText === "$ld" || variableText === "$ls";
         },
     };
 

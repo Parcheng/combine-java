@@ -1,13 +1,10 @@
 package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.manager.ConstantManager;
-import com.parch.combine.core.ui.base.HtmlConfig;
 import com.parch.combine.core.ui.handler.CombineManagerHandler;
 import com.parch.combine.core.ui.vo.CombineConfigVO;
-import com.parch.combine.core.ui.vo.CombineInitVO;
-
+import com.parch.combine.core.ui.vo.CombineLoadVO;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 /**
  * 核心处理器
@@ -24,7 +21,7 @@ public class CombineManager {
 
     private PageManager page;
 
-    private PageTemplateManager pageTemplate;
+    private PageElementTemplateManager pageElementTemplate;
 
     private ConstantManager constant;
 
@@ -36,41 +33,29 @@ public class CombineManager {
         dataLoad = new DataLoadManager();
         trigger = new TriggerManager();
         pageElement = new PageElementManager();
-        pageTemplate = new PageTemplateManager();
+        pageElementTemplate = new PageElementTemplateManager();
         pageGroup = new PageElementGroupManager(pageElement);
         page = new PageManager();
         CombineManagerHandler.register(scopeKey, this);
     }
 
-    public void init(CombineConfigVO config, Consumer<CombineInitVO> func) {
-
-        // TODO func
+    public CombineLoadVO load(CombineConfigVO config) {
+        CombineLoadVO initVO = new CombineLoadVO();
 
         // 保存常量到常量池
         constant.save(config.getConstant());
-
         // 加载数据加载配置
-        dataLoad.load(config.getDataLoads());
-
-        // 加载DOM模板配置
-        pageElement.load(config.getTemplates());
-
+        initVO.setDataLoadIds(dataLoad.load(config.getDataLoads()));
+        // 加载元素模板配置
+        initVO.setElementTemplateIds(pageElementTemplate.load(config.getTemplates()));
         // 加载页面元素配置
-        pageElement.load(config.getElements());
-
+        initVO.setElementIds(pageElement.load(config.getElements()));
         // 初始化页面元素组配置
-        pageGroup.init(config.getGroups());
-
+        initVO.setGroupElementMap(pageGroup.init(config.getGroups()));
         // 初始化每个接口的逻辑
-        page.load(config.getPages());
-    }
+        initVO.setPageKeys(page.load(config.getPages()));
 
-    public String getPage(String key) {
-        HtmlConfig pageConfig = page.get(key);
-
-
-
-        return null;
+        return initVO;
     }
 
     public DataLoadManager getDataLoad() {
@@ -89,8 +74,8 @@ public class CombineManager {
         return page;
     }
 
-    public PageTemplateManager getPageTemplate() {
-        return pageTemplate;
+    public PageElementTemplateManager getPageElementTemplate() {
+        return pageElementTemplate;
     }
 
     public ConstantManager getConstant() {

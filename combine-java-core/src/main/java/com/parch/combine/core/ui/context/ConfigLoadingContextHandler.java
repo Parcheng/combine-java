@@ -1,18 +1,20 @@
 package com.parch.combine.core.ui.context;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.ui.manager.CombineManager;
+import com.parch.combine.core.ui.vo.GlobalConfigVO;
 
 public class ConfigLoadingContextHandler {
 
     private static final ThreadLocal<ConfigLoadingContext> CACHE = new ThreadLocal<>();
 
-    public static void init(CombineManager manager, String baseUrl, String systemUrl) {
+    public static ConfigLoadingContext build(GlobalConfigVO globalConfig) {
         ConfigLoadingContext context = new ConfigLoadingContext();
-        context.setScopeKey(manager.getScopeKey());
-        context.setBaseUrl(baseUrl == null ? CheckEmptyUtil.EMPTY : baseUrl);
-        context.setSystemUrl(systemUrl == null ? CheckEmptyUtil.EMPTY : systemUrl);
-        context.setManager(manager);
+        context.setBaseUrl(globalConfig.getBaseUrl() == null ? CheckEmptyUtil.EMPTY : globalConfig.getBaseUrl());
+        context.setSystemUrl(globalConfig.getSystemUrl() == null ? CheckEmptyUtil.EMPTY : globalConfig.getSystemUrl());
+        return context;
+    }
+
+    public static void set(ConfigLoadingContext context) {
         CACHE.set(context);
     }
 

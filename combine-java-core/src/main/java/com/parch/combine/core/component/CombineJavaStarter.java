@@ -37,8 +37,8 @@ public class CombineJavaStarter {
         String scopeKey = combineWebService.getScopeKey();
         GlobalContextHandler.init(scopeKey, path);
         GlobalContext context = GlobalContextHandler.get(scopeKey);
-        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
-        PrintHelper.printInit("初始化全局设置 >>>");
+        PrintHelper.printInit("=======================================================================================================================================================");
+        PrintHelper.printInit("初始化全局设置 [" + path + "] >>>");
         PrintHelper.printInit("加载配置文件设置   -> " + StringUtil.join(context.getInitConfigs(), ","));
         PrintHelper.printInit("初始化流程设置     -> " + StringUtil.join(context.getInitFlows(), ","));
         PrintHelper.printInit("是否开放配置注册   -> " + context.getOpenRegisterConfig());
@@ -77,7 +77,7 @@ public class CombineJavaStarter {
                 combineWebService.executeAny(keyArr[0], keyArr[1], new HashMap<>(0), new HashMap<>(0));
             }
         }
-        PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
+        PrintHelper.printInit("=======================================================================================================================================================");
 
 
         combineWebService.setOpenRegister(context.getOpenRegisterConfig());

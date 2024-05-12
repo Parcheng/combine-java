@@ -4,30 +4,41 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.ResourceFileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 全局配置
- *
- * @author parch
- * @date 2023/4/26
- */
 public class GlobalConfigVO {
 
-    @Field(key = "initConfigs", name = "初始化要导入的配置文件集合", type = FieldTypeEnum.TEXT, isArray = true)
-    private List<String> initConfigs = new ArrayList<>();
+    @Field(key = "baseUrl", name = "根URL", type = FieldTypeEnum.TEXT, isRequired = true)
+    private String baseUrl;
+
+    @Field(key = "systemUrl", name = "系统根URL", type = FieldTypeEnum.TEXT, isRequired = true)
+    private String systemUrl;
+
+    @Field(key = "configs", name = "初始化要导入的配置文件集合", type = FieldTypeEnum.TEXT, isArray = true)
+    private List<String> configs = new ArrayList<>();
 
     @Field(key = "initFlows", name = "初始化要执行的流程KEY集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> initPages = new ArrayList<>();
 
-    public List<String> getInitConfigs() {
-        return initConfigs;
+    public static GlobalConfigVO build(String path) {
+        GlobalConfigVO globalConfig = JsonUtil.deserialize(ResourceFileUtil.read(path), GlobalConfigVO.class);
+        if (globalConfig == null) {
+            globalConfig = new GlobalConfigVO();
+        }
+
+        return globalConfig;
     }
 
-    public void setInitConfigs(List<String> initConfigs) {
-        this.initConfigs = initConfigs;
+    public List<String> getConfigs() {
+        return configs;
+    }
+
+    public void setConfigs(List<String> configs) {
+        this.configs = configs;
     }
 
     public List<String> getInitPages() {
@@ -36,6 +47,22 @@ public class GlobalConfigVO {
 
     public void setInitPages(List<String> initPages) {
         this.initPages = initPages;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
+    public String getSystemUrl() {
+        return systemUrl;
+    }
+
+    public void setSystemUrl(String systemUrl) {
+        this.systemUrl = systemUrl;
     }
 
     //    @Field(key = "openRegisterConfig", name = "是否开放流程注册", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
