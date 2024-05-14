@@ -6,49 +6,48 @@ $combineWebUI.element.register("FROM", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        const layout = config.settings.layout ? config.settings.layout.toUpperCase() : null;
+    function init(instance, parentData) {
+        const layout = instance.layout ? instance.layout.toUpperCase() : null;
         switch (layout) {
             case "VERTICAL":
-                config.from = configFns.initElement(config.from, config.vertical);
+                instance.template.from = configFns.initElement(instance.template.from, instance.template.vertical);
                 break;
             case "INLINE":
-                config.from = configFns.initElement(config.from, config.inline);
+                instance.template.from = configFns.initElement(instance.template.from, instance.template.inline);
                 break;
             case "HORIZONTAL":
             default:
-                config.from = configFns.initElement(config.from, config.horizontal);
+                instance.template.from = configFns.initElement(instance.template.from, instance.template.horizontal);
                 break;
         }
         return config;
     }
 
-    function buildFromBody(config, buildData) {
+    function buildFromBody(instance, buildData) {
         let body = [];
-        const settings = config.settings;
         buildData = buildData ? buildData : {};
-        for (let i = 0; i < settings.items.length; i++) {
-            const currItem = settings.items[i];
+        for (let i = 0; i < instance.items.length; i++) {
+            const currItem = instance.items[i];
             const currKey = currItem.fieldKey;
             const hide = currItem.hide === true;
 
             const itemBodys = [];
             if (currItem.fieldName) {
-                itemBodys.push(domFns.build(config.label, currItem.fieldName));
+                itemBodys.push(domFns.build(instance.template.label, currItem.fieldName));
             }
             if (currItem.element) {
                 const contentElementDom = buildElement(currItem.element, buildData);
                 if (contentElementDom) {
                     itemBodys.push(contentElementDom);
-                    setData(config.id, currKey, null, currItem.element.id);
+                    setData(instance.id, currKey, null, currItem.element.id);
                 }
             } else {
                 const text = dataFns.parseVariable(currItem.text, buildData);
-                setData(config.id, currKey, text);
-                itemBodys.push(domFns.build(config.content, text));
+                setData(instance.id, currKey, text);
+                itemBodys.push(domFns.build(instance.template.content, text));
             }
 
-            const groupDom = domFns.build(config.item, itemBodys)
+            const groupDom = domFns.build(instance.template.item, itemBodys)
             groupDom.setAttribute("id", dataFns.parseVariableText(currItem.id, buildData));
             if (hide) {
                 domFns.hide(groupDom);
@@ -60,8 +59,8 @@ $combineWebUI.element.register("FROM", (function () {
         return body;
     }
 
-    function buildElement(elementConfig, data) {
-        const result = instanceFns.registerAndBuild(elementConfig, data);
+    function buildElement(elementId, data) {
+        const result = instanceFns.build(elementId, data);
         if (result.success) {
             return result.data;
         }
@@ -89,22 +88,22 @@ $combineWebUI.element.register("FROM", (function () {
     }
 
     return {
-        build: function (config, data) {
-            config = init(config, data);
+        build: function (instance, data) {
+            instance = init(instance, data);
 
             let fromDom;
-            if (config.from) {
-                const fromBody = buildFromBody(config, data);
-                fromDom = domFns.build(config.from, fromBody);
+            if (instance.template.from) {
+                const fromBody = buildFromBody(instance, data);
+                fromDom = domFns.build(instance.template.from, fromBody);
             }
 
-            return domFns.build(config.external, fromDom);
+            return domFns.build(instance.template.external, fromDom);
         },
-        refresh: function (id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function (id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom.children[0], buildFromBody(config, parentData));
+                domFns.setBody(externalDom.children[0], buildFromBody(instance, parentData));
             }
         },
         getData: function (id) {

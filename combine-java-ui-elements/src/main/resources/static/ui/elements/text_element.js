@@ -5,11 +5,11 @@ $combineWebUI.element.register("TEXT", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildText(config, settings, buildData) {
+    function buildText(template, settings, buildData) {
         const body = [];
         if (!settings) {
             return body;
@@ -19,7 +19,7 @@ $combineWebUI.element.register("TEXT", (function () {
             buildData = buildData instanceof Array ? buildData : [buildData];
             for (let i = 0; i < buildData.length; i++) {
                 const currData = buildData[i];
-                const lineDoms = buildLine(config, settings, currData, 0);
+                const lineDoms = buildLine(template, settings, currData, 0);
                 if (lineDoms.length > 0) {
                     body.push(lineDoms);
                 }
@@ -33,11 +33,11 @@ $combineWebUI.element.register("TEXT", (function () {
         return body;
     }
 
-    function buildLine(config, settings, data, level) {
+    function buildLine(template, settings, data, level) {
         const body = [];
         for (let l = 0; l < settings.lines.length; l++) {
             const lineSettings = settings.lines[l];
-            const lineDom = buildLineDom(config, settings.retract, l, level, lineSettings, data);
+            const lineDom = buildLineDom(template, settings.retract, l, level, lineSettings, data);
             if (lineDom) {
                 body.push(lineDom);
             }
@@ -53,7 +53,7 @@ $combineWebUI.element.register("TEXT", (function () {
                     if (childrenItemData) {
                         const childrenitemDom = buildLine(config, settings, childrenItemData, level + 1);
                         if (childrenitemDom && childrenitemDom.length > 0) {
-                            body.push(domFns.build(config.children, childrenitemDom));
+                            body.push(domFns.build(template.children, childrenitemDom));
                         }
                     }
                 }
@@ -63,13 +63,13 @@ $combineWebUI.element.register("TEXT", (function () {
         return body;
     }
 
-    function buildLineDom(config, retract, lineIndex, level, lineSettings, currData) {
-        let lineConfig = config.line;
-        if (config.lines && config.lines.length > lineIndex) {
-            lineConfig = configFns.initElement(config.lines[lineIndex], lineConfig, currData);
+    function buildLineDom(template, retract, lineIndex, level, lineSettings, currData) {
+        let lineConfig = template.line;
+        if (template.lines && template.lines.length > lineIndex) {
+            lineConfig = configFns.initElement(template.lines[lineIndex], lineConfig, currData);
         }
-        if (config.levels && config.levels.length > level) {
-            lineConfig = configFns.initElement(config.levels[level], lineConfig, currData);
+        if (template.levels && template.levels.length > level) {
+            lineConfig = configFns.initElement(template.levels[level], lineConfig, currData);
         }
 
         if (lineSettings.data) {
@@ -118,14 +118,14 @@ $combineWebUI.element.register("TEXT", (function () {
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildText(config, config.settings, data));
+        build: function build(instance, data) {
+            config = init(instance, data);
+            return domFns.build(instance.template.external, buildText(instance.template, instance, data));
         },
         refresh: function refresh(id, config, parentData) {
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildText(config, config.settings, parentData));
+                domFns.setBody(externalDom, buildText(instance.template, instance, parentData));
             }
         },
         getData: function getData(id) {

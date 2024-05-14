@@ -132,7 +132,7 @@ $combineWebUI = (function () {
                 return resultFns.fail("Get data fail", "No instance: " + instance.type);
             }
 
-            return resultFns.success(element.getData(id, instance.settings));
+            return resultFns.success(element.getData(id, instance));
         },
         call: function (id, name, params) {
             const configResult = this.getConfig(id);
@@ -705,15 +705,12 @@ $combineWebUI = (function () {
         },
         buildSubElement: function (subSettings, domConfig, buildData, elementDatas) {
             let currData = buildData, dom;
-            if (subSettings.elementsId) {
-                dom = domFns.build(domConfig, []);
-                instanceFns.load(subSettings.elementsId, dom, buildData);
-            } else if (subSettings.elements) {
+            if (subSettings.elements) {
                 const itemsBody = [];
                 for (let i = 0; i < subSettings.elements.length; i++) {
                     const itemConfig = subSettings.elements[i];
                     if (itemConfig) {
-                        const buildResult = instanceFns.registerAndBuild(itemConfig, buildData);
+                        const buildResult = instanceFns.build(itemConfig, buildData);
                         if (buildResult.success) {
                             itemsBody.push(buildResult.data);
                         }

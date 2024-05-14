@@ -1,38 +1,37 @@
 $combineWebUI.element.register("BREADCRUMB", (function () {
     const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
-
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildBreadcrumb(config, buildData) {
+    function buildBreadcrumb(instance, buildData) {
+        const templateConfig = instance.template;
         if (!buildData) {
             data[id] = [];
-            return domFns.build(config.breadcrumb, []);
+            return domFns.build(templateConfig.breadcrumb, []);
         }
 
         const body = [];
-        buildData = data[config.id] = buildData instanceof Array ? buildData : [buildData];
+        buildData = data[templateConfig.id] = buildData instanceof Array ? buildData : [buildData];
         for (let d = 0; d < buildData.length; d++) {
-            body.push(domFns.build(config.item, buildData[d]));
+            body.push(domFns.build(templateConfig.item, buildData[d]));
         }
 
-        return domFns.build(config.breadcrumb, body);
+        return domFns.build(templateConfig.breadcrumb, body);
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildBreadcrumb(config, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildBreadcrumb(instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildBreadcrumb(config, parentData));
+                domFns.setBody(externalDom, buildBreadcrumb(instance, parentData));
             }
         },
         getData: function getData(id) {

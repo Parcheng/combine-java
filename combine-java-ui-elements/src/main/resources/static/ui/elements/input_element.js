@@ -1,41 +1,39 @@
 $combineWebUI.element.register("INPUT", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
-    const configFns = $combineWebUI.config;
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildControls(config, buildData) {
+    function buildControls(instance, buildData) {
         let body = [];
-        const settings = config.settings;
-
-        if (settings.beforeText) {
-            body.push(buildAddon(config, settings.beforeText, buildData));
+        
+        if (instance.beforeText) {
+            body.push(buildAddon(instance, instance.beforeText, buildData));
         }
 
-        const type = settings.type ? settings.type.toLowerCase() : "text";
-        body.push(buildInput(config, type, settings, buildData));
+        const type = instance.type ? instance.type.toLowerCase() : "text";
+        body.push(buildInput(instance, type, settings, buildData));
 
-        if (settings.afterText) {
-            body.push(buildAddon(config, settings.afterText, buildData));
+        if (instance.afterText) {
+            body.push(buildAddon(instance, instance.afterText, buildData));
         }
 
         return body;
     }
 
 
-    function buildInput(config, type, settings, buildData) {
-        const inputDom = domFns.build(config.input, null);
+    function buildInput(instance, type, settings, buildData) {
+        const inputDom = domFns.build(instance.template.input, null);
         inputDom.type = type;
 
-        const key = dataFns.parseVariableText(settings.key, buildData);
+        const key = dataFns.parseVariableText(instance.key, buildData);
         if (key) {
             inputDom.name = key;
         }
-        if (settings.value) {
-            const val = dataFns.parseVariable(settings.value, buildData);
+        if (instance.value) {
+            const val = dataFns.parseVariable(instance.value, buildData);
             if (val) {
                 inputDom.value = val;
             }
@@ -44,17 +42,17 @@ $combineWebUI.element.register("INPUT", (function () {
     }
 
 
-    function buildAddon(config, text, buildData) {
+    function buildAddon(instance, text, buildData) {
         const value = dataFns.parseVariable(text, buildData);
-        const addonDom = domFns.build(config.addon, value);
+        const addonDom = domFns.build(instance.template.addon, value);
         return addonDom;
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            const buttons = buildControls(config, data);
-            const externalDom = domFns.build(config.external, buttons);
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            const buttons = buildControls(instance, data);
+            const externalDom = domFns.build(instance.template.external, buttons);
             return externalDom
         },
         refresh: function refresh(id, config, parentData) {

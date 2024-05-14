@@ -1,37 +1,35 @@
 $combineWebUI.element.register("TAB", (function () {
     const tabIdName = "tabId";
     const domFns = $combineWebUI.dom;
-    const instanceFns = $combineWebUI.instance;
     const elementFns = $combineWebUI.element;
     const toolFns = $combineWebUI.tools;
     const configFns = $combineWebUI.config;
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildTab(config, buildData) {
-        const settings = config.settings;
-        if (!settings.items) {
+    function buildTab(instance, buildData) {
+        if (!instance.items) {
             return [];
         }
 
         const titleBody = [];
         const contentBody = [];
 
-        const elementData = data[config.id] = {};
-        for (let i = 0; i < settings.items.length; i++) {
-            const curr = settings.items[i];
+        const elementData = data[instance.id] = {};
+        for (let i = 0; i < instance.items.length; i++) {
+            const curr = instance.items[i];
             curr.id = curr.id ? curr.id : toolFns.generateUUID();
 
             if (curr.checked) {
                 curr.show = true;
             }
             if (curr.show || curr.checked) {
-                titleBody.push(buildTitle(config, curr));
-                const contentDom = buildContent(config, curr, buildData);
+                titleBody.push(buildTitle(instance, curr));
+                const contentDom = buildContent(instance, curr, buildData);
                 if (!curr.checked) {
                     domFns.hide(contentDom);
                 }
@@ -41,35 +39,35 @@ $combineWebUI.element.register("TAB", (function () {
             elementData[curr.id] = toolFns.copy(curr);
         }
 
-        const tabDom = domFns.build(config.tab, titleBody);
-        const contentDom = domFns.build(config.content, contentBody);
+        const tabDom = domFns.build(instance.template.tab, titleBody);
+        const contentDom = domFns.build(instance.template.content, contentBody);
         return [tabDom, contentDom];
     }
 
-    function buildTitle(config, itemSettings) {
+    function buildTitle(instance, itemSettings) {
         const idParam = itemSettings.id;
 
-        const titleTextDom = domFns.build(config.titleText, itemSettings.title ? itemSettings.title : config.titleText.text);
-        domFns.appendProtity(titleTextDom, "onclick", elementFns.buildCallFnCode(config.id, "checked", idParam));
+        const titleTextDom = domFns.build(instance.template.titleText, itemSettings.title ? itemSettings.title : instance.template.titleText.text);
+        domFns.appendProtity(titleTextDom, "onclick", elementFns.buildCallFnCode(instance.id, "checked", idParam));
         let closeDom = null;
         if (itemSettings.hasClose) {
-            closeDom = domFns.build(config.titleClose, config.titleClose.text)
-            domFns.appendProtity(closeDom, "onclick", elementFns.buildCallFnCode(config.id, "close", idParam));
+            closeDom = domFns.build(instance.template.titleClose, instance.template.titleClose.text)
+            domFns.appendProtity(closeDom, "onclick", elementFns.buildCallFnCode(instance.id, "close", idParam));
         }
 
-        const titleDom = domFns.build(config.title, closeDom ? [titleTextDom, closeDom] : titleTextDom);
-        const itemDom = domFns.build(itemSettings.checked ? config.itemActive : config.item, titleDom);
+        const titleDom = domFns.build(instance.template.title, closeDom ? [titleTextDom, closeDom] : titleTextDom);
+        const itemDom = domFns.build(itemSettings.checked ? instance.template.itemActive : instance.template.item, titleDom);
         itemDom.setAttribute(tabIdName, idParam);
         return itemDom;
     }
 
-    function buildContent(config, itemSettings, buildData) {
-        return configFns.buildSubElement(itemSettings.body, config.content, buildData);
+    function buildContent(instance, itemSettings, buildData) {
+        return configFns.buildSubElement(itemSettings.body, instance.template.content, buildData);
     }
 
-    function checked(config, externalDom, checkId) {
-        const currData = data[config.id];
-        if (!externalDom || !config || !checkId || !currData) {
+    function checked(instance, externalDom, checkId) {
+        const currData = data[instance.id];
+        if (!externalDom || !instance || !checkId || !currData) {
             return;
         }
 
@@ -91,8 +89,8 @@ $combineWebUI.element.register("TAB", (function () {
 
         let childrenIndex = -1;
         let showTitleDom, showContentDom, showItemConfig;
-        for (let i = 0; i < config.settings.items.length; i++) {
-            const curr = currData[config.settings.items[i].id];
+        for (let i = 0; i < instance.items.length; i++) {
+            const curr = currData[instance.items[i].id];
             if (!curr) {
                 continue;
             }
@@ -110,7 +108,7 @@ $combineWebUI.element.register("TAB", (function () {
             } else {
                 if (titleDom && curr.checked) {
                     curr.checked = false;
-                    domFns.replace(titleDom, buildTitle(config, curr));
+                    domFns.replace(titleDom, buildTitle(instance, curr));
                 }
                 if (contentDom) {
                     domFns.hide(contentDom);
@@ -121,19 +119,19 @@ $combineWebUI.element.register("TAB", (function () {
         if (showItemConfig) {
             showItemConfig.checked = true;
             if (showTitleDom && showContentDom) {
-                domFns.replace(showTitleDom, buildTitle(config, showItemConfig));
+                domFns.replace(showTitleDom, buildTitle(instance, showItemConfig));
                 domFns.show(showContentDom);
             } else {
                 showItemConfig.show = true;
-                domFns.appendBody(titleExternalDom, buildTitle(config, showItemConfig));
-                domFns.appendBody(contentExternalDom, buildContent(config, showItemConfig));
+                domFns.appendBody(titleExternalDom, buildTitle(instance, showItemConfig));
+                domFns.appendBody(contentExternalDom, buildContent(instance, showItemConfig));
             }
         }
     }
 
-    function close(config, externalDom, colseDomId) {
-        const currData = data[config.id];
-        if (!externalDom || !config || !colseDomId || !currData) {
+    function close(instance, externalDom, colseDomId) {
+        const currData = data[instance.id];
+        if (!externalDom || !instance || !colseDomId || !currData) {
             return;
         }
 
@@ -152,7 +150,7 @@ $combineWebUI.element.register("TAB", (function () {
         }
 
         let showFirstDom = false, showData;
-        const items = config.settings.items;
+        const items = instance.items;
         for (let i = 0; i < items.length; i++) {
             const curr = currData[items[i].id];
 
@@ -187,39 +185,39 @@ $combineWebUI.element.register("TAB", (function () {
         }
 
         if (showFirstDom && showData) {
-            domFns.replace(titleDoms[0], buildTitle(config, showData));
+            domFns.replace(titleDoms[0], buildTitle(instance, showData));
             domFns.show(contentDoms[0]);
         }
     }
 
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildTab(config, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildTab(instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildTab(config, parentData));
+                domFns.setBody(externalDom, buildTab(instance, parentData));
             }
         },
         getData: function getData(id) {
             return null;
         },
         call: {
-            checked: function (config, checkId) {
-                const externalDom = document.getElementById(config.id);
-                checked(config, externalDom, checkId);
+            checked: function (instance, checkId) {
+                const externalDom = document.getElementById(instance.id);
+                checked(instance, externalDom, checkId);
             },
-            open: function (config, checkId) {
-                const externalDom = document.getElementById(config.id);
-                checked(config, externalDom, checkId);
+            open: function (instance, checkId) {
+                const externalDom = document.getElementById(instance.id);
+                checked(instance, externalDom, checkId);
             },
-            close: function (config, closeDomId) {
-                const externalDom = document.getElementById(config.id);
-                close(config, externalDom, closeDomId);
+            close: function (instance, closeDomId) {
+                const externalDom = document.getElementById(instance.id);
+                close(instance, externalDom, closeDomId);
             }
         }
     }

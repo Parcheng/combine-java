@@ -5,16 +5,16 @@ $combineWebUI.element.register("TABLE", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildHeadContent(config) {
-        const row = config.headRow;
-        const col = config.headCol;
-        const checkbox = config.checkbox;
-        const headNames = config.settings.headNames;
-        const hasChecked = config.settings.hasChecked;
+    function buildHeadContent(instance) {
+        const row = instance.template.headRow;
+        const col = instance.template.headCol;
+        const checkbox = instance.template.checkbox;
+        const headNames = instance.headNames;
+        const hasChecked = instance.hasChecked;
 
         let body = [];
         if (!headNames || headNames.length === 0) {
@@ -22,7 +22,7 @@ $combineWebUI.element.register("TABLE", (function () {
         }
         if (hasChecked) {
             const checkboxDom = domFns.build(checkbox, null);
-            domFns.appendProtity(checkboxDom, "onclick", elementFns.buildCallFnCode(config.id, "checkAll"));
+            domFns.appendProtity(checkboxDom, "onclick", elementFns.buildCallFnCode(instance.id, "checkAll"));
             body.push(domFns.build(col, checkboxDom));
         }
         for (let i = 0; i < headNames.length; i++) {
@@ -31,17 +31,17 @@ $combineWebUI.element.register("TABLE", (function () {
         return domFns.build(row, body);
     }
 
-    function buildBodyContent(config, buildData) {
-        const id = config.id;
-        const row = config.row;
-        const col = config.col;
-        const checkbox = config.checkbox;
-        const rowOpts = config.settings.rowOpts;
-        const fieldNames = config.settings.fieldNames;
-        const dataFieldNames = config.settings.dataFieldNames;
-        const minLength = config.settings.minLength ? config.settings.minLength : 10;
-        const hasChecked = config.settings.hasChecked;
-        const hasIndex = config.settings.hasIndex;
+    function buildBodyContent(instance, buildData) {
+        const id = instance.id;
+        const row = instance.template.row;
+        const col = instance.template.col;
+        const checkbox = instance.template.checkbox;
+        const rowOpts = instance.rowOpts;
+        const fieldNames = instance.fieldNames;
+        const dataFieldNames = instance.dataFieldNames;
+        const minLength = instance.minLength ? instance.minLength : 10;
+        const hasChecked = instance.hasChecked;
+        const hasIndex = instance.hasIndex;
 
         let body = [];
         if (buildData instanceof Array) {
@@ -123,28 +123,28 @@ $combineWebUI.element.register("TABLE", (function () {
     }
 
     return {
-        build: function (logicConfig, data) {
-            const config = init(logicConfig, data);
-            const headBody = buildHeadContent(config);
-            const head = domFns.build(config.head, headBody)
-            const bodyBody = buildBodyContent(config, data);
-            const body = domFns.build(config.body, bodyBody);
-            const table = domFns.build(config.table, [head, body]);
-            return domFns.build(config.external, table);
+        build: function (instance, data) {
+            const instance = init(instance, data);
+            const headBody = buildHeadContent(instance);
+            const head = domFns.build(instance.template.head, headBody)
+            const bodyBody = buildBodyContent(instance, data);
+            const body = domFns.build(instance.template.body, bodyBody);
+            const table = domFns.build(instance.template.table, [head, body]);
+            return domFns.build(instance.template.external, table);
         },
-        refresh: function (id, logicConfig, parentData) {
-            const config = init(logicConfig, parentData);
+        refresh: function (id, instance, parentData) {
+            const instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                const bodyBody = buildBodyContent(config, parentData);
+                const bodyBody = buildBodyContent(instance, parentData);
                 domFns.setBody(externalDom.children[0].children[1], bodyBody);
             }
         },
-        getData: function (id, settings) {
+        getData: function (id, instance) {
             const elementData = data[id]
-            if (settings.hasChecked) {
+            if (instance.hasChecked) {
                 const result = [];
-                const externalDom = document.getElementById(config.id);
+                const externalDom = document.getElementById(instance.id);
                 if (externalDom) {
                     const rowDoms = externalDom.children[0].children[1].children;
                     for (let i = 0; i < rowDoms.length; i++) {
@@ -170,8 +170,8 @@ $combineWebUI.element.register("TABLE", (function () {
             return elementData;
         },
         call: {
-            checkAll: function (config) {
-                const externalDom = document.getElementById(config.id);
+            checkAll: function (instance) {
+                const externalDom = document.getElementById(instance.id);
                 if (externalDom) {
                     let isChecked;
                     const headerRowDom = externalDom.children[0].children[0].children[0];

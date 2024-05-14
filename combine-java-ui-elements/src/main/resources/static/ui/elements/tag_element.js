@@ -4,40 +4,39 @@ $combineWebUI.element.register("TAG", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildTags(config, buildData) {
+    function buildTags(instance, buildData) {
         const body = [];
-        const settings = config.settings;
-        const itemConfig = config[settings.type];
+        const itemConfig = instance.template[instance.tagType];
         if (!buildData || !itemConfig) {
             return body;
         }
 
-        data[config.id] = [];
+        data[instance.id] = [];
         buildData = buildData instanceof Array ? buildData : [buildData];
         for (let i = 0; i < buildData.length; i++) {
             const currData = buildData[i];
-            const text = dataFns.parseVariable(settings.text, currData);
+            const text = dataFns.parseVariable(instance.text, currData);
             body.push(domFns.build(itemConfig, text));
-            data[config.id].push(text);
+            data[instance.id].push(text);
         }
 
         return body;
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildTags(config, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildTags(instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildTags(config, parentData));
+                domFns.setBody(externalDom, buildTags(instance, parentData));
             }
         },
         getData: function getData(id) {

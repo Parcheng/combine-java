@@ -5,19 +5,19 @@ $combineWebUI.element.register("TREE", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(template, parentData) {
+        return template;
     }
 
-    function buildTree(config, settings, buildData, level, checkPath, treeData) {
+    function buildTree(template, settings, buildData, level, checkPath, treeData) {
         const body = [];
         if (!buildData) {
-            return domFns.build(config.tree, body);
+            return domFns.build(template.tree, body);
         }
 
         if (!level || level == 0) {
             level = 0;
-            treeData = data[config.id] = [];
+            treeData = data[instance.id] = [];
         }
 
         const checkFirst = settings.checkFirst === true;
@@ -43,8 +43,8 @@ $combineWebUI.element.register("TREE", (function () {
             treeData.push(currTreeData);
             currCheckPath.push(i);
 
-            const textDom = domFns.build(config.itemText, text ? text : "未知");
-            domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(config.id, "checked", currCheckPath));
+            const textDom = domFns.build(template.itemText, text ? text : "未知");
+            domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(instance.id, "checked", currCheckPath));
             if (settings.triggers) {
                 triggerFns.build(settings.triggers, textDom, currData);
                 if (isChecked) {
@@ -54,21 +54,21 @@ $combineWebUI.element.register("TREE", (function () {
             itemBody.push(textDom);
 
             if (children) {
-                const itemTreeDom = domFns.build(config.itemTree, buildTree(config, settings, children, level + 1, currCheckPath, currTreeData.children));
+                const itemTreeDom = domFns.build(template.itemTree, buildTree(template, settings, children, level + 1, currCheckPath, currTreeData.children));
                 if (!isChecked) {
                     domFns.hide(itemTreeDom);
                 }
                 itemBody.push(itemTreeDom);
             }
 
-            const itemConfig = config.levelItems && config.levelItems[level] ? config.levelItems[level] : config.item;
-            body.push(domFns.build(isChecked ? config.itemAtive : itemConfig, itemBody));
+            const itemConfig = template.levelItems && template.levelItems[level] ? template.levelItems[level] : template.item;
+            body.push(domFns.build(isChecked ? template.itemAtive : itemConfig, itemBody));
         }
 
-        return domFns.build(config.tree, body);
+        return domFns.build(template.tree, body);
     }
 
-    function checked(config, ulDom, dataArr, checkPath, level) {
+    function checked(template, ulDom, dataArr, checkPath, level) {
         const itemDoms = ulDom ? ulDom.children : null;
         if (!itemDoms) {
             return;
@@ -87,7 +87,7 @@ $combineWebUI.element.register("TREE", (function () {
                     currData.checked = true;
                     domFns.show(itemChildrenDom);
 
-                    const newItemDom = domFns.build(config.itemAtive);
+                    const newItemDom = domFns.build(template.itemAtive);
                     domFns.appendBody(newItemDom, itemDom.children[0]);
                     domFns.appendBody(newItemDom, itemChildrenDom);
                     domFns.replace(itemDom, newItemDom);
@@ -97,7 +97,7 @@ $combineWebUI.element.register("TREE", (function () {
                     currData.checked = false;
                     domFns.hide(itemChildrenDom);
 
-                    const newItemDom = domFns.build(config.levelItems && config.levelItems[level] ? config.levelItems[level] : config.item);
+                    const newItemDom = domFns.build(template.levelItems && template.levelItems[level] ? template.levelItems[level] : template.item);
                     domFns.appendBody(newItemDom, itemDom.children[0]);
                     domFns.appendBody(newItemDom, itemChildrenDom);
                     domFns.replace(itemDom, newItemDom);
@@ -106,32 +106,32 @@ $combineWebUI.element.register("TREE", (function () {
 
 
             if (currData.children && currData.children.length > 0 && itemChildrenDom) {
-                checked(config, itemChildrenDom.children[0], currData.children, checkPath, level + 1);
+                checked(template, itemChildrenDom.children[0], currData.children, checkPath, level + 1);
             }
         }
     }
 
     return {
-        build: function build(config, parentData) {
-            config = init(config, parentData);
-            return domFns.build(config.external, buildTree(config, config.settings, parentData));
+        build: function build(instance, parentData) {
+            instance = init(instance, parentData);
+            return domFns.build(instance.template.external, buildTree(instance.template, instance, parentData));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildTree(config, config.settings, parentData));
+                domFns.setBody(externalDom, buildTree(instance.template, instance, parentData));
             }
         },
         getData: function getData(id) {
             return data[id];
         },
         call: {
-            checked: function (config, checkPath) {
-                const treeData = data[config.id];
-                const externalDom = document.getElementById(config.id);
+            checked: function (instance, checkPath) {
+                const treeData = data[instance.id];
+                const externalDom = document.getElementById(instance.id);
                 if (externalDom && treeData) {
-                    checked(config, externalDom.children[0], treeData, checkPath, 0);
+                    checked(instance.template, externalDom.children[0], treeData, checkPath, 0);
                 }
             }
         }

@@ -1,21 +1,19 @@
 $combineWebUI.element.register("TEXTAREA", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
-    const configFns = $combineWebUI.config;
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildControls(config, buildData) {
-        const settings = config.settings;
-        return buildTextarea(config, settings, buildData);
+    function buildControls(instance, buildData) {
+        return buildTextarea(instance.template, instance, buildData);
     }
 
-    function buildTextarea(config, item, buildData) {
+    function buildTextarea(template, item, buildData) {
         const key = dataFns.parseVariableText(item.key, buildData);
         const value = dataFns.parseVariable(item.value, buildData);
-        const textDom = domFns.build(config.textarea, value);
+        const textDom = domFns.build(template.textarea, value);
         if (key) {
             textDom.name = key;
         }
@@ -23,16 +21,16 @@ $combineWebUI.element.register("TEXTAREA", (function () {
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            const buttons = buildControls(config, data);
-            const externalDom = domFns.build(config.external, buttons);
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            const buttons = buildControls(instance, data);
+            const externalDom = domFns.build(instance.template.external, buttons);
             return externalDom
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let dom = document.getElementById(id);
-            domFns.setBody(dom, buildControls(config, parentData));
+            domFns.setBody(dom, buildControls(instance, parentData));
         },
         getData: function getData(id) {
             let externalDom = document.getElementById(id);

@@ -1,48 +1,46 @@
 $combineWebUI.element.register("TITLE", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
-    const elementFns = $combineWebUI.element;
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildTitle(config, buildData) {
+    function buildTitle(instance, buildData) {
         const body = [];
-        const settings = config.settings;
-        if (!settings) {
+        if (!instance) {
             return body;
         }
 
-        if (settings.top) {
-            body.push(domFns.build(config.top, null));
+        if (instance.top) {
+            body.push(domFns.build(instance.template.top, null));
         }
 
-        const itemConfig = config["h" + settings.level];
+        const itemConfig = instance.template["h" + instance.level];
         if (itemConfig) {
-            const text = dataFns.parseVariable(settings.text, buildData);
+            const text = dataFns.parseVariable(instance.text, buildData);
             body.push(domFns.build(itemConfig, text));
         }
 
-        if (settings.bottom) {
-            body.push(domFns.build(config.bottom, null));
+        if (instance.bottom) {
+            body.push(domFns.build(instance.template.bottom, null));
         }
 
         return body;
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildTitle(config, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildTitle(instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildTitle(config, parentData));
+                domFns.setBody(externalDom, buildTitle(instance, parentData));
             }
         },
         getData: function getData(id) {

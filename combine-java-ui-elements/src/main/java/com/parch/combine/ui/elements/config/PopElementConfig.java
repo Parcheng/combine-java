@@ -10,9 +10,9 @@ import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 @PageElement(key = "pop", name = "泡泡窗元素", templateClass = PopElementTemplateConfig.class)
 public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
 
-    @Field(key = "type", name = "样式类型（可选值取决于模板配置）", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "popType", name = "样式类型（可选值取决于模板配置）", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldDesc("系统内置模板支持的类型：normal | success | info | warn | error")
-    private String type;
+    private String popType;
 
     @Field(key = "text", name = "内容文本", type = FieldTypeEnum.TEXT, isRequired = true)
     private String text;
@@ -24,12 +24,12 @@ public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
         super(SystemElementPathTool.buildJsPath("pop"), SystemElementPathTool.buildTemplatePath("pop"), PopElementTemplateConfig.class);
     }
 
-    public String getType() {
-        return type;
+    public String getPopType() {
+        return popType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPopType(String popType) {
+        this.popType = popType;
     }
 
     public String getText() {

@@ -4,24 +4,23 @@ $combineWebUI.element.register("BUTTON", (function () {
     const configFns = $combineWebUI.config;
     const triggerFns = $combineWebUI.trigger;
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildButtons(config, buildData) {
+    function buildButtons(instance, buildData) {
         let body = [];
-        const settings = config.settings;
-        if (!settings.items || settings.items.length === 0) {
+        if (!instance.items || instance.items.length === 0) {
             return body;
         }
 
-        for (let i = 0; i < settings.items.length; i++) {
-            const item = settings.items[i];
+        for (let i = 0; i < instance.items.length; i++) {
+            const item = instance.items[i];
 
             const itemTemp = config[item.type];
             if (itemTemp) {
                 const text = dataFns.parseVariable(item.text, buildData);
-                const itemConfig = configFns.initElement(config.button, itemTemp, buildData);
+                const itemConfig = configFns.initElement(instance.template.button, itemTemp, buildData);
                 const buttonDom = domFns.build(itemConfig, text);
                 if (item.triggers) {
                     triggerFns.build(item.triggers, buttonDom, buildData);
@@ -34,16 +33,16 @@ $combineWebUI.element.register("BUTTON", (function () {
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            const buttons = buildButtons(config, data);
-            const externalDom = domFns.build(config.external, buttons);
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            const buttons = buildButtons(instance, data);
+            const externalDom = domFns.build(instance.template.external, buttons);
             return externalDom
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let dom = document.getElementById(id);
-            domFns.setBody(dom, buildButtons(config, parentData));
+            domFns.setBody(dom, buildButtons(instance, parentData));
         },
         getData: function getData(id) {
             return null;

@@ -3,45 +3,43 @@ $combineWebUI.element.register("RADIO", (function () {
     const dataFns = $combineWebUI.data;
     const configFns = $combineWebUI.config;
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildControls(config, buildData) {
-        const settings = config.settings;
-
+    function buildControls(instance, buildData) {
         let layoutConfig;
-        const layout = settings.layout ? settings.layout.toUpperCase() : null;
+        const layout = instance.layout ? instance.layout.toUpperCase() : null;
         switch (layout) {
             case "INLINE":
-                layoutConfig = config.inline;
+                layoutConfig = instance.template.inline;
                 break;
             case "MULTILINE":
             default:
-                layoutConfig = config.multiline;
+                layoutConfig = instance.template.multiline;
                 break;
         }
 
-        const isDisabled = settings.disabled && settings.disabled == true;
-        return buildRadio(config, layoutConfig, isDisabled, settings, buildData);
+        const isDisabled = instance.disabled && instance.disabled == true;
+        return buildRadio(instance, layoutConfig, isDisabled, settings, buildData);
     }
 
-    function buildRadio(config, layoutConfig, isDisabled, settings, buildData) {
+    function buildRadio(instance, layoutConfig, isDisabled, settings, buildData) {
         const body = [];
-        if (!settings.option) {
+        if (!instance.option) {
             return body;
         }
 
         if (isDisabled) {
-            layoutConfig = configFns.initElement(layoutConfig, config.disabled, buildData);
+            layoutConfig = configFns.initElement(layoutConfig, instance.template.disabled, buildData);
         }
 
-        const key = dataFns.parseVariableText(settings.key, buildData);
-        const value = dataFns.parseVariable(settings.value, buildData);
-        const optionTextField = settings.option.text;
-        const optionValueField = settings.option.value;
+        const key = dataFns.parseVariableText(instance.key, buildData);
+        const value = dataFns.parseVariable(instance.value, buildData);
+        const optionTextField = instance.option.text;
+        const optionValueField = instance.option.value;
 
-        let optionData = dataFns.parseVariable(settings.option.data, buildData);
+        let optionData = dataFns.parseVariable(instance.option.data, buildData);
         optionData = optionData instanceof Array ? optionData : [optionData];
         for (let i = 0; i < optionData.length; i++) {
             const currOptionData = optionData[i];
@@ -52,7 +50,7 @@ $combineWebUI.element.register("RADIO", (function () {
             const currOptionText = dataFns.parseVariableText(optionTextField, currOptionData);
             const currOptionValue = dataFns.parseVariableText(optionValueField, currOptionData);
 
-            const inputDom = domFns.build(config.option, null);
+            const inputDom = domFns.build(instance.template.option, null);
             const radioItemDom = domFns.build(layoutConfig, currOptionText ? [inputDom, currOptionText] : inputDom);
             if (key) {
                 inputDom.name = key;
@@ -71,16 +69,16 @@ $combineWebUI.element.register("RADIO", (function () {
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            const buttons = buildControls(config, data);
-            const externalDom = domFns.build(config.external, buttons);
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            const buttons = buildControls(instance, data);
+            const externalDom = domFns.build(instance.template.external, buttons);
             return externalDom
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let dom = document.getElementById(id);
-            domFns.setBody(dom, buildControls(config, parentData));
+            domFns.setBody(dom, buildControls(instance, parentData));
         },
         getData: function getData(id) {
             let externalDom = document.getElementById(id);

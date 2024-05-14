@@ -1,38 +1,36 @@
 $combineWebUI.element.register("LINE", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
-    const elementFns = $combineWebUI.element;
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildLine(config, buildData) {
+    function buildLine(instance, buildData) {
         const body = [];
-        const settings = config.settings;
 
-        if (settings.text) {
-            body.push(domFns.build(config.line));
-            const text = dataFns.parseVariable(settings.text, buildData);
-            body.push(domFns.build(config.text, text));
+        if (instance.text) {
+            body.push(domFns.build(instance.template.line));
+            const text = dataFns.parseVariable(instance.text, buildData);
+            body.push(domFns.build(instance.template.text, text));
         }
-        body.push(domFns.build(config.line));
+        body.push(domFns.build(instance.template.line));
 
         return body;
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildLine(config, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildLine(instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildLine(config, parentData));
+                domFns.setBody(externalDom, buildLine(instance, parentData));
             }
         },
         getData: function getData(id) {

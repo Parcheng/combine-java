@@ -9,44 +9,42 @@ $combineWebUI.element.register("WINDOW", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildHead(config, buildData) {
+    function buildHead(instance, buildData) {
         let body = [];
-        const settings = config.settings;
 
-        const title = dataFns.parseVariable(settings.title, buildData);
-        body.push(domFns.build(config.headTitle, title ? title : config.headTitle.text));
+        const title = dataFns.parseVariable(instance.title, buildData);
+        body.push(domFns.build(instance.template.headTitle, title ? title : instance.template.headTitle.text));
 
-        const colseDom = domFns.build(config.headClose, config.headClose.text)
-        domFns.appendProtity(colseDom, "onclick", elementFns.buildCallFnCode(config.id, "close", null));
-        if (settings.closeTriggers) {
-            triggerFns.build(settings.closeTriggers, colseDom, buildData);
+        const colseDom = domFns.build(instance.template.headClose, instance.template.headClose.text)
+        domFns.appendProtity(colseDom, "onclick", elementFns.buildCallFnCode(instance.id, "close", null));
+        if (instance.closeTriggers) {
+            triggerFns.build(instance.closeTriggers, colseDom, buildData);
         }
 
         body.push(colseDom);
 
-        return domFns.build(config.head, body);
+        return domFns.build(instance.template.head, body);
     }
 
-    function buildContent(config, buildData) {
-        const settings = config.settings;
-        return configFns.buildSubElement(settings.body, config.body, buildData);
+    function buildContent(instance, buildData) {
+        return configFns.buildSubElement(instance.body, instance.template.body, buildData);
     }
 
-    function refreshBody(id, config, data) {
-        config = init(config, data);
+    function refreshBody(id, instance, data) {
+        instance = init(instance, data);
 
-        if (config.settings?.body?.elements) {
-            for (let i = 0; i < config.settings.body.elements?.length; i++) {
-                instanceFns.refresh(config.settings.body.elements[i].id, data);``
+        if (instance.template.settings?.body?.elements) {
+            for (let i = 0; i < instance.body.elements?.length; i++) {
+                instanceFns.refresh(instance.body.elements[i].id, data);``
             }
-        } else if (config.settings?.body?.text) {
+        } else if (instance.template.settings?.body?.text) {
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                const text = dataFns.parseVariableText(config.settings.body.text, data);
+                const text = dataFns.parseVariableText(instance.body.text, data);
                 domFns.setBody(externalDom.children[0].children[1], text);
             }
         }
@@ -63,38 +61,38 @@ $combineWebUI.element.register("WINDOW", (function () {
     }
 
     return {
-        build: function (config, data) {
-            config = init(config, data);
+        build: function (instance, data) {
+            instance = init(instance, data);
             const windowsDom = initWindowsDom();
 
-            const headBody = buildHead(config, data);
-            const contentBody = buildContent(config, data);
-            const windowBody = domFns.build(config.window, [headBody, contentBody]);
+            const headBody = buildHead(instance, data);
+            const contentBody = buildContent(instance, data);
+            const windowBody = domFns.build(instance.template.window, [headBody, contentBody]);
 
-            const externalDom = domFns.build(config.external, windowBody);
+            const externalDom = domFns.build(instance.template.external, windowBody);
             externalDom.style.display = "none";
 
             windowsDom.appendChild(externalDom);
             return null;
         },
-        refresh: function (id, config, parentData) {
-            refreshBody(id, config, parentData);
+        refresh: function (id, instance, parentData) {
+            refreshBody(id, instance, parentData);
         },
         getData: function (id) {
             return null;
         },
         call: {
-            open: function (config, data) {
+            open: function (instance, data) {
                 if (data) {
-                    refreshBody(config.id, config, data);
+                    refreshBody(instance.id, instance, data);
                 }
-                domFns.show(config.id);
+                domFns.show(instance.id);
             },
-            close: function (config, data) {
+            close: function (instance, data) {
                 if (data) {
-                    refreshBody(config.id, config, data);
+                    refreshBody(instance.id, instance, data);
                 }
-                domFns.hide(config.id);
+                domFns.hide(instance.id);
             }
         }
     }

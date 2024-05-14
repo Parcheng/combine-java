@@ -59,7 +59,7 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = type == null ? null : type.toUpperCase();
     }
 
     public Object getData() {

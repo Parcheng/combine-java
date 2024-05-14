@@ -3,16 +3,15 @@ $combineWebUI.element.register("SELECT", (function () {
     const dataFns = $combineWebUI.data;
     const elementFns = $combineWebUI.element;
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildControls(config, buildData) {
-        const settings = config.settings;
-        return buildSelect(config, settings, buildData);
+    function buildControls(instance, buildData) {
+        return buildSelect(instance.template, instance, buildData);
     }
 
-    function buildSelect(config, settings, buildData) {
+    function buildSelect(template, settings, buildData) {
         const selectBody = [];
 
         const key = dataFns.parseVariableText(settings.key, buildData);
@@ -35,9 +34,9 @@ $combineWebUI.element.register("SELECT", (function () {
             const optionText = dataFns.parseVariableText(optionTextField, currOptionData);
             const optionValue = dataFns.parseVariableText(optionValueField, currOptionData);
 
-            const optionDom = domFns.build(config.selectOptionItem, domFns.build(config.selectOptionItemText, optionText));
+            const optionDom = domFns.build(template.selectOptionItem, domFns.build(template.selectOptionItemText, optionText));
             optionDom.setAttribute("value", optionValue);
-            domFns.appendProtity(optionDom, "onclick", elementFns.buildCallFnCode(config.id, "checked", i));
+            domFns.appendProtity(optionDom, "onclick", elementFns.buildCallFnCode(instance.id, "checked", i));
             selectOptionBody.push(optionDom);
 
             if (optionValue == value) {
@@ -48,7 +47,7 @@ $combineWebUI.element.register("SELECT", (function () {
         if (!checkedText) {
             checkedText = dataFns.parseVariable(settings.text ? settings.text : settings.defaultText, buildData);
         }
-        const selectValueDom = domFns.build(config.selectValue, buildSelectValueText(config, checkedText));
+        const selectValueDom = domFns.build(template.selectValue, buildSelectValueText(template, checkedText));
         if (value) {
             selectValueDom.setAttribute("value", value);
         }
@@ -57,26 +56,26 @@ $combineWebUI.element.register("SELECT", (function () {
         }
 
         selectBody.push(selectValueDom);
-        selectBody.push(domFns.build(config.selectOptions, selectOptionBody));
-        return domFns.build(config.select, selectBody);
+        selectBody.push(domFns.build(template.selectOptions, selectOptionBody));
+        return domFns.build(template.select, selectBody);
     }
 
-    function buildSelectValueText(config, text) {
-        const flagDom = domFns.build(config.selectOptionFlag, config.selectOptionFlag.text);
+    function buildSelectValueText(template, text) {
+        const flagDom = domFns.build(template.selectOptionFlag, template.selectOptionFlag.text);
         return [text, " ", flagDom];
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            const buttons = buildControls(config, data);
-            const externalDom = domFns.build(config.external, buttons);
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            const buttons = buildControls(instance, data);
+            const externalDom = domFns.build(instance.template.external, buttons);
             return externalDom
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let dom = document.getElementById(id);
-            domFns.setBody(dom, buildControls(config, parentData));
+            domFns.setBody(dom, buildControls(instance, parentData));
         },
         getData: function getData(id) {
             let externalDom = document.getElementById(id);
@@ -87,8 +86,8 @@ $combineWebUI.element.register("SELECT", (function () {
             return null;
         },
         call: {
-            checked: function (config, checkIndex) {
-                let externalDom = document.getElementById(config.id);
+            checked: function (instance, checkIndex) {
+                let externalDom = document.getElementById(instance.id);
                 if (externalDom) {
                     const valueDom = externalDom.children[0].children[0];
                     const optionsDom = externalDom.children[0].children[1];
@@ -100,7 +99,7 @@ $combineWebUI.element.register("SELECT", (function () {
                         text = optionDom.children[0].textContent;
                     }
                     valueDom.setAttribute("value", value);
-                    domFns.setBody(valueDom, buildSelectValueText(config, text));
+                    domFns.setBody(valueDom, buildSelectValueText(instance, text));
                 }
             }
         }

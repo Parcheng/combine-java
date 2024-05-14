@@ -4,41 +4,41 @@ $combineWebUI.element.register("VIDEO", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildVideo(config, buildData) {
-        const src = data[config.id] = dataFns.parseVariable(config.settings.src, buildData);
-        const text = dataFns.parseVariable(config.settings.text, buildData);
+    function buildVideo(instance, buildData) {
+        const src = data[instance.id] = dataFns.parseVariable(instance.src, buildData);
+        const text = dataFns.parseVariable(instance.text, buildData);
 
         const body = [];
-        const mp4 = domFns.build(config.mp4, null);
+        const mp4 = domFns.build(instance.template.mp4, null);
         mp4.setAttribute("src", src);
         body.push(mp4);
 
-        const ogg = domFns.build(config.ogg, null);
+        const ogg = domFns.build(instance.template.ogg, null);
         ogg.setAttribute("src", src);
         body.push(ogg);
 
-        const webm = domFns.build(config.webm, null);
+        const webm = domFns.build(instance.template.webm, null);
         webm.setAttribute("src", src);
         body.push(webm);
 
-        body.push(domFns.build(config.content, config.settings.text ? text : config.content.text));
-        return domFns.build(config.video, body);
+        body.push(domFns.build(instance.template.content, instance.text ? text : instance.template.content.text));
+        return domFns.build(instance.template.video, body);
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildVideo(config, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildVideo(instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildVideo(config, parentData));
+                domFns.setBody(externalDom, buildVideo(instance, parentData));
             }
         },
         getData: function getData(id) {

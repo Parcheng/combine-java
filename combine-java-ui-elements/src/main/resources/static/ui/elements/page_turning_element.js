@@ -6,36 +6,36 @@ $combineWebUI.element.register("PAGE_TURNING", (function () {
 
     const data = {};
 
-    function init(config, parentData) {
-        return config;
+    function init(instance, parentData) {
+        return instance;
     }
 
-    function buildPage(config, settings, buildData) {
+    function buildPage(instance, settings, buildData) {
         const body = [];
 
         const currPage = Number(dataFns.parseVariable(settings.currPage, buildData));
         const maxPage = Number(dataFns.parseVariable(settings.maxPage, buildData));
         if (isNaN(maxPage) || isNaN(currPage)) {
-            return domFns.build(config.pageTurning, body);
+            return domFns.build(instance.template.pageTurning, body);
         }
 
-        const currData = data[config.id] = {};
+        const currData = data[instance.id] = {};
         currData.currPage = currPage;
         currData.maxPage = maxPage;
 
         if (currPage <= 1) {
-            body.push(buildItem(config.id, config.lastDisabled, config.lastContent, config.lastContent.text));
+            body.push(buildItem(instance.id, instance.template.lastDisabled, instance.template.lastContent, instance.template.lastContent.text));
         } else {
-            body.push(buildItem(config.id, config.last, config.lastContent, config.lastContent.text, settings.triggers, buildData, true, currPage - 1));
+            body.push(buildItem(instance.id, instance.template.last, instance.template.lastContent, instance.template.lastContent.text, settings.triggers, buildData, true, currPage - 1));
         }
 
         if (currPage >= maxPage) {
-            body.push(buildItem(config.id, config.nextDisabled, config.nextContent, config.nextContent.text));
+            body.push(buildItem(instance.id, instance.template.nextDisabled, instance.template.nextContent, instance.template.nextContent.text));
         } else {
-            body.push(buildItem(config.id, config.next, config.nextContent, config.nextContent.text, settings.triggers, buildData, true, currPage + 1));
+            body.push(buildItem(instance.id, instance.template.next, instance.template.nextContent, instance.template.nextContent.text, settings.triggers, buildData, true, currPage + 1));
         }
 
-        return domFns.build(config.pageTurning, body);
+        return domFns.build(instance.template.pageTurning, body);
     }
 
     function buildItem(id, item, content, body, triggers, buildData, hasChecked, targetPage) {
@@ -50,29 +50,29 @@ $combineWebUI.element.register("PAGE_TURNING", (function () {
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(config.external, buildPage(config, config.settings, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildPage(instance, instance.template.settings, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildPage(config, config.settings, parentData));
+                domFns.setBody(externalDom, buildPage(instance, instance.template.settings, parentData));
             }
         },
         getData: function getData(id) {
             return data[id];
         },
         call: {
-            checked: function (config, pageNum) {
-                let externalDom = document.getElementById(config.id);
+            checked: function (instance, pageNum) {
+                let externalDom = document.getElementById(instance.id);
                 if (externalDom) {
-                    data[config.id].currPage = pageNum;
-                    domFns.setBody(externalDom, buildPage(config, {
+                    data[instance.id].currPage = pageNum;
+                    domFns.setBody(externalDom, buildPage(instance, {
                         currPage: pageNum,
-                        maxPage: data[config.id].maxPage,
-                        triggers: config.settings.triggers
+                        maxPage: data[instance.id].maxPage,
+                        triggers: instance.triggers
                     }));
                 }
             }
