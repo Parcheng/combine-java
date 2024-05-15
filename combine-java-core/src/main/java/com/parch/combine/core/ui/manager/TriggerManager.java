@@ -76,6 +76,8 @@ public class TriggerManager {
 
         TriggerTypeEnum triggerType = TriggerTypeEnum.get(type);
         switch (triggerType) {
+            case CALL_FLOW:
+                return TypeConversionUtil.parseJava(configMap, TriggerCallFlowConfig.class);
             case CALL_URL:
                 return TypeConversionUtil.parseJava(configMap, TriggerCallUrlConfig.class);
             case CALL_FUNC:

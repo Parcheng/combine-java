@@ -18,15 +18,14 @@ $combineWebUI.element.register("SYSTEM.NAV_BAR", (function () {
     }
 
     function buildBrand(instance, buildData) {
-        const settings = instance.template.settings;
         const body = [];
-        if (settings.brandImg) {
+        if (instance.brandImg) {
             const imgDom = domFns.build(instance.template.brandImgContent, null);
-            imgDom.src = dataFns.parseVariable(settings.brandImg, buildData);
+            imgDom.src = dataFns.parseVariable(instance.brandImg, buildData);
             body.push(imgDom);
         }
-        if (settings.brandText) {
-            const text = dataFns.parseVariable(settings.brandText, buildData);
+        if (instance.brandText) {
+            const text = dataFns.parseVariable(instance.brandText, buildData);
             body.push(domFns.build(instance.template.brandTextContent, text));
         }
 

@@ -8,6 +8,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
  */
 public enum TriggerTypeEnum implements IOptionSetting {
 
+    CALL_FLOW("调用流程", true),
     CALL_URL("调用URL", true),
     CALL_FUNC("调用页面元素函数", true),
     LOAD("加载元素", true),

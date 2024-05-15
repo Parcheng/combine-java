@@ -4,10 +4,7 @@ import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.TypeConversionUtil;
-import com.parch.combine.core.ui.base.dataload.ApiDataLoadConfig;
-import com.parch.combine.core.ui.base.dataload.DataLoadConfig;
-import com.parch.combine.core.ui.base.dataload.DataLoadTypeEnum;
-import com.parch.combine.core.ui.base.dataload.FileDataLoadConfig;
+import com.parch.combine.core.ui.base.dataload.*;
 import com.parch.combine.core.ui.tools.ConfigTool;
 
 import java.util.ArrayList;
@@ -65,6 +62,8 @@ public class DataLoadManager  {
 
         DataLoadTypeEnum dataLoadType = DataLoadTypeEnum.get(type);
         switch (dataLoadType) {
+            case FLOW:
+                return TypeConversionUtil.parseJava(configMap, FlowDataLoadConfig.class);
             case API:
                 return TypeConversionUtil.parseJava(configMap, ApiDataLoadConfig.class);
             case FILE:

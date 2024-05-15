@@ -98,7 +98,7 @@ $combineWebUI = (function () {
             }
 
             this.initConfig(instance, data);
-            const dataLoadId = instance.dataLoadId && config.defaultLoad !== false ? instance.dataLoadId : null;
+            const dataLoadId = instance.dataLoadId && instance.dataLoadId !== false ? instance.dataLoadId : null;
             return resultFns.success(element.build(instance, data), dataLoadId);
         },
         refresh: function (id, parentData) {
@@ -303,10 +303,10 @@ $combineWebUI = (function () {
 
                 const eventKey = trigger.event ? trigger.event : "click";
                 switch (trigger.type) {
-                    case "CALL":
+                    case "CALL_FLOW":
                         dom.addEventListener(eventKey, function () {
                             const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.call.flow(curr.flow, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
+                            combineWebUI.call.flow(curr.url, curr.mode, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
                         });
                         break;
                     case "CALL_URL":
@@ -466,10 +466,10 @@ $combineWebUI = (function () {
 
             switch (config.type) {
                 case "FLOW":
-                    if (config.flow) {
+                    if (config.url) {
                         const newHeaders = dataFns.parseVariable(config.headers, data);
                         const newParams = dataFns.parseVariable(config.params, data);
-                        callFns.flow(config.flow, false, newParams, newHeaders, function (data) {
+                        callFns.flow(config.url, config.mode, false, newParams, newHeaders, function (data) {
                             combineWebUI.loadData.loadSuccess(loadConfig, data, true);
                         }, failFn, null, config.localStorageKey);
                     }
@@ -1001,6 +1001,12 @@ $combineWebUI = (function () {
 
     const callFns = {
         url: function (url, type, fromSubmit, params, headers, successFn, failFn, errorFn, localStorageKey) {
+            errorFn = errorFn ? errorFn : function () {
+                console.log("Request error: ", url, headers, params);
+                alert("Request error!");
+            };
+
+            url = url.startsWith("http") ? url : (baseUrl + url);
             const xhr = new XMLHttpRequest();
             xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
 
@@ -1057,15 +1063,9 @@ $combineWebUI = (function () {
 
             xhr.send(sendData);
         },
-        flow: function (flowKey, fromSubmit, params, headers, successFn, failFn, errorFn, localStorageKey) {
+        flow: function (url, type, fromSubmit, params, headers, successFn, failFn, errorFn, localStorageKey) {
             params = params ? params : {};
-            errorFn = errorFn ? errorFn : function () {
-                console.log("Request error: ", flowKey, params);
-                alert("Request error!");
-            };
-
-            const newBaseUrl = baseUrl === "http://127.0.0.1:5500" ? "http://127.0.0.1:8888/combine" : baseUrl;
-            this.url(newBaseUrl + "/api/" + flowKey, 'POST', fromSubmit, params, headers,
+            this.url(url, type, fromSubmit, params, headers,
                 function (data) {
                     data = JSON.parse(data);
                     if (data.success) {

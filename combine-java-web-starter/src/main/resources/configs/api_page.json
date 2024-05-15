@@ -3,12 +3,14 @@
   "dataLoads": [
     {
       "id": "system_settings_load",
-      "type": "api",
-      "url": "settings/list"
+      "type": "flow",
+      "mode": "POST",
+      "url": "/api/settings/list"
     },{
       "id": "system_config_load",
-      "type": "api",
-      "url": "config/get",
+      "type": "flow",
+      "mode": "POST",
+      "url": "/api/config/get",
       "cache": -1
     }
   ],

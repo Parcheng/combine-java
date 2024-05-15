@@ -8,6 +8,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
  */
 public enum DataLoadTypeEnum implements IOptionSetting {
 
+    FLOW("内部FLOW", true),
     API("外部API", true),
     FILE("文件数据", true),
     NONE("未知", false);
