@@ -222,15 +222,15 @@ $combineWebUI = (function () {
             let success = true;
             if (typeof element.build != "function") {
                 success = false;
-                msg += ", no build function, "
+                msg += " no build function, "
             }
             if (typeof element.refresh != "function") {
                 success = false;
-                msg += ", no refresh function, "
+                msg += " no refresh function, "
             }
             if (typeof element.getData != "function") {
                 success = false;
-                msg += ", no get data function"
+                msg += " no get data function"
             }
 
             if (!success) {
@@ -624,7 +624,7 @@ $combineWebUI = (function () {
             let elementTemplate = tempFns.load(instance.elementTemplatePath);
             for (const key in elementTemplate) {
                 if (Object.hasOwnProperty.call(elementTemplate, key)) {
-                    let doms = instance[key] ? instance[key] : {};
+                    let doms = instance.template[key] ? instance.template[key] : {};
                     const tempDom = elementTemplate[key];
 
                     if (doms instanceof Array) {

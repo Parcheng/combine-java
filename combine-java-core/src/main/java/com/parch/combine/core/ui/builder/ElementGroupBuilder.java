@@ -6,9 +6,11 @@ import com.parch.combine.core.ui.base.dataload.DataLoadConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.base.element.ElementTemplateConfig;
 import com.parch.combine.core.ui.base.trigger.TriggerConfig;
+import com.parch.combine.core.ui.context.ConfigLoadingContext;
 import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
 import com.parch.combine.core.ui.handler.CombineManagerHandler;
 import com.parch.combine.core.ui.manager.CombineManager;
+import com.parch.combine.core.ui.tools.UrlPathHelper;
 
 import java.util.*;
 
@@ -135,6 +137,7 @@ public class ElementGroupBuilder {
 
     public ElementGroupResult build() {
         ElementGroupResult result = new ElementGroupResult();
+        ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
 
         result.groupMap = new HashMap<>();
         groupMap.forEach((k, v) -> result.groupMap.put(k, JsonUtil.serialize(v)));
@@ -142,7 +145,8 @@ public class ElementGroupBuilder {
         result.elementScripts = new HashSet<>(elementMap.size());
         result.elementMap = new HashMap<>(elementMap.size());
         elementMap.forEach((k, v) -> {
-            result.elementScripts.add(v.getElementJSPath());
+            result.elementScripts.add(v.thisElementJSPath());
+            v.setElementTemplatePath(UrlPathHelper.replaceUrlFlag(v.getElementTemplatePath()));
             result.elementMap.put(k, JsonUtil.serialize(v));
         });
 

@@ -118,11 +118,15 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
         this.templateId = templateId;
     }
 
+    public void setElementTemplatePath(String elementTemplatePath) {
+        this.elementTemplatePath = elementTemplatePath;
+    }
+
     public String getElementTemplatePath() {
         return elementTemplatePath;
     }
 
-    public String getElementJSPath() {
+    public String thisElementJSPath() {
         return elementJSPath;
     }
 

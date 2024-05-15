@@ -140,7 +140,7 @@ public class HtmlBuilder {
         // trigger事件注册
         groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.trigger.register(\"" + k + "\"," + v + ");"));
         // 页面元素注册
-        groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.element.register(\"" + k + "\"," + v + ");"));
+        groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.instance.register(\"" + k + "\"," + v + ");"));
         // 页面元素组注册
         groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.group.register(\"" + k + "\"," + v + ");"));
 
@@ -150,7 +150,7 @@ public class HtmlBuilder {
             for (HtmlElementConfig model : models) {
                 String showGroupId = model.getDefaultShowGroupId();
                 if (CheckEmptyUtil.isNotEmpty(showGroupId)) {
-                    groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.group.load(\"" + showGroupId + "\",\"" + model.getId() + "\");"));
+                    scriptCodeList.add("\n$combineWebUI.group.load(\"" + showGroupId + "\",\"" + model.getId() + "\");");
                 }
             }
         }
