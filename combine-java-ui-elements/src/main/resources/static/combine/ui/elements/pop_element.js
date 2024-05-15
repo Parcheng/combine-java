@@ -1,4 +1,4 @@
-$combineWebUI.element.register("POP", (function () {
+$combineWebUI.element.register("SYSTEM.POP", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
     const elementFns = $combineWebUI.element;
@@ -25,7 +25,7 @@ $combineWebUI.element.register("POP", (function () {
             const id = toolFns.generateUUID();
             const text = dataFns.parseVariable(instance.text, currData);
             const contentDom = domFns.build(instance.template.content, text);
-            const closeDom = null;
+            let closeDom = null;
             if (instance.hasClose) {
                 closeDom = domFns.build(instance.template.close, instance.template.close.text)
                 domFns.appendProtity(closeDom, "onclick", elementFns.buildCallFnCode(instance.id, "close", id));

@@ -1,4 +1,4 @@
-$combineWebUI.element.register("INPUT", (function () {
+$combineWebUI.element.register("SYSTEM.INPUT", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
 

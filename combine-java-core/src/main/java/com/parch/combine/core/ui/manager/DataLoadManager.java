@@ -8,6 +8,7 @@ import com.parch.combine.core.ui.base.dataload.ApiDataLoadConfig;
 import com.parch.combine.core.ui.base.dataload.DataLoadConfig;
 import com.parch.combine.core.ui.base.dataload.DataLoadTypeEnum;
 import com.parch.combine.core.ui.base.dataload.FileDataLoadConfig;
+import com.parch.combine.core.ui.tools.ConfigTool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ public class DataLoadManager  {
     }
 
     protected String load(Map<String, Object> configMap) {
+        ConfigTool.initID(configMap);
         String id = (String) configMap.get(FieldKeyCanstant.ID);
         String type = (String) configMap.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
@@ -37,8 +39,7 @@ public class DataLoadManager  {
             return null;
         }
 
-        String key = getKey(id, type);
-        if (CONFIGS.containsKey(key)) {
+        if (CONFIGS.containsKey(id)) {
             return id;
         }
 
@@ -48,7 +49,7 @@ public class DataLoadManager  {
         }
 
         dataLoad.init();
-        CONFIGS.put(key, dataLoad);
+        CONFIGS.put(id, dataLoad);
         return id;
     }
 

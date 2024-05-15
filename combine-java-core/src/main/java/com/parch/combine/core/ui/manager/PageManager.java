@@ -24,7 +24,13 @@ public class PageManager {
             return key;
         }
 
-        CONFIGS.put(key, TypeConversionUtil.parseJava(configMap, HtmlConfig.class));
+        HtmlConfig htmlConfig = TypeConversionUtil.parseJava(configMap, HtmlConfig.class);
+        if (htmlConfig == null) {
+            return null;
+        }
+
+        htmlConfig.init();
+        CONFIGS.put(key, htmlConfig);
         return key;
     }
 

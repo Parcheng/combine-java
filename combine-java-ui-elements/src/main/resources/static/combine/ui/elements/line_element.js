@@ -1,4 +1,4 @@
-$combineWebUI.element.register("TITLE", (function () {
+$combineWebUI.element.register("SYSTEM.LINE", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
 
@@ -8,25 +8,15 @@ $combineWebUI.element.register("TITLE", (function () {
         return instance;
     }
 
-    function buildTitle(instance, buildData) {
+    function buildLine(instance, buildData) {
         const body = [];
-        if (!instance) {
-            return body;
-        }
 
-        if (instance.top) {
-            body.push(domFns.build(instance.template.top, null));
-        }
-
-        const itemConfig = instance.template["h" + instance.level];
-        if (itemConfig) {
+        if (instance.text) {
+            body.push(domFns.build(instance.template.line));
             const text = dataFns.parseVariable(instance.text, buildData);
-            body.push(domFns.build(itemConfig, text));
+            body.push(domFns.build(instance.template.text, text));
         }
-
-        if (instance.bottom) {
-            body.push(domFns.build(instance.template.bottom, null));
-        }
+        body.push(domFns.build(instance.template.line));
 
         return body;
     }
@@ -34,13 +24,13 @@ $combineWebUI.element.register("TITLE", (function () {
     return {
         build: function build(instance, data) {
             instance = init(instance, data);
-            return domFns.build(instance.template.external, buildTitle(instance, data));
+            return domFns.build(instance.template.external, buildLine(instance, data));
         },
         refresh: function refresh(id, instance, parentData) {
             instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildTitle(instance, parentData));
+                domFns.setBody(externalDom, buildLine(instance, parentData));
             }
         },
         getData: function getData(id) {

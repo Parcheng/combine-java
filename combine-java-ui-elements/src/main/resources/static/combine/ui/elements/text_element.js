@@ -1,4 +1,4 @@
-$combineWebUI.element.register("TEXT", (function () {
+$combineWebUI.element.register("SYSTEM.TEXT", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
     const configFns = $combineWebUI.config;

@@ -1,6 +1,7 @@
 package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.manager.ConstantManager;
+import com.parch.combine.core.ui.handler.CombineManagerHandler;
 import com.parch.combine.core.ui.vo.CombineConfigVO;
 import com.parch.combine.core.ui.vo.CombineLoadVO;
 import java.util.UUID;
@@ -30,11 +31,12 @@ public class CombineManager {
         scopeKey = UUID.randomUUID().toString();
         constant = new ConstantManager();
         dataLoad = new DataLoadManager();
-        trigger = new TriggerManager();
-        pageElement = new PageElementManager();
+        trigger = new TriggerManager(scopeKey);
+        pageElement = new PageElementManager(scopeKey);
         pageElementTemplate = new PageElementTemplateManager();
         pageGroup = new PageElementGroupManager(pageElement);
         page = new PageManager();
+        CombineManagerHandler.register(scopeKey, this);
     }
 
     public CombineLoadVO load(CombineConfigVO config) {

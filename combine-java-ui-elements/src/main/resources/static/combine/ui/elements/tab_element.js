@@ -1,4 +1,4 @@
-$combineWebUI.element.register("TAB", (function () {
+$combineWebUI.element.register("SYSTEM.TAB", (function () {
     const tabIdName = "tabId";
     const domFns = $combineWebUI.dom;
     const elementFns = $combineWebUI.element;

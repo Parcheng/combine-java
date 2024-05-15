@@ -8,6 +8,8 @@ public interface UrlPathCanstant {
 
     String BASE_PATH = "/combine/ui/";
 
+    String BASE_FILE_PATH = "/static/combine/ui/";
+
     String DEFAULT_BASE_JS_NAME = "base.js";
 
     String DEFAULT_TEMPLATE_NAME = "default_page_template.json";

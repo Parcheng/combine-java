@@ -22,13 +22,15 @@ public class CombineJavaUIService implements ICombineJavaUIService {
 
     private ConfigLoadingContext context;
 
-    private CombineManager combineManager = new CombineManager();
+    private CombineManager combineManager;
 
-    private Map<String, String> pageMap = new HashMap<>();
+    private Map<String, String> pageMap;
 
     public CombineJavaUIService(ConfigLoadingContext context) {
         this.context = context;
-        this.context.setManager(combineManager);
+        this.combineManager = new CombineManager();
+        this.context.setScopeKey(combineManager.getScopeKey());
+        this.pageMap = new HashMap<>();
     }
 
     public CombineLoadVO batchLoad(List<String> configPaths) {

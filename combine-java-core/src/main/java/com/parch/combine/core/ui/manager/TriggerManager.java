@@ -5,6 +5,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.trigger.*;
+import com.parch.combine.core.ui.tools.ConfigTool;
 
 import java.util.*;
 
@@ -12,7 +13,13 @@ public class TriggerManager {
 
     private final Map<String, TriggerConfig> CONFIGS = new HashMap<>();
 
-    private SubConfigManager subManager = new SubConfigManager();
+    private String scopeKey;
+    private SubConfigManager subManager;
+
+    public TriggerManager(String scopeKey) {
+        this.scopeKey = scopeKey;
+        this.subManager = new SubConfigManager(scopeKey);
+    }
 
     public List<String> load(List<Map<String, Object>> configs) {
         List<String> ids = new ArrayList<>();
@@ -26,12 +33,8 @@ public class TriggerManager {
     }
 
     public String load(Map<String, Object> configMap) {
+        ConfigTool.initID(configMap);
         String id = (String) configMap.get(FieldKeyCanstant.ID);
-        if (id == null) {
-            id = UUID.randomUUID().toString();
-            configMap.put(FieldKeyCanstant.ID, id);
-        }
-
         String type = (String) configMap.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
             return null;

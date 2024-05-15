@@ -1,4 +1,4 @@
-$combineWebUI.element.register("BUTTON", (function () {
+$combineWebUI.element.register("SYSTEM.BUTTON", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
     const configFns = $combineWebUI.config;

@@ -1,7 +1,7 @@
 $combineWebUI = (function () {
     const triggersDomId = "$combine-web-triggers";
     const groups = {};
-    const canstant = {};
+    const constant = {};
     const instances = {};
     const instanceRefs = {};
     const instanceTemps = {};
@@ -17,12 +17,16 @@ $combineWebUI = (function () {
         baseUrl = initBaseUrl;
     }
 
-    const canstantFns = {
-        register: function (canstantJson) {
-            canstant.data = canstantJson ? JSON.parse(canstantJson) : {};
+    const constantFns = {
+        register: function (constantConfig) {
+            if (constantConfig) {
+                constant.data = constantConfig;
+            } else {
+                constant.data = {};
+            }
         },
         get: function () {
-            return canstant.data;
+            return constant.data;
         }
     }
 
@@ -58,8 +62,7 @@ $combineWebUI = (function () {
             loadDataFns.loads(loadIds, data);
             return resultFns.success();
         },
-        register: function (groupId, elementIdsJson) {
-            const elementIds = JSON.parse(elementIdsJson);
+        register: function (groupId, elementIds) {
             groups[groupId] = elementIds;
         },
         get(groupId) {
@@ -68,8 +71,7 @@ $combineWebUI = (function () {
     }
 
     const instanceFns = {
-        register: function (id, instanceJson) {
-            const instance = JSON.parse(instanceJson);
+        register: function (id, instance) {
             configFns.init(instance);
             instances[id] = JSON.stringify(instance);
             return resultFns.success();
@@ -264,8 +266,8 @@ $combineWebUI = (function () {
         successFiledKey: "success",
         failFiledKey: "fail",
         errorFiledKey: "error",
-        register: function (id, triggerJson) {
-            triggers[id] = triggerJson;
+        register: function (id, trigger) {
+            triggers[id] = JSON.stringify(trigger);
         },
         get: function (id) {
             const triggerJson = triggers[id];
@@ -598,8 +600,8 @@ $combineWebUI = (function () {
     };
 
     const instanceTempFns = {
-        register: function (id, instanceTempJson) {
-            instanceTemps[id] = instanceTempJson;
+        register: function (id, instanceTemp) {
+            instanceTemps[id] = JSON.stringify(instanceTemp);;
         },
         get: function (id) {
             if (!id || !instanceTemps[id]) {
@@ -967,7 +969,7 @@ $combineWebUI = (function () {
 
             const first = variablePath.shift();
             if (first === "$c") {
-                return canstantFns.get();
+                return constantFns.get();
             } else if (first === "$e") {
                 const dataResult = instanceFns.getData(variablePath.shift());
                 if (dataResult.success) {
@@ -992,7 +994,7 @@ $combineWebUI = (function () {
             return null;
         },
         hasDataFlag: function (variableText) {
-            return variableText === "$c" || variableText === "$e" 
+            return variableText === "$c" || variableText === "$e"
                 || variableText === "$ld" || variableText === "$ls";
         },
     };
@@ -1134,8 +1136,8 @@ $combineWebUI = (function () {
         init: init,
         call: callFns,
         temp: tempFns,
-        canstant: canstantFns,
-        groupFns: groupFns,
+        constant: constantFns,
+        group: groupFns,
         instance: instanceFns,
         instanceTemp: instanceTempFns,
         element: elementFns,

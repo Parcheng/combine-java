@@ -41,7 +41,7 @@ public class HtmlConfig implements IInit, ICheck {
             this.lang = "en";
         }
         if (CheckEmptyUtil.isEmpty(this.tempPath)) {
-            this.tempPath = UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_TEMPLATE_NAME;
+            this.tempPath = UrlPathCanstant.BASE_FILE_PATH + UrlPathCanstant.DEFAULT_TEMPLATE_NAME;
         }
         if (CheckEmptyUtil.isNotEmpty(this.metas)) {
             this.metas.forEach(HtmlHeaderMetaConfig::init);

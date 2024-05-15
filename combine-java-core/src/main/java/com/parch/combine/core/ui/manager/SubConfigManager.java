@@ -9,13 +9,18 @@ import java.util.Map;
 
 class SubConfigManager {
 
+    private String scopeKey;
     private final Map<String, List<String>> CONFIGS_SUB_ELEMENTS = new HashMap<>();
     private final Map<String, List<String>> CONFIGS_SUB_TRIGGERS = new HashMap<>();
+
+    public SubConfigManager(String scopeKey) {
+        this.scopeKey = scopeKey;
+    }
 
     public void build(String key, Object config) {
         SubConfigHelper.ResultVO suvVO;
         try {
-            suvVO = SubConfigHelper.loadAndReset(config);
+            suvVO = SubConfigHelper.loadAndReset(scopeKey, config);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             PrintUtil.printError("【ui】【subconfig】【" + key + "】子元素解析异常：" + e.getMessage());

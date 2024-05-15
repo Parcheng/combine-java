@@ -1,4 +1,4 @@
-$combineWebUI.element.register("PAGINATION", (function () {
+$combineWebUI.element.register("SYSTEM.PAGE_TURNING", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
     const elementFns = $combineWebUI.element;
@@ -15,11 +15,8 @@ $combineWebUI.element.register("PAGINATION", (function () {
 
         const currPage = Number(dataFns.parseVariable(settings.currPage, buildData));
         const maxPage = Number(dataFns.parseVariable(settings.maxPage, buildData));
-        data[instance.id] = { currPage: currPage, maxPage: maxPage };
-
-        const maxLength = settings.maxLength ? settings.maxLength : 10;
         if (isNaN(maxPage) || isNaN(currPage)) {
-            return domFns.build(instance.template.pagination, body);
+            return domFns.build(instance.template.pageTurning, body);
         }
 
         const currData = data[instance.id] = {};
@@ -27,36 +24,18 @@ $combineWebUI.element.register("PAGINATION", (function () {
         currData.maxPage = maxPage;
 
         if (currPage <= 1) {
-            body.push(buildItem(instance.id, instance.template.itemDisabled, instance.template.itemContentFirst, instance.template.itemContentFirst.text));
+            body.push(buildItem(instance.id, instance.template.lastDisabled, instance.template.lastContent, instance.template.lastContent.text));
         } else {
-            body.push(buildItem(instance.id, instance.template.item, instance.template.itemContentFirst, instance.template.itemContentFirst.text, settings.triggers, buildData, true, currPage - 1));
+            body.push(buildItem(instance.id, instance.template.last, instance.template.lastContent, instance.template.lastContent.text, settings.triggers, buildData, true, currPage - 1));
         }
-
-        const startIndex = (maxLength / 2) < currPage ? parseInt(currPage - maxLength / 2) : 0;
-        for (let i = startIndex; i < currPage - 1; i++) {
-            body.push(buildItem(instance.id, instance.template.item, instance.template.itemContentNum, i + 1, settings.triggers, buildData, true, i + 1));
-        }
-
-        const itemContentNumDom = buildItem(instance.id, instance.template.itemActive, instance.template.itemContentNum, currPage);
-        body.push(itemContentNumDom);
-
-        let endIndex = currPage + (maxLength - (currPage - startIndex));
-        endIndex = endIndex > maxPage ? maxPage : endIndex;
-        for (let i = currPage; i < endIndex; i++) {
-            body.push(buildItem(instance.id, instance.template.item, instance.template.itemContentNum, i + 1, settings.triggers, buildData, true, i + 1));
-        }
-
-        // if (maxPage >= 2) {
-        //     body.push(buildItem(instance.id, instance.template.item, instance.template.itemContentSkip, domFns.build(instance.template.itemContentSkipInput, null)));
-        // }
 
         if (currPage >= maxPage) {
-            body.push(buildItem(instance.id, instance.template.itemDisabled, instance.template.itemContentEnd, instance.template.itemContentEnd.text));
+            body.push(buildItem(instance.id, instance.template.nextDisabled, instance.template.nextContent, instance.template.nextContent.text));
         } else {
-            body.push(buildItem(instance.id, instance.template.item, instance.template.itemContentEnd, instance.template.itemContentEnd.text, settings.triggers, buildData, true, currPage + 1));
+            body.push(buildItem(instance.id, instance.template.next, instance.template.nextContent, instance.template.nextContent.text, settings.triggers, buildData, true, currPage + 1));
         }
 
-        return domFns.build(instance.template.pagination, body);
+        return domFns.build(instance.template.pageTurning, body);
     }
 
     function buildItem(id, item, content, body, triggers, buildData, hasChecked, targetPage) {
@@ -93,7 +72,6 @@ $combineWebUI.element.register("PAGINATION", (function () {
                     domFns.setBody(externalDom, buildPage(instance, {
                         currPage: pageNum,
                         maxPage: data[instance.id].maxPage,
-                        maxLength: instance.maxLength,
                         triggers: instance.triggers
                     }));
                 }

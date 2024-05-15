@@ -7,12 +7,14 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.base.element.ElementTemplateConfig;
 import com.parch.combine.core.ui.base.trigger.TriggerConfig;
 import com.parch.combine.core.ui.context.ConfigLoadingContextHandler;
+import com.parch.combine.core.ui.handler.CombineManagerHandler;
 import com.parch.combine.core.ui.manager.CombineManager;
 
 import java.util.*;
 
 public class ElementGroupBuilder {
 
+    private String scopeKey;
     private CombineManager manager;
     private Map<String, List<String>> groupMap = new HashMap<>();
     private Map<String, ElementConfig<?>> elementMap = new HashMap<>();
@@ -22,7 +24,8 @@ public class ElementGroupBuilder {
     private Map<String, TriggerConfig> triggerMap = new HashMap<>();
 
     public ElementGroupBuilder(List<String> groupIds) {
-        manager = ConfigLoadingContextHandler.getContext().getManager();
+        scopeKey = ConfigLoadingContextHandler.getContext().getScopeKey();
+        manager = CombineManagerHandler.get(scopeKey);
         initGroups(groupIds);
     }
 
@@ -45,7 +48,7 @@ public class ElementGroupBuilder {
 
         for (String elementId : elementIds) {
             ElementConfig<?> element = manager.getPageElement().get(elementId);
-            elementMap.put(elementId, manager.getPageElement().get(elementId));
+            elementMap.put(elementId, element);
             if (element == null) {
                 continue;
             }

@@ -31,7 +31,7 @@ public class DefaultCombineController {
         return defaultCombineWebService.uploadAndCall(paramJson, file, domain, function, request, response);
     }
 
-    @PostMapping("/page/{pageKey}")
+    @GetMapping("/page/{pageKey}")
     public String page(@PathVariable(name = "pageKey") String pageKey) {
         return defaultCombineJavaUIService.getPage(pageKey);
     }

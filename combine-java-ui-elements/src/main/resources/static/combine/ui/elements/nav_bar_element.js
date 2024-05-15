@@ -1,4 +1,4 @@
-$combineWebUI.element.register("NAV_BAR", (function () {
+$combineWebUI.element.register("SYSTEM.NAV_BAR", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
     const elementFns = $combineWebUI.element;

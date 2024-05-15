@@ -1,4 +1,4 @@
-$combineWebUI.element.register("TEXTAREA", (function () {
+$combineWebUI.element.register("SYSTEM.TEXTAREA", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
 

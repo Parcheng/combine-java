@@ -6,14 +6,21 @@ import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.handler.ElementClassHandler;
+import com.parch.combine.core.ui.tools.ConfigTool;
 
 import java.util.*;
 
 public class PageElementManager {
 
+    private String scopeKey;
     private final Map<String, ElementConfig<?>> CONFIGS = new HashMap<>();
 
-    private SubConfigManager subManager = new SubConfigManager();
+    private SubConfigManager subManager;
+
+    public PageElementManager(String scopeKey) {
+        this.scopeKey = scopeKey;
+        this.subManager = new SubConfigManager(scopeKey);
+    }
 
     public List<String> load(List<Map<String, Object>> configs) {
         List<String> ids = new ArrayList<>();
@@ -27,6 +34,7 @@ public class PageElementManager {
     }
 
     public String load(Map<String, Object> configMap) {
+        ConfigTool.initID(configMap);
         String id = (String) configMap.get(FieldKeyCanstant.ID);
         String type = (String) configMap.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
@@ -51,6 +59,7 @@ public class PageElementManager {
             CONFIGS.put(id, config);
         } catch (Exception e) {
             PrintUtil.printError("【ui】【element】【" + id + "】【" + type + "】元素配置构建失败");
+            e.printStackTrace();
             return null;
         }
 

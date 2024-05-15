@@ -1,4 +1,4 @@
-$combineWebUI.element.register("AUDIO", (function () {
+$combineWebUI.element.register("SYSTEM.AUDIO", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
 

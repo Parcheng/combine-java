@@ -1,4 +1,4 @@
-$combineWebUI.element.register("FROM", (function () {
+$combineWebUI.element.register("SYSTEM.FROM", (function () {
     const domFns = $combineWebUI.dom;
     const instanceFns = $combineWebUI.instance;
     const configFns = $combineWebUI.config;

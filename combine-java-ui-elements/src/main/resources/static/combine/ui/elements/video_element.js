@@ -1,4 +1,4 @@
-$combineWebUI.element.register("VIDEO", (function () {
+$combineWebUI.element.register("SYSTEM.VIDEO", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
 

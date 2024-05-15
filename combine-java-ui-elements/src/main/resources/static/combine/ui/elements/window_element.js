@@ -1,4 +1,4 @@
-$combineWebUI.element.register("WINDOW", (function () {
+$combineWebUI.element.register("SYSTEM.WINDOW", (function () {
     const windowsDomId = "$combine-web-windows";
     const domFns = $combineWebUI.dom;
     const instanceFns = $combineWebUI.instance;

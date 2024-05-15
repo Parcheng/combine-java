@@ -1,4 +1,4 @@
-$combineWebUI.element.register("BREADCRUMB", (function () {
+$combineWebUI.element.register("SYSTEM.BREADCRUMB", (function () {
     const domFns = $combineWebUI.dom;
     const data = {};
 

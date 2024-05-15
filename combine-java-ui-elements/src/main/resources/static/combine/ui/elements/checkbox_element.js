@@ -1,4 +1,4 @@
-$combineWebUI.element.register("RADIO", (function () {
+$combineWebUI.element.register("SYSTEM.CHECKBOX", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
     const configFns = $combineWebUI.config;
@@ -8,61 +8,67 @@ $combineWebUI.element.register("RADIO", (function () {
     }
 
     function buildControls(instance, buildData) {
+        const templateConfig = instance.template;
+
         let layoutConfig;
         const layout = instance.layout ? instance.layout.toUpperCase() : null;
         switch (layout) {
             case "INLINE":
-                layoutConfig = instance.template.inline;
+                layoutConfig = templateConfig.inline;
                 break;
             case "MULTILINE":
             default:
-                layoutConfig = instance.template.multiline;
+                layoutConfig = templateConfig.multiline;
                 break;
         }
 
         const isDisabled = instance.disabled && instance.disabled == true;
-        return buildRadio(instance, layoutConfig, isDisabled, settings, buildData);
+        return buildCheckbox(templateConfig, layoutConfig, isDisabled, instance, buildData);
     }
 
-    function buildRadio(instance, layoutConfig, isDisabled, settings, buildData) {
+
+    function buildCheckbox(templateConfig, layoutConfig, isDisabled, instance, buildData) {
         const body = [];
         if (!instance.option) {
             return body;
         }
 
         if (isDisabled) {
-            layoutConfig = configFns.initElement(layoutConfig, instance.template.disabled, buildData);
+            layoutConfig = configFns.initElement(layoutConfig, templateConfig.disabled, buildData);
         }
 
         const key = dataFns.parseVariableText(instance.key, buildData);
-        const value = dataFns.parseVariable(instance.value, buildData);
+        let value = dataFns.parseVariable(instance.value, buildData);
+        value = value ? (value instanceof Array ? value : [value]) : [];
+
         const optionTextField = instance.option.text;
         const optionValueField = instance.option.value;
 
         let optionData = dataFns.parseVariable(instance.option.data, buildData);
         optionData = optionData instanceof Array ? optionData : [optionData];
+
         for (let i = 0; i < optionData.length; i++) {
             const currOptionData = optionData[i];
             if (!currOptionData) {
                 continue;
             }
 
-            const currOptionText = dataFns.parseVariableText(optionTextField, currOptionData);
-            const currOptionValue = dataFns.parseVariableText(optionValueField, currOptionData);
+            const optionText = dataFns.parseVariableText(optionTextField, currOptionData);
+            const optionValue = dataFns.parseVariableText(optionValueField, currOptionData);
 
-            const inputDom = domFns.build(instance.template.option, null);
-            const radioItemDom = domFns.build(layoutConfig, currOptionText ? [inputDom, currOptionText] : inputDom);
+            const inputDom = domFns.build(templateConfig.option, null);
+            const checkboxItemDom = domFns.build(layoutConfig, optionText ? [inputDom, optionText] : inputDom);
             if (key) {
                 inputDom.name = key;
             }
-            if (currOptionValue) {
-                inputDom.value = currOptionValue;
+            if (optionValue) {
+                inputDom.value = optionValue;
             }
-            if (value == currOptionValue) {
+            if (value.indexOf(optionValue) >= 0) {
                 inputDom.checked = true;
             }
 
-            body.push(radioItemDom);
+            body.push(checkboxItemDom);
         }
 
         return body;
@@ -82,16 +88,16 @@ $combineWebUI.element.register("RADIO", (function () {
         },
         getData: function getData(id) {
             let externalDom = document.getElementById(id);
-            if (externalDom) {
-                const valueDom = externalDom.children[0];
-                if (valueDom.children) {
-                    for (let i = 0; i < valueDom.children.length; i++) {
-                        const radioDom = valueDom.children[i];
-                        if (radioDom.checked) {
-                            return radioDom.value;
-                        }
+            if (externalDom && externalDom.children) {
+                const resultData = [];
+                for (let i = 0; i < externalDom.children.length; i++) {
+                    const checkboxDom = externalDom.children[i].children[0];
+                    if (checkboxDom.checked) {
+                        resultData.push(checkboxDom.value);
                     }
                 }
+                return resultData;
+
             }
             return null;
         }

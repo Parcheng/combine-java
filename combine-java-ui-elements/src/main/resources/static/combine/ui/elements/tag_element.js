@@ -1,4 +1,4 @@
-$combineWebUI.element.register("TAG", (function () {
+$combineWebUI.element.register("SYSTEM.TAG", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
 

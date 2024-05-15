@@ -1,4 +1,4 @@
-$combineWebUI.element.register("THUMBNAIL", (function () {
+$combineWebUI.element.register("SYSTEM.THUMBNAIL", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
 

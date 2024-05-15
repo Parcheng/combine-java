@@ -1,4 +1,4 @@
-$combineWebUI.element.register("TREE", (function () {
+$combineWebUI.element.register("SYSTEM.TREE", (function () {
     const domFns = $combineWebUI.dom;
     const triggerFns = $combineWebUI.trigger;
     const elementFns = $combineWebUI.element;
