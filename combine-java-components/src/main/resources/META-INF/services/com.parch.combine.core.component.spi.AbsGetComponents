@@ -5,5 +5,4 @@ com.parch.combine.components.call.GetCallComponents
 com.parch.combine.components.logic.GetLogicComponents
 com.parch.combine.components.tool.GetToolComponents
 com.parch.combine.components.mail.GetMailComponents
-com.parch.combine.components.web.GetWebComponents
 com.parch.combine.components.system.GetSystemComponents
