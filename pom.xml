@@ -6,9 +6,9 @@
     <packaging>pom</packaging>
     <modules>
         <module>combine-java-core</module>
-        <module>combine-java-test</module>
         <module>combine-java-components</module>
         <module>combine-java-ui-elements</module>
+        <module>combine-java-spring-web</module>
     </modules>
 
     <groupId>com.parch.combine</groupId>
