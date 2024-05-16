@@ -27,15 +27,15 @@ $combineWebUI.element.register("SYSTEM.LIST", (function () {
     }
 
     return {
-        build: function build(config, data) {
-            config = init(config, data);
-            return domFns.build(instance.template.external, buildList(config, data));
+        build: function build(instance, data) {
+            instance = init(instance, data);
+            return domFns.build(instance.template.external, buildList(instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
-            config = init(config, parentData);
+        refresh: function refresh(id, instance, parentData) {
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildList(config, parentData));
+                domFns.setBody(externalDom, buildList(instance, parentData));
             }
         },
         getData: function getData(id) {
