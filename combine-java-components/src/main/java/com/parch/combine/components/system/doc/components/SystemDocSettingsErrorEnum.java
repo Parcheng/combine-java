@@ -1,6 +1,6 @@
 package com.parch.combine.components.system.doc.components;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 /**
  * 逻辑判断异常枚举

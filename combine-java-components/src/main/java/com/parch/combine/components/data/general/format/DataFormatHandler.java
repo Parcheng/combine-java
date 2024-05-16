@@ -1,8 +1,8 @@
 package com.parch.combine.components.data.general.format;
 
 import com.parch.combine.components.data.general.format.func.*;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.tools.variable.DataFindHandler;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.variable.DataFindHandler;
 
 import java.util.*;
 

@@ -1,11 +1,11 @@
 package com.parch.combine.components.web.page.custom;
 
-import com.parch.combine.common.util.*;
+import com.parch.combine.core.common.util.*;
 import com.parch.combine.components.web.page.AbsWebPageComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 

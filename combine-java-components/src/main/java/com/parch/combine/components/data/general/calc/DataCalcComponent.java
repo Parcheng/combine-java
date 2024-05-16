@@ -1,17 +1,17 @@
 package com.parch.combine.components.data.general.calc;
 
-import com.parch.combine.common.constant.CommonConstant;
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.DataTypeIsUtil;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.ValueHelper;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.common.util.MatcherUtil;
-import com.parch.combine.core.tools.ExpressionCalcHelper;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.canstant.CommonConstant;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataTypeIsUtil;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.ValueTool;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.common.util.MatcherUtil;
+import com.parch.combine.core.component.tools.ExpressionCalcTool;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.vo.DataResult;
 import java.util.*;
 
 /**
@@ -92,7 +92,7 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
                         expression[0] = expression[0].replace(matcherStr, newValue.toString());
                     });
                     // 运算表达式
-                    calcResult = ExpressionCalcHelper.calc(expression[0]);
+                    calcResult = ExpressionCalcTool.calc(expression[0]);
                 } catch (Exception e) {
                     ComponentErrorHandler.print(DataCalcErrorEnum.CALC_ERROR, e);
                     return DataResult.fail(DataCalcErrorEnum.CALC_ERROR);
@@ -102,9 +102,9 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
             case MIN:
                 List<Object> values = new ArrayList<>();
                 for (String param : item.getParams()) {
-                    ValueHelper.parseValueToList(DataVariableHelper.parseValue(param, false), values);
+                    ValueTool.parseValueToList(DataVariableHelper.parseValue(param, false), values);
                 }
-                calcResult = mode == DataCalcModeEnum.MAX ? ValueHelper.max(values, null) : ValueHelper.min(values, null);
+                calcResult = mode == DataCalcModeEnum.MAX ? ValueTool.max(values, null) : ValueTool.min(values, null);
                 break;
             case RANDOM:
                 String start, end;

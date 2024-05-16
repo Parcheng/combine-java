@@ -1,12 +1,12 @@
 package com.parch.combine.components.web;
 
 import com.parch.combine.components.web.helper.DomConfig;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 
 /**
  * HTML元素配置
  */
-@ComponentCommonObject(key = WebSettingCanstant.DOM_KEY, name = "页面DOM元素配置")
+@CommonObject(key = WebSettingCanstant.DOM_KEY, name = "页面DOM元素配置")
 public class ElementDomConfig extends DomConfig {
 
 //    @ComponentField(key = "triggers", name = "DOM的触发配置", type = FieldTypeEnum.OBJECT, isArray = true)

@@ -1,24 +1,24 @@
 package com.parch.combine.components.tool.cache.get;
 
 import com.parch.combine.components.tool.cache.CacheKeyMatchRuleEnum;
-import com.parch.combine.core.base.LogicConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldSelect;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldSelect;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 逻辑配置类
  */
 public class CacheGetLogicConfig extends LogicConfig {
 
-    @ComponentField(key = "domain", name = "缓存域", type = FieldTypeEnum.TEXT, defaultValue = "$common")
+    @Field(key = "domain", name = "缓存域", type = FieldTypeEnum.TEXT, defaultValue = "$common")
     private String domain;
 
-    @ComponentField(key = "key", name = "缓存KEY/数据引用", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "key", name = "缓存KEY/数据引用", type = FieldTypeEnum.TEXT, isRequired = true)
     private String key;
 
-    @ComponentField(key = "keyMatchRule", name = "KEY匹配规则", type = FieldTypeEnum.SELECT, defaultValue = "EXACT")
-    @ComponentFieldSelect(enumClass = CacheKeyMatchRuleEnum.class)
+    @Field(key = "keyMatchRule", name = "KEY匹配规则", type = FieldTypeEnum.SELECT, defaultValue = "EXACT")
+    @FieldSelect(enumClass = CacheKeyMatchRuleEnum.class)
     private String keyMatchRule;
 
     public String getDomain() {

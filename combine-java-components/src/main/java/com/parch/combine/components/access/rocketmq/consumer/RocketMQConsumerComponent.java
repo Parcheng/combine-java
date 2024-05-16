@@ -1,15 +1,15 @@
 package com.parch.combine.components.access.rocketmq.consumer;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.JsonUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.components.access.rocketmq.AbsRocketMQComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.settings.annotations.ComponentResultDesc;
-import com.parch.combine.core.tools.SubComponentHelper;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
+import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.vo.DataResult;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
@@ -43,7 +43,7 @@ public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQCons
 
         // 初始化逻辑中使用的组件
         if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentHelper.init(logicConfig.getComponents());
+            List<String> initErrorMsgs = SubComponentTool.init(manager, logicConfig.getComponents());
             for (String initErrorMsg : initErrorMsgs) {
                 errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
             }
@@ -73,7 +73,7 @@ public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQCons
                     data.put("msgId", msg.getMsgId());
                     data.put("body", JsonUtil.deserialize(new String(msg.getBody()), HashMap.class));
 
-                    DataResult result = SubComponentHelper.execute(listenFlowKey, data, logicConfig.getComponents());
+                    DataResult result = SubComponentTool.execute(manager, listenFlowKey, data, logicConfig.getComponents());
                     if (!result.getSuccess()) {
                         ComponentErrorHandler.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic.toString()
                                 + " expression=" + expression.toString() + " error=" + result.getErrMsg(), null);

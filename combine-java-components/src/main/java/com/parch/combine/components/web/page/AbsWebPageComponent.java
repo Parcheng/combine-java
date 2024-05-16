@@ -1,15 +1,15 @@
 package com.parch.combine.components.web.page;
 
-import com.parch.combine.common.util.*;
+import com.parch.combine.core.common.util.*;
 import com.parch.combine.components.web.helper.DomConfig;
 import com.parch.combine.components.web.helper.HtmlBuileHelper;
 import com.parch.combine.components.web.helper.ScriptBuildHelper;
-import com.parch.combine.core.base.AbsComponent;
+import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.components.web.ElementResultHandler;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
-import com.parch.combine.core.context.ComponentContextHandler;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.context.ComponentContextHandler;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 import java.util.stream.Collectors;

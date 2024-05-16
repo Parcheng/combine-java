@@ -1,6 +1,6 @@
 package com.parch.combine.components.access.rocketmq.consumer;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum RocketMQConsumerErrorEnum implements IComponentError {
     FAIL("监听消息失败", "监听消息失败"),

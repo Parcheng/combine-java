@@ -1,8 +1,8 @@
 package com.parch.combine.components.data.general.verify;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.tools.compare.CompareHelper;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.tools.compare.CompareTool;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ public class DataVerifyHandler {
         String errorMsg = (defaultMsg == null ? CheckEmptyUtil.EMPTY : defaultMsg) + (configErrorMsg == null ? CheckEmptyUtil.EMPTY : configErrorMsg.toString());
 
         // 判断条件是否成立
-        boolean isTrue = CompareHelper.isPass(config, false);
+        boolean isTrue = CompareTool.isPass(config, false);
         if (!isTrue) {
             result.add(errorMsg);
         }

@@ -2,10 +2,10 @@ package com.parch.combine.components.web.elements.settings;
 
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.trigger.TriggerEntity;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -14,15 +14,15 @@ import java.util.List;
  */
 public class WindowSettings extends BaseSettings{
 
-    @ComponentField(key = "title", name = "标题", type = FieldTypeEnum.TEXT)
+    @Field(key = "title", name = "标题", type = FieldTypeEnum.TEXT)
     private String title;
 
-    @ComponentField(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-    @ComponentFieldObject(type = SubElementSettings.class)
+    @Field(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @FieldObject(type = SubElementSettings.class)
     private SubElementSettings body;
 
-    @ComponentField(key = "closeTriggers", name = "窗口关闭的触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
-    @ComponentFieldRef(key = WebSettingCanstant.TRIGGER_KEY)
+    @Field(key = "closeTriggers", name = "窗口关闭的触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldRef(key = WebSettingCanstant.TRIGGER_KEY)
     private List<TriggerEntity> closeTriggers;
 
     public List<TriggerEntity> getCloseTriggers() {

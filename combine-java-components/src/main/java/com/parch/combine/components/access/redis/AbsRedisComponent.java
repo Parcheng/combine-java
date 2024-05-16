@@ -1,11 +1,11 @@
 package com.parch.combine.components.access.redis;
 
-import com.parch.combine.common.constant.SymbolConstant;
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.DataTypeIsUtil;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.base.LogicConfig;
-import com.parch.combine.core.error.ComponentErrorHandler;
+import com.parch.combine.core.common.canstant.SymbolConstant;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataTypeIsUtil;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;

@@ -1,14 +1,14 @@
 package com.parch.combine.components.file.parse.excel;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.base.FileInfo;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.components.file.FilePostfixEnum;
 import com.parch.combine.components.file.parse.FileParseComponent;
 import com.parch.combine.components.file.parse.txt.FileParseTxtErrorEnum;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.vo.DataResult;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

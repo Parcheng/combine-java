@@ -1,6 +1,6 @@
 package com.parch.combine.components.tool.lock;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 /**
  * 数据替换错误信息枚举

@@ -1,12 +1,12 @@
 package com.parch.combine.components.file.input.upload;
 
-import com.parch.combine.core.context.ComponentContextHandler;
-import com.parch.combine.core.error.IComponentError;
-import com.parch.combine.core.base.FileInfo;
-import com.parch.combine.core.base.FileParamKey;
+import com.parch.combine.core.component.context.ComponentContextHandler;
+import com.parch.combine.core.component.error.IComponentError;
+import com.parch.combine.core.component.base.FileInfo;
+import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.components.file.input.FileInputComponent;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
 import java.util.ArrayList;
 import java.util.List;

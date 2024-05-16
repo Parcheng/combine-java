@@ -1,14 +1,14 @@
 package com.parch.combine.components.system.doc.config;
 
-import com.parch.combine.common.util.JsonUtil;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.context.GlobalContext;
-import com.parch.combine.core.context.GlobalContextHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.settings.builder.ComponentPropertySettingBuilder;
-import com.parch.combine.core.settings.config.ComponentPropertySetting;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.context.GlobalContext;
+import com.parch.combine.core.component.context.GlobalContextHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
+import com.parch.combine.core.common.settings.config.PropertySetting;
+import com.parch.combine.core.component.vo.DataResult;
 import java.util.*;
 
 /**
@@ -30,7 +30,7 @@ public class SystemDocConfigComponent extends AbsComponent<SystemDocConfigInitCo
 
     @Override
     public List<String> init(){
-        List<ComponentPropertySetting> properties = ComponentPropertySettingBuilder.build("global", GlobalContext.class);
+        List<PropertySetting> properties = PropertySettingBuilder.build("global", GlobalContext.class);
         String json = JsonUtil.serialize(properties);
         result = JsonUtil.parseArray(json, HashMap.class);
         return new ArrayList<>();
@@ -38,7 +38,7 @@ public class SystemDocConfigComponent extends AbsComponent<SystemDocConfigInitCo
 
     @Override
     public DataResult execute() {
-        GlobalContext context = GlobalContextHandler.get();
+        GlobalContext context = GlobalContextHandler.get(getScopeKey());
         if (context == null) {
             return DataResult.fail(SystemDocConfigErrorEnum.FAIL);
         }

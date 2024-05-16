@@ -1,6 +1,6 @@
 package com.parch.combine.components.data.general.filter;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 /**
  * 数据过滤异常枚举

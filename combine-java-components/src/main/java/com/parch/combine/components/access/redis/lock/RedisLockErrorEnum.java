@@ -1,6 +1,6 @@
 package com.parch.combine.components.access.redis.lock;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum RedisLockErrorEnum implements IComponentError {
     FAIL("锁操作失败", "锁操作失败"),

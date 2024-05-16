@@ -2,9 +2,9 @@ package com.parch.combine.components.web.elements.settings;
 
 import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.entity.ElementEntity;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ import java.util.List;
  */
 public class SubElementSettings {
 
-    @ComponentField(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT)
+    @Field(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT)
     private String text;
 
-    @ComponentField(key = "elements", name = "元素组配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @ComponentFieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
+    @Field(key = "elements", name = "元素组配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldRef(key = WebSettingCanstant.ELEMENT_ENTITY_KEY)
     private List<ElementEntity<?>> elements;
 
-    @ComponentField(key = "elementsId", name = "引用元素组ID", type = FieldTypeEnum.TEXT)
+    @Field(key = "elementsId", name = "引用元素组ID", type = FieldTypeEnum.TEXT)
     private String elementsId;
 
     public String getText() {

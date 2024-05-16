@@ -1,23 +1,23 @@
 package com.parch.combine.components.web.elements.settings;
 
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 页面元素设置
  */
 public class TitleSettings extends BaseSettings{
 
-    @ComponentField(key = "text", name = "文本", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "text", name = "文本", type = FieldTypeEnum.TEXT, isRequired = true)
     private String text;
 
-    @ComponentField(key = "level", name = "级别（1-6）", type = FieldTypeEnum.NUMBER, isRequired = true)
+    @Field(key = "level", name = "级别（1-6）", type = FieldTypeEnum.NUMBER, isRequired = true)
     private Integer level;
 
-    @ComponentField(key = "top", name = "是否需要上面添加空行", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    @Field(key = "top", name = "是否需要上面添加空行", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean top;
 
-    @ComponentField(key = "bottom", name = "是否需要下分割线", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    @Field(key = "bottom", name = "是否需要下分割线", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean bottom;
 
     public String getText() {

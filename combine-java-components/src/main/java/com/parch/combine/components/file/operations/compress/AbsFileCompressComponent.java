@@ -1,13 +1,13 @@
 package com.parch.combine.components.file.operations.compress;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.FileNameUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.components.file.helper.FilePathHelper;
 import com.parch.combine.components.file.operations.FileOperationsInitConfig;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.vo.DataResult;
 import java.util.ArrayList;
 import java.util.List;
 

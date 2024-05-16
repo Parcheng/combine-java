@@ -1,6 +1,6 @@
 package com.parch.combine.components.access.rocketmq.product;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum RocketMQProductErrorEnum implements IComponentError {
     FAIL("消息发送失败", "消息发送失败"),

@@ -1,6 +1,6 @@
 package com.parch.combine.components.file.operations.compress;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 /**
  * 压缩类型枚举

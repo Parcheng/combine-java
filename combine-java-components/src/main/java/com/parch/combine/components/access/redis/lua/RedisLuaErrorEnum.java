@@ -1,6 +1,6 @@
 package com.parch.combine.components.access.redis.lua;
 
-import com.parch.combine.core.error.IComponentError;
+import com.parch.combine.core.component.error.IComponentError;
 
 public enum RedisLuaErrorEnum implements IComponentError {
     FAIL("锁操作失败", "锁操作失败"),

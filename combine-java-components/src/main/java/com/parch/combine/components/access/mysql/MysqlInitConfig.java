@@ -1,54 +1,54 @@
 package com.parch.combine.components.access.mysql;
 
-import com.parch.combine.core.base.InitConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.annotations.ComponentFieldEg;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.annotations.FieldEg;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public class MysqlInitConfig extends InitConfig {
     
-    @ComponentField(key = "username", name = "数据库用户名", type = FieldTypeEnum.TEXT, isRequired = true)
-    @ComponentFieldEg(eg = "admin", desc = "数据库用户名为admin")
+    @Field(key = "username", name = "数据库用户名", type = FieldTypeEnum.TEXT, isRequired = true)
+    @FieldEg(eg = "admin", desc = "数据库用户名为admin")
     private String username;
 
-    @ComponentField(key = "password", name = "数据库密码", type = FieldTypeEnum.TEXT, isRequired = true)
-    @ComponentFieldEg(eg = "123456", desc = "数据库密码为123456")
+    @Field(key = "password", name = "数据库密码", type = FieldTypeEnum.TEXT, isRequired = true)
+    @FieldEg(eg = "123456", desc = "数据库密码为123456")
     private String password;
 
-    @ComponentField(key = "port", name = "数据库端口", type = FieldTypeEnum.TEXT, isRequired = true)
-    @ComponentFieldEg(eg = "3306", desc = "数据库连接端口为3306")
+    @Field(key = "port", name = "数据库端口", type = FieldTypeEnum.TEXT, isRequired = true)
+    @FieldEg(eg = "3306", desc = "数据库连接端口为3306")
     private String port;
 
-    @ComponentField(key = "dbName", name = "数据库名称", type = FieldTypeEnum.TEXT, isRequired = true)
-    @ComponentFieldEg(eg = "test", desc = "连接数据库名称为test")
+    @Field(key = "dbName", name = "数据库名称", type = FieldTypeEnum.TEXT, isRequired = true)
+    @FieldEg(eg = "test", desc = "连接数据库名称为test")
     private String dbName;
 
-    @ComponentField(key = "host", name = "数据库HOST地址", type = FieldTypeEnum.TEXT, isRequired = true)
-    @ComponentFieldEg(eg = "127.0.0.1", desc = "数据库主机地址是本机")
+    @Field(key = "host", name = "数据库HOST地址", type = FieldTypeEnum.TEXT, isRequired = true)
+    @FieldEg(eg = "127.0.0.1", desc = "数据库主机地址是本机")
     private String host;
 
-    @ComponentField(key = "pool", name = "数据库连接池配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = Pool.class)
-    @ComponentFieldDesc("不配置则不使用连接池")
+    @Field(key = "pool", name = "数据库连接池配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = Pool.class)
+    @FieldDesc("不配置则不使用连接池")
     private Pool pool;
 
-    @ComponentField(key = "printSql", name = "是否打印SQL", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    @Field(key = "printSql", name = "是否打印SQL", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean printSql;
 
     public static class Pool {
 
-        @ComponentField(key = "max", name = "数据库连接最大数量", type = FieldTypeEnum.NUMBER)
-        @ComponentFieldEg(eg = "10", desc = "连接池最大连接数10")
+        @Field(key = "max", name = "数据库连接最大数量", type = FieldTypeEnum.NUMBER)
+        @FieldEg(eg = "10", desc = "连接池最大连接数10")
         private Integer max;
 
-        @ComponentField(key = "min", name = "数据库连接最小数量", type = FieldTypeEnum.NUMBER)
-        @ComponentFieldEg(eg = "5", desc = "连接池最小连接数5")
+        @Field(key = "min", name = "数据库连接最小数量", type = FieldTypeEnum.NUMBER)
+        @FieldEg(eg = "5", desc = "连接池最小连接数5")
         private Integer min;
 
-        @ComponentField(key = "timeout", name = "数据库连接超时时间", type = FieldTypeEnum.NUMBER)
-        @ComponentFieldEg(eg = "10000", desc = "连接超时时间为10000毫秒")
+        @Field(key = "timeout", name = "数据库连接超时时间", type = FieldTypeEnum.NUMBER)
+        @FieldEg(eg = "10000", desc = "连接超时时间为10000毫秒")
         private Long timeout;
 
         public Integer getMax() {

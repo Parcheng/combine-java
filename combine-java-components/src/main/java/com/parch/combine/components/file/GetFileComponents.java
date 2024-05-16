@@ -1,6 +1,6 @@
 package com.parch.combine.components.file;
 
-import com.parch.combine.core.settings.spi.AbsGetComponents;
+import com.parch.combine.core.component.spi.AbsGetComponents;
 
 /**
  * 获取文件组件加载器

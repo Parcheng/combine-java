@@ -1,19 +1,19 @@
 package com.parch.combine.components.access.rocketmq.product;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.access.rocketmq.RocketMQLogicConfig;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public class RocketMQProductLogicConfig extends RocketMQLogicConfig {
 
-    @ComponentField(key = "tags", name = "标签", type = FieldTypeEnum.TEXT)
+    @Field(key = "tags", name = "标签", type = FieldTypeEnum.TEXT)
     private String tags;
 
-    @ComponentField(key = "producerGroup", name = "生产者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
+    @Field(key = "producerGroup", name = "生产者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
     private String producerGroup;
 
-    @ComponentField(key = "content", name = "消息内容", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "content", name = "消息内容", type = FieldTypeEnum.OBJECT, isRequired = true)
     private Object content;
 
     @Override

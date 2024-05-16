@@ -1,36 +1,36 @@
 package com.parch.combine.components.web.elements.trigger;
 
 import com.parch.combine.components.web.WebSettingCanstant;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldDesc;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.Map;
 
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用URL触发配置", desc = "当 TYPE = CALL_URL 时的参数列表")
+@CommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用URL触发配置", desc = "当 TYPE = CALL_URL 时的参数列表")
 public class TriggerCallUrlEntity extends TriggerEntity {
 
-    @ComponentField(key = "url", name = "URL地址", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "url", name = "URL地址", type = FieldTypeEnum.TEXT, isRequired = true)
     private String url;
 
-    @ComponentField(key = "mode", name = "请求方式 POST | GET", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "mode", name = "请求方式 POST | GET", type = FieldTypeEnum.TEXT, isRequired = true)
     private String mode;
 
-    @ComponentField(key = "fromSubmit", name = "使用FROM表单方式提交", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    @Field(key = "fromSubmit", name = "使用FROM表单方式提交", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean fromSubmit;
 
-    @ComponentField(key = "headers", name = "请求头", type = FieldTypeEnum.OBJECT)
+    @Field(key = "headers", name = "请求头", type = FieldTypeEnum.OBJECT)
     private Object params;
 
-    @ComponentField(key = "params", name = "请求参数", type = FieldTypeEnum.OBJECT)
+    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.OBJECT)
     private Map<String, String> headers;
 
-    @ComponentField(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)
-    @ComponentFieldDesc("以该值作为KEY将结果保存到浏览器缓存，不设置该值则不保存")
+    @Field(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)
+    @FieldDesc("以该值作为KEY将结果保存到浏览器缓存，不设置该值则不保存")
     private String localStorageKey;
 
     public String getUrl() {

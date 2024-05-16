@@ -1,13 +1,13 @@
 package com.parch.combine.components.call.api;
 
-import com.parch.combine.common.util.JsonUtil;
+import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.components.call.CallComponent;
 import com.parch.combine.components.call.CallTypeEnum;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.HttpHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.HttpTool;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,13 +57,13 @@ public class CallApiComponent extends CallComponent<CallApiInitConfig, CallApiLo
             CallTypeEnum mode = CallTypeEnum.get(logicConfig.getMode());
             switch (mode) {
                 case GET:
-                    result = HttpHelper.doGet(url, params, headers, logicConfig.getRetry(), logicConfig.getTimeout());
+                    result = HttpTool.doGet(url, params, headers, logicConfig.getRetry(), logicConfig.getTimeout());
                     break;
                 case POST:
-                    result = HttpHelper.doPost(url, JsonUtil.serialize(params), headers, logicConfig.getRetry(), logicConfig.getTimeout());
+                    result = HttpTool.doPost(url, JsonUtil.serialize(params), headers, logicConfig.getRetry(), logicConfig.getTimeout());
                     break;
                 case FILE:
-                    result = HttpHelper.downloadFile(url, params, headers, logicConfig.getRetry(), logicConfig.getTimeout());
+                    result = HttpTool.downloadFile(url, params, headers, logicConfig.getRetry(), logicConfig.getTimeout());
                     break;
                 default:
                     break;

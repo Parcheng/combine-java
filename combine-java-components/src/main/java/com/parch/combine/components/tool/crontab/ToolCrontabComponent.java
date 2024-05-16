@@ -1,14 +1,14 @@
 package com.parch.combine.components.tool.crontab;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.common.util.DataParseUtil;
-import com.parch.combine.common.util.DataTypeIsUtil;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.SubComponentHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataParseUtil;
+import com.parch.combine.core.common.util.DataTypeIsUtil;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -45,7 +45,7 @@ public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, To
 
         // 初始化逻辑中使用的组件
         if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentHelper.init(logicConfig.getComponents());
+            List<String> initErrorMsgs = SubComponentTool.init(manager, logicConfig.getComponents());
             for (String initErrorMsg : initErrorMsgs) {
                 errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
             }
@@ -80,7 +80,7 @@ public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, To
 
     protected void executeSubComponents() {
         ToolCrontabLogicConfig logicConfig = getLogicConfig();
-        SubComponentHelper.execute(logicConfig.getJobFlowKey(), new HashMap<>(0), logicConfig.getComponents());
+        SubComponentTool.execute(manager, logicConfig.getJobFlowKey(), new HashMap<>(0), logicConfig.getComponents());
     }
 
     protected ScheduledExecutorService getService() {

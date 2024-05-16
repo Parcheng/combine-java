@@ -1,0 +1,20 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "line": {
+    "tag": "p",
+    "class": "",
+    "style": "display:block;text-align:left;",
+    "properties": {}
+  },
+  "children": {
+    "tag": "p",
+    "class": "",
+    "style": "display:block;padding-left:20px;",
+    "properties": {}
+  }
+}

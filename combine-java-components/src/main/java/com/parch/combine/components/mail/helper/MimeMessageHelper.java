@@ -1,6 +1,6 @@
 package com.parch.combine.components.mail.helper;
 
-import com.parch.combine.common.util.FileNameUtil;
+import com.parch.combine.core.common.util.FileNameUtil;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;

@@ -4,76 +4,76 @@ import com.parch.combine.components.web.WebSettingCanstant;
 import com.parch.combine.components.web.elements.enums.ElementTypeEnum;
 import com.parch.combine.components.web.elements.settings.NavBarSettings;
 import com.parch.combine.components.web.ElementDomConfig;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.annotations.ComponentFieldRef;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "导航条页面元素", desc = "当 TYPE = NAV_BAR 时的参数列表")
+@CommonObject(order = 1, key = WebSettingCanstant.ELEMENT_ENTITY_KEY, name = "导航条页面元素", desc = "当 TYPE = NAV_BAR 时的参数列表")
 public class NavBarElementEntity extends ElementEntity<NavBarSettings> {
 
-    @ComponentField(key = "navBar", name = "导航条DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "navBar", name = "导航条DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig navBar;
 
-    @ComponentField(key = "brand", name = "导航条商标DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "brand", name = "导航条商标DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig brand;
 
-    @ComponentField(key = "brandContent", name = "导航条商标内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "brandContent", name = "导航条商标内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig brandContent;
 
-    @ComponentField(key = "brandImgContent", name = "导航条商标图片内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "brandImgContent", name = "导航条商标图片内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig brandImgContent;
 
-    @ComponentField(key = "brandTextContent", name = "导航条商标文本内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "brandTextContent", name = "导航条商标文本内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig brandTextContent;
 
-    @ComponentField(key = "body", name = "导航条内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "body", name = "导航条内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig body;
 
-    @ComponentField(key = "bodyNav", name = "导航DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyNav", name = "导航DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyNav;
 
-    @ComponentField(key = "bodyNavItem", name = "导航项DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyNavItem", name = "导航项DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyNavItem;
 
-    @ComponentField(key = "bodyNavItemText", name = "导航项文本DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyNavItemText", name = "导航项文本DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyNavItemText;
 
-    @ComponentField(key = "bodyNavItemTextActive", name = "导航项文本选中时DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyNavItemTextActive", name = "导航项文本选中时DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyNavItemTextActive;
 
-    @ComponentField(key = "bodyNavItemChildren", name = "导航项子项DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyNavItemChildren", name = "导航项子项DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyNavItemChildren;
 
-    @ComponentField(key = "bodyRight", name = "导航右栏DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyRight", name = "导航右栏DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyRight;
 
-    @ComponentField(key = "bodyRightItem", name = "导航右栏项DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyRightItem", name = "导航右栏项DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyRightItem;
 
-    @ComponentField(key = "bodyRightItemButton", name = "导航右栏项中按钮DOM配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldRef(key = WebSettingCanstant.DOM_KEY)
+    @Field(key = "bodyRightItemButton", name = "导航右栏项中按钮DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = WebSettingCanstant.DOM_KEY)
     private ElementDomConfig bodyRightItemButton;
 
-    @ComponentField(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
-    @ComponentFieldObject(type = NavBarSettings.class)
+    @Field(key = "settings", name = "元素配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = NavBarSettings.class)
     private NavBarSettings settings;
 
     public NavBarElementEntity() {

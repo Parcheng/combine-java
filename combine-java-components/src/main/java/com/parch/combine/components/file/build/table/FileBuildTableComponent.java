@@ -1,10 +1,10 @@
 package com.parch.combine.components.file.build.table;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.error.ComponentErrorHandler;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.components.file.build.FileBuildComponent;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

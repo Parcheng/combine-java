@@ -1,7 +1,7 @@
 package com.parch.combine.components.mail.helper;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.settings.config.IOptionSetting;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.config.IOptionSetting;
 
 /**
  * 邮件内容类型

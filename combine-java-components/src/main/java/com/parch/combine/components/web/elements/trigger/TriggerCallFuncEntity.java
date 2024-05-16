@@ -2,23 +2,23 @@ package com.parch.combine.components.web.elements.trigger;
 
 
 import com.parch.combine.components.web.WebSettingCanstant;
-import com.parch.combine.core.settings.annotations.ComponentCommonObject;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.annotations.CommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 配置类
  */
-@ComponentCommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用页面元素函数触发配置", desc = "当 TYPE = CALL_FUNC 时的参数列表")
+@CommonObject(order = 3, key = WebSettingCanstant.TRIGGER_KEY, name = "调用页面元素函数触发配置", desc = "当 TYPE = CALL_FUNC 时的参数列表")
 public class TriggerCallFuncEntity extends TriggerEntity {
 
-    @ComponentField(key = "id", name = "页面元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "id", name = "页面元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
     private String id;
 
-    @ComponentField(key = "name", name = "函数名称", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "name", name = "函数名称", type = FieldTypeEnum.TEXT, isRequired = true)
     private String name;
 
-    @ComponentField(key = "params", name = "函数参数", type = FieldTypeEnum.OBJECT)
+    @Field(key = "params", name = "函数参数", type = FieldTypeEnum.OBJECT)
     private Object params;
 
     public String getId() {

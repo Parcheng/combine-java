@@ -1,16 +1,16 @@
 package com.parch.combine.components.logic.loop;
 
-import com.parch.combine.common.constant.SymbolConstant;
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.SubComponentHelper;
-import com.parch.combine.core.tools.compare.CompareHelper;
-import com.parch.combine.core.context.ComponentContextHandler;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.tools.variable.DataVariableHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.canstant.SymbolConstant;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.core.component.tools.compare.CompareTool;
+import com.parch.combine.core.component.context.ComponentContextHandler;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 
@@ -46,7 +46,7 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
 
         // 初始化循环中使用的组件
         if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentHelper.init(logicConfig.getComponents());
+            List<String> initErrorMsgs = SubComponentTool.init(manager, logicConfig.getComponents());
             for (String initErrorMsg : initErrorMsgs) {
                 result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
             }
@@ -97,18 +97,18 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
             if (logicConfig.getCondition() != null) {
                 LogicLoopLogicConfig.LoopConditionConfig loopCondition = logicConfig.getCondition();
                 // 判断是否需要跳过当前循环
-                if (CompareHelper.isPass(loopCondition.getSkip(), false)) {
+                if (CompareTool.isPass(loopCondition.getSkip(), false)) {
                     continue;
                 }
 
                 // 判断是否停止循环
-                if (CompareHelper.isPass(loopCondition.getFinish(), false)) {
+                if (CompareTool.isPass(loopCondition.getFinish(), false)) {
                     break;
                 }
             }
 
             // 执行组件逻辑
-            DataResult result = SubComponentHelper.execute(logicConfig.getComponents());
+            DataResult result = SubComponentTool.execute(manager, logicConfig.getComponents());
             if (logicConfig.getFailStop() && !result.getSuccess()) {
                 return DataResult.fail(result.getErrMsg(), result.getShowMsg());
             }

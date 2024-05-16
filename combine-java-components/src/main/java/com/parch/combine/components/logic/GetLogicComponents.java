@@ -1,6 +1,6 @@
 package com.parch.combine.components.logic;
 
-import com.parch.combine.core.settings.spi.AbsGetComponents;
+import com.parch.combine.core.component.spi.AbsGetComponents;
 
 /**
  * 获取逻辑组件实现类

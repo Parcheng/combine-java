@@ -3,10 +3,10 @@ package com.parch.combine.components.file.operations.compress.zip;
 import com.parch.combine.components.file.helper.FileHelper;
 import com.parch.combine.components.file.operations.compress.AbsFileCompressComponent;
 import com.parch.combine.components.file.operations.compress.FileCompressTypeEnum;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.*;
 import java.util.List;

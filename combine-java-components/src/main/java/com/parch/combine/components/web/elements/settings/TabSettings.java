@@ -1,9 +1,9 @@
 package com.parch.combine.components.web.elements.settings;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.settings.annotations.ComponentField;
-import com.parch.combine.core.settings.annotations.ComponentFieldObject;
-import com.parch.combine.core.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,29 +13,29 @@ import java.util.UUID;
  */
 public class TabSettings extends BaseSettings{
 
-    @ComponentField(key = "items", name = "页签项配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
-    @ComponentFieldObject(type = TabItemSettings.class)
+    @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+    @FieldObject(type = TabItemSettings.class)
     private List<TabItemSettings> items;
 
     public static class TabItemSettings {
 
-        @ComponentField(key = "id", name = "页签ID", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
+        @Field(key = "id", name = "页签ID", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
         private String id;
 
-        @ComponentField(key = "title", name = "页签标题", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "title", name = "页签标题", type = FieldTypeEnum.TEXT, isRequired = true)
         private String title;
 
-        @ComponentField(key = "show", name = "页签是否默认显示", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+        @Field(key = "show", name = "页签是否默认显示", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
         private Boolean show;
 
-        @ComponentField(key = "checked", name = "页签是否默认选中", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+        @Field(key = "checked", name = "页签是否默认选中", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
         private Boolean checked;
 
-        @ComponentField(key = "hasClose", name = "页签是否允许关闭", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+        @Field(key = "hasClose", name = "页签是否允许关闭", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
         private Boolean hasClose;
 
-        @ComponentField(key = "body", name = "页签内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-        @ComponentFieldObject(type = SubElementSettings.class)
+        @Field(key = "body", name = "页签内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+        @FieldObject(type = SubElementSettings.class)
         private SubElementSettings body;
 
         public String getId() {

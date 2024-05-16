@@ -1,0 +1,34 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "radio",
+    "style": "",
+    "properties": {}
+  },
+  "inline": {
+    "tag": "label",
+    "class": "radio-inline",
+    "style": "",
+    "properties": {}
+  },
+  "multiline": {
+    "tag": "label",
+    "class": "radio",
+    "style": "",
+    "properties": {}
+  },
+  "disabled": {
+    "tag": "label",
+    "class": "disabled",
+    "style": "",
+    "properties": {}
+  },
+  "option": {
+    "tag": "input",
+    "class": "",
+    "style": "",
+    "properties": {
+      "type": "radio"
+    }
+  }
+}

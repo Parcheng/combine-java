@@ -2,12 +2,12 @@ package com.parch.combine.components.file.input.open;
 
 import com.parch.combine.components.file.helper.FilePathHelper;
 import com.parch.combine.components.file.input.FileInputComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.error.IComponentError;
-import com.parch.combine.core.base.FileInfo;
-import com.parch.combine.common.util.FileNameUtil;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.error.IComponentError;
+import com.parch.combine.core.component.base.FileInfo;
+import com.parch.combine.core.common.util.FileNameUtil;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
 import java.io.File;
 import java.io.FileInputStream;

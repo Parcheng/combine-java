@@ -1,6 +1,6 @@
 package com.parch.combine.components.data.general.filter;
 
-import com.parch.combine.core.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import java.util.List;
 
 /**

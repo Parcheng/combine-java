@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.format;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.settings.config.IOptionSetting;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.settings.config.IOptionSetting;
 
 /**
  * 函数枚举

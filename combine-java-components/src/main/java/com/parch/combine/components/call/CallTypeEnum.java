@@ -1,6 +1,6 @@
 package com.parch.combine.components.call;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 /**
  * 请求类型

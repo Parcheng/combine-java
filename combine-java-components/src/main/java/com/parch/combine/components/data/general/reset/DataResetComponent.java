@@ -1,12 +1,12 @@
 package com.parch.combine.components.data.general.reset;
 
-import com.parch.combine.common.util.CheckEmptyUtil;
-import com.parch.combine.core.base.AbsComponent;
-import com.parch.combine.core.error.ComponentErrorHandler;
-import com.parch.combine.core.settings.annotations.Component;
-import com.parch.combine.core.settings.annotations.ComponentResult;
-import com.parch.combine.core.tools.compare.CompareHelper;
-import com.parch.combine.core.vo.DataResult;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.compare.CompareTool;
+import com.parch.combine.core.component.vo.DataResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class DataResetComponent extends AbsComponent<DataResetInitConfig, DataRe
                     continue;
                 }
 
-                boolean isTrue = CompareHelper.isPass(item, true);
+                boolean isTrue = CompareTool.isPass(item, true);
                 if (!isTrue) {
                     continue;
                 }
