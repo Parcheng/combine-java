@@ -79,6 +79,9 @@ public class HtmlBuilder {
         List<HtmlElementConfig> models = config.getModules();
         if (CheckEmptyUtil.isNotEmpty(models)) {
             for (HtmlElementConfig model : models) {
+                if (CheckEmptyUtil.isEmpty(model.getKey())) {
+                    continue;
+                }
                 HtmlElementConfig tempDomConfig = templateModelMap.get(model.getKey());
                 body.add(HtmlBuildTool.build(model, tempDomConfig, false));
             }
