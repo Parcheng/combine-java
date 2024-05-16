@@ -3,6 +3,7 @@ package com.parch.combine.ui.elements.config;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
@@ -29,6 +30,7 @@ public class TextElementConfig extends ElementConfig<TextElementTemplateConfig> 
         super(SystemElementPathTool.buildJsPath("text"), SystemElementPathTool.buildTemplatePath("text"), TextElementTemplateConfig.class);
     }
 
+    @SubConfig
     public static class TextLineSettings{
 
         @Field(key = "title", name = "行标题配置", type = FieldTypeEnum.TEXT)

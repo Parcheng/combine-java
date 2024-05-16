@@ -3,6 +3,7 @@ package com.parch.combine.ui.elements.config;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.base.trigger.Trigger;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
@@ -21,6 +22,7 @@ public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConf
         super(SystemElementPathTool.buildJsPath("button"), SystemElementPathTool.buildTemplatePath("button"), ButtonElementTemplateConfig.class);
     }
 
+    @SubConfig
     public static class ButtonItemSettings {
 
         @Field(key = "type", name = "按钮阳寿类型（要与与模板一致）", type = FieldTypeEnum.OBJECT, isArray = true)

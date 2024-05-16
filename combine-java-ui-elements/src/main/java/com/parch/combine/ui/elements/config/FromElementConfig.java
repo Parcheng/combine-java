@@ -1,6 +1,7 @@
 package com.parch.combine.ui.elements.config;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
@@ -26,6 +27,7 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
         super(SystemElementPathTool.buildJsPath("from"), SystemElementPathTool.buildTemplatePath("from"), FromElementTemplateConfig.class);
     }
 
+    @SubConfig
     public static class ItemConfig {
 
         @Field(key = "id", name = "配置项ID（DOM元素ID）", type = FieldTypeEnum.TEXT)

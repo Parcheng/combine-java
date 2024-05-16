@@ -40,8 +40,7 @@ public class TriggerManager {
             return null;
         }
 
-        String key = getKey(id, type);
-        if (CONFIGS.containsKey(key)) {
+        if (CONFIGS.containsKey(id)) {
             return id;
         }
 
@@ -51,13 +50,13 @@ public class TriggerManager {
         }
 
         trigger.init();
-        CONFIGS.put(key, trigger);
-        subManager.build(key, trigger);
+        CONFIGS.put(id, trigger);
+        subManager.build(id, trigger);
         return id;
     }
 
-    public TriggerConfig get(String key) {
-        return CONFIGS.get(key);
+    public TriggerConfig get(String id) {
+        return CONFIGS.get(id);
     }
 
     public List<String> getSubElements(String key) {

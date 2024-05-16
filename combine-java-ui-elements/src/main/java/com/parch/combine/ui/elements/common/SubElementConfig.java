@@ -3,12 +3,14 @@ package com.parch.combine.ui.elements.common;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.SubElement;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 /**
  * 下级元素配置
  */
+@SubConfig
 public class SubElementConfig {
 
     @Field(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT)

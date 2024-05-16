@@ -4,6 +4,7 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
@@ -59,30 +60,6 @@ public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplate
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public static class Option {
-        @Field(key = "value", name = "选项值", type = FieldTypeEnum.TEXT, isRequired = true)
-        private String value;
-
-        @Field(key = "text", name = "选项显示文本", type = FieldTypeEnum.TEXT, isRequired = true)
-        private String text;
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
     }
 
     public Object getTriggers() {

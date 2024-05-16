@@ -324,7 +324,7 @@ $combineWebUI = (function () {
                     case "LOAD":
                         dom.addEventListener(eventKey, function () {
                             const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.instance.load(curr.groupId, curr.parentId, curr.params);
+                            combineWebUI.group.load(curr.groupId, curr.parentId, curr.params);
                         });
                         break;
                     case "LOAD_DATA":

@@ -14,6 +14,9 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
     @Field(key = "data", name = "初始数据", type = FieldTypeEnum.OBJECT)
     private Object data;
 
+    @Field(key = "refresh", name = "是否支持刷新", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    private Boolean refresh;
+
     @Field(key = "defaultData", name = "默认数据", type = FieldTypeEnum.OBJECT)
     private Object defaultData;
 
@@ -22,9 +25,6 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
 
     @Field(key = "defaultLoad", name = "是否默认加载（构建元素时加载数据）", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean defaultLoad;
-
-    @Field(key = "refresh", name = "是否支持刷新", type = FieldTypeEnum.BOOLEAN)
-    private Boolean refresh;
 
     @Field(key = "dataField", name = "数据二次取值的字段名", type = FieldTypeEnum.TEXT)
     private String dataField;
@@ -44,7 +44,11 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
         this.templateConfigClass = templateConfigClass;
     }
 
-    public void init() {}
+    public void init() {
+        if (this.refresh == null) {
+            this.refresh = true;
+        }
+    }
 
     public String getId() {
         return id;
@@ -133,4 +137,6 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
     public Class<T> thisTemplateConfigClass() {
         return templateConfigClass;
     }
+
+
 }

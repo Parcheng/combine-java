@@ -9,7 +9,7 @@ $combineWebUI.element.register("SYSTEM.TREE", (function () {
         return template;
     }
 
-    function buildTree(template, settings, buildData, level, checkPath, treeData) {
+    function buildTree(id, template, settings, buildData, level, checkPath, treeData) {
         const body = [];
         if (!buildData) {
             return domFns.build(template.tree, body);
@@ -17,7 +17,7 @@ $combineWebUI.element.register("SYSTEM.TREE", (function () {
 
         if (!level || level == 0) {
             level = 0;
-            treeData = data[instance.id] = [];
+            treeData = data[id] = [];
         }
 
         const checkFirst = settings.checkFirst === true;
@@ -44,7 +44,7 @@ $combineWebUI.element.register("SYSTEM.TREE", (function () {
             currCheckPath.push(i);
 
             const textDom = domFns.build(template.itemText, text ? text : "未知");
-            domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(instance.id, "checked", currCheckPath));
+            domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(id, "checked", currCheckPath));
             if (settings.triggers) {
                 triggerFns.build(settings.triggers, textDom, currData);
                 if (isChecked) {
@@ -54,7 +54,7 @@ $combineWebUI.element.register("SYSTEM.TREE", (function () {
             itemBody.push(textDom);
 
             if (children) {
-                const itemTreeDom = domFns.build(template.itemTree, buildTree(template, settings, children, level + 1, currCheckPath, currTreeData.children));
+                const itemTreeDom = domFns.build(template.itemTree, buildTree(id, template, settings, children, level + 1, currCheckPath, currTreeData.children));
                 if (!isChecked) {
                     domFns.hide(itemTreeDom);
                 }
@@ -114,13 +114,13 @@ $combineWebUI.element.register("SYSTEM.TREE", (function () {
     return {
         build: function build(instance, parentData) {
             instance = init(instance, parentData);
-            return domFns.build(instance.template.external, buildTree(instance.template, instance, parentData));
+            return domFns.build(instance.template.external, buildTree(instance.id, instance.template, instance, parentData));
         },
         refresh: function refresh(id, instance, parentData) {
             instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                domFns.setBody(externalDom, buildTree(instance.template, instance, parentData));
+                domFns.setBody(externalDom, buildTree(instance.id, instance.template, instance, parentData));
             }
         },
         getData: function getData(id) {

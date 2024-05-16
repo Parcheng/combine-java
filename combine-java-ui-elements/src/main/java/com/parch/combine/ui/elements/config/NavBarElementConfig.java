@@ -4,6 +4,7 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.base.trigger.Trigger;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
@@ -39,6 +40,7 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         super(SystemElementPathTool.buildJsPath("nav_bar"), SystemElementPathTool.buildTemplatePath("nav_bar"), NavBarElementTemplateConfig.class);
     }
 
+    @SubConfig
     public static class NavData {
 
         @Field(key = "text", name = "默认项文本", type = FieldTypeEnum.TEXT)
@@ -88,6 +90,7 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         }
     }
 
+    @SubConfig
     public static class NavSettings {
 
         @Field(key = "text", name = "导航项文本", type = FieldTypeEnum.OBJECT, isRequired = true)

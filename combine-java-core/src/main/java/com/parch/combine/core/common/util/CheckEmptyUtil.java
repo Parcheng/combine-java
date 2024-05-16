@@ -23,6 +23,16 @@ public class CheckEmptyUtil {
     }
 
     /**
+     * 判断空
+     *
+     * @param iterable 集合
+     * @return 结果
+     */
+    public static boolean isEmpty(Iterable<?> iterable) {
+        return iterable == null || !iterable.iterator().hasNext();
+    }
+
+    /**
      * 判断非空
      *
      * @param collection 集合

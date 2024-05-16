@@ -2,7 +2,9 @@ package com.parch.combine.ui.elements.common;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.SubConfig;
 
+@SubConfig
 public class OptionElementConfig {
 
     @Field(key = "data", name = "选项数据配置", type = FieldTypeEnum.OBJECT)

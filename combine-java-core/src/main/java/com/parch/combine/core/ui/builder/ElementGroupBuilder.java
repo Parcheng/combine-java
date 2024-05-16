@@ -137,7 +137,6 @@ public class ElementGroupBuilder {
 
     public ElementGroupResult build() {
         ElementGroupResult result = new ElementGroupResult();
-        ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
 
         result.groupMap = new HashMap<>();
         groupMap.forEach((k, v) -> result.groupMap.put(k, JsonUtil.serialize(v)));
