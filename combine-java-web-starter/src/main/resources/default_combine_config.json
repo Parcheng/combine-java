@@ -1,6 +1,6 @@
 {
-  "initConfigs": ["configs/apidoc.json"],
-  "initFlows": ["$build/api"],
+  "initConfigs": ["configs/api_flow.json"],
+  "initFlows": [],
   "openRegisterConfig": false,
   "requestIdKey": "requestID",
   "printComponentResult": true
