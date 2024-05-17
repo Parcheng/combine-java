@@ -122,7 +122,7 @@ $combineWebUI.element.register("SYSTEM.TEXT", (function () {
             config = init(instance, data);
             return domFns.build(instance.template.external, buildText(instance.template, instance, data));
         },
-        refresh: function refresh(id, config, parentData) {
+        refresh: function refresh(id, instance, parentData) {
             let externalDom = document.getElementById(id);
             if (externalDom) {
                 domFns.setBody(externalDom, buildText(instance.template, instance, parentData));

@@ -137,7 +137,7 @@ public class HtmlBuilder {
         String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
         scriptCodeList.add("\n$combineWebUI.constant.register(" + contentJson + ");");
         // 元素模板注册
-        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.template.register(\"" + k + "\"," + v + ");"));
+        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.instanceTemp.register(\"" + k + "\"," + v + ");"));
         // 数据加载配置注册
         groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.loadData.register(\"" + k + "\"," + v + ", " + groupResult.dataLoadToElementIdMap.get(k) + ");"));
         // trigger事件注册

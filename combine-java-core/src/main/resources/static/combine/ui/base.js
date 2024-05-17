@@ -292,14 +292,14 @@ $combineWebUI = (function () {
                     continue;
                 }
 
-                const successElement = trigger[this.successFiledKey];
-                const failElement = trigger[this.failFiledKey];
-                const errorElement = trigger[this.errorFiledKey];
-                this.buildAlert(successElement, failElement, errorElement);
+                const successInstanceId = trigger[this.successFiledKey];
+                const failInstanceId = trigger[this.failFiledKey];
+                const errorInstanceId = trigger[this.errorFiledKey];
+                this.buildAlert(successInstanceId, failInstanceId, errorInstanceId);
 
-                const successFn = this.buildAlertFn(successElement);
-                const failFn = this.buildAlertFn(failElement);
-                const errorFn = errorElement ? this.buildAlertFn(errorElement) : null;
+                const successFn = this.buildAlertFn(successInstanceId);
+                const failFn = this.buildAlertFn(failInstanceId);
+                const errorFn = errorInstanceId ? this.buildAlertFn(errorInstanceId) : null;
 
                 const eventKey = trigger.event ? trigger.event : "click";
                 switch (trigger.type) {
@@ -382,16 +382,16 @@ $combineWebUI = (function () {
                 }
             }
         },
-        buildAlert(successElement, failElement, errorElement) {
+        buildAlert(successInstanceId, failInstanceId, errorInstanceId) {
             const triggersDom = document.getElementById(triggersDomId);
             if (!triggersDom) {
                 return;
             }
 
-            if (successElement) {
-                const successDom = document.getElementById(successElement.id);
+            if (successInstanceId) {
+                const successDom = document.getElementById(successInstanceId);
                 if (!successDom) {
-                    const successBuildResulr = instanceFns.registerAndBuild(successElement);
+                    const successBuildResulr = instanceFns.build(successInstanceId);
                     if (successBuildResulr.success) {
                         domFns.appendBody(triggersDom, successBuildResulr.data);
                     }
@@ -399,31 +399,31 @@ $combineWebUI = (function () {
             }
 
 
-            if (failElement) {
-                const failDom = document.getElementById(failElement.id);
+            if (failInstanceId) {
+                const failDom = document.getElementById(failInstanceId);
                 if (!failDom) {
-                    const failBuildResulr = instanceFns.registerAndBuild(failElement);
+                    const failBuildResulr = instanceFns.build(failInstanceId);
                     if (failBuildResulr.success) {
                         domFns.appendBody(triggersDom, failBuildResulr.data);
                     }
                 }
             }
 
-            if (errorElement) {
-                const errorDom = document.getElementById(errorElement.id);
+            if (errorInstanceId) {
+                const errorDom = document.getElementById(errorInstanceId);
                 if (!errorDom) {
-                    const failBuildResulr = instanceFns.registerAndBuild(errorElement);
+                    const failBuildResulr = instanceFns.build(errorInstanceId);
                     if (failBuildResulr.success) {
                         domFns.appendBody(triggersDom, failBuildResulr.data);
                     }
                 }
             }
         },
-        buildAlertFn(element) {
+        buildAlertFn(instanceId) {
             return function (data) {
-                if (element) {
-                    instanceFns.refresh(element.id, data);
-                    domFns.show(element.id);
+                if (instanceId) {
+                    instanceFns.refresh(instanceId, data);
+                    domFns.show(instanceId);
                 }
             }
         },
@@ -1082,7 +1082,7 @@ $combineWebUI = (function () {
                             }
                         }
                     } else {
-                        console.log("Request fail: ", flowKey, params, data);
+                        console.log("Request fail: ", url, params, data);
                         failFn ? failFn(data) : function () {
                             alert("Request fail: " + data.showMsg + "！");
                         };

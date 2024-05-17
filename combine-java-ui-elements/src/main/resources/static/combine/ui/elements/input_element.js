@@ -13,8 +13,8 @@ $combineWebUI.element.register("SYSTEM.INPUT", (function () {
             body.push(buildAddon(instance, instance.beforeText, buildData));
         }
 
-        const type = instance.type ? instance.type.toLowerCase() : "text";
-        body.push(buildInput(instance, type, settings, buildData));
+        const type = instance.inputType ? instance.inputType.toLowerCase() : "text";
+        body.push(buildInput(instance, type, buildData));
 
         if (instance.afterText) {
             body.push(buildAddon(instance, instance.afterText, buildData));
@@ -24,7 +24,7 @@ $combineWebUI.element.register("SYSTEM.INPUT", (function () {
     }
 
 
-    function buildInput(instance, type, settings, buildData) {
+    function buildInput(instance, type, buildData) {
         const inputDom = domFns.build(instance.template.input, null);
         inputDom.type = type;
 

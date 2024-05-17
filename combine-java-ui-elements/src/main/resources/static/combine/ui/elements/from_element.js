@@ -20,7 +20,7 @@ $combineWebUI.element.register("SYSTEM.FROM", (function () {
                 instance.template.from = configFns.initElement(instance.template.from, instance.template.horizontal);
                 break;
         }
-        return config;
+        return instance;
     }
 
     function buildFromBody(instance, buildData) {
