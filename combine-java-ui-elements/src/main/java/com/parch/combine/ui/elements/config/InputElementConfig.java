@@ -9,6 +9,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "input", name = "输入框元素", templateClass = InputElementTemplateConfig.class)
 public class InputElementConfig extends ElementConfig<InputElementTemplateConfig> {
 
@@ -30,6 +32,14 @@ public class InputElementConfig extends ElementConfig<InputElementTemplateConfig
 
     public InputElementConfig() {
         super(SystemElementPathTool.buildJsPath("input"), SystemElementPathTool.buildTemplatePath("input"), InputElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getKey() {

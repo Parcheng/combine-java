@@ -7,6 +7,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "pop", name = "泡泡窗元素", templateClass = PopElementTemplateConfig.class)
 public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
 
@@ -22,6 +24,14 @@ public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
 
     public PopElementConfig() {
         super(SystemElementPathTool.buildJsPath("pop"), SystemElementPathTool.buildTemplatePath("pop"), PopElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getPopType() {

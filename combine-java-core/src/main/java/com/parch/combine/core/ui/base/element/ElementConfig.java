@@ -1,9 +1,14 @@
 package com.parch.combine.core.ui.base.element;
 
+import com.parch.combine.core.common.base.ICheck;
+import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-public abstract class ElementConfig<T extends ElementTemplateConfig> {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class ElementConfig<T extends ElementTemplateConfig> implements IInit, ICheck {
 
     @Field(key = "id", name = "元素ID", type = FieldTypeEnum.TEXT, defaultValue = "随机字符粗")
     private String id;
@@ -44,6 +49,7 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
         this.templateConfigClass = templateConfigClass;
     }
 
+    @Override
     public void init() {
         if (this.refresh == null) {
             this.refresh = true;
@@ -51,7 +57,17 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
         if (this.defaultLoad == null) {
             this.defaultLoad = true;
         }
+        this.initConfig();
     }
+
+    @Override
+    public List<String> check() {
+        return this.checkConfig();
+    }
+
+    protected abstract void initConfig();
+
+    protected abstract List<String> checkConfig();
 
     public String getId() {
         return id;

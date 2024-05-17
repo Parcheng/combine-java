@@ -30,6 +30,14 @@ public class TextElementConfig extends ElementConfig<TextElementTemplateConfig> 
         super(SystemElementPathTool.buildJsPath("text"), SystemElementPathTool.buildTemplatePath("text"), TextElementTemplateConfig.class);
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     @SubConfig
     public static class TextLineSettings{
 

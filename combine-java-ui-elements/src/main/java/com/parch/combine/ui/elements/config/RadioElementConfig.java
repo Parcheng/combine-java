@@ -11,6 +11,8 @@ import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.common.OptionElementConfig;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "radio", name = "单选框元素", templateClass = RadioElementTemplateConfig.class)
 public class RadioElementConfig extends ElementConfig<RadioElementTemplateConfig> {
 
@@ -37,6 +39,14 @@ public class RadioElementConfig extends ElementConfig<RadioElementTemplateConfig
 
     public RadioElementConfig() {
         super(SystemElementPathTool.buildJsPath("radio"), SystemElementPathTool.buildTemplatePath("radio"), RadioElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getKey() {

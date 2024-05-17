@@ -9,6 +9,8 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "tree", name = "树元素", templateClass = TreeElementTemplateConfig.class)
 public class TreeElementConfig extends ElementConfig<TreeElementTemplateConfig> {
 
@@ -31,6 +33,14 @@ public class TreeElementConfig extends ElementConfig<TreeElementTemplateConfig> 
 
     public TreeElementConfig() {
         super(SystemElementPathTool.buildJsPath("tree"), SystemElementPathTool.buildTemplatePath("tree"), TreeElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getTextField() {

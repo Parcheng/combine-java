@@ -31,6 +31,14 @@ public class ThumbnailElementConfig extends ElementConfig<ThumbnailElementTempla
         super(SystemElementPathTool.buildJsPath("thumbnail"), SystemElementPathTool.buildTemplatePath("thumbnail"), ThumbnailElementTemplateConfig.class);
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     public String getPath() {
         return path;
     }

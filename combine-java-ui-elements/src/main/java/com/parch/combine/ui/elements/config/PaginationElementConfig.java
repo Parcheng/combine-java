@@ -9,6 +9,8 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "pagination", name = "分页元素", templateClass = AudioElementTemplateConfig.class)
 public class PaginationElementConfig extends ElementConfig<PaginationElementTemplateConfig> {
 
@@ -28,6 +30,14 @@ public class PaginationElementConfig extends ElementConfig<PaginationElementTemp
 
     public PaginationElementConfig() {
         super(SystemElementPathTool.buildJsPath("pagination"), SystemElementPathTool.buildTemplatePath("pagination"), PaginationElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getCurrPage() {

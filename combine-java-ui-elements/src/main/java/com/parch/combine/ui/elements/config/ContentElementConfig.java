@@ -30,6 +30,14 @@ public class ContentElementConfig extends ElementConfig<ContentElementTemplateCo
         super(SystemElementPathTool.buildJsPath("content"), SystemElementPathTool.buildTemplatePath("content"), ContentElementTemplateConfig.class);
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     public String getLeftImg() {
         return leftImg;
     }

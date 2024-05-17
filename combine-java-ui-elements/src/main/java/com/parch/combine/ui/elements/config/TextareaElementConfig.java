@@ -6,6 +6,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "textarea", name = "多行文本输入框元素", templateClass = TextareaElementTemplateConfig.class)
 public class TextareaElementConfig extends ElementConfig<TextareaElementTemplateConfig> {
 
@@ -17,6 +19,14 @@ public class TextareaElementConfig extends ElementConfig<TextareaElementTemplate
 
     public TextareaElementConfig() {
         super(SystemElementPathTool.buildJsPath("textarea"), SystemElementPathTool.buildTemplatePath("textarea"), TextareaElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getKey() {

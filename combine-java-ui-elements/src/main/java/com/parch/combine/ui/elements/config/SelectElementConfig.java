@@ -11,6 +11,8 @@ import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.common.OptionElementConfig;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "select", name = "下拉框元素", templateClass = AudioElementTemplateConfig.class)
 public class SelectElementConfig extends ElementConfig<SelectElementTemplateConfig> {
 
@@ -37,6 +39,14 @@ public class SelectElementConfig extends ElementConfig<SelectElementTemplateConf
 
     public SelectElementConfig() {
         super(SystemElementPathTool.buildJsPath("select"), SystemElementPathTool.buildTemplatePath("select"), SelectElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getKey() {

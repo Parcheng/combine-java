@@ -6,6 +6,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "video", name = "视频元素", templateClass = VideoElementTemplateConfig.class)
 public class VideoElementConfig extends ElementConfig<VideoElementTemplateConfig> {
 
@@ -17,6 +19,14 @@ public class VideoElementConfig extends ElementConfig<VideoElementTemplateConfig
 
     public VideoElementConfig() {
         super(SystemElementPathTool.buildJsPath("video"), SystemElementPathTool.buildTemplatePath("video"), VideoElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getSrc() {

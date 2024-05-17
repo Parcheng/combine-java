@@ -61,6 +61,14 @@ public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConf
         }
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     public List<ButtonItemSettings> getItems() {
         return items;
     }
