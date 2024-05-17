@@ -209,6 +209,24 @@ public class DataResult {
     }
 
     /**
+     * 构建
+     *
+     * @param source 来源数据
+     * @return 结果对象
+     */
+    public static DataResult build(DataResult source) {
+        DataResult result = build();
+        result.setSuccess(source.getSuccess());
+        result.setDownload(source.isDownload());
+        result.setStop(source.isStop());
+        result.setShowMsg(source.getShowMsg());
+        result.setErrMsg(source.getErrMsg());
+        result.setDataFlag(source.getDataFlag());
+        result.setData(source.getData());
+        return result;
+    }
+
+    /**
      * 构建 DataResult 对象
      *
      * @return DataResult对象

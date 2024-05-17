@@ -39,7 +39,7 @@ $combineWebUI.element.register("SYSTEM.FROM", (function () {
                 const contentElementDom = buildElement(currItem.element, buildData);
                 if (contentElementDom) {
                     itemBodys.push(contentElementDom);
-                    setData(instance.id, currKey, null, currItem.element.id);
+                    setData(instance.id, currKey, null, currItem.element);
                 }
             } else {
                 const text = dataFns.parseVariable(currItem.text, buildData);

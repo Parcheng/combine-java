@@ -8,33 +8,31 @@ $combineWebUI.element.register("SYSTEM.CHECKBOX", (function () {
     }
 
     function buildControls(instance, buildData) {
-        const templateConfig = instance.template;
-
         let layoutConfig;
         const layout = instance.layout ? instance.layout.toUpperCase() : null;
         switch (layout) {
             case "INLINE":
-                layoutConfig = templateConfig.inline;
+                layoutConfig = instance.template.inline;
                 break;
             case "MULTILINE":
             default:
-                layoutConfig = templateConfig.multiline;
+                layoutConfig = instance.template.multiline;
                 break;
         }
 
         const isDisabled = instance.disabled && instance.disabled == true;
-        return buildCheckbox(templateConfig, layoutConfig, isDisabled, instance, buildData);
+        return buildCheckbox(instance, layoutConfig, isDisabled, buildData);
     }
 
 
-    function buildCheckbox(templateConfig, layoutConfig, isDisabled, instance, buildData) {
+    function buildCheckbox(instance, layoutConfig, isDisabled, buildData) {
         const body = [];
         if (!instance.option) {
             return body;
         }
 
         if (isDisabled) {
-            layoutConfig = configFns.initElement(layoutConfig, templateConfig.disabled, buildData);
+            layoutConfig = configFns.initElement(layoutConfig, instance.template.disabled, buildData);
         }
 
         const key = dataFns.parseVariableText(instance.key, buildData);
@@ -56,7 +54,7 @@ $combineWebUI.element.register("SYSTEM.CHECKBOX", (function () {
             const optionText = dataFns.parseVariableText(optionTextField, currOptionData);
             const optionValue = dataFns.parseVariableText(optionValueField, currOptionData);
 
-            const inputDom = domFns.build(templateConfig.option, null);
+            const inputDom = domFns.build(instance.template.option, null);
             const checkboxItemDom = domFns.build(layoutConfig, optionText ? [inputDom, optionText] : inputDom);
             if (key) {
                 inputDom.name = key;

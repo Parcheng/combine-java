@@ -115,7 +115,7 @@ $combineWebUI.element.register("SYSTEM.TABLE", (function () {
     }
 
     function buildOpts(rowOpts, rowData) {
-        const result = instanceFns.registerAndBuild(rowOpts, rowData);
+        const result = instanceFns.build(rowOpts, rowData);
         if (result.success) {
             return result.data;
         }
@@ -124,7 +124,7 @@ $combineWebUI.element.register("SYSTEM.TABLE", (function () {
 
     return {
         build: function (instance, data) {
-            const instance = init(instance, data);
+            instance = init(instance, data);
             const headBody = buildHeadContent(instance);
             const head = domFns.build(instance.template.head, headBody)
             const bodyBody = buildBodyContent(instance, data);
@@ -133,7 +133,7 @@ $combineWebUI.element.register("SYSTEM.TABLE", (function () {
             return domFns.build(instance.template.external, table);
         },
         refresh: function (id, instance, parentData) {
-            const instance = init(instance, parentData);
+            instance = init(instance, parentData);
             let externalDom = document.getElementById(id);
             if (externalDom) {
                 const bodyBody = buildBodyContent(instance, parentData);

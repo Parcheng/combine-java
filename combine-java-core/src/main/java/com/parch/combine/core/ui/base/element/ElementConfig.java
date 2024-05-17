@@ -48,6 +48,9 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> {
         if (this.refresh == null) {
             this.refresh = true;
         }
+        if (this.defaultLoad == null) {
+            this.defaultLoad = true;
+        }
     }
 
     public String getId() {

@@ -98,7 +98,7 @@ $combineWebUI = (function () {
             }
 
             this.initConfig(instance, data);
-            const dataLoadId = instance.dataLoadId && instance.dataLoadId !== false ? instance.dataLoadId : null;
+            const dataLoadId = instance.dataLoadId && instance.defaultLoad !== false ? instance.dataLoadId : null;
             return resultFns.success(element.build(instance, data), dataLoadId);
         },
         refresh: function (id, parentData) {

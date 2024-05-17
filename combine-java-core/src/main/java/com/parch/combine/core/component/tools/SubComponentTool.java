@@ -86,7 +86,7 @@ public class SubComponentTool {
                 if (!result.getSuccess()) {
                     return DataResult.fail(result.getErrMsg(), result.getShowMsg());
                 } else if (result.isStop()) {
-                    return DataResult.successAndStop(result.getData());
+                    return DataResult.build(result);
                 }
             }
         }
