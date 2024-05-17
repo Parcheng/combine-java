@@ -22,6 +22,8 @@ public class DataResult {
 
     private String errMsg;
 
+    private String dataFlag;
+
     private Object data;
 
     private DataResult() {
@@ -88,6 +90,14 @@ public class DataResult {
 
     public void setSuccess(Boolean success) {
         this.success = success;
+    }
+
+    public String getDataFlag() {
+        return dataFlag;
+    }
+
+    public void setDataFlag(String dataFlag) {
+        this.dataFlag = dataFlag;
     }
 
     /**

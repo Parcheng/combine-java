@@ -1069,9 +1069,9 @@ $combineWebUI = (function () {
                 function (data) {
                     data = JSON.parse(data);
                     if (data.success) {
-                        if (typeof data.data === "string") {
-                            if (data.data.startsWith("$web-component-redirect:")) {
-                                toolFns.linkTo(data.data.replace("$web-component-redirect:", ""));
+                        if (data.dataFlag) {
+                            if (data.dataFlag === "redirect") {
+                                toolFns.linkTo(data.data);
                                 return;
                             }
                         }

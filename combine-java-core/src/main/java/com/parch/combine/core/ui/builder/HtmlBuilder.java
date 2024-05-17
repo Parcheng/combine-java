@@ -177,6 +177,8 @@ public class HtmlBuilder {
             } catch (Exception e) {
                 PrintTool.printInit("【PAGE-TEMPLATE】【" + config.getTempPath() + "】【加载模板失败】");
             }
+        } else {
+            templateConfig = TEMP_MAP.get(config.getTempPath());
         }
     }
 }
