@@ -5,13 +5,12 @@
       "id": "system_settings_load",
       "type": "flow",
       "mode": "POST",
-      "url": "/api/flow/settings/list"
+      "url": "/flow/settings/list"
     },{
       "id": "system_config_load",
       "type": "flow",
       "mode": "POST",
-      "url": "/api/flow/config/get",
-      "cache": -1
+      "url": "/flow/config/get"
     }
   ],
   "templates": [],
@@ -23,7 +22,7 @@
         {
           "type": "system.nav_bar",
           "dataLoadId": "system_settings_load",
-          "brandText": "API",
+          "brandText": "Combine-Java",
           "defaultChecked": 0,
           "defaultNavs": [{
             "text": "首页",
@@ -102,7 +101,7 @@
           "type": "system.text",
           "lines": [
             { "text": "使用方式：" },
-            { "text": "第一：需要一个全局配置文件 “combine_web.json” 放在 resource 根目录下，配置项详见 “全局配置” 菜单" },
+            { "text": "第一：需要一个全局配置文件 “combine_java.json” 放在 resource 根目录下，配置项详见 “全局配置” 菜单" },
             { "text": "第二：需要至少一个流程配置文件，格式如下" },
             { "text": "{" },
             { "text": "　\"constant\": {...},　　　　　　　　　　【表示常量定义，可以自由的定义常量，并能够在流程配置中使用 $c.xxx 来获取它们】" },
@@ -144,7 +143,7 @@
             { "text": "全局变量 $v 用于获取和设置流程中变量，该变量的内容可以在当前流程中的各个组件中使用" },
             { "text": "如：$v.index 表示获取流程中 index 属性的值" },
             { "text": "　" },
-            { "text": "全局变量 $h 用于获取请求头西南西，该变量的内容可以在当前流程中的各个组件中使用" },
+            { "text": "全局变量 $h 用于获取请求头的内容，该变量的内容可以在当前流程中的各个组件中使用" },
             { "text": "如：$h.requestId 表示获取流程中 requestId 属性的值" },
             { "text": "<hr>" }
           ]

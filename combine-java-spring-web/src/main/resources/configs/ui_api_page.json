@@ -2,28 +2,32 @@
   "constant": {},
   "dataLoads": [
     {
-      "id": "system_settings_load",
+      "id": "system_ui_elements_load",
       "type": "flow",
       "mode": "POST",
-      "url": "/api/flow/settings/list"
+      "url": "/flow/ui-elements/list"
     },{
-      "id": "system_config_load",
+      "id": "system_ui_config_load",
       "type": "flow",
       "mode": "POST",
-      "url": "/api/flow/config/get",
-      "cache": -1
+      "url": "/flow/ui-config/get"
+    },{
+      "id": "system_ui_page_config_load",
+      "type": "flow",
+      "mode": "POST",
+      "url": "/flow/ui-page/get"
     }
   ],
   "templates": [],
   "elements": [],
   "groups": [
     {
-      "id": "system_api_nav",
+      "id": "system_ui_api_nav",
       "elements": [
         {
           "type": "system.nav_bar",
-          "dataLoadId": "system_settings_load",
-          "brandText": "API",
+          "dataLoadId": "system_ui_elements_load",
+          "brandText": "Combine-Java-UI",
           "defaultChecked": 0,
           "defaultNavs": [{
             "text": "首页",
@@ -31,7 +35,7 @@
             "triggers": [{
               "event": "click",
               "type": "LOAD",
-              "groupId": "system_api_home_tree",
+              "groupId": "system_ui_api_home_tree",
               "parentId": "element_left"
             }]
           }],
@@ -40,7 +44,7 @@
             "triggers": [{
               "event": "click",
               "type": "LOAD",
-              "groupId": "system_api_tree",
+              "groupId": "system_ui_api_tree",
               "parentId": "element_left",
               "params": "#{settings}"
             }]
@@ -48,7 +52,7 @@
         }
       ]
     },{
-      "id": "system_api_tree",
+      "id": "system_ui_api_tree",
       "elements": [
         {
           "type": "system.tree",
@@ -57,24 +61,27 @@
           "triggers": [{
             "event": "click",
             "type": "LOAD",
-            "groupId": "system_api_content",
+            "groupId": "system_ui_api_content",
             "parentId": "element_content",
             "params": "#{}"
           }]
         }
       ]
     },{
-      "id": "system_api_home_tree",
+      "id": "system_ui_api_home_tree",
       "elements": [
         {
           "type": "system.tree",
           "data": [
             {
               "name": "概要",
-              "groupId": "system_api_home_content"
+              "groupId": "system_ui_api_home_content"
+            },{
+              "name": "页面配置",
+              "groupId": "system_ui_api_page_config_content"
             },{
               "name": "全局配置",
-              "groupId": "system_api_config_content"
+              "groupId": "system_ui_api_config_content"
             }
           ],
           "textField": "name",
@@ -89,7 +96,7 @@
         }
       ]
     },{
-      "id": "system_api_home_content",
+      "id": "system_ui_api_home_content",
       "elements": [
         {
           "type": "system.title",
@@ -102,56 +109,45 @@
           "type": "system.text",
           "lines": [
             { "text": "使用方式：" },
-            { "text": "第一：需要一个全局配置文件 “combine_web.json” 放在 resource 根目录下，配置项详见 “全局配置” 菜单" },
+            { "text": "第一：需要一个全局配置文件 “combine.json” 放在 resource 根目录下，配置项详见 “全局配置” 菜单" },
             { "text": "第二：需要至少一个流程配置文件，格式如下" },
             { "text": "{" },
-            { "text": "　\"constant\": {...},　　　　　　　　　　【表示常量定义，可以自由的定义常量，并能够在流程配置中使用 $c.xxx 来获取它们】" },
-            { "text": "　\"init\": [{...}, ...],　　　　　　　　　　【表示组件的初始化配置，配置项详见对应组件（每个组件配置项不同）】" },
-            { "text": "　\"blocks\": [{...}, ...],　　　　　　　　　　【表示逻辑块配置，此处配置的逻辑块，可以被流程配置引用，主要用途：使需要被多次使用的组件可以复用】" },
-            { "text": "　\"before\": [{　　　　　　　　　　【表示流程前置逻辑，在流程（接口）逻辑之前执行，也可以作为拦截器/过滤器使用】" },
-            { "text": "　　\"id\": \"\",　　　　　　　　　　【选填，表示前置逻辑的ID】" },
-            { "text": "　　\"order\": 1,　　　　　　　　　　【选填，表示执行的优先级，数字越小越先执行】" },
-            { "text": "　　\"failStop\": true,　　　　　　　　　　【选填，表示执行失败是否中止（不再执行后面的所有前置/后置和流程的逻辑），默认为 true】" },
-            { "text": "　　\"flow\": [{...}, ...],　　　　　　　　　　【必填，表示要执行的流程配置】" },
-            { "text": "　　\"includes\": [\"user/save\", \"user/*\", \"*/save\", \"*/*\"],　　　　　　　　　　【选填，配置要执行该前置逻辑的流程集合，可使用 * 通配符" },
-            { "text": "　　\"excludes\": [\"user/save\"]　　　　　　　　　　【选填，配置不需要执行该前置逻辑的流程集合，可使用 * 通配符，注意 includes 和 excludes 仅可选择一个来配置" },
-            { "text": "　}, ...]," },
-            { "text": "　\"after\": [{　　　　　　　　　　【表示流程后置逻辑，在流程（接口）逻辑之后执行，注意后置逻辑的执行结果不会输出" },
-            { "text": "　　....　　　　　　　　　　【同 before 相同" },
-            { "text": "　}, ...]," },
-            { "text": "　\"flows\": [{...}, ...]　　　　　　　　　　【表示逻辑块配置，此处配置的逻辑块，可以被流程配置引用，主要用途：使需要被多次使用的组件可以复用】" },
-            { "text": "　　\"user/save\": [　　　　　　　　　　【表示每个流程（接口）的配置，表示接口路径（最多支持两级）" },
-            { "text": "　　　{...}, ...　　　　　　　　　　【该数组表示组件的集合，组件会按照定义的顺序执行，配置项详见对应组件（每个组件配置项不同）】" },
-            { "text": "　　]" },
+            { "text": "　\"constant\": {...},　　　　　　　　　　【表示常量定义，可以自由的定义常量，并能够在UI元素配置中使用 $c.xxx 来获取它们】" },
+            { "text": "　\"dataLoads\": [{...}, ...],　　　　　　　　　　【表示UI元素的数据加载配置，配置项详见数据加载配置】" },
+            { "text": "　\"templates\": [{...}, ...],　　　　　　　　　　【表示UI元素的模板配置，可以被UI元素配置引用，配置详见对应的UI元素配置】" },
+            { "text": "　\"elements\": [{...}, ...]　　　　　　　　　　【表示UI元素配置，用于 groups 配置中引用，配置详见对应的UI元素配置】" },
+            { "text": "　\"groups\": [　　　　　　　　　　【表示一组UI元素，用于 page 配置中引用】" },
+            { "text": "　　{" },
+            { "text": "　　　\"id\": ...　　　　　　　　　　【一组UI元素的组ID，page 配置中通过该 ID 来引用】" },
+            { "text": "　　　\"elements\": [...]　　　　　　　　　　【组中包含的 UI 元素集合，集合中每一项可以是 elements 中配置的ID，也可以是直接 element UI元素配置】" },
+            { "text": "　　}, ..." },
+            { "text": "　\"pages\": {　　　　　　　　　　【表示每个页面的配置集合" },
+            { "text": "　　\"index\": {...}　　　　　　　　　　【表示每个页面的配置，其中冒号左侧表示页面名称/路径，右侧为该页面的详细配置，详见页面配置" },
+            { "text": "　　}" },
             { "text": "<hr>" },
-            { "text": "注意：同一个ID的组件只会加载一次（配置以第一个为准），所以当一个组件需要反复使用时可以写成如下" },
-            { "text": "\"flows\": {" },
-            { "text": "　\"user/save\":[" },
-            { "text": "　　{ id: \"user_save_1\", type: \"access.mysql\", .... }" },
-            { "text": "　]," },
-            { "text": "　\"list\":[" },
-            { "text": "　　{ id: \"user_save_1\" }　　　　　　　　　　【相当于沿用上面 id 为 user_save_1 组件的执行逻辑配置，即使在这里加了其他配置项也不会生效】" },
-            { "text": "　]" },
-            { "text": "}" },
-            { "text": "此功能可以理解为，同一个组件的功能需要在多个流程中使用时，只需要第一次将该组件配置定义好，其他地方引用这个ID即可（如：上面的 { id: \"user_save_1\" }）" },
+            { "text": "注意：同一个ID的组件只会加载一次（配置以第一个为准），切勿使用相同的ID" },
             { "text": "<hr>" },
-            { "text": "全局变量 $r 用于获取其它组件的结果" },
-            { "text": "如：$r.user_query.[0].id 表示获取ID为“user_query”组件的执行结果的第一行数据的id字段的值" },
+            { "text": "全局变量 $e 用于获取其它UI元素的结果" },
+            { "text": "如：$r.user_table.0.id 表示获取ID为“user_table”UI元素数据的第一行数据的 id 属性的值" },
             { "text": "　" },
             { "text": "全局变量 $c 用于获取 constant 中配置的常量" },
             { "text": "如：$c.user.name 表示获取常量配置中 user 对象的 name 属性的值" },
             { "text": "　" },
-            { "text": "全局变量 $v 用于获取和设置流程中变量，该变量的内容可以在当前流程中的各个组件中使用" },
-            { "text": "如：$v.index 表示获取流程中 index 属性的值" },
+            { "text": "全局变量 $ld 用于获取已被缓存的 dataLoads 加载数据，注意：数据加载配置必须配置为可被缓存才可获取" },
+            { "text": "如：$ld.curr_user.name 表示获取 ID 为“curr_user”的数据加载 name 属性的值" },
             { "text": "　" },
-            { "text": "全局变量 $h 用于获取请求头西南西，该变量的内容可以在当前流程中的各个组件中使用" },
-            { "text": "如：$h.requestId 表示获取流程中 requestId 属性的值" },
+            { "text": "全局变量 $ls 用于浏览器的 localStorage 配置，注意：数据加载配置必须缓存到 localStorage 中才可获取" },
+            { "text": "如：$ls.user_token 表示获取 localStorage 中 user_token 属性的值" },
+            { "text": "　" },
+            { "text": "#{$this} 或 #{} 表示直接获取UI元素的当前的数据对象" },
+            { "text": "如：在 input 元素配置中使用 #{$this} 或 #{} 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据" },
+            { "text": "如：在 input 元素配置中使用 #{name} 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据的 name 属性值" },
             { "text": "<hr>" }
           ]
         }
       ]
     },{
-      "id": "system_api_config_content",
+      "id": "system_ui_api_page_config_content",
       "elements": [
         {
           "type": "system.title",
@@ -162,7 +158,7 @@
         },
         {
           "type": "system.text",
-          "dataLoadId": "system_config_load",
+          "dataLoadId": "system_ui_page_config_load",
           "lines": [
             { "text": "<b>#{key} - #{name}</b>" },
             { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue}" },
@@ -173,7 +169,29 @@
         }
       ]
     },{
-      "id": "system_api_content",
+      "id": "system_ui_api_config_content",
+      "elements": [
+        {
+          "type": "system.title",
+          "text": "【#{name}】",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "system.text",
+          "dataLoadId": "system_ui_config_load",
+          "lines": [
+            { "text": "<b>#{key} - #{name}</b>" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue}" },
+            { "title": "描述：", "text": "#{desc}" },
+            { "text": "<hr>" }
+          ],
+          "children": ["#{children}"]
+        }
+      ]
+    },{
+      "id": "system_ui_api_content",
       "elements": [
         {
           "type": "system.content",
@@ -181,13 +199,13 @@
           "text": ["#{desc}"]
         },{
           "type": "system.title",
-          "text": "1. 组件初始化配置",
+          "text": "1. UI元素配置",
           "level": 3,
           "top": true,
           "bottom": true
         },{
           "type": "system.text",
-          "dataField": "initConfig",
+          "dataField": "configs",
           "lines": [
             { "text": "<b>#{key} - #{name}</b>" },
             { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue}" },
@@ -206,7 +224,7 @@
           "bottom": true
         },{
           "type": "system.text",
-          "dataField": "logicConfig",
+          "dataField": "templateConfigs",
           "lines": [
             { "text": "<b>#{key} - #{name}</b>" },
             { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue}" },
@@ -257,14 +275,15 @@
     }
   ],
   "pages": {
-    "api": {
+    "ui-api": {
       "metas": [],
       "links": [],
-      "groupIds": ["system_api_nav", "system_api_tree", "system_api_home_tree", "system_api_home_content", "system_api_config_content", "system_api_content"],
+      "groupIds": ["system_ui_api_nav", "system_ui_api_tree", "system_ui_api_home_tree", "system_ui_api_home_content",
+            "system_ui_api_page_config_content", "system_ui_api_config_content", "system_ui_api_content"],
       "modules": [
         {
           "key": "header",
-          "defaultShowGroupId": "system_api_nav"
+          "defaultShowGroupId": "system_ui_api_nav"
         },{
           "key": "left",
           "id": "element_left",

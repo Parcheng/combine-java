@@ -12,7 +12,7 @@ import java.util.List;
  * 配置类
  */
 @CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "自定义触发配置", desc = "当 TYPE = CUSTOM 时的参数列表")
-public class TriggerCustomEntity extends TriggerConfig {
+public class TriggerCustomConfig extends TriggerConfig {
 
     @Field(key = "functionName", name = "自定义函数名", type = FieldTypeEnum.TEXT, isRequired = true)
     private String functionName;

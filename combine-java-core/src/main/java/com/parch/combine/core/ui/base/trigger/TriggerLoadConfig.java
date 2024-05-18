@@ -11,7 +11,7 @@ import java.util.List;
  * 配置类
  */
 @CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "加载元素触发配置", desc = "当 TYPE = LOAD 时的参数列表")
-public class TriggerLoadEntity extends TriggerConfig {
+public class TriggerLoadConfig extends TriggerConfig {
 
     @Field(key = "groupId", name = "元素组ID", type = FieldTypeEnum.TEXT, isRequired = true)
     private String groupId;

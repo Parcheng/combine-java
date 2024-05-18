@@ -82,13 +82,13 @@ public class TriggerManager {
             case CALL_FUNC:
                 return TypeConversionUtil.parseJava(configMap, TriggerCallFuncConfig.class);
             case LOAD:
-                return TypeConversionUtil.parseJava(configMap, TriggerLoadEntity.class);
+                return TypeConversionUtil.parseJava(configMap, TriggerLoadConfig.class);
             case LOAD_DATA:
-                return TypeConversionUtil.parseJava(configMap, TriggerLoadDataEntity.class);
+                return TypeConversionUtil.parseJava(configMap, TriggerLoadDataConfig.class);
             case SKIP:
-                return TypeConversionUtil.parseJava(configMap, TriggerSkipEntity.class);
+                return TypeConversionUtil.parseJava(configMap, TriggerSkipConfig.class);
             case CUSTOM:
-                return TypeConversionUtil.parseJava(configMap, TriggerCustomEntity.class);
+                return TypeConversionUtil.parseJava(configMap, TriggerCustomConfig.class);
             default:
                 PrintUtil.printError("【ui】【trigger】【" + id + "】【" + type + "】类型不存在");
                 return null;

@@ -11,7 +11,7 @@ import java.util.List;
  * 配置类
  */
 @CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "跳转其他页面触发配置", desc = "当 TYPE = SKIP 时的参数列表")
-public class TriggerSkipEntity extends TriggerConfig {
+public class TriggerSkipConfig extends TriggerConfig {
 
     @Field(key = "url", name = "要跳转的URL", type = FieldTypeEnum.TEXT, isRequired = true)
     private String url;

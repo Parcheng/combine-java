@@ -32,7 +32,7 @@ public class HtmlConfig implements IInit, ICheck {
     @Field(key ="groupIds" , name = "页面元素组ID集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> groupIds;
 
-    @Field(key = "configs", name = "页面元素配置集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @Field(key = "modules", name = "页面元素配置集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
     private List<HtmlElementConfig> modules;
 
     @Override

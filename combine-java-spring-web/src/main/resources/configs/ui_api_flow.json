@@ -2,14 +2,19 @@
   "constant": {},
   "init": [],
   "flows": {
-    "settings/list": [
+    "ui-config/get": [
       {
-        "type": "system.doc.components"
+        "type": "web.doc.config"
       }
     ],
-    "config/get": [
+    "ui-page/get": [
       {
-        "type": "system.doc.config"
+        "type": "web.doc.page"
+      }
+    ],
+    "ui-elements/list": [
+      {
+        "type": "web.doc.elements"
       }
     ]
   }
