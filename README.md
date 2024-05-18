@@ -81,7 +81,7 @@ public class CombineTestController {
     private CombineJavaService combineWebService;
 
     @Autowired
-    private CombineJavaPageService combineJavaUIService;
+    private CombineJavaPageService combineJavaPageService;
 
     @PostMapping("flow/{domain}/{function}")
     public DataResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
@@ -95,7 +95,7 @@ public class CombineTestController {
 
     @GetMapping("page/{pageKey}")
     public String page(@PathVariable(name = "pageKey") String pageKey) {
-        return combineJavaUIService.getPage(pageKey);
+        return combineJavaPageService.getPage(pageKey);
     }
 }
 ```
