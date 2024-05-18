@@ -1,12 +1,19 @@
 # 介绍
-combine-java 是一个轻量级低代码框架，在框架中一切的功能皆为组件，用户可以自由将各种组件组合在一起进行编排，实现自己的业务功能。<br>
-JDK版本：17<br>
+**combine-java** 是一个轻量级低代码框架，在框架中一切的功能皆为组件，用户可以自由将各种组件组合在一起进行编排，实现自己的业务功能。<br>
+**JDK版本：17**<br>
 <br>
-工程包含四个模块：<br>
-combine-java-core：核心包，所有的核心功能都在这里<br>
-combine-java-components：系统自带的组件包，封装了一些公共组件<br>
-combine-java-ui-elements：系统自带的UI元素组件包，封装了一些公共UI元素组件<br>
-combine-java-spring-web：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程也可以直接启动，启动后可访问 http://127.0.0.1:8888/combine/page/api 和 http://127.0.0.1:8888/combine//page/ui-api 查看API<br>
+
+**工程包含四个模块：**<br>
+**combine-java-core**：核心包，所有的核心功能都在这里<br>
+**combine-java-components**：系统自带的组件包，封装了一些公共组件<br>
+**combine-java-ui-elements**：系统自带的UI元素组件包，封装了一些公共UI元素组件<br>
+**combine-java-spring-web**：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程可以直接启动，仅提供了 API 相关的页面和接口<br>
+<br>
+
+**本地启动并访问 API：**<br>
+启动 combine-java-spring-web 工程<br>
+组件的API地址：http://127.0.0.1:8888/combine/page/api<br>
+UI的API地址：http://127.0.0.1:8888/combine//page/ui-api<br>
 <br>
 
 ### 流程（FLOW）
@@ -217,6 +224,7 @@ public class My1InitConfig extends InitConfig {
     ... 自定义配置项和GET/SET方法 ...
 }
 ```
+<br>
 
 # 自定义UI元素组件
 通过 SPI 加载<br>
