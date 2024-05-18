@@ -43,6 +43,14 @@ public class TableElementConfig extends ElementConfig<TableElementTemplateConfig
         super(SystemElementPathTool.buildJsPath("table"), SystemElementPathTool.buildTemplatePath("table"), TableElementTemplateConfig.class);
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     public List<String> getFieldNames() {
         return fieldNames;
     }

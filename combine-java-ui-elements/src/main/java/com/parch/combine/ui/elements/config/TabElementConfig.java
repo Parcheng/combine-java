@@ -24,6 +24,14 @@ public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
         super(SystemElementPathTool.buildJsPath("tab"), SystemElementPathTool.buildTemplatePath("tab"), TabElementTemplateConfig.class);
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     @SubConfig
     public static class TabItemSettings {
 

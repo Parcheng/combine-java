@@ -17,7 +17,7 @@ $combineWebUI.element.register("SYSTEM.BUTTON", (function () {
         for (let i = 0; i < instance.items.length; i++) {
             const item = instance.items[i];
 
-            const itemTemp = config[item.type];
+            const itemTemp = instance.template[item.type];
             if (itemTemp) {
                 const text = dataFns.parseVariable(item.text, buildData);
                 const itemConfig = configFns.initElement(instance.template.button, itemTemp, buildData);

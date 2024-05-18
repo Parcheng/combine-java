@@ -2,6 +2,7 @@ package com.parch.combine.core.ui.settings.builder;
 
 import com.parch.combine.core.common.settings.annotations.Invalid;
 import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
+import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.core.ui.settings.annotations.PageElementDesc;
@@ -32,14 +33,9 @@ public class PageElementSettingBuilder {
             setting.getDesc().addAll(Arrays.asList(descAnnotation.value()));
         }
 
-//        // 逻辑配置
-//        componentSetting.setLogicConfig(PropertySettingBuilder.build(scope, componentAnnotation.logicConfigClass()));
-//
-//        // 初始化配置
-//        Class<? extends InitConfig> initConfigClass = componentAnnotation.initConfigClass();
-//        if (initConfigClass.getAnnotation(Invalid.class) == null) {
-//            componentSetting.setInitConfig(PropertySettingBuilder.build(scope, initConfigClass));
-//        }
+        // 元素配置和模板配置
+        setting.setConfigs(PropertySettingBuilder.build(scope, pageElementClass));
+        setting.setTemplateConfigs(PropertySettingBuilder.build(scope, annotation.templateClass()));
 
         // 公共对象
         setting.setCommonObjects(CommonObjectSettingBuilder.get(scope));

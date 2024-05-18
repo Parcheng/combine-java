@@ -8,6 +8,8 @@ import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.common.SubElementConfig;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "list", name = "列表元素", templateClass = AudioElementTemplateConfig.class)
 public class ListElementConfig extends ElementConfig<ListElementTemplateConfig> {
 
@@ -20,6 +22,14 @@ public class ListElementConfig extends ElementConfig<ListElementTemplateConfig> 
 
     public ListElementConfig() {
         super(SystemElementPathTool.buildJsPath("list"), SystemElementPathTool.buildTemplatePath("list"), ListElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public SubElementConfig getContent() {

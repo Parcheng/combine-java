@@ -25,10 +25,10 @@ public class ElementClassHandler {
     }
 
     public synchronized static void register(String key, Class<? extends ElementConfig<?>> elementConfigClass) {
-        ELEMENT_CLASS_MAP.put(key, elementConfigClass);
+        ELEMENT_CLASS_MAP.put(key.toLowerCase(), elementConfigClass);
     }
 
     public static Class<? extends ElementConfig<?>> get(String key) {
-        return ELEMENT_CLASS_MAP.get(key);
+        return ELEMENT_CLASS_MAP.get(key.toLowerCase());
     }
 }

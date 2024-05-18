@@ -156,7 +156,7 @@ class FlowAspectManager {
             if (CheckEmptyUtil.isNotEmpty(includes)) {
                 for (String[] include : includes) {
                     if (match(flowKeyArr, include)) {
-                        return false;
+                        return true;
                     }
                 }
 
@@ -177,8 +177,10 @@ class FlowAspectManager {
         }
 
         private boolean match(String[] flowArr, String[] config) {
-            boolean domainPass = (SymbolConstant.DOLLAR_SIGN.equals(config[0]) && flowArr[0].startsWith(SymbolConstant.DOLLAR_SIGN))
-                    || SymbolConstant.ASTERISK.equals(config[0]) || flowArr[0].equals(config[0]);
+            boolean domainPass =
+                    (config[0].length() == 1 && SymbolConstant.DOLLAR_SIGN.equals(config[0]) && flowArr[0].startsWith(SymbolConstant.DOLLAR_SIGN))
+                    || SymbolConstant.ASTERISK.equals(config[0])
+                    || flowArr[0].equals(config[0]);
             boolean functionPass = SymbolConstant.ASTERISK.equals(config[1]) || flowArr[1].equals(config[1]);
             return domainPass && functionPass;
         }

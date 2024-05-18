@@ -11,6 +11,8 @@ import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.common.SubElementConfig;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "window", name = "弹窗元素", templateClass = WindowElementTemplateConfig.class)
 public class WindowElementConfig extends ElementConfig<WindowElementTemplateConfig> {
 
@@ -28,6 +30,14 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
 
     public WindowElementConfig() {
         super(SystemElementPathTool.buildJsPath("window"), SystemElementPathTool.buildTemplatePath("window"), WindowElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public Object getCloseTriggers() {

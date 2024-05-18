@@ -6,6 +6,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "audio", name = "音频元素", templateClass = AudioElementTemplateConfig.class)
 public class AudioElementConfig extends ElementConfig<AudioElementTemplateConfig> {
 
@@ -17,6 +19,14 @@ public class AudioElementConfig extends ElementConfig<AudioElementTemplateConfig
 
     public AudioElementConfig() {
         super(SystemElementPathTool.buildJsPath("audio"), SystemElementPathTool.buildTemplatePath("audio"), AudioElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getSrc() {

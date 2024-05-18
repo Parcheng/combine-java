@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class DefaultCombineController {
 
     @Autowired
@@ -21,17 +21,17 @@ public class DefaultCombineController {
     @Autowired
     private DefaultCombineJavaUIService defaultCombineJavaUIService;
 
-    @PostMapping("/{domain}/{function}")
+    @PostMapping("flow/{domain}/{function}")
     public DataResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
         return defaultCombineWebService.call(params, domain, function, request, response);
     }
 
-    @PostMapping("/file/{domain}/{function}")
+    @PostMapping("file-flow/{domain}/{function}")
     public DataResult uploadAndCall(@RequestParam("params") String paramJson, @RequestParam("file") MultipartFile file, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return defaultCombineWebService.uploadAndCall(paramJson, file, domain, function, request, response);
     }
 
-    @GetMapping("/page/{pageKey}")
+    @GetMapping("page/{pageKey}")
     public String page(@PathVariable(name = "pageKey") String pageKey) {
         return defaultCombineJavaUIService.getPage(pageKey);
     }

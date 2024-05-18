@@ -21,10 +21,10 @@ $combineWebUI.element.register("SYSTEM.RADIO", (function () {
         }
 
         const isDisabled = instance.disabled && instance.disabled == true;
-        return buildRadio(instance, layoutConfig, isDisabled, settings, buildData);
+        return buildRadio(instance, layoutConfig, isDisabled, buildData);
     }
 
-    function buildRadio(instance, layoutConfig, isDisabled, settings, buildData) {
+    function buildRadio(instance, layoutConfig, isDisabled, buildData) {
         const body = [];
         if (!instance.option) {
             return body;

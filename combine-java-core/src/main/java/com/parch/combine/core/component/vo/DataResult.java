@@ -22,6 +22,8 @@ public class DataResult {
 
     private String errMsg;
 
+    private String dataFlag;
+
     private Object data;
 
     private DataResult() {
@@ -88,6 +90,14 @@ public class DataResult {
 
     public void setSuccess(Boolean success) {
         this.success = success;
+    }
+
+    public String getDataFlag() {
+        return dataFlag;
+    }
+
+    public void setDataFlag(String dataFlag) {
+        this.dataFlag = dataFlag;
     }
 
     /**
@@ -195,6 +205,24 @@ public class DataResult {
         result.setSuccess(false);
         result.setErrMsg(msg);
         result.setShowMsg(showMsg);
+        return result;
+    }
+
+    /**
+     * 构建
+     *
+     * @param source 来源数据
+     * @return 结果对象
+     */
+    public static DataResult build(DataResult source) {
+        DataResult result = build();
+        result.setSuccess(source.getSuccess());
+        result.setDownload(source.isDownload());
+        result.setStop(source.isStop());
+        result.setShowMsg(source.getShowMsg());
+        result.setErrMsg(source.getErrMsg());
+        result.setDataFlag(source.getDataFlag());
+        result.setData(source.getData());
         return result;
     }
 

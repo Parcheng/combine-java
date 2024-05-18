@@ -1,5 +1,5 @@
 {
-  "configs": ["configs/api_page.json"],
+  "configs": ["configs/api_page.json", "configs/ui_api_page.json"],
   "baseUrl": "http://127.0.0.1:8888/combine",
   "systemUrl": "http://127.0.0.1:8888/combine"
 }

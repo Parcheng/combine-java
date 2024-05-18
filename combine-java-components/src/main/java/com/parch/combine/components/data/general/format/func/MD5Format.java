@@ -26,12 +26,11 @@ public class MD5Format implements ICustomFormat {
 
         // 数据转为JSON格式
         String data = JsonUtil.serialize(sourceValue);
-
-        // 验证数据类型
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] md5 = md.digest(data.getBytes(StandardCharsets.UTF_8));
-
         try {
+            // 验证数据类型
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] md5 = md.digest(data.getBytes(StandardCharsets.UTF_8));
+
             StringBuilder sb = new StringBuilder();
             for (byte b : md5) {
                 sb.append(String.format("%02x", b));

@@ -48,8 +48,8 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
 
                 // 初始化逻辑中使用的组件
                 if (CheckEmptyUtil.isNotEmpty(item.getComponents())) {
-                    List<String> initErrorMsgs = SubComponentTool.init(manager, item.getComponents());
-                    for (String initErrorMsg : initErrorMsgs) {
+                    List<String> initErrors = SubComponentTool.init(manager, item.getComponents());
+                    for (String initErrorMsg : initErrors) {
                         result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + initErrorMsg));
                     }
                 }

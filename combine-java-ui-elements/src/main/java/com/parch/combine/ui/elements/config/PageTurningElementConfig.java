@@ -9,6 +9,8 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "page_turning", name = "翻页元素", templateClass = AudioElementTemplateConfig.class)
 public class PageTurningElementConfig extends ElementConfig<PageTurningElementTemplateConfig> {
 
@@ -25,6 +27,14 @@ public class PageTurningElementConfig extends ElementConfig<PageTurningElementTe
 
     public PageTurningElementConfig() {
         super(SystemElementPathTool.buildJsPath("page_turning"), SystemElementPathTool.buildTemplatePath("page_turning"), PageTurningElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getCurrPage() {

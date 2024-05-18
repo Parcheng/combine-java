@@ -11,15 +11,15 @@ $combineWebUI.element.register("SYSTEM.SELECT", (function () {
         return buildSelect(instance.template, instance, buildData);
     }
 
-    function buildSelect(template, settings, buildData) {
+    function buildSelect(template, instance, buildData) {
         const selectBody = [];
 
-        const key = dataFns.parseVariableText(settings.key, buildData);
-        const value = dataFns.parseVariable(settings.defaultValue, buildData);
-        const optionTextField = settings.option.text;
-        const optionValueField = settings.option.value;
+        const key = dataFns.parseVariableText(instance.key, buildData);
+        const value = dataFns.parseVariable(instance.defaultValue, buildData);
+        const optionTextField = instance.option.text;
+        const optionValueField = instance.option.value;
 
-        let optionData = dataFns.parseVariable(settings.option.data, buildData);
+        let optionData = dataFns.parseVariable(instance.option.data, buildData);
         optionData = optionData instanceof Array ? optionData : [optionData];
 
         let checkedText;
@@ -45,7 +45,7 @@ $combineWebUI.element.register("SYSTEM.SELECT", (function () {
         }
 
         if (!checkedText) {
-            checkedText = dataFns.parseVariable(settings.text ? settings.text : settings.defaultText, buildData);
+            checkedText = dataFns.parseVariable(instance.text ? instance.text : instance.defaultText, buildData);
         }
         const selectValueDom = domFns.build(template.selectValue, buildSelectValueText(template, checkedText));
         if (value) {
@@ -99,7 +99,7 @@ $combineWebUI.element.register("SYSTEM.SELECT", (function () {
                         text = optionDom.children[0].textContent;
                     }
                     valueDom.setAttribute("value", value);
-                    domFns.setBody(valueDom, buildSelectValueText(instance, text));
+                    domFns.setBody(valueDom, buildSelectValueText(instance.template, text));
                 }
             }
         }

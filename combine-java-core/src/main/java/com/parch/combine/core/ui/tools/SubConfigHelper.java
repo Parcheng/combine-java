@@ -56,9 +56,10 @@ public class SubConfigHelper {
                         if (item instanceof Map) {
                             String id = manager.getPageElement().load((Map<String, Object>) item);
                             result.getElementIds().add(id);
-                            field.set(config, id);
+                            elementIds.add(id);
                         } else {
                             result.getElementIds().add(item == null ? null : item.toString());
+                            elementIds.add(item == null ? null : item.toString());
                         }
                     }
                     field.set(config, elementIds);

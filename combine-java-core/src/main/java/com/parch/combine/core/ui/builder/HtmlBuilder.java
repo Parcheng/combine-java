@@ -79,6 +79,9 @@ public class HtmlBuilder {
         List<HtmlElementConfig> models = config.getModules();
         if (CheckEmptyUtil.isNotEmpty(models)) {
             for (HtmlElementConfig model : models) {
+                if (CheckEmptyUtil.isEmpty(model.getKey())) {
+                    continue;
+                }
                 HtmlElementConfig tempDomConfig = templateModelMap.get(model.getKey());
                 body.add(HtmlBuildTool.build(model, tempDomConfig, false));
             }
@@ -119,9 +122,13 @@ public class HtmlBuilder {
         ElementGroupBuilder.ElementGroupResult groupResult = groupBuilder.build();
         ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
 
-        // 添加框架核心JS和页面元素JS
+        // 添加框架核心
         String baseJsPath = context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_JS_NAME;
         scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseJsPath)));
+        String baseToolsJsPath = context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_TOOLS_JS_NAME;
+        scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseToolsJsPath)));
+
+        // 添加框架中使用的页面元素JS
         for (String elementScript : groupResult.elementScripts) {
             scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(elementScript)));
         }
@@ -134,7 +141,7 @@ public class HtmlBuilder {
         String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
         scriptCodeList.add("\n$combineWebUI.constant.register(" + contentJson + ");");
         // 元素模板注册
-        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.template.register(\"" + k + "\"," + v + ");"));
+        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.instanceTemp.register(\"" + k + "\"," + v + ");"));
         // 数据加载配置注册
         groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.loadData.register(\"" + k + "\"," + v + ", " + groupResult.dataLoadToElementIdMap.get(k) + ");"));
         // trigger事件注册
@@ -174,6 +181,8 @@ public class HtmlBuilder {
             } catch (Exception e) {
                 PrintTool.printInit("【PAGE-TEMPLATE】【" + config.getTempPath() + "】【加载模板失败】");
             }
+        } else {
+            templateConfig = TEMP_MAP.get(config.getTempPath());
         }
     }
 }

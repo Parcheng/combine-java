@@ -37,11 +37,11 @@ $combineWebUI.element.register("SYSTEM.WINDOW", (function () {
     function refreshBody(id, instance, data) {
         instance = init(instance, data);
 
-        if (instance.template.settings?.body?.elements) {
+        if (instance.body?.elements) {
             for (let i = 0; i < instance.body.elements?.length; i++) {
-                instanceFns.refresh(instance.body.elements[i].id, data);``
+                instanceFns.refresh(instance.body.elements[i], data);``
             }
-        } else if (instance.template.settings?.body?.text) {
+        } else if (instance.body?.text) {
             let externalDom = document.getElementById(id);
             if (externalDom) {
                 const text = dataFns.parseVariableText(instance.body.text, data);

@@ -11,6 +11,8 @@ import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.common.OptionElementConfig;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "checkbox", name = "多选框元素", templateClass = CheckboxElementTemplateConfig.class)
 public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplateConfig> {
 
@@ -36,6 +38,14 @@ public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplate
 
     public CheckboxElementConfig() {
         super(SystemElementPathTool.buildJsPath("checkbox"), SystemElementPathTool.buildTemplatePath("checkbox"), CheckboxElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getKey() {

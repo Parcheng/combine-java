@@ -6,6 +6,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "title", name = "标题元素", templateClass = TitleElementTemplateConfig.class)
 public class TitleElementConfig extends ElementConfig<TitleElementTemplateConfig> {
 
@@ -23,6 +25,14 @@ public class TitleElementConfig extends ElementConfig<TitleElementTemplateConfig
 
     public TitleElementConfig() {
         super(SystemElementPathTool.buildJsPath("title"), SystemElementPathTool.buildTemplatePath("title"), TitleElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getText() {

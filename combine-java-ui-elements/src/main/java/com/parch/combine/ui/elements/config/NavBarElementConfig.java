@@ -40,6 +40,14 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         super(SystemElementPathTool.buildJsPath("nav_bar"), SystemElementPathTool.buildTemplatePath("nav_bar"), NavBarElementTemplateConfig.class);
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     @SubConfig
     public static class NavData {
 

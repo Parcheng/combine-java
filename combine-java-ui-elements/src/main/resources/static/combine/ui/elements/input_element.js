@@ -1,6 +1,7 @@
 $combineWebUI.element.register("SYSTEM.INPUT", (function () {
     const domFns = $combineWebUI.dom;
     const dataFns = $combineWebUI.data;
+    const toolFns = $combineWebUI.tools;
 
     function init(instance, parentData) {
         return instance;
@@ -13,8 +14,8 @@ $combineWebUI.element.register("SYSTEM.INPUT", (function () {
             body.push(buildAddon(instance, instance.beforeText, buildData));
         }
 
-        const type = instance.type ? instance.type.toLowerCase() : "text";
-        body.push(buildInput(instance, type, settings, buildData));
+        const type = instance.inputType ? instance.inputType.toLowerCase() : "text";
+        body.push(buildInput(instance, type, buildData));
 
         if (instance.afterText) {
             body.push(buildAddon(instance, instance.afterText, buildData));
@@ -24,7 +25,7 @@ $combineWebUI.element.register("SYSTEM.INPUT", (function () {
     }
 
 
-    function buildInput(instance, type, settings, buildData) {
+    function buildInput(instance, type, buildData) {
         const inputDom = domFns.build(instance.template.input, null);
         inputDom.type = type;
 
@@ -48,6 +49,12 @@ $combineWebUI.element.register("SYSTEM.INPUT", (function () {
         return addonDom;
     }
 
+    function hashPassword(password) {
+        const salt = crypto.randomBytes(16).toString('base64'); // 生成盐
+        const hash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512'); // 密码散列
+        return `${salt}$${hash}`; // 返回合并的盐和散列
+    }
+
     return {
         build: function build(instance, data) {
             instance = init(instance, data);
@@ -66,8 +73,11 @@ $combineWebUI.element.register("SYSTEM.INPUT", (function () {
                 for (let i = 0; i < externalDom.children.length; i++) {
                     const inputDom = externalDom.children[i];
                     if (inputDom.tagName == 'INPUT') {
-                        if (inputDom.getAttribute("type") == "file") {
+                        const inputType = inputDom.getAttribute("type");
+                        if (inputType == "file") {
                             return inputDom.files[0];
+                        } else if (inputType == "password"){
+                            return toolFns.md5(inputDom.value);
                         } else {
                             return inputDom.value;
                         }

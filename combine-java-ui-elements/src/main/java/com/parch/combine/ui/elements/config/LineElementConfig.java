@@ -7,6 +7,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "line", name = "分割线元素", templateClass = LineElementTemplateConfig.class)
 public class LineElementConfig extends ElementConfig<LineElementTemplateConfig> {
 
@@ -16,6 +18,14 @@ public class LineElementConfig extends ElementConfig<LineElementTemplateConfig> 
 
     public LineElementConfig() {
         super(SystemElementPathTool.buildJsPath("line"), SystemElementPathTool.buildTemplatePath("line"), LineElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getText() {

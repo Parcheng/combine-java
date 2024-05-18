@@ -7,6 +7,8 @@ import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
+import java.util.List;
+
 @PageElement(key = "tag", name = "标签元素", templateClass = TagElementTemplateConfig.class)
 public class TagElementConfig extends ElementConfig<TagElementTemplateConfig> {
 
@@ -19,6 +21,14 @@ public class TagElementConfig extends ElementConfig<TagElementTemplateConfig> {
 
     public TagElementConfig() {
         super(SystemElementPathTool.buildJsPath("tag"), SystemElementPathTool.buildTemplatePath("tag"), TagElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
     }
 
     public String getTagType() {

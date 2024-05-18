@@ -111,6 +111,13 @@ public class ElementGroupBuilder {
         elementMap.forEach((k, v) -> {
             if (v == null) {
                 result.add("elementId:" + k + "不存在");
+            } else {
+                List<String> errors = v.check();
+                if (CheckEmptyUtil.isNotEmpty(errors)) {
+                    for (String error : errors) {
+                        result.add("elementId:" + k + " > " + error);
+                    }
+                }
             }
         });
 

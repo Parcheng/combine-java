@@ -27,6 +27,14 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
         super(SystemElementPathTool.buildJsPath("from"), SystemElementPathTool.buildTemplatePath("from"), FromElementTemplateConfig.class);
     }
 
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
     @SubConfig
     public static class ItemConfig {
 
