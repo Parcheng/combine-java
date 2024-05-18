@@ -71,7 +71,7 @@ public class CombineJavaPageService extends AbstractCombineJavaUIService {
 ```
 
 <br>编写一个 Controller<br>
-其中 call 方法是常规接口，uploadAndCall 方法是包含文件上次的接口，page 方法是访问页面<br>
+其中 call 方法是常规接口，uploadAndCall 方法是包含文件上传的接口，page 方法是访问页面<br>
 ```$java
 @RestController
 @RequestMapping("/")
