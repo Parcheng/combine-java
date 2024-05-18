@@ -13,7 +13,7 @@
 **本地启动并访问 API：**<br>
 启动 combine-java-spring-web 工程<br>
 组件的API地址：http://127.0.0.1:8888/combine/page/api<br>
-UI的API地址：http://127.0.0.1:8888/combine//page/ui-api<br>
+UI的API地址：http://127.0.0.1:8888/combine/page/ui-api<br>
 <br>
 
 ### 流程（FLOW）
