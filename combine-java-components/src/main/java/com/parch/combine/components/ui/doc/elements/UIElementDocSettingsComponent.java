@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Component(key = "doc.elements", name = "获取UI元素API", logicConfigClass = UIElementDocSettingsLogicConfig.class, initConfigClass = UIElementDocSettingsInitConfig.class)
+@Component(order = 900, key = "doc.elements", name = "获取UI元素API", logicConfigClass = UIElementDocSettingsLogicConfig.class, initConfigClass = UIElementDocSettingsInitConfig.class)
 @ComponentResult(name = "所有UI元素API集合")
 public class UIElementDocSettingsComponent extends AbsComponent<UIElementDocSettingsInitConfig, UIElementDocSettingsLogicConfig> {
 

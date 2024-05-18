@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Component(key = "doc.config", name = "获取UI设置API", logicConfigClass = UIDocConfigLogicConfig.class, initConfigClass = UIDocConfigInitConfig.class)
+@Component(order = 900, key = "doc.config", name = "获取UI设置API", logicConfigClass = UIDocConfigLogicConfig.class, initConfigClass = UIDocConfigInitConfig.class)
 @ComponentResult(name = "UI设置API")
 public class UIDocConfigComponent extends AbsComponent<UIDocConfigInitConfig, UIDocConfigLogicConfig> {
 

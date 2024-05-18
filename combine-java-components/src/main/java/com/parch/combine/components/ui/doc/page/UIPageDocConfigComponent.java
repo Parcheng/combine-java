@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Component(key = "doc.page", name = "获取UI页面配置API", logicConfigClass = UIPageDocConfigLogicConfig.class, initConfigClass = UIPageDocConfigInitConfig.class)
+@Component(order = 900, key = "doc.page", name = "获取UI页面配置API", logicConfigClass = UIPageDocConfigLogicConfig.class, initConfigClass = UIPageDocConfigInitConfig.class)
 @ComponentResult(name = "UI页面配置API")
 public class UIPageDocConfigComponent extends AbsComponent<UIPageDocConfigInitConfig, UIPageDocConfigLogicConfig> {
 
