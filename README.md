@@ -5,8 +5,8 @@ JDK版本：17<br>
 工程包含四个模块：<br>
 combine-java-core：核心包，组件的所有操作都在这里<br>
 combine-java-components：系统自带的组件包，封装了几十个公共组件<br>
-combine-java-test：自动化测试模块<br>
-combine-java-web-starter：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程也可以直接启动，启动后访问 http://127.0.0.1:8888/combine/api.html 可查看API<br>
+combine-java-ui-elements：自动化测试模块<br>
+combine-java-spring-web：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程也可以直接启动，启动后访问 http://127.0.0.1:8888/combine/api.html 可查看API<br>
 <br>
 组件（component）包含三部分：<br>
 初始化配置：相当于同类型组件的全局配置，如：MySql 执行组件的数据库连接配置就是初始化配置<br>
