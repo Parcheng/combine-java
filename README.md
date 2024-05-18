@@ -45,12 +45,12 @@ UI的API地址：http://127.0.0.1:8888/combine/page/ui-api<br>
 <br>
 
 # 如何使用？
-快送使用，通过 POM 引用 combine-java-spring-web<br>
+通过 POM 引用 combine-java-spring-web<br>
 ```$xml
 <dependency>
     <artifactId>combine-java-web-starter</artifactId>
     <groupId>com.parch.combine</groupId>
-    <version>1.0.0</version>
+    <version>0.6.0</version>
 </dependency>
 ```
 
