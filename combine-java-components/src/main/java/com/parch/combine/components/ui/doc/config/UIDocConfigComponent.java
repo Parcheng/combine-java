@@ -1,4 +1,4 @@
-package com.parch.combine.components.web.doc.page;
+package com.parch.combine.components.ui.doc.config;
 
 import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.common.settings.config.PropertySetting;
@@ -7,29 +7,29 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.core.ui.base.HtmlConfig;
+import com.parch.combine.core.ui.vo.GlobalConfigVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@Component(key = "doc.page", name = "获取UI页面配置API", logicConfigClass = UIPageDocConfigLogicConfig.class, initConfigClass = UIPageDocConfigInitConfig.class)
-@ComponentResult(name = "UI页面配置API")
-public class UIPageDocConfigComponent extends AbsComponent<UIPageDocConfigInitConfig, UIPageDocConfigLogicConfig> {
+@Component(key = "doc.config", name = "获取UI设置API", logicConfigClass = UIDocConfigLogicConfig.class, initConfigClass = UIDocConfigInitConfig.class)
+@ComponentResult(name = "UI设置API")
+public class UIDocConfigComponent extends AbsComponent<UIDocConfigInitConfig, UIDocConfigLogicConfig> {
 
     private List<HashMap> result;
 
     /**
      * 构造器
      */
-    public UIPageDocConfigComponent() {
-        super(UIPageDocConfigInitConfig.class, UIPageDocConfigLogicConfig.class);
+    public UIDocConfigComponent() {
+        super(UIDocConfigInitConfig.class, UIDocConfigLogicConfig.class);
     }
 
 
     @Override
     public List<String> init(){
-        List<PropertySetting> properties = PropertySettingBuilder.build("global", HtmlConfig.class);
+        List<PropertySetting> properties = PropertySettingBuilder.build("global", GlobalConfigVO.class);
         String json = JsonUtil.serialize(properties);
         result = JsonUtil.parseArray(json, HashMap.class);
         return new ArrayList<>();

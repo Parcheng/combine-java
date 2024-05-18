@@ -1,4 +1,4 @@
-package com.parch.combine.components.web.redirect;
+package com.parch.combine.components.ui.redirect;
 
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;

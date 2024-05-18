@@ -1,4 +1,4 @@
-package com.parch.combine.components.web.redirect;
+package com.parch.combine.components.ui.redirect;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;

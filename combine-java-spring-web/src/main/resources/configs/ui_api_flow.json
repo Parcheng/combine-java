@@ -4,17 +4,17 @@
   "flows": {
     "ui-config/get": [
       {
-        "type": "web.doc.config"
+        "type": "ui.doc.config"
       }
     ],
     "ui-page/get": [
       {
-        "type": "web.doc.page"
+        "type": "ui.doc.page"
       }
     ],
     "ui-elements/list": [
       {
-        "type": "web.doc.elements"
+        "type": "ui.doc.elements"
       }
     ]
   }

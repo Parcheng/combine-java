@@ -1,4 +1,4 @@
-package com.parch.combine.components.web.doc.page;
+package com.parch.combine.components.ui.doc.page;
 
 import com.parch.combine.core.component.base.LogicConfig;
 

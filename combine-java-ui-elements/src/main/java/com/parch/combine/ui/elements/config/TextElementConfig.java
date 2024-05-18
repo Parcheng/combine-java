@@ -10,7 +10,7 @@ import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
 import java.util.List;
 
-@PageElement(key = "text", name = "文本元素", templateClass = TextElementTemplateConfig.class)
+@PageElement(key = "text", name = "复杂文本元素", templateClass = TextElementTemplateConfig.class)
 public class TextElementConfig extends ElementConfig<TextElementTemplateConfig> {
 
     @Field(key = "retract", name = "缩进数", type = FieldTypeEnum.NUMBER)
