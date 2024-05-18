@@ -59,6 +59,7 @@ public class CombineJavaService extends AbstractCombineJavaService {
     // ... 可以写一些自定义方法 ...
 }
 
+@Service
 public class CombineJavaPageService extends AbstractCombineJavaUIService {
     public CombineWebService() {
         // 这里传入传入全局配置的JSON文件（配置项可参考API）
