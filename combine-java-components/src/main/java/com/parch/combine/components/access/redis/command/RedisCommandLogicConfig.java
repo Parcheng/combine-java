@@ -46,7 +46,6 @@ public class RedisCommandLogicConfig extends LogicConfig {
 
     @Override
     public void init() {
-        super.init();
         if (this.failStop == null) {
             this.failStop =false;
         }

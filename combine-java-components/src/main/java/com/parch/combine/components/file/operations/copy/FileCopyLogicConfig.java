@@ -16,6 +16,9 @@ public class FileCopyLogicConfig extends LogicConfig {
     @Field(key = "target", name = "写入路径", type = FieldTypeEnum.TEXT, isRequired = true)
     private String target;
 
+    @Override
+    public void init() {}
+
     public String getSource() {
         return source;
     }

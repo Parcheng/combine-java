@@ -13,7 +13,7 @@
 **本地启动并访问 API：**<br>
 启动 combine-java-spring-web 工程<br>
 组件的API地址：http://127.0.0.1:8888/combine/page/api<br>
-UI的API地址：http://127.0.0.1:8888/combine//page/ui-api<br>
+UI的API地址：http://127.0.0.1:8888/combine/page/ui-api<br>
 <br>
 
 ### 流程（FLOW）
@@ -30,7 +30,7 @@ UI的API地址：http://127.0.0.1:8888/combine//page/ui-api<br>
 <br>
 
 ### 页面（PAGE）
-**页面**：每个**页面**都有一个KEY（可以理解为页面路径/名称），并由多个**UI元素组**（UI元素组就是一个）组成<br>
+**页面**：每个**页面**都有一个KEY（可以理解为页面路径/名称），并由多个**UI元素组**组成<br>
 **UI元素组**：每个**元素组**都有一个ID（用于在页面中引用），和一个**UI元素**的集合，用于组装多个**UI元素**组成一个完整的页面模块<br>
 **UI元素**：组成页面的最小配置单元，它由元素配置类、元素模板配置类、元素功能的JS实现文件，元素模板配置Json文件组成
 <br>
@@ -45,12 +45,12 @@ UI的API地址：http://127.0.0.1:8888/combine//page/ui-api<br>
 <br>
 
 # 如何使用？
-快送使用，通过 POM 引用 combine-java-spring-web<br>
+通过 POM 引用 combine-java-spring-web<br>
 ```$xml
 <dependency>
     <artifactId>combine-java-web-starter</artifactId>
     <groupId>com.parch.combine</groupId>
-    <version>1.0.0</version>
+    <version>0.6.0</version>
 </dependency>
 ```
 

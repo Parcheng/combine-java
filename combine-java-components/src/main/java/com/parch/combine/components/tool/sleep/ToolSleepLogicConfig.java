@@ -14,6 +14,9 @@ public class ToolSleepLogicConfig extends LogicConfig {
     @FieldEg(eg = "1000", desc = "表示休眠1000毫秒")
     private Long time;
 
+    @Override
+    public void init() {}
+
     public Long getTime() {
         return time;
     }

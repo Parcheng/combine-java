@@ -1,6 +1,6 @@
-$combineWebUI.element.register("SYSTEM.TEXTAREA", (function () {
-    const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
+$combine.element.register("SYSTEM.TEXTAREA", (function () {
+    const domFns = $combine.dom;
+    const dataFns = $combine.data;
 
     function init(instance, parentData) {
         return instance;

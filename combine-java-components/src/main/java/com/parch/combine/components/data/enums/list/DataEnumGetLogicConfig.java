@@ -12,6 +12,9 @@ public class DataEnumGetLogicConfig extends LogicConfig {
     @Field(key = "key", name = "枚举KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     private String key;
 
+    @Override
+    public void init() {}
+
     public String getKey() {
         return key;
     }

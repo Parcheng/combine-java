@@ -8,4 +8,7 @@ import com.parch.combine.core.component.base.InitConfig;
  */
 @Invalid
 public class UIDocConfigInitConfig extends InitConfig {
+
+    @Override
+    public void init() {}
 }

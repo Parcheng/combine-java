@@ -1,6 +1,7 @@
 package com.parch.combine.components.tool.cache.get;
 
 import com.parch.combine.components.tool.cache.CacheKeyMatchRuleEnum;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
@@ -20,6 +21,16 @@ public class CacheGetLogicConfig extends LogicConfig {
     @Field(key = "keyMatchRule", name = "KEY匹配规则", type = FieldTypeEnum.SELECT, defaultValue = "EXACT")
     @FieldSelect(enumClass = CacheKeyMatchRuleEnum.class)
     private String keyMatchRule;
+
+    @Override
+    public void init() {
+        if (CheckEmptyUtil.isEmpty(this.domain)) {
+            this.domain = "$common";
+        }
+        if (CheckEmptyUtil.isEmpty(this.keyMatchRule)) {
+            this.keyMatchRule = "EXACT";
+        }
+    }
 
     public String getDomain() {
         return domain;

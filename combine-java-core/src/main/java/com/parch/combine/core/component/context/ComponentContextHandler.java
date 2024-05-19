@@ -65,6 +65,15 @@ public class ComponentContextHandler {
      *
      * @return 上下文对象
      */
+    public static void setContext(ComponentContext context) {
+        CACHE.set(context);
+    }
+
+    /**
+     * 获取全局上下文对象
+     *
+     * @return 上下文对象
+     */
     public static ComponentContext getContext() {
         return CACHE.get();
     }

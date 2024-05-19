@@ -1,7 +1,7 @@
-$combineWebUI.element.register("SYSTEM.TEXT", (function () {
-    const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
-    const configFns = $combineWebUI.config;
+$combine.element.register("SYSTEM.TEXT", (function () {
+    const domFns = $combine.dom;
+    const dataFns = $combine.data;
+    const configFns = $combine.config;
 
     const data = {};
 

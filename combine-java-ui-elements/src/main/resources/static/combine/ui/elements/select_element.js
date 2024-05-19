@@ -1,7 +1,7 @@
-$combineWebUI.element.register("SYSTEM.SELECT", (function () {
-    const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
-    const elementFns = $combineWebUI.element;
+$combine.element.register("SYSTEM.SELECT", (function () {
+    const domFns = $combine.dom;
+    const dataFns = $combine.data;
+    const elementFns = $combine.element;
 
     function init(instance, parentData) {
         return instance;

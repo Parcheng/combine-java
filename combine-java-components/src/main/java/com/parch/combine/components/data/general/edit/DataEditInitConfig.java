@@ -8,4 +8,7 @@ import com.parch.combine.core.common.settings.annotations.Invalid;
  */
 @Invalid
 public class DataEditInitConfig extends InitConfig {
+
+    @Override
+    public void init() {}
 }

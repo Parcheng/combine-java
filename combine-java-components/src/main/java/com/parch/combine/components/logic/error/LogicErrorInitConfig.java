@@ -8,4 +8,7 @@ import com.parch.combine.core.common.settings.annotations.Invalid;
  */
 @Invalid
 public class LogicErrorInitConfig extends InitConfig {
+
+    @Override
+    public void init() {}
 }

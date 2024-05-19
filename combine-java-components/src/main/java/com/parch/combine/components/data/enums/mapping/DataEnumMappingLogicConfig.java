@@ -28,6 +28,9 @@ public class DataEnumMappingLogicConfig extends LogicConfig {
     @FieldGroup(index = 2, name = "目标字段名（默认写到源字段中）", type = FieldTypeEnum.TEXT, isRequired = false)
     private List<MappingItem> items = new ArrayList<>();
 
+    @Override
+    public void init() {}
+
     public String getSource() {
         return source;
     }

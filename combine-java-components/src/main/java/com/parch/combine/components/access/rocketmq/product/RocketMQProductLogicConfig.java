@@ -18,7 +18,6 @@ public class RocketMQProductLogicConfig extends RocketMQLogicConfig {
 
     @Override
     public void init() {
-        super.init();
         if (getProducerGroup() == null) {
             setProducerGroup(getId());
         }

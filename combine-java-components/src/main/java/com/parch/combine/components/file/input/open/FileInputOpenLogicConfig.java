@@ -14,6 +14,9 @@ public class FileInputOpenLogicConfig extends LogicConfig {
     @FieldEg(eg = "my/test.txt", desc = "打开项目资源目录下 target/class/files/my/test.txt 文件")
     private String path;
 
+    @Override
+    public void init() {}
+
     public String getPath() {
         return path;
     }

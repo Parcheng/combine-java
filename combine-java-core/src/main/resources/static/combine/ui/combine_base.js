@@ -1,5 +1,6 @@
-$combineWebUI = (function () {
+$combine = (function () {
     const triggersDomId = "$combine-web-triggers";
+    
     const groups = {};
     const constant = {};
     const instances = {};
@@ -13,8 +14,10 @@ $combineWebUI = (function () {
     const loadGlobals = {};
 
     let baseUrl = "";
-    function init(initBaseUrl) {
+    let variableFlag = {};
+    function init(initBaseUrl, initVariableFlag) {
         baseUrl = initBaseUrl;
+        variableFlag = initVariableFlag;
     }
 
     const constantFns = {
@@ -240,7 +243,7 @@ $combineWebUI = (function () {
             return success;
         },
         buildCallFnCode: function (id, name, params) {
-            return "$combineWebUI.instance.call('" + id + "','" + name + "'," + JSON.stringify(params) + ")";
+            return "$combine.instance.call('" + id + "','" + name + "'," + JSON.stringify(params) + ")";
         }
     };
 
@@ -305,43 +308,43 @@ $combineWebUI = (function () {
                 switch (trigger.type) {
                     case "CALL_FLOW":
                         dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.call.flow(curr.url, curr.mode, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
+                            const curr = combine.trigger.parseVariable(trigger, data);
+                            combine.call.flow(curr.url, curr.mode, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
                         });
                         break;
                     case "CALL_URL":
                         dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.call.url(curr.url, curr.mode, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
+                            const curr = combine.trigger.parseVariable(trigger, data);
+                            combine.call.url(curr.url, curr.mode, curr.fromSubmit, curr.params, curr.headers, successFn, failFn, errorFn, curr.localStorageKey);
                         });
                         break;
                     case "CALL_FUNC":
                         dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.instance.call(curr.id, curr.name, curr.params);
+                            const curr = combine.trigger.parseVariable(trigger, data);
+                            combine.instance.call(curr.id, curr.name, curr.params);
                         });
                         break;
                     case "LOAD":
                         dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.group.load(curr.groupId, curr.parentId, curr.params);
+                            const curr = combine.trigger.parseVariable(trigger, data);
+                            combine.group.load(curr.groupId, curr.parentId, curr.params);
                         });
                         break;
                     case "LOAD_DATA":
                         dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.loadData.loads(curr.loadIds, data, failFn);
+                            const curr = combine.trigger.parseVariable(trigger, data);
+                            combine.loadData.loads(curr.loadIds, data, failFn);
                         });
                         break;
                     case "SKIP":
                         dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
-                            combineWebUI.tools.linkTo(curr.url);
+                            const curr = combine.trigger.parseVariable(trigger, data);
+                            combine.tools.linkTo(curr.url);
                         });
                         break;
                     case "CUSTOM":
                         dom.addEventListener(eventKey, function () {
-                            const curr = combineWebUI.trigger.parseVariable(trigger, data);
+                            const curr = combine.trigger.parseVariable(trigger, data);
 
                             let funcCode = curr.functionName + "(";
                             if (curr.functionParams && curr.functionParams.length > 0) {
@@ -470,7 +473,7 @@ $combineWebUI = (function () {
                         const newHeaders = dataFns.parseVariable(config.headers, data);
                         const newParams = dataFns.parseVariable(config.params, data);
                         callFns.flow(config.url, config.mode, false, newParams, newHeaders, function (data) {
-                            combineWebUI.loadData.loadSuccess(loadConfig, data, true);
+                            combine.loadData.loadSuccess(loadConfig, data, true);
                         }, failFn, null, config.localStorageKey);
                     }
                     break;
@@ -479,7 +482,7 @@ $combineWebUI = (function () {
                         const newHeaders = dataFns.parseVariable(config.headers, data);
                         const newParams = dataFns.parseVariable(config.params, data);
                         callFns.url(config.url, config.mode, false, newParams, newHeaders, function (data) {
-                            combineWebUI.loadData.loadSuccess(loadConfig, data, true);
+                            combine.loadData.loadSuccess(loadConfig, data, true);
                         }, failFn, null, config.localStorageKey);
                     }
                     break;
@@ -491,7 +494,7 @@ $combineWebUI = (function () {
                                 if (fileType.toLowerCase() === 'json') {
                                     data = JSON.parse(data);
                                 }
-                                combineWebUI.loadData.loadSuccess(loadConfig, data, true);
+                                combine.loadData.loadSuccess(loadConfig, data, true);
                             });
                     }
                     break;
@@ -881,19 +884,29 @@ $combineWebUI = (function () {
 
             const isSet = variables.length == 1 && text.length == variables[0].length;
             for (let i = 0; i < variables.length; i++) {
-                const variableExpression = variables[i];
-                const variable = variableExpression.substring(2, variableExpression.length - 1);
+                const variableText = variables[i];
+                
+                let variable, variableDefaultValue;
+                const defaultValueFlag = variableText.indexOf(":");
+                if (defaultValueFlag === -1) {
+                    variable = variableText.substring(2, variableText.length - 1);
+                    variableDefaultValue = null;
+                } else {
+                    variable = variableText.substring(2, defaultValueFlag);
+                    variableDefaultValue = variableText.substring(defaultValueFlag + 1, variableText.length - 1);
+                }
 
                 let currData = data;
                 if ("" !== variable && "$this" !== variable) {
                     let variablePath = variable.split(".");
                     currData = this.parseDataAsFlag(variablePath, currData);
-                    for (let i = 0; i < variablePath.length; i++) {
-                        if (currData) {
+                    if (currData) {
+                        for (let i = 0; i < variablePath.length; i++) {
                             currData = currData[variablePath[i]];
-                        } else {
-                            currData = null;
-                            break;
+                            if (currData == undefined || currData == null) {
+                                currData = variableDefaultValue;
+                                break;
+                            }
                         }
                     }
                 }
@@ -907,11 +920,11 @@ $combineWebUI = (function () {
                     if (currData instanceof Array) {
                         const newText = [];
                         for (let ci = 0; ci < currData.length; ci++) {
-                            newText.push(text.replace(variableExpression, currData[ci]));
+                            newText.push(text.replace(variableText, currData[ci]));
                         }
                         text = newText;
                     } else {
-                        text = currData == null ? "" : text.replace(variableExpression, currData);
+                        text = currData == null ? "" : text.replace(variableText, currData);
                     }
                 }
             }
@@ -968,9 +981,9 @@ $combineWebUI = (function () {
             }
 
             const first = variablePath.shift();
-            if (first === "$c") {
+            if (first == variableFlag.canstent) {
                 return constantFns.get();
-            } else if (first === "$e") {
+            } else if (first == variableFlag.element) {
                 const dataResult = instanceFns.getData(variablePath.shift());
                 if (dataResult.success) {
                     return dataResult.data;
@@ -978,9 +991,9 @@ $combineWebUI = (function () {
                     console.error(dataResult.showMsg, dataResult.errorMsg);
                     return null;
                 }
-            } else if (first === "$ld") {
+            } else if (first == variableFlag.dataLoad) {
                 return loadGlobals;
-            } else if (first === "$ls") {
+            } else if (first == variableFlag.localStorage) {
                 const second = variablePath.shift();
                 if (second) {
                     const localData = localStorage.getItem(second);
@@ -994,9 +1007,15 @@ $combineWebUI = (function () {
             return null;
         },
         hasDataFlag: function (variableText) {
-            return variableText === "$c" || variableText === "$e"
-                || variableText === "$ld" || variableText === "$ls";
-        },
+            for (const key in variableFlag) {
+                if (Object.hasOwnProperty.call(variableFlag, key)) {
+                    if (variableText == variableFlag[key]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     };
 
     const callFns = {
@@ -1132,7 +1151,7 @@ $combineWebUI = (function () {
         }
     };
 
-    const combineWebUI = {
+    const combine = {
         init: init,
         call: callFns,
         temp: tempFns,
@@ -1149,5 +1168,5 @@ $combineWebUI = (function () {
         data: dataFns
     };
 
-    return combineWebUI;
+    return combine;
 })();

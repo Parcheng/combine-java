@@ -1,7 +1,7 @@
-$combineWebUI.element.register("SYSTEM.INPUT", (function () {
-    const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
-    const toolFns = $combineWebUI.tools;
+$combine.element.register("SYSTEM.INPUT", (function () {
+    const domFns = $combine.dom;
+    const dataFns = $combine.data;
+    const toolFns = $combine.tools;
 
     function init(instance, parentData) {
         return instance;

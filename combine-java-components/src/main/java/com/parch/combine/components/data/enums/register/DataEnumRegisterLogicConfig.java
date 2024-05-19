@@ -24,6 +24,8 @@ public class DataEnumRegisterLogicConfig extends LogicConfig {
     @FieldGroup(index = 2, name = "枚举项描述", type = FieldTypeEnum.TEXT, isRequired = false)
     private List<EnumCacheHandler.EnumItem> items = new ArrayList<>();
 
+    @Override
+    public void init() {}
 
     public String getKey() {
         return key;

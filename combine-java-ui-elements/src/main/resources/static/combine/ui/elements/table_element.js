@@ -1,7 +1,7 @@
-$combineWebUI.element.register("SYSTEM.TABLE", (function () {
-    const domFns = $combineWebUI.dom;
-    const instanceFns = $combineWebUI.instance;
-    const elementFns = $combineWebUI.element;
+$combine.element.register("SYSTEM.TABLE", (function () {
+    const domFns = $combine.dom;
+    const instanceFns = $combine.instance;
+    const elementFns = $combine.element;
 
     const data = {};
 

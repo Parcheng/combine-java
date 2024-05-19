@@ -9,4 +9,6 @@ import com.parch.combine.core.common.settings.annotations.Invalid;
 @Invalid
 public class FileBuildTableInitConfig extends InitConfig {
 
+    @Override
+    public void init() {}
 }

@@ -18,6 +18,9 @@ public class LogicErrorLogicConfig extends LogicConfig {
     @FieldObject(type = LogicErrorItem.class)
     private List<LogicErrorItem> items;
 
+    @Override
+    public void init() {}
+
     /**
      * 逻辑判断配置项
      */

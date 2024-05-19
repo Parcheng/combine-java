@@ -9,6 +9,9 @@ public class RocketMQInitConfig extends InitConfig {
     @Field(key = "service", name = "服务地址", type = FieldTypeEnum.TEXT, isRequired = true)
     private String service;
 
+    @Override
+    public void init() {}
+
     public String getService() {
         return service;
     }

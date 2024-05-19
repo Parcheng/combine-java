@@ -18,6 +18,9 @@ public class LogicJudgmentLogicConfig extends LogicConfig {
     @FieldObject(type = LogicJudgmentItem.class)
     private List<LogicJudgmentItem> items;
 
+    @Override
+    public void init() {}
+
     /**
      * 逻辑判断配置项
      */

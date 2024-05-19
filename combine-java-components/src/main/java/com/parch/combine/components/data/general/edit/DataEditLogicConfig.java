@@ -37,6 +37,9 @@ public class DataEditLogicConfig extends LogicConfig {
     @FieldEg(eg = "data REMOVE_ALL flag #{$v.list} #{$v.data}", desc = "删除参数中 data 结构对象 flag 字段，及流程中变量的 list 集合对应的所有字段，及流程中变量的 data 结构对象中的所有字段")
     private List<DataEditItem> items = new ArrayList<>();
 
+    @Override
+    public void init() {}
+
     public List<DataEditItem> getItems() {
         return items;
     }

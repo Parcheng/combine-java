@@ -23,7 +23,6 @@ public class DataTableToTextLogicConfig extends LogicConfig {
 
     @Override
     public void init() {
-        super.init();
         if (CheckEmptyUtil.isEmpty(getSeparator())) {
             setSeparator("|");
         }

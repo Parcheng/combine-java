@@ -1,16 +1,18 @@
 package com.parch.combine.core.ui.vo;
 
+import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GlobalConfigVO {
+public class GlobalConfigVO implements IInit {
 
     @Field(key = "baseUrl", name = "根URL", type = FieldTypeEnum.TEXT, isRequired = true)
     private String baseUrl;
@@ -24,13 +26,94 @@ public class GlobalConfigVO {
     @Field(key = "initFlows", name = "初始化要执行的流程KEY集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> initPages = new ArrayList<>();
 
+    @Field(key = "flagConfigs", name = "标识配置集合", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = FlagConfigs.class)
+    private FlagConfigs flagConfigs;
+
     public static GlobalConfigVO build(String path) {
         GlobalConfigVO globalConfig = JsonUtil.deserialize(ResourceFileUtil.read(path), GlobalConfigVO.class);
         if (globalConfig == null) {
             globalConfig = new GlobalConfigVO();
         }
 
+        globalConfig.init();
         return globalConfig;
+    }
+
+    @Override
+    public void init() {
+        if (flagConfigs == null) {
+            flagConfigs = new FlagConfigs();
+        }
+        flagConfigs.init();
+    }
+
+
+    public static class FlagConfigs implements IInit {
+
+        @Field(key = "element", name = "元素标识", type = FieldTypeEnum.TEXT, defaultValue = "$e")
+        @FieldDesc("在变量中使用 #{$e.my_from} 时，表示获取 ID 为 my_from 的元素实例的值")
+        private String element = "$e";
+
+        @Field(key = "constant", name = "常量标识", type = FieldTypeEnum.TEXT, defaultValue = "$c")
+        @FieldDesc("在变量中使用 #{$c.name} 时，表示从常量中取 name 属性的值")
+        private String constant = "$c";
+
+        @Field(key = "dataLoad", name = "数据加载标识", type = FieldTypeEnum.TEXT, defaultValue = "$ld")
+        @FieldDesc("在变量中使用 #{$ld.user_list} 时，表示获取 ID 为 user_list 的数据加载的缓存结果")
+        private String dataLoad = "$ld";
+
+        @Field(key = "localStorage", name = "浏览器localStorage标识", type = FieldTypeEnum.TEXT, defaultValue = "$ls")
+        @FieldDesc("在变量中使用 #{$ls.token} 时，表示从浏览器 localStorage 中取 token 属性的值")
+        private String localStorage = "$ls";
+
+        @Override
+        public void init() {
+            if (CheckEmptyUtil.isEmpty(this.element)) {
+                this.element = "$e";
+            }
+            if (CheckEmptyUtil.isEmpty(this.constant)) {
+                this.constant = "$c";
+            }
+            if (CheckEmptyUtil.isEmpty(this.dataLoad)) {
+                this.dataLoad = "$ld";
+            }
+            if (CheckEmptyUtil.isEmpty(this.localStorage)) {
+                this.localStorage = "$ls";
+            }
+        }
+
+        public String getElement() {
+            return element;
+        }
+
+        public void setElement(String element) {
+            this.element = element;
+        }
+
+        public String getConstant() {
+            return constant;
+        }
+
+        public void setConstant(String constant) {
+            this.constant = constant;
+        }
+
+        public String getDataLoad() {
+            return dataLoad;
+        }
+
+        public void setDataLoad(String dataLoad) {
+            this.dataLoad = dataLoad;
+        }
+
+        public String getLocalStorage() {
+            return localStorage;
+        }
+
+        public void setLocalStorage(String localStorage) {
+            this.localStorage = localStorage;
+        }
     }
 
     public List<String> getConfigs() {
@@ -65,192 +148,11 @@ public class GlobalConfigVO {
         this.systemUrl = systemUrl;
     }
 
-    //    @Field(key = "openRegisterConfig", name = "是否开放流程注册", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
-//    private Boolean openRegisterConfig = true;
-//
-//    @Field(key = "requestIdKey", name = "流程请求ID的字段KEY", type = FieldTypeEnum.TEXT, defaultValue = "$requestId")
-//    private String requestIdKey = "$requestId";
-//
-//    @Field(key = "printComponentResult", name = "日志是否打印组件执行结果", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
-//    private Boolean printComponentResult = true;
-//
-//    @Field(key = "loadApiInfo", name = "是否加载API信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
-//    private Boolean loadApiInfo = true;
-//
-//    @Field(key = "flagConfigs", name = "标识配置", type = FieldTypeEnum.OBJECT)
-//    @FieldObject(type = FlagConfigs.class)
-//    private FlagConfigs flagConfigs = new FlagConfigs();
-//
-//    public static class FlagConfigs {
-//
-//        @Field(key = "innerFlow", name = "内部流程标识", type = FieldTypeEnum.TEXT, defaultValue = "$")
-//        @FieldDesc("不允许外部调用")
-//        private String innerFlow = "$";
-//
-//        @Field(key = "componentResult", name = "组件结果标识", type = FieldTypeEnum.TEXT, defaultValue = "$r")
-//        private String componentResult = "$r";
-//
-//        @Field(key = "componentResultShowMsg", name = "组件结果-显示错误信息标识", type = FieldTypeEnum.TEXT, defaultValue = "$showMsg")
-//        private String componentResultShowMsg = "$showMsg";
-//
-//        @Field(key = "componentResultErrorMsg", name = "组件结果-错误信息标识", type = FieldTypeEnum.TEXT, defaultValue = "$errorMsg")
-//        private String componentResultErrorMsg = "$errorMsg";
-//
-//        @Field(key = "componentResultSuccess", name = "组件结果-成功标识", type = FieldTypeEnum.TEXT, defaultValue = "$success")
-//        private String componentResultSuccess = "$success";
-//
-//        @Field(key = "componentResultDownload", name = "组件结果-是否下载标识", type = FieldTypeEnum.TEXT, defaultValue = "$download")
-//        private String componentResultDownload = "$download";
-//
-//        @Field(key = "flowConstant", name = "流程中常量标识", type = FieldTypeEnum.TEXT, defaultValue = "$c")
-//        private String flowConstant = "$c";
-//
-//        @Field(key = "flowVariable", name = "流程中内部变量标识", type = FieldTypeEnum.TEXT, defaultValue = "$v")
-//        private String flowVariable = "$v";
-//
-//        @Field(key = "flowHeader", name = "流程请求头标识", type = FieldTypeEnum.TEXT, defaultValue = "$h")
-//        private String flowHeader = "$h";
-//
-//        @Field(key = "size", name = "数据长度标识", type = FieldTypeEnum.TEXT, defaultValue = "$size")
-//        private String size = "$size";
-//
-//
-//        public String getInnerFlow() {
-//            return innerFlow;
-//        }
-//
-//        public void setInnerFlow(String innerFlow) {
-//            this.innerFlow = innerFlow;
-//        }
-//
-//        public String getComponentResult() {
-//            return componentResult;
-//        }
-//
-//        public void setComponentResult(String componentResult) {
-//            this.componentResult = componentResult;
-//        }
-//
-//        public String getComponentResultShowMsg() {
-//            return componentResultShowMsg;
-//        }
-//
-//        public void setComponentResultShowMsg(String componentResultShowMsg) {
-//            this.componentResultShowMsg = componentResultShowMsg;
-//        }
-//
-//        public String getComponentResultErrorMsg() {
-//            return componentResultErrorMsg;
-//        }
-//
-//        public void setComponentResultErrorMsg(String componentResultErrorMsg) {
-//            this.componentResultErrorMsg = componentResultErrorMsg;
-//        }
-//
-//        public String getComponentResultSuccess() {
-//            return componentResultSuccess;
-//        }
-//
-//        public void setComponentResultSuccess(String componentResultSuccess) {
-//            this.componentResultSuccess = componentResultSuccess;
-//        }
-//
-//        public String getComponentResultDownload() {
-//            return componentResultDownload;
-//        }
-//
-//        public void setComponentResultDownload(String componentResultDownload) {
-//            this.componentResultDownload = componentResultDownload;
-//        }
-//
-//        public String getFlowConstant() {
-//            return flowConstant;
-//        }
-//
-//        public void setFlowConstant(String flowConstant) {
-//            this.flowConstant = flowConstant;
-//        }
-//
-//        public String getFlowVariable() {
-//            return flowVariable;
-//        }
-//
-//        public void setFlowVariable(String flowVariable) {
-//            this.flowVariable = flowVariable;
-//        }
-//
-//        public String getFlowHeader() {
-//            return flowHeader;
-//        }
-//
-//        public void setFlowHeader(String flowHeader) {
-//            this.flowHeader = flowHeader;
-//        }
-//
-//        public String getSize() {
-//            return size;
-//        }
-//
-//        public void setSize(String size) {
-//            this.size = size;
-//        }
-//    }
-//
-//    public List<String> getInitConfigs() {
-//        return initConfigs;
-//    }
-//
-//    public void setInitConfigs(List<String> initConfigs) {
-//        this.initConfigs = initConfigs;
-//    }
-//
-//    public List<String> getInitFlows() {
-//        return initFlows;
-//    }
-//
-//    public void setInitFlows(List<String> initFlows) {
-//        this.initFlows = initFlows;
-//    }
-//
-//    public Boolean getOpenRegisterConfig() {
-//        return openRegisterConfig;
-//    }
-//
-//    public void setOpenRegisterConfig(Boolean openRegisterConfig) {
-//        this.openRegisterConfig = openRegisterConfig;
-//    }
-//
-//    public String getRequestIdKey() {
-//        return requestIdKey;
-//    }
-//
-//    public void setRequestIdKey(String requestIdKey) {
-//        this.requestIdKey = requestIdKey;
-//    }
-//
-//
-//    public Boolean getPrintComponentResult() {
-//        return printComponentResult;
-//    }
-//
-//    public void setPrintComponentResult(Boolean printComponentResult) {
-//        this.printComponentResult = printComponentResult;
-//    }
-//
-//
-//    public FlagConfigs getFlagConfigs() {
-//        return flagConfigs;
-//    }
-//
-//    public void setFlagConfigs(FlagConfigs flagConfigs) {
-//        this.flagConfigs = flagConfigs;
-//    }
-//
-//    public Boolean getLoadApiInfo() {
-//        return loadApiInfo;
-//    }
-//
-//    public void setLoadApiInfo(Boolean loadApiInfo) {
-//        this.loadApiInfo = loadApiInfo;
-//    }
+    public FlagConfigs getFlagConfigs() {
+        return flagConfigs;
+    }
+
+    public void setFlagConfigs(FlagConfigs flagConfigs) {
+        this.flagConfigs = flagConfigs;
+    }
 }
