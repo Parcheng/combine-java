@@ -29,6 +29,9 @@ public class DataCreateLogicConfig extends LogicConfig {
     @FieldEg(eg = "$r.data001.settings OBJECT id:1 type:a", desc = "创建一个结构对象数据为 {id:1,type:'a'}，并将该值赋值到 data001 组件返回结果的 settings 字段上")
     private List<DataCreateItem> items = new ArrayList<>();
 
+    @Override
+    public void init() {}
+
     public List<DataCreateItem> getItems() {
         return items;
     }

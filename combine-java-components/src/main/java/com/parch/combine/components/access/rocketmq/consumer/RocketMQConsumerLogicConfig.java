@@ -55,7 +55,6 @@ public class RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
 
     @Override
     public void init() {
-        super.init();
         if (getConsumerGroup() == null) {
             setConsumerGroup(getId());
         }

@@ -1,5 +1,6 @@
 package com.parch.combine.components.file.output;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
@@ -20,7 +21,14 @@ public class FileOutputLogicConfig extends LogicConfig {
 
     @Field(key = "charset", name = "字符集编码", type = FieldTypeEnum.TEXT, defaultValue = "默认根据系统环境决定")
     @FieldDesc("注意：仅在文本数据时生效")
-    private Charset charset = java.nio.charset.Charset.defaultCharset();
+    private Charset charset;
+
+    @Override
+    public void init() {
+        if (charset == null) {
+            charset = java.nio.charset.Charset.defaultCharset();
+        }
+    }
 
     public String getSource() {
         return source;

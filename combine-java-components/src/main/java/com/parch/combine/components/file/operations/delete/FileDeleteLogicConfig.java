@@ -13,6 +13,9 @@ public class FileDeleteLogicConfig extends LogicConfig {
     @Field(key = "source", name = "文件路径", type = FieldTypeEnum.TEXT, isRequired = true)
     private String source;
 
+    @Override
+    public void init() {}
+
     public String getSource() {
         return source;
     }

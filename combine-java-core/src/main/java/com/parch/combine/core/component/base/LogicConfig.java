@@ -1,5 +1,6 @@
 package com.parch.combine.core.component.base;
 
+import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
@@ -9,7 +10,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class LogicConfig {
+public abstract class LogicConfig implements IInit {
 
     @Field(key = "id", name = "逻辑配置ID", type = FieldTypeEnum.TEXT)
     @FieldDesc("组件ID，默认为随机字符串")
@@ -36,11 +37,6 @@ public abstract class LogicConfig {
     @Field(key = "printResult", name = "是否组件打印执行结果", type = FieldTypeEnum.BOOLEAN)
     @FieldDesc("不设置时，以全局配置为准")
     private Boolean printResult;
-
-    /**
-     * 用于设置默认值
-     */
-    public void init() {}
 
     public String getId() {
         return id;

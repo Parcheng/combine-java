@@ -25,6 +25,9 @@ public class MysqlLogicConfig extends LogicConfig {
             "提示：如果不配置条件则认为满足条件，SQL语句（段）会生效"})
     private List<SqlItem> sqlConfigs;
 
+    @Override
+    public void init() {}
+
     public String getSqlType() {
         return sqlType;
     }

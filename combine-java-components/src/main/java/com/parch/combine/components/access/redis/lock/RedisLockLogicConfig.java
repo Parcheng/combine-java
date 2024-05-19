@@ -30,6 +30,9 @@ public class RedisLockLogicConfig extends LogicConfig {
     @FieldEg(eg = "10000", desc = "有效期为 10000 毫秒")
     private Long expire;
 
+    @Override
+    public void init() {}
+
     public String getKey() {
         return key;
     }

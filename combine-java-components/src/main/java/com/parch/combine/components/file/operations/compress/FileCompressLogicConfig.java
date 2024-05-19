@@ -18,6 +18,9 @@ public class FileCompressLogicConfig extends LogicConfig {
     @FieldDesc("该字段如果为路径，则表示要将压缩文件解压到该路径；如果为压缩文件地址，则表示要压缩为该文件")
     private String target;
 
+    @Override
+    public void init() {}
+
     public String getTarget() {
         return target;
     }

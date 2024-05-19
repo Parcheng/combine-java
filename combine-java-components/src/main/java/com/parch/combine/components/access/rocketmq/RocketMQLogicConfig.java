@@ -5,7 +5,7 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 
-public class RocketMQLogicConfig extends LogicConfig {
+public abstract class RocketMQLogicConfig extends LogicConfig {
 
     @Field(key = "topic", name = "消息Topic", type = FieldTypeEnum.TEXT, isRequired = true)
     private String topic;

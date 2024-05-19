@@ -24,6 +24,9 @@ public class SystemTemplateLogicConfig extends LogicConfig {
     @FieldDesc("系统内部会自动赋值")
     private List<String> componentIds;
 
+    @Override
+    public void init() {}
+
     public String getKey() {
         return key;
     }

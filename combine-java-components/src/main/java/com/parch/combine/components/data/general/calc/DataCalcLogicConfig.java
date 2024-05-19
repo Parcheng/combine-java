@@ -27,6 +27,9 @@ public class DataCalcLogicConfig extends LogicConfig {
     @FieldEg(eg = "#{$r.data001.uuid} UUID", desc = "生成一个 UUID 写入到组件 data001 的 uuid 字段")
     private List<DataCalcItem> items = new ArrayList<>();
 
+    @Override
+    public void init() {}
+
     public List<DataCalcItem> getItems() {
         return items;
     }

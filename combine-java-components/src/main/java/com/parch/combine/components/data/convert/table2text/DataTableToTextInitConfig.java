@@ -9,4 +9,7 @@ import com.parch.combine.core.common.settings.annotations.Invalid;
 @Invalid
 public class DataTableToTextInitConfig extends InitConfig {
 
+    @Override
+    public void init() {}
+
 }

@@ -20,6 +20,9 @@ public class ToolLockLogicConfig extends LogicConfig {
     @FieldDesc("大于0表示加锁，小于0表示解锁")
     private Integer count;
 
+    @Override
+    public void init() {}
+
     public String getKey() {
         return key;
     }

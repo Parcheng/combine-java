@@ -20,6 +20,22 @@ public class ToolAsyncInitConfig extends InitConfig {
     @Field(key = "queueCapacity", name = "缓存队列容量", type = FieldTypeEnum.NUMBER, defaultValue = "20")
     private Integer queueCapacity;
 
+    @Override
+    public void init() {
+        if (this.getCorePoolSize() == null) {
+            this.setCorePoolSize(5);
+        }
+        if (this.getMaxPoolSize() == null) {
+            this.setMaxPoolSize(20);
+        }
+        if (this.getKeepAliveTime() == null) {
+            this.setKeepAliveTime(5000L);
+        }
+        if (this.getQueueCapacity() == null) {
+            this.setQueueCapacity(20);
+        }
+    }
+
     public Integer getCorePoolSize() {
         return corePoolSize;
     }

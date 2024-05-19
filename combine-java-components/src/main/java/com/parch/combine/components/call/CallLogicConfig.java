@@ -25,6 +25,9 @@ public class CallLogicConfig extends LogicConfig {
     @Field(key = "headers", name = "请求头", type = FieldTypeEnum.OBJECT)
     private Map<String, String> headers;
 
+    @Override
+    public void init() {}
+
     public Map<String, Object> getParams() {
         return params;
     }

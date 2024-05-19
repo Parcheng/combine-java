@@ -16,6 +16,9 @@ public class ToolSemaphoreLogicConfig extends LogicConfig {
     @FieldEg(eg = "user_change", desc = "表示所有 KEY 为 user_change 的流程的流量总和不能超过20")
     private String key;
 
+    @Override
+    public void init() {}
+
     public String getKey() {
         return key;
     }

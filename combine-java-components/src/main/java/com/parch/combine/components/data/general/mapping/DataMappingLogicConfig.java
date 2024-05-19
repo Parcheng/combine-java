@@ -23,6 +23,9 @@ public class DataMappingLogicConfig extends LogicConfig {
     @FieldEg(eg = "age 18", desc = "将 18 赋值给执行结果的 age 字段")
     private List<DataMappingItem> items = new ArrayList<>();
 
+    @Override
+    public void init() {}
+
     public List<DataMappingItem> getItems() {
         return items;
     }

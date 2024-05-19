@@ -33,20 +33,7 @@ public class ToolAsyncComponent extends AbsComponent<ToolAsyncInitConfig, ToolAs
     @Override
     public List<String> init() {
         List<String> result = new ArrayList<>();
-        ToolAsyncInitConfig initConfig = getInitConfig();
         ToolAsyncLogicConfig logicConfig = getLogicConfig();
-        if (initConfig.getCorePoolSize() == null) {
-            initConfig.setCorePoolSize(5);
-        }
-        if (initConfig.getMaxPoolSize() == null) {
-            initConfig.setMaxPoolSize(20);
-        }
-        if (initConfig.getKeepAliveTime() == null) {
-            initConfig.setKeepAliveTime(5000L);
-        }
-        if (initConfig.getQueueCapacity() == null) {
-            initConfig.setQueueCapacity(20);
-        }
 
         // 初始化逻辑中使用的组件
         List<Object> components = logicConfig.getComponents();

@@ -29,6 +29,9 @@ public class DataFilterLogicConfig extends LogicConfig {
     @FieldEg(eg = "$r.data001.type REPLACE #{$c.type}", desc = "表示将 data001 组件返回结果的 name 字段的值替换为全局变量的 type 字段值")
     private List<DataFilterItem> items = new ArrayList<>();
 
+    @Override
+    public void init() {}
+
     public String getResultId() {
         return resultId;
     }

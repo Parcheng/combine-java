@@ -12,6 +12,9 @@ public class WebRedirectLogicConfig extends LogicConfig {
     @Field(key = "path", name = "重定向地址", type = FieldTypeEnum.TEXT, isRequired = true)
     private String path;
 
+    @Override
+    public void init() {}
+
     public String getPath() {
         return path;
     }

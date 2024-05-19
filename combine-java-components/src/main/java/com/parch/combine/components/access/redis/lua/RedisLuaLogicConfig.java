@@ -25,6 +25,9 @@ public class RedisLuaLogicConfig extends LogicConfig {
     @FieldEg(eg = "[\"local num = redis.call('incr', KEYS[1])\",\"return num\", \"end\"]", desc = "执行该语句")
     private List<String> scriptLines;
 
+    @Override
+    public void init() {}
+
     public List<String> getKeys() {
         return keys;
     }

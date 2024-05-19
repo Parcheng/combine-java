@@ -8,4 +8,7 @@ import com.parch.combine.core.common.settings.annotations.Invalid;
  */
 @Invalid
 public class FileParseTxtInitConfig extends InitConfig {
+
+    @Override
+    public void init() {}
 }

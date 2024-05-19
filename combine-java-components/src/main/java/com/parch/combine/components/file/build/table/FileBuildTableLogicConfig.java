@@ -23,6 +23,9 @@ public class FileBuildTableLogicConfig extends FileBuildLogicConfig {
     @FieldEg(eg = "[\"id\", \"name\", \"age\"]", desc = "按顺序从 data001 组件的结果中取id, name, age 字段写入表格文件数据中")
     private List<String> filedNames;
 
+    @Override
+    public void init() {}
+
     public List<String> getHeader() {
         return header;
     }
