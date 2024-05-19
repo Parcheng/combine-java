@@ -83,7 +83,7 @@ public class ToolAsyncComponent extends AbsComponent<ToolAsyncInitConfig, ToolAs
         public Task(CombineManager combineManager, List<Object> components, ComponentContext context) {
             this.combineManager = combineManager;
             this.components = components;
-            this.context = context;
+            this.context = ComponentContext.copy(context);
         }
 
         @Override
