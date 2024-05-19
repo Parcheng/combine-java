@@ -1,6 +1,6 @@
-$combineWebUI.element.register("SYSTEM.LIST", (function () {
-    const domFns = $combineWebUI.dom;
-    const configFns = $combineWebUI.config;
+$combine.element.register("SYSTEM.LIST", (function () {
+    const domFns = $combine.dom;
+    const configFns = $combine.config;
 
     const data = {};
 

@@ -1,8 +1,8 @@
-$combineWebUI.element.register("SYSTEM.FROM", (function () {
-    const domFns = $combineWebUI.dom;
-    const instanceFns = $combineWebUI.instance;
-    const configFns = $combineWebUI.config;
-    const dataFns = $combineWebUI.data;
+$combine.element.register("SYSTEM.FROM", (function () {
+    const domFns = $combine.dom;
+    const instanceFns = $combine.instance;
+    const configFns = $combine.config;
+    const dataFns = $combine.data;
 
     const data = {};
 

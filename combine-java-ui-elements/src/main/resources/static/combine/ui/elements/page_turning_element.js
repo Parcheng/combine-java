@@ -1,8 +1,8 @@
-$combineWebUI.element.register("SYSTEM.PAGE_TURNING", (function () {
-    const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
-    const elementFns = $combineWebUI.element;
-    const triggerFns = $combineWebUI.trigger;
+$combine.element.register("SYSTEM.PAGE_TURNING", (function () {
+    const domFns = $combine.dom;
+    const dataFns = $combine.data;
+    const elementFns = $combine.element;
+    const triggerFns = $combine.trigger;
 
     const data = {};
 

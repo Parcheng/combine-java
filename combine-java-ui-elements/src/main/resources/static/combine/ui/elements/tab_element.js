@@ -1,9 +1,9 @@
-$combineWebUI.element.register("SYSTEM.TAB", (function () {
+$combine.element.register("SYSTEM.TAB", (function () {
     const tabIdName = "tabId";
-    const domFns = $combineWebUI.dom;
-    const elementFns = $combineWebUI.element;
-    const toolFns = $combineWebUI.tools;
-    const configFns = $combineWebUI.config;
+    const domFns = $combine.dom;
+    const elementFns = $combine.element;
+    const toolFns = $combine.tools;
+    const configFns = $combine.config;
 
     const data = {};
 

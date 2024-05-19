@@ -1,8 +1,8 @@
-$combineWebUI.element.register("SYSTEM.BUTTON", (function () {
-    const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
-    const configFns = $combineWebUI.config;
-    const triggerFns = $combineWebUI.trigger;
+$combine.element.register("SYSTEM.BUTTON", (function () {
+    const domFns = $combine.dom;
+    const dataFns = $combine.data;
+    const configFns = $combine.config;
+    const triggerFns = $combine.trigger;
 
     function init(instance, parentData) {
         return instance;

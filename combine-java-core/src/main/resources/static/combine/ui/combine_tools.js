@@ -1,4 +1,4 @@
-$combineWebUI.tools.md5 = function (str) {
+$combine.tools.md5 = function (str) {
     const rotateLeft = function(lValue, iShiftBits) {
         return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
     };

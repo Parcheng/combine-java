@@ -1,8 +1,8 @@
-$combineWebUI.element.register("SYSTEM.POP", (function () {
-    const domFns = $combineWebUI.dom;
-    const dataFns = $combineWebUI.data;
-    const elementFns = $combineWebUI.element;
-    const toolFns = $combineWebUI.tools;
+$combine.element.register("SYSTEM.POP", (function () {
+    const domFns = $combine.dom;
+    const dataFns = $combine.data;
+    const elementFns = $combine.element;
+    const toolFns = $combine.tools;
 
     const data = {};
 

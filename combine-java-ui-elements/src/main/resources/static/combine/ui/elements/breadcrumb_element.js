@@ -1,5 +1,5 @@
-$combineWebUI.element.register("SYSTEM.BREADCRUMB", (function () {
-    const domFns = $combineWebUI.dom;
+$combine.element.register("SYSTEM.BREADCRUMB", (function () {
+    const domFns = $combine.dom;
     const data = {};
 
     function init(instance, parentData) {

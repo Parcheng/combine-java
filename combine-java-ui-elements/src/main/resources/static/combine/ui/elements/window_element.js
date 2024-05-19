@@ -1,11 +1,11 @@
-$combineWebUI.element.register("SYSTEM.WINDOW", (function () {
+$combine.element.register("SYSTEM.WINDOW", (function () {
     const windowsDomId = "$combine-web-windows";
-    const domFns = $combineWebUI.dom;
-    const instanceFns = $combineWebUI.instance;
-    const dataFns = $combineWebUI.data;
-    const elementFns = $combineWebUI.element;
-    const configFns = $combineWebUI.config;
-    const triggerFns = $combineWebUI.trigger;
+    const domFns = $combine.dom;
+    const instanceFns = $combine.instance;
+    const dataFns = $combine.data;
+    const elementFns = $combine.element;
+    const configFns = $combine.config;
+    const triggerFns = $combine.trigger;
 
     const data = {};
 
