@@ -7,7 +7,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.ui.base.element.ElementTemplateConfig;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
-public class LineElementTemplateConfig extends ElementTemplateConfig {
+public class HRElementTemplateConfig extends ElementTemplateConfig {
 
     @Field(key = "line", name = "线DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)

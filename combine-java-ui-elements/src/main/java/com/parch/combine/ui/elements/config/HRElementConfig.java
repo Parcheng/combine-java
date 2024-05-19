@@ -9,15 +9,15 @@ import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
 import java.util.List;
 
-@PageElement(key = "line", name = "分割线元素", templateClass = LineElementTemplateConfig.class)
-public class LineElementConfig extends ElementConfig<LineElementTemplateConfig> {
+@PageElement(key = "hr", name = "分割线元素", templateClass = HRElementTemplateConfig.class)
+public class HRElementConfig extends ElementConfig<HRElementTemplateConfig> {
 
-    @Field(key = "text", name = "线中间的文本", type = FieldTypeEnum.TEXT)
+    @Field(key = "text", name = "分隔线中间的文本", type = FieldTypeEnum.TEXT)
     @FieldDesc("不设置文本，则显示为单线")
     private String text;
 
-    public LineElementConfig() {
-        super(SystemElementPathTool.buildJsPath("line"), SystemElementPathTool.buildTemplatePath("line"), LineElementTemplateConfig.class);
+    public HRElementConfig() {
+        super(SystemElementPathTool.buildJsPath("hr"), SystemElementPathTool.buildTemplatePath("hr"), HRElementTemplateConfig.class);
     }
 
     @Override

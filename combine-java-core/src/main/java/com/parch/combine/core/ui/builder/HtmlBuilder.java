@@ -135,21 +135,21 @@ public class HtmlBuilder {
 
         // 添加框架组件实例注册代码
         List<String> scriptCodeList = new ArrayList<>();
-        scriptCodeList.add("\n$combineWebUI.init(\"" + context.getBaseUrl() + "\");");
+        scriptCodeList.add("\n$combine.init(\"" + context.getBaseUrl() + "\");");
 
         // 常量注册
         String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
-        scriptCodeList.add("\n$combineWebUI.constant.register(" + contentJson + ");");
+        scriptCodeList.add("\n$combine.constant.register(" + contentJson + ");");
         // 元素模板注册
-        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.instanceTemp.register(\"" + k + "\"," + v + ");"));
+        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + k + "\"," + v + ");"));
         // 数据加载配置注册
-        groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.loadData.register(\"" + k + "\"," + v + ", " + groupResult.dataLoadToElementIdMap.get(k) + ");"));
+        groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combine.loadData.register(\"" + k + "\"," + v + ", " + groupResult.dataLoadToElementIdMap.get(k) + ");"));
         // trigger事件注册
-        groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.trigger.register(\"" + k + "\"," + v + ");"));
+        groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combine.trigger.register(\"" + k + "\"," + v + ");"));
         // 页面元素注册
-        groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.instance.register(\"" + k + "\"," + v + ");"));
+        groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combine.instance.register(\"" + k + "\"," + v + ");"));
         // 页面元素组注册
-        groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combineWebUI.group.register(\"" + k + "\"," + v + ");"));
+        groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combine.group.register(\"" + k + "\"," + v + ");"));
 
         // 页面模块初始化
         List<HtmlElementConfig> models = config.getModules();
@@ -157,7 +157,7 @@ public class HtmlBuilder {
             for (HtmlElementConfig model : models) {
                 String showGroupId = model.getDefaultShowGroupId();
                 if (CheckEmptyUtil.isNotEmpty(showGroupId)) {
-                    scriptCodeList.add("\n$combineWebUI.group.load(\"" + showGroupId + "\",\"" + model.getId() + "\");");
+                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + model.getId() + "\");");
                 }
             }
         }

@@ -1,5 +1,7 @@
 $combine = (function () {
     const triggersDomId = "$combine-web-triggers";
+    const variableFlag = {};
+
     const groups = {};
     const constant = {};
     const instances = {};
@@ -881,19 +883,29 @@ $combine = (function () {
 
             const isSet = variables.length == 1 && text.length == variables[0].length;
             for (let i = 0; i < variables.length; i++) {
-                const variableExpression = variables[i];
-                const variable = variableExpression.substring(2, variableExpression.length - 1);
+                const variableText = variables[i];
+                
+                let variable, variableDefaultValue;
+                const defaultValueFlag = variableText.indexOf(":");
+                if (defaultValueFlag === -1) {
+                    variable = variableText.substring(2, variableText.length - 1);
+                    variableDefaultValue = null;
+                } else {
+                    variable = variableText.substring(2, defaultValueFlag - 1);
+                    variableDefaultValue = variableText.substring(defaultValueFlag, variableText.length - 1);
+                }
 
                 let currData = data;
                 if ("" !== variable && "$this" !== variable) {
                     let variablePath = variable.split(".");
                     currData = this.parseDataAsFlag(variablePath, currData);
-                    for (let i = 0; i < variablePath.length; i++) {
-                        if (currData) {
+                    if (currData) {
+                        for (let i = 0; i < variablePath.length; i++) {
                             currData = currData[variablePath[i]];
-                        } else {
-                            currData = null;
-                            break;
+                            if (currData == undefined || currData == null) {
+                                currData = variableDefaultValue;
+                                break;
+                            }
                         }
                     }
                 }
@@ -907,11 +919,11 @@ $combine = (function () {
                     if (currData instanceof Array) {
                         const newText = [];
                         for (let ci = 0; ci < currData.length; ci++) {
-                            newText.push(text.replace(variableExpression, currData[ci]));
+                            newText.push(text.replace(variableText, currData[ci]));
                         }
                         text = newText;
                     } else {
-                        text = currData == null ? "" : text.replace(variableExpression, currData);
+                        text = currData == null ? "" : text.replace(variableText, currData);
                     }
                 }
             }
