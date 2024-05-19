@@ -892,8 +892,8 @@ $combine = (function () {
                     variable = variableText.substring(2, variableText.length - 1);
                     variableDefaultValue = null;
                 } else {
-                    variable = variableText.substring(2, defaultValueFlag - 1);
-                    variableDefaultValue = variableText.substring(defaultValueFlag, variableText.length - 1);
+                    variable = variableText.substring(2, defaultValueFlag);
+                    variableDefaultValue = variableText.substring(defaultValueFlag + 1, variableText.length - 1);
                 }
 
                 let currData = data;

@@ -80,7 +80,7 @@ public class PropertySettingBuilder {
         property.setIsRequired(fieldAnnotation.isRequired());
         property.setIsArray(fieldAnnotation.isArray());
         property.setDesc(new ArrayList<>());
-        property.setDefaultValue(fieldAnnotation.defaultValue());
+        property.setDefaultValue(CheckEmptyUtil.isEmpty(fieldAnnotation.defaultValue()) ? null : fieldAnnotation.defaultValue());
 
         FieldDesc fieldDescAnnotation = field.getAnnotation(FieldDesc.class);
         if (fieldDescAnnotation != null) {
