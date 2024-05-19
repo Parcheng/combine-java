@@ -69,6 +69,22 @@ public class ComponentContext {
      */
     private List<AbsComponent<?,?>> executedComponents;
 
+    public static ComponentContext copy(ComponentContext source) {
+        ComponentContext context = new ComponentContext();
+        context.setFlowKey(source.getFlowKey());
+        context.setScopeKey(source.getScopeKey());
+        context.setRequestId(source.getRequestId());
+        context.setParams(source.getParams());
+        context.setHeaders(source.getHeaders());
+        context.setResultMap(source.getResultMap());
+        context.setData(source.getData());
+        context.setExecutedComponents(source.getExecutedComponents());
+        context.setVariables(source.getVariables());
+        context.setCurrComponent(source.getCurrComponent());
+        context.setLastResult(source.getLastResult());
+        return context;
+    }
+
     public Map<String, Object> getParams() {
         return params;
     }
