@@ -32,20 +32,6 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
 
     protected CombineManager manager;
 
-//    /**
-//     * 构造器
-//     *
-//     * @param initConfig 初始化配置对象
-//     * @param logicConfig 业务配置对象
-//     */
-//    @SuppressWarnings("unchecked")
-//    public AbsComponent(T initConfig, R logicConfig) {
-//        this.initConfig = initConfig ;
-//        this.logicConfig = logicConfig;
-//        this.initConfigClass = (Class<T>) initConfig.getClass();
-//        this.logicConfigClass = (Class<R>) logicConfig.getClass();
-//    }
-
     /**
      * 构造器
      *
