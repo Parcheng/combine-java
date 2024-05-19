@@ -1,7 +1,6 @@
 $combine = (function () {
     const triggersDomId = "$combine-web-triggers";
-    const variableFlag = {};
-
+    
     const groups = {};
     const constant = {};
     const instances = {};
@@ -15,8 +14,10 @@ $combine = (function () {
     const loadGlobals = {};
 
     let baseUrl = "";
-    function init(initBaseUrl) {
+    let variableFlag = {};
+    function init(initBaseUrl, initVariableFlag) {
         baseUrl = initBaseUrl;
+        variableFlag = initVariableFlag;
     }
 
     const constantFns = {
@@ -980,9 +981,9 @@ $combine = (function () {
             }
 
             const first = variablePath.shift();
-            if (first === "$c") {
+            if (first == variableFlag.canstent) {
                 return constantFns.get();
-            } else if (first === "$e") {
+            } else if (first == variableFlag.element) {
                 const dataResult = instanceFns.getData(variablePath.shift());
                 if (dataResult.success) {
                     return dataResult.data;
@@ -990,9 +991,9 @@ $combine = (function () {
                     console.error(dataResult.showMsg, dataResult.errorMsg);
                     return null;
                 }
-            } else if (first === "$ld") {
+            } else if (first == variableFlag.dataLoad) {
                 return loadGlobals;
-            } else if (first === "$ls") {
+            } else if (first == variableFlag.localStorage) {
                 const second = variablePath.shift();
                 if (second) {
                     const localData = localStorage.getItem(second);
@@ -1006,9 +1007,15 @@ $combine = (function () {
             return null;
         },
         hasDataFlag: function (variableText) {
-            return variableText === "$c" || variableText === "$e"
-                || variableText === "$ld" || variableText === "$ls";
-        },
+            for (const key in variableFlag) {
+                if (Object.hasOwnProperty.call(variableFlag, key)) {
+                    if (variableText == variableFlag[key]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     };
 
     const callFns = {

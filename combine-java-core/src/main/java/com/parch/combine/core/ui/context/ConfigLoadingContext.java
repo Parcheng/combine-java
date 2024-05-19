@@ -8,6 +8,8 @@ public class ConfigLoadingContext {
 
     private String baseUrl;
 
+    private String flagConfigsJson;
+
     public String getSystemUrl() {
         return systemUrl;
     }
@@ -30,5 +32,13 @@ public class ConfigLoadingContext {
 
     public void setScopeKey(String scopeKey) {
         this.scopeKey = scopeKey;
+    }
+
+    public String getFlagConfigsJson() {
+        return flagConfigsJson;
+    }
+
+    public void setFlagConfigsJson(String flagConfigsJson) {
+        this.flagConfigsJson = flagConfigsJson;
     }
 }

@@ -135,7 +135,7 @@ public class HtmlBuilder {
 
         // 添加框架组件实例注册代码
         List<String> scriptCodeList = new ArrayList<>();
-        scriptCodeList.add("\n$combine.init(\"" + context.getBaseUrl() + "\");");
+        scriptCodeList.add("\n$combine.init(\"" + context.getBaseUrl() + "\", " + context.getFlagConfigsJson() + ");");
 
         // 常量注册
         String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());

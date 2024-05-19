@@ -1,6 +1,7 @@
 package com.parch.combine.core.ui.context;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.ui.vo.GlobalConfigVO;
 
 public class ConfigLoadingContextHandler {
@@ -11,6 +12,7 @@ public class ConfigLoadingContextHandler {
         ConfigLoadingContext context = new ConfigLoadingContext();
         context.setBaseUrl(globalConfig.getBaseUrl() == null ? CheckEmptyUtil.EMPTY : globalConfig.getBaseUrl());
         context.setSystemUrl(globalConfig.getSystemUrl() == null ? CheckEmptyUtil.EMPTY : globalConfig.getSystemUrl());
+        context.setFlagConfigsJson(JsonUtil.serialize(globalConfig.getFlagConfigs()));
         return context;
     }
 
