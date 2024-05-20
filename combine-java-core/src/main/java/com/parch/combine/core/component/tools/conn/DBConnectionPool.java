@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.tools.pool;
+package com.parch.combine.core.component.tools.conn;
 
 import java.sql.Connection;
 import java.sql.SQLException;

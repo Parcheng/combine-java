@@ -3,7 +3,7 @@ package com.parch.combine.components.access.mysql;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
-import com.parch.combine.core.component.tools.pool.DbConnPoolTool;
+import com.parch.combine.core.component.tools.conn.DbConnPoolTool;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.tools.sql.SqlTool;
 import com.parch.combine.core.common.util.TypeConversionUtil;

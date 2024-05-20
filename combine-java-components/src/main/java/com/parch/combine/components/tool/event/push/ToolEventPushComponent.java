@@ -1,6 +1,6 @@
 package com.parch.combine.components.tool.event.push;
 
-import com.parch.combine.components.tool.event.EventManagerHandler;
+import com.parch.combine.components.tool.event.EventSubjectHandler;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -36,7 +36,7 @@ public class ToolEventPushComponent extends AbsComponent<ToolEventPushInitConfig
     public DataResult execute() {
         try {
             ToolEventPushLogicConfig logicConfig = getLogicConfig();
-            EventManagerHandler.notify(logicConfig.getEventKey(), logicConfig.getData());
+            EventSubjectHandler.push(logicConfig.getEventKey(), logicConfig.getData());
         } catch (Exception e) {
             ComponentErrorHandler.print(ToolEventPushErrorEnum.FAIL, e);
             return DataResult.fail(ToolEventPushErrorEnum.FAIL);
