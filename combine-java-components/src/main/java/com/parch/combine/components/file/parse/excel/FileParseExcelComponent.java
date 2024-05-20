@@ -7,6 +7,7 @@ import com.parch.combine.components.file.parse.FileParseComponent;
 import com.parch.combine.components.file.parse.txt.FileParseTxtErrorEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -24,6 +25,7 @@ import java.util.List;
  * 文件读取组件
  */
 @Component(order = 500, key = "parse.excel", name = "解析表格文件数据组件", logicConfigClass = FileParseExcelLogicConfig.class, initConfigClass = FileParseExcelInitConfig.class)
+@ComponentDesc("依赖 poi 和 poi-ooxml，推荐版本 4.1.2")
 @ComponentResult(name = "表格数据矩阵（二维数组）")
 public class FileParseExcelComponent extends FileParseComponent<FileParseExcelInitConfig, FileParseExcelLogicConfig> {
 

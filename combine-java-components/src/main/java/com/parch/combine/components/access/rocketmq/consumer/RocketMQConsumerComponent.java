@@ -5,6 +5,7 @@ import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.components.access.rocketmq.AbsRocketMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
 import com.parch.combine.core.component.tools.SubComponentTool;
@@ -25,6 +26,7 @@ import java.util.Map;
  * Redis锁组件
  */
 @Component(key = "rocketmq.consumer", name = "RocketMQ消费者组件", logicConfigClass = RocketMQConsumerLogicConfig.class, initConfigClass = RocketMQConsumerInitConfig.class)
+@ComponentDesc("依赖 rocketmq-client，推荐版本 4.9.4")
 @ComponentResult(name = "异常信息或 true")
 @ComponentResultDesc("消息数据格式：{ msgId: ‘消息ID’, body: ‘消息内容’ }")
 public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQConsumerInitConfig, RocketMQConsumerLogicConfig> {

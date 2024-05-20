@@ -19,12 +19,12 @@
 
     <properties>
         <java.version>17</java.version>
-        <poi.version>4.1.2</poi.version>
         <jackson.version>2.13.5</jackson.version>
         <hutool.version>5.8.12</hutool.version>
         <slf4j-api.version>2.0.7</slf4j-api.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
+        <poi.version>4.1.2</poi.version>
         <mail-api.version>1.4.7</mail-api.version>
         <compress.version>1.20</compress.version>
 <!--        <junrar.version>7.4.0</junrar.version>-->
@@ -94,22 +94,6 @@
                 <artifactId>commons-compress</artifactId>
                 <version>${compress.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>com.github.junrar</groupId>-->
-<!--                <artifactId>junrar</artifactId>-->
-<!--                <version>${junrar.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>net.sf.sevenzipjbinding</groupId>-->
-<!--                <artifactId>sevenzipjbinding</artifactId>-->
-<!--                <version>${sevenzipjbinding.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>net.sf.sevenzipjbinding</groupId>-->
-<!--                <artifactId>sevenzipjbinding-all-platforms</artifactId>-->
-<!--                <version>${sevenzipjbinding.version}</version>-->
-<!--            </dependency>-->
-
             <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>

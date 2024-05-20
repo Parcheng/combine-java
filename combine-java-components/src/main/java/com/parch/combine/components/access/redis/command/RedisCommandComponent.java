@@ -5,6 +5,7 @@ import com.parch.combine.core.common.util.*;
 import com.parch.combine.components.access.redis.AbsRedisComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.ArrayGetTool;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
@@ -18,6 +19,7 @@ import java.util.*;
  * Redis命令组件
  */
 @Component(key = "redis.command", name = "Redis命令组件", logicConfigClass = RedisCommandLogicConfig.class, initConfigClass = RedisCommandInitConfig.class)
+@ComponentDesc("依赖 jedis，推荐版本 3.6.3")
 @ComponentResult(name = "命令的执行结果集合")
 public class RedisCommandComponent extends AbsRedisComponent<RedisCommandInitConfig, RedisCommandLogicConfig> {
 

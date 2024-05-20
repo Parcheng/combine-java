@@ -5,6 +5,7 @@ import com.parch.combine.components.file.FilePostfixEnum;
 import com.parch.combine.components.file.parse.FileParseComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -17,6 +18,7 @@ import java.util.List;
  * 文件读取组件
  */
 @Component(order = 500, key = "parse.pdf", name = "解析PDF文件数据组件", logicConfigClass = FileParsePdfLogicConfig.class, initConfigClass = FileParsePdfInitConfig.class)
+@ComponentDesc("依赖 pdfbox，推荐版本 2.0.24")
 @ComponentResult(name = "文本")
 public class FileParsePdfComponent extends FileParseComponent<FileParsePdfInitConfig, FileParsePdfLogicConfig> {
 

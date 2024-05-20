@@ -19,7 +19,10 @@ import java.util.UUID;
  * Mysql组件
  */
 @Component(key = "mysql", name = "MYSQL数据库组件", logicConfigClass = MysqlLogicConfig.class, initConfigClass = MysqlInitConfig.class)
-@ComponentDesc("MYSQL数据库相关操作，支持DDL和DML语句")
+@ComponentDesc({
+        "MYSQL数据库相关操作，支持DDL和DML语句",
+        "依赖 mysql-connector-j，推荐版本 8.0.33"
+})
 @ComponentResult(name = "SQL执行结果")
 @ComponentResultDesc({
         "其中：",

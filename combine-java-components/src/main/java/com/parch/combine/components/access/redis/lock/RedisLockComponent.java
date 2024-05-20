@@ -21,7 +21,7 @@ import java.util.UUID;
  * Redis锁组件
  */
 @Component(key = "redis.lock", name = "Redis分布式锁组件", logicConfigClass = RedisLockLogicConfig.class, initConfigClass = RedisLockInitConfig.class)
-@ComponentDesc("简单版分布式锁，暂时不支持“未获取到锁时自旋等待功能”、“流程未执行完锁自动续期功能”")
+@ComponentDesc({"简单版分布式锁，暂时不支持“未获取到锁时自旋等待功能”、“流程未执行完锁自动续期功能”", "依赖 jedis，推荐版本 3.6.3"})
 @ComponentResult(name = "是否成功获取锁：true | false")
 public class RedisLockComponent extends AbsRedisComponent<RedisLockInitConfig, RedisLockLogicConfig> {
 

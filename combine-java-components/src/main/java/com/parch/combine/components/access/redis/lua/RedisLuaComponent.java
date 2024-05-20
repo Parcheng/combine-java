@@ -6,6 +6,7 @@ import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.components.access.redis.AbsRedisComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
@@ -18,6 +19,7 @@ import java.util.List;
  * Redis锁组件
  */
 @Component(key = "redis.lua", name = "Redis脚本组件", logicConfigClass = RedisLuaLogicConfig.class, initConfigClass = RedisLuaInitConfig.class)
+@ComponentDesc("依赖 jedis，推荐版本 3.6.3")
 @ComponentResult(name = "脚本执行结果")
 public class RedisLuaComponent extends AbsRedisComponent<RedisLuaInitConfig, RedisLuaLogicConfig> {
 
