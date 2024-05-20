@@ -5,6 +5,7 @@ import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.components.access.rocketmq.AbsRocketMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
@@ -22,6 +23,7 @@ import java.util.List;
  * Redis锁组件
  */
 @Component(key = "rocketmq.product", name = "RocketMQ生产者组件", logicConfigClass = RocketMQProductLogicConfig.class, initConfigClass = RocketMQProductInitConfig.class)
+@ComponentDesc("依赖 rocketmq-client，推荐版本 4.9.4")
 @ComponentResult(name = "Message ID")
 public class RocketMQProductComponent extends AbsRocketMQComponent<RocketMQProductInitConfig, RocketMQProductLogicConfig> {
 

@@ -6,6 +6,7 @@ import com.parch.combine.components.file.operations.compress.FileCompressErrorEn
 import com.parch.combine.components.file.operations.compress.FileCompressTypeEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
@@ -21,6 +22,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Component(order = 310, key = "operations.compress.targz", name = "tar.gz压缩解压组件", logicConfigClass = FileCompressTarGzLogicConfig.class, initConfigClass = FileCompressTarGzInitConfig.class)
+@ComponentDesc("依赖 commons-compress，推荐版本 1.20")
 @ComponentResult(name = "true 或抛出异常信息")
 public class FileCompressTarGzComponent extends AbsFileCompressComponent<FileCompressTarGzInitConfig, FileCompressTarGzLogicConfig> {
 

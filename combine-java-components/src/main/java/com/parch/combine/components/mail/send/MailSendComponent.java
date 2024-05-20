@@ -5,6 +5,7 @@ import com.parch.combine.components.mail.AbsMailComponent;
 import com.parch.combine.components.mail.helper.MimeMessageHelper;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
@@ -18,10 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * 运算组件
- */
 @Component(key = "send", name = "邮件发送组件", logicConfigClass = MailSendLogicConfig.class, initConfigClass = MailSendInitConfig.class)
+@ComponentDesc("依赖 poi 和 poi-ooxml，推荐版本 4.1.2")
 @ComponentResult(name = "邮件发送成功：true")
 public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, MailSendLogicConfig> {
 
