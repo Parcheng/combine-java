@@ -10,7 +10,8 @@ public class EventSubjectHandler {
     public static synchronized EventObservable register(String subject) {
         EventObservable eventObservable = SUBJECT_MAP.get(subject);
         if (eventObservable == null) {
-            SUBJECT_MAP.put(subject, new EventObservable(subject));
+            eventObservable = new EventObservable(subject);
+            SUBJECT_MAP.put(subject, eventObservable);
         }
 
         return eventObservable;
