@@ -27,7 +27,8 @@ public class TextElementConfig extends ElementConfig<TextElementTemplateConfig> 
     private String defaultText;
 
     public TextElementConfig() {
-        super(SystemElementPathTool.buildJsPath("text"), SystemElementPathTool.buildTemplatePath("text"), TextElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("text"), SystemElementPathTool.buildCssPath("text"),
+                SystemElementPathTool.buildTemplatePath("text"), TextElementTemplateConfig.class);
     }
 
     @Override

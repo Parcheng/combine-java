@@ -1,0 +1,67 @@
+.c-button {
+  width: 100%;
+  padding: 5px;
+  display: inline-block;
+}
+
+.c-button button{
+  margin-right:5px;
+  text-align: center;
+  border: 0;
+  width: auto;
+  padding: 0 8px;
+}
+
+.c-button .c-xs{
+  height: 15px;
+  font-size: 9px;
+  border-radius: 3px;
+}
+
+.c-button .c-small{
+  height: 20px;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.c-button .c-medium{
+  height: 25px;
+  font-size: 17px;
+  border-radius: 3px;
+}
+
+.c-button .c-large{
+  height: 30px;
+  font-size: 21px;
+  border-radius: 3px;
+}
+
+.c-button .c-default{
+  background-color: var(--main_color);
+  color: var(--anti_color);
+}
+
+.c-button .c-primary{
+  background-color: royalblue;
+  color: var(--anti_color);
+}
+
+.c-button .c-success{
+  background-color: deepskyblue;
+  color: var(--anti_color);
+}
+
+.c-button .c-info{
+  background-color: green;
+  color: var(--anti_color);
+}
+
+.c-button .c-warning{
+  background-color: orange;
+  color: var(--anti_color);
+}
+
+.c-button .c-danger{
+  background-color: red;
+  color: var(--anti_color);
+}

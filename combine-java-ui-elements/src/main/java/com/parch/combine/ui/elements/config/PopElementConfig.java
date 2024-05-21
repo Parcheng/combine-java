@@ -23,7 +23,8 @@ public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
     private Boolean hasClose = false;
 
     public PopElementConfig() {
-        super(SystemElementPathTool.buildJsPath("pop"), SystemElementPathTool.buildTemplatePath("pop"), PopElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("pop"), SystemElementPathTool.buildCssPath("pop"),
+                SystemElementPathTool.buildTemplatePath("pop"), PopElementTemplateConfig.class);
     }
 
     @Override

@@ -38,7 +38,8 @@ public class RadioElementConfig extends ElementConfig<RadioElementTemplateConfig
     private Object triggers;
 
     public RadioElementConfig() {
-        super(SystemElementPathTool.buildJsPath("radio"), SystemElementPathTool.buildTemplatePath("radio"), RadioElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("radio"), SystemElementPathTool.buildCssPath("radio"),
+                SystemElementPathTool.buildTemplatePath("radio"), RadioElementTemplateConfig.class);
     }
 
     @Override

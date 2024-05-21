@@ -148,10 +148,15 @@ public class ElementGroupBuilder {
         result.groupMap = new HashMap<>();
         groupMap.forEach((k, v) -> result.groupMap.put(k, JsonUtil.serialize(v)));
 
-        result.elementScripts = new HashSet<>(elementMap.size());
-        result.elementMap = new HashMap<>(elementMap.size());
+        int elementSize = elementMap.size();
+        result.elementScripts = new HashSet<>(elementSize);
+        result.elementStyles = new HashSet<>(elementSize);
+        result.elementMap = new HashMap<>(elementSize);
         elementMap.forEach((k, v) -> {
             result.elementScripts.add(v.thisElementJSPath());
+            if (CheckEmptyUtil.isNotEmpty(v.thisElementCssPath())) {
+                result.elementStyles.add(v.thisElementCssPath());
+            }
             v.setElementTemplatePath(UrlPathHelper.replaceUrlFlag(v.getElementTemplatePath()));
             result.elementMap.put(k, JsonUtil.serialize(v));
         });
@@ -174,6 +179,8 @@ public class ElementGroupBuilder {
     public static class ElementGroupResult {
 
         public Set<String> elementScripts;
+
+        public Set<String> elementStyles;
 
         public Map<String, String> groupMap;
 

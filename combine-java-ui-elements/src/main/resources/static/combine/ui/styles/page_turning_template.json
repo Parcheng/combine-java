@@ -1,0 +1,52 @@
+{
+  "external": {
+    "tag": "nav",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "pageTurning": {
+    "tag": "ul",
+    "class": "pager",
+    "style": "",
+    "properties": {}
+  },
+  "last": {
+    "tag": "li",
+    "class": "previous",
+    "style": "cursor:pointer;",
+    "properties": {}
+  },
+  "lastDisabled": {
+    "tag": "li",
+    "class": "previous disabled",
+    "style": "",
+    "properties": {}
+  },
+  "next": {
+    "tag": "li",
+    "class": "next",
+    "style": "cursor:pointer;",
+    "properties": {}
+  },
+  "nextDisabled": {
+    "tag": "li",
+    "class": "next disabled",
+    "style": "",
+    "properties": {}
+  },
+  "lastContent": {
+    "tag": "a",
+    "class": "",
+    "style": "",
+    "text": "<< 上一页",
+    "properties": {}
+  },
+  "nextContent": {
+    "tag": "a",
+    "class": "",
+    "style": "",
+    "text": "下一页 >>",
+    "properties": {}
+  }
+}

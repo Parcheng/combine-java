@@ -18,7 +18,8 @@ public class AudioElementConfig extends ElementConfig<AudioElementTemplateConfig
     private String text;
 
     public AudioElementConfig() {
-        super(SystemElementPathTool.buildJsPath("audio"), SystemElementPathTool.buildTemplatePath("audio"), AudioElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("audio"), SystemElementPathTool.buildCssPath("audio"),
+                SystemElementPathTool.buildTemplatePath("audio"), AudioElementTemplateConfig.class);
     }
 
     @Override

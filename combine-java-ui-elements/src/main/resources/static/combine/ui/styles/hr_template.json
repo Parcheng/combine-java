@@ -1,24 +1,18 @@
 {
   "external": {
     "tag": "div",
-    "class": "c-breadcrumb",
-    "style": "",
-    "properties": {}
-  },
-  "breadcrumb": {
-    "tag": "ol",
     "class": "",
     "style": "",
     "properties": {}
   },
-  "item": {
-    "tag": "li",
+  "line": {
+    "tag": "hr",
     "class": "",
     "style": "",
     "properties": {}
   },
-  "content": {
-    "tag": "a",
+  "text": {
+    "tag": "p",
     "class": "",
     "style": "",
     "properties": {}

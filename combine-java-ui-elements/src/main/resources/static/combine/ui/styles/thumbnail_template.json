@@ -1,0 +1,38 @@
+{
+    "external": {
+        "tag": "div",
+        "class": "thumbnail",
+        "style": "",
+        "properties": {}
+    },
+    "img": {
+        "tag": "img",
+        "class": "",
+        "style": "",
+        "properties": {}
+    },
+    "content": {
+        "tag": "div",
+        "class": "caption",
+        "style": "",
+        "properties": {}
+    },
+    "contentTitle": {
+        "tag": "h3",
+        "class": "",
+        "style": "",
+        "properties": {}
+    },
+    "contentText": {
+        "tag": "p",
+        "class": "",
+        "style": "",
+        "properties": {}
+    },
+    "contentButton": {
+        "tag": "a",
+        "class": "btn btn-primary",
+        "style": "",
+        "properties": {}
+    }
+}

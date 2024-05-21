@@ -18,7 +18,8 @@ public class VideoElementConfig extends ElementConfig<VideoElementTemplateConfig
     private String text;
 
     public VideoElementConfig() {
-        super(SystemElementPathTool.buildJsPath("video"), SystemElementPathTool.buildTemplatePath("video"), VideoElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("video"), SystemElementPathTool.buildCssPath("video"),
+                SystemElementPathTool.buildTemplatePath("video"), VideoElementTemplateConfig.class);
     }
 
     @Override

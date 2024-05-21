@@ -21,7 +21,8 @@ public class ListElementConfig extends ElementConfig<ListElementTemplateConfig> 
     private String defaultText;
 
     public ListElementConfig() {
-        super(SystemElementPathTool.buildJsPath("list"), SystemElementPathTool.buildTemplatePath("list"), ListElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("list"), SystemElementPathTool.buildCssPath("list"),
+                SystemElementPathTool.buildTemplatePath("list"), ListElementTemplateConfig.class);
     }
 
     @Override

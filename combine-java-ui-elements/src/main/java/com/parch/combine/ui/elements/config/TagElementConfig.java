@@ -20,7 +20,8 @@ public class TagElementConfig extends ElementConfig<TagElementTemplateConfig> {
     private String text;
 
     public TagElementConfig() {
-        super(SystemElementPathTool.buildJsPath("tag"), SystemElementPathTool.buildTemplatePath("tag"), TagElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("tag"), SystemElementPathTool.buildCssPath("tag"),
+                SystemElementPathTool.buildTemplatePath("tag"), TagElementTemplateConfig.class);
     }
 
     @Override

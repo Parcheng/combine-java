@@ -28,7 +28,8 @@ public class ThumbnailElementConfig extends ElementConfig<ThumbnailElementTempla
     private List<Object> buttons;
 
     public ThumbnailElementConfig() {
-        super(SystemElementPathTool.buildJsPath("thumbnail"), SystemElementPathTool.buildTemplatePath("thumbnail"), ThumbnailElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("thumbnail"), SystemElementPathTool.buildCssPath("thumbnail"),
+                SystemElementPathTool.buildTemplatePath("thumbnail"), ThumbnailElementTemplateConfig.class);
     }
 
     @Override

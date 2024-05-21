@@ -24,7 +24,8 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
     private List<ItemConfig> items;
 
     public FromElementConfig() {
-        super(SystemElementPathTool.buildJsPath("from"), SystemElementPathTool.buildTemplatePath("from"), FromElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("from"), SystemElementPathTool.buildCssPath("from"),
+                SystemElementPathTool.buildTemplatePath("from"), FromElementTemplateConfig.class);
     }
 
     @Override

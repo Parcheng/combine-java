@@ -40,7 +40,8 @@ public class TableElementConfig extends ElementConfig<TableElementTemplateConfig
     public Object rowOpts;
 
     public TableElementConfig() {
-        super(SystemElementPathTool.buildJsPath("table"), SystemElementPathTool.buildTemplatePath("table"), TableElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("table"), SystemElementPathTool.buildCssPath("table"),
+                SystemElementPathTool.buildTemplatePath("table"), TableElementTemplateConfig.class);
     }
 
     @Override

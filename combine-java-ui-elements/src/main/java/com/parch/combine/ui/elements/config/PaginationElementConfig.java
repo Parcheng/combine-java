@@ -29,7 +29,8 @@ public class PaginationElementConfig extends ElementConfig<PaginationElementTemp
     private Object triggers;
 
     public PaginationElementConfig() {
-        super(SystemElementPathTool.buildJsPath("pagination"), SystemElementPathTool.buildTemplatePath("pagination"), PaginationElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("pagination"), SystemElementPathTool.buildCssPath("pagination"),
+                SystemElementPathTool.buildTemplatePath("pagination"), PaginationElementTemplateConfig.class);
     }
 
     @Override

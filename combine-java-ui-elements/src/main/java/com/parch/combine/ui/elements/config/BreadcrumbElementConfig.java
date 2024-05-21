@@ -10,7 +10,8 @@ import java.util.List;
 public class BreadcrumbElementConfig extends ElementConfig<BreadcrumbElementTemplateConfig> {
 
     public BreadcrumbElementConfig() {
-        super(SystemElementPathTool.buildJsPath("breadcrumb"), SystemElementPathTool.buildTemplatePath("breadcrumb"), BreadcrumbElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("breadcrumb"), SystemElementPathTool.buildCssPath("breadcrumb"),
+                SystemElementPathTool.buildTemplatePath("breadcrumb"), BreadcrumbElementTemplateConfig.class);
     }
 
     @Override

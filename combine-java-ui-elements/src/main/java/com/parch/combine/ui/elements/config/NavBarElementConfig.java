@@ -37,7 +37,8 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     private List<ButtonElementConfig.ButtonItemSettings> buttons;
 
     public NavBarElementConfig() {
-        super(SystemElementPathTool.buildJsPath("nav_bar"), SystemElementPathTool.buildTemplatePath("nav_bar"), NavBarElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("nav_bar"), SystemElementPathTool.buildCssPath("nav_bar"),
+                SystemElementPathTool.buildTemplatePath("nav_bar"), NavBarElementTemplateConfig.class);
     }
 
     @Override

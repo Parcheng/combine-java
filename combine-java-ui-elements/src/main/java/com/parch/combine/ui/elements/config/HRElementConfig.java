@@ -17,7 +17,8 @@ public class HRElementConfig extends ElementConfig<HRElementTemplateConfig> {
     private String text;
 
     public HRElementConfig() {
-        super(SystemElementPathTool.buildJsPath("hr"), SystemElementPathTool.buildTemplatePath("hr"), HRElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("hr"), SystemElementPathTool.buildCssPath("hr"),
+                SystemElementPathTool.buildTemplatePath("hr"), HRElementTemplateConfig.class);
     }
 
     @Override

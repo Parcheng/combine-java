@@ -1,24 +1,24 @@
 {
   "external": {
     "tag": "div",
-    "class": "c-breadcrumb",
+    "class": "",
     "style": "",
     "properties": {}
   },
-  "breadcrumb": {
-    "tag": "ol",
+  "list": {
+    "tag": "ul",
     "class": "",
-    "style": "",
+    "style": "list-style:none;margin:0;padding:0;",
     "properties": {}
   },
   "item": {
     "tag": "li",
     "class": "",
-    "style": "",
+    "style": "list-style:none;margin:0;padding:0;",
     "properties": {}
   },
-  "content": {
-    "tag": "a",
+  "defaultText": {
+    "tag": "div",
     "class": "",
     "style": "",
     "properties": {}

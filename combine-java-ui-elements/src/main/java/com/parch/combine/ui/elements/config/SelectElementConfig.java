@@ -38,7 +38,8 @@ public class SelectElementConfig extends ElementConfig<SelectElementTemplateConf
     private Object triggers;
 
     public SelectElementConfig() {
-        super(SystemElementPathTool.buildJsPath("select"), SystemElementPathTool.buildTemplatePath("select"), SelectElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("select"), SystemElementPathTool.buildCssPath("select"),
+                SystemElementPathTool.buildTemplatePath("select"), SelectElementTemplateConfig.class);
     }
 
     @Override

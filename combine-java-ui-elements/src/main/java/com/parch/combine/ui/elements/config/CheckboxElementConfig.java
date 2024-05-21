@@ -37,7 +37,8 @@ public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplate
     private Object triggers;
 
     public CheckboxElementConfig() {
-        super(SystemElementPathTool.buildJsPath("checkbox"), SystemElementPathTool.buildTemplatePath("checkbox"), CheckboxElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("checkbox"), SystemElementPathTool.buildCssPath("checkbox"),
+                SystemElementPathTool.buildTemplatePath("checkbox"), CheckboxElementTemplateConfig.class);
     }
 
     @Override

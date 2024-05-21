@@ -21,7 +21,8 @@ public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
     private List<TabItemSettings> items;
 
     public TabElementConfig() {
-        super(SystemElementPathTool.buildJsPath("tab"), SystemElementPathTool.buildTemplatePath("tab"), TabElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("tab"), SystemElementPathTool.buildCssPath("tab"),
+                SystemElementPathTool.buildTemplatePath("tab"), TabElementTemplateConfig.class);
     }
 
     @Override

@@ -27,7 +27,8 @@ public class ContentElementConfig extends ElementConfig<ContentElementTemplateCo
     private String children;
 
     public ContentElementConfig() {
-        super(SystemElementPathTool.buildJsPath("content"), SystemElementPathTool.buildTemplatePath("content"), ContentElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("content"), SystemElementPathTool.buildCssPath("content"),
+                SystemElementPathTool.buildTemplatePath("content"), ContentElementTemplateConfig.class);
     }
 
     @Override

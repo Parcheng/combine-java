@@ -29,7 +29,8 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
     private Object closeTriggers;
 
     public WindowElementConfig() {
-        super(SystemElementPathTool.buildJsPath("window"), SystemElementPathTool.buildTemplatePath("window"), WindowElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("window"), SystemElementPathTool.buildCssPath("window"),
+                SystemElementPathTool.buildTemplatePath("window"), WindowElementTemplateConfig.class);
     }
 
     @Override

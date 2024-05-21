@@ -26,7 +26,8 @@ public class PageTurningElementConfig extends ElementConfig<PageTurningElementTe
     private Object triggers;
 
     public PageTurningElementConfig() {
-        super(SystemElementPathTool.buildJsPath("page_turning"), SystemElementPathTool.buildTemplatePath("page_turning"), PageTurningElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("page_turning"), SystemElementPathTool.buildCssPath("page_turning"),
+                SystemElementPathTool.buildTemplatePath("page_turning"), PageTurningElementTemplateConfig.class);
     }
 
     @Override
