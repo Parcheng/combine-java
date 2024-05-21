@@ -1,0 +1,24 @@
+.c-checkbox {
+  width: 100%;
+  padding: 5px;
+}
+
+.c-checkbox input{
+  margin-right: 3px;
+  height: 10px;
+}
+
+.c-checkbox .c-inline {
+  padding-right: 8px;
+  display: inline-block;
+}
+
+.c-checkbox .c-multiline {
+  width: 100%;
+  display: block;
+}
+
+.c-checkbox .c-disabled input{
+  pointer-events: none;
+  opacity: 0.5;
+}

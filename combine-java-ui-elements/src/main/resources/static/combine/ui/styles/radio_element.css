@@ -1,0 +1,24 @@
+.c-radio {
+  width: 100%;
+  padding: 5px;
+}
+
+.c-radio input{
+  margin-right: 3px;
+  height: 10px;
+}
+
+.c-radio .c-inline {
+  padding-right: 8px;
+  display: inline-block;
+}
+
+.c-radio .c-multiline {
+  width: 100%;
+  display: block;
+}
+
+.c-radio .c-disabled input{
+  pointer-events: none;
+  opacity: 0.5;
+}

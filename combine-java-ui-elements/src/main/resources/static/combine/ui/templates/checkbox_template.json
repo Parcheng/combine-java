@@ -1,25 +1,25 @@
 {
   "external": {
     "tag": "div",
-    "class": "checkbox",
+    "class": "c-checkbox",
     "style": "",
     "properties": {}
   },
   "inline": {
-    "tag": "label",
-    "class": "checkbox-inline",
+    "tag": "div",
+    "class": "c-inline",
     "style": "",
     "properties": {}
   },
   "multiline": {
-    "tag": "label",
-    "class": "checkbox",
+    "tag": "div",
+    "class": "c-multiline",
     "style": "",
     "properties": {}
   },
   "disabled": {
-    "tag": "label",
-    "class": "disabled",
+    "tag": "div",
+    "class": "c-disabled",
     "style": "",
     "properties": {}
   },

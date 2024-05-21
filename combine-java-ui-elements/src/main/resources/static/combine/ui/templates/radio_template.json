@@ -1,25 +1,25 @@
 {
   "external": {
     "tag": "div",
-    "class": "radio",
+    "class": "c-radio",
     "style": "",
     "properties": {}
   },
   "inline": {
-    "tag": "label",
-    "class": "radio-inline",
+    "tag": "div",
+    "class": "c-inline",
     "style": "",
     "properties": {}
   },
   "multiline": {
-    "tag": "label",
-    "class": "radio",
+    "tag": "div",
+    "class": "c-multiline",
     "style": "",
     "properties": {}
   },
   "disabled": {
     "tag": "label",
-    "class": "disabled",
+    "class": "c-disabled",
     "style": "",
     "properties": {}
   },
