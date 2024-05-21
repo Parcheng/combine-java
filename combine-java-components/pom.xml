@@ -53,18 +53,5 @@
             <artifactId>commons-compress</artifactId>
         </dependency>
 
-        <!-- rar压缩解压 -->
-<!--        <dependency>-->
-<!--            <groupId>com.github.junrar</groupId>-->
-<!--            <artifactId>junrar</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>net.sf.sevenzipjbinding</groupId>-->
-<!--            <artifactId>sevenzipjbinding</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>net.sf.sevenzipjbinding</groupId>-->
-<!--            <artifactId>sevenzipjbinding-all-platforms</artifactId>-->
-<!--        </dependency>-->
     </dependencies>
 </project>
