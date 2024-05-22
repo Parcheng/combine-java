@@ -1,6 +1,7 @@
 package com.parch.combine.ui.elements.config;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.ui.base.SubConfig;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConfig> {
 
     @Field(key = "items", name = "按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(type = ButtonItemSettings.class)
     private List<ButtonItemSettings> items;
 
     public ButtonElementConfig() {

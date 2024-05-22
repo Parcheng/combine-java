@@ -1,25 +1,25 @@
 {
   "external": {
     "tag": "div",
-    "class": "",
+    "class": "c-list",
     "style": "",
     "properties": {}
   },
   "list": {
     "tag": "ul",
     "class": "",
-    "style": "list-style:none;margin:0;padding:0;",
+    "style": "",
     "properties": {}
   },
   "item": {
     "tag": "li",
     "class": "",
-    "style": "list-style:none;margin:0;padding:0;",
+    "style": "",
     "properties": {}
   },
   "defaultText": {
     "tag": "div",
-    "class": "",
+    "class": "c-default-text",
     "style": "",
     "properties": {}
   }
