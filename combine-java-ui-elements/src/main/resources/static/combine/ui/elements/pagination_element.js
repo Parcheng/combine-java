@@ -11,13 +11,16 @@ $combine.element.register("SYSTEM.PAGINATION", (function () {
     }
 
     function buildPage(instance, buildData) {
-        const body = [];
-
         const currPage = Number(dataFns.parseVariable(instance.currPage, buildData));
         const maxPage = Number(dataFns.parseVariable(instance.maxPage, buildData));
-        data[instance.id] = { currPage: currPage, maxPage: maxPage };
-
         const maxLength = instance.maxLength ? instance.maxLength : 10;
+        return buildPageAsConfig(instance, currPage, maxPage, maxLength, buildData);
+    }
+
+    function buildPageAsConfig(instance, currPage, maxPage, maxLength, buildData) {
+        const body = [];
+
+        data[instance.id] = { currPage: currPage, maxPage: maxPage };
         if (isNaN(maxPage) || isNaN(currPage)) {
             return domFns.build(instance.template.pagination, body);
         }
@@ -86,12 +89,7 @@ $combine.element.register("SYSTEM.PAGINATION", (function () {
                 let externalDom = document.getElementById(instance.id);
                 if (externalDom) {
                     data[instance.id].currPage = pageNum;
-                    domFns.setBody(externalDom, buildPage(instance, {
-                        currPage: pageNum,
-                        maxPage: data[instance.id].maxPage,
-                        maxLength: instance.maxLength,
-                        triggers: instance.triggers
-                    }));
+                    domFns.setBody(externalDom, buildPageAsConfig(instance, pageNum, data[instance.id].maxPage, instance.maxLength));
                 }
             }
         }

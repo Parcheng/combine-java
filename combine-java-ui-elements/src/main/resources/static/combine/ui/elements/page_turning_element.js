@@ -11,10 +11,14 @@ $combine.element.register("SYSTEM.PAGE_TURNING", (function () {
     }
 
     function buildPage(instance, buildData) {
-        const body = [];
-
         const currPage = Number(dataFns.parseVariable(instance.currPage, buildData));
         const maxPage = Number(dataFns.parseVariable(instance.maxPage, buildData));
+        return buildPageAsConfig(instance, currPage, maxPage, buildData);
+    }
+
+    function buildPageAsConfig(instance, currPage, maxPage, buildData) {
+        const body = [];
+
         if (isNaN(maxPage) || isNaN(currPage)) {
             return domFns.build(instance.template.pageTurning, body);
         }
@@ -69,11 +73,7 @@ $combine.element.register("SYSTEM.PAGE_TURNING", (function () {
                 let externalDom = document.getElementById(instance.id);
                 if (externalDom) {
                     data[instance.id].currPage = pageNum;
-                    domFns.setBody(externalDom, buildPage(instance, {
-                        currPage: pageNum,
-                        maxPage: data[instance.id].maxPage,
-                        triggers: instance.triggers
-                    }));
+                    domFns.setBody(externalDom, buildPageAsConfig(instance, pageNum, data[instance.id].maxPage));
                 }
             }
         }

@@ -17,7 +17,7 @@
   margin: 0 20px;
   color: var(--main_color);
   cursor:pointer;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .c-page-turning .c-disabled{

@@ -1,7 +1,7 @@
 {
   "external": {
     "tag": "div",
-    "class": "input-group",
+    "class": "c-textarea",
     "style": "",
     "properties": {}
   },
