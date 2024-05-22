@@ -13,21 +13,9 @@ public class SelectElementTemplateConfig extends ElementTemplateConfig {
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig select;
 
-    @Field(key = "selectValue", name = "下拉框值DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "option", name = "下拉框选项集合DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig selectValue;
-
-    @Field(key = "selectOptions", name = "下拉框选项集合DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig selectOptions;
-
-    @Field(key = "selectOptionFlag", name = "下拉标识DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig selectOptionFlag;
-
-    @Field(key = "selectOptionItem", name = "下拉选项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig selectOptionItem;
+    private DomConfig option;
 
     public DomConfig getSelect() {
         return select;
@@ -37,35 +25,11 @@ public class SelectElementTemplateConfig extends ElementTemplateConfig {
         this.select = select;
     }
 
-    public DomConfig getSelectValue() {
-        return selectValue;
+    public DomConfig getOption() {
+        return option;
     }
 
-    public void setSelectValue(DomConfig selectValue) {
-        this.selectValue = selectValue;
-    }
-
-    public DomConfig getSelectOptionItem() {
-        return selectOptionItem;
-    }
-
-    public void setSelectOptionItem(DomConfig selectOptionItem) {
-        this.selectOptionItem = selectOptionItem;
-    }
-
-    public DomConfig getSelectOptions() {
-        return selectOptions;
-    }
-
-    public void setSelectOptions(DomConfig selectOptions) {
-        this.selectOptions = selectOptions;
-    }
-
-    public DomConfig getSelectOptionFlag() {
-        return selectOptionFlag;
-    }
-
-    public void setSelectOptionFlag(DomConfig selectOptionFlag) {
-        this.selectOptionFlag = selectOptionFlag;
+    public void setOption(DomConfig option) {
+        this.option = option;
     }
 }

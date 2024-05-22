@@ -1,0 +1,19 @@
+.c-select {
+  width: 100%;
+  padding: 5px;
+}
+
+.c-select select {
+  border: 2px solid var(--main_color);
+  padding: 0 5px;
+  height: 25px;
+  vertical-align: top;
+}
+
+.c-select option {
+  height: 25px;
+}
+
+.c-select select:focus{
+  outline: none;
+}
