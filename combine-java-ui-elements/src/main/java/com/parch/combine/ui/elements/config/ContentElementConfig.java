@@ -1,6 +1,7 @@
 package com.parch.combine.ui.elements.config;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
@@ -11,24 +12,96 @@ import java.util.List;
 @PageElement(key = "content", name = "内容元素", templateClass = ContentElementTemplateConfig.class)
 public class ContentElementConfig extends ElementConfig<ContentElementTemplateConfig> {
 
-    @Field(key = "leftImg", name = "左图片地址", type = FieldTypeEnum.TEXT)
-    private String leftImg;
+    @Field(key = "top", name = "顶部图片配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = ContentImgConfig.class)
+    private ContentImgConfig top;
 
-    @Field(key = "rightImg", name = "右图片地址", type = FieldTypeEnum.TEXT)
-    private String rightImg;
+    @Field(key = "left", name = "左侧图片配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = ContentImgConfig.class)
+    private ContentImgConfig left;
 
-    @Field(key = "title", name = "标题", type = FieldTypeEnum.TEXT)
-    private String title;
+    @Field(key = "right", name = "右侧图片配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = ContentImgConfig.class)
+    private ContentImgConfig right;
 
-    @Field(key = "text", name = "每一行内容文本", type = FieldTypeEnum.TEXT, isArray = true)
-    private List<String> text;
-
-    @Field(key = "children", name = "子本文", type = FieldTypeEnum.TEXT)
-    private String children;
+    @Field(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(type = ContentConfig.class)
+    private ContentConfig content;
 
     public ContentElementConfig() {
         super(SystemElementPathTool.buildJsPath("content"), SystemElementPathTool.buildCssPath("content"),
                 SystemElementPathTool.buildTemplatePath("content"), ContentElementTemplateConfig.class);
+    }
+
+    public static class ContentImgConfig {
+        @Field(key = "img", name = "图片地址", type = FieldTypeEnum.TEXT, isRequired = true)
+        private String img;
+
+        @Field(key = "size", name = "尺寸（1-100）%", type = FieldTypeEnum.NUMBER, isRequired = true)
+        private Integer size;
+
+        @Field(key = "height", name = "高度 px", type = FieldTypeEnum.NUMBER)
+        private Integer height;
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
+
+        public Integer getSize() {
+            return size;
+        }
+
+        public void setSize(Integer size) {
+            this.size = size;
+        }
+
+        public Integer getHeight() {
+            return height;
+        }
+
+        public void setHeight(Integer height) {
+            this.height = height;
+        }
+    }
+
+    public static class ContentConfig {
+
+        @Field(key = "title", name = "标题", type = FieldTypeEnum.TEXT)
+        private String title;
+
+        @Field(key = "textSize", name = "文本尺寸（1-100）%", type = FieldTypeEnum.NUMBER, isRequired = true)
+        private Integer size;
+
+        @Field(key = "text", name = "每一行内容文本", type = FieldTypeEnum.TEXT, isArray = true)
+        private List<String> text;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public Integer getSize() {
+            return size;
+        }
+
+        public void setSize(Integer size) {
+            this.size = size;
+        }
+
+        public List<String> getText() {
+            return text;
+        }
+
+        public void setText(List<String> text) {
+            this.text = text;
+        }
     }
 
     @Override
@@ -39,43 +112,35 @@ public class ContentElementConfig extends ElementConfig<ContentElementTemplateCo
         return null;
     }
 
-    public String getLeftImg() {
-        return leftImg;
+    public ContentImgConfig getTop() {
+        return top;
     }
 
-    public void setLeftImg(String leftImg) {
-        this.leftImg = leftImg;
+    public void setTop(ContentImgConfig top) {
+        this.top = top;
     }
 
-    public String getRightImg() {
-        return rightImg;
+    public ContentImgConfig getLeft() {
+        return left;
     }
 
-    public void setRightImg(String rightImg) {
-        this.rightImg = rightImg;
+    public void setLeft(ContentImgConfig left) {
+        this.left = left;
     }
 
-    public String getTitle() {
-        return title;
+    public ContentImgConfig getRight() {
+        return right;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setRight(ContentImgConfig right) {
+        this.right = right;
     }
 
-    public List<String> getText() {
-        return text;
+    public ContentConfig getContent() {
+        return content;
     }
 
-    public void setText(List<String> text) {
-        this.text = text;
-    }
-
-    public String getChildren() {
-        return children;
-    }
-
-    public void setChildren(String children) {
-        this.children = children;
+    public void setContent(ContentConfig content) {
+        this.content = content;
     }
 }

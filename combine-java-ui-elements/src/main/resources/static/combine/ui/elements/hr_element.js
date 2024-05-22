@@ -11,12 +11,10 @@ $combine.element.register("SYSTEM.HR", (function () {
     function buildLine(instance, buildData) {
         const body = [];
 
-        if (instance.text) {
-            body.push(domFns.build(instance.template.line));
-            const text = dataFns.parseVariable(instance.text, buildData);
-            body.push(domFns.build(instance.template.text, text));
+        const count = instance.count ? instance.count : 1;
+        for (let i = 0; i < count; i++) {
+            body.push(domFns.build(instance.template.hr));
         }
-        body.push(domFns.build(instance.template.line));
 
         return body;
     }

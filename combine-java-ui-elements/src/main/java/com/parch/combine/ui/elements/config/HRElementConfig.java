@@ -12,9 +12,8 @@ import java.util.List;
 @PageElement(key = "hr", name = "分割线元素", templateClass = HRElementTemplateConfig.class)
 public class HRElementConfig extends ElementConfig<HRElementTemplateConfig> {
 
-    @Field(key = "text", name = "分隔线中间的文本", type = FieldTypeEnum.TEXT)
-    @FieldDesc("不设置文本，则显示为单线")
-    private String text;
+    @Field(key = "count", name = "分隔线数量", type = FieldTypeEnum.TEXT)
+    private Integer count;
 
     public HRElementConfig() {
         super(SystemElementPathTool.buildJsPath("hr"), SystemElementPathTool.buildCssPath("hr"),
@@ -29,11 +28,11 @@ public class HRElementConfig extends ElementConfig<HRElementTemplateConfig> {
         return null;
     }
 
-    public String getText() {
-        return text;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

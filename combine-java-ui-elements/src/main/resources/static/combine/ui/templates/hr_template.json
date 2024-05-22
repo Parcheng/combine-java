@@ -1,18 +1,12 @@
 {
   "external": {
     "tag": "div",
-    "class": "",
+    "class": "c-hr",
     "style": "",
     "properties": {}
   },
-  "line": {
+  "hr": {
     "tag": "hr",
-    "class": "",
-    "style": "",
-    "properties": {}
-  },
-  "text": {
-    "tag": "p",
     "class": "",
     "style": "",
     "properties": {}

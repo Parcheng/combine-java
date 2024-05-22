@@ -9,15 +9,15 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class HRElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "line", name = "线DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "hr", name = "线DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig line;
+    private DomConfig hr;
 
-    public DomConfig getLine() {
-        return line;
+    public DomConfig getHr() {
+        return hr;
     }
 
-    public void setLine(DomConfig line) {
-        this.line = line;
+    public void setHr(DomConfig hr) {
+        this.hr = hr;
     }
 }
