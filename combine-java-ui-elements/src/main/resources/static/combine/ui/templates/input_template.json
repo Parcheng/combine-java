@@ -1,19 +1,19 @@
 {
   "external": {
     "tag": "div",
-    "class": "input-group",
+    "class": "c-input",
     "style": "",
     "properties": {}
   },
   "addon": {
-    "tag": "input",
-    "class": "input-group-addon",
+    "tag": "span",
+    "class": "c-addon",
     "style": "",
     "properties": {}
   },
   "input": {
     "tag": "input",
-    "class": "form-control",
+    "class": "",
     "style": "",
     "properties": {}
   }
