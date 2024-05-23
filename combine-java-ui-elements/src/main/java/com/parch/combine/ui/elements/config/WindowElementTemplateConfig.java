@@ -25,6 +25,10 @@ public class WindowElementTemplateConfig extends ElementTemplateConfig {
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig headClose;
 
+    @Field(key = "body", name = "窗口内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    private DomConfig body;
+
     public DomConfig getHead() {
         return head;
     }
@@ -55,5 +59,13 @@ public class WindowElementTemplateConfig extends ElementTemplateConfig {
 
     public void setWindow(DomConfig window) {
         this.window = window;
+    }
+
+    public DomConfig getBody() {
+        return body;
+    }
+
+    public void setBody(DomConfig body) {
+        this.body = body;
     }
 }
