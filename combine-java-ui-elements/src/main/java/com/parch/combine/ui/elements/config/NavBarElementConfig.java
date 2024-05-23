@@ -32,13 +32,41 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
     private List<NavData> defaultNavs;
 
-    @Field(key = "buttons", name = "导航右栏按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldObject(type = ButtonElementConfig.ButtonItemSettings.class)
-    private List<ButtonElementConfig.ButtonItemSettings> buttons;
+    @Field(key = "buttons", name = "导航右栏操作配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(type = OptItemSettings.class)
+    private List<OptItemSettings> opts;
 
     public NavBarElementConfig() {
         super(SystemElementPathTool.buildJsPath("nav_bar"), SystemElementPathTool.buildCssPath("nav_bar"),
                 SystemElementPathTool.buildTemplatePath("nav_bar"), NavBarElementTemplateConfig.class);
+    }
+
+    @SubConfig
+    public static class OptItemSettings {
+
+        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.OBJECT, isArray = true)
+        private String text;
+
+        @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+        @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
+        @Trigger
+        private Object triggers;
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public Object getTriggers() {
+            return triggers;
+        }
+
+        public void setTriggers(Object triggers) {
+            this.triggers = triggers;
+        }
     }
 
     @Override
@@ -162,12 +190,12 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         this.nav = nav;
     }
 
-    public List<ButtonElementConfig.ButtonItemSettings> getButtons() {
-        return buttons;
+    public List<OptItemSettings> getOpts() {
+        return opts;
     }
 
-    public void setButtons(List<ButtonElementConfig.ButtonItemSettings> buttons) {
-        this.buttons = buttons;
+    public void setOpts(List<OptItemSettings> opts) {
+        this.opts = opts;
     }
 
     public List<NavData> getDefaultNavs() {

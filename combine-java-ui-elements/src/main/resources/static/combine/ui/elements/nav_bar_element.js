@@ -14,6 +14,7 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
         const body = [];
         body.push(buildBrand(instance, buildData));
         body.push(buildBody(instance, buildData));
+        body.push(buildRight(instance, buildData));
         return domFns.build(instance.template.navBar, body);
     }
 
@@ -34,10 +35,7 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
     }
 
     function buildBody(instance, buildData) {
-        const body = [];
-        body.push(buildBodyNav(instance, buildData));
-        body.push(buildbodyRight(instance, buildData));
-        return domFns.build(instance.template.body, body);
+        return domFns.build(instance.template.body, buildBodyNav(instance, buildData));
     }
 
     function buildBodyNav(instance, buildData) {
@@ -109,7 +107,7 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
         const itemBody = [];
 
         text = dataFns.parseVariable(text, currData);
-        const textDom = domFns.build(checked ? instance.template.bodyNavItemTextActive : instance.template.bodyNavItemText, text);
+        const textDom = domFns.build(checked ? instance.template.navActive : instance.template.bodyNavItemText, text);
         triggerFns.build(triggers, textDom, currData);
         if (checked && isCheckTrigger) {
             triggerFns.trigger(triggers, textDom);
@@ -121,25 +119,27 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
 
         children = dataFns.parseVariable(children, currData);
         if (children) {
-            itemBody.push(domFns.build(instance.template.bodyNavItemChildren, buildBodyNavItems(instance, currData, level + 1)));
+            itemBody.push(domFns.build(instance.template.navChildren, buildBodyNavItems(instance, currData, level + 1)));
         }
 
         return itemBody;
     }
 
-    function buildbodyRight(instance, buildData) {
+    function buildRight(instance, buildData) {
         const body = [];
-        const buttons = instance.buttons;
-        if (buttons && buttons instanceof Array) {
-            for (let i = 0; i < instance.buttons.length; i++) {
-                const buttonConfig = instance.buttons[i];
+        const opts = instance.opts;
+        if (opts && opts instanceof Array) {
+            for (let i = 0; i < opts.length; i++) {
+                const buttonConfig = opts[i];
                 const text = dataFns.parseVariable(buttonConfig.text, buildData);
-                const buttonDom = domFns.build(instance.template.bodyRightItem, domFns.build(instance.template.bodyRightItemButton, text));
+                const buttonDom = domFns.build(instance.template.rightOptItem, domFns.build(instance.template.rightOptItemText, text));
                 triggerFns.build(buttonConfig.triggers, buttonDom, buildData);
                 body.push(buttonDom);
             }
         }
-        return domFns.build(instance.template.bodyRight, body);
+
+        const rightOpts = domFns.build(instance.template.rightOpts, body);
+        return domFns.build(instance.template.right, rightOpts);
     }
 
     return {
