@@ -1,5 +1,6 @@
 package com.parch.combine.ui.elements.config;
 
+import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
@@ -26,7 +27,13 @@ public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
     }
 
     @Override
-    protected void initConfig() {}
+    protected void initConfig() {
+        if (CheckEmptyUtil.isNotEmpty(items)) {
+            for (TabItemSettings item : items) {
+                item.init();
+            }
+        }
+    }
 
     @Override
     protected List<String> checkConfig() {
@@ -34,7 +41,7 @@ public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
     }
 
     @SubConfig
-    public static class TabItemSettings {
+    public static class TabItemSettings implements IInit {
 
         @Field(key = "id", name = "页签ID", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
         private String id;
@@ -60,6 +67,19 @@ public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
                 id = UUID.randomUUID().toString();
             }
             return id;
+        }
+
+        @Override
+        public void init() {
+            if (show == null) {
+                show = false;
+            }
+            if (checked == null) {
+                checked = false;
+            }
+            if (hasClose == null) {
+                hasClose = true;
+            }
         }
 
         public void setId(String id) {

@@ -1,13 +1,13 @@
 {
   "external": {
     "tag": "div",
-    "class": "",
+    "class": "c-tab",
     "style": "",
     "properties": {}
   },
   "tab": {
     "tag": "ul",
-    "class": "nav nav-tabs",
+    "class": "",
     "style": "",
     "properties": {}
   },
@@ -19,33 +19,39 @@
   },
   "itemActive": {
     "tag": "li",
-    "class": "active",
+    "class": "c-active",
     "style": "",
     "properties": {}
   },
   "title": {
-    "tag": "a",
+    "tag": "div",
     "class": "",
-    "style": "cursor:default;",
+    "style": "",
     "properties": {}
   },
   "titleText": {
     "tag": "span",
-    "class": "",
-    "style": "block:inline-block;",
+    "class": "c-title",
+    "style": "",
     "properties": {}
   },
   "titleClose": {
     "tag": "span",
-    "class": "",
-    "style": "block:inline-block;margin-left:8px;cursor:pointer;",
+    "class": "c-close",
+    "style": "",
     "text": "x",
     "properties": {}
   },
-  "content": {
+  "body": {
+    "tag": "div",
+    "class": "c-body",
+    "style": "",
+    "properties": {}
+  },
+  "bodyItem": {
     "tag": "div",
     "class": "",
-    "style": "margin-top:30px;",
+    "style": "",
     "properties": {}
   }
 }

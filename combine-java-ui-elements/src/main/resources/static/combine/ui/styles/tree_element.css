@@ -1,0 +1,36 @@
+.c-tree {
+  width: 100%;
+  padding: 5px;
+}
+
+.c-tree ul{
+  list-style-type: none;
+  padding: 0;
+}
+
+.c-tree li{
+  margin: 8px 0;
+}
+
+.c-tree li label{
+  width: 100%;
+  cursor:pointer;
+  padding: 6px 8px;
+  border: 1px solid var(--main_color);
+  color: var(--main_color);
+  display: inline-block;
+  height: 35px;
+  margin: 0;
+  font-weight: normal;
+  border-radius: 4px;
+}
+
+.c-tree .c-active > label{
+  background-color: var(--main_color);
+  color: var(--anti_color);
+  font-weight: bold;
+}
+
+.c-tree .c-children{
+  padding-left: 4%;
+}
