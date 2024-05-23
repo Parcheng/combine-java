@@ -1,0 +1,13 @@
+.c-text {
+  width: 100%;
+  padding: 5px;
+}
+
+.c-text p{
+  display:block;
+  text-align:left;
+}
+
+.c-text .c-children{
+  padding-left:20px;
+}

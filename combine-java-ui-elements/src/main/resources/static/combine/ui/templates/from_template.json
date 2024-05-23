@@ -1,43 +1,43 @@
 {
   "external": {
     "tag": "div",
-    "class": "",
-    "style": "",
-    "properties": {}
-  },
-  "vertical": {
-    "tag": "div",
-    "class": "",
-    "style": "",
-    "properties": {}
-  },
-  "inline": {
-    "tag": "div",
-    "class": "form-inline",
+    "class": "c-from",
     "style": "",
     "properties": {}
   },
   "horizontal": {
     "tag": "div",
-    "class": "form-horizontal",
+    "class": "c-horizontal",
+    "style": "",
+    "properties": {}
+  },
+  "vertical": {
+    "tag": "div",
+    "class": "c-vertical",
+    "style": "",
+    "properties": {}
+  },
+  "inline": {
+    "tag": "div",
+    "class": "c-inline",
     "style": "",
     "properties": {}
   },
   "item": {
     "tag": "div",
-    "class": "form-group",
-    "style": "margin-left:10px;margin-top:8px;margin-bottom:8px;text-align:left;",
+    "class": "c-item",
+    "style": "",
     "properties": {}
   },
   "label": {
     "tag": "label",
     "class": "",
-    "style": "margin-right:10px;",
+    "style": "",
     "properties": {}
   },
   "content": {
     "tag": "div",
-    "class": "input-group",
+    "class": "",
     "style": "",
     "properties": {}
   }
