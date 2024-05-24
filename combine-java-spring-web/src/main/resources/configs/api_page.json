@@ -267,12 +267,13 @@
         },{
           "key": "left",
           "id": "element_left",
-          "classes": "col-md-2"
+          "classes": "c-model",
+          "style": "width:19%;"
         },{
           "key": "content",
           "id": "element_content",
-          "classes": "col-md-10",
-          "style": "border-left:1px solid #F5F5F5;padding-left:20px;"
+          "classes": "c-model",
+          "style": "width:80%;border-left:1px solid #F5F5F5;padding-left:20px;"
         }
       ]
     }
