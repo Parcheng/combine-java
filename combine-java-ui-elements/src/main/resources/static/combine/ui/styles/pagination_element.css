@@ -13,11 +13,12 @@
 
 .c-pagination li{
   border: 1px solid var(--main_color);
-  padding: 0 8px;
+  padding: 3px 8px;
   margin: 0 5px;
   color: var(--main_color);
   cursor:pointer;
   border-radius: 8px;
+  font-size: 14px;
 }
 
 .c-pagination .c-disabled{

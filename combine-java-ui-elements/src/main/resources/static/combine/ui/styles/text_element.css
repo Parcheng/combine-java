@@ -6,6 +6,7 @@
 .c-text p{
   display:block;
   text-align:left;
+  font-size: 14px;
 }
 
 .c-text .c-children{

@@ -34,6 +34,7 @@
 
 .c-content .c-body-content{
   color: var(--font_color);
+  font-size: 14px;
 }
 
 .c-content .c-right{

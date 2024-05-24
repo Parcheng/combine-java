@@ -5,6 +5,7 @@
 
 .c-table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 .c-table thead{
@@ -19,6 +20,7 @@
 .c-table thead th{
   padding: 5px;
   font-size: 14px;
+  text-align: left;
 }
 
 .c-table tbody tr{
@@ -32,4 +34,6 @@
 .c-table tbody td{
   padding: 5px;
   font-size: 14px;
+  text-align: left;
+  margin: 0;
 }

@@ -11,11 +11,13 @@
 .c-radio .c-inline {
   padding-right: 8px;
   display: inline-block;
+  font-size: 14px;
 }
 
 .c-radio .c-multiline {
   width: 100%;
   display: block;
+  font-size: 14px;
 }
 
 .c-radio .c-disabled input{

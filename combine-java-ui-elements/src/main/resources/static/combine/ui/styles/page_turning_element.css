@@ -13,11 +13,12 @@
 
 .c-page-turning li{
   border: 1px solid var(--main_color);
-  padding: 0 10px;
+  padding: 3px 10px;
   margin: 0 20px;
   color: var(--main_color);
   cursor:pointer;
   border-radius: 8px;
+  font-size: 14px;
 }
 
 .c-page-turning .c-disabled{
