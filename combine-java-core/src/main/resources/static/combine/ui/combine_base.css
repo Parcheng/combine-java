@@ -1,6 +1,8 @@
 *{
     font-family: Verdana, Geneva, sans-serif;
+    box-sizing: border-box;
 }
+
 :root{
     --bg_color:white;
     
@@ -17,11 +19,22 @@
     --anti_color: white;
     --deep_anti_color: #dddddd;
 }
+
 html,body{
-    height: 100%; 
-    margin: 0px;
-    padding: 0px;
-    color: var(--font_color);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol, li, a, label, p {
+    padding: 0;
+    margin: 0;
+}
+
+
+.c-model {
+    display: inline-block;
+    vertical-align: top;
 }
 
 /* 公共样式 */

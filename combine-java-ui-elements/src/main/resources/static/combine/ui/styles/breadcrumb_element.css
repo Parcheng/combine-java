@@ -13,6 +13,7 @@
 
 .c-breadcrumb li {
   display: inline;
+  font-size: 14px;
 }
 
 .c-breadcrumb li:not(:last-child):after {

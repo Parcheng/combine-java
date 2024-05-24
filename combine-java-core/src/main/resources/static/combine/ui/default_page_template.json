@@ -1,18 +1,6 @@
 {
   "lang": "en",
   "metas": [],
-  "links": [
-    {
-      "rel": "stylesheet",
-      "href": "${systemUrl}/combine/ui/bootstrap/bootstrap.min.css"
-    },
-    {
-      "rel": "stylesheet",
-      "href": "${systemUrl}/combine/ui/bootstrap/bootstrap-theme.min.css"
-    }
-  ],
-  "scripts": [
-    "${systemUrl}/combine/ui/bootstrap/jquery.min.js",
-    "${systemUrl}/combine/ui/bootstrap/bootstrap.min.js"
-  ]
+  "links": [],
+  "scripts": []
 }

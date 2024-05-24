@@ -29,10 +29,11 @@ $combine.element.register("SYSTEM.FROM", (function () {
         for (let i = 0; i < instance.items.length; i++) {
             const currItem = instance.items[i];
             const currKey = currItem.fieldKey;
+            const fieldName = dataFns.parseVariable(currItem.fieldName, buildData);
             const hide = currItem.hide === true;
 
             const itemBodys = [];
-            itemBodys.push(domFns.build(instance.template.label, currItem.fieldName));
+            itemBodys.push(domFns.build(instance.template.label, fieldName));
             if (currItem.element) {
                 const contentElementDom = buildElement(currItem.element, buildData);
                 if (contentElementDom) {

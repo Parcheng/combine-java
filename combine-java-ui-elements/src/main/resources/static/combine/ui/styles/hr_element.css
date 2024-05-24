@@ -3,6 +3,10 @@
 }
 
 .c-content hr{
+  box-sizing: content-box;
+  height: 0;
   border: none;
   border-top: 1px solid var(--main_color);
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

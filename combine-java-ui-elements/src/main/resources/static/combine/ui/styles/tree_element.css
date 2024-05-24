@@ -15,13 +15,14 @@
 .c-tree li label{
   width: 100%;
   cursor:pointer;
-  padding: 6px 8px;
+  padding: 10px 10px;
   border: 1px solid var(--main_color);
   color: var(--main_color);
   display: inline-block;
-  height: 35px;
+  height: 40px;
   margin: 0;
   font-weight: normal;
+  font-size: 14px;
   border-radius: 4px;
 }
 
