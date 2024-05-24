@@ -31,7 +31,7 @@ $combine = (function () {
         get: function () {
             return constant.data;
         }
-    }
+    };
 
     const groupFns = {
         load: function (id, parent, data, isAppend) {
@@ -71,7 +71,7 @@ $combine = (function () {
         get(groupId) {
             return groups[groupId];
         }
-    }
+    };
 
     const instanceFns = {
         register: function (id, instance) {
@@ -612,7 +612,7 @@ $combine = (function () {
             }
             return JSON.parse(instanceTemps[id]);
         }
-    }
+    };
 
     const configFns = {
         init: function (instance) {

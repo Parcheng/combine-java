@@ -11,7 +11,7 @@ import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
 import java.util.List;
 
-@PageElement(key = "pagination", name = "分页元素", templateClass = AudioElementTemplateConfig.class)
+@PageElement(key = "pagination", name = "分页元素", templateClass = PaginationElementTemplateConfig.class)
 public class PaginationElementConfig extends ElementConfig<PaginationElementTemplateConfig> {
 
     @Field(key = "currPage", name = "当前页", type = FieldTypeEnum.TEXT, isRequired = true)

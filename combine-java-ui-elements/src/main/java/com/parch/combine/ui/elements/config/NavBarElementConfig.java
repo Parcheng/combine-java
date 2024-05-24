@@ -13,7 +13,7 @@ import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
 import java.util.List;
 
-@PageElement(key = "nav_bar", name = "音频元素", templateClass = AudioElementTemplateConfig.class)
+@PageElement(key = "nav_bar", name = "音频元素", templateClass = NavBarElementTemplateConfig.class)
 public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConfig> {
 
     @Field(key = "brandText", name = "商标文本", type = FieldTypeEnum.TEXT)

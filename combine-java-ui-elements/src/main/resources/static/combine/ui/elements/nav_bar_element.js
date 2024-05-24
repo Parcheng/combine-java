@@ -57,28 +57,31 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
             return body;
         }
 
-        if (instance.defaultNavs) {
-            const defaultNavs = instance.defaultNavs;
-            for (let i = 0; i < defaultNavs.length; i++) {
-                const defaultNav = defaultNavs[i];
-                let index = defaultNav.index ? defaultNav.index : 0;
-                index = index >= 0 ? index : (buildData.length + index);
+        // 防止每次选则使都生成默认菜单
+        if (checkedIndex === null || checkedIndex === undefined) {
+            if (instance.defaultNavs) {
+                const defaultNavs = instance.defaultNavs;
+                for (let i = 0; i < defaultNavs.length; i++) {
+                    const defaultNav = defaultNavs[i];
+                    let index = defaultNav.index ? defaultNav.index : 0;
+                    index = index >= 0 ? index : (buildData.length + index);
 
-                const defaultData = {
-                    $isDefaultNav: true,
-                    $triggers: defaultNav.triggers,
-                    $text: dataFns.parseVariable(defaultNav.text, buildData)
-                };
-                if (buildData.length >= index && index >= 0) {
-                    buildData.splice(index, 0, defaultData);
-                } else {
-                    buildData.push(defaultData);
+                    const defaultData = {
+                        $isDefaultNav: true,
+                        $triggers: defaultNav.triggers,
+                        $text: dataFns.parseVariable(defaultNav.text, buildData)
+                    };
+                    if (buildData.length >= index && index >= 0) {
+                        buildData.splice(index, 0, defaultData);
+                    } else {
+                        buildData.push(defaultData);
+                    }
                 }
             }
-        }
 
-        checkedIndex = checkedIndex ? checkedIndex : instance.defaultChecked;
-        data[instance.id] = buildData;
+            checkedIndex = instance.defaultChecked;
+            data[instance.id] = buildData;
+        }
 
         for (let i = 0; i < buildData.length; i++) {
             const currData = buildData[i];

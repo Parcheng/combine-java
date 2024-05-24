@@ -13,7 +13,7 @@ import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
 import java.util.List;
 
-@PageElement(key = "select", name = "下拉框元素", templateClass = AudioElementTemplateConfig.class)
+@PageElement(key = "select", name = "下拉框元素", templateClass = SelectElementTemplateConfig.class)
 public class SelectElementConfig extends ElementConfig<SelectElementTemplateConfig> {
 
     @Field(key = "key", name = "下拉框KEY属性，在获取数据时作为字段名", type = FieldTypeEnum.TEXT)
