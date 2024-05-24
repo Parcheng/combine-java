@@ -5,7 +5,7 @@
 
 .c-navbar .c-main{
   width: 100%;
-  height: 40px;
+  height: 50px;
   padding: 0 5px;
   margin: 0;
   border: 0;
@@ -13,16 +13,16 @@
 }
 
 .c-navbar .c-main .c-brand{
-  height: 40px;
-  padding: 5px 5px;
+  height: 50px;
+  padding: 10px 5px;
   margin: 0;
   display: inline-block;
   vertical-align: top;
 }
 
 .c-navbar .c-main .c-brand img{
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
 }
 
 .c-navbar .c-main .c-brand span{
@@ -34,7 +34,7 @@
 }
 
 .c-navbar .c-main .c-body{
-  height: 40px;
+  height: 50px;
   padding: 0;
   margin: 0 0 0 30px;
   display: inline-block;
@@ -54,11 +54,11 @@
 
 .c-navbar .c-main .c-body .c-navs li span{
   color: var(--anti_color);
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  padding: 10px 10px 11px;
+  padding: 16px 10px 16px;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .c-navbar .c-main .c-body .c-navs li .c-active{
@@ -67,7 +67,7 @@
 }
 
 .c-navbar .c-main .c-opts{
-  height: 40px;
+  height: 50px;
   padding: 0;
   margin: 0;
   display: inline-block;
