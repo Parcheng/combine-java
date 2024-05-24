@@ -1,25 +1,25 @@
 {
   "external": {
     "tag": "nav",
-    "class": "navbar navbar-default",
+    "class": "c-navbar",
     "style": "",
     "properties": {}
   },
   "navBar": {
     "tag": "div",
-    "class": "container-fluid",
+    "class": "c-main",
     "style": "",
     "properties": {}
   },
   "brand": {
     "tag": "div",
-    "class": "navbar-header",
+    "class": "c-brand",
     "style": "",
     "properties": {}
   },
   "brandContent": {
-    "tag": "a",
-    "class": "navbar-brand",
+    "tag": "div",
+    "class": "",
     "style": "",
     "properties": {}
   },
@@ -37,56 +37,56 @@
   },
   "body": {
     "tag": "div",
-    "class": "collapse navbar-collapse",
+    "class": "c-body",
     "style": "",
     "properties": {}
   },
   "bodyNav": {
     "tag": "ul",
-    "class": "nav navbar-nav",
+    "class": "c-navs",
     "style": "",
     "properties": {}
   },
   "bodyNavItem": {
     "tag": "li",
     "class": "",
-    "style": "cursor:pointer;",
+    "style": "",
     "properties": {}
   },
   "bodyNavItemText": {
-    "tag": "a",
-    "class": "dropdown-toggle",
+    "tag": "span",
+    "class": "",
     "style": "",
     "properties": {}
   },
-  "bodyNavItemTextActive": {
-    "tag": "a",
-    "class": "dropdown-toggle",
-    "style": "font-weight:bold;",
-    "properties": {}
-  },
-  "bodyNavItemChildren": {
+  "right": {
     "tag": "ul",
-    "class": "dropdown-menu",
+    "class": "c-opts",
     "style": "",
     "properties": {}
   },
-  "bodyRight": {
+  "rightOpts": {
     "tag": "ul",
-    "class": "nav navbar-nav navbar-right",
+    "class": "",
     "style": "",
     "properties": {}
   },
-  "bodyRightItem": {
+  "rightOptItem": {
     "tag": "li",
     "class": "",
     "style": "",
     "properties": {}
   },
-  "bodyRightItemButton": {
-    "tag": "a",
+  "rightOptItemText": {
+    "tag": "span",
     "class": "",
-    "style": "cursor:pointer;",
+    "style": "",
+    "properties": {}
+  },
+  "navActive": {
+    "tag": "span",
+    "class": "c-active",
+    "style": "",
     "properties": {}
   }
 }

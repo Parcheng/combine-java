@@ -1,56 +1,62 @@
 {
   "external": {
     "tag": "div",
-    "class": "media",
+    "class": "c-content",
+    "style": "",
+    "properties": {}
+  },
+  "top": {
+    "tag": "div",
+    "class": "c-top",
+    "style": "",
+    "properties": {}
+  },
+  "topImg": {
+    "tag": "img",
+    "class": "",
     "style": "",
     "properties": {}
   },
   "left": {
     "tag": "div",
-    "class": "media-left",
+    "class": "c-left",
     "style": "",
     "properties": {}
   },
   "leftImg": {
     "tag": "img",
-    "class": "media-object",
+    "class": "",
     "style": "",
     "properties": {}
   },
   "right": {
     "tag": "div",
-    "class": "media-right",
+    "class": "c-right",
     "style": "",
     "properties": {}
   },
   "rightImg": {
     "tag": "img",
-    "class": "media-object",
+    "class": "",
     "style": "",
     "properties": {}
   },
   "body": {
     "tag": "div",
-    "class": "media-body",
+    "class": "c-body",
     "style": "",
     "properties": {}
   },
   "bodyTitle": {
     "tag": "h4",
-    "class": "media-heading",
+    "class": "c-body-title",
     "style": "",
     "properties": {}
   },
   "bodyContent": {
     "tag": "p",
-    "class": "",
+    "class": "c-body-content",
     "style": "",
-    "properties": {}
-  },
-  "bodyChildren": {
-    "tag": "div",
-    "class": "media",
-    "style": "padding-left:3%;",
     "properties": {}
   }
 }

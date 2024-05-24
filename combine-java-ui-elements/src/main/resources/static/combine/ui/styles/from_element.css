@@ -1,0 +1,44 @@
+.c-from {
+  width: 100%;
+  padding: 5px;
+}
+
+.c-from .c-item{
+  display: inline-block;
+}
+
+.c-from .c-item > label{
+  display: inline-block;
+  padding: 5px;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.c-from .c-item > div{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.c-from .c-horizontal .c-item > label{
+  width: 20%;
+}
+
+.c-from .c-horizontal .c-item > div{
+  width: 80%;
+}
+
+.c-from .c-vertical .c-item > label{
+  width: 100%;
+}
+
+.c-from .c-vertical .c-item > div{
+  width: 100%;
+}
+
+.c-from .c-inline .c-item > label{
+  width: auto;
+}
+
+.c-from .c-inline .c-item > div{
+  width: auto;
+}

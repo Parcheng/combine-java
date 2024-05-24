@@ -1,13 +1,13 @@
 {
   "external": {
     "tag": "div",
-    "class": "table-responsive",
+    "class": "c-table-responsive",
     "style": "",
     "properties": {}
   },
   "table": {
     "tag": "table",
-    "class": "table table-hover table-striped",
+    "class": "c-table",
     "style": "",
     "properties": {}
   },

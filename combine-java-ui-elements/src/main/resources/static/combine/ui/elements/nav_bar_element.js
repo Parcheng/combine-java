@@ -14,6 +14,7 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
         const body = [];
         body.push(buildBrand(instance, buildData));
         body.push(buildBody(instance, buildData));
+        body.push(buildRight(instance, buildData));
         return domFns.build(instance.template.navBar, body);
     }
 
@@ -34,17 +35,14 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
     }
 
     function buildBody(instance, buildData) {
-        const body = [];
-        body.push(buildBodyNav(instance, buildData));
-        body.push(buildbodyRight(instance, buildData));
-        return domFns.build(instance.template.body, body);
+        return domFns.build(instance.template.body, buildBodyNav(instance, buildData));
     }
 
     function buildBodyNav(instance, buildData) {
         return domFns.build(instance.template.bodyNav, buildBodyNavItems(instance, buildData));
     }
 
-    function buildBodyNavItems(instance, buildData, level, checkedIndex) {
+    function buildBodyNavItems(instance, buildData, checkedIndex) {
         const body = [];
         const navSettings = instance.nav;
         if (!navSettings || !navSettings.text) {
@@ -52,52 +50,44 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
         }
 
         const text = navSettings.text;
-        const children = navSettings.children;
 
-        level = level ? level : 0;
         const sourceBuildData = buildData;
         buildData = buildData ? buildData : [];
-        buildData = buildData instanceof Array ? buildData : (children ? buildData[children] : null);
-        if (!buildData || buildData.length == 0) {
+        if (!buildData || buildData.length === 0) {
             return body;
         }
 
-        let isCheckTrigger = false;
-        if (level == 0 && (checkedIndex == undefined || checkedIndex == null)) {
-            if (instance.defaultNavs) {
-                const defaultNavs = instance.defaultNavs;
-                for (let i = 0; i < defaultNavs.length; i++) {
-                    const defaultNav = defaultNavs[i];
-                    let index = defaultNav.index ? defaultNav.index : 0;
-                    index = index >= 0 ? index : (buildData.length + index);
+        if (instance.defaultNavs) {
+            const defaultNavs = instance.defaultNavs;
+            for (let i = 0; i < defaultNavs.length; i++) {
+                const defaultNav = defaultNavs[i];
+                let index = defaultNav.index ? defaultNav.index : 0;
+                index = index >= 0 ? index : (buildData.length + index);
 
-                    const defaultData = {
-                        $isDefaultNav: true,
-                        $triggers: defaultNav.triggers,
-                        $text: dataFns.parseVariable(defaultNav.text, buildData),
-                        $children: dataFns.parseVariable(defaultNav.children, buildData)
-                    };
-                    if (buildData.length >= index && index >= 0) {
-                        buildData.splice(index, 0, defaultData);
-                    } else {
-                        buildData.push(defaultData);
-                    }
+                const defaultData = {
+                    $isDefaultNav: true,
+                    $triggers: defaultNav.triggers,
+                    $text: dataFns.parseVariable(defaultNav.text, buildData)
+                };
+                if (buildData.length >= index && index >= 0) {
+                    buildData.splice(index, 0, defaultData);
+                } else {
+                    buildData.push(defaultData);
                 }
             }
-
-            isCheckTrigger = true; // 只有初始化才能触发
-            checkedIndex = instance.defaultChecked;
-            data[instance.id] = buildData;
         }
+
+        checkedIndex = checkedIndex ? checkedIndex : instance.defaultChecked;
+        data[instance.id] = buildData;
 
         for (let i = 0; i < buildData.length; i++) {
             const currData = buildData[i];
             const isChecked = checkedIndex == i;
             let itemBody;
             if (currData.$isDefaultNav) {
-                itemBody = buildBodyNavItem(instance, sourceBuildData, currData.$triggers, currData.$text, currData.$children, level, i, isChecked, isCheckTrigger);
+                itemBody = buildBodyNavItem(instance, sourceBuildData, currData.$triggers, currData.$text, i, isChecked);
             } else {
-                itemBody = buildBodyNavItem(instance, currData, navSettings.triggers, text, children, level, i, isChecked, isCheckTrigger);
+                itemBody = buildBodyNavItem(instance, currData, navSettings.triggers, text, i, isChecked);
             }
             body.push(domFns.build(instance.template.bodyNavItem, itemBody));
         }
@@ -105,41 +95,36 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
         return body;
     }
 
-    function buildBodyNavItem(instance, currData, triggers, text, children, level, index, checked, isCheckTrigger) {
+    function buildBodyNavItem(instance, currData, triggers, text, index, checked) {
         const itemBody = [];
 
         text = dataFns.parseVariable(text, currData);
-        const textDom = domFns.build(checked ? instance.template.bodyNavItemTextActive : instance.template.bodyNavItemText, text);
+        const textDom = domFns.build(checked ? instance.template.navActive : instance.template.bodyNavItemText, text);
         triggerFns.build(triggers, textDom, currData);
-        if (checked && isCheckTrigger) {
+        if (checked) {
             triggerFns.trigger(triggers, textDom);
         }
-        if (level == 0) {
-            domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(instance.id, "checked", index));
-        }
+        domFns.appendProtity(textDom, "onclick", elementFns.buildCallFnCode(instance.id, "checked", index));
         itemBody.push(textDom);
-
-        children = dataFns.parseVariable(children, currData);
-        if (children) {
-            itemBody.push(domFns.build(instance.template.bodyNavItemChildren, buildBodyNavItems(instance, currData, level + 1)));
-        }
 
         return itemBody;
     }
 
-    function buildbodyRight(instance, buildData) {
+    function buildRight(instance, buildData) {
         const body = [];
-        const buttons = instance.buttons;
-        if (buttons && buttons instanceof Array) {
-            for (let i = 0; i < instance.buttons.length; i++) {
-                const buttonConfig = instance.buttons[i];
+        const opts = instance.opts;
+        if (opts && opts instanceof Array) {
+            for (let i = 0; i < opts.length; i++) {
+                const buttonConfig = opts[i];
                 const text = dataFns.parseVariable(buttonConfig.text, buildData);
-                const buttonDom = domFns.build(instance.template.bodyRightItem, domFns.build(instance.template.bodyRightItemButton, text));
+                const buttonDom = domFns.build(instance.template.rightOptItem, domFns.build(instance.template.rightOptItemText, text));
                 triggerFns.build(buttonConfig.triggers, buttonDom, buildData);
                 body.push(buttonDom);
             }
         }
-        return domFns.build(instance.template.bodyRight, body);
+
+        const rightOpts = domFns.build(instance.template.rightOpts, body);
+        return domFns.build(instance.template.right, rightOpts);
     }
 
     return {
@@ -164,7 +149,7 @@ $combine.element.register("SYSTEM.NAV_BAR", (function () {
                 const externalDom = document.getElementById(instance.id);
                 if (externalDom && elementData) {
                     const navBodyDom = externalDom.children[0].children[1].children[0];
-                    const navItemDoms = buildBodyNavItems(instance, elementData, 0, checkIndex);
+                    const navItemDoms = buildBodyNavItems(instance, elementData, checkIndex);
                     domFns.setBody(navBodyDom, navItemDoms);
                 }
             }

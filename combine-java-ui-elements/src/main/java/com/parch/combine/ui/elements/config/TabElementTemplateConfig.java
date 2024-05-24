@@ -34,9 +34,13 @@ public class TabElementTemplateConfig extends ElementTemplateConfig {
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig titleClose;
 
-    @Field(key = "content", name = "页签内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "body", name = "页签内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig content;
+    private DomConfig body;
+
+    @Field(key = "bodyContent", name = "页签内容项DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    private DomConfig bodyItem;
 
     public DomConfig getTab() {
         return tab;
@@ -70,12 +74,20 @@ public class TabElementTemplateConfig extends ElementTemplateConfig {
         this.title = title;
     }
 
-    public DomConfig getContent() {
-        return content;
+    public DomConfig getBody() {
+        return body;
     }
 
-    public void setContent(DomConfig content) {
-        this.content = content;
+    public void setBody(DomConfig body) {
+        this.body = body;
+    }
+
+    public DomConfig getBodyItem() {
+        return bodyItem;
+    }
+
+    public void setBodyItem(DomConfig bodyItem) {
+        this.bodyItem = bodyItem;
     }
 
     public DomConfig getTitleText() {

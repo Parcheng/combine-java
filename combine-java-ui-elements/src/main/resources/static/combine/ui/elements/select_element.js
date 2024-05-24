@@ -1,7 +1,6 @@
 $combine.element.register("SYSTEM.SELECT", (function () {
     const domFns = $combine.dom;
     const dataFns = $combine.data;
-    const elementFns = $combine.element;
 
     function init(instance, parentData) {
         return instance;
@@ -12,18 +11,25 @@ $combine.element.register("SYSTEM.SELECT", (function () {
     }
 
     function buildSelect(template, instance, buildData) {
-        const selectBody = [];
-
         const key = dataFns.parseVariableText(instance.key, buildData);
-        const value = dataFns.parseVariable(instance.defaultValue, buildData);
+        const value = dataFns.parseVariable(instance.value, buildData);
         const optionTextField = instance.option.text;
         const optionValueField = instance.option.value;
 
         let optionData = dataFns.parseVariable(instance.option.data, buildData);
         optionData = optionData instanceof Array ? optionData : [optionData];
 
-        let checkedText;
         const selectOptionBody = [];
+
+        if (instance.defaultText || instance.defaultValue) {
+            const optionDom = domFns.build(template.option, instance.defaultText ? instance.defaultText : "");
+            optionDom.setAttribute("value", instance.defaultValue ? instance.defaultValue : "");
+            optionDom.setAttribute("hidden", true);
+            if (!value) {
+                optionDom.selected = true;
+            }
+            selectOptionBody.push(optionDom);
+        }
 
         for (let i = 0; i < optionData.length; i++) {
             const currOptionData = optionData[i];
@@ -34,43 +40,27 @@ $combine.element.register("SYSTEM.SELECT", (function () {
             const optionText = dataFns.parseVariableText(optionTextField, currOptionData);
             const optionValue = dataFns.parseVariableText(optionValueField, currOptionData);
 
-            const optionDom = domFns.build(template.selectOptionItem, domFns.build(template.selectOptionItemText, optionText));
+            const optionDom = domFns.build(template.option, optionText);
             optionDom.setAttribute("value", optionValue);
-            domFns.appendProtity(optionDom, "onclick", elementFns.buildCallFnCode(instance.id, "checked", i));
-            selectOptionBody.push(optionDom);
-
-            if (optionValue == value) {
-                checkedText = optionText;
+            if (value && value == optionValue) {
+                optionDom.selected = true;
             }
+
+            selectOptionBody.push(optionDom);
         }
 
-        if (!checkedText) {
-            checkedText = dataFns.parseVariable(instance.text ? instance.text : instance.defaultText, buildData);
-        }
-        const selectValueDom = domFns.build(template.selectValue, buildSelectValueText(template, checkedText));
-        if (value) {
-            selectValueDom.setAttribute("value", value);
-        }
+        const selectDom = domFns.build(template.select, selectOptionBody);
         if (key) {
-            selectValueDom.name = key;
+            selectDom.name = key;
         }
 
-        selectBody.push(selectValueDom);
-        selectBody.push(domFns.build(template.selectOptions, selectOptionBody));
-        return domFns.build(template.select, selectBody);
-    }
-
-    function buildSelectValueText(template, text) {
-        const flagDom = domFns.build(template.selectOptionFlag, template.selectOptionFlag.text);
-        return [text, " ", flagDom];
+        return selectDom
     }
 
     return {
         build: function build(instance, data) {
             instance = init(instance, data);
-            const buttons = buildControls(instance, data);
-            const externalDom = domFns.build(instance.template.external, buttons);
-            return externalDom
+            return domFns.build(instance.template.external, buildControls(instance, data));
         },
         refresh: function refresh(id, instance, parentData) {
             instance = init(instance, parentData);
@@ -80,28 +70,10 @@ $combine.element.register("SYSTEM.SELECT", (function () {
         getData: function getData(id) {
             let externalDom = document.getElementById(id);
             if (externalDom) {
-                const valueDom = externalDom.children[0].children[0];
-                return valueDom.getAttribute("value");
+                const selectDom = externalDom.children[0];
+                return selectDom.options[selectDom.selectedIndex].value;
             }
             return null;
-        },
-        call: {
-            checked: function (instance, checkIndex) {
-                let externalDom = document.getElementById(instance.id);
-                if (externalDom) {
-                    const valueDom = externalDom.children[0].children[0];
-                    const optionsDom = externalDom.children[0].children[1];
-
-                    let value = "", text = "     ";
-                    if (optionsDom.children.length > checkIndex) {
-                        const optionDom = optionsDom.children[checkIndex];
-                        value = optionDom.getAttribute("value");
-                        text = optionDom.children[0].textContent;
-                    }
-                    valueDom.setAttribute("value", value);
-                    domFns.setBody(valueDom, buildSelectValueText(instance.template, text));
-                }
-            }
         }
     }
 })());

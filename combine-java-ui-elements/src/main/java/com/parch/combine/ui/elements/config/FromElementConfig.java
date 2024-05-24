@@ -17,18 +17,31 @@ import java.util.UUID;
 @PageElement(key = "from", name = "表单元素", templateClass = FromElementTemplateConfig.class)
 public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> {
 
-    @Field(key = "layout", name = "布局 VERTICAL | INLINE | HORIZONTAL", type = FieldTypeEnum.TEXT, defaultValue = "HORIZONTAL")
+    @Field(key = "layout", name = "布局 VERTICAL | INLINE | HORIZONTAL", type = FieldTypeEnum.TEXT, defaultValue = "INLINE")
     private String layout;
+
+    @Field(key = "column", name = "列数（1-100）", type = FieldTypeEnum.NUMBER, defaultValue = "1")
+    private Integer column;
 
     @Field(key = "items", name = "表单项配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
     private List<ItemConfig> items;
 
     public FromElementConfig() {
-        super(SystemElementPathTool.buildJsPath("from"), SystemElementPathTool.buildTemplatePath("from"), FromElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("from"), SystemElementPathTool.buildCssPath("from"),
+                SystemElementPathTool.buildTemplatePath("from"), FromElementTemplateConfig.class);
     }
 
     @Override
-    protected void initConfig() {}
+    protected void initConfig() {
+        if (column == null) {
+            column = 1;
+        }
+        if (layout == null) {
+            layout = "HORIZONTAL";
+        } else if (layout.toUpperCase().equals("INLINE")) {
+            column = -1;
+        }
+    }
 
     @Override
     protected List<String> checkConfig() {
@@ -124,5 +137,13 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
 
     public void setItems(List<ItemConfig> items) {
         this.items = items;
+    }
+
+    public Integer getColumn() {
+        return column;
+    }
+
+    public void setColumn(Integer column) {
+        this.column = column;
     }
 }

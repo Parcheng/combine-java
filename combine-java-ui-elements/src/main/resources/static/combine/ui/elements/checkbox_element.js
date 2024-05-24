@@ -12,15 +12,19 @@ $combine.element.register("SYSTEM.CHECKBOX", (function () {
         const layout = instance.layout ? instance.layout.toUpperCase() : null;
         switch (layout) {
             case "INLINE":
-                layoutConfig = instance.template.inline;
+                layoutConfig = configFns.initElement({}, instance.template.inline);
                 break;
             case "MULTILINE":
             default:
-                layoutConfig = instance.template.multiline;
+                layoutConfig = configFns.initElement({}, instance.template.multiline);
                 break;
         }
 
-        const isDisabled = instance.disabled && instance.disabled == true;
+        const isDisabled = instance.disabled && instance.disabled === true;
+        if (isDisabled) {
+            layoutConfig = configFns.initElement(layoutConfig, instance.template.disabled, buildData);
+        }
+
         return buildCheckbox(instance, layoutConfig, isDisabled, buildData);
     }
 
@@ -29,10 +33,6 @@ $combine.element.register("SYSTEM.CHECKBOX", (function () {
         const body = [];
         if (!instance.option) {
             return body;
-        }
-
-        if (isDisabled) {
-            layoutConfig = configFns.initElement(layoutConfig, instance.template.disabled, buildData);
         }
 
         const key = dataFns.parseVariableText(instance.key, buildData);

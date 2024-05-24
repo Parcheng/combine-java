@@ -1,6 +1,7 @@
 package com.parch.combine.ui.elements.config;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.ui.base.SubConfig;
@@ -16,17 +17,22 @@ import java.util.List;
 public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConfig> {
 
     @Field(key = "items", name = "按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(type = ButtonItemSettings.class)
     private List<ButtonItemSettings> items;
 
     public ButtonElementConfig() {
-        super(SystemElementPathTool.buildJsPath("button"), SystemElementPathTool.buildTemplatePath("button"), ButtonElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("button"), SystemElementPathTool.buildCssPath("button"),
+                SystemElementPathTool.buildTemplatePath("button"), ButtonElementTemplateConfig.class);
     }
 
     @SubConfig
     public static class ButtonItemSettings {
 
-        @Field(key = "type", name = "按钮阳寿类型（要与与模板一致）", type = FieldTypeEnum.OBJECT, isArray = true)
+        @Field(key = "type", name = "按钮样式类型（要与与模板一致）", type = FieldTypeEnum.OBJECT, isArray = true)
         private String type;
+
+        @Field(key = "size", name = "按钮大小（可选值1-4）", type = FieldTypeEnum.NUMBER, isArray = true)
+        private Integer size;
 
         @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.OBJECT, isArray = true)
         private String text;
@@ -58,6 +64,14 @@ public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConf
 
         public void setTriggers(Object triggers) {
             this.triggers = triggers;
+        }
+
+        public Integer getSize() {
+            return size;
+        }
+
+        public void setSize(Integer size) {
+            this.size = size;
         }
     }
 

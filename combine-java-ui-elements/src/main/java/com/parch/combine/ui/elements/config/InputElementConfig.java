@@ -31,7 +31,8 @@ public class InputElementConfig extends ElementConfig<InputElementTemplateConfig
     private String beforeText;
 
     public InputElementConfig() {
-        super(SystemElementPathTool.buildJsPath("input"), SystemElementPathTool.buildTemplatePath("input"), InputElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("input"), SystemElementPathTool.buildCssPath("input"),
+                SystemElementPathTool.buildTemplatePath("input"), InputElementTemplateConfig.class);
     }
 
     @Override

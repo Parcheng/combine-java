@@ -19,6 +19,12 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
     @Field(key = "title", name = "标题", type = FieldTypeEnum.TEXT)
     private String title;
 
+    @Field(key = "show", name = "默认显示窗口", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    private Boolean show;
+
+    @Field(key = "size", name = "尺寸（宽度）px", type = FieldTypeEnum.NUMBER, defaultValue = "200")
+    private Integer size;
+
     @Field(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
     @FieldObject(type = SubElementConfig.class)
     private SubElementConfig body;
@@ -29,11 +35,19 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
     private Object closeTriggers;
 
     public WindowElementConfig() {
-        super(SystemElementPathTool.buildJsPath("window"), SystemElementPathTool.buildTemplatePath("window"), WindowElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("window"), SystemElementPathTool.buildCssPath("window"),
+                SystemElementPathTool.buildTemplatePath("window"), WindowElementTemplateConfig.class);
     }
 
     @Override
-    protected void initConfig() {}
+    protected void initConfig() {
+        if (show == null) {
+            show = false;
+        }
+        if (size == null) {
+            size = 200;
+        }
+    }
 
     @Override
     protected List<String> checkConfig() {
@@ -62,5 +76,21 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
 
     public void setBody(SubElementConfig body) {
         this.body = body;
+    }
+
+    public Boolean getShow() {
+        return show;
+    }
+
+    public void setShow(Boolean show) {
+        this.show = show;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 }

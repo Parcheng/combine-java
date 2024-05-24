@@ -1,49 +1,49 @@
 {
   "external": {
     "tag": "div",
-    "class": "",
+    "class": "c-pop",
     "style": "",
     "properties": {}
   },
   "normal": {
     "tag": "div",
-    "class": "alert",
+    "class": "c-default",
     "style": "",
     "properties": {}
   },
   "success": {
     "tag": "div",
-    "class": "alert alert-success",
+    "class": "c-success",
     "style": "",
     "properties": {}
   },
   "info": {
     "tag": "div",
-    "class": "alert alert-info",
+    "class": "c-info",
     "style": "",
     "properties": {}
   },
   "warn": {
     "tag": "div",
-    "class": "alert alert-warning",
+    "class": "c-warning",
     "style": "",
     "properties": {}
   },
   "error": {
     "tag": "div",
-    "class": "alert alert-danger",
+    "class": "c-danger",
     "style": "",
     "properties": {}
   },
   "content": {
     "tag": "span",
-    "class": "",
+    "class": "c-content",
     "style": "",
     "properties": {}
   },
   "close": {
-    "tag": "button",
-    "class": "close",
+    "tag": "span",
+    "class": "c-close",
     "style": "",
     "text": "x",
     "properties": {}

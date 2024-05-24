@@ -1,0 +1,35 @@
+.c-table-responsive{
+  width: 100%;
+  padding: 5px;
+}
+
+.c-table {
+  width: 100%;
+}
+
+.c-table thead{
+  background-color: var(--main_color);
+  color: var(--anti_color);
+}
+
+.c-table thead tr{
+  height: 40px;
+}
+
+.c-table thead th{
+  padding: 5px;
+  font-size: 14px;
+}
+
+.c-table tbody tr{
+  height: 30px;
+}
+
+.c-table tbody tr:nth-child(odd){
+  background-color: var(--light_color);
+}
+
+.c-table tbody td{
+  padding: 5px;
+  font-size: 14px;
+}

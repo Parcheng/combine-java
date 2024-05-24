@@ -14,52 +14,56 @@ $combine.element.register("SYSTEM.CONTENT", (function () {
             return body;
         }
 
-        if (settings.leftImg) {
-            const imgLeftDom = domFns.build(templateConfig.leftImg, null);
-            const leftImg = dataFns.parseVariable(settings.leftImg, buildData);
-            imgLeftDom.setAttribute("src", leftImg);
-            body.push(domFns.build(templateConfig.left, imgLeftDom));
+        if (settings.top) {
+            body.push(buildImg(settings.top, templateConfig.top, templateConfig.topImg, buildData));
         }
 
-        const contentBody = [];
-        const title = dataFns.parseVariable(settings.title, buildData);
-        contentBody.push(domFns.build(templateConfig.bodyTitle, title));
+        if (settings.left) {
+            body.push(buildImg(settings.left, templateConfig.left, templateConfig.leftImg, buildData));
+        }
 
-        if (settings.text) {
-            let text = dataFns.parseVariable(settings.text, buildData);
-            if (text) {
-                text = text instanceof Array ? text : [text];
-                for (let i = 0; i < text.length; i++) {
-                    const textLines = text[i] instanceof Array ? text[i] : [text[i]];
-                    for (let j = 0; j < textLines.length; j++) {
-                        const textLine = textLines[j];
-                        contentBody.push(domFns.build(templateConfig.bodyContent, textLine));
+        if (settings.content) {
+            const contentBody = [];
+            const title = dataFns.parseVariable(settings.content.title, buildData);
+            contentBody.push(domFns.build(templateConfig.bodyTitle, title));
+
+            if (settings.content.text) {
+                let text = dataFns.parseVariable(settings.content.text, buildData);
+                if (text) {
+                    text = text instanceof Array ? text : [text];
+                    for (let i = 0; i < text.length; i++) {
+                        const textLines = text[i] instanceof Array ? text[i] : [text[i]];
+                        for (let j = 0; j < textLines.length; j++) {
+                            const textLine = textLines[j];
+                            contentBody.push(domFns.build(templateConfig.bodyContent, textLine));
+                        }
                     }
                 }
             }
+
+            const bodyDom = domFns.build(templateConfig.body, contentBody);
+            bodyDom.style.width = dataFns.parseVariable(settings.content.size, buildData)  + "%";
+            body.push(bodyDom);
         }
 
-        if (settings.children) {
-            let children = dataFns.parseVariable(settings.children, buildData);
-            if (children) {
-                children = children instanceof Array ? children : [children];
-                for (let i = 0; i < children.length; i++) {
-                    const childrenItem = children[i];
-                    contentBody.push(domFns.build(templateConfig.bodyChildren, buildContent(templateConfig, settings, childrenItem)));
-                }
-            }
-        }
-
-        body.push(domFns.build(templateConfig.body, contentBody));
-
-        if (settings.rightImg) {
-            const imgRightDom = domFns.build(templateConfig.rightImg, null);
-            const rightImg = dataFns.parseVariable(settings.rightImg, buildData);
-            imgRightDom.setAttribute("src", rightImg);
-            body.push(domFns.build(templateConfig.right, imgRightDom));
+        if (settings.right) {
+            body.push(buildImg(settings.right, templateConfig.right, templateConfig.rightImg, buildData));
         }
 
         return body;
+    }
+
+    function buildImg(imgSettings, template, imgTemplate, buildData) {
+        const imgDom = domFns.build(imgTemplate, null);
+        const imgSrc = dataFns.parseVariable(imgSettings.img, buildData);
+        imgDom.setAttribute("src", imgSrc);
+
+        const dom = domFns.build(template, imgDom);
+        dom.style.width = imgSettings.size  + "%";
+        if (imgSettings.height) {
+            dom.style.height = imgSettings.height  + "px";
+        }
+        return dom;
     }
 
     return {

@@ -16,6 +16,9 @@ public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
     @FieldDesc("系统内置模板支持的类型：normal | success | info | warn | error")
     private String popType;
 
+    @Field(key = "size", name = "尺寸（宽度）px", type = FieldTypeEnum.NUMBER)
+    private Integer size;
+
     @Field(key = "text", name = "内容文本", type = FieldTypeEnum.TEXT, isRequired = true)
     private String text;
 
@@ -23,7 +26,8 @@ public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
     private Boolean hasClose = false;
 
     public PopElementConfig() {
-        super(SystemElementPathTool.buildJsPath("pop"), SystemElementPathTool.buildTemplatePath("pop"), PopElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("pop"), SystemElementPathTool.buildCssPath("pop"),
+                SystemElementPathTool.buildTemplatePath("pop"), PopElementTemplateConfig.class);
     }
 
     @Override
@@ -56,5 +60,13 @@ public class PopElementConfig extends ElementConfig<PopElementTemplateConfig> {
 
     public void setHasClose(Boolean hasClose) {
         this.hasClose = hasClose;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 }

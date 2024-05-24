@@ -2,8 +2,13 @@ package com.parch.combine.ui.elements.config;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
+import com.parch.combine.core.ui.base.trigger.Trigger;
+import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
@@ -16,20 +21,11 @@ public class TagElementConfig extends ElementConfig<TagElementTemplateConfig> {
     @FieldDesc("系统内置模板支持的类型：normal | success | info | primary | warn | error")
     private String tagType;
 
+    @Field(key = "size", name = "标签大小（可选值1-4）", type = FieldTypeEnum.NUMBER, isArray = true)
+    private Integer size;
+
     @Field(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT, isRequired = true)
     private String text;
-
-    public TagElementConfig() {
-        super(SystemElementPathTool.buildJsPath("tag"), SystemElementPathTool.buildTemplatePath("tag"), TagElementTemplateConfig.class);
-    }
-
-    @Override
-    protected void initConfig() {}
-
-    @Override
-    protected List<String> checkConfig() {
-        return null;
-    }
 
     public String getTagType() {
         return tagType;
@@ -46,4 +42,26 @@ public class TagElementConfig extends ElementConfig<TagElementTemplateConfig> {
     public void setText(String text) {
         this.text = text;
     }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public TagElementConfig() {
+        super(SystemElementPathTool.buildJsPath("tag"), SystemElementPathTool.buildCssPath("tag"),
+                SystemElementPathTool.buildTemplatePath("tag"), TagElementTemplateConfig.class);
+    }
+
+    @Override
+    protected void initConfig() {}
+
+    @Override
+    protected List<String> checkConfig() {
+        return null;
+    }
+
 }

@@ -1,13 +1,13 @@
 {
   "external": {
     "tag": "div",
-    "class": "",
+    "class": "c-breadcrumb",
     "style": "",
     "properties": {}
   },
   "breadcrumb": {
     "tag": "ol",
-    "class": "breadcrumb",
+    "class": "",
     "style": "",
     "properties": {}
   },

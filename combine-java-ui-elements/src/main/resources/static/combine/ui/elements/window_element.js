@@ -68,9 +68,12 @@ $combine.element.register("SYSTEM.WINDOW", (function () {
             const headBody = buildHead(instance, data);
             const contentBody = buildContent(instance, data);
             const windowBody = domFns.build(instance.template.window, [headBody, contentBody]);
+            windowBody.style.width = instance.size + "px";
 
             const externalDom = domFns.build(instance.template.external, windowBody);
-            externalDom.style.display = "none";
+            if (instance.show === false) {
+                externalDom.style.display = "none";
+            }
 
             windowsDom.appendChild(externalDom);
             return null;

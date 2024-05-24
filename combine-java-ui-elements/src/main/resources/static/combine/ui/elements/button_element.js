@@ -20,6 +20,12 @@ $combine.element.register("SYSTEM.BUTTON", (function () {
             const itemTemp = instance.template[item.type];
             if (itemTemp) {
                 const text = dataFns.parseVariable(item.text, buildData);
+                let sizeStyle = getStyleBySize(item.size);
+                if (sizeStyle) {
+                    sizeStyle = " c-" + sizeStyle;
+                    itemTemp.class = itemTemp.class ? (itemTemp.class + sizeStyle) : sizeStyle;
+                }
+
                 const itemConfig = configFns.initElement(instance.template.button, itemTemp, buildData);
                 const buttonDom = domFns.build(itemConfig, text);
                 if (item.triggers) {
@@ -30,6 +36,19 @@ $combine.element.register("SYSTEM.BUTTON", (function () {
         }
 
         return body;
+    }
+
+    function getStyleBySize(size) {
+        size = size ? size : 2;
+        if (size <= 1) {
+            return "xs"
+        } else if (size <= 2) {
+            return "small"
+        } else if (size <= 3) {
+            return "medium"
+        } else {
+            return "large"
+        }
     }
 
     return {

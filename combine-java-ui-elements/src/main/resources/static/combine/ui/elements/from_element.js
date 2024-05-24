@@ -32,15 +32,13 @@ $combine.element.register("SYSTEM.FROM", (function () {
             const hide = currItem.hide === true;
 
             const itemBodys = [];
-            if (currItem.fieldName) {
-                itemBodys.push(domFns.build(instance.template.label, currItem.fieldName));
-            }
+            itemBodys.push(domFns.build(instance.template.label, currItem.fieldName));
             if (currItem.element) {
                 const contentElementDom = buildElement(currItem.element, buildData);
                 if (contentElementDom) {
-                    itemBodys.push(contentElementDom);
                     setData(instance.id, currKey, null, currItem.element);
                 }
+                itemBodys.push(domFns.build(instance.template.content, contentElementDom));
             } else {
                 const text = dataFns.parseVariable(currItem.text, buildData);
                 setData(instance.id, currKey, text);
@@ -49,6 +47,9 @@ $combine.element.register("SYSTEM.FROM", (function () {
 
             const groupDom = domFns.build(instance.template.item, itemBodys)
             groupDom.setAttribute("id", dataFns.parseVariableText(currItem.id, buildData));
+            if (instance.column !== -1) {
+                groupDom.style.width =  Math.floor(100 / instance.column) + "%";
+            }
             if (hide) {
                 domFns.hide(groupDom);
             }

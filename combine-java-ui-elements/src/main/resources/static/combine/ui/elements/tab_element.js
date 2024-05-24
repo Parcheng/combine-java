@@ -40,7 +40,7 @@ $combine.element.register("SYSTEM.TAB", (function () {
         }
 
         const tabDom = domFns.build(instance.template.tab, titleBody);
-        const contentDom = domFns.build(instance.template.content, contentBody);
+        const contentDom = domFns.build(instance.template.body, contentBody);
         return [tabDom, contentDom];
     }
 
@@ -62,7 +62,7 @@ $combine.element.register("SYSTEM.TAB", (function () {
     }
 
     function buildContent(instance, itemSettings, buildData) {
-        return configFns.buildSubElement(itemSettings.body, instance.template.content, buildData);
+        return configFns.buildSubElement(itemSettings.body, instance.template.bodyItem, buildData);
     }
 
     function checked(instance, externalDom, checkId) {

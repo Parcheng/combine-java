@@ -40,20 +40,40 @@ public class HtmlBuilder {
     }
 
     public String build() {
-        String head = buildHead();
+        ElementGroupBuilder.ElementGroupResult groupResult = groupBuilder.build();
+        ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
+
+        String head = buildHead(groupResult, context);
         String body = buildBody();
         String script = buildScript();
-        String elementScript = buildElementScript();
+        String elementScript = buildElementScript(groupResult, context);
         return buildPage(head, body, script + elementScript);
     }
 
-    private String buildHead() {
+    private String buildHead(ElementGroupBuilder.ElementGroupResult groupResult, ConfigLoadingContext context) {
         HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(templateConfig.getLinks(), config.getLinks());
         HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateConfig.getMetas(), config.getMetas());
 
+        // 添加框架核心
+        Map<String, String> coreCssProperties = new HashMap<>();
+        coreCssProperties.put("rel", "stylesheet");
+        coreCssProperties.put("href", context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_CSS_NAME);
+        String coreCssTag = HtmlBuildTool.build("link", null, coreCssProperties, true);
+
+        // 添加框架中使用的页面元素JS
+        List<String> elementCssTag = new ArrayList<>();
+        for (String elementStyle : groupResult.elementStyles) {
+            Map<String, String> elementCssProperties = new HashMap<>();
+            elementCssProperties.put("rel", "stylesheet");
+            elementCssProperties.put("href", UrlPathHelper.replaceUrlFlag(elementStyle));
+            elementCssTag.add(HtmlBuildTool.build("link", null, elementCssProperties, true));
+        }
+
         String headBody = CheckEmptyUtil.EMPTY;
-        headBody += StringUtil.join(metaBuilder.build(), "");
-        headBody += StringUtil.join(linkBuilder.build(), "");
+        headBody += StringUtil.join(metaBuilder.build(), CheckEmptyUtil.EMPTY);
+        headBody += coreCssTag;
+        headBody += StringUtil.join(linkBuilder.build(), CheckEmptyUtil.EMPTY);
+        headBody += StringUtil.join(elementCssTag, CheckEmptyUtil.EMPTY);
         return HtmlBuildTool.build("head", headBody, null, false);
     }
 
@@ -116,11 +136,8 @@ public class HtmlBuilder {
         return StringUtil.join(scripts, CheckEmptyUtil.EMPTY);
     }
 
-    protected String buildElementScript() {
+    protected String buildElementScript(ElementGroupBuilder.ElementGroupResult groupResult, ConfigLoadingContext context) {
         List<String> scripts = new ArrayList<>();
-
-        ElementGroupBuilder.ElementGroupResult groupResult = groupBuilder.build();
-        ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
 
         // 添加框架核心
         String baseJsPath = context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_JS_NAME;

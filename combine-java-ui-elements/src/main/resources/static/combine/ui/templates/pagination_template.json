@@ -1,45 +1,45 @@
 {
   "external": {
-    "tag": "nav",
-    "class": "",
+    "tag": "div",
+    "class": "c-pagination",
     "style": "",
     "properties": {}
   },
   "pagination": {
     "tag": "ul",
-    "class": "pagination",
+    "class": "",
     "style": "",
     "properties": {}
   },
   "item": {
     "tag": "li",
     "class": "",
-    "style": "cursor:pointer;",
+    "style": "",
     "properties": {}
   },
   "itemActive": {
     "tag": "li",
-    "class": "active",
+    "class": "c-active",
     "style": "",
     "properties": {}
   },
   "itemDisabled": {
     "tag": "li",
-    "class": "disabled",
+    "class": "c-disabled",
     "style": "",
     "properties": {}
   },
   "itemContentFirst": {
     "tag": "span",
     "class": "",
-    "style": "cursor:pointer;",
+    "style": "",
     "text": "<",
     "properties": {}
   },
   "itemContentEnd": {
     "tag": "span",
     "class": "",
-    "style": "cursor:pointer;",
+    "style": "",
     "text": ">",
     "properties": {}
   },
@@ -48,20 +48,5 @@
     "class": "",
     "style": "",
     "properties": {}
-  },
-  "itemContentSkip": {
-    "tag": "span",
-    "class": "",
-    "style": "",
-    "text": "跳转",
-    "properties": {}
-  },
-  "itemContentSkipInput": {
-    "tag": "input",
-    "class": "",
-    "style": "height:20px;width:40px;",
-    "properties": {
-      "type": "number"
-    }
   }
 }

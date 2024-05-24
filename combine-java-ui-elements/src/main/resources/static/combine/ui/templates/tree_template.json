@@ -1,38 +1,38 @@
 {
   "external": {
     "tag": "div",
-    "class": "",
+    "class": "c-tree",
     "style": "",
     "properties": {}
   },
   "tree": {
     "tag": "ul",
-    "class": "nav nav-pills nav-stacked",
+    "class": "",
     "style": "",
     "properties": {}
   },
   "item": {
     "tag": "li",
     "class": "",
-    "style": "cursor:pointer;",
+    "style": "",
     "properties": {}
   },
   "itemAtive": {
     "tag": "li",
-    "class": "active",
+    "class": "c-active",
     "style": "",
     "properties": {}
   },
   "itemText": {
-    "tag": "a",
+    "tag": "label",
     "class": "",
     "style": "",
     "properties": {}
   },
   "itemTree": {
     "tag": "div",
-    "class": "",
-    "style": "margin-top:3px;",
+    "class": "c-children",
+    "style": "",
     "properties": {}
   }
 }

@@ -24,7 +24,8 @@ public class TitleElementConfig extends ElementConfig<TitleElementTemplateConfig
     private Boolean bottom;
 
     public TitleElementConfig() {
-        super(SystemElementPathTool.buildJsPath("title"), SystemElementPathTool.buildTemplatePath("title"), TitleElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("title"), SystemElementPathTool.buildCssPath("title"),
+                SystemElementPathTool.buildTemplatePath("title"), TitleElementTemplateConfig.class);
     }
 
     @Override

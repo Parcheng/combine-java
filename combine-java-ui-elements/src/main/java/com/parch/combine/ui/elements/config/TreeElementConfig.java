@@ -32,7 +32,8 @@ public class TreeElementConfig extends ElementConfig<TreeElementTemplateConfig> 
     private Object triggers;
 
     public TreeElementConfig() {
-        super(SystemElementPathTool.buildJsPath("tree"), SystemElementPathTool.buildTemplatePath("tree"), TreeElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("tree"), SystemElementPathTool.buildCssPath("tree"),
+                SystemElementPathTool.buildTemplatePath("tree"), TreeElementTemplateConfig.class);
     }
 
     @Override

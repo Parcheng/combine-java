@@ -650,7 +650,8 @@ $combine = (function () {
             element.id = element.id ? element.id : elementTemp.id;
             element.name = element.name ? element.name : elementTemp.name;
             element.tag = element.tag ? element.tag : elementTemp.tag;
-            element.class = elementTemp.class + " " + (element.classes ? element.classes : "");
+            element.class = (elementTemp.classes ? elementTemp.classes : "") + (elementTemp.class ? elementTemp.class : "")
+                + " " + (element.classes ? element.classes : "") + (element.class ? element.class : "");
             element.style = elementTemp.style + (element.style ? element.style : "");
             element.text = element.text ? element.text : elementTemp.text;
 

@@ -18,7 +18,8 @@ public class TextareaElementConfig extends ElementConfig<TextareaElementTemplate
     private String value;
 
     public TextareaElementConfig() {
-        super(SystemElementPathTool.buildJsPath("textarea"), SystemElementPathTool.buildTemplatePath("textarea"), TextareaElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("textarea"), SystemElementPathTool.buildCssPath("textarea"),
+                SystemElementPathTool.buildTemplatePath("textarea"), TextareaElementTemplateConfig.class);
     }
 
     @Override

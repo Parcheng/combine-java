@@ -12,16 +12,20 @@ $combine.element.register("SYSTEM.POP", (function () {
 
     function buildPops(instance, buildData) {
         const body = [];
-        const itemConfig = instance.template[instance.popType];
-        if (!buildData || !itemConfig) {
+        if (!buildData) {
             return body;
         }
 
         data[instance.id] = [];
         buildData = buildData instanceof Array ? buildData : [buildData];
         for (let i = 0; i < buildData.length; i++) {
-
             const currData = buildData[i];
+            const popType = dataFns.parseVariable(instance.popType, currData);
+            const itemConfig = instance.template[popType];
+            if (!buildData || !itemConfig) {
+                return body;
+            }
+
             const id = toolFns.generateUUID();
             const text = dataFns.parseVariable(instance.text, currData);
             const contentDom = domFns.build(instance.template.content, text);
@@ -33,6 +37,10 @@ $combine.element.register("SYSTEM.POP", (function () {
 
             const itemDom = domFns.build(itemConfig, closeDom ? [closeDom, contentDom] : contentDom);
             itemDom.id = id;
+            if (instance.size && instance.size > 0) {
+                itemDom.style.width = instance.size + "px";
+            }
+
             body.push(itemDom);
             data[instance.id].push(text);
         }

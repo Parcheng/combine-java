@@ -39,12 +39,15 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> implements 
 
     private String elementJSPath;
 
+    private String elementCssPath;
+
     private String elementTemplatePath;
 
     private Class<T> templateConfigClass;
 
-    public ElementConfig(String elementJSPath, String elementTemplatePath, Class<T> templateConfigClass) {
+    public ElementConfig(String elementJSPath, String elementCssPath, String elementTemplatePath, Class<T> templateConfigClass) {
         this.elementJSPath = elementJSPath;
+        this.elementCssPath = elementCssPath;
         this.elementTemplatePath = elementTemplatePath;
         this.templateConfigClass = templateConfigClass;
     }
@@ -156,6 +159,11 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> implements 
     public Class<T> thisTemplateConfigClass() {
         return templateConfigClass;
     }
+
+    public String thisElementCssPath() {
+        return elementCssPath;
+    }
+
 
 
 }

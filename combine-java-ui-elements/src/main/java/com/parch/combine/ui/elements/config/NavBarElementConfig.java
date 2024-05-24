@@ -32,12 +32,41 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
     private List<NavData> defaultNavs;
 
-    @Field(key = "buttons", name = "导航右栏按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldObject(type = ButtonElementConfig.ButtonItemSettings.class)
-    private List<ButtonElementConfig.ButtonItemSettings> buttons;
+    @Field(key = "buttons", name = "导航右栏操作配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(type = OptItemSettings.class)
+    private List<OptItemSettings> opts;
 
     public NavBarElementConfig() {
-        super(SystemElementPathTool.buildJsPath("nav_bar"), SystemElementPathTool.buildTemplatePath("nav_bar"), NavBarElementTemplateConfig.class);
+        super(SystemElementPathTool.buildJsPath("nav_bar"), SystemElementPathTool.buildCssPath("nav_bar"),
+                SystemElementPathTool.buildTemplatePath("nav_bar"), NavBarElementTemplateConfig.class);
+    }
+
+    @SubConfig
+    public static class OptItemSettings {
+
+        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.OBJECT, isArray = true)
+        private String text;
+
+        @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+        @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
+        @Trigger
+        private Object triggers;
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public Object getTriggers() {
+            return triggers;
+        }
+
+        public void setTriggers(Object triggers) {
+            this.triggers = triggers;
+        }
     }
 
     @Override
@@ -57,8 +86,8 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         @Field(key = "index", name = "默认项位置索引（从0开始）", type = FieldTypeEnum.NUMBER)
         private Integer index;
 
-        @Field(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.OBJECT, isArray = true)
-        private List<NavData> children;
+//        @Field(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.OBJECT, isArray = true)
+//        private List<NavData> children;
 
         @Field(key = "triggers", name = "默认项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
@@ -81,14 +110,6 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
             this.index = index;
         }
 
-        public List<NavData> getChildren() {
-            return children;
-        }
-
-        public void setChildren(List<NavData> children) {
-            this.children = children;
-        }
-
         public Object getTriggers() {
             return triggers;
         }
@@ -101,11 +122,11 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     @SubConfig
     public static class NavSettings {
 
-        @Field(key = "text", name = "导航项文本", type = FieldTypeEnum.OBJECT, isRequired = true)
+        @Field(key = "text", name = "导航项文本", type = FieldTypeEnum.TEXT, isRequired = true)
         private String text;
 
-        @Field(key = "children", name = "导航项子项", type = FieldTypeEnum.OBJECT)
-        private String children;
+//        @Field(key = "children", name = "导航项子项", type = FieldTypeEnum.TEXT)
+//        private String children;
 
         @Field(key = "triggers", name = "导航项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
@@ -118,14 +139,6 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
 
         public void setText(String text) {
             this.text = text;
-        }
-
-        public String getChildren() {
-            return children;
-        }
-
-        public void setChildren(String children) {
-            this.children = children;
         }
 
         public Object getTriggers() {
@@ -161,12 +174,12 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         this.nav = nav;
     }
 
-    public List<ButtonElementConfig.ButtonItemSettings> getButtons() {
-        return buttons;
+    public List<OptItemSettings> getOpts() {
+        return opts;
     }
 
-    public void setButtons(List<ButtonElementConfig.ButtonItemSettings> buttons) {
-        this.buttons = buttons;
+    public void setOpts(List<OptItemSettings> opts) {
+        this.opts = opts;
     }
 
     public List<NavData> getDefaultNavs() {
