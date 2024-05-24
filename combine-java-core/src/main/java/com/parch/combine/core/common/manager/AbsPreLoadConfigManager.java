@@ -71,7 +71,7 @@ public abstract class AbsPreLoadConfigManager<C> {
     }
 
     protected String getKey(String id, String type) {
-        return type + (id == null ? CheckEmptyUtil.EMPTY : id);
+        return (type + (id == null ? CheckEmptyUtil.EMPTY : id)).toUpperCase();
     }
 
     protected abstract <T extends C> T initConfig(String id, String type, Map<String, Object> configMap, Class<T> clazz);

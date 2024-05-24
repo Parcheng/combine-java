@@ -13,7 +13,15 @@
       "url": "/flow/config/get"
     }
   ],
-  "templates": [],
+  "templates": [
+    {
+      "id": "empty_list",
+      "type": "system.list",
+      "defaultText": {
+        "style": "padding:5px;font-size:16px;text-align:left;border:0;"
+      }
+    }
+  ],
   "elements": [],
   "groups": [
     {
@@ -223,6 +231,7 @@
           "bottom": true
         },{
           "type": "system.list",
+          "templateId": "empty_list",
           "dataField": "commonObjects",
           "content": {
             "elements": [{
@@ -273,7 +282,7 @@
           "key": "content",
           "id": "element_content",
           "classes": "c-model",
-          "style": "width:80%;border-left:1px solid #F5F5F5;padding-left:20px;"
+          "style": "width:80%;border-left:1px solid #F5F5F5;padding-left:20px;margin-bottom:50px"
         }
       ]
     }

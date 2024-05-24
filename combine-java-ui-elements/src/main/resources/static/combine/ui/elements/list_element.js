@@ -19,7 +19,7 @@ $combine.element.register("SYSTEM.LIST", (function () {
             }
         }
 
-        if (body.length == 0 && instance.defaultText) {
+        if (body.length === 0 && instance.defaultText) {
             body.push(domFns.build(instance.template.defaultText, instance.defaultText));
         }
 
