@@ -13,15 +13,16 @@
 }
 
 .c-table thead tr{
-  height: 30px;
+  height: 40px;
 }
 
 .c-table thead th{
-  padding: 0 5px;
+  padding: 5px;
+  font-size: 14px;
 }
 
 .c-table tbody tr{
-  height: 25px;
+  height: 30px;
 }
 
 .c-table tbody tr:nth-child(odd){
@@ -29,6 +30,6 @@
 }
 
 .c-table tbody td{
-  padding: 0 5px;
+  padding: 5px;
   font-size: 14px;
 }

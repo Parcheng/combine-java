@@ -71,7 +71,7 @@ $combine.element.register("SYSTEM.WINDOW", (function () {
             windowBody.style.width = instance.size + "px";
 
             const externalDom = domFns.build(instance.template.external, windowBody);
-            if (instance.show && instance.show === false) {
+            if (instance.show === false) {
                 externalDom.style.display = "none";
             }
 

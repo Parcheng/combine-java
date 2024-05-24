@@ -4,14 +4,14 @@
 }
 
 .c-select select {
-  border: 2px solid var(--main_color);
-  padding: 0 5px;
-  height: 25px;
+  border: 1px solid var(--main_color);
+  padding: 5px;
+  height: 30px;
   vertical-align: top;
 }
 
-.c-select option {
-  height: 25px;
+.c-select select option {
+  height: 30px;
 }
 
 .c-select select:focus{
