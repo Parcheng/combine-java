@@ -65,9 +65,9 @@ public class NavBarElementTemplateConfig extends ElementTemplateConfig {
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig navActive;
 
-    @Field(key = "navChildren", name = "导航项子项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig navChildren;
+//    @Field(key = "navChildren", name = "导航项子项DOM配置", type = FieldTypeEnum.OBJECT)
+//    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+//    private DomConfig navChildren;
 
     public DomConfig getNavBar() {
         return navBar;
@@ -179,13 +179,5 @@ public class NavBarElementTemplateConfig extends ElementTemplateConfig {
 
     public void setNavActive(DomConfig navActive) {
         this.navActive = navActive;
-    }
-
-    public DomConfig getNavChildren() {
-        return navChildren;
-    }
-
-    public void setNavChildren(DomConfig navChildren) {
-        this.navChildren = navChildren;
     }
 }

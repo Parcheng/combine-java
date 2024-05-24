@@ -86,8 +86,8 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         @Field(key = "index", name = "默认项位置索引（从0开始）", type = FieldTypeEnum.NUMBER)
         private Integer index;
 
-        @Field(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.OBJECT, isArray = true)
-        private List<NavData> children;
+//        @Field(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.OBJECT, isArray = true)
+//        private List<NavData> children;
 
         @Field(key = "triggers", name = "默认项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
@@ -110,14 +110,6 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
             this.index = index;
         }
 
-        public List<NavData> getChildren() {
-            return children;
-        }
-
-        public void setChildren(List<NavData> children) {
-            this.children = children;
-        }
-
         public Object getTriggers() {
             return triggers;
         }
@@ -130,11 +122,11 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     @SubConfig
     public static class NavSettings {
 
-        @Field(key = "text", name = "导航项文本", type = FieldTypeEnum.OBJECT, isRequired = true)
+        @Field(key = "text", name = "导航项文本", type = FieldTypeEnum.TEXT, isRequired = true)
         private String text;
 
-        @Field(key = "children", name = "导航项子项", type = FieldTypeEnum.OBJECT)
-        private String children;
+//        @Field(key = "children", name = "导航项子项", type = FieldTypeEnum.TEXT)
+//        private String children;
 
         @Field(key = "triggers", name = "导航项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
@@ -147,14 +139,6 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
 
         public void setText(String text) {
             this.text = text;
-        }
-
-        public String getChildren() {
-            return children;
-        }
-
-        public void setChildren(String children) {
-            this.children = children;
         }
 
         public Object getTriggers() {

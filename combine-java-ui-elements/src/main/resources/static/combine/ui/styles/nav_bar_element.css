@@ -39,7 +39,6 @@
 .c-navbar .c-main .c-body .c-navs{
   list-style-type: none;
   display: flex;
-  flex-grow: 1;
   padding: 0;
 }
 
@@ -60,16 +59,13 @@
   color: var(--main_color);
 }
 
-.c-navbar .c-main .c-body .c-children{
-
-}
-
 .c-navbar .c-main .c-opts{
   height: 40px;
   padding: 0;
   margin: 0;
   display: inline-block;
   vertical-align: top;
+  float: right;
 }
 
 .c-navbar .c-main .c-opts ul{
@@ -80,12 +76,15 @@
 }
 
 .c-navbar .c-main .c-opts li{
-  margin-right: 8px;
+  margin-right: 5px;
 }
 
 .c-navbar .c-main .c-opts li span{
   color: var(--anti_color);
   cursor: pointer;
+  padding: 13px 10px 10px;
+  display: inline-block;
+  font-size: 12px;
 }
 
 /*{*/

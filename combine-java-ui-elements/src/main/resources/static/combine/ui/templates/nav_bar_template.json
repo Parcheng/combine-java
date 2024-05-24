@@ -88,11 +88,5 @@
     "class": "c-active",
     "style": "",
     "properties": {}
-  },
-  "navChildren": {
-    "tag": "ul",
-    "class": "c-children",
-    "style": "",
-    "properties": {}
   }
 }
