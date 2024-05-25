@@ -16,7 +16,7 @@ public class SubElementConfig {
     @Field(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT)
     private String text;
 
-    @Field(key = "elements", name = "元素组配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "elements", name = "元素组配置集合", type = FieldTypeEnum.ELEMENT, isArray = true)
     @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
     @SubElement
     private Object elements;

@@ -34,7 +34,7 @@ public class TableElementConfig extends ElementConfig<TableElementTemplateConfig
     @Field(key = "hasIndex", name = "是否显示行号", type = FieldTypeEnum.BOOLEAN)
     private Boolean hasIndex;
 
-    @Field(key = "rowOpts", name = "操作栏的操作元素配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "rowOpts", name = "操作栏的操作元素配置", type = FieldTypeEnum.ELEMENT)
     @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
     @SubElement
     public Object rowOpts;

@@ -66,7 +66,7 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
         @Field(key = "hide", name = "是否隐藏", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
         private Boolean hide;
 
-        @Field(key = "element", name = "表单字段元素", type = FieldTypeEnum.OBJECT)
+        @Field(key = "element", name = "表单字段元素", type = FieldTypeEnum.ELEMENT)
         @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
         @SubElement
         private Object element;

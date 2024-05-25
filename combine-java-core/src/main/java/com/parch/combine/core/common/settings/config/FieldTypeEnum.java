@@ -1,5 +1,6 @@
 package com.parch.combine.core.common.settings.config;
 
 public enum FieldTypeEnum {
-    TEXT, BOOLEAN, OBJECT, SELECT, NUMBER, GROUP
+    ID, TEXT, BOOLEAN, OBJECT, SELECT, NUMBER, GROUP,
+    COMPONENT, ELEMENT, TRIGGER, DATA_LOAD;
 }

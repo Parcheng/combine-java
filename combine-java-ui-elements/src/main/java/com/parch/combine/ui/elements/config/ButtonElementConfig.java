@@ -37,7 +37,7 @@ public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConf
         @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.OBJECT, isArray = true)
         private String text;
 
-        @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+        @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.TRIGGER, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
         @Trigger
         private Object triggers;

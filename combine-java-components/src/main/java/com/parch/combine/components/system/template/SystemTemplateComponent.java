@@ -12,6 +12,7 @@ import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 组件设置信息组件
@@ -36,25 +37,35 @@ public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConf
             errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "模板KEY为空"));
         }
 
-        List<Map<String, Object>> configs = initConfig.getTemplates() == null ? null : initConfig.getTemplates().get(logicConfig.getKey());
-        if (configs == null) {
+        List<SystemTemplateInitConfig.SystemTemplate> configs = initConfig.getTemplates().stream()
+                .filter(item -> item.getKey().equals(logicConfig.getKey())).collect(Collectors.toList());
+        if (CheckEmptyUtil.isEmpty(configs)) {
             errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "模板不存在, KEY: " + logicConfig.getKey()));
+        } else if (configs.size() > 1) {
+            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "存在重复的模板 KEY: " + logicConfig.getKey()));
         } else {
-            // 初始化ID
-            for (Map<String, Object> config : configs) {
-                if (config.get(FieldKeyCanstant.ID) == null) {
-                    config.put(FieldKeyCanstant.ID, UUID.randomUUID().toString());
-                }
-            }
+            List<String> componentIds = new ArrayList<>();
+            if (CheckEmptyUtil.isNotEmpty(configs.get(0).getComponents())) {
+                for (Object component : configs.get(0).getComponents()) {
+                    if (component == null) {
+                        continue;
+                    }
 
-            // 初始化模板使用的组件
-            CombineInitVO initVO = manager.getComponent().init(configs);
-            if (!initVO.isSuccess()) {
-                for (String initError : initVO.getErrorList()) {
-                    errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "模板中组件初始化失败: " + initError));
+                    if (component instanceof Map) {
+                        CombineInitVO initVO = manager.getComponent().init(Collections.singletonList((Map<String, Object>) component));
+                        if (!initVO.isSuccess()) {
+                            for (String initError : initVO.getErrorList()) {
+                                errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "模板中组件初始化失败: " + initError));
+                            }
+                        }
+                        componentIds.addAll(initVO.getComponentIds());
+                    } else {
+                        componentIds.add(component.toString());
+                    }
                 }
+
+                logicConfig.setComponentIds(componentIds);
             }
-            logicConfig.setComponentIds(initVO.getComponentIds());
         }
 
         return errorMsg;

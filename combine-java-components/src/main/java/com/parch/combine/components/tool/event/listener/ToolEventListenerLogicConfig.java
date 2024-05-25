@@ -13,7 +13,7 @@ public class ToolEventListenerLogicConfig extends LogicConfig {
     @Field(key = "eventKey", name = "要监听的事件KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     private String eventKey;
 
-    @Field(key = "components", name = "要执行的组件集合（ID或组件配置）", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+    @Field(key = "components", name = "要执行的组件集合（ID或组件配置）", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
     private List<Object> components;
 
     @Override

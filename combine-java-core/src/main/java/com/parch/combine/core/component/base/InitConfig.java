@@ -8,7 +8,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public abstract class InitConfig implements IInit {
 
-    @Field(key = "id", name = "组件初始化配置ID", type = FieldTypeEnum.TEXT)
+    @Field(key = "id", name = "组件初始化配置ID", type = FieldTypeEnum.ID)
     @FieldDesc("同一类型的组件可以存在多个初始化配置，可以再逻辑配置中通过ref字段来指定使用哪一个初始化配置")
     @FieldEg(eg = "component_init_config_001")
     private String id;
