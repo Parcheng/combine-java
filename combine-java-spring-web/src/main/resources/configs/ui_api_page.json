@@ -218,7 +218,7 @@
           "defaultText": "（该组件无初始化配置）"
         },{
           "type": "system.title",
-          "text": "2. 组件逻辑配置",
+          "text": "2. UI元素模板配置",
           "level": 3,
           "top": true,
           "bottom": true
@@ -246,7 +246,7 @@
           "content": {
             "elements": [{
               "type": "system.title",
-              "text": "#{name}",
+              "text": "【#{name}】",
               "level": 4,
               "top": true,
               "bottom": true
