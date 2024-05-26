@@ -762,6 +762,10 @@ $combine = (function () {
                 }
             }
 
+            if ((body === null || body === undefined) && config.text && config.text != "") {
+                body = config.text;
+            }
+
             this.appendBody(tag, body);
             return tag;
         },
