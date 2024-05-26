@@ -24,8 +24,11 @@ $combine.element.register("SYSTEM.CONTENT", (function () {
 
         if (settings.content) {
             const contentBody = [];
-            const title = dataFns.parseVariable(settings.content.title, buildData);
-            contentBody.push(domFns.build(templateConfig.bodyTitle, title));
+
+            if (settings.content.title) {
+                const title = dataFns.parseVariable(settings.content.title, buildData);
+                contentBody.push(domFns.build(templateConfig.bodyTitle, title));
+            }
 
             if (settings.content.text) {
                 let text = dataFns.parseVariable(settings.content.text, buildData);
