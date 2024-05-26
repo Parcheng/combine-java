@@ -812,7 +812,7 @@ $combine = (function () {
                 idOrDom = document.getElementById(idOrDom);
             }
             if (idOrDom) {
-                idOrDom.style.display = "block"
+                idOrDom.style.removeProperty("display");
             }
         },
         hide: function (idOrDom) {

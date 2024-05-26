@@ -3,11 +3,11 @@
   padding: 5px;
 }
 
-.c-from .c-item{
+.c-from .c-item {
   display: inline-block;
 }
 
-.c-from .c-item > label{
+.c-from .c-item .c-left {
   display: inline-block;
   padding: 5px;
   margin: 0;
@@ -16,34 +16,61 @@
   font-size: 14px;
 }
 
-.c-from .c-item > div{
+.c-from .c-item .c-right {
   display: inline-block;
   vertical-align: middle;
   font-size: 14px;
 }
 
-.c-from .c-horizontal .c-item > label{
+.c-from .c-item .c-left .c-required-flag {
+  color: var(--error_color);
+  padding: 0 1px;
+  display: inline-block;
+}
+
+.c-from .c-item .c-right .c-content {
+  width: 100%;
+  display: inline-block;
+}
+
+.c-from .c-item .c-right .c-desc-text {
+  width: 100%;
+  color: var(--light_font_color);
+  padding: 0 5px;
+  display: inline-block;
+  font-size: 10px;
+}
+
+.c-from .c-item .c-right .c-error-text {
+  width: 100%;
+  color: var(--error_color);
+  padding: 0 5px;
+  display: inline-block;
+  font-size: 10px;
+}
+
+.c-from .c-horizontal .c-item .c-left {
   text-align: right;
   padding-right: 15px;
   width: 20%;
 }
 
-.c-from .c-horizontal .c-item > div{
+.c-from .c-horizontal .c-item .c-right {
   width: 80%;
 }
 
-.c-from .c-vertical .c-item > label{
+.c-from .c-vertical .c-item .c-left {
   width: 100%;
 }
 
-.c-from .c-vertical .c-item > div{
+.c-from .c-vertical .c-item .c-right {
   width: 100%;
 }
 
-.c-from .c-inline .c-item > label{
+.c-from .c-inline .c-item .c-left {
   width: auto;
 }
 
-.c-from .c-inline .c-item > div{
+.c-from .c-inline .c-item .c-right {
   width: auto;
 }

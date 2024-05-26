@@ -66,6 +66,21 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
         @Field(key = "hide", name = "是否隐藏", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
         private Boolean hide;
 
+        @Field(key = "requiredFlag", name = "是否显示必填标识", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+        private Boolean requiredFlag;
+
+        @Field(key = "desc", name = "描述信息（或字段名）", type = FieldTypeEnum.TEXT)
+        private String desc;
+
+        @Field(key = "showDesc", name = "是否默认显示描述", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+        private Boolean showDesc;
+
+        @Field(key = "error", name = "错误信息（或字段名）", type = FieldTypeEnum.TEXT)
+        private String error;
+
+        @Field(key = "showError", name = "是否默认显示错误信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+        private Boolean showError;
+
         @Field(key = "element", name = "表单字段元素", type = FieldTypeEnum.ELEMENT)
         @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
         @SubElement
@@ -120,6 +135,46 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
 
         public void setHide(Boolean hide) {
             this.hide = hide;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        public String getError() {
+            return error;
+        }
+
+        public void setError(String error) {
+            this.error = error;
+        }
+
+        public Boolean getRequiredFlag() {
+            return requiredFlag;
+        }
+
+        public void setRequiredFlag(Boolean requiredFlag) {
+            this.requiredFlag = requiredFlag;
+        }
+
+        public Boolean getShowDesc() {
+            return showDesc;
+        }
+
+        public void setShowDesc(Boolean showDesc) {
+            this.showDesc = showDesc;
+        }
+
+        public Boolean getShowError() {
+            return showError;
+        }
+
+        public void setShowError(Boolean showError) {
+            this.showError = showError;
         }
     }
 

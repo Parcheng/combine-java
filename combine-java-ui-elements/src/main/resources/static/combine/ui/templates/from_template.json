@@ -29,15 +29,40 @@
     "style": "",
     "properties": {}
   },
-  "label": {
+  "left": {
     "tag": "label",
-    "class": "",
+    "class": "c-left",
     "style": "",
     "properties": {}
   },
-  "content": {
+  "requestFlag": {
+    "tag": "span",
+    "class": "c-required-flag",
+    "style": "",
+    "text": "*",
+    "properties": {}
+  },
+  "right": {
     "tag": "div",
-    "class": "",
+    "class": "c-right",
+    "style": "",
+    "properties": {}
+  },
+  "rightContent": {
+    "tag": "div",
+    "class": "c-content",
+    "style": "",
+    "properties": {}
+  },
+  "rightDesc": {
+    "tag": "div",
+    "class": "c-desc-text",
+    "style": "",
+    "properties": {}
+  },
+  "rightError": {
+    "tag": "div",
+    "class": "c-error-text",
     "style": "",
     "properties": {}
   }
