@@ -1,0 +1,27 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "c-banner",
+    "style": "",
+    "properties": {}
+  },
+  "close": {
+    "tag": "div",
+    "class": "c-close",
+    "style": "",
+    "text": "x",
+    "properties": {}
+  },
+  "img": {
+    "tag": "img",
+    "class": "c-img",
+    "style": "",
+    "properties": {}
+  },
+  "text": {
+    "tag": "div",
+    "class": "c-content",
+    "style": "",
+    "properties": {}
+  }
+}

@@ -75,7 +75,7 @@ $combine.element.register("SYSTEM.TAB", (function () {
         const contentExternalDom = externalDom.children[1];
         const titleDoms = titleExternalDom.children;
         const contentDoms = contentExternalDom.children;
-        if (titleDoms.length == 0 || contentDoms.length == 0) {
+        if (titleDoms.length === 0 || contentDoms.length === 0) {
             return;
         }
         const titleDomMap = {}, contentDomMap = {};
@@ -87,7 +87,6 @@ $combine.element.register("SYSTEM.TAB", (function () {
             contentDomMap[domTabId] = contentDom;
         }
 
-        let childrenIndex = -1;
         let showTitleDom, showContentDom, showItemConfig;
         for (let i = 0; i < instance.items.length; i++) {
             const curr = currData[instance.items[i].id];
@@ -137,7 +136,7 @@ $combine.element.register("SYSTEM.TAB", (function () {
 
         const titleDoms = externalDom.children[0].children;
         const contentDoms = externalDom.children[1].children;
-        if (titleDoms.length == 0 || contentDoms.length == 0) {
+        if (titleDoms.length === 0 || contentDoms.length === 0) {
             return;
         }
         const titleDomMap = {}, contentDomMap = {};
