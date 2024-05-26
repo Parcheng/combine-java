@@ -18,7 +18,7 @@ public class RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
     @Field(key = "expression", name = "表达式", type = FieldTypeEnum.TEXT, defaultValue = "*")
     private String expression;
 
-    @Field(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
     private List<Object> components;
 
     public String getListenFlowKey() {

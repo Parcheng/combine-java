@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class ToolAsyncLogicConfig extends LogicConfig {
 
-    @Field(key = "components", name = "要执行的逻辑，可以是组件ID，也可以是组件配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
-    List<Object> components;
+    @Field(key = "components", name = "要执行的逻辑，可以是组件ID，也可以是组件配置", type = FieldTypeEnum.COMPONENT, isRequired = true, isArray = true)
+    private List<Object> components;
 
     @Override
     public void init() {}

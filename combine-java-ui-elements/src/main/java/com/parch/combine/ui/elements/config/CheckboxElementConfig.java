@@ -32,7 +32,7 @@ public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplate
     @FieldObject(type = OptionElementConfig.class)
     private OptionElementConfig option;
 
-    @Field(key = "triggers", name = "多选框触发配置（用于实现多级联动，暂未不支持使用", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "triggers", name = "多选框触发配置（用于实现多级联动，暂未不支持使用", type = FieldTypeEnum.TRIGGER, isArray = true)
     @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
     private Object triggers;
 

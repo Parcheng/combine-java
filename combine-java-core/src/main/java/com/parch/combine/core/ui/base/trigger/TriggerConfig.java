@@ -14,7 +14,7 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
  */
 public abstract class TriggerConfig implements IInit, ICheck {
 
-    @Field(key = "id", name = "触发配置ID", type = FieldTypeEnum.TEXT)
+    @Field(key = "id", name = "触发配置ID", type = FieldTypeEnum.ID)
     private String id;
 
     @Field(key = "event", name = "触发要监听的事件", type = FieldTypeEnum.TEXT, isRequired = true)
@@ -24,17 +24,17 @@ public abstract class TriggerConfig implements IInit, ICheck {
     @FieldSelect(enumClass = TriggerTypeEnum.class)
     private TriggerTypeEnum type;
 
-    @Field(key = "success", name = "触发执行成功后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "success", name = "触发执行成功后要渲染的元素配置", type = FieldTypeEnum.ELEMENT)
     @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
     @SubElement
     private Object success;
 
-    @Field(key = "fail", name = "触发执行失败后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "fail", name = "触发执行失败后要渲染的元素配置", type = FieldTypeEnum.ELEMENT)
     @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
     @SubElement
     private Object fail;
 
-    @Field(key = "error", name = "触发执行异常后要渲染的元素配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "error", name = "触发执行异常后要渲染的元素配置", type = FieldTypeEnum.ELEMENT)
     @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
     @SubElement
     private Object error;

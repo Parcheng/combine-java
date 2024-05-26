@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class ElementConfig<T extends ElementTemplateConfig> implements IInit, ICheck {
 
-    @Field(key = "id", name = "元素ID", type = FieldTypeEnum.TEXT, defaultValue = "随机字符粗")
+    @Field(key = "id", name = "元素ID", type = FieldTypeEnum.ID, defaultValue = "随机字符粗")
     private String id;
 
     @Field(key = "type", name = "元素类型", type = FieldTypeEnum.SELECT, isRequired = true)

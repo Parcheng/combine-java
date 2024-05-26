@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class LogicConfig implements IInit {
 
-    @Field(key = "id", name = "逻辑配置ID", type = FieldTypeEnum.TEXT)
+    @Field(key = "id", name = "逻辑配置ID", type = FieldTypeEnum.ID)
     @FieldDesc("组件ID，默认为随机字符串")
     @FieldEg(eg = "component_logic_config_001")
     private String id;

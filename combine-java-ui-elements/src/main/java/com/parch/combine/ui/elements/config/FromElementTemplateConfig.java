@@ -17,13 +17,29 @@ public class FromElementTemplateConfig extends ElementTemplateConfig {
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig item;
 
-    @Field(key = "label", name = "标签DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "left", name = "左侧标签DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig label;
+    private DomConfig left;
 
-    @Field(key = "content", name = "内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "requestFlag", name = "必填标识DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
-    private DomConfig content;
+    private DomConfig requestFlag;
+
+    @Field(key = "right", name = "右侧DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    private DomConfig right;
+
+    @Field(key = "rightContent", name = "右侧内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    private DomConfig rightContent;
+
+    @Field(key = "rightDesc", name = "右侧内容描述DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    private DomConfig rightDesc;
+
+    @Field(key = "rightError", name = "右侧内容错误信息DOM配置", type = FieldTypeEnum.OBJECT)
+    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    private DomConfig rightError;
 
     public DomConfig getItem() {
         return item;
@@ -33,12 +49,52 @@ public class FromElementTemplateConfig extends ElementTemplateConfig {
         this.item = item;
     }
 
-    public DomConfig getContent() {
-        return content;
+    public DomConfig getLeft() {
+        return left;
     }
 
-    public void setContent(DomConfig content) {
-        this.content = content;
+    public void setLeft(DomConfig left) {
+        this.left = left;
+    }
+
+    public DomConfig getRequestFlag() {
+        return requestFlag;
+    }
+
+    public void setRequestFlag(DomConfig requestFlag) {
+        this.requestFlag = requestFlag;
+    }
+
+    public DomConfig getRight() {
+        return right;
+    }
+
+    public void setRight(DomConfig right) {
+        this.right = right;
+    }
+
+    public DomConfig getRightContent() {
+        return rightContent;
+    }
+
+    public void setRightContent(DomConfig rightContent) {
+        this.rightContent = rightContent;
+    }
+
+    public DomConfig getRightDesc() {
+        return rightDesc;
+    }
+
+    public void setRightDesc(DomConfig rightDesc) {
+        this.rightDesc = rightDesc;
+    }
+
+    public DomConfig getRightError() {
+        return rightError;
+    }
+
+    public void setRightError(DomConfig rightError) {
+        this.rightError = rightError;
     }
 
     public DomConfig getFrom() {
@@ -47,13 +103,5 @@ public class FromElementTemplateConfig extends ElementTemplateConfig {
 
     public void setFrom(DomConfig from) {
         this.from = from;
-    }
-
-    public DomConfig getLabel() {
-        return label;
-    }
-
-    public void setLabel(DomConfig label) {
-        this.label = label;
     }
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public abstract class DataLoadConfig implements IInit, ICheck {
 
-    @Field(key = "id", name = "ID", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
+    @Field(key = "id", name = "ID", type = FieldTypeEnum.ID)
     private String id;
 
     @Field(key = "type", name = "加载类型", type = FieldTypeEnum.SELECT, isRequired = true)

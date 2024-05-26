@@ -26,7 +26,7 @@ public class LogicJudgmentLogicConfig extends LogicConfig {
      */
     public static class LogicJudgmentItem extends CompareGroupConfig {
 
-        @Field(key = "components", name = "要执行的逻辑，可以是组件ID，也可以是组件配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+        @Field(key = "components", name = "要执行的逻辑，可以是组件ID，也可以是组件配置", type = FieldTypeEnum.COMPONENT, isRequired = true, isArray = true)
         @FieldEg(eg = "[\"logicJudgmentTestData\", { \"type\": \"XXX\", ... }", desc = "条件满足后，先执行 ID 为 logicJudgmentTestData 的组件配置，再执行第二项类型为 XXX 的组件配置逻辑")
         List<Object> components;
 

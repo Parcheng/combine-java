@@ -25,6 +25,7 @@ $combine.element.register("SYSTEM.FROM", (function () {
 
     function buildFromBody(instance, buildData) {
         let body = [];
+
         buildData = buildData ? buildData : {};
         for (let i = 0; i < instance.items.length; i++) {
             const currItem = instance.items[i];
@@ -33,18 +34,46 @@ $combine.element.register("SYSTEM.FROM", (function () {
             const hide = currItem.hide === true;
 
             const itemBodys = [];
-            itemBodys.push(domFns.build(instance.template.label, fieldName));
+
+            const leftBody = [fieldName];
+            if (currItem.requiredFlag && currItem.requiredFlag === true) {
+                leftBody.push(domFns.build(instance.template.requestFlag, instance.template.requestFlag.text))
+            }
+            itemBodys.push(domFns.build(instance.template.left, leftBody));
+
+
+            const rightBody = [];
             if (currItem.element) {
                 const contentElementDom = buildElement(currItem.element, buildData);
                 if (contentElementDom) {
                     setData(instance.id, currKey, null, currItem.element);
                 }
-                itemBodys.push(domFns.build(instance.template.content, contentElementDom));
+                rightBody.push(domFns.build(instance.template.rightContent, contentElementDom));
             } else {
                 const text = dataFns.parseVariable(currItem.text, buildData);
                 setData(instance.id, currKey, text);
-                itemBodys.push(domFns.build(instance.template.content, text));
+                rightBody.push(domFns.build(instance.template.rightContent, text));
             }
+
+            if (currItem.desc) {
+                const descDom = domFns.build(instance.template.rightDesc, dataFns.parseVariable(currItem.desc, buildData));
+                descDom.id = instance.id + "-" + currKey + "-desc";
+                if (currItem.showDesc === false) {
+                    descDom.style.display = "none";
+                }
+                rightBody.push(descDom)
+            }
+            if (currItem.error) {
+                const errorDom = domFns.build(instance.template.rightError, dataFns.parseVariable(currItem.error, buildData));
+                errorDom.id = instance.id + "-" + currKey + "-error";
+                if (currItem.showError !== true) {
+                    errorDom.style.display = "none";
+                }
+                rightBody.push(errorDom)
+            }
+
+            itemBodys.push(domFns.build(instance.template.right, rightBody));
+
 
             const groupDom = domFns.build(instance.template.item, itemBodys)
             groupDom.setAttribute("id", dataFns.parseVariableText(currItem.id, buildData));
@@ -87,6 +116,33 @@ $combine.element.register("SYSTEM.FROM", (function () {
         }
 
         currData.push(currDataItem);
+    }
+    
+    function switchRightText(id, key, opt, type) {
+        const keys = [];
+        if (key) {
+            keys.push(key);
+        } else {
+            const currData = data[id];
+            if (currData) {
+                for (let i = 0; i < currData.length; i++) {
+                    keys.push(currData[i].key);
+                }
+            }
+        }
+
+        for (let i = 0; i < keys.length; i++) {
+            const currKey = keys[i];
+            let domId = type === "desc" ? (id + "-" + currKey + "-desc") : (id + "-" + currKey + "-error");
+            const dom = document.getElementById(domId);
+            if (dom) {
+                if (opt === "show") {
+                    dom.style.removeProperty("display");
+                } else {
+                    dom.style.display = "none";
+                }
+            }
+        }
     }
 
     return {
@@ -135,6 +191,20 @@ $combine.element.register("SYSTEM.FROM", (function () {
             }
 
             return result;
+        },
+        call: {
+            showDesc: function (instance, key) {
+                switchRightText(instance.id, key, "show", "desc");
+            },
+            hideDesc: function (instance, key) {
+                switchRightText(instance.id, key, "hide", "desc");
+            },
+            showError: function (instance, key) {
+                switchRightText(instance.id, key, "show", "error");
+            },
+            hideError: function (instance, key) {
+                switchRightText(instance.id, key, "hide", "error");
+            }
         }
     }
 })());

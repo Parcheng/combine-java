@@ -33,7 +33,7 @@ public class ToolCrontabLogicConfig extends LogicConfig {
     @FieldDesc("如果设置了固定间隔，那么时间间隔是按任务开始执行时间算周期，否则按任务执行完成时间算周期")
     private Boolean fixedRate;
 
-    @Field(key = "components", name = "要执行的组件集合（ID或组件配置）", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+    @Field(key = "components", name = "要执行的组件集合（ID或组件配置）", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
     private List<Object> components;
 
     @Override

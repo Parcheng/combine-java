@@ -19,8 +19,7 @@ public class SystemTemplateInitConfig extends InitConfig {
     private String variableKey;
 
     @Field(key = "templates", name = "模板的组件配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
-    @FieldDesc("格式为键值对（ KEY:VALUE）; 其中KEY表示模板KEY, VALUE表示模板的组件配置集合")
-    private Map<String, List<Map<String, Object>>> templates;
+    private List<SystemTemplate> templates;
 
     @Override
     public void init() {
@@ -29,11 +28,36 @@ public class SystemTemplateInitConfig extends InitConfig {
         }
     }
 
-    public Map<String, List<Map<String, Object>>> getTemplates() {
+    public static class SystemTemplate {
+
+        @Field(key = "key", name = "模板KEY", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
+        private String key;
+
+        @Field(key = "components", name = "模板包含的组件集合", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
+        private List<Object> components;
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public List<Object> getComponents() {
+            return components;
+        }
+
+        public void setComponents(List<Object> components) {
+            this.components = components;
+        }
+    }
+
+    public List<SystemTemplate> getTemplates() {
         return templates;
     }
 
-    public void setTemplates(Map<String, List<Map<String, Object>>> templates) {
+    public void setTemplates(List<SystemTemplate> templates) {
         this.templates = templates;
     }
 
