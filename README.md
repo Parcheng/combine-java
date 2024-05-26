@@ -116,7 +116,6 @@ public class CombineTestController {
     "configs/my_business.json"  -- 自己的业务流程配置（可以根据功能模块搞成多个文件）
   ],
   "initFlows": [
-    "$build/api",  -- 系统内置的生成API页面的流程（流程可以理解为接口/功能实现逻辑），放在这里会在启动的时候生成API页面，启动完成后可访问
     "$init"   -- 自己的业务功能需要项目启动时执行的流程（如：建MySql表，初始化缓存等）
   ],
   "openRegisterConfig": false,  -- 是否开放注册，true 表示可以在项目运行期间动态注册流程
@@ -256,8 +255,8 @@ public class MyElementConfig extends ElementConfig<AudioElementTemplateConfig> {
     private String src;
 
     public AudioElementConfig() {
-        // 该UI元素的前端JS地址，和模板JSON文件地址
-        super("/lib/elements/my_element.js", "/lib/temolate/my_template.json", MyElementTemplateConfig.class);
+        // 该UI元素的前端JS地址、CSS地址、模板JSON文件地址，及模板类Class对象
+        super("/lib/elements/my_element.js", "/lib/style/my_element.css", "/lib/temolate/my_template.json", MyElementTemplateConfig.class);
     }
 
     @Override
@@ -290,8 +289,8 @@ public class MyElementTemplateConfig extends ElementTemplateConfig {
 
 <br>创建UI元素JS实现： my_element.js<br>
 ```
-$combineWebUI.element.register("my.myElement", (function () {
-    const domFns = $combineWebUI.dom;
+$combine.element.register("my.myElement", (function () {
+    const domFns = $combine.dom;
 
     ... ...
 
@@ -315,10 +314,11 @@ $combineWebUI.element.register("my.myElement", (function () {
 ```
 {
     "external": {
-        "tag": "div",
-        "class": "",
-        "style": "",
-        "properties": {}
+        "tag": "div",   -- HTML标签
+        "class": "",    -- 样式Class配置
+        "style": "",    -- 样式配置，格式如：“width:20px;height:20px;”
+        "text": "",     -- HTML标签内的文本内容
+        "properties": {}   -- HTML标签的属性配置，如: 可以设置 img 标签 src 属性
     },
     "headerDiv": {
         "tag": "div",
@@ -326,7 +326,7 @@ $combineWebUI.element.register("my.myElement", (function () {
         "style": "...",
         "properties": { ... }
     },
-    ... 其他自定义配置 ...
+    ... 其他DOM元素配置 ...
 }
 ```
 <br>
