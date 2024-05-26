@@ -48,13 +48,13 @@ UI的API地址：http://127.0.0.1:8888/combine/page/ui-api<br>
 通过 POM 引用 combine-java-spring-web<br>
 ```$xml
 <dependency>
-    <artifactId>combine-java-web-starter</artifactId>
+    <artifactId>combine-java-spring-web</artifactId>
     <groupId>com.parch.combine</groupId>
     <version>0.6.0</version>
 </dependency>
 ```
 
-<br>编写一个组件Service和一个UI页面的Service，继承 starter 包提供的 AbstractCombineWebService：<br>
+<br>编写一个组件Service和一个UI页面的Service，继承核心提供的 AbstractCombineWebService：<br>
 ```$java
 @Service
 public class CombineJavaService extends AbstractCombineJavaService {
