@@ -67,7 +67,9 @@ public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQCons
         Object expression = DataVariableHelper.parseValue(logicConfig.getExpression(), false);
 
         try {
-            String listenFlowKey = logicConfig.getListenFlowKey();
+            Object listenFlowKeyObj = DataVariableHelper.parseValue(logicConfig.getListenFlowKey(), false);
+            String listenFlowKey = listenFlowKeyObj == null ? logicConfig.getListenFlowKey() : listenFlowKeyObj.toString();
+
             consumer.subscribe(topic.toString(), expression.toString());
             consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
                 for (MessageExt msg : msgs) {

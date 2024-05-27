@@ -9,13 +9,13 @@ import java.util.List;
 
 public class RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
 
-    @Field(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
+    @Field(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT, hasExpression = true, defaultValue = "组件自动生成")
     private String listenFlowKey;
 
-    @Field(key = "consumerGroup", name = "消费者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
+    @Field(key = "consumerGroup", name = "消费者组", type = FieldTypeEnum.TEXT, hasExpression = true, defaultValue = "逻辑配置ID")
     private String consumerGroup;
 
-    @Field(key = "expression", name = "表达式", type = FieldTypeEnum.TEXT, defaultValue = "*")
+    @Field(key = "expression", name = "表达式", type = FieldTypeEnum.TEXT, hasExpression = true, defaultValue = "*")
     private String expression;
 
     @Field(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)

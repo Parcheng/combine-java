@@ -7,13 +7,13 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public class RocketMQProductLogicConfig extends RocketMQLogicConfig {
 
-    @Field(key = "tags", name = "标签", type = FieldTypeEnum.TEXT)
+    @Field(key = "tags", name = "标签", type = FieldTypeEnum.TEXT, hasExpression = true)
     private String tags;
 
-    @Field(key = "producerGroup", name = "生产者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
+    @Field(key = "producerGroup", name = "生产者组", type = FieldTypeEnum.TEXT, hasExpression = true, defaultValue = "逻辑配置ID")
     private String producerGroup;
 
-    @Field(key = "content", name = "消息内容", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "content", name = "消息内容", type = FieldTypeEnum.OBJECT, hasExpression = true, isRequired = true)
     private Object content;
 
     @Override

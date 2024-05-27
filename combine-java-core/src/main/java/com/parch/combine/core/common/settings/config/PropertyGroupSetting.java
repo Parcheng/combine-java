@@ -19,6 +19,8 @@ public class PropertyGroupSetting {
 
     private Boolean isRequired;
 
+    private Boolean hasExpression;
+
     private List<IOptionSetting> options;
 
     public String getName() {
@@ -59,5 +61,13 @@ public class PropertyGroupSetting {
 
     public void setIndex(Integer index) {
         this.index = index;
+    }
+
+    public Boolean getHasExpression() {
+        return hasExpression;
+    }
+
+    public void setHasExpression(Boolean hasExpression) {
+        this.hasExpression = hasExpression;
     }
 }

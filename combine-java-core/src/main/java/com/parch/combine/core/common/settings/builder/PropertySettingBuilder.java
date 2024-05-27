@@ -78,6 +78,7 @@ public class PropertySettingBuilder {
         property.setName(fieldAnnotation.name());
         property.setType(fieldAnnotation.type());
         property.setIsRequired(fieldAnnotation.isRequired());
+        property.setHasExpression(fieldAnnotation.hasExpression());
         property.setIsArray(fieldAnnotation.isArray());
         property.setDesc(new ArrayList<>());
         property.setDefaultValue(CheckEmptyUtil.isEmpty(fieldAnnotation.defaultValue()) ? null : fieldAnnotation.defaultValue());
@@ -131,6 +132,7 @@ public class PropertySettingBuilder {
             group.setName(fieldGroupAnnotation.name());
             group.setType(fieldGroupAnnotation.type());
             group.setIsRequired(fieldGroupAnnotation.isRequired());
+            group.setHasExpression(fieldGroupAnnotation.hasExpression());
             groups.add(group);
         }
 

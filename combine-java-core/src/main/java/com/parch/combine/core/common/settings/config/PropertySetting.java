@@ -15,6 +15,8 @@ public class PropertySetting {
 
     private String refKey;
 
+    private Boolean hasExpression;
+
     private Boolean isRequired;
 
     private Boolean isArray;
@@ -125,5 +127,13 @@ public class PropertySetting {
 
     public void setRefKey(String refKey) {
         this.refKey = refKey;
+    }
+
+    public Boolean getHasExpression() {
+        return hasExpression;
+    }
+
+    public void setHasExpression(Boolean hasExpression) {
+        this.hasExpression = hasExpression;
     }
 }

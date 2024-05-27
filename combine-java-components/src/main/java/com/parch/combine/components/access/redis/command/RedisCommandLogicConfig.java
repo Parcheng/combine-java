@@ -14,10 +14,9 @@ public class RedisCommandLogicConfig extends LogicConfig {
     private Boolean failStop;
 
     @Field(key = "commands", name = "命令配置集合", type = FieldTypeEnum.GROUP, isArray = true, isRequired = true)
-    @FieldDesc("命令和命令参数配置集合，可使用#{}变量取值符")
     @FieldGroup(index = 0, name = "命令类型", type = FieldTypeEnum.SELECT)
     @FieldGroupSelect(index = 0, enumClass = RedisCommandTypeEnum.class)
-    @FieldGroup(index = 1, name = "命令参数, 多个用空格分隔", type = FieldTypeEnum.TEXT, isRequired = false)
+    @FieldGroup(index = 1, name = "命令参数, 多个用空格分隔", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = false)
     @FieldEg(eg = "[\"SET username NX 10000 #{$r.data001.name}\"]", desc = "执行设值命令，只有 username 的 KEY存在才生效，值为 ID 为 data001 组件执行结果的 name 字段，有效期为 10000 毫秒")
     private List<RedisCommand> commands;
 

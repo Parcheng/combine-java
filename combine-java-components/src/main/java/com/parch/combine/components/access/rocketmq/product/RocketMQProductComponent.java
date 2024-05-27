@@ -47,7 +47,10 @@ public class RocketMQProductComponent extends AbsRocketMQComponent<RocketMQProdu
         RocketMQProductInitConfig initConfig = getInitConfig();
         RocketMQProductLogicConfig logicConfig = getLogicConfig();
 
-        DefaultMQProducer producer = new DefaultMQProducer(logicConfig.getProducerGroup());
+        Object producerGroupObj = DataVariableHelper.parseValue(logicConfig.getProducerGroup(), false);
+        String producerGroup = producerGroupObj == null ? logicConfig.getId() : producerGroupObj.toString();
+
+        DefaultMQProducer producer = new DefaultMQProducer(producerGroup);
         producer.setNamesrvAddr(initConfig.getService());
 
         Object topic = DataVariableHelper.parseValue(logicConfig.getTopic(), false);

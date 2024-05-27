@@ -29,6 +29,11 @@ public @interface Field {
     FieldTypeEnum type();
 
     /**
+     * 字段是否支持取值表达式（#{...}）
+     */
+    boolean hasExpression() default false;
+
+    /**
      * 字段是否为数组
      */
     boolean isArray() default false;

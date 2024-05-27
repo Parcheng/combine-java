@@ -161,7 +161,7 @@
           "dataLoadId": "system_ui_page_config_load",
           "lines": [
             { "text": "<b>#{key} - #{name}</b>" },
-            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无} | 支持取值表达式: #{hasExpression}" },
             { "title": "描述：", "text": "#{desc}" },
             { "text": "<hr>" }
           ],
@@ -183,7 +183,7 @@
           "dataLoadId": "system_ui_config_load",
           "lines": [
             { "text": "<b>#{key} - #{name}</b>" },
-            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无} | 支持取值表达式: #{hasExpression}" },
             { "title": "描述：", "text": "#{desc}" },
             { "text": "<hr>" }
           ],
@@ -208,7 +208,7 @@
           "dataField": "configs",
           "lines": [
             { "text": "<b>#{key} - #{name}</b>" },
-            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无} | 支持取值表达式: #{hasExpression}" },
             { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
             { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
             { "title": "描述：", "text": "#{desc}" },
@@ -227,7 +227,7 @@
           "dataField": "templateConfigs",
           "lines": [
             { "text": "<b>#{key} - #{name}</b>" },
-            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无} | 支持取值表达式: #{hasExpression}" },
             { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
             { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
             { "title": "描述：", "text": "#{desc}" },
@@ -260,7 +260,7 @@
               "dataField": "properties",
               "lines": [
                 { "text": "<b>#{key} - #{name}</b>" },
-                { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+                { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无} | 支持取值表达式: #{hasExpression}" },
                 { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
                 { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
                 { "title": "描述：", "text": "#{desc}" },
