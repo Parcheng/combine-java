@@ -34,7 +34,7 @@ public class DataTextSplitComponent extends AbsComponent<DataTextSplitInitConfig
             result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "数据源为空为空"));
         }
         if (CheckEmptyUtil.isEmpty(logicConfig.getRegex())) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "拆分的正则表达式为空"));
+            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, DataTextSplitErrorEnum.REGEX_IS_NULL.getMsg()));
         }
 
         return result;
@@ -46,9 +46,14 @@ public class DataTextSplitComponent extends AbsComponent<DataTextSplitInitConfig
         List<String> result = null;
 
         try {
+            Object regex = DataVariableHelper.parseValue(logicConfig.getRegex(), false);
+            if (regex == null) {
+                return DataResult.fail(DataTextSplitErrorEnum.REGEX_IS_NULL);
+            }
+
             Object data = DataVariableHelper.parseValue(logicConfig.getSource(), true);
             if (data != null) {
-                String[] dataArr = JsonUtil.serialize(data).split(logicConfig.getRegex());
+                String[] dataArr = JsonUtil.serialize(data).split(regex.toString());
                 result = new ArrayList<>(dataArr.length);
                 Collections.addAll(result, dataArr);
             }

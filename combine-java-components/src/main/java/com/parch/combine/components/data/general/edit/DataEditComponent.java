@@ -125,7 +125,7 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
             case PUT_ALL:
                 for (String s : params) {
                     if (s.contains(SymbolConstant.COLON)) {
-                        String[] currSetPath = params.get(0).split(SymbolConstant.COLON);
+                        String[] currSetPath = s.split(SymbolConstant.COLON);
                         key = DataVariableHelper.parseValue(currSetPath[1], false);
                         if (key != null) {
                             value = DataVariableHelper.parseValue(currSetPath[2], false);
@@ -143,7 +143,7 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
 
                         Map<Object, Object> currMapData = (Map<Object, Object>) currMapObj;
                         for (Object newMapKey : currMapData.keySet()) {
-                            sourceData.put(newMapKey, getValue(sourceData.get(newMapKey), params.get(0), currMapData.get(newMapKey)));
+                            sourceData.put(newMapKey, currMapData.get(newMapKey));
                         }
                     }
                 }
@@ -382,9 +382,9 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
      * @return 值
      */
     private Object getValue(Object sourceData, String type, Object value) {
-        DataTypeEnum dataType = DataTypeEnum.get(type);
-        Object newValue = value;
-        if (newValue == null) {
+        Object typeObj = DataVariableHelper.parseValue(type, false);
+        DataTypeEnum dataType = DataTypeEnum.get(typeObj == null ? type : typeObj.toString());
+        if (value == null) {
             return null;
         }
 
@@ -403,22 +403,22 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
         try {
             switch (dataType) {
                 case STRING:
-                    return newValue.toString();
+                    return value.toString();
                 case NUMBER:
-                    if (newValue.toString().contains(SymbolConstant.DOT)) {
-                        return Double.parseDouble(newValue.toString());
+                    if (value.toString().contains(SymbolConstant.DOT)) {
+                        return Double.parseDouble(value.toString());
                     } else {
-                        return Long.parseLong(newValue.toString());
+                        return Long.parseLong(value.toString());
                     }
                 case BOOLEAN:
-                    return Boolean.parseBoolean(newValue.toString());
+                    return Boolean.parseBoolean(value.toString());
                 case DATE:
-                    return DataParseUtil.parseDate(newValue.toString());
+                    return DataParseUtil.parseDate(value.toString());
                 default:
-                    return newValue;
+                    return value;
             }
         } catch (Exception e) {
-            return newValue;
+            return value;
         }
     }
 }

@@ -28,7 +28,7 @@ public class DataVerifyLogicConfig extends LogicConfig {
 
     public static class DataVerifyItem extends CompareGroupConfig {
 
-        @Field(key = "msg", name = "错误提示信息，", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "msg", name = "错误提示信息，", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
         @FieldObject(type = DataVerifyItem.class)
         @FieldEg(eg = "名称不正确", desc = "条件成立时，返回“名称不正确”错误信息")
         @FieldEg(eg = "#{$r.data001.error}", desc = "条件成立时，返回 data001 组件返回结果的 error 字段的值")

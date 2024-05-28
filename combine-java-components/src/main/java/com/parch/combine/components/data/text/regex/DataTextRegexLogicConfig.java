@@ -12,7 +12,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class DataTextRegexLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
     @FieldDesc("提示：非文本类型会转为JSON格式处理")
     private String source;
 

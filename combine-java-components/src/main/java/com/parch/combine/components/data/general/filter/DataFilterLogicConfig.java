@@ -20,10 +20,10 @@ public class DataFilterLogicConfig extends LogicConfig {
 
     @Field(key = "items", name = "过滤配置集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
     @FieldDesc("创建配置项集合")
-    @FieldGroup(index = 0, name = "要过滤的字段的路径", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 0, name = "要过滤的字段的路径", type = FieldTypeEnum.TEXT, hasExpression = true)
     @FieldGroup(index = 1, name = "过滤规则，默认为 CLEAR 规则", type = FieldTypeEnum.SELECT, isRequired = false)
     @FieldGroupSelect(index = 1, enumClass = DataFilterRuleEnum.class)
-    @FieldGroup(index = 2, name = "过滤规则的参数", type = FieldTypeEnum.TEXT, isRequired = false)
+    @FieldGroup(index = 2, name = "过滤规则的参数", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = false)
     @FieldEg(eg = "$r.data001.id", desc = "将 data001 组件返回结果的 id 字段清除掉")
     @FieldEg(eg = "$r.data001.name REPLACE zhangsan", desc = "将 data001 组件返回结果的 name 字段的值替换为 zhangsan")
     @FieldEg(eg = "$r.data001.type REPLACE #{$c.type}", desc = "表示将 data001 组件返回结果的 name 字段的值替换为全局变量的 type 字段值")
