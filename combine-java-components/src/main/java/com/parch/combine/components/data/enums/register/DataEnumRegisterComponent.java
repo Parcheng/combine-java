@@ -6,9 +6,12 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 运算组件
@@ -53,8 +56,32 @@ public class DataEnumRegisterComponent extends AbsComponent<DataEnumRegisterInit
     public DataResult execute() {
         List<Object> result = new ArrayList<>();
         DataEnumRegisterLogicConfig logicConfig = getLogicConfig();
+
+        Object key = DataVariableHelper.parseValue(logicConfig.getKey(), false);
+        if (key == null) {
+            return DataResult.fail(DataEnumRegisterErrorEnum.KEY_IS_NULL);
+        }
+
+        List<EnumCacheHandler.EnumItem> enumItems = logicConfig.getItems();
+        for (EnumCacheHandler.EnumItem enumItem : enumItems) {
+            Object code = DataVariableHelper.parseValue(enumItem.getCode(), false);
+            if (code != null) {
+                enumItem.setCode(code.toString());
+            }
+
+            Object name = DataVariableHelper.parseValue(enumItem.getName(), false);
+            if (name != null) {
+                enumItem.setCode(name.toString());
+            }
+
+            Object desc = DataVariableHelper.parseValue(enumItem.getDesc(), false);
+            if (desc != null) {
+                enumItem.setCode(desc.toString());
+            }
+        }
+
         try {
-            EnumCacheHandler.register(logicConfig.getKey(), logicConfig.getItems());
+            EnumCacheHandler.register(key.toString(), enumItems);
         } catch (Exception e) {
             ComponentErrorHandler.print(DataEnumRegisterErrorEnum.FAIL, e);
             return DataResult.fail(DataEnumRegisterErrorEnum.FAIL);
