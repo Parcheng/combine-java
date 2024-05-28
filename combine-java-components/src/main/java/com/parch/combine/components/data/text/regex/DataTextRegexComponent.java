@@ -52,7 +52,7 @@ public class DataTextRegexComponent extends AbsComponent<DataTextRegexInitConfig
     }
 
     private String getSourceText() {
-        Object data = DataVariableHelper.parseValue(getLogicConfig().getSource(), true);
+        Object data = DataVariableHelper.parseValue(getLogicConfig().getSource(), false);
         if (data instanceof Map || data instanceof Collection) {
             return JsonUtil.serialize(data);
         } else {

@@ -6,6 +6,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.DataFindHandler;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
@@ -51,13 +52,13 @@ public class DataTextSplitComponent extends AbsComponent<DataTextSplitInitConfig
                 return DataResult.fail(DataTextSplitErrorEnum.REGEX_IS_NULL);
             }
 
-            Object data = DataVariableHelper.parseValue(logicConfig.getSource(), true);
+            Object data = DataVariableHelper.parseValue(logicConfig.getSource(), false);
             if (data != null) {
                 String[] dataArr = JsonUtil.serialize(data).split(regex.toString());
                 result = new ArrayList<>(dataArr.length);
                 Collections.addAll(result, dataArr);
             }
-            if (logicConfig.getIsReplace()) {
+            if (logicConfig.getIsReplace() && DataFindHandler.hasParseFlag(logicConfig.getSource())) {
                 Object finalResult = result;
                 DataVariableHelper.replaceValue(logicConfig.getSource(), old -> finalResult);
             }

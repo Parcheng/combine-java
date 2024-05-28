@@ -34,7 +34,7 @@ public class DataCropComponent extends AbsComponent<DataCropInitConfig, DataCrop
     @SuppressWarnings("unchecked")
     protected DataResult execute() {
         DataCropLogicConfig config = getLogicConfig();
-        Object data = DataVariableHelper.parseValue(config.getSource(), true);
+        Object data = DataVariableHelper.parseValue(config.getSource(), false);
         if (data == null) {
             return DataResult.success(null);
         }

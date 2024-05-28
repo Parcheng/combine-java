@@ -6,9 +6,6 @@ import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-/**
- * 文件内容读取逻辑配置类
- */
 public class DataCropLogicConfig extends LogicConfig {
 
     @Field(key = "source", name = "数据来源", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
