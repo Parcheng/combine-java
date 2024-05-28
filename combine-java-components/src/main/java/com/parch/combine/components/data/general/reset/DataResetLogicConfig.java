@@ -33,7 +33,7 @@ public class DataResetLogicConfig extends LogicConfig {
 
         @Field(key = "resets", name = "配置项集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
         @FieldDesc("将 “新值” 赋值给 “要重新赋值的字段”")
-        @FieldGroup(index = 0, name = "要重新赋值的字段名", type = FieldTypeEnum.TEXT, hasExpression = true)
+        @FieldGroup(index = 0, name = "要重新赋值的字段名", type = FieldTypeEnum.EXPRESSION, hasExpression = true)
         @FieldGroup(index = 1, name = "数据类型", type = FieldTypeEnum.SELECT)
         @FieldGroupSelect(index = 1, enumClass = DataTypeEnum.class)
         @FieldGroup(index = 2, name = "新值", type = FieldTypeEnum.TEXT, hasExpression = true)
