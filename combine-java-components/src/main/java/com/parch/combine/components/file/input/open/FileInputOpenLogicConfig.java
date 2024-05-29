@@ -10,7 +10,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class FileInputOpenLogicConfig extends LogicConfig {
 
-    @Field(key = "path", name = "文件路径", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "path", name = "文件路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     @FieldEg(eg = "my/test.txt", desc = "打开项目资源目录下 target/class/files/my/test.txt 文件")
     private String path;
 

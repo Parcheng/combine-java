@@ -4,6 +4,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public class DataTextToTableComponent extends AbsComponent<DataTextToTableInitCo
         List<List<String>> table = new ArrayList<>();
         DataTextToTableLogicConfig config = getLogicConfig();
 
-        Object data = DataVariableHelper.parseValue(config.getSource(), true);
+        Object data = TextExpressionHelper.getObject(config.getSource());
         if (data == null) {
             return DataResult.success(table);
         }
