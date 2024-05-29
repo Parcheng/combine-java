@@ -10,7 +10,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class FileDeleteLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "文件路径", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "文件路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String source;
 
     @Override

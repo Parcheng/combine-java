@@ -10,7 +10,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public abstract class FileParseLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "数据来源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据来源", type = FieldTypeEnum.EXPRESSION, isRequired = true)
     @FieldEg(eg = "$r.data001", desc = "读取 ID 为 data001 组件的返回结果作为文件数据")
     private String source;
 

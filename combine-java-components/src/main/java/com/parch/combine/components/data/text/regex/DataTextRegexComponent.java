@@ -1,5 +1,6 @@
 package com.parch.combine.components.data.text.regex;
 
+import com.parch.combine.components.data.text.split.DataTextSplitErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.AbsComponent;
@@ -47,8 +48,15 @@ public class DataTextRegexComponent extends AbsComponent<DataTextRegexInitConfig
 
     @Override
     public DataResult execute() {
+        DataTextRegexLogicConfig logicConfig = getLogicConfig();
         String text = getSourceText();
-        return DataResult.success(match(text));
+
+        Object regex = DataVariableHelper.parseValue(logicConfig.getRegex(), false);
+        if (regex == null) {
+            return DataResult.fail(DataTextRegexErrorEnum.REGEX_IS_NULL);
+        }
+
+        return DataResult.success(match(text, DataTextRegexResultModeEnum.get(logicConfig.getResultMode()), regex.toString()));
     }
 
     private String getSourceText() {
@@ -60,12 +68,9 @@ public class DataTextRegexComponent extends AbsComponent<DataTextRegexInitConfig
         }
     }
 
-    private List<Object> match(String text) {
+    private List<Object> match(String text, DataTextRegexResultModeEnum mode, String regex) {
         List<Object> result = new ArrayList<>();
-        DataTextRegexLogicConfig logicConfig = getLogicConfig();
-        DataTextRegexResultModeEnum mode = DataTextRegexResultModeEnum.get(logicConfig.getResultMode());
-
-        Pattern pattern = Pattern.compile(logicConfig.getRegex(), Pattern.DOTALL);
+        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             if (mode == DataTextRegexResultModeEnum.FULL) {

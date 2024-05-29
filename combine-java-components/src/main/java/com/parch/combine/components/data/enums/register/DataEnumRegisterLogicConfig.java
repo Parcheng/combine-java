@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class DataEnumRegisterLogicConfig extends LogicConfig {
 
-    @Field(key = "key", name = "枚举KEY", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
+    @Field(key = "key", name = "枚举KEY", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String key;
 
     @Field(key = "items", name = "枚举项配置集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
-    @FieldGroup(index = 0, name = "枚举项编码", type = FieldTypeEnum.TEXT, hasExpression = true)
-    @FieldGroup(index = 1, name = "枚举项名称", type = FieldTypeEnum.TEXT, hasExpression = true)
-    @FieldGroup(index = 2, name = "枚举项描述", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = false)
+    @FieldGroup(index = 0, name = "枚举项编码", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+    @FieldGroup(index = 1, name = "枚举项名称", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+    @FieldGroup(index = 2, name = "枚举项描述", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = false)
     private List<EnumCacheHandler.EnumItem> items = new ArrayList<>();
 
     @Override

@@ -1,5 +1,6 @@
 package com.parch.combine.components.tool.cache.set;
 
+import com.parch.combine.components.tool.cache.CacheLogicConfig;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -7,13 +8,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 /**
  * 逻辑配置类
  */
-public class CacheSetLogicConfig extends LogicConfig {
-
-    @Field(key = "domain", name = "缓存域", type = FieldTypeEnum.TEXT, defaultValue = "$common")
-    private String domain;
-
-    @Field(key = "key", name = "缓存KEY/数据引用", type = FieldTypeEnum.TEXT, isRequired = true)
-    private String key;
+public class CacheSetLogicConfig extends CacheLogicConfig {
 
     @Field(key = "value", name = "数据/数据引用", type = FieldTypeEnum.TEXT, isRequired = true)
     private String value;
@@ -23,20 +18,10 @@ public class CacheSetLogicConfig extends LogicConfig {
 
     @Override
     public void init() {
-        if (domain == null) {
-            domain = "$common";
-        }
+        super.init();
         if (expires == null) {
             expires = -1L;
         }
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public String getValue() {
@@ -53,13 +38,5 @@ public class CacheSetLogicConfig extends LogicConfig {
 
     public void setExpires(Long expires) {
         this.expires = expires;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
     }
 }

@@ -10,12 +10,12 @@ import java.util.List;
 
 public class RedisLuaLogicConfig extends LogicConfig {
 
-    @Field(key = "keys", name = "脚本KEY集合", type = FieldTypeEnum.TEXT, hasExpression = true, isArray = true)
+    @Field(key = "keys", name = "脚本KEY集合", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isArray = true)
     @FieldDesc("用于脚本中 KEYS[i] 取值")
     @FieldEg(eg = "[\"test_key\"]", desc = "集合中只有一个为 test_key 的脚本KEY")
     private List<String> keys;
 
-    @Field(key = "args", name = "脚本参数集合", type = FieldTypeEnum.TEXT, hasExpression = true, isArray = true)
+    @Field(key = "args", name = "脚本参数集合", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isArray = true)
     @FieldDesc("用于脚本中 ARGV[i] 取值")
     @FieldEg(eg = "[\"1\"]", desc = "集合中只有一个为 test_key 的脚本参数")
     private List<String> args;

@@ -13,16 +13,16 @@ public class RedisLockLogicConfig extends LogicConfig {
     @FieldEg(eg = "-1", desc = "解锁")
     private Integer count;
 
-    @Field(key = "key", name = "锁的KEY", type = FieldTypeEnum.TEXT, hasExpression = true, defaultValue = "随机生成")
+    @Field(key = "key", name = "锁的KEY", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, defaultValue = "随机生成")
     @FieldEg(eg = "user_12345", desc = "锁的 KEY 为 user_12345")
     private String key;
 
-    @Field(key = "value", name = "锁的值", type = FieldTypeEnum.TEXT, hasExpression = true)
+    @Field(key = "value", name = "锁的值", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
     @FieldDesc("如果不为空，则解锁时必须与加锁时的 KEY 和 VALUE 都一致才能成功解锁")
     @FieldEg(eg = "ORDER_NO_123445", desc = "锁的值为 ORDER_NO_123445")
     private String value;
 
-    @Field(key = "keyPrefix", name = "", type = FieldTypeEnum.TEXT, hasExpression = true)
+    @Field(key = "keyPrefix", name = "", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
     @FieldEg(eg = "order_", desc = "锁的 KEY 会在前面拼接 order_")
     private String keyPrefix;
 

@@ -1,6 +1,5 @@
 package com.parch.combine.components.file.output;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
@@ -14,7 +13,7 @@ import java.nio.charset.Charset;
  */
 public class FileOutputLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "文件的数据来源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "文件的数据来源", type = FieldTypeEnum.EXPRESSION, isRequired = true)
     @FieldDesc("必须是文件的字节数据")
     @FieldEg(eg = "$r.data001", desc = "获取 data001 组件的结果数据（文件字节数据）")
     private String source;

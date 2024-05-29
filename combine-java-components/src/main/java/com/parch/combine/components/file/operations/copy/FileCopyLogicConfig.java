@@ -10,10 +10,10 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class FileCopyLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "数据来源路径", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据来源路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String source;
 
-    @Field(key = "target", name = "写入路径", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "target", name = "写入路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String target;
 
     @Override

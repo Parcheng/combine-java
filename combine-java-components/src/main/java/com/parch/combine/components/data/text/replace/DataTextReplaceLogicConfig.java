@@ -18,14 +18,14 @@ public class DataTextReplaceLogicConfig extends LogicConfig {
     @FieldSelect(enumClass = DataTextReplaceModeEnum.class)
     private String mode;
 
-    @Field(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
+    @Field(key = "source", name = "数据源", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     @FieldDesc("支持结构对象、集合和文本类型")
     private String source;
 
-    @Field(key = "oldText", name = "旧文本", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
+    @Field(key = "oldText", name = "旧文本", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String oldText;
 
-    @Field(key = "newText", name = "新文本", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
+    @Field(key = "newText", name = "新文本", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String newText;
 
     public String getSource() {

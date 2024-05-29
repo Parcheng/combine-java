@@ -9,7 +9,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class DataEnumGetLogicConfig extends LogicConfig {
 
-    @Field(key = "key", name = "枚举KEY", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
+    @Field(key = "key", name = "枚举KEY", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String key;
 
     @Override

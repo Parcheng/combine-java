@@ -5,6 +5,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.ArrayList;
@@ -108,7 +109,8 @@ public class ToolLockComponent extends AbsComponent<ToolLockInitConfig, ToolLock
      */
     private String getKey() {
         ToolLockLogicConfig config = getLogicConfig();
-        return CheckEmptyUtil.isEmpty(config.getKey()) ? "$DEFAULT" : config.getKey();
+        String key = TextExpressionHelper.getText(config.getKey());
+        return CheckEmptyUtil.isEmpty(key) ? "$DEFAULT" : key;
     }
 
     /**

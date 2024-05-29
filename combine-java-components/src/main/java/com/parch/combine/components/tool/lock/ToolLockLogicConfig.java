@@ -11,7 +11,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class ToolLockLogicConfig extends LogicConfig {
 
-    @Field(key = "key", name = "锁的KEY", type = FieldTypeEnum.TEXT)
+    @Field(key = "key", name = "锁的KEY", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
     @FieldDesc("不设置该值时，默认所有流程共用一把锁")
     @FieldEg(eg = "user_change", desc = "添加或解除 KEY 为 user_change 的锁")
     private String key;

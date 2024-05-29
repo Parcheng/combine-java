@@ -14,7 +14,7 @@ public abstract class FileBuildLogicConfig extends LogicConfig {
     @Field(key = "fileName", name = "文件名", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
     private String fileName;
 
-    @Field(key = "source", name = "数据来源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据来源", type = FieldTypeEnum.EXPRESSION, isRequired = true)
     @FieldDesc({"构建表格：数据必须是对象或者对象集合的格式", "构建文本：数据可以是任意类型，但都会转为文本处理"})
     @FieldEg(eg = "$r.data001", desc = "要将ID为 data001 组件的结果作为数据源")
     private String source;

@@ -8,6 +8,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import javax.mail.*;
@@ -58,7 +59,7 @@ public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, Mail
         try {
             from = new InternetAddress(initConfig.getMail());
             for (String to : logicConfig.getTo()) {
-                toList.add(new InternetAddress(to));
+                toList.add(new InternetAddress(TextExpressionHelper.getText(to, to)));
             }
         } catch (MessagingException e) {
             ComponentErrorHandler.print(MailSendErrorEnum.ADDRESS_ERROR, e);
@@ -75,7 +76,7 @@ public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, Mail
             Message message = new MimeMessage(session);
             message.setFrom(from);
             message.setRecipients(Message.RecipientType.TO, toList.toArray(new InternetAddress[0]));
-            message.setSubject(logicConfig.getSubject());
+            message.setSubject(TextExpressionHelper.getText(logicConfig.getSubject(), "无标题"));
             message.setContent(multipart);
             message.setSentDate(new Date());
 
@@ -101,7 +102,7 @@ public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, Mail
         switch (item.getType()) {
             case IMAGE:
                 if (CheckEmptyUtil.isEmpty(item.getPath())) {
-                    path = DataVariableHelper.parseValue(item.getPath(),false);
+                    path = TextExpressionHelper.getText(item.getPath());
                     if (path != null) {
                         MimeMessageHelper.addImage(part, path.toString());
                     }

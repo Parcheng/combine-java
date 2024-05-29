@@ -10,11 +10,11 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class FileCompressLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "数据来源路径", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据来源路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     @FieldDesc("该字段如果为路径，则表示要对该路径压缩；如果为压缩文件地址，则表示要对改压缩包解压")
     private String source;
 
-    @Field(key = "target", name = "写入路径", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "target", name = "写入路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     @FieldDesc("该字段如果为路径，则表示要将压缩文件解压到该路径；如果为压缩文件地址，则表示要压缩为该文件")
     private String target;
 

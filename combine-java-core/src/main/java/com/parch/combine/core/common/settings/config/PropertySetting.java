@@ -15,15 +15,13 @@ public class PropertySetting {
 
     private String refKey;
 
-    private Boolean hasExpression;
-
     private Boolean isRequired;
 
     private Boolean isArray;
 
     private String defaultValue;
 
-    private FieldTypeEnum type;
+    private FieldTypeEnum[] type;
 
     private List<PropertyGroupSetting> group;
 
@@ -57,11 +55,11 @@ public class PropertySetting {
         this.desc = desc;
     }
 
-    public FieldTypeEnum getType() {
+    public FieldTypeEnum[] getType() {
         return type;
     }
 
-    public void setType(FieldTypeEnum type) {
+    public void setType(FieldTypeEnum[] type) {
         this.type = type;
     }
 
@@ -127,13 +125,5 @@ public class PropertySetting {
 
     public void setRefKey(String refKey) {
         this.refKey = refKey;
-    }
-
-    public Boolean getHasExpression() {
-        return hasExpression;
-    }
-
-    public void setHasExpression(Boolean hasExpression) {
-        this.hasExpression = hasExpression;
     }
 }

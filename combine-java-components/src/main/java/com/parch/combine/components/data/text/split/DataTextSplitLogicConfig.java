@@ -13,11 +13,11 @@ public class DataTextSplitLogicConfig extends LogicConfig {
     @Field(key = "isReplace", name = "是否替换掉源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean isReplace;
 
-    @Field(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, hasExpression = true, isRequired = true)
+    @Field(key = "source", name = "数据源", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     @FieldDesc("注意：非文本类型会先转成JSON再处理")
     private String source;
 
-    @Field(key = "regex", name = "拆分的正则表达式", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "regex", name = "拆分的正则表达式", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String regex;
 
     public String getSource() {

@@ -7,6 +7,7 @@ import com.parch.combine.core.component.error.IComponentError;
  */
 public enum FileOutputDiskErrorEnum implements IComponentError {
 
+    TARGET_PATH_IS_NULL("目标文件路径为空", "目标文件路径为空"),
     DATA_IS_NULL("数据不存在", "数据异常"),
     FAIL("文件写入异常", "文件写入失败"),
     ;

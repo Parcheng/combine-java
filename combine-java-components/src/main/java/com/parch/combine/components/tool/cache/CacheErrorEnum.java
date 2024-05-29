@@ -1,18 +1,20 @@
-package com.parch.combine.components.data.text.regex;
+package com.parch.combine.components.tool.cache;
 
 import com.parch.combine.core.component.error.IComponentError;
 
-public enum DataTextRegexErrorEnum implements IComponentError {
+/**
+ * 逻辑判断异常枚举
+ */
+public enum CacheErrorEnum implements IComponentError {
 
-    REGEX_IS_NULL("分隔符表达式为空", "分隔符配置为空"),
-    FAIL("失败", "失败"),
-    ;
+    DOMAIN_IS_NULL("缓存域KEY为空", "缓存域KEY为空"),
+    KEY_IS_NULL("缓存KEY为空", "缓存KEY为空");
 
     private String msg;
 
     private String showMsg;
 
-    DataTextRegexErrorEnum(String msg, String showMsg) {
+    CacheErrorEnum(String msg, String showMsg) {
         this.msg = msg;
         this.showMsg = showMsg;
 

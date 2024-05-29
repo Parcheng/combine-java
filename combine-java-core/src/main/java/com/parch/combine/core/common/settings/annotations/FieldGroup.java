@@ -24,15 +24,10 @@ public @interface FieldGroup {
     /**
      * 项类型
      */
-    FieldTypeEnum type();
+    FieldTypeEnum[] type();
 
     /**
      * 项是否必须
      */
     boolean isRequired() default true;
-
-    /**
-     * 是否支持取值表达式
-     */
-    boolean hasExpression() default false;
 }

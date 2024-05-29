@@ -1,11 +1,13 @@
 package com.parch.combine.components.file.operations.delete;
 
+import com.parch.combine.components.file.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.file.helper.FilePathHelper;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.*;
@@ -39,7 +41,14 @@ public class FileDeleteComponent extends AbsComponent<FileDeleteInitConfig, File
     protected DataResult execute() {
         FileDeleteInitConfig initConfig = getInitConfig();
         FileDeleteLogicConfig logicConfig = getLogicConfig();
-        File source = new File(FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), logicConfig.getSource()));
+
+        Object sourcePath = DataVariableHelper.parseValue(logicConfig.getSource(), false);
+        if (sourcePath == null) {
+            ComponentErrorHandler.print(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
+            return DataResult.fail(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
+        }
+
+        File source = new File(FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), sourcePath.toString()));
         if (!source.exists()) {
             ComponentErrorHandler.print(FileDeleteErrorEnum.FILE_NOT_EXIST);
             return DataResult.fail(FileDeleteErrorEnum.FILE_NOT_EXIST);

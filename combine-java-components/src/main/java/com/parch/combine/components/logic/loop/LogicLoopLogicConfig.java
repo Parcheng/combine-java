@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class LogicLoopLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "要遍历的数据", type = FieldTypeEnum.TEXT)
+    @Field(key = "source", name = "要遍历的数据", type = FieldTypeEnum.EXPRESSION)
     @FieldDesc("提示：source 和 count 至少要配置一项")
     @FieldEg(eg = "$r.data", desc = "遍历组件 ID 为 data 的执行结果")
     private String source;

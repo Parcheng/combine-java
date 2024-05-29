@@ -26,12 +26,7 @@ public @interface Field {
     /**
      * 字段类型
      */
-    FieldTypeEnum type();
-
-    /**
-     * 字段是否支持取值表达式（#{...}）
-     */
-    boolean hasExpression() default false;
+    FieldTypeEnum[] type();
 
     /**
      * 字段是否为数组

@@ -101,7 +101,7 @@ public class RedisLockComponent extends AbsRedisComponent<RedisLockInitConfig, R
     public void unlock(JedisCluster cluster, String key, Object valueObj) {
         if (valueObj != null) {
             String value = cluster.get(key);
-            if (!value.toString().equals(value)) {
+            if (!valueObj.toString().equals(value)) {
                 return;
             }
         }

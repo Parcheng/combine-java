@@ -7,7 +7,6 @@ import com.parch.combine.core.component.error.IComponentError;
  */
 public enum CacheGetErrorEnum implements IComponentError {
 
-    KEY_IS_NULL("缓存KEY为空", "缓存KEY为空"),
     KEY_MATCH_RULE_IS_ERROR("未知的匹配规则", "未知的匹配规则"),
     FAIL("获取缓存失败", "获取缓存失败");
 
