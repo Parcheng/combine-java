@@ -887,7 +887,7 @@ $combine = (function () {
                 return text;
             }
 
-            const isSet = variables.length == 1 && text.length == variables[0].length;
+            const isSet = variables.length === 1 && text.length === variables[0].length;
             for (let i = 0; i < variables.length; i++) {
                 const variableText = variables[i];
                 
@@ -908,7 +908,7 @@ $combine = (function () {
                     if (currData) {
                         for (let i = 0; i < variablePath.length; i++) {
                             currData = currData[variablePath[i]];
-                            if (currData == undefined || currData == null) {
+                            if (currData === undefined || currData === null) {
                                 currData = variableDefaultValue;
                                 break;
                             }
@@ -919,18 +919,19 @@ $combine = (function () {
                 if (isSet) {
                     text = currData;
                 } else {
-                    if (currData == null && defaultText != null && defaultText != undefined) {
+                    if (currData === null && defaultText !== null && defaultText !== undefined) {
                         currData = defaultText;
                     }
-                    if (currData instanceof Array) {
-                        const newText = [];
-                        for (let ci = 0; ci < currData.length; ci++) {
-                            newText.push(text.replace(variableText, currData[ci]));
+
+                    if (currData !== null) {
+                        if (currData instanceof Array) {
+                            currData = currData.join(',');
+                        } else {
+                            currData = currData.toString();
                         }
-                        text = newText;
-                    } else {
-                        text = currData == null ? "" : text.replace(variableText, currData);
                     }
+
+                    text = currData == null ? "" : text.replace(variableText, currData);
                 }
             }
 
