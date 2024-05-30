@@ -1,6 +1,4 @@
 $combine = (function () {
-    const triggersDomId = "$combine-web-triggers";
-    
     const groups = {};
     const constant = {};
     const instances = {};
@@ -265,10 +263,14 @@ $combine = (function () {
         }
     };
 
+    let triggersDomId;
     const triggerFns = {
         successFiledKey: "success",
         failFiledKey: "fail",
         errorFiledKey: "error",
+        setDomId: function (domId) {
+            triggersDomId = domId;
+        },
         register: function (id, trigger) {
             triggers[id] = JSON.stringify(trigger);
         },
