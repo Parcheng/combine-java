@@ -19,7 +19,7 @@ public class DataFormatLogicConfig extends LogicConfig {
 
     @Field(key = "items", name = "过滤配置集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
     @FieldDesc("创建配置项集合")
-    @FieldGroup(index = 0, name = "要格式化的字段", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 0, name = "要格式化的字段", type = FieldTypeEnum.EXPRESSION)
     @FieldGroup(index = 1, name = "函数", type = FieldTypeEnum.SELECT)
     @FieldGroupSelect(index = 1, enumClass = DataFormatFunctionEnum.class)
     @FieldGroup(index = 2, name = "函数的参数", type = FieldTypeEnum.TEXT, isRequired = false)

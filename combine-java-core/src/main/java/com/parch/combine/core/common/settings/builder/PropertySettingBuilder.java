@@ -49,18 +49,21 @@ public class PropertySettingBuilder {
                 continue;
             }
 
-            switch (property.getType()) {
-                case OBJECT:
-                    setObjectProperty(scope, properties, property, field, keyPrefix, parsedClass);
-                    break;
-                case GROUP:
-                    setGroup(property, field);
-                    break;
-                case SELECT:
-                    setSelect(property, field);
-                    break;
-                default:
-                    break;
+            FieldTypeEnum[] types = property.getType();
+            for (FieldTypeEnum type : types) {
+                switch (type) {
+                    case OBJECT:
+                        setObjectProperty(scope, properties, property, field, keyPrefix, parsedClass);
+                        break;
+                    case GROUP:
+                        setGroup(property, field);
+                        break;
+                    case SELECT:
+                        setSelect(property, field);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             setEgs(property, field);
@@ -144,7 +147,15 @@ public class PropertySettingBuilder {
                 }
 
                 for (PropertyGroupSetting currGroup : currGroups) {
-                    if (currGroup.getType() != FieldTypeEnum.SELECT) {
+                    boolean hasSelect = false;
+                    for (FieldTypeEnum type : currGroup.getType()) {
+                        if (type == FieldTypeEnum.SELECT) {
+                            hasSelect = true;
+                            break;
+                        }
+                    }
+
+                    if (!hasSelect) {
                         continue;
                     }
 

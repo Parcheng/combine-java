@@ -16,10 +16,10 @@ public class CompareGroupConfig {
     String relation;
 
     @Field(key = "conditions", name = "比较条件集合", type = FieldTypeEnum.GROUP, isArray = true)
-    @FieldGroup(index = 0, name = "比较条件左值", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 0, name = "比较条件左值", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
     @FieldGroup(index = 1, name = "比较类型", type = FieldTypeEnum.SELECT)
     @FieldGroupSelect(index = 1, enumClass = CompareTypeEnum.class)
-    @FieldGroup(index = 2, name = "比较条件右值", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 2, name = "比较条件右值", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
     @FieldEg(eg = "[\"#{username} NO_NULL\"]", desc = "入参username字段为空，则满足该条件")
     List<CompareConfig> conditions;
 

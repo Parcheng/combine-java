@@ -1,9 +1,6 @@
 package com.parch.combine.core.common.settings.config;
 
 
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.common.settings.config.IOptionSetting;
-
 import java.util.List;
 
 /**
@@ -15,7 +12,7 @@ public class PropertyGroupSetting {
 
     private String name;
 
-    private FieldTypeEnum type;
+    private FieldTypeEnum[] type;
 
     private Boolean isRequired;
 
@@ -37,14 +34,6 @@ public class PropertyGroupSetting {
         isRequired = required;
     }
 
-    public FieldTypeEnum getType() {
-        return type;
-    }
-
-    public void setType(FieldTypeEnum type) {
-        this.type = type;
-    }
-
     public List<IOptionSetting> getOptions() {
         return options;
     }
@@ -59,5 +48,13 @@ public class PropertyGroupSetting {
 
     public void setIndex(Integer index) {
         this.index = index;
+    }
+
+    public FieldTypeEnum[] getType() {
+        return type;
+    }
+
+    public void setType(FieldTypeEnum[] type) {
+        this.type = type;
     }
 }

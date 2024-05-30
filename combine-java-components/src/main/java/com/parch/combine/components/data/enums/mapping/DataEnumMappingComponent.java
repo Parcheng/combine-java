@@ -1,5 +1,6 @@
 package com.parch.combine.components.data.enums.mapping;
 
+import com.parch.combine.components.data.enums.list.DataEnumGetErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.data.enums.EnumCacheHandler;
 import com.parch.combine.core.component.base.AbsComponent;
@@ -74,12 +75,16 @@ public class DataEnumMappingComponent extends AbsComponent<DataEnumMappingInitCo
                     continue;
                 }
 
-                List<EnumCacheHandler.EnumItem> enumItems = EnumCacheHandler.get(item.getEnumKey());
-                if (enumItems == null) {
-                    continue;
+                Map<String, EnumCacheHandler.EnumItem> itemData = null;
+                Object key = DataVariableHelper.parseValue(item.getEnumKey(), false);
+                if (key != null) {
+                    List<EnumCacheHandler.EnumItem> enumItems = EnumCacheHandler.get(key.toString());
+                    if (enumItems != null) {
+                        itemData = enumItems.stream().collect(Collectors.toMap(EnumCacheHandler.EnumItem::getCode, Function.identity()));
+                    }
                 }
 
-                enumMap.put(item.getEnumKey(), enumItems.stream().collect(Collectors.toMap(EnumCacheHandler.EnumItem::getCode, Function.identity())));
+                enumMap.put(item.getEnumKey(), itemData);
             }
 
             for (Map<String, Object> dataItem : data) {

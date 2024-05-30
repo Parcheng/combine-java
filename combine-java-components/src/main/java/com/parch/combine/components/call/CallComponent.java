@@ -56,11 +56,10 @@ public abstract class CallComponent<T extends InitConfig, R extends CallLogicCon
     public final DataResult execute() {
         // 数据过滤
         CallLogicConfig logicConfig = getLogicConfig();
-        Map<String, Object> params = logicConfig.getParams() == null ? new HashMap<>(0) : (Map<String, Object>) DataVariableHelper.parseAndCopy(logicConfig.getParams());
-        Map<String, String> headers = logicConfig.getHeaders() == null ? new HashMap<>(0) : (Map<String, String>) DataVariableHelper.parseAndCopy(logicConfig.getHeaders());
-
-        // 解析参数，将参数中${...}替换为实际值
-        DataVariableHelper.parse(params);
+        Map<String, Object> params = logicConfig.getParams() == null ? new HashMap<>(0)
+                : (Map<String, Object>) DataVariableHelper.parseAndCopy(logicConfig.getParams());
+        Map<String, String> headers = logicConfig.getHeaders() == null ? new HashMap<>(0)
+                : (Map<String, String>) DataVariableHelper.parseAndCopy(logicConfig.getHeaders());
 
         return execute(logicConfig.getUrl(), params, headers);
     }

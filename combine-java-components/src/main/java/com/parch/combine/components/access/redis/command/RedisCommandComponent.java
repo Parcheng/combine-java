@@ -9,6 +9,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.ArrayGetTool;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.params.SetParams;
@@ -273,7 +274,7 @@ public class RedisCommandComponent extends AbsRedisComponent<RedisCommandInitCon
     private Object[] parseParams(String[] params) {
         Object[] result = new Object[params.length];
         for (int i = 0; i < params.length; i++) {
-            result[i] = DataVariableHelper.parseValue(params[i], false);
+            result[i] = TextExpressionHelper.getText(params[i]);
         }
         return result;
     }

@@ -5,6 +5,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.DataFindHandler;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
@@ -52,12 +53,12 @@ public class DataTextReplaceComponent extends AbsComponent<DataTextReplaceInitCo
         Object result = null;
 
         try {
-            Object data = DataVariableHelper.parseValue(logicConfig.getSource(), true);
+            Object data = DataVariableHelper.parseValue(logicConfig.getSource(), false);
             if (data != null) {
                 DataTextReplaceModeEnum mode = DataTextReplaceModeEnum.get(logicConfig.getMode());
                 result = replace(mode, logicConfig.getOldText(), logicConfig.getNewText(), data);
             }
-            if (logicConfig.getIsReplace()) {
+            if (logicConfig.getIsReplace() && DataFindHandler.hasParseFlag(logicConfig.getSource())) {
                 Object finalResult = result;
                 DataVariableHelper.replaceValue(logicConfig.getSource(), old -> finalResult);
             }
@@ -75,24 +76,30 @@ public class DataTextReplaceComponent extends AbsComponent<DataTextReplaceInitCo
             return null;
         }
 
+        Object oldTextObj = DataVariableHelper.parseValue(oldText, false);
+        String finalOldText = oldTextObj == null ? oldText : oldTextObj.toString();
+
+        Object newTextObj = DataVariableHelper.parseValue(newText, false);
+        String finalNewTest = newTextObj == null ?  newText : newTextObj.toString();
+
         if (data instanceof Map) {
             Map<String, Object> mapData = (Map<String, Object>) data;
             Map<String, Object> newMapData = new HashMap<>(mapData.size());
             mapData.forEach((k, v) -> {
-                newMapData.put(k, replace(mode, oldText, newText, v));
+                newMapData.put(k, replace(mode, finalOldText, finalNewTest, v));
             });
             return newMapData;
         } else if (data instanceof Collection) {
             Collection<Object> listData = (Collection<Object>) data;
             List<Object> newListData = new ArrayList<>();
-            listData.forEach(v -> newListData.add(replace(mode, oldText, newText, v)));
+            listData.forEach(v -> newListData.add(replace(mode, finalOldText, finalNewTest, v)));
             return newListData;
         } else {
             switch (mode) {
                 case FIRST:
-                    return data.toString().replace(oldText, newText);
+                    return data.toString().replace(finalOldText, finalNewTest);
                 case ALL:
-                    return data.toString().replaceAll(oldText, newText);
+                    return data.toString().replaceAll(finalOldText, finalNewTest);
                 default:
                     return null;
             }

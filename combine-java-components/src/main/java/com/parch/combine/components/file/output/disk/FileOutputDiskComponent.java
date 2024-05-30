@@ -1,5 +1,6 @@
 package com.parch.combine.components.file.output.disk;
 
+import com.parch.combine.components.file.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.file.helper.FilePathHelper;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
@@ -7,6 +8,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.components.file.output.FileOutputComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.File;
@@ -45,8 +47,14 @@ public class FileOutputDiskComponent extends FileOutputComponent<FileOutputDiskI
         FileOutputDiskInitConfig initConfig = getInitConfig();
         FileOutputDiskLogicConfig logicConfig = getLogicConfig();
 
+        Object targetPath = DataVariableHelper.parseValue(logicConfig.getTargetPath(), false);
+        if (targetPath == null) {
+            ComponentErrorHandler.print(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
+            return DataResult.fail(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
+        }
+
         // 组装文件写入路径
-        String filePath = FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), logicConfig.getTargetPath());
+        String filePath = FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), targetPath.toString());
         File file = new File(filePath);
 
         // 创建目录

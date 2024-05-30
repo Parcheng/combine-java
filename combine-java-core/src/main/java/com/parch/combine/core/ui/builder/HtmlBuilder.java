@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 public class HtmlBuilder {
 
+    private final static String TRIGGERS_DOM_ID = "$combine-triggers";
+
     private final static Map<String, HtmlConfig> TEMP_MAP = new HashMap<>();
 
     private HtmlConfig config;
@@ -109,7 +111,7 @@ public class HtmlBuilder {
 
         // 添加弹窗使用的DIV元素
         Map<String, String> properties = new HashMap<>();
-        properties.put("id", "$combine-web-triggers");
+        properties.put("id", TRIGGERS_DOM_ID);
         body.add(HtmlBuildTool.build("div", null, properties, false));
 
         // 构建页面
@@ -157,14 +159,22 @@ public class HtmlBuilder {
         // 常量注册
         String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
         scriptCodeList.add("\n$combine.constant.register(" + contentJson + ");");
+
         // 元素模板注册
         groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + k + "\"," + v + ");"));
+
         // 数据加载配置注册
         groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combine.loadData.register(\"" + k + "\"," + v + ", " + groupResult.dataLoadToElementIdMap.get(k) + ");"));
+
         // trigger事件注册
-        groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combine.trigger.register(\"" + k + "\"," + v + ");"));
+        if (groupResult.triggerMap.size() > 0) {
+            scriptCodeList.add("\n$combine.trigger.setDomId(\"" + TRIGGERS_DOM_ID + "\");");
+            groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combine.trigger.register(\"" + k + "\"," + v + ");"));
+        }
+
         // 页面元素注册
         groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combine.instance.register(\"" + k + "\"," + v + ");"));
+
         // 页面元素组注册
         groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combine.group.register(\"" + k + "\"," + v + ");"));
 

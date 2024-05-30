@@ -45,7 +45,7 @@ public class DataCreateComponent extends AbsComponent<DataCreateInitConfig, Data
                 }
 
                 // 参数值校验
-                List<String> params = new ArrayList<>();
+                List<String> params = item.getParams();
                 if (CheckEmptyUtil.isNotEmpty(params)) {
                     switch (type) {
                         case OBJECT:
@@ -58,7 +58,7 @@ public class DataCreateComponent extends AbsComponent<DataCreateInitConfig, Data
                             }
                             break;
                         case DATE:
-                            if (DataTypeIsUtil.isLong(params.get(0))){
+                            if (!DataTypeIsUtil.isLong(params.get(0))){
                                 result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "日期类型格式错误"));
                                 break;
                             }

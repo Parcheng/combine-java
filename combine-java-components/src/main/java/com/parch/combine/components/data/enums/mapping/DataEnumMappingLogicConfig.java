@@ -15,15 +15,15 @@ import java.util.List;
  */
 public class DataEnumMappingLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "数据来源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据来源", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String source;
 
-    @Field(key = "source", name = "输出指定组件ID的执行结果", type = FieldTypeEnum.TEXT)
+    @Field(key = "resultId", name = "输出指定组件ID的执行结果", type = FieldTypeEnum.TEXT)
     @FieldDesc("默认输出 source 的数据")
     private String resultId;
 
     @Field(key = "items", name = "映射配置集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
-    @FieldGroup(index = 0, name = "枚举KEY", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 0, name = "枚举KEY", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
     @FieldGroup(index = 1, name = "源的字段名", type = FieldTypeEnum.TEXT)
     @FieldGroup(index = 2, name = "目标字段名（默认写到源字段中）", type = FieldTypeEnum.TEXT, isRequired = false)
     private List<MappingItem> items = new ArrayList<>();

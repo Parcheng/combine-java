@@ -139,9 +139,9 @@
             { "text": "全局变量 $ls 用于浏览器的 localStorage 配置，注意：数据加载配置必须缓存到 localStorage 中才可获取" },
             { "text": "如：$ls.user_token 表示获取 localStorage 中 user_token 属性的值" },
             { "text": "　" },
-            { "text": "#{$this} 或 #{} 表示直接获取UI元素的当前的数据对象" },
-            { "text": "如：在 input 元素配置中使用 #{$this} 或 #{} 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据" },
-            { "text": "如：在 input 元素配置中使用 #{name} 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据的 name 属性值" },
+            { "text": "#<span>{$this}</span> 或 #<span>{}</span> 表示直接获取UI元素的当前的数据对象" },
+            { "text": "如：在 input 元素配置中使用 #<span>{$this}</span> 或 #<span>{}</span> 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据" },
+            { "text": "如：在 input 元素配置中使用 #<span>{name}</span> 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据的 name 属性值" },
             { "text": "<hr>" }
           ]
         }

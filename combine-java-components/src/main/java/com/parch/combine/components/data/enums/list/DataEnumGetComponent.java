@@ -6,10 +6,14 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.DataFindHandler;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 运算组件
@@ -38,12 +42,15 @@ public class DataEnumGetComponent extends AbsComponent<DataEnumGetInitConfig, Da
 
     @Override
     public DataResult execute() {
-        List<Object> result = new ArrayList<>();
         DataEnumGetLogicConfig logicConfig = getLogicConfig();
+        Object key = DataVariableHelper.parseValue(logicConfig.getKey(), false);
+        if (key == null) {
+            return DataResult.fail(DataEnumGetErrorEnum.KEY_IS_NULL);
+        }
 
         List<EnumCacheHandler.EnumItem> items;
         try {
-            items = EnumCacheHandler.get(logicConfig.getKey());
+            items = EnumCacheHandler.get(key.toString());
         } catch (Exception e) {
             ComponentErrorHandler.print(DataEnumGetErrorEnum.FAIL, e);
             return DataResult.fail(DataEnumGetErrorEnum.FAIL);
@@ -53,6 +60,15 @@ public class DataEnumGetComponent extends AbsComponent<DataEnumGetInitConfig, Da
             return DataResult.fail(DataEnumGetErrorEnum.ENUM_NO_REGISTER);
         }
 
-        return DataResult.success(items);
+        List<Map<String, String>> result = new ArrayList<>();
+        for (EnumCacheHandler.EnumItem item : items) {
+            Map<String, String> resultItem = new HashMap<>(8);
+            resultItem.put("code", item.getCode());
+            resultItem.put("name", item.getName());
+            resultItem.put("desc", item.getDesc());
+            result.add(resultItem);
+        }
+
+        return DataResult.success(result);
     }
 }

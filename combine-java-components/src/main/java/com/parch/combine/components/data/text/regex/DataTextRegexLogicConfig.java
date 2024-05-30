@@ -12,11 +12,11 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class DataTextRegexLogicConfig extends LogicConfig {
 
-    @Field(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "source", name = "数据源", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     @FieldDesc("提示：非文本类型会转为JSON格式处理")
     private String source;
 
-    @Field(key = "regex", name = "正则表达式", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "regex", name = "正则表达式", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
     private String regex;
 
     @Field(key = "resultMode", name = "返回结果的方式", type = FieldTypeEnum.SELECT, defaultValue = "FULL")

@@ -26,7 +26,7 @@ public @interface Field {
     /**
      * 字段类型
      */
-    FieldTypeEnum type();
+    FieldTypeEnum[] type();
 
     /**
      * 字段是否为数组

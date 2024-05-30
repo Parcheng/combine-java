@@ -1,5 +1,6 @@
 package com.parch.combine.components.file.operations.copy;
 
+import com.parch.combine.components.file.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.file.helper.FilePathHelper;
 import com.parch.combine.components.file.operations.delete.FileDeleteErrorEnum;
@@ -7,6 +8,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.*;
@@ -52,8 +54,19 @@ public class FileCopyComponent extends AbsComponent<FileCopyInitConfig, FileCopy
         FileCopyInitConfig initConfig = getInitConfig();
         FileCopyLogicConfig logicConfig = getLogicConfig();
 
-        File source = new File(FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), logicConfig.getSource()));
-        File dest = new File(FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), logicConfig.getTarget()));
+        Object sourcePath = DataVariableHelper.parseValue(logicConfig.getSource(), false);
+        Object targetPath = DataVariableHelper.parseValue(logicConfig.getTarget(), false);
+        if (sourcePath == null) {
+            ComponentErrorHandler.print(FileCompressErrorEnum.SOURCE_PATH_IS_NULL);
+            return false;
+        }
+        if (targetPath == null) {
+            ComponentErrorHandler.print(FileCompressErrorEnum.TARGET_PATH_IS_NULL);
+            return false;
+        }
+
+        File source = new File(FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), sourcePath.toString()));
+        File dest = new File(FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), targetPath.toString()));
 
         try {
             File parentDir = dest.getParentFile();

@@ -9,7 +9,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
  */
 public class WebRedirectLogicConfig extends LogicConfig {
 
-    @Field(key = "path", name = "重定向地址", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "path", name = "重定向地址", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     private String path;
 
     @Override

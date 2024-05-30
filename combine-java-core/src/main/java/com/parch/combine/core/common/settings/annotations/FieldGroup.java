@@ -24,7 +24,7 @@ public @interface FieldGroup {
     /**
      * 项类型
      */
-    FieldTypeEnum type();
+    FieldTypeEnum[] type();
 
     /**
      * 项是否必须

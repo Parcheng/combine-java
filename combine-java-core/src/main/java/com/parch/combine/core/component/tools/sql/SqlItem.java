@@ -11,7 +11,7 @@ import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
  */
 public class SqlItem extends CompareGroupConfig {
 
-    @Field(key = "sql", name = "满足条件时会生效的SQL语句（段）", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "sql", name = "满足条件时会生效的SQL语句（段）", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
     @FieldDesc("简单的SQL语句，注意：sql和sqlConfigs必须只配置一项")
     @FieldEg(eg = "select * from t_user where 1=1", desc = "要执行的SQL语句（段）")
     @FieldEg(eg = "and name = ${name}", desc = "要执行的SQL语句（段）")

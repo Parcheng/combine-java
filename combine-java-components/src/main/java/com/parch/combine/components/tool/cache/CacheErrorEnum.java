@@ -1,18 +1,20 @@
-package com.parch.combine.components.data.enums.register;
+package com.parch.combine.components.tool.cache;
 
 import com.parch.combine.core.component.error.IComponentError;
 
-public enum DataEnumRegisterErrorEnum implements IComponentError {
+/**
+ * 逻辑判断异常枚举
+ */
+public enum CacheErrorEnum implements IComponentError {
 
-    KEY_IS_NULL("枚举KEY为空", "枚举不存在"),
-    FAIL("创建失败", "创建失败"),
-    ;
+    DOMAIN_IS_NULL("缓存域KEY为空", "缓存域KEY为空"),
+    KEY_IS_NULL("缓存KEY为空", "缓存KEY为空");
 
     private String msg;
 
     private String showMsg;
 
-    DataEnumRegisterErrorEnum(String msg, String showMsg) {
+    CacheErrorEnum(String msg, String showMsg) {
         this.msg = msg;
         this.showMsg = showMsg;
 

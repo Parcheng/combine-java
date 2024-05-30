@@ -8,6 +8,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +39,11 @@ public class FileInputOpenComponent extends FileInputComponent<FileInputOpenInit
     protected IComponentError execute(FileInfo fileInfo) {
         FileInputOpenInitConfig initConfig = getInitConfig();
         FileInputOpenLogicConfig logicConfig = getLogicConfig();
+
+        String path = TextExpressionHelper.getText(logicConfig.getPath());
+        if (path == null) {
+            return FileInputOpenErrorEnum.PATH_IS_NULL;
+        }
 
         String filePath = FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), logicConfig.getPath());
         File file = new File(filePath);
