@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * 组件字段
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.METHOD})
 public @interface Field {
     /**
      * 字段KEY
@@ -42,4 +42,9 @@ public @interface Field {
      * 字段默认值
      */
     String defaultValue() default "";
+
+    /**
+     * 是否抛出类型转换错误
+     */
+    boolean throwTypeError() default true;
 }

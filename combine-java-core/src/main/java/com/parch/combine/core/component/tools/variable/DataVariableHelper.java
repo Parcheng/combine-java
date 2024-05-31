@@ -72,7 +72,7 @@ public class DataVariableHelper {
      * @return 值
      */
     public static Object parseValue(Object data, boolean isForce) {
-        if (data instanceof String && CheckEmptyUtil.isNotEmpty(data.toString())) {
+        if (data instanceof String) {
             boolean isFind = false;
             String path = data.toString();
             if (DataFindHandler.hasParseFlag(path)) {
