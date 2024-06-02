@@ -1,13 +1,13 @@
 package com.parch.combine.components.mail;
 
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 初始化配置类
  */
-public class MailInitConfig extends InitConfig {
+public class MailInitConfig extends IInitConfig {
 
     @Field(key = "host", name = "服务主机", type = FieldTypeEnum.TEXT, isRequired = true)
     private String host;

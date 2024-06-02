@@ -3,17 +3,16 @@ package com.parch.combine.components.tool.event.push;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 
-import java.util.List;
 import java.util.Map;
 
-public class ToolEventPushLogicConfig extends LogicConfig {
+public class ToolEventPushLogicConfig extends ILogicConfig {
 
     @Field(key = "eventKey", name = "要监听的事件KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     private String eventKey;
 
-    @Field(key = "data", name = "要推送的数据", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "data", name = "要推送的数据", type = FieldTypeEnum.ANY, isRequired = true)
     @FieldDesc("注意：该数据必须为对象结构（键值对）")
     private Map<String, Object> data;
 

@@ -9,11 +9,11 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class SelectElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "select", name = "下拉框DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "select", name = "下拉框DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig select;
 
-    @Field(key = "option", name = "下拉框选项集合DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "option", name = "下拉框选项集合DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig option;
 

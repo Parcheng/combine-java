@@ -29,4 +29,27 @@ public class StringUtil {
         }
         return result.toString();
     }
+
+    /**
+     * 字符串拼接
+     *
+     * @param array 集合
+     * @param separator 拼接字符
+     * @return 结果
+     */
+    public static String join(Object[] array, String separator) {
+        if (array == null || array.length == 0) {
+            return CheckEmptyUtil.EMPTY;
+        }
+        int index = 0;
+        StringBuilder result = new StringBuilder(CheckEmptyUtil.EMPTY);
+        for (Object item : array) {
+            result.append(item == null ? CheckEmptyUtil.EMPTY : item.toString());
+            if (index != array.length -1) {
+                result.append(separator);
+            }
+            index++;
+        }
+        return result.toString();
+    }
 }

@@ -3,10 +3,10 @@ package com.parch.combine.components.tool.async;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.tools.thread.ThreadPoolConfig;
 
-public class ToolAsyncInitConfig extends InitConfig {
+public class ToolAsyncInitConfig extends IInitConfig {
 
     @Field(key = "pool", name = "线程池配置", type = FieldTypeEnum.NUMBER)
     @FieldObject(type = ThreadPoolConfig.class)

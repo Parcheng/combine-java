@@ -3,7 +3,7 @@ package com.parch.combine.components.data.convert.text2table;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
 import java.util.ArrayList;

@@ -17,7 +17,7 @@ import java.util.UUID;
 @PageElement(key = "tab", name = "页签元素", templateClass = TabElementTemplateConfig.class)
 public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
 
-    @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+    @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.ANY, isArray = true, isRequired = true)
     @FieldObject(type = TabItemSettings.class)
     private List<TabItemSettings> items;
 
@@ -58,7 +58,7 @@ public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
         @Field(key = "hasClose", name = "页签是否允许关闭", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
         private Boolean hasClose;
 
-        @Field(key = "body", name = "页签内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+        @Field(key = "body", name = "页签内容配置", type = FieldTypeEnum.ANY, isRequired = true)
         @FieldObject(type = SubElementConfig.class)
         private SubElementConfig body;
 

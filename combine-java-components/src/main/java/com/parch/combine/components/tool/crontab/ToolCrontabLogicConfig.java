@@ -1,7 +1,7 @@
 package com.parch.combine.components.tool.crontab;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class ToolCrontabLogicConfig extends LogicConfig {
+public class ToolCrontabLogicConfig extends ILogicConfig {
 
     @Field(key = "jobFlowKey", name = "定时任务流程KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
     private String jobFlowKey;
@@ -34,7 +34,7 @@ public class ToolCrontabLogicConfig extends LogicConfig {
     private Boolean fixedRate;
 
     @Field(key = "components", name = "要执行的组件集合（ID或组件配置）", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
-    private List<Object> components;
+    private List<String> components;
 
     @Override
     public void init() {

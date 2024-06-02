@@ -3,9 +3,11 @@ package com.parch.combine.core.component.manager;
 import com.parch.combine.core.common.canstant.CommonConstant;
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.base.ComponentFlagEnum;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.handler.ComponentClassHandler;
@@ -120,24 +122,19 @@ public class ComponentManager {
 
         // 构建组件
         String componentType = typeObj.toString();
-        component = ComponentClassHandler.build(componentId, componentType, scopeKey, logicConfig);
-        if (component == null) {
-            errorMsgList.add("组件【" + componentId + "】构建失败");
-            return;
+        ThreeTuples<Boolean, AbsComponent<?,?>, List<String>> buildResult = ComponentClassHandler.build(componentId, componentType, scopeKey, logicConfig);
+        if (buildResult.getFirst()) {
+            component = buildResult.getSecond();
+
+            // 注册到组件池，并记录
+            COMPONENT_MAP.put(component.getId(), component);
+            registerComponentIds.add(component.getId());
+
+            // 添加流程组件ID集合
+            addComponentId(componentIds, staticComponentIds, component);
+        } else {
+            errorMsgList.addAll(buildResult.getThird());
         }
-
-        // 检查组件配置
-        List<String> checkErrors = ComponentClassHandler.init(component);
-        if (checkErrors != null) {
-            errorMsgList.addAll(checkErrors);
-        }
-
-        // 注册到组件池，并记录
-        COMPONENT_MAP.put(component.getId(), component);
-        registerComponentIds.add(component.getId());
-
-        // 添加流程组件ID集合
-        addComponentId(componentIds, staticComponentIds, component);
     }
 
     /**
@@ -148,9 +145,13 @@ public class ComponentManager {
      */
     protected void addComponentId(List<String> componentIds, List<String> staticComponentIds, AbsComponent<?,?> component) {
         // 静态逻辑块只构建，不加入到流程中
-        if (component.getLogicConfig().getFlags().contains(ComponentFlagEnum.STATIC)) {
-            staticComponentIds.add(component.getId());
-            return;
+        List<String> flags = component.getLogicConfig().flags();
+        if (CheckEmptyUtil.isNotEmpty(flags)) {
+            for (String flag : flags) {
+                if (ComponentFlagEnum.get(flag) == ComponentFlagEnum.STATIC) {
+                    return;
+                }
+            }
         }
 
         componentIds.add(component.getId());
@@ -189,21 +190,7 @@ public class ComponentManager {
      */
     public DataResult executeComponent(AbsComponent<?,?> component) {
         // 运行组件逻辑
-        DataResult result = component.run();
-        LogicConfig logicConfig = component.getLogicConfig();
-
-        // 如果配置中定义了报错提示语，则使用配置的报错提示语
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getShowMsg())) {
-            result.setShowMsg(logicConfig.getShowMsg());
-        }
-
-        // 打印日志
-        boolean isPrint = logicConfig.getPrintResult() == null ? GlobalContextHandler.get(scopeKey).getPrintComponentResult() : logicConfig.getPrintResult();
-        if (isPrint) {
-            PrintHelper.printComponentResult(component, result);
-        }
-
-        return result;
+        return component.run();
     }
 
     /**

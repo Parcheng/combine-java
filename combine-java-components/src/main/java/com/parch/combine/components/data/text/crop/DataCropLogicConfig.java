@@ -1,14 +1,14 @@
 package com.parch.combine.components.data.text.crop;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-public class DataCropLogicConfig extends LogicConfig {
+public class DataCropLogicConfig extends ILogicConfig {
 
-    @Field(key = "source", name = "数据来源", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "source", name = "数据来源", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldEg(eg = "$r.data001", desc = "读取 ID 为 data001 组件的返回结果作为文件数据")
     private String source;
 

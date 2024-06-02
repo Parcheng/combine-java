@@ -26,7 +26,7 @@ public class TreeElementConfig extends ElementConfig<TreeElementTemplateConfig> 
     @Field(key = "checkFirst", name = "是否默认选择第一项", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean checkFirst;
 
-    @Field(key = "triggers", name = "树项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "triggers", name = "树项触发配置", type = FieldTypeEnum.ANY, isArray = true)
     @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
     @Trigger
     private Object triggers;

@@ -34,8 +34,8 @@ public class GlobalContext {
     @Field(key = "loadApiInfo", name = "是否加载API信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean loadApiInfo = true;
 
-    @Field(key = "flagConfigs", name = "标识配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = FlagConfigs.class)
+    @Field(key = "flagConfigs", name = "标识配置", type = FieldTypeEnum.CONFIG)
+    @FieldObject(FlagConfigs.class)
     private FlagConfigs flagConfigs = new FlagConfigs();
 
     public static class FlagConfigs {

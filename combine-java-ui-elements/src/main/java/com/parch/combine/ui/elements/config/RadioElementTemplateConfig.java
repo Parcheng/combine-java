@@ -9,19 +9,19 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class RadioElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "inline", name = "内联显示时DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "inline", name = "内联显示时DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig inline;
 
-    @Field(key = "multiline", name = "多行显示时DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "multiline", name = "多行显示时DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig multiline;
 
-    @Field(key = "disabled", name = "禁用时DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "disabled", name = "禁用时DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig disabled;
 
-    @Field(key = "option", name = "选项DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "option", name = "选项DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig option;
 

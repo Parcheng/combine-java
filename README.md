@@ -209,7 +209,7 @@ public class My1Component extends AbsComponent<My1InitConfig, My1LogicConfig> {
 
 <br>创建 My1Component 的初始化配置类和逻辑配置类<br>
 ```$xslt
-public class My1LogicConfig extends LogicConfig {
+public class My1LogicConfig extends ILogicConfig {
 
     // 使用 Field 相关注解，可以在访问 API 页面时生成自定义组件的描述信息
     @Field(key = "key", name = "XXXX", type = FieldTypeEnum.TEXT, isRequired = true)
@@ -219,7 +219,7 @@ public class My1LogicConfig extends LogicConfig {
     ... 其他自定义配置项和GET/SET方法 ...
 }
 
-public class My1InitConfig extends InitConfig {
+public class My1InitConfig extends IInitConfig {
     ... 自定义配置项和GET/SET方法 ...
 }
 ```
@@ -279,7 +279,7 @@ public class MyElementConfig extends ElementConfig<AudioElementTemplateConfig> {
 public class MyElementTemplateConfig extends ElementTemplateConfig {
 
     // DomConfig 对象时是通用的 DOM 元素配置类，通过 FieldRef 注解可以直接引用系统内置的 DomConfig 属性 API 信息
-    @Field(key = "headerDiv", name = "XXXXX", type = FieldTypeEnum.OBJECT)
+    @Field(key = "headerDiv", name = "XXXXX", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig headerDiv;
 

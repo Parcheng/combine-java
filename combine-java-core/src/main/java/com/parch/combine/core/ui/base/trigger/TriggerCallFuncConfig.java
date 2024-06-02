@@ -20,7 +20,7 @@ public class TriggerCallFuncConfig extends TriggerConfig {
     @Field(key = "name", name = "函数名称", type = FieldTypeEnum.TEXT, isRequired = true)
     private String name;
 
-    @Field(key = "params", name = "函数参数", type = FieldTypeEnum.OBJECT)
+    @Field(key = "params", name = "函数参数", type = FieldTypeEnum.ANY)
     private Object params;
 
     @Override

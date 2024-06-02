@@ -1,8 +1,8 @@
 package com.parch.combine.components.file.input;
 
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.InitConfig;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.vo.DataResult;
@@ -13,7 +13,7 @@ import com.parch.combine.core.component.vo.DataResult;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class FileInputComponent<T extends InitConfig, R extends LogicConfig> extends AbsComponent<T, R> {
+public abstract class FileInputComponent<T extends IInitConfig, R extends ILogicConfig> extends AbsComponent<T, R> {
 
     /**
      * 构造器

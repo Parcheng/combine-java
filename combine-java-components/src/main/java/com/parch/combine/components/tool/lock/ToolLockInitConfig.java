@@ -1,6 +1,6 @@
 package com.parch.combine.components.tool.lock;
 
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -8,7 +8,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 /**
  * 初始化配置类
  */
-public class ToolLockInitConfig extends InitConfig {
+public class ToolLockInitConfig extends IInitConfig {
 
     @Field(key = "autoUnLock", name = "流程执行完成是否自动释放锁", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     @FieldEg(eg = "false", desc = "流程全部组件主席执行完毕后不自动解锁")

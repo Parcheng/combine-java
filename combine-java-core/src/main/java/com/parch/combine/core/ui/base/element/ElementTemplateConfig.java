@@ -13,7 +13,7 @@ public abstract class ElementTemplateConfig {
     @Field(key = "id", name = "元素模板ID", type = FieldTypeEnum.ID)
     private String id;
 
-    @Field(key = "external", name = "外部DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "external", name = "外部DOM配置", type = FieldTypeEnum.CONFIG)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig external;
 

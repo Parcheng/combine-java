@@ -9,11 +9,11 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class TagElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "tag", name = "标签DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "tag", name = "标签DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig tag;
 
-    @Field(key = "close", name = "标签关闭标识DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "close", name = "标签关闭标识DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig close;
 

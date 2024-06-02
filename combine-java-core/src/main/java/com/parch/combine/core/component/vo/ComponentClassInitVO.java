@@ -2,6 +2,8 @@ package com.parch.combine.core.component.vo;
 
 import com.parch.combine.core.component.base.AbsComponent;
 
+import java.util.List;
+
 /**
  * 组件初始化VO
  */
@@ -11,6 +13,11 @@ public class ComponentClassInitVO {
      * 组件KEY
      */
     private String key;
+
+    /**
+     * 组件初始化异常信息
+     */
+    private List<String> errorMsg;
 
     /**
      * 组件类描述
@@ -36,5 +43,13 @@ public class ComponentClassInitVO {
 
     public void setComponent(Class<? extends AbsComponent<?, ?>> component) {
         this.component = component;
+    }
+
+    public List<String> getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(List<String> errorMsg) {
+        this.errorMsg = errorMsg;
     }
 }

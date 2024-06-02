@@ -9,7 +9,7 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class HRElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "hr", name = "线DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "hr", name = "线DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig hr;
 

@@ -4,7 +4,6 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
@@ -28,7 +27,7 @@ public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplate
     @Field(key = "disabled", name = "是否禁选", type = FieldTypeEnum.BOOLEAN)
     private Boolean disabled;
 
-    @Field(key = "option", name = "多选项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "option", name = "多选项配置", type = FieldTypeEnum.ANY, isRequired = true)
     @FieldObject(type = OptionElementConfig.class)
     private OptionElementConfig option;
 

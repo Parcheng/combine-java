@@ -9,35 +9,35 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class TabElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "tab", name = "页签DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "tab", name = "页签DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig tab;
 
-    @Field(key = "item", name = "页签项DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "item", name = "页签项DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig item;
 
-    @Field(key = "itemActive", name = "页签项选中时DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "itemActive", name = "页签项选中时DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig itemActive;
 
-    @Field(key = "title", name = "页签项标题DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "title", name = "页签项标题DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig title;
 
-    @Field(key = "titleText", name = "页签项标题文本DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "titleText", name = "页签项标题文本DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig titleText;
 
-    @Field(key = "titleClose", name = "页签项标题关闭标识DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "titleClose", name = "页签项标题关闭标识DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig titleClose;
 
-    @Field(key = "body", name = "页签内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "body", name = "页签内容DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig body;
 
-    @Field(key = "bodyContent", name = "页签内容项DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "bodyContent", name = "页签内容项DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig bodyItem;
 

@@ -7,7 +7,7 @@ import com.parch.combine.core.ui.base.SubConfig;
 @SubConfig
 public class OptionElementConfig {
 
-    @Field(key = "data", name = "选项数据配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "data", name = "选项数据配置", type = FieldTypeEnum.ANY)
     private Object data;
 
     @Field(key = "value", name = "单选项值（字段名）", type = FieldTypeEnum.TEXT, isRequired = true)

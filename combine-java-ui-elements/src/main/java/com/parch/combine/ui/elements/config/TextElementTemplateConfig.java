@@ -11,19 +11,19 @@ import java.util.List;
 
 public class TextElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "line", name = "行通用DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "line", name = "行通用DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig line;
 
-    @Field(key = "children", name = "子文本DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "children", name = "子文本DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig children;
 
-    @Field(key = "levels", name = "每个层级的通用DOM配置集合", type = FieldTypeEnum.OBJECT)
+    @Field(key = "levels", name = "每个层级的通用DOM配置集合", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private List<DomConfig> lines;
 
-    @Field(key = "lines", name = "每行的DOM配置集合", type = FieldTypeEnum.OBJECT)
+    @Field(key = "lines", name = "每行的DOM配置集合", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private List<DomConfig> levels;
 

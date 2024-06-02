@@ -1,19 +1,19 @@
 package com.parch.combine.components.file.operations.copy;
 
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 逻辑配置类
  */
-public class FileCopyLogicConfig extends LogicConfig {
+public class FileCopyLogicConfig extends ILogicConfig {
 
-    @Field(key = "source", name = "数据来源路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "source", name = "数据来源路径", type = FieldTypeEnum.TEXT, isRequired = true)
     private String source;
 
-    @Field(key = "target", name = "写入路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "target", name = "写入路径", type = FieldTypeEnum.TEXT, isRequired = true)
     private String target;
 
     @Override

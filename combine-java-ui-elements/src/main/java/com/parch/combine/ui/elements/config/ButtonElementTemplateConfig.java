@@ -9,7 +9,7 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class ButtonElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "button", name = "按钮DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "button", name = "按钮DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig button;
 

@@ -1,9 +1,9 @@
 package com.parch.combine.components.call;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
@@ -14,7 +14,7 @@ import java.util.*;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class CallComponent<T extends InitConfig, R extends CallLogicConfig> extends AbsComponent<T, R> {
+public abstract class CallComponent<T extends IInitConfig, R extends CallLogicConfig> extends AbsComponent<T, R> {
 
 
     /**

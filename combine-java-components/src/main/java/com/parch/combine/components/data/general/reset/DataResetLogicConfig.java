@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.reset;
 
 import com.parch.combine.core.common.settings.annotations.*;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.tools.ConfigGroupTool;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
@@ -13,12 +13,12 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class DataResetLogicConfig extends LogicConfig {
+public class DataResetLogicConfig extends ILogicConfig {
 
     @Field(key = "nullValue", name = "是否允许空值", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean nullValue;
 
-    @Field(key = "items", name = "重新设值配置集合，", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @Field(key = "items", name = "重新设值配置集合，", type = FieldTypeEnum.ANY, isRequired = true, isArray = true)
     @FieldObject(type = DataResetCompare.class)
     private List<DataResetCompare> items = new ArrayList<>();
 
@@ -36,7 +36,7 @@ public class DataResetLogicConfig extends LogicConfig {
         @FieldGroup(index = 0, name = "要重新赋值的字段名", type = FieldTypeEnum.EXPRESSION)
         @FieldGroup(index = 1, name = "数据类型", type = FieldTypeEnum.SELECT)
         @FieldGroupSelect(index = 1, enumClass = DataTypeEnum.class)
-        @FieldGroup(index = 2, name = "新值", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+        @FieldGroup(index = 2, name = "新值", type = FieldTypeEnum.TEXT)
         @FieldEg(eg = "$r.data001.name STRING zhangsan", desc = "将 zhangsan 重新赋值给组件 data001 的 name 字段")
         @FieldEg(eg = "$r.data001.age INT 1", desc = "将 1 重新赋值给组件 data001 的 age 字段")
         @FieldEg(eg = "$r.data001.desc VARIABLE $r.data002.desc", desc = "将组件 data002 的 desc 字段赋值给组件 data001 的 desc 字段")

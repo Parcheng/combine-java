@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.edit;
 
 import com.parch.combine.core.common.settings.annotations.*;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.tools.ConfigGroupTool;
 
@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class DataEditLogicConfig extends LogicConfig {
+public class DataEditLogicConfig extends ILogicConfig {
 
     @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
     @FieldDesc("编辑配置项集合")
-    @FieldGroup(index = 0, name = "要编辑的数据源", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+    @FieldGroup(index = 0, name = "要编辑的数据源", type = FieldTypeEnum.TEXT)
     @FieldGroup(index = 1, name = "数据编辑方式", type = FieldTypeEnum.SELECT)
     @FieldGroupSelect(index = 1, enumClass = DataEditTypeEnum.class)
-    @FieldGroup(index = 2, name = "参数，多个使用空格分隔", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+    @FieldGroup(index = 2, name = "参数，多个使用空格分隔", type = FieldTypeEnum.TEXT)
     @FieldEg(eg = "id SET NUMBER :101", desc = "修改参数中 id 字段的值为 101")
     @FieldEg(eg = "name SET STRING :TEST", desc = "修改参数中 name 字段的值为 TEST")
     @FieldEg(eg = "time SET DATE :20231101180000", desc = "修改参数中 time 字段的值为 20231101180000（时间毫秒值）")

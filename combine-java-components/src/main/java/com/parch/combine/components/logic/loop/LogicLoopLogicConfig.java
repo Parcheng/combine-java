@@ -1,6 +1,6 @@
 package com.parch.combine.components.logic.loop;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class LogicLoopLogicConfig extends LogicConfig {
+public class LogicLoopLogicConfig extends ILogicConfig {
 
     @Field(key = "source", name = "要遍历的数据", type = FieldTypeEnum.EXPRESSION)
     @FieldDesc("提示：source 和 count 至少要配置一项")
@@ -25,14 +25,14 @@ public class LogicLoopLogicConfig extends LogicConfig {
     @FieldEg(eg = "5", desc = "只遍历前五条，如果数据来源不足五条，则将数据遍历完为止")
     private Integer count;
 
-    @Field(key = "condition", name = "停止循环的条件配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "condition", name = "停止循环的条件配置", type = FieldTypeEnum.ANY)
     @FieldObject(type = LoopConditionConfig.class)
     private LoopConditionConfig condition;
 
     @Field(key = "components", name = "要循环执行的逻辑配置", type = FieldTypeEnum.COMPONENT, isRequired = true, isArray = true)
     @FieldDesc("可以是组件ID，也可以是组件配置")
     @FieldEg(eg = "[\"loopTest1\", { \"type\": \"XXX\", ... }]", desc = "条件满足后，先执行 ID 为 loopTest1 的组件配置，再执行第二项类型为 XXX 的组件配置逻辑")
-    private List<Object> components;
+    private List<String> components;
 
     @Field(key = "failStop", name = "逻辑执行失败是否终止", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     @FieldEg(eg = "false", desc = "组件逻辑执行报错时，不停止循环，依然继续执行")
@@ -40,11 +40,11 @@ public class LogicLoopLogicConfig extends LogicConfig {
 
     public static class LoopConditionConfig {
 
-        @Field(key = "skip", name = "跳过当前循环的条件配置", type = FieldTypeEnum.OBJECT)
+        @Field(key = "skip", name = "跳过当前循环的条件配置", type = FieldTypeEnum.ANY)
         @FieldObject(type = CompareGroupConfig.class)
         private CompareGroupConfig skip;
 
-        @Field(key = "finish", name = "终止循环的条件配置", type = FieldTypeEnum.OBJECT)
+        @Field(key = "finish", name = "终止循环的条件配置", type = FieldTypeEnum.ANY)
         @FieldObject(type = CompareGroupConfig.class)
         private CompareGroupConfig finish;
 

@@ -3,7 +3,7 @@ package com.parch.combine.components.data.general.create;
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.component.tools.ConfigGroupTool;
 
 import java.util.ArrayList;
@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class DataCreateLogicConfig extends LogicConfig {
+public class DataCreateLogicConfig extends ILogicConfig {
 
     @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
     @FieldDesc("创建配置项集合")
-    @FieldGroup(index = 0, name = "创建数据的被赋值变量", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+    @FieldGroup(index = 0, name = "创建数据的被赋值变量", type = FieldTypeEnum.TEXT)
     @FieldGroup(index = 1, name = "数据类型", type = FieldTypeEnum.SELECT)
     @FieldGroupSelect(index = 1, enumClass = DataTypeEnum.class)
-    @FieldGroup(index = 2, name = "数据值。如果是集合或对象类型值可以有多个（空格分隔），对象类型值必须为“字段名:字段值”格式", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+    @FieldGroup(index = 2, name = "数据值。如果是集合或对象类型值可以有多个（空格分隔），对象类型值必须为“字段名:字段值”格式", type = FieldTypeEnum.TEXT)
     @FieldEg(eg = "$r.data001.id NUMBER 100000", desc = "创建一个数字数据为 100000，并将该值赋值到 data001 组件返回结果的 id 字段上")
     @FieldEg(eg = "$r.data001.name STRING zhangsan", desc = "创建一个字符串数据为 zhangsan，并将该值赋值到 data001 组件返回结果的 name 字段上")
     @FieldEg(eg = "$r.data001.deleteFlag BOOLEAN true", desc = "创建一个布尔数据为 true，并将该值赋值到 data001 组件返回结果的 deleteFlag 字段上")

@@ -13,7 +13,7 @@ public class FileOutputDownloadLogicConfig extends FileOutputLogicConfig {
     /**
      * 文件名称
      */
-    @Field(key = "name", name = "文件名称", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "name", name = "文件名称", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldEg(eg = "#{name}", desc = "从入参的 name 字段作为文件名称")
     private String name;
 

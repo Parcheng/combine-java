@@ -12,35 +12,35 @@ import java.util.List;
 
 public class TableElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "table", name = "表格DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "table", name = "表格DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig table;
 
-    @Field(key = "head", name = "表格头DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "head", name = "表格头DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig head;
 
-    @Field(key = "headRow", name = "表格头行DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "headRow", name = "表格头行DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig headRow;
 
-    @Field(key = "headCol", name = "表格头单元格DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "headCol", name = "表格头单元格DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig headCol;
 
-    @Field(key = "body", name = "表格内容DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "body", name = "表格内容DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig body;
 
-    @Field(key = "row", name = "行DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "row", name = "行DOM配置", type = FieldTypeEnum.ANY)
     @FieldObject(type = TableRowDomConfig.class)
     private TableRowDomConfig row;
 
-    @Field(key = "col", name = "单元格DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "col", name = "单元格DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig col;
 
-    @Field(key = "checkbox", name = "多选DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "checkbox", name = "多选DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig checkbox;
 

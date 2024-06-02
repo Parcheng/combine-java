@@ -1,6 +1,6 @@
 package com.parch.combine.components.logic.error;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
@@ -12,9 +12,9 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class LogicErrorLogicConfig extends LogicConfig {
+public class LogicErrorLogicConfig extends ILogicConfig {
 
-    @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+    @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.ANY, isArray = true, isRequired = true)
     @FieldObject(type = LogicErrorItem.class)
     private List<LogicErrorItem> items;
 

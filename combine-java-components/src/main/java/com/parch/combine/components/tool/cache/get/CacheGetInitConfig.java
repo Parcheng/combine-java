@@ -1,13 +1,13 @@
 package com.parch.combine.components.tool.cache.get;
 
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 /**
  * 初始化配置类
  */
-public class CacheGetInitConfig extends InitConfig {
+public class CacheGetInitConfig extends IInitConfig {
 
     @Field(key = "renewal", name = "是否重置有效期", type = FieldTypeEnum.NUMBER, defaultValue = "true")
     private Boolean renewal;

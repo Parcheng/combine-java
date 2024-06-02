@@ -6,7 +6,6 @@ import com.parch.combine.core.common.settings.annotations.*;
 
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PropertySettingBuilder {
 
@@ -49,21 +48,16 @@ public class PropertySettingBuilder {
                 continue;
             }
 
-            FieldTypeEnum[] types = property.getType();
-            for (FieldTypeEnum type : types) {
-                switch (type) {
-                    case OBJECT:
-                        setObjectProperty(scope, properties, property, field, keyPrefix, parsedClass);
-                        break;
-                    case GROUP:
-                        setGroup(property, field);
-                        break;
-                    case SELECT:
-                        setSelect(property, field);
-                        break;
-                    default:
-                        break;
-                }
+            FieldTypeEnum type = property.getType();
+            switch (type) {
+                case CONFIG:
+                    setConfigProperty(scope, properties, property, field, keyPrefix, parsedClass);
+                    break;
+                case SELECT:
+                    setSelect(property, field);
+                    break;
+                default:
+                    break;
             }
 
             setEgs(property, field);
@@ -94,11 +88,11 @@ public class PropertySettingBuilder {
         return property;
     }
 
-    private static void setObjectProperty(String scope, List<PropertySetting> properties, PropertySetting property, java.lang.reflect.Field field, String keyPrefix, Set<Class<?>> parsedClass) {
+    private static void setConfigProperty(String scope, List<PropertySetting> properties, PropertySetting property, java.lang.reflect.Field field, String keyPrefix, Set<Class<?>> parsedClass) {
         FieldObject fieldObjectAnnotation = field.getAnnotation(FieldObject.class);
         if (fieldObjectAnnotation != null) {
             List<PropertySetting> subProperties = new ArrayList<>();
-            buildProperties(scope, subProperties, fieldObjectAnnotation.type(), keyPrefix + property.getKey() + ".", parsedClass);
+            buildProperties(scope, subProperties, fieldObjectAnnotation.value(), keyPrefix + property.getKey() + ".", parsedClass);
             properties.addAll(subProperties);
             return;
         }
@@ -119,73 +113,6 @@ public class PropertySettingBuilder {
             }
             property.getDesc().add(refDesc.toString());
         }
-    }
-
-    private static void setGroup(PropertySetting property, java.lang.reflect.Field field) {
-        FieldGroup[] fieldGroupAnnotations = field.getAnnotationsByType(FieldGroup.class);
-        if (fieldGroupAnnotations == null) {
-            return;
-        }
-
-        List<PropertyGroupSetting> groups = new ArrayList<>();
-        for (FieldGroup fieldGroupAnnotation : fieldGroupAnnotations) {
-            PropertyGroupSetting group = new PropertyGroupSetting();
-            group.setIndex(fieldGroupAnnotation.index());
-            group.setName(fieldGroupAnnotation.name());
-            group.setType(fieldGroupAnnotation.type());
-            group.setIsRequired(fieldGroupAnnotation.isRequired());
-            groups.add(group);
-        }
-
-        FieldGroupSelect[] fieldGroupSelectAnnotations = field.getAnnotationsByType(FieldGroupSelect.class);
-        if (fieldGroupSelectAnnotations != null && fieldGroupSelectAnnotations.length > 0) {
-            Map<Integer, List<PropertyGroupSetting>> groupMap = groups.stream().collect(Collectors.groupingBy(PropertyGroupSetting::getIndex));
-            for (FieldGroupSelect fieldGroupSelectAnnotation : fieldGroupSelectAnnotations) {
-                List<PropertyGroupSetting> currGroups = groupMap.get(fieldGroupSelectAnnotation.index());
-                if (currGroups == null) {
-                    continue;
-                }
-
-                for (PropertyGroupSetting currGroup : currGroups) {
-                    boolean hasSelect = false;
-                    for (FieldTypeEnum type : currGroup.getType()) {
-                        if (type == FieldTypeEnum.SELECT) {
-                            hasSelect = true;
-                            break;
-                        }
-                    }
-
-                    if (!hasSelect) {
-                        continue;
-                    }
-
-                    IOptionSetting[] optionConfigs = getOptions(fieldGroupSelectAnnotation.enumClass());
-                    if (optionConfigs == null || optionConfigs.length == 0) {
-                        continue;
-                    }
-
-                    List<IOptionSetting> options = new ArrayList<>();
-                    List<String> propertyDesc = property.getDesc();
-                    propertyDesc.add(currGroup.getName() + " - 可选值：");
-                    for (IOptionSetting optionConfig : optionConfigs) {
-                        if (!optionConfig.isValid()) {
-                            continue;
-                        }
-
-                        options.add(optionConfig);
-
-                        propertyDesc.add("【" + optionConfig.getKey() + "】:" + optionConfig.getName() +
-                                (CheckEmptyUtil.isEmpty(optionConfig.getDesc()) ? CheckEmptyUtil.EMPTY : ("（" + optionConfig.getDesc() + "）")));
-                        if (optionConfig.getDetails() != null) {
-                            propertyDesc.addAll(Arrays.asList(optionConfig.getDetails()));
-                        }
-                    }
-                    currGroup.setOptions(options);
-                }
-            }
-        }
-
-        property.setGroup(groups);
     }
 
     private static void setSelect(PropertySetting property, java.lang.reflect.Field field) {

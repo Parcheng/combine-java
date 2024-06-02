@@ -3,18 +3,15 @@ package com.parch.combine.components.access.redis.lock;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.access.redis.AbsRedisComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.params.SetParams;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,31 +29,17 @@ public class RedisLockComponent extends AbsRedisComponent<RedisLockInitConfig, R
     }
 
     @Override
-    public void initRedisConfig() {}
-
-    @Override
-    public List<String> checkRedisConfig() {
-        List<String> checkMsg = new ArrayList<>();
-        RedisLockLogicConfig logicConfig = getLogicConfig();
-        if (logicConfig.getCount() == null) {
-            checkMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "锁Count为空"));
-        }
-
-        return checkMsg;
-    }
-
-    @Override
     public DataResult execute() {
         RedisLockLogicConfig logicConfig = getLogicConfig();
 
         boolean result;
         String key = getKey();
-        Object valueObj = DataVariableHelper.parseValue(logicConfig.getValue(), false);
+        String value = logicConfig.value();
         try (JedisCluster cluster = this.getConn(getInitConfig())) {
-            if (logicConfig.getCount() > 0) {
-                result = lock(cluster, key, valueObj);
+            if (logicConfig.count() > 0) {
+                result = lock(cluster, key, value);
             } else {
-                unlock(cluster, key, valueObj);
+                unlock(cluster, key, value);
                 result = true;
             }
         }
@@ -67,31 +50,28 @@ public class RedisLockComponent extends AbsRedisComponent<RedisLockInitConfig, R
     public String getKey() {
         RedisLockLogicConfig logicConfig = getLogicConfig();
         String key = CheckEmptyUtil.EMPTY;
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getKeyPrefix())) {
-            Object keyPrefixObj = DataVariableHelper.parseValue(logicConfig.getKeyPrefix(), false);
-            key = keyPrefixObj == null ? key : (keyPrefixObj.toString() + key);
-        }
-        Object keyObj = DataVariableHelper.parseValue(logicConfig.getKeyPrefix(), false);
-        key = keyObj == null ? key : (keyObj.toString() + key);
-
+        String keyPrefix = logicConfig.keyPrefix();
+        key = keyPrefix == null ? key : (keyPrefix + key);
         if (CheckEmptyUtil.isEmpty(key)) {
             key = UUID.randomUUID().toString();
         }
         return key;
     }
 
-    public boolean lock(JedisCluster cluster, String key, Object valueObj) {
+    public boolean lock(JedisCluster cluster, String key, String value) {
         RedisLockInitConfig initConfig = getInitConfig();
         RedisLockLogicConfig logicConfig = getLogicConfig();
 
         SetParams setParams = new SetParams();
         setParams.nx();
-        if (logicConfig.getExpire() != null) {
-            setParams.ex(logicConfig.getExpire());
-        }
-        String value = valueObj == null ? UUID.randomUUID().toString() : valueObj.toString();
 
-        if (initConfig.getAutoUnLock()) {
+        Long expire = logicConfig.expire();
+        if (expire != null) {
+            setParams.ex(expire);
+        }
+        value = value == null ? UUID.randomUUID().toString() : value;
+
+        if (initConfig.autoUnLock()) {
             ComponentContextHandler.addRuntimeData(LOCK_VALUE_FILED, new String[]{key, value});
         }
 

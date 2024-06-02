@@ -25,11 +25,11 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
     @Field(key = "size", name = "尺寸（宽度）px", type = FieldTypeEnum.NUMBER, defaultValue = "200")
     private Integer size;
 
-    @Field(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "content", name = "内容配置", type = FieldTypeEnum.ANY, isRequired = true)
     @FieldObject(type = SubElementConfig.class)
     private SubElementConfig body;
 
-    @Field(key = "closeTriggers", name = "窗口关闭的触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "closeTriggers", name = "窗口关闭的触发配置", type = FieldTypeEnum.ANY, isArray = true)
     @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
     @Trigger
     private Object closeTriggers;

@@ -11,27 +11,27 @@ import java.util.List;
 
 public class TreeElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "tree", name = "树DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "tree", name = "树DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig tree;
 
-    @Field(key = "item", name = "树项DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "item", name = "树项DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig item;
 
-    @Field(key = "levelItems", name = "每个层级的树项DOM配置", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "levelItems", name = "每个层级的树项DOM配置", type = FieldTypeEnum.ANY, isArray = true)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private List<DomConfig> levelItems;
 
-    @Field(key = "itemActive", name = "树项选中时DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "itemActive", name = "树项选中时DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig itemActive;
 
-    @Field(key = "itemText", name = "树项文本DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "itemText", name = "树项文本DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig itemText;
 
-    @Field(key = "itemTree", name = "树项子树DOM配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "itemTree", name = "树项子树DOM配置", type = FieldTypeEnum.ANY)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig itemTree;
 

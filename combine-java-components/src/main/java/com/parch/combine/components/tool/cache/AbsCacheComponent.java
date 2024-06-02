@@ -2,14 +2,14 @@ package com.parch.combine.components.tool.cache;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 
-public abstract class AbsCacheComponent<I extends InitConfig, T extends CacheLogicConfig> extends AbsComponent<I, T> {
+public abstract class AbsCacheComponent<I extends IInitConfig, T extends CacheLogicConfig> extends AbsComponent<I, T> {
 
     public AbsCacheComponent(Class<I> initConfigClass, Class<T> logicConfigClass) {
         super(initConfigClass, logicConfigClass);

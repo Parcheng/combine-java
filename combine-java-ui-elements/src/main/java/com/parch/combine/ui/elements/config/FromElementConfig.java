@@ -23,7 +23,7 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
     @Field(key = "column", name = "列数（1-100）", type = FieldTypeEnum.NUMBER, defaultValue = "1")
     private Integer column;
 
-    @Field(key = "items", name = "表单项配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @Field(key = "items", name = "表单项配置", type = FieldTypeEnum.ANY, isRequired = true, isArray = true)
     private List<ItemConfig> items;
 
     public FromElementConfig() {

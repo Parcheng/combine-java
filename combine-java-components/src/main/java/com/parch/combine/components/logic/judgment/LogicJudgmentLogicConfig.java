@@ -1,6 +1,6 @@
 package com.parch.combine.components.logic.judgment;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
@@ -12,9 +12,9 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class LogicJudgmentLogicConfig extends LogicConfig {
+public class LogicJudgmentLogicConfig extends ILogicConfig {
 
-    @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.ANY, isRequired = true, isArray = true)
     @FieldObject(type = LogicJudgmentItem.class)
     private List<LogicJudgmentItem> items;
 
@@ -28,7 +28,7 @@ public class LogicJudgmentLogicConfig extends LogicConfig {
 
         @Field(key = "components", name = "要执行的逻辑，可以是组件ID，也可以是组件配置", type = FieldTypeEnum.COMPONENT, isRequired = true, isArray = true)
         @FieldEg(eg = "[\"logicJudgmentTestData\", { \"type\": \"XXX\", ... }", desc = "条件满足后，先执行 ID 为 logicJudgmentTestData 的组件配置，再执行第二项类型为 XXX 的组件配置逻辑")
-        List<Object> components;
+        List<String> components;
 
         public List<Object> getComponents() {
             return components;

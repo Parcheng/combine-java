@@ -1,18 +1,23 @@
 package com.parch.combine.core.component.base;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.tuple.ThreeTuples;
+import com.parch.combine.core.component.base.proxy.ConfigHandler;
+import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.error.SystemErrorEnum;
+import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
-import com.parch.combine.core.common.util.TypeConversionUtil;
+
 import java.util.*;
 
 /**
  * 组件公共父类
  */
-public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> {
+public abstract class AbsComponent<T extends IInitConfig, R extends ILogicConfig> {
 
     private String id;
 
@@ -48,14 +53,29 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
      *
      * @param logicConfig 逻辑配置
      */
-    public final void initConfig(Map<String, Object> logicConfig) {
-        // 加载逻辑配置
-        if (logicConfig == null) {
-            logicConfig = new HashMap<>();
+    public final List<String> initConfig(Map<String, Object> logicConfig) {
+        List<String> errorMsg = new ArrayList<>();
+        ThreeTuples<Boolean, R, List<String>> logicBuildResult = ConfigHandler.build(scopeKey, logicConfigClass, logicConfig);
+        if (logicBuildResult.getFirst()) {
+            this.logicConfig = logicBuildResult.getSecond();
+        } else {
+            for (String error : logicBuildResult.getThird()) {
+                errorMsg.add("BUILD LOGIC-" + error);
+            }
+
+            return errorMsg;
         }
-        this.logicConfig = TypeConversionUtil.parseJava(logicConfig, logicConfigClass);
-        this.logicConfig.init();
-        this.initConfig = manager.getInitConfig().get(this.logicConfig.getRef(), this.logicConfig.getType(), initConfigClass);
+
+        ThreeTuples<Boolean, T, List<String>> initBuildResult = manager.getInitConfig().get(this.logicConfig.ref(), this.logicConfig.type(), initConfigClass);
+        if (initBuildResult.getFirst()) {
+            this.initConfig = initBuildResult.getSecond();
+        } else {
+            for (String error : initBuildResult.getThird()) {
+                errorMsg.add("BUILD INIT-" + error);
+            }
+        }
+
+        return errorMsg;
     }
 
     /**
@@ -74,6 +94,16 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
             // 将执行结果设置到上下文中
             ComponentContextHandler.setResultData(this.getId(), result);
 
+            // 如果配置中定义了报错提示语，则使用配置的报错提示语
+            if (CheckEmptyUtil.isNotEmpty(logicConfig.showMsg())) {
+                result.setShowMsg(logicConfig.showMsg());
+            }
+
+            // 打印日志
+            if (logicConfig.printResult() == null ? GlobalContextHandler.get(scopeKey).getPrintComponentResult() : logicConfig.printResult()) {
+                PrintHelper.printComponentResult(this, result);
+            }
+
             // 清当前执行的组件对象
             ComponentContextHandler.clearCurrComponent();
 
@@ -86,13 +116,6 @@ public abstract class AbsComponent<T extends InitConfig, R extends LogicConfig> 
             ComponentContextHandler.addExecutedComponent(this);
         }
     }
-
-    /**
-     * 检测配置
-     *
-     * @return 初始化错误信息集合
-     */
-    public abstract List<String> init();
 
     /**
      * 执行

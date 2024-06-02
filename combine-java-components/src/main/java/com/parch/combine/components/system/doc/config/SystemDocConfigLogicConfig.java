@@ -1,11 +1,11 @@
 package com.parch.combine.components.system.doc.config;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 
 /**
  * 逻辑配置类
  */
-public class SystemDocConfigLogicConfig extends LogicConfig {
+public class SystemDocConfigLogicConfig extends ILogicConfig {
 
     @Override
     public void init() {}

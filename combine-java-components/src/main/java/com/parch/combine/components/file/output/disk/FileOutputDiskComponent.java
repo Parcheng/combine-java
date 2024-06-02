@@ -8,7 +8,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.components.file.output.FileOutputComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.File;

@@ -1,6 +1,6 @@
 package com.parch.combine.components.data.text.replace;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
@@ -9,7 +9,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 /**
  * 逻辑配置类
  */
-public class DataTextReplaceLogicConfig extends LogicConfig {
+public class DataTextReplaceLogicConfig extends ILogicConfig {
 
     @Field(key = "isReplace", name = "是否替换掉源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean isReplace;
@@ -18,14 +18,14 @@ public class DataTextReplaceLogicConfig extends LogicConfig {
     @FieldSelect(enumClass = DataTextReplaceModeEnum.class)
     private String mode;
 
-    @Field(key = "source", name = "数据源", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "source", name = "数据源", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldDesc("支持结构对象、集合和文本类型")
     private String source;
 
-    @Field(key = "oldText", name = "旧文本", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "oldText", name = "旧文本", type = FieldTypeEnum.TEXT, isRequired = true)
     private String oldText;
 
-    @Field(key = "newText", name = "新文本", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "newText", name = "新文本", type = FieldTypeEnum.TEXT, isRequired = true)
     private String newText;
 
     public String getSource() {

@@ -4,6 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.tools.conn.DbConnPoolTool;
+import com.parch.combine.core.component.tools.sql.SqlItem;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.tools.sql.SqlTool;
 import com.parch.combine.core.common.util.TypeConversionUtil;
@@ -63,19 +64,30 @@ public class MysqlOperationHandler {
     public static DataResult execute(Connection conn, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
         DataResult result;
 
+        List<SqlItem> sqlItems = logicConfig.sqlConfigs();
+        String sql = logicConfig.sql();
+        if (CheckEmptyUtil.isEmpty(sqlItems)) {
+            sqlItems = new ArrayList<>();
+        }
+        if (sql != null) {
+            SqlItem sqlItem = new SqlItem();
+            sqlItem.setSql(sql);
+            sqlItems.add(sqlItem);
+        }
+
         PreparedStatement ps = null;
         ResultSet rs = null;
         PreparedStatement psCount = null;
         ResultSet rsCount = null;
         try {
             List<Object> sqlParams = new ArrayList<>();
-            String sqlStr = SqlTool.buildSql(logicConfig.getSqlConfigs());
+            String sqlStr = SqlTool.buildSql(sqlItems);
             String changeSql = SqlTool.replaceByParam(sqlStr, sqlParams);
-            if (initConfig.getPrintSql()) {
+            if (initConfig.printSql()) {
                 PrintHelper.printSql(changeSql, sqlParams);
             }
 
-            SqlTypeEnum sqlType = SqlTypeEnum.get(logicConfig.getSqlType());
+            SqlTypeEnum sqlType = SqlTypeEnum.get(logicConfig.sqlType());
             switch (sqlType) {
                 case INSERT_INCR:
                     ps = getAddPreparedStatement(conn, changeSql, sqlParams);
@@ -116,7 +128,7 @@ public class MysqlOperationHandler {
 
                     // count 查询
                     String countSql = SqlTool.replaceCount(changeSql, COUNT_NAME);
-                    if (initConfig.getPrintSql()) {
+                    if (initConfig.printSql()) {
                         PrintHelper.printSql(countSql, sqlParams);
                     }
                     psCount = getPreparedStatement(conn, countSql, sqlParams);
@@ -198,16 +210,16 @@ public class MysqlOperationHandler {
 
         String driver = "com.mysql.cj.jdbc.Driver";
         // 添加 "?useUnicode=true&characterEncoding=utf-8"
-        String url = "jdbc:mysql://"+initConfig.getHost()+":"+initConfig.getPort()+"/"+initConfig.getDbName();
-        if (initConfig.getPool() == null) {
+        String url = "jdbc:mysql://"+initConfig.host()+":"+initConfig.port()+"/"+initConfig.dbName();
+        if (initConfig.pool() == null) {
             Class.forName(driver);
-            conn = DriverManager.getConnection(url, initConfig.getUsername(), initConfig.getPassword());
+            conn = DriverManager.getConnection(url, initConfig.username(), initConfig.password());
         } else {
-            String key = "Mysql_" + (CheckEmptyUtil.isEmpty(initConfig.getId()) ? CheckEmptyUtil.EMPTY : initConfig.getId());
+            String key = "Mysql_" + (CheckEmptyUtil.isEmpty(initConfig.id()) ? CheckEmptyUtil.EMPTY : initConfig.id());
             DataSource data = DbConnPoolTool.getPool(key);
             if (data == null) {
-                MysqlInitConfig.Pool poolConfig = initConfig.getPool();
-                data = DbConnPoolTool.initAndGet(key, url, initConfig.getUsername(), initConfig.getPassword(), driver, poolConfig.getMax(), poolConfig.getMin(), poolConfig.getTimeout());
+                MysqlInitConfig.Pool poolConfig = initConfig.pool();
+                data = DbConnPoolTool.initAndGet(key, url, initConfig.username(), initConfig.password(), driver, poolConfig.max(), poolConfig.min(), poolConfig.timeout());
             }
             conn = data.getConnection();
         }

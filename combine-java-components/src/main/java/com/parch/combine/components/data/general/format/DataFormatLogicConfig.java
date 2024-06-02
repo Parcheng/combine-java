@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.format;
 
 import com.parch.combine.core.common.settings.annotations.*;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.tools.ConfigGroupTool;
 
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class DataFormatLogicConfig extends LogicConfig {
+public class DataFormatLogicConfig extends ILogicConfig {
 
     @Field(key = "replace", name = "是否替换源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean replace;

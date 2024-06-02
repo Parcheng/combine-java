@@ -11,15 +11,15 @@ import java.util.List;
  */
 public class MailSendLogicConfig extends MailLogicConfig {
 
-    @Field(key = "to", name = "收件人", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true, isArray = true)
+    @Field(key = "to", name = "收件人", type = FieldTypeEnum.TEXT, isRequired = true, isArray = true)
     @FieldEg(eg = "[\"a@qq.com\",\"b@qq.com\"]", desc = "邮件发送给 a@qq.com 和 b@qq.com")
     private List<String> to;
 
-    @Field(key = "subject", name = "主题", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "subject", name = "主题", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldEg(eg = "办公用品审批", desc = "邮件的标题为“办公用品审批”")
     private String subject;
 
-    @Field(key = "body", name = "内容配置", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "body", name = "内容配置", type = FieldTypeEnum.ANY, isArray = true)
     @FieldObject(type = MailBody.class)
     private List<MailBody> body;
 
@@ -33,11 +33,11 @@ public class MailSendLogicConfig extends MailLogicConfig {
         @FieldEg(eg = "FILE", desc = "内容类型为文件，一定要有文件名")
         private MailContentTypeEnum type;
 
-        @Field(key = "content", name = "内容信息", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+        @Field(key = "content", name = "内容信息", type = FieldTypeEnum.TEXT)
         @FieldEg(eg = "申请办公用品", desc = "邮件内容/邮件附件内容为“申请办公用品”")
         private String content;
 
-        @Field(key = "path", name = "路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
+        @Field(key = "path", name = "路径", type = FieldTypeEnum.TEXT)
         private String path;
 
         @Field(key = "fileName", name = "文件名称", type = FieldTypeEnum.TEXT)

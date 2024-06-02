@@ -13,7 +13,7 @@ import java.util.List;
 @PageElement(key = "list", name = "列表元素", templateClass = ListElementTemplateConfig.class)
 public class ListElementConfig extends ElementConfig<ListElementTemplateConfig> {
 
-    @Field(key = "content", name = "列表项内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "content", name = "列表项内容配置", type = FieldTypeEnum.ANY, isRequired = true)
     @FieldObject(type = SubElementConfig.class)
     private SubElementConfig content;
 

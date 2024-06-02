@@ -21,10 +21,10 @@ public class ApiDataLoadConfig extends DataLoadConfig {
     @Field(key = "mode", name = "请求方式 GET | POST", type = FieldTypeEnum.TEXT)
     private String mode;
 
-    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.OBJECT)
+    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
     private Object params;
 
-    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.OBJECT)
+    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
     private Map<String, String> headers;
 
     @Field(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)

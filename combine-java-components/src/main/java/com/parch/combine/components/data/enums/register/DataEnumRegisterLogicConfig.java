@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.enums.register;
 
 import com.parch.combine.components.data.enums.EnumCacheHandler;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldGroup;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -13,15 +13,15 @@ import java.util.List;
 /**
  * 逻辑配置类
  */
-public class DataEnumRegisterLogicConfig extends LogicConfig {
+public class DataEnumRegisterLogicConfig extends ILogicConfig {
 
-    @Field(key = "key", name = "枚举KEY", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "key", name = "枚举KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     private String key;
 
     @Field(key = "items", name = "枚举项配置集合", type = FieldTypeEnum.GROUP, isRequired = true, isArray = true)
-    @FieldGroup(index = 0, name = "枚举项编码", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
-    @FieldGroup(index = 1, name = "枚举项名称", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION})
-    @FieldGroup(index = 2, name = "枚举项描述", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = false)
+    @FieldGroup(index = 0, name = "枚举项编码", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 1, name = "枚举项名称", type = FieldTypeEnum.TEXT)
+    @FieldGroup(index = 2, name = "枚举项描述", type = FieldTypeEnum.TEXT, isRequired = false)
     private List<EnumCacheHandler.EnumItem> items = new ArrayList<>();
 
     @Override

@@ -1,6 +1,6 @@
 package com.parch.combine.components.file.build;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
@@ -9,7 +9,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 /**
  * 文件解析逻辑配置类
  */
-public abstract class FileBuildLogicConfig extends LogicConfig {
+public abstract class FileBuildLogicConfig extends ILogicConfig {
 
     @Field(key = "fileName", name = "文件名", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
     private String fileName;

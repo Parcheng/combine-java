@@ -6,7 +6,8 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
@@ -58,7 +59,7 @@ public class DataTextReplaceComponent extends AbsComponent<DataTextReplaceInitCo
                 DataTextReplaceModeEnum mode = DataTextReplaceModeEnum.get(logicConfig.getMode());
                 result = replace(mode, logicConfig.getOldText(), logicConfig.getNewText(), data);
             }
-            if (logicConfig.getIsReplace() && DataFindHandler.hasParseFlag(logicConfig.getSource())) {
+            if (logicConfig.getIsReplace() && DataVariableFlagHelper.hasParseFlag(logicConfig.getSource())) {
                 Object finalResult = result;
                 DataVariableHelper.replaceValue(logicConfig.getSource(), old -> finalResult);
             }

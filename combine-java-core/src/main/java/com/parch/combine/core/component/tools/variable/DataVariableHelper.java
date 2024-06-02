@@ -75,7 +75,7 @@ public class DataVariableHelper {
         if (data instanceof String) {
             boolean isFind = false;
             String path = data.toString();
-            if (DataFindHandler.hasParseFlag(path)) {
+            if (DataVariableFlagHelper.hasParseFlag(path)) {
                 // 过滤掉#{...}
                 path = path.substring(2, path.length() -1);
                 isFind = true;
@@ -110,7 +110,7 @@ public class DataVariableHelper {
             }
         }
 
-        path = DataFindHandler.filterParseFlag(path);
+        path = DataVariableFlagHelper.filterParseFlag(path);
         return DataFindHandler.replace(path, newValueStr.toString());
     }
 
@@ -128,7 +128,7 @@ public class DataVariableHelper {
             }
         }
 
-        path = DataFindHandler.filterParseFlag(path);
+        path = DataVariableFlagHelper.filterParseFlag(path);
         return DataFindHandler.replace(path, newValueList);
     }
 
@@ -140,7 +140,7 @@ public class DataVariableHelper {
      * @return 值
      */
     public static boolean replaceValue(String path, Object newValue, boolean isForce) {
-        path = DataFindHandler.filterParseFlag(path);
+        path = DataVariableFlagHelper.filterParseFlag(path);
         if (newValue != null) {
             newValue = DataVariableHelper.parseValue(newValue, isForce);
         }
@@ -155,7 +155,7 @@ public class DataVariableHelper {
      * @return 值
      */
     public static boolean replaceValue(String path, DataFindHandler.GetDataFunction<?> func) {
-        path = DataFindHandler.filterParseFlag(path);
+        path = DataVariableFlagHelper.filterParseFlag(path);
         return DataFindHandler.replaceAsFunc(path, func);
     }
 
@@ -166,7 +166,7 @@ public class DataVariableHelper {
      * @return 值
      */
     public static boolean clearValue(String path) {
-        path = DataFindHandler.filterParseFlag(path);
+        path = DataVariableFlagHelper.filterParseFlag(path);
         return DataFindHandler.clear(path);
     }
 }

@@ -5,10 +5,10 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.components.file.FilePostfixEnum;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.IComponentError;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class FileParseComponent<T extends InitConfig, R extends FileParseLogicConfig> extends AbsComponent<T, R> {
+public abstract class FileParseComponent<T extends IInitConfig, R extends FileParseLogicConfig> extends AbsComponent<T, R> {
 
     protected List<String> fileTypes = new ArrayList<>(1);
 

@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 字段描述
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface FieldDesc {
     /**
      * 字段描述行集合

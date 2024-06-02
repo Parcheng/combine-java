@@ -9,7 +9,7 @@ import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;

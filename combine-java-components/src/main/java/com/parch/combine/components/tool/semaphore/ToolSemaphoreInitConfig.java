@@ -1,6 +1,6 @@
 package com.parch.combine.components.tool.semaphore;
 
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 初始化配置类
  */
-public class ToolSemaphoreInitConfig extends InitConfig {
+public class ToolSemaphoreInitConfig extends IInitConfig {
 
     @Field(key = "max", name = "最大流量数配置", type = FieldTypeEnum.BOOLEAN, defaultValue = "20")
     @FieldEg(eg = "100", desc = "所有流程最大流量为 100")

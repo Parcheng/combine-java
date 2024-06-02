@@ -6,9 +6,10 @@ import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.MatcherUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 
 import java.util.Collection;
@@ -32,8 +33,9 @@ public class SqlTool {
 
         StringBuilder sql = new StringBuilder();
         for (SqlItem item : sqlConfigs) {
-            if (CheckEmptyUtil.isEmpty(item.getConditions()) || CompareTool.isPass(item, false)) {
-                sql.append(CheckEmptyUtil.SPACE).append(item.getSql());
+            CompareGroupConfig compare = item.compare();
+            if (compare == null || CheckEmptyUtil.isEmpty(compare.getConditions()) || CompareTool.isPass(compare, false)) {
+                sql.append(CheckEmptyUtil.SPACE).append(item.sql());
             }
         }
 

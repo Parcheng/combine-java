@@ -1,6 +1,5 @@
 package com.parch.combine.components.access.mysql;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
@@ -9,9 +8,6 @@ import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
 import com.parch.combine.core.component.vo.DataResult;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -51,27 +47,6 @@ public class MysqlComponent extends AbsComponent<MysqlInitConfig, MysqlLogicConf
     }
 
     @Override
-    public List<String> init() {
-        // 检查初始化配置
-        List<String> checkMsg = new ArrayList<>();
-        MysqlInitConfig initConfig = getInitConfig();
-        if (CheckEmptyUtil.isAnyEmpty(initConfig.getUsername(), initConfig.getPassword(), initConfig.getHost(), initConfig.getDbName(), initConfig.getPort())) {
-            checkMsg.add(ComponentErrorHandler.buildCheckInitMsg(initConfig, "数据库配置信息缺失"));
-        }
-
-        // 检查逻辑配置
-        MysqlLogicConfig logicConfig = getLogicConfig();
-        if (SqlTypeEnum.get(logicConfig.getSqlType()) == SqlTypeEnum.NONE) {
-            checkMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "SQL类型不合规"));
-        }
-        if (CheckEmptyUtil.isEmpty(logicConfig.getSqlConfigs())) {
-            checkMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "SQL语句不能为空"));
-        }
-
-        return checkMsg;
-    }
-
-    @Override
     public DataResult execute() {
         // 上下文获取入参
         Map<String, Object> params = ComponentContextHandler.getParams();
@@ -95,7 +70,7 @@ public class MysqlComponent extends AbsComponent<MysqlInitConfig, MysqlLogicConf
             Object connKeyObj = ComponentContextHandler.getRuntimeData(CONN_KEY);
             connKey = connKeyObj == null ? null : connKeyObj.toString();
 
-            DataResult result = ComponentContextHandler.getResultData(getLogicConfig().getId());
+            DataResult result = ComponentContextHandler.getResultData(getLogicConfig().id());
             success = result != null && result.getSuccess();
         } catch (Exception e) {
             ComponentErrorHandler.print(MysqlErrorEnum.END_FUNCTION_ERROR, e);

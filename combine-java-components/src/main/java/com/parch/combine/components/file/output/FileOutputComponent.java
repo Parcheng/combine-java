@@ -2,11 +2,11 @@ package com.parch.combine.components.file.output;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class FileOutputComponent<T extends InitConfig, R extends FileOutputLogicConfig> extends AbsComponent<T, R> {
+public abstract class FileOutputComponent<T extends IInitConfig, R extends FileOutputLogicConfig> extends AbsComponent<T, R> {
 
     /**
      * 构造器

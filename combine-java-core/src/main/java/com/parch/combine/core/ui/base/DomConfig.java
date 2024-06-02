@@ -2,6 +2,7 @@ package com.parch.combine.core.ui.base;
 
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
@@ -31,11 +32,12 @@ public class DomConfig{
     @Field(key = "style", name = "DOM的style属性", type = FieldTypeEnum.TEXT)
     private String style;
 
-    @Field(key = "trigger", name = "DOM的其他（或自定义）属性", type = FieldTypeEnum.OBJECT)
+    @Field(key = "trigger", name = "DOM的其他（或自定义）属性", type = FieldTypeEnum.MAP)
     @FieldDesc("格式为“属性名:属性值”的键值对")
     private Map<String, String> properties;
 
-    @Field(key = "trigger", name = "DOM的事件集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "trigger", name = "DOM的事件集合", type = FieldTypeEnum.CONFIG, isArray = true)
+    @FieldObject(ElementEvent.class)
     private List<ElementEvent> events;
 
     public static class ElementEvent {

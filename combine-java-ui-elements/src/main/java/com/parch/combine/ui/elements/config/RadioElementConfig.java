@@ -25,14 +25,14 @@ public class RadioElementConfig extends ElementConfig<RadioElementTemplateConfig
     @Field(key = "value", name = "当前选中的值", type = FieldTypeEnum.TEXT)
     private String value;
 
-    @Field(key = "option", name = "单选项配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "option", name = "单选项配置", type = FieldTypeEnum.ANY)
     @FieldObject(type = OptionElementConfig.class)
     private OptionElementConfig option;
 
     @Field(key = "disabled", name = "是否禁选", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean disabled;
 
-    @Field(key = "triggers", name = "单选框触发配置（用于实现多级联动，暂未不支持使用）", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "triggers", name = "单选框触发配置（用于实现多级联动，暂未不支持使用）", type = FieldTypeEnum.ANY, isArray = true)
     @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
     @Trigger
     private Object triggers;

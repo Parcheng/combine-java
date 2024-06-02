@@ -24,10 +24,10 @@ public class TriggerCallUrlConfig extends TriggerConfig {
     @Field(key = "fromSubmit", name = "使用FROM表单方式提交", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     private Boolean fromSubmit;
 
-    @Field(key = "headers", name = "请求头", type = FieldTypeEnum.OBJECT)
-    private Object params;
+    @Field(key = "headers", name = "请求头", type = FieldTypeEnum.MAP)
+    private Map<String, String> params;
 
-    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.OBJECT)
+    @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
     private Map<String, String> headers;
 
     @Field(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)
@@ -58,11 +58,11 @@ public class TriggerCallUrlConfig extends TriggerConfig {
         this.mode = mode;
     }
 
-    public Object getParams() {
+    public Map<String, String> getParams() {
         return params;
     }
 
-    public void setParams(Object params) {
+    public void setParams(Map<String, String> params) {
         this.params = params;
     }
 

@@ -2,7 +2,6 @@ package com.parch.combine.components.tool.cache.cleanup;
 
 import com.parch.combine.components.tool.cache.CacheKeyMatchRuleEnum;
 import com.parch.combine.components.tool.cache.CacheLogicConfig;
-import com.parch.combine.core.component.base.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
