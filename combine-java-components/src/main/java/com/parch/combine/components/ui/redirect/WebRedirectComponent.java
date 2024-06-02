@@ -8,7 +8,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.ArrayList;

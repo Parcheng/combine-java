@@ -1,6 +1,5 @@
 package com.parch.combine.components.data.enums.mapping;
 
-import com.parch.combine.components.data.enums.list.DataEnumGetErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.data.enums.EnumCacheHandler;
 import com.parch.combine.core.component.base.AbsComponent;
@@ -32,33 +31,12 @@ public class DataEnumMappingComponent extends AbsComponent<DataEnumMappingInitCo
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        DataEnumMappingLogicConfig logicConfig = getLogicConfig();
-        List<DataEnumMappingLogicConfig.MappingItem> items = logicConfig.getItems();
-        if (items != null) {
-            for (int i = 0; i < items.size(); i++) {
-                DataEnumMappingLogicConfig.MappingItem item = items.get(i);
-                String baseMsg = "第<" + (i+1) + ">条-";
-                if (CheckEmptyUtil.isEmpty(item.getEnumKey())) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "枚举KEY为空"));
-                }
-                if (CheckEmptyUtil.isEmpty(item.getSourceField())) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "数据来源为空"));
-                }
-            }
-        }
-
-        return result;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public DataResult execute() {
         DataEnumMappingLogicConfig logicConfig = getLogicConfig();
 
         Collection<Map<String, Object>> data;
-        Object sourceData = DataVariableHelper.parseValue(logicConfig.getSource(), true);
+        Object sourceData = logicConfig.source();
         if (sourceData instanceof Map) {
             data = new ArrayList<>();
             data.add((Map<String, Object>) sourceData);
@@ -68,33 +46,38 @@ public class DataEnumMappingComponent extends AbsComponent<DataEnumMappingInitCo
             return DataResult.fail(DataEnumMappingErrorEnum.DATA_TYPE_ERROR);
         }
 
+        DataEnumMappingLogicConfig.MappingItem[] items = logicConfig.items();
         try {
             Map<String, Map<String, EnumCacheHandler.EnumItem>> enumMap = new HashMap<>();
-            for (DataEnumMappingLogicConfig.MappingItem item : logicConfig.getItems()) {
-                if (enumMap.containsKey(item.getEnumKey())) {
+            for (DataEnumMappingLogicConfig.MappingItem item : items) {
+                String enumKey = item.enumKey();
+                if (enumMap.containsKey(enumKey)) {
                     continue;
                 }
 
                 Map<String, EnumCacheHandler.EnumItem> itemData = null;
-                Object key = DataVariableHelper.parseValue(item.getEnumKey(), false);
-                if (key != null) {
-                    List<EnumCacheHandler.EnumItem> enumItems = EnumCacheHandler.get(key.toString());
+                if (enumKey != null) {
+                    List<EnumCacheHandler.EnumItem> enumItems = EnumCacheHandler.get(enumKey);
                     if (enumItems != null) {
                         itemData = enumItems.stream().collect(Collectors.toMap(EnumCacheHandler.EnumItem::getCode, Function.identity()));
                     }
                 }
 
-                enumMap.put(item.getEnumKey(), itemData);
+                enumMap.put(enumKey, itemData);
             }
 
             for (Map<String, Object> dataItem : data) {
-                for (DataEnumMappingLogicConfig.MappingItem item : logicConfig.getItems()) {
-                    Object currSourceData = dataItem.get(item.getSourceField());
+                for (DataEnumMappingLogicConfig.MappingItem item : items) {
+                    String enumKey = item.enumKey();
+                    String sourceField = item.sourceField();
+                    String targetField = item.targetField();
+
+                    Object currSourceData = dataItem.get(sourceField);
                     if (currSourceData == null) {
                         continue;
                     }
 
-                    Map<String, EnumCacheHandler.EnumItem> currEnumMap = enumMap.get(item.getEnumKey());
+                    Map<String, EnumCacheHandler.EnumItem> currEnumMap = enumMap.get(enumKey);
                     if (currEnumMap == null) {
                         continue;
                     }
@@ -104,7 +87,7 @@ public class DataEnumMappingComponent extends AbsComponent<DataEnumMappingInitCo
                         continue;
                     }
 
-                    String target = CheckEmptyUtil.isEmpty(item.getTargetField()) ? item.getSourceField() : item.getTargetField();
+                    String target = CheckEmptyUtil.isEmpty(targetField) ? sourceField : targetField;
                     dataItem.put(target, currEnumItem.getName());
                 }
             }
@@ -115,8 +98,9 @@ public class DataEnumMappingComponent extends AbsComponent<DataEnumMappingInitCo
         }
 
         Object result = sourceData;
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getResultId())) {
-            DataResult componentResult = ComponentContextHandler.getResultData(logicConfig.getResultId());
+        String resultId = logicConfig.resultId();
+        if (CheckEmptyUtil.isNotEmpty(resultId)) {
+            DataResult componentResult = ComponentContextHandler.getResultData(resultId);
             if (componentResult != null) {
                 result = componentResult.getData();
             }

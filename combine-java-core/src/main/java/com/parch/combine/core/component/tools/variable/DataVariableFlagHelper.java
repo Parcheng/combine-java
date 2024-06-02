@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  * 数据变量处理帮助类
  */
 public class DataVariableFlagHelper {
+
     /**
      * 判断是否有解析标识
      *
@@ -62,6 +63,10 @@ public class DataVariableFlagHelper {
         return path;
     }
 
+    public static String getRegex() {
+        return "#\\{(.*?)}";
+    }
+
     /**
      * 解析路径（将路径中#{...}解析成值）
      *
@@ -69,7 +74,7 @@ public class DataVariableFlagHelper {
      * @return 解析后的路径
      */
     public static String[] parsePath(String path) {
-        String regex2 = "#\\{(.*?)}";
+        String regex2 = getRegex();
         Pattern pattern2 = Pattern.compile(regex2);
         Matcher matcher2 = pattern2.matcher(path);
         while (matcher2.find()) {

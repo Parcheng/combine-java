@@ -248,6 +248,7 @@ public class ConfigHandler {
                 case OBJECT:
                     fieldConfig = method.getAnnotation(FieldObject.class);
                     if (item instanceof Map && fieldConfig != null) {
+                        // TODO 手动序列化，补校验逻辑
                         try {
                             itemData = JsonUtil.parseArray(JsonUtil.serialize(item), fieldConfig.value());
                         } catch (Exception e) {

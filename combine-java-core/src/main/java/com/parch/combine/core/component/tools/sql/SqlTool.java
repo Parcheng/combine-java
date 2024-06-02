@@ -9,8 +9,8 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 
 import java.util.Collection;
 import java.util.List;
@@ -109,8 +109,8 @@ public class SqlTool {
     }
 
     public static String setLimit(String sql, String pageName, String pageSizeName) {
-        Object pageObj = TextExpressionHelper.getObject(pageName);
-        Object pageSizeObj = TextExpressionHelper.getObject(pageSizeName);
+        Object pageObj = DataVariableHelper.parseValue(pageName, false);
+        Object pageSizeObj = DataVariableHelper.parseValue(pageSizeName, false);
 
         // 解析参数
         long page = pageObj == null || !DataTypeIsUtil.isLong(pageObj.toString()) ? 0 : Long.parseLong(pageObj.toString());

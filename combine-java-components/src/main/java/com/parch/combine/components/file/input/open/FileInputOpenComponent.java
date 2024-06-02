@@ -8,7 +8,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
+
 
 import java.io.File;
 import java.io.FileInputStream;

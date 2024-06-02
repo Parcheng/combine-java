@@ -4,7 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
