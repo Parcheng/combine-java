@@ -5,7 +5,6 @@ import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.manager.CombineManager;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 下级组件帮助类
@@ -58,7 +57,7 @@ public class SubComponentTool {
      * @param componentIds 组件ID集合
      * @return 结果
      */
-    public static DataResult execute(CombineManager combineManager, String key, Map<String, Object> data, List<Object> componentIds) {
-        return combineManager.execute(key, data, new HashMap<>(0), componentIds.stream().map(Object::toString).collect(Collectors.toList()), null);
+    public static DataResult execute(CombineManager combineManager, String key, Map<String, Object> data, String[] componentIds) {
+        return combineManager.execute(key, data, new HashMap<>(0), Arrays.asList(componentIds), null);
     }
 }

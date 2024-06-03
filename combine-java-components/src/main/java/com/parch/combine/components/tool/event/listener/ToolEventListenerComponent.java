@@ -11,6 +11,7 @@ import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.core.component.tools.thread.ThreadPoolConfig;
 import com.parch.combine.core.component.tools.thread.ThreadPoolTool;
 import com.parch.combine.core.component.vo.DataResult;
 
@@ -26,30 +27,11 @@ public class ToolEventListenerComponent extends AbsComponent<ToolEventListenerIn
     }
 
     @Override
-    public List<String> init() {
-        List<String> errorMsg = new ArrayList<>(1);
-        ToolEventListenerLogicConfig logicConfig = getLogicConfig();
-        if (logicConfig.getEventKey() == null) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "事件KEY为空"));
-        }
-
-        // 初始化逻辑中使用的组件
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentTool.init(manager, logicConfig.getComponents());
-            for (String initErrorMsg : initErrorMsgs) {
-                errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
-            }
-        }
-
-        return errorMsg;
-    }
-
-    @Override
     public DataResult execute() {
         try {
             ToolEventListenerLogicConfig logicConfig = getLogicConfig();
-            EventSubjectHandler.subscribe(logicConfig.getEventKey(),
-                    new EventObserver(getInitConfig().getPool().getKey(), logicConfig.getComponents(), manager));
+            EventSubjectHandler.subscribe(logicConfig.eventKey(),
+                    new EventObserver(getInitConfig().pool(), logicConfig.components(), manager));
         } catch (Exception e) {
             ComponentErrorHandler.print(ToolEventListenerErrorEnum.FAIL, e);
             return DataResult.fail(ToolEventListenerErrorEnum.FAIL);
@@ -59,19 +41,19 @@ public class ToolEventListenerComponent extends AbsComponent<ToolEventListenerIn
     }
 
     private static class EventObserver implements IEventObserver {
-        private String poolKey;
-        private List<Object> components;
+        private ThreadPoolConfig pool;
+        private String[] components;
         private CombineManager combineManager;
 
-        public EventObserver(String poolKey, List<Object> components, CombineManager combineManager) {
-            this.poolKey = poolKey;
+        public EventObserver(ThreadPoolConfig pool, String[] components, CombineManager combineManager) {
+            this.pool = pool;
             this.components = components;
             this.combineManager = combineManager;
         }
 
         @Override
         public ExecutorService getPool() {
-            return ThreadPoolTool.getPool(poolKey);
+            return ThreadPoolTool.getPool(pool);
         }
 
         @Override
