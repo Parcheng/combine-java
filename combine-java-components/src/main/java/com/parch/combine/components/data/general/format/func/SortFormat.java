@@ -1,6 +1,5 @@
 package com.parch.combine.components.data.general.format.func;
 
-import com.parch.combine.core.common.canstant.CommonConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.tools.ValueTool;
 
@@ -17,13 +16,13 @@ public class SortFormat implements ICustomFormat {
     private final static String DESC = "desc";
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         return null;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }
@@ -41,12 +40,12 @@ public class SortFormat implements ICustomFormat {
         String[] keys = null;
         boolean isAsc = true;
         if (CheckEmptyUtil.isNotEmpty(params)) {
-            String keyArrStr = params.get(0);
-            if (CheckEmptyUtil.isNotEmpty(keyArrStr) && !keyArrStr.equals(CommonConstant.PLACEHOLDER)) {
+            String keyArrStr = params[0];
+            if (CheckEmptyUtil.isNotEmpty(keyArrStr) && !keyArrStr.equals("-")) {
                 keys = keyArrStr.split(KEY_SEPARATOR);
             }
-            if (params.size() > 1 && CheckEmptyUtil.isNotEmpty(params.get(1))) {
-                isAsc = !DESC.equals(params.get(1).toLowerCase());
+            if (params.length > 1 && CheckEmptyUtil.isNotEmpty(params[1])) {
+                isAsc = !DESC.equals(params[1].toLowerCase());
             }
         }
 

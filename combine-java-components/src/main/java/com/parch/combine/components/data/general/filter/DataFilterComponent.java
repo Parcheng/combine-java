@@ -26,40 +26,10 @@ public class DataFilterComponent extends AbsComponent<DataFilterInitConfig, Data
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        DataFilterLogicConfig logicConfig = getLogicConfig();
-        List<DataFilterLogicConfig.DataFilterItem> items = logicConfig.getItems();
-        if (items != null) {
-            for (int i = 0; i < items.size(); i++) {
-                DataFilterLogicConfig.DataFilterItem item = items.get(i);
-                String baseMsg = "第<" + (i+1) + ">条-";
-                if (CheckEmptyUtil.isEmpty(item.getRule())) {
-                    item.setRule(DataFilterRuleEnum.CLEAR.name());
-                }
-
-                if (CheckEmptyUtil.isEmpty(item.getFieldName())) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "字段名为空"));
-                }
-
-                DataFilterRuleEnum rule = DataFilterRuleEnum.get(item.getRule());
-                if (rule == DataFilterRuleEnum.NONE) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "过滤规则不合规"));
-                }
-                if (rule == DataFilterRuleEnum.REPLACE && (CheckEmptyUtil.isEmpty(item.getFieldName()) || item.getRuleParams().size() < 1)) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "过滤规则参数不合规"));
-                }
-            }
-        }
-
-        return result;
-    }
-
-    @Override
     public DataResult execute() {
         // 数据过滤
         DataFilterLogicConfig logicConfig = getLogicConfig();
-        List<DataFilterLogicConfig.DataFilterItem> items = logicConfig.getItems();
+        DataFilterLogicConfig.DataFilterItem[] items = logicConfig.items();
         if (items != null) {
             for (DataFilterLogicConfig.DataFilterItem item : items) {
                 DataFilterErrorEnum msg = DataFilterHandler.filter(item);
@@ -70,12 +40,12 @@ public class DataFilterComponent extends AbsComponent<DataFilterInitConfig, Data
         }
 
         // 获取其他组件的执行结果（配置了resultId就按该字段去，否则取上一步的执行结果）
-        String resultId = logicConfig.getResultId();
+        String resultId = logicConfig.resultId();
         DataResult result = CheckEmptyUtil.isEmpty(resultId) ? ComponentContextHandler.getLastResultData() : ComponentContextHandler.getResultData(resultId);
         if (result == null) {
             return DataResult.fail(DataFilterErrorEnum.RESULT_ERROR);
         }
-        result.setId(logicConfig.getId());
+        result.setId(logicConfig.id());
         return result;
     }
 }

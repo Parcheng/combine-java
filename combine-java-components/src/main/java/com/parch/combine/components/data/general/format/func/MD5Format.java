@@ -14,12 +14,12 @@ import java.util.List;
 public class MD5Format implements ICustomFormat {
 
     @Override
-    public List<String> check(List<String> params) {
-        return new ArrayList<>();
+    public List<String> check(String[] params) {
+        return null;
     }
 
     @Override
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }

@@ -17,11 +17,10 @@ public class DataVerifyHandler {
      * @return 结果
      */
     public static DataVerifyErrorEnum verify(DataVerifyLogicConfig.DataVerifyItem config, String defaultMsg, List<String> result) {
-        Object configErrorMsg = DataVariableHelper.parseValue(config.getMsg(), false);
-        String errorMsg = (defaultMsg == null ? CheckEmptyUtil.EMPTY : defaultMsg) + (configErrorMsg == null ? CheckEmptyUtil.EMPTY : configErrorMsg.toString());
+        String errorMsg = (defaultMsg == null ? CheckEmptyUtil.EMPTY : defaultMsg) + config.msg();
 
         // 判断条件是否成立
-        boolean isTrue = CompareTool.isPass(config, false);
+        boolean isTrue = CompareTool.isPass(config.compare(), false);
         if (!isTrue) {
             result.add(errorMsg);
         }

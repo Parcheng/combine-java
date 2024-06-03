@@ -12,14 +12,14 @@ import java.util.List;
 public class JSONFormat implements ICustomFormat {
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         List<String> errorMsg = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(params)) {
             errorMsg.add(FormatFuncError.JSON_TYPE_IS_NULL);
             return errorMsg;
         }
 
-        JSONFormatType type = JSONFormatType.get(params.get(0));
+        JSONFormatType type = JSONFormatType.get(params[0]);
         if (type == JSONFormatType.NONE) {
             errorMsg.add(FormatFuncError.UNKNOWN_JSON_TYPE);
         }
@@ -28,13 +28,13 @@ public class JSONFormat implements ICustomFormat {
     }
 
     @Override
-    public Object format(Object sourceValue, List<String> params) {
+    public Object format(Object sourceValue, String[] params) {
         if (sourceValue == null) {
             return null;
         }
 
         // 根据类型调用不同的JSON转换函数
-        JSONFormatType type = JSONFormatType.get(params.get(0));
+        JSONFormatType type = JSONFormatType.get(params[0]);
         switch (type) {
             case TO_JSON:
                 return JsonUtil.serialize(sourceValue);

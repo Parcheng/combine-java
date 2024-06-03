@@ -3,7 +3,7 @@ package com.parch.combine.components.data.general.edit;
 import com.parch.combine.core.component.error.IComponentError;
 
 public enum DataEditErrorEnum implements IComponentError {
-    PARAM_DATA_NOT_OBJECT("参数数据不是结构类型", "数据异常"),
+    PARAM_DATA_ERROR("参数类型错误", "数据异常"),
     SET_KEY_IS_NULL("要设置的 KEY 为空", "数据异常"),
     TYPE_ERROR("数据类型和处理方式不匹配", "数据异常"),
     UNKNOWN_TYPE("未知的处理类型", "数据异常"),

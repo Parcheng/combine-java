@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * 逻辑配置类
- */
 public interface DataCalcLogicConfig extends ILogicConfig {
 
     @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
@@ -27,7 +24,7 @@ public interface DataCalcLogicConfig extends ILogicConfig {
 
     interface DataCalcItem {
 
-        @Field(key = "target", name = "计算结果要写入的数据源（空表示不写入）", type = FieldTypeEnum.TEXT)
+        @Field(key = "target", name = "计算结果要写入的数据源（空表示不写入）", type = FieldTypeEnum.EXPRESSION, parseExpression = false)
         String target();
 
         @Field(key = "mode", name = "计算函数", type = FieldTypeEnum.SELECT, isRequired = true)

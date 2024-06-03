@@ -1,5 +1,6 @@
 package com.parch.combine.components.data.general.create;
 
+import com.parch.combine.components.data.general.DataStructureHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
@@ -83,11 +84,8 @@ public class DataCreateComponent extends AbsComponent<DataCreateInitConfig, Data
                         for (Object param : params) {
                             if (param instanceof Map) {
                                 objectData.putAll((Map<String, Object>) param);
-                            } else if (DataTypeIsUtil.isString(param)
-                                    && param.toString().startsWith(SymbolConstant.LEFT_PARENTHESIS)
-                                    && param.toString().startsWith(SymbolConstant.RIGHT_PARENTHESIS)
-                                    && param.toString().indexOf(SymbolConstant.COLON) > 0) {
-                                String[] paramPath = param.toString().substring(1, param.toString().length() -1).split(SymbolConstant.COLON);
+                            } else if (DataTypeIsUtil.isString(param) && DataStructureHelper.isStructure(param.toString())) {
+                                String[] paramPath = DataStructureHelper.parseStructure(param.toString());
                                 Object key = DataVariableHelper.parseValue(paramPath[0], false);
                                 if (key != null) {
                                     objectData.put(key.toString(), DataVariableHelper.parseValue(paramPath[1], false));

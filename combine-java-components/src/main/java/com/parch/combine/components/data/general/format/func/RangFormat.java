@@ -13,7 +13,7 @@ import java.util.List;
 public class RangFormat implements ICustomFormat {
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         List<String> errorMsg = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(params)) {
             errorMsg.add(FormatFuncError.PARAMS_IS_NULL);
@@ -21,10 +21,10 @@ public class RangFormat implements ICustomFormat {
         }
 
         // 参数是否为数字类型校验
-        if (!DataTypeIsUtil.isInteger(params.get(0))) {
+        if (!DataTypeIsUtil.isInteger(params[0])) {
             errorMsg.add(FormatFuncError.RAND_START_INDEX_IS_NOT_NUMBER);
         }
-        if (params.size() > 1 && !DataTypeIsUtil.isInteger(params.get(1))) {
+        if (params.length > 1 && !DataTypeIsUtil.isInteger(params[1])) {
             errorMsg.add(FormatFuncError.RAND_END_INDEX_IS_NOT_NUMBER);
         }
 
@@ -32,19 +32,19 @@ public class RangFormat implements ICustomFormat {
     }
 
     @Override
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }
 
-        int startIndex = Integer.parseInt(params.get(0));
+        int startIndex = Integer.parseInt(params[0]);
         if (sourceValue instanceof String) {
             String data = (String) sourceValue;
-            int endIndex = params.size() > 1 ? Integer.parseInt(params.get(1)) : data.length();
+            int endIndex = params.length > 1 ? Integer.parseInt(params[1]) : data.length();
             return data.substring(startIndex, endIndex);
         } else if (sourceValue instanceof List) {
             List<?> dataList = (List<?>) sourceValue;
-            int endIndex = params.size() > 1 ? Integer.parseInt(params.get(1)) : dataList.size();
+            int endIndex = params.length > 1 ? Integer.parseInt(params[1]) : dataList.size();
             return dataList.subList(startIndex, endIndex);
         } else {
             throw new Exception(FormatFuncError.DATA_TYPE_ERROR);

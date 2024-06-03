@@ -3,6 +3,7 @@ package com.parch.combine.components.data.general.reset;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
+import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 
 
 import java.util.Collection;
@@ -52,7 +53,7 @@ public class DataResetHandler {
      * @return 结果
      */
     public static DataResetErrorEnum reset(DataResetLogicConfig.DataResetConfig config, boolean nullValue) {
-        Object value = DataVariableHelper.parseValue(config.getValue(), false);
+        Object value = config.value();
 
         Object newValue = null;
         if (value == null) {
@@ -60,7 +61,7 @@ public class DataResetHandler {
                 return DataResetErrorEnum.NEW_VALUE_IS_NULL;
             }
         } else {
-            DataTypeEnum dataType = DataTypeEnum.get(config.getType());
+            DataTypeEnum dataType = DataTypeEnum.get(config.type());
             switch (dataType) {
                 case NUMBER:
                     newValue = DataParseUtil.parseNumber(value.toString());
@@ -94,7 +95,7 @@ public class DataResetHandler {
         }
 
         // 设置新值
-        boolean success = DataVariableHelper.replaceValue(config.getFieldName(), newValue, false);
+        boolean success = DataVariableHelper.replaceValue(config.target(), newValue, false);
         if (!success) {
             return DataResetErrorEnum.FAIL;
         }

@@ -25,12 +25,12 @@ public enum DataTypeEnum implements IOptionSetting {
         this.isValid = isValid;
     }
 
-    public static DataTypeEnum get(String sqlType) {
-        if (CheckEmptyUtil.isEmpty(sqlType)) {
+    public static DataTypeEnum get(String type) {
+        if (CheckEmptyUtil.isEmpty(type)) {
             return NONE;
         }
         for (DataTypeEnum value : DataTypeEnum.values()) {
-            if (value.toString().equals(sqlType.toUpperCase())) {
+            if (value.toString().equals(type.toUpperCase())) {
                 return value;
             }
         }

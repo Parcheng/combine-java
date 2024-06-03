@@ -2,6 +2,7 @@ package com.parch.combine.core.component.base.proxy;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
@@ -16,6 +17,7 @@ import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.CombineInitVO;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.*;
@@ -43,91 +45,112 @@ public class ConfigHandler {
      */
     public static List<String> check(Class<?> config) {
         List<String> errorMsg = new ArrayList<>();
-
+//        if (!config.isInterface()) {
+//            java.lang.reflect.Field[] fields = config.getFields();
+//            for (AnnotatedElement item : fields) {
+//                CheckField(item, errorMsg);
+//            }
+//        }
+        // TODO 父亲方法（字段不用检查，但要在sETTING中添加）
         Method[] methods = config.getMethods();
-        for (Method method : methods) {
-            Field field = method.getAnnotation(Field.class);
-            if (field == null) {
-                continue;
-            }
-
-            Class<?> typeClass = method.getReturnType();
-            if (field.isArray()) {
-                if (typeClass.isArray()) {
-                    typeClass = typeClass.getComponentType();
-                } else {
-                    errorMsg.add(field.key() + "-被设置为数组，请使用数组类型");
-                    continue;
-                }
-            }
-
-            FieldTypeEnum type = field.type();
-            switch (type) {
-                case ID:
-                    if (typeClass != String.class) {
-                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用字符串类型");
-                    }
-                    break;
-                case BOOLEAN:
-                    if (typeClass != Boolean.class) {
-                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用布尔类型");
-                    }
-                    break;
-                case NUMBER:
-                    if (!typeClass.isAssignableFrom(Number.class)) {
-                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用数字类型");
-                    }
-                    break;
-                case SELECT:
-                    if (typeClass != String.class) {
-                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用字符串类型");
-                    }
-                case MAP:
-                    if (typeClass != Map.class) {
-                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用Map类型");
-                    }
-                    break;
-                case CONFIG:
-                    FieldObject fieldConfig = method.getAnnotation(FieldObject.class);
-                    if (fieldConfig == null) {
-                        errorMsg.add(field.key() + "-的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类");
-                    } else {
-                        if (typeClass.isAssignableFrom(fieldConfig.value())) {
-                            errorMsg.add(field.key() + "-的类型配置定义与 FieldObject 注解配置不一致");
-                        }
-                        List<String> subErrors = ConfigHandler.check(fieldConfig.value());
-                        for (String subError : subErrors) {
-                            errorMsg.add(field.key() + "-" + subError);
-                        }
-                    }
-                    break;
-                case OBJECT:
-                    fieldConfig = method.getAnnotation(FieldObject.class);
-                    if (fieldConfig == null) {
-                        errorMsg.add(field.key() + "-的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类");
-                    }
-                    break;
-                case COMPONENT:
-                    if (typeClass != List.class) {
-                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用字符串 List 类型");
-                    }
-                    break;
-                case EXPRESSION:
-                    if (!field.parseExpression()) {
-                        errorMsg.add(field.key() + "-表达式类型的字段, Field 注解的 parseExpression 配置必须为 true");
-                    }
-                case ANY:
-                    if (typeClass != Object.class) {
-                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用 Object 类型");
-                    }
-                    break;
-                default:
-                    errorMsg.add(field.key() + "-不支持该类型配置定义");
-                    break;
-            }
+        for (AnnotatedElement item : methods) {
+            CheckField(item, errorMsg);
         }
 
         return errorMsg;
+    }
+
+    private static void CheckField(AnnotatedElement item, List<String> errorMsg) {
+        Field field = item.getAnnotation(Field.class);
+        if (field == null) {
+            return;
+        }
+
+        Class<?> typeClass = item instanceof Method ? ((Method) item).getReturnType() : ((java.lang.reflect.Field) item).getType();
+        if (field.isArray()) {
+            if (typeClass.isArray()) {
+                typeClass = typeClass.getComponentType();
+            } else {
+                errorMsg.add(field.key() + "-被设置为数组，请使用数组类型");
+                return;
+            }
+        }
+
+        FieldTypeEnum type = field.type();
+        switch (type) {
+            case ID:
+                if (typeClass != String.class) {
+                    errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用字符串类型");
+                }
+                break;
+            case BOOLEAN:
+                if (typeClass != Boolean.class) {
+                    errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用布尔类型");
+                }
+                break;
+            case NUMBER:
+                if (!typeClass.isAssignableFrom(Number.class)) {
+                    errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用数字类型");
+                }
+                break;
+            case SELECT:
+                FieldSelect fieldSelect = item.getAnnotation(FieldSelect.class);
+                if (fieldSelect == null) {
+                    errorMsg.add(field.key() + "-的类型配置定义缺少配置，请使用 FieldSelect 注解指定配置类");
+                }
+                if (typeClass != String.class) {
+                    errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用字符串类型");
+                }
+            case MAP:
+                if (typeClass != Map.class) {
+                    errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用Map类型");
+                }
+                break;
+            case CONFIG:
+                FieldObject fieldConfig = item.getAnnotation(FieldObject.class);
+                if (fieldConfig == null) {
+                    errorMsg.add(field.key() + "-的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类");
+                } else {
+                    if (typeClass.isAssignableFrom(fieldConfig.value())) {
+                        errorMsg.add(field.key() + "-的类型配置定义与 FieldObject 注解配置不一致");
+                    }
+                    List<String> subErrors = ConfigHandler.check(fieldConfig.value());
+                    for (String subError : subErrors) {
+                        errorMsg.add(field.key() + "-" + subError);
+                    }
+                }
+                break;
+            case OBJECT:
+                fieldConfig = item.getAnnotation(FieldObject.class);
+                if (fieldConfig == null) {
+                    errorMsg.add(field.key() + "-的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类");
+                }
+                break;
+            case COMPONENT:
+                if (typeClass != List.class) {
+                    errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用字符串 List 类型");
+                }
+                break;
+            case EXPRESSION:
+                if (field.parseExpression()) {
+                    if (typeClass != Object.class) {
+                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用 Object 类型");
+                    }
+                } else {
+                    if (typeClass != String.class) {
+                        errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，不自动解析表达式时，请使用字符串类型");
+                    }
+                }
+                break;
+            case ANY:
+                if (typeClass != Object.class) {
+                    errorMsg.add(field.key() + "-的类型配置定义与方法返回值不匹配，请使用 Object 类型");
+                }
+                break;
+            default:
+                errorMsg.add(field.key() + "-不支持该类型配置定义");
+                break;
+        }
     }
 
     /**

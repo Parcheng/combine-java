@@ -15,7 +15,7 @@ public interface ICustomFormat {
      * @param params 参数集合
      * @return 错误信息集合
      */
-    List<String> check(List<String> params);
+    List<String> check(String[] params);
 
     /**
      * 自定义格式转换
@@ -24,5 +24,5 @@ public interface ICustomFormat {
      * @param params 配置参数集合
      * @return 新值
      */
-    Object format(Object sourceValue, List<String> params) throws Exception;
+    Object format(Object sourceValue, String[] params) throws Exception;
 }
