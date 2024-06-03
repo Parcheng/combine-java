@@ -1,15 +1,8 @@
 package com.parch.combine.components.file.input.upload;
 
-import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.common.settings.annotations.Invalid;
+import com.parch.combine.core.component.base.IInitConfig;
 
-/**
- * 文件解析初始化配置类
- */
 @Invalid
-public class FileInputUploadInitConfig extends IInitConfig {
-
-    @Override
-    public void init() {}
-
+public interface FileInputUploadInitConfig extends IInitConfig {
 }

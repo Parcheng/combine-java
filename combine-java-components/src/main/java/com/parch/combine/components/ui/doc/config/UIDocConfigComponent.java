@@ -8,8 +8,6 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.ui.vo.GlobalConfigVO;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +15,7 @@ import java.util.List;
 @ComponentResult(name = "UI设置API")
 public class UIDocConfigComponent extends AbsComponent<UIDocConfigInitConfig, UIDocConfigLogicConfig> {
 
-    private List<HashMap> result;
+    private static List<HashMap> result;
 
     /**
      * 构造器
@@ -26,17 +24,18 @@ public class UIDocConfigComponent extends AbsComponent<UIDocConfigInitConfig, UI
         super(UIDocConfigInitConfig.class, UIDocConfigLogicConfig.class);
     }
 
-
-    @Override
-    public List<String> init(){
-        List<PropertySetting> properties = PropertySettingBuilder.build("global", GlobalConfigVO.class);
-        String json = JsonUtil.serialize(properties);
-        result = JsonUtil.parseArray(json, HashMap.class);
-        return new ArrayList<>();
-    }
-
     @Override
     public DataResult execute() {
+        if (result == null) {
+            synchronized (UIDocConfigComponent.class) {
+                if (result == null) {
+                    List<PropertySetting> properties = PropertySettingBuilder.build("global", GlobalConfigVO.class);
+                    String json = JsonUtil.serialize(properties);
+                    result = JsonUtil.parseArray(json, HashMap.class);
+                }
+            }
+        }
+
         return DataResult.success(result);
     }
 }

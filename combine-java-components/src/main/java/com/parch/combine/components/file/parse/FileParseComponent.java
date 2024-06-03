@@ -5,6 +5,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.components.file.FilePostfixEnum;
 import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.IComponentError;
@@ -25,12 +26,6 @@ public abstract class FileParseComponent<T extends IInitConfig, R extends FilePa
 
     protected List<String> fileTypes = new ArrayList<>(1);
 
-    /**
-     * 构造器
-     *
-     * @param initConfigClass  初始化配置类Class对象
-     * @param logicConfigClass 业务配置类Class对象
-     */
     public FileParseComponent(Class<T> initConfigClass, Class<R> logicConfigClass, FilePostfixEnum fileType, FilePostfixEnum ... fileTypes) {
         super(initConfigClass, logicConfigClass);
 
@@ -47,7 +42,9 @@ public abstract class FileParseComponent<T extends IInitConfig, R extends FilePa
 
         // 根据Source获取文件信息（Source为空表示从接口上传文件）
         FileParseLogicConfig readLogicConfig = getLogicConfig();
-        if (CheckEmptyUtil.isEmpty(readLogicConfig.getSource())) {
+
+        Object data = readLogicConfig.source();
+        if (data == null) {
             Map<String, Object> params = ComponentContextHandler.getParams();
             Object fileInfoObj = params.get(FileParamKey.FILE_OBJ_KEY);
 
@@ -64,9 +61,8 @@ public abstract class FileParseComponent<T extends IInitConfig, R extends FilePa
                 }
             }
         } else {
-            Object fileInfoObj = DataVariableHelper.parseValue(readLogicConfig.getSource(), true);
-            if (fileInfoObj instanceof FileInfo) {
-                fileInfo = (FileInfo) fileInfoObj;
+            if (data instanceof FileInfo) {
+                fileInfo = (FileInfo) data;
             }
         }
 

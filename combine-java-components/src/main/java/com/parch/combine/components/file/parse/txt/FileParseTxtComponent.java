@@ -15,9 +15,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 文件读取组件
- */
 @Component(order = 500, key = "parse.txt", name = "解析文本文件数据组件", logicConfigClass = FileParseTxtLogicConfig.class, initConfigClass = FileParseTxtInitConfig.class)
 @ComponentResult(name = "文本行集合")
 public class FileParseTxtComponent extends FileParseComponent<FileParseTxtInitConfig, FileParseTxtLogicConfig> {
@@ -27,11 +24,6 @@ public class FileParseTxtComponent extends FileParseComponent<FileParseTxtInitCo
      */
     public FileParseTxtComponent() {
         super(FileParseTxtInitConfig.class, FileParseTxtLogicConfig.class, FilePostfixEnum.TXT);
-    }
-
-    @Override
-    public List<String> init() {
-        return null;
     }
 
     @Override

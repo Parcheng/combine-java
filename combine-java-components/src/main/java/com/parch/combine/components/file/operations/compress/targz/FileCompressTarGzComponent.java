@@ -26,9 +26,6 @@ import java.util.List;
 @ComponentResult(name = "true 或抛出异常信息")
 public class FileCompressTarGzComponent extends AbsFileCompressComponent<FileCompressTarGzInitConfig, FileCompressTarGzLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public FileCompressTarGzComponent() {
         super(FileCompressTarGzInitConfig.class, FileCompressTarGzLogicConfig.class, FileCompressTypeEnum.ZIP);
     }

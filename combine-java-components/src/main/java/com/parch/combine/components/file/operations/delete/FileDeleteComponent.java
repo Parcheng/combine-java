@@ -18,37 +18,22 @@ import java.util.List;
 @ComponentResult(name = "被删除文件数量")
 public class FileDeleteComponent extends AbsComponent<FileDeleteInitConfig, FileDeleteLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public FileDeleteComponent() {
         super(FileDeleteInitConfig.class, FileDeleteLogicConfig.class);
     }
-
-    @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        FileDeleteLogicConfig logicConfig = getLogicConfig();
-        if (CheckEmptyUtil.isEmpty(logicConfig.getSource())) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "源路径不能为空"));
-        }
-
-        return result;
-    }
-
 
     @Override
     protected DataResult execute() {
         FileDeleteInitConfig initConfig = getInitConfig();
         FileDeleteLogicConfig logicConfig = getLogicConfig();
 
-        Object sourcePath = DataVariableHelper.parseValue(logicConfig.getSource(), false);
+        String sourcePath = logicConfig.source();
         if (sourcePath == null) {
             ComponentErrorHandler.print(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
             return DataResult.fail(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
         }
 
-        File source = new File(FilePathHelper.getFinalPath(initConfig.getUseSystemDir(), initConfig.getDir(), sourcePath.toString()));
+        File source = new File(FilePathHelper.getFinalPath(initConfig.useSystemDir(), initConfig.dir(), sourcePath));
         if (!source.exists()) {
             ComponentErrorHandler.print(FileDeleteErrorEnum.FILE_NOT_EXIST);
             return DataResult.fail(FileDeleteErrorEnum.FILE_NOT_EXIST);

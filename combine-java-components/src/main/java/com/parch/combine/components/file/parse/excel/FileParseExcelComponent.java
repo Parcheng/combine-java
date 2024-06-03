@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 文件读取组件
- */
 @Component(order = 500, key = "parse.excel", name = "解析表格文件数据组件", logicConfigClass = FileParseExcelLogicConfig.class, initConfigClass = FileParseExcelInitConfig.class)
 @ComponentDesc("依赖 poi 和 poi-ooxml，推荐版本 4.1.2")
 @ComponentResult(name = "表格数据矩阵（二维数组）")
@@ -34,11 +31,6 @@ public class FileParseExcelComponent extends FileParseComponent<FileParseExcelIn
      */
     public FileParseExcelComponent() {
         super(FileParseExcelInitConfig.class, FileParseExcelLogicConfig.class, FilePostfixEnum.XLS, FilePostfixEnum.XLSX);
-    }
-
-    @Override
-    public List<String> init() {
-        return null;
     }
 
     @Override

@@ -18,9 +18,6 @@ import java.util.zip.ZipOutputStream;
 @ComponentResult(name = "true 或抛出异常信息")
 public class FileCompressZipComponent extends AbsFileCompressComponent<FileCompressZipInitConfig, FileCompressZipLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public FileCompressZipComponent() {
         super(FileCompressZipInitConfig.class, FileCompressZipLogicConfig.class, FileCompressTypeEnum.ZIP);
     }
