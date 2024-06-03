@@ -17,27 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 运算组件
- */
 @Component(key = "receive", name = "邮件收取组件", logicConfigClass = MailReceiveLogicConfig.class, initConfigClass = MailReceiveInitConfig.class)
 @ComponentDesc("依赖 mail，推荐版本 1.4.7")
 @ComponentResult(name = "获取的邮件列表")
 public class MailReceiveComponent extends AbsMailComponent<MailReceiveInitConfig, MailReceiveLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public MailReceiveComponent() {
         super(MailReceiveInitConfig.class, MailReceiveLogicConfig.class);
-    }
-
-
-    @Override
-    protected List<String> checkMailConfig() {
-        MailReceiveLogicConfig logicConfig = getLogicConfig();
-        List<String> errorMsg = new ArrayList<>();
-        return errorMsg;
     }
 
     @Override
