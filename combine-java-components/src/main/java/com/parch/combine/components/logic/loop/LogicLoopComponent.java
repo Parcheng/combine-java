@@ -1,22 +1,15 @@
 package com.parch.combine.components.logic.loop;
 
 import com.parch.combine.core.common.canstant.SymbolConstant;
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
-
 import com.parch.combine.core.component.vo.DataResult;
-
 import java.util.*;
 
-/**
- * 逻辑判断组件
- */
 @Component(key = "loop", name = "逻辑循环组件", logicConfigClass = LogicLoopLogicConfig.class, initConfigClass = LogicLoopInitConfig.class)
 @ComponentResult(name = "逻辑循环执行")
 public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicLoopLogicConfig> {
@@ -24,35 +17,8 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
     private final static String INDEX_FILED = "$index";
     private final static String ITEM_FILED = "$item";
 
-    /**
-     * 构造器
-     */
     public LogicLoopComponent() {
         super(LogicLoopInitConfig.class, LogicLoopLogicConfig.class);
-    }
-
-
-    @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        LogicLoopLogicConfig logicConfig = getLogicConfig();
-
-        // 循环次数判断
-        if (CheckEmptyUtil.isEmpty(logicConfig.getSource()) && logicConfig.getCount() == null) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "循环次数未定义"));
-        } else if (logicConfig.getCount() != null && logicConfig.getCount() < 0) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "循环次数不能小于0"));
-        }
-
-        // 初始化循环中使用的组件
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentTool.init(manager, logicConfig.getComponents());
-            for (String initErrorMsg : initErrorMsgs) {
-                result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
-            }
-        }
-
-        return result;
     }
 
     @Override
@@ -60,9 +26,11 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
         LogicLoopLogicConfig logicConfig = getLogicConfig();
 
         Collection<?> list = null;
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getSource())) {
+        Object data = logicConfig.source();
+        Integer count = logicConfig.count();
+
+        if (data != null) {
             // 验证数据类型
-            Object data = DataVariableHelper.parseValue(logicConfig.getSource(), true);
             if (!(data instanceof Collection)) {
                 return DataResult.fail(LogicLoopErrorEnum.DATA_ERROR);
             }
@@ -72,19 +40,19 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
 
             // 重新设置遍历次数，防止下标越界
             int dataSize = list.size();
-            if (logicConfig.getCount() == null || logicConfig.getCount() > dataSize) {
-                logicConfig.setCount(dataSize);
+            if (count == null || count > dataSize) {
+                count = dataSize;
             }
         }
 
         // 设置循环中变量
-        String variableKey = SymbolConstant.DOLLAR_SIGN + logicConfig.getId();
+        String variableKey = SymbolConstant.DOLLAR_SIGN + logicConfig.id();
         Map<String, Object> variable = new HashMap<>();
         ComponentContextHandler.getVariables().put(variableKey, variable);
 
         int loopedCont = 0;
         Iterator<?> iterator = list == null ? null : list.iterator();
-        for (int i = 0; i < logicConfig.getCount(); i++) {
+        for (int i = 0; i < count; i++) {
             // 设置循环中数据
             variable.put(INDEX_FILED, i);
             if (iterator != null) {
@@ -94,22 +62,22 @@ public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicL
             loopedCont++;
 
             // 条件判断
-            if (logicConfig.getCondition() != null) {
-                LogicLoopLogicConfig.LoopConditionConfig loopCondition = logicConfig.getCondition();
+            LogicLoopLogicConfig.LoopConditionConfig loopCondition = logicConfig.condition();
+            if (loopCondition != null) {
                 // 判断是否需要跳过当前循环
-                if (CompareTool.isPass(loopCondition.getSkip(), false)) {
+                if (CompareTool.isPass(loopCondition.skip(), false)) {
                     continue;
                 }
 
                 // 判断是否停止循环
-                if (CompareTool.isPass(loopCondition.getFinish(), false)) {
+                if (CompareTool.isPass(loopCondition.finish(), false)) {
                     break;
                 }
             }
 
             // 执行组件逻辑
-            DataResult result = SubComponentTool.execute(manager, logicConfig.getComponents());
-            if (logicConfig.getFailStop() && !result.getSuccess()) {
+            DataResult result = SubComponentTool.execute(manager, logicConfig.components());
+            if (logicConfig.failStop() && !result.getSuccess()) {
                 return DataResult.fail(result.getErrMsg(), result.getShowMsg());
             }
         }
