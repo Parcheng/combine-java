@@ -1,12 +1,11 @@
 package com.parch.combine.core.component.tools.thread;
 
-import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
-public class ThreadPoolConfig implements IInit {
+public class ThreadPoolConfig {
 
     @Field(key = "key", name = "线程池KEY", type = FieldTypeEnum.TEXT, defaultValue = "global")
     @FieldDesc("用于指定使用的线程池，默认使用全局线程池")
@@ -24,28 +23,8 @@ public class ThreadPoolConfig implements IInit {
     @Field(key = "queueCapacity", name = "缓存队列容量", type = FieldTypeEnum.NUMBER, defaultValue = "20")
     private Integer queueCapacity;
 
-    @Override
-    public void init() {
-        if (CheckEmptyUtil.isEmpty(this.key)) {
-            this.key = "global";
-        }
-        if (this.getCorePoolSize() == null) {
-            this.setCorePoolSize(5);
-        }
-        if (this.getMaxPoolSize() == null) {
-            this.setMaxPoolSize(20);
-        }
-        if (this.getKeepAliveTime() == null) {
-            this.setKeepAliveTime(5000L);
-        }
-        if (this.getQueueCapacity() == null) {
-            this.setQueueCapacity(20);
-        }
-        ThreadPoolTool.register(this);
-    }
-
     public Integer getCorePoolSize() {
-        return corePoolSize;
+        return corePoolSize == null ? 5 : corePoolSize;
     }
 
     public void setCorePoolSize(Integer corePoolSize) {
@@ -53,7 +32,7 @@ public class ThreadPoolConfig implements IInit {
     }
 
     public Integer getMaxPoolSize() {
-        return maxPoolSize;
+        return maxPoolSize == null ? 20 : maxPoolSize;
     }
 
     public void setMaxPoolSize(Integer maxPoolSize) {
@@ -61,7 +40,7 @@ public class ThreadPoolConfig implements IInit {
     }
 
     public Long getKeepAliveTime() {
-        return keepAliveTime;
+        return keepAliveTime == null ? 5000L : keepAliveTime;
     }
 
     public void setKeepAliveTime(Long keepAliveTime) {
@@ -69,7 +48,7 @@ public class ThreadPoolConfig implements IInit {
     }
 
     public Integer getQueueCapacity() {
-        return queueCapacity;
+        return queueCapacity == null ? 20 : queueCapacity;
     }
 
     public void setQueueCapacity(Integer queueCapacity) {
@@ -77,7 +56,7 @@ public class ThreadPoolConfig implements IInit {
     }
 
     public String getKey() {
-        return key;
+        return CheckEmptyUtil.isEmpty(this.key) ? "global" : key;
     }
 
     public void setKey(String key) {
