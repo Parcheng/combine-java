@@ -23,7 +23,7 @@ public class PaginationElementConfig extends ElementConfig<PaginationElementTemp
     @Field(key = "maxLength", name = "可选页最大长度", type = FieldTypeEnum.TEXT, defaultValue = "10")
     private Integer maxLength = 10;
 
-    @Field(key = "triggers", name = "选页触发配置", type = FieldTypeEnum.ANY, isArray = true)
+    @Field(key = "triggers", name = "选页触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
     @Trigger
     private Object triggers;

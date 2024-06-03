@@ -9,11 +9,11 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class InputElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "addon", name = "文本插件DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "addon", name = "文本插件DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig addon;
 
-    @Field(key = "input", name = "文本输入框DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "input", name = "文本输入框DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig input;
 

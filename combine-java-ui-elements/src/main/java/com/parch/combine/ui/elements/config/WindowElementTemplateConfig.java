@@ -9,23 +9,23 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class WindowElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "window", name = "窗口DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "window", name = "窗口DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig window;
 
-    @Field(key = "head", name = "窗口标题DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "head", name = "窗口标题DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig head;
 
-    @Field(key = "headTitle", name = "窗口标题文本DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "headTitle", name = "窗口标题文本DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig headTitle;
 
-    @Field(key = "headClose", name = "窗口标题关闭标识DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "headClose", name = "窗口标题关闭标识DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig headClose;
 
-    @Field(key = "body", name = "窗口内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "body", name = "窗口内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig body;
 

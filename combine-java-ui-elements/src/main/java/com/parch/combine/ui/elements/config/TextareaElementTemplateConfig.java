@@ -9,7 +9,7 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class TextareaElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "textarea", name = "多行文本框DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "textarea", name = "多行文本框DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig textarea;
 

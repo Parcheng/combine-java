@@ -9,35 +9,35 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class FromElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "from", name = "表单DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "from", name = "表单DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig from;
 
-    @Field(key = "item", name = "表单项DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "item", name = "表单项DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig item;
 
-    @Field(key = "left", name = "左侧标签DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "left", name = "左侧标签DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig left;
 
-    @Field(key = "requestFlag", name = "必填标识DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "requestFlag", name = "必填标识DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig requestFlag;
 
-    @Field(key = "right", name = "右侧DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "right", name = "右侧DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig right;
 
-    @Field(key = "rightContent", name = "右侧内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "rightContent", name = "右侧内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig rightContent;
 
-    @Field(key = "rightDesc", name = "右侧内容描述DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "rightDesc", name = "右侧内容描述DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig rightDesc;
 
-    @Field(key = "rightError", name = "右侧内容错误信息DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "rightError", name = "右侧内容错误信息DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig rightError;
 

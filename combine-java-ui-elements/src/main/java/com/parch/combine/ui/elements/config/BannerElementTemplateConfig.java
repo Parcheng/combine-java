@@ -9,15 +9,15 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class BannerElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "close", name = "关闭标识DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "close", name = "关闭标识DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig close;
 
-    @Field(key = "img", name = "图片内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "img", name = "图片内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig img;
 
-    @Field(key = "text", name = "文本内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "text", name = "文本内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig text;
 

@@ -9,35 +9,35 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class TitleElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "h1", name = "级别一标题DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "h1", name = "级别一标题DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig h1;
 
-    @Field(key = "h2", name = "级别二标题DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "h2", name = "级别二标题DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig h2;
 
-    @Field(key = "h3", name = "级别三标题DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "h3", name = "级别三标题DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig h3;
 
-    @Field(key = "h4", name = "级别四标题DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "h4", name = "级别四标题DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig h4;
 
-    @Field(key = "h5", name = "级别五标题DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "h5", name = "级别五标题DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig h5;
 
-    @Field(key = "h6", name = "级别六标题DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "h6", name = "级别六标题DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig h6;
 
-    @Field(key = "top", name = "上分割线DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "top", name = "上分割线DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig top;
 
-    @Field(key = "bottom", name = "下分割线DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "bottom", name = "下分割线DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig bottom;
 

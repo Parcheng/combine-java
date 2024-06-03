@@ -28,11 +28,11 @@ public class SelectElementConfig extends ElementConfig<SelectElementTemplateConf
     @Field(key = "defaultValue", name = "默认选择的值", type = FieldTypeEnum.TEXT)
     private String defaultValue;
 
-    @Field(key = "option", name = "下拉项配置", type = FieldTypeEnum.ANY)
-    @FieldObject(type = OptionElementConfig.class)
+    @Field(key = "option", name = "下拉项配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(OptionElementConfig.class)
     private OptionElementConfig option;
 
-    @Field(key = "triggers", name = "下拉框触发配置（用于实现多级联动，暂未不支持使用）", type = FieldTypeEnum.ANY, isArray = true)
+    @Field(key = "triggers", name = "下拉框触发配置（用于实现多级联动，暂未不支持使用）", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
     @Trigger
     private Object triggers;

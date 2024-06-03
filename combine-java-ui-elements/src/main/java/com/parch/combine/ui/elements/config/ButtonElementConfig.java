@@ -16,8 +16,8 @@ import java.util.List;
 @PageElement(key = "button", name = "按钮组元素", templateClass = ButtonElementTemplateConfig.class)
 public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConfig> {
 
-    @Field(key = "items", name = "按钮配置集合", type = FieldTypeEnum.ANY, isArray = true)
-    @FieldObject(type = ButtonItemSettings.class)
+    @Field(key = "items", name = "按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(ButtonItemSettings.class)
     private List<ButtonItemSettings> items;
 
     public ButtonElementConfig() {
@@ -28,13 +28,13 @@ public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConf
     @SubConfig
     public static class ButtonItemSettings {
 
-        @Field(key = "type", name = "按钮样式类型（要与与模板一致）", type = FieldTypeEnum.ANY, isArray = true)
+        @Field(key = "type", name = "按钮样式类型（要与与模板一致）", type = FieldTypeEnum.OBJECT, isArray = true)
         private String type;
 
         @Field(key = "size", name = "按钮大小（可选值1-4）", type = FieldTypeEnum.NUMBER, isArray = true)
         private Integer size;
 
-        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.ANY, isArray = true)
+        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.OBJECT, isArray = true)
         private String text;
 
         @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.TRIGGER, isArray = true)

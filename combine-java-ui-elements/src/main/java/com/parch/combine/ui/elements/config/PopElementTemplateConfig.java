@@ -9,15 +9,15 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class PopElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "pop", name = "泡泡窗DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "pop", name = "泡泡窗DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig pop;
 
-    @Field(key = "content", name = "泡泡窗内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "content", name = "泡泡窗内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig content;
 
-    @Field(key = "close", name = "泡泡窗关闭标识DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "close", name = "泡泡窗关闭标识DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig close;
 

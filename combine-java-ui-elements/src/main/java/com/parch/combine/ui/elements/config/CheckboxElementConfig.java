@@ -27,8 +27,8 @@ public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplate
     @Field(key = "disabled", name = "是否禁选", type = FieldTypeEnum.BOOLEAN)
     private Boolean disabled;
 
-    @Field(key = "option", name = "多选项配置", type = FieldTypeEnum.ANY, isRequired = true)
-    @FieldObject(type = OptionElementConfig.class)
+    @Field(key = "option", name = "多选项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @FieldObject(OptionElementConfig.class)
     private OptionElementConfig option;
 
     @Field(key = "triggers", name = "多选框触发配置（用于实现多级联动，暂未不支持使用", type = FieldTypeEnum.TRIGGER, isArray = true)

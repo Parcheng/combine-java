@@ -9,23 +9,23 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class PageTurningElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "pageTurning", name = "DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "pageTurning", name = "DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig pageTurning;
 
-    @Field(key = "last", name = "向前翻页元素DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "last", name = "向前翻页元素DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig last;
 
-    @Field(key = "next", name = "向后翻页元素DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "next", name = "向后翻页元素DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig next;
 
-    @Field(key = "lastContent", name = "向前翻页文本内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "lastContent", name = "向前翻页文本内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig lastContent;
 
-    @Field(key = "nextContent", name = "向后翻页文本内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "nextContent", name = "向后翻页文本内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig nextContent;
 

@@ -16,8 +16,8 @@ public class TextElementConfig extends ElementConfig<TextElementTemplateConfig> 
     @Field(key = "retract", name = "缩进数", type = FieldTypeEnum.NUMBER)
     private Integer retract;
 
-    @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.ANY, isRequired = true, isArray = true)
-    @FieldObject(type = TextLineSettings.class)
+    @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @FieldObject(TextLineSettings.class)
     private List<TextLineSettings> lines;
 
     @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT)
@@ -54,7 +54,7 @@ public class TextElementConfig extends ElementConfig<TextElementTemplateConfig> 
         @Field(key = "separator", name = "行数据为多条文本时的分隔符", type = FieldTypeEnum.TEXT, defaultValue = "<br/>")
         private String separator;
 
-        @Field(key = "children", name = "子文本数据配置，配置项同该级相同", type = FieldTypeEnum.ANY)
+        @Field(key = "children", name = "子文本数据配置，配置项同该级相同", type = FieldTypeEnum.OBJECT)
         private TextElementConfig children;
 
         public String getTitle() {

@@ -12,19 +12,19 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
  */
 public class BreadcrumbElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "breadcrumb", name = "面包削DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "breadcrumb", name = "面包削DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig breadcrumb;
 
-    @Field(key = "itemActive", name = "选中元素项DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "itemActive", name = "选中元素项DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig itemActive;
 
-    @Field(key = "content", name = "元素项内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "content", name = "元素项内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig content;
 
-    @Field(key = "item", name = "元素项DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "item", name = "元素项DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig item;
 

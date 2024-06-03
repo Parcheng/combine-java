@@ -9,19 +9,19 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class AudioElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "audio", name = "音频DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "audio", name = "音频DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig audio;
 
-    @Field(key = "mp3", name = "mp3格式音频DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "mp3", name = "mp3格式音频DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig mp3;
 
-    @Field(key = "ogg", name = "ogg格式音频DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "ogg", name = "ogg格式音频DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig ogg;
 
-    @Field(key = "content", name = "不兼容展示的内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "content", name = "不兼容展示的内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig content;
 

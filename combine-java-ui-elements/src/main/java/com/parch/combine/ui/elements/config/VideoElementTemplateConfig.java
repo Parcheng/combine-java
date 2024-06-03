@@ -9,23 +9,23 @@ import com.parch.combine.core.ui.settings.PageSettingCanstant;
 
 public class VideoElementTemplateConfig extends ElementTemplateConfig {
 
-    @Field(key = "video", name = "视频DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "video", name = "视频DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig video;
 
-    @Field(key = "mp4", name = "mp4格式视频DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "mp4", name = "mp4格式视频DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig mp4;
 
-    @Field(key = "ogg", name = "ogg格式视频DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "ogg", name = "ogg格式视频DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig ogg;
 
-    @Field(key = "webm", name = "webm格式视频DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "webm", name = "webm格式视频DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig webm;
 
-    @Field(key = "content", name = "不兼容展示的内容DOM配置", type = FieldTypeEnum.ANY)
+    @Field(key = "content", name = "不兼容展示的内容DOM配置", type = FieldTypeEnum.OBJECT)
     @FieldRef(key = PageSettingCanstant.DOM_KEY)
     private DomConfig content;
 

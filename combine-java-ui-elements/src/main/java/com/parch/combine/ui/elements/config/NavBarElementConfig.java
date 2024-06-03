@@ -25,15 +25,15 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     @Field(key = "defaultChecked", name = "默认选择项索引（从0开始）", type = FieldTypeEnum.NUMBER)
     private Integer defaultChecked;
 
-    @Field(key = "nav", name = "导航项配置", type = FieldTypeEnum.ANY, isRequired = true)
-    @FieldObject(type = NavSettings.class)
+    @Field(key = "nav", name = "导航项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @FieldObject(NavSettings.class)
     private NavSettings nav;
 
-    @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.ANY, isArray = true)
+    @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
     private List<NavData> defaultNavs;
 
-    @Field(key = "buttons", name = "导航右栏操作配置集合", type = FieldTypeEnum.ANY, isArray = true)
-    @FieldObject(type = OptItemSettings.class)
+    @Field(key = "buttons", name = "导航右栏操作配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @FieldObject(OptItemSettings.class)
     private List<OptItemSettings> opts;
 
     public NavBarElementConfig() {
@@ -44,10 +44,10 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     @SubConfig
     public static class OptItemSettings {
 
-        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.ANY, isArray = true)
+        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.OBJECT, isArray = true)
         private String text;
 
-        @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.ANY, isArray = true)
+        @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
         @Trigger
         private Object triggers;
@@ -86,10 +86,10 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
         @Field(key = "index", name = "默认项位置索引（从0开始）", type = FieldTypeEnum.NUMBER)
         private Integer index;
 
-//        @Field(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.ANY, isArray = true)
+//        @Field(key = "children", name = "默认项子项（子项配置项与“settings.defaultNavs”相同）", type = FieldTypeEnum.OBJECT, isArray = true)
 //        private List<NavData> children;
 
-        @Field(key = "triggers", name = "默认项触发配置", type = FieldTypeEnum.ANY, isArray = true)
+        @Field(key = "triggers", name = "默认项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
         @Trigger
         private Object triggers;
@@ -128,7 +128,7 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
 //        @Field(key = "children", name = "导航项子项", type = FieldTypeEnum.TEXT)
 //        private String children;
 
-        @Field(key = "triggers", name = "导航项触发配置", type = FieldTypeEnum.ANY, isArray = true)
+        @Field(key = "triggers", name = "导航项触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
         @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
         @Trigger
         private Object triggers;

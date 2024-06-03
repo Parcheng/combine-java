@@ -1,6 +1,5 @@
 package com.parch.combine.core.component.manager;
 
-import com.parch.combine.core.common.canstant.CommonConstant;
 import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
@@ -72,7 +71,7 @@ class FlowAspectManager {
             for (FlowAspectVO aspect : aspects) {
                 // 初始化拦截器的组件
                 CombineInitVO initResult = component.init(aspect.getFlow());
-                initResult.setFlowKey(CheckEmptyUtil.isEmpty(aspect.getId()) ? CommonConstant.PLACEHOLDER : aspect.getId());
+                initResult.setFlowKey(CheckEmptyUtil.isEmpty(aspect.getId()) ? "-" : aspect.getId());
 
                 // 构建配置对象并保存
                 AspectConfig config = new AspectConfig(aspect.getId(), aspect.getOrder(), aspect.getFailStop(),

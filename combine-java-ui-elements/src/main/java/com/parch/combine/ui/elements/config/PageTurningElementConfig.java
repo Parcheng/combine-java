@@ -20,7 +20,7 @@ public class PageTurningElementConfig extends ElementConfig<PageTurningElementTe
     @Field(key = "maxPage", name = "最大页", type = FieldTypeEnum.TEXT, isRequired = true)
     private String maxPage;
 
-    @Field(key = "triggers", name = "翻页触发配置", type = FieldTypeEnum.ANY, isArray = true)
+    @Field(key = "triggers", name = "翻页触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
     @Trigger
     private Object triggers;

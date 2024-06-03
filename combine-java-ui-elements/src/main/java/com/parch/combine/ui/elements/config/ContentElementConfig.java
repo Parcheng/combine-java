@@ -12,20 +12,20 @@ import java.util.List;
 @PageElement(key = "content", name = "内容元素", templateClass = ContentElementTemplateConfig.class)
 public class ContentElementConfig extends ElementConfig<ContentElementTemplateConfig> {
 
-    @Field(key = "top", name = "顶部图片配置", type = FieldTypeEnum.ANY)
-    @FieldObject(type = ContentImgConfig.class)
+    @Field(key = "top", name = "顶部图片配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ContentImgConfig.class)
     private ContentImgConfig top;
 
-    @Field(key = "left", name = "左侧图片配置", type = FieldTypeEnum.ANY)
-    @FieldObject(type = ContentImgConfig.class)
+    @Field(key = "left", name = "左侧图片配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ContentImgConfig.class)
     private ContentImgConfig left;
 
-    @Field(key = "right", name = "右侧图片配置", type = FieldTypeEnum.ANY)
-    @FieldObject(type = ContentImgConfig.class)
+    @Field(key = "right", name = "右侧图片配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ContentImgConfig.class)
     private ContentImgConfig right;
 
-    @Field(key = "content", name = "内容配置", type = FieldTypeEnum.ANY)
-    @FieldObject(type = ContentConfig.class)
+    @Field(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ContentConfig.class)
     private ContentConfig content;
 
     public ContentElementConfig() {
