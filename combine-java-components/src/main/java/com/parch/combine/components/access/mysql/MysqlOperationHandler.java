@@ -3,6 +3,7 @@ package com.parch.combine.components.access.mysql;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
+import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.conn.DbConnPoolTool;
 import com.parch.combine.core.component.tools.sql.SqlItem;
 import com.parch.combine.core.component.vo.DataResult;
@@ -64,16 +65,20 @@ public class MysqlOperationHandler {
     public static DataResult execute(Connection conn, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
         DataResult result;
 
-        List<SqlItem> sqlItems = logicConfig.sqlConfigs();
-        String sql = logicConfig.sql();
+        SqlItem[] sqlItems = logicConfig.sqlConfigs();
         if (CheckEmptyUtil.isEmpty(sqlItems)) {
-            sqlItems = new ArrayList<>();
+            String sql = logicConfig.sql();
+            if (sql != null) {
+                sqlItems = new SqlItem[]{new SqlItem() {
+                    @Override public String sql() { return sql; }
+                    @Override public CompareGroupConfig compare() { return null; }
+                }};
+            } else {
+                sqlItems = new SqlItem[0];
+            }
         }
-        if (sql != null) {
-            SqlItem sqlItem = new SqlItem();
-            sqlItem.setSql(sql);
-            sqlItems.add(sqlItem);
-        }
+
+
 
         PreparedStatement ps = null;
         ResultSet rs = null;

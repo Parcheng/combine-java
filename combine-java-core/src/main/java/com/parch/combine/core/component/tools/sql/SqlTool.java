@@ -26,7 +26,7 @@ public class SqlTool {
      * @param sqlConfigs SQL配置集合
      * @return SQL语句
      */
-    public static String buildSql(List<SqlItem> sqlConfigs) {
+    public static String buildSql(SqlItem[] sqlConfigs) {
         if (CheckEmptyUtil.isEmpty(sqlConfigs)) {
             return null;
         }
