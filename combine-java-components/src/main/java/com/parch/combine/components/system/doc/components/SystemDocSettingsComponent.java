@@ -10,23 +10,12 @@ import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 
-/**
- * 组件设置信息组件
- */
 @Component(key = "doc.components", name = "获取组件API", logicConfigClass = SystemDocSettingsLogicConfig.class, initConfigClass = SystemDocSettingsInitConfig.class)
 @ComponentResult(name = "所有组件设API集合")
 public class SystemDocSettingsComponent extends AbsComponent<SystemDocSettingsInitConfig, SystemDocSettingsLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public SystemDocSettingsComponent() {
         super(SystemDocSettingsInitConfig.class, SystemDocSettingsLogicConfig.class);
-    }
-
-    @Override
-    public List<String> init() {
-        return new ArrayList<>();
     }
 
     @Override

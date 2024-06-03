@@ -1,17 +1,12 @@
 package com.parch.combine.core.component.manager;
 
-import com.parch.combine.core.common.canstant.CommonConstant;
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.base.ComponentFlagEnum;
-import com.parch.combine.core.component.base.ILogicConfig;
-import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.handler.ComponentClassHandler;
-import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
 
@@ -75,7 +70,7 @@ public class ComponentManager {
     protected boolean initBlock(List<Map<String, Object>> configs, Consumer<CombineInitVO> func) {
         if (CheckEmptyUtil.isNotEmpty(configs)) {
             CombineInitVO initResult = init(configs);
-            initResult.setFlowKey(CommonConstant.PLACEHOLDER);
+            initResult.setFlowKey("-");
 
             // 调用自定义处理函数
             if (func != null) {
