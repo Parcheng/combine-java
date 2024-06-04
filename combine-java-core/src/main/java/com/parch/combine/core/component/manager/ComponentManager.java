@@ -140,7 +140,7 @@ public class ComponentManager {
      */
     protected void addComponentId(List<String> componentIds, List<String> staticComponentIds, AbsComponent<?,?> component) {
         // 静态逻辑块只构建，不加入到流程中
-        List<String> flags = component.getLogicConfig().flags();
+        String[] flags = component.getLogicConfig().flags();
         if (CheckEmptyUtil.isNotEmpty(flags)) {
             for (String flag : flags) {
                 if (ComponentFlagEnum.get(flag) == ComponentFlagEnum.STATIC) {

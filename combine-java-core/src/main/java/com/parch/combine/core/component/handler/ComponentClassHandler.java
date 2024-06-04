@@ -54,14 +54,14 @@ public class ComponentClassHandler {
             List<String> initErrors = ConfigHandler.check(componentAnnotation.initConfigClass());
             if (CheckEmptyUtil.isNotEmpty(initErrors)) {
                 for (String item : initErrors) {
-                    errors.add("初始化配置-" + item);
+                    errors.add("【初始化配置】" + item);
                 }
             }
 
             List<String> logicErrors = ConfigHandler.check(componentAnnotation.logicConfigClass());
             if (CheckEmptyUtil.isNotEmpty(logicErrors)) {
                 for (String item : logicErrors) {
-                    errors.add("逻辑配置-" + item);
+                    errors.add("【逻辑配置】" + item);
                 }
             }
         }

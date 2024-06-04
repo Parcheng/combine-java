@@ -14,6 +14,7 @@ import java.util.List;
 public interface DataEditLogicConfig extends ILogicConfig {
 
     @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
+    @FieldObject(DataEditItem.class)
     @FieldDesc("编辑配置项集合")
     @FieldEg(eg = "{\"target\":\"id\",\"type\":\"SET\",\"dataType\":\"NUMBER\",\"params\":[\"101\"]}", desc = "修改参数中 id 字段的值为 101")
     @FieldEg(eg = "{\"target\":\"name\",\"type\":\"SET\",\"dataType\":\"STRING\",\"params\":[\"TEST\"]}", desc = "修改参数中 name 字段的值为 TEST")

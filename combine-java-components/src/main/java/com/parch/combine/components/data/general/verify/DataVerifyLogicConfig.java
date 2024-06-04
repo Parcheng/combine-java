@@ -18,7 +18,7 @@ public interface DataVerifyLogicConfig extends ILogicConfig {
     @FieldDesc("会拼接在 items 中配置错误提示信息之前")
     String defaultMsg();
 
-    @Field(key = "items", name = "格式化配置集合，", type = FieldTypeEnum.ANY, isRequired = true, isArray = true)
+    @Field(key = "items", name = "格式化配置集合，", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
     @FieldObject(DataVerifyItem.class)
     DataVerifyItem[] items();
 

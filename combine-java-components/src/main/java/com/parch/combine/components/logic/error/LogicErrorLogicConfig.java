@@ -19,11 +19,11 @@ public interface LogicErrorLogicConfig extends ILogicConfig {
         @FieldObject(CompareGroupConfig.class)
         CompareGroupConfig compare();
 
-        @Field(key = "errorMsg", name = "错误信息", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
+        @Field(key = "errorMsg", name = "错误信息", type = FieldTypeEnum.TEXT, isRequired = true)
         @FieldEg(eg = "空指针异常", desc = "条件满足后执行会报错，返回的 errorMsg 为该配置项的信息")
         String errorMsg();
 
-        @Field(key = "showMsg", name = "显示的错误信息", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
+        @Field(key = "showMsg", name = "显示的错误信息", type = FieldTypeEnum.TEXT, isRequired = true)
         @FieldEg(eg = "系统内部错误", desc = "条件满足后执行会报错，返回的 showMsg 为该配置项的信息")
         String showMsg();
     }

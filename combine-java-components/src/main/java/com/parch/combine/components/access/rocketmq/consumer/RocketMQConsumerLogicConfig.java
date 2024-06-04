@@ -4,8 +4,6 @@ import com.parch.combine.components.access.rocketmq.RocketMQLogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-import java.util.List;
-
 public interface RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
 
     @Field(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
@@ -20,5 +18,5 @@ public interface RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
     };
 
     @Field(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
-    List<String> components();
+    String[] components();
 }

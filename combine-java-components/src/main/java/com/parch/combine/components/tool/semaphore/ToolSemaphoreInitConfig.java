@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface ToolSemaphoreInitConfig extends IInitConfig {
 
-    @Field(key = "max", name = "最大流量数配置", type = FieldTypeEnum.BOOLEAN, defaultValue = "20")
+    @Field(key = "max", name = "最大流量数配置", type = FieldTypeEnum.NUMBER, defaultValue = "20")
     @FieldEg(eg = "100", desc = "所有流程最大流量为 100")
     default Integer max() {
         return 20;

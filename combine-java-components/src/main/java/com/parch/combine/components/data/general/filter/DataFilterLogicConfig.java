@@ -27,7 +27,7 @@ public interface DataFilterLogicConfig extends ILogicConfig {
         @FieldSelect(enumClass = DataFilterRuleEnum.class)
         String rule();
 
-        @Field(key = "params", name = "过滤规则的参数", type = FieldTypeEnum.TEXT)
+        @Field(key = "params", name = "过滤规则的参数", type = FieldTypeEnum.TEXT, isArray = true)
         String[] params();
     }
 }

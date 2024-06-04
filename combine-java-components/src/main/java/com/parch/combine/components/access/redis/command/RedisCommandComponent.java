@@ -51,7 +51,7 @@ public class RedisCommandComponent extends AbsRedisComponent<RedisCommandInitCon
 
     @SuppressWarnings("unchecked")
     private RedisCommandResult executeCommand(JedisCluster cluster, RedisCommandLogicConfig.RedisCommand command) {
-        RedisCommandTypeEnum type = command.type();
+        RedisCommandTypeEnum type = RedisCommandTypeEnum.get(command.type());
         Object[] params = command.params();
         if (params.length < type.getMinParamCount()) {
             return RedisCommandResult.fail("参数数量不合规");

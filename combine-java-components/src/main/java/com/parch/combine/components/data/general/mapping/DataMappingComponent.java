@@ -25,7 +25,7 @@ public class DataMappingComponent extends AbsComponent<DataMappingInitConfig, Da
 
         // 数据过滤
         DataMappingLogicConfig logicConfig = getLogicConfig();
-        List<DataMappingLogicConfig.DataMappingItem> items = logicConfig.items();
+        DataMappingLogicConfig.DataMappingItem[] items = logicConfig.items();
         if (items != null) {
             for (DataMappingLogicConfig.DataMappingItem item : items) {
                 result.put(item.fieldName(), item.source());

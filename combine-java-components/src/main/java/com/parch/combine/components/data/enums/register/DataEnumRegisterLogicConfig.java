@@ -15,7 +15,7 @@ public interface DataEnumRegisterLogicConfig extends ILogicConfig {
     String key();
 
     @Field(key = "items", name = "枚举项配置集合", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
-    @FieldObject(EnumCacheHandler.EnumItem.class)
+    @FieldObject(EnumItem.class)
     EnumItem[] items();
 
     interface EnumItem {

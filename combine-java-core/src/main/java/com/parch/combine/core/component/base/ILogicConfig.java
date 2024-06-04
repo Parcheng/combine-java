@@ -1,6 +1,7 @@
 package com.parch.combine.core.component.base;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import java.util.List;
 
@@ -16,7 +17,8 @@ public interface ILogicConfig {
     String ref();
 
     @Field(key = "flag", name = "标识", type = FieldTypeEnum.SELECT, parseExpression = false, isArray = true)
-    List<String> flags();
+    @FieldSelect(enumClass = ComponentFlagEnum.class)
+    String[] flags();
 
     @Field(key = "showMsg", name = "自定义错误信息", type = FieldTypeEnum.TEXT)
     String showMsg();

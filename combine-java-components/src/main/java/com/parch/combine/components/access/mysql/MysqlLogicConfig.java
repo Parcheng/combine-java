@@ -19,6 +19,7 @@ public interface MysqlLogicConfig extends ILogicConfig {
     String sql();
 
     @Field(key = "sqlConfigs", name = "SQL语句配置", type = FieldTypeEnum.CONFIG, isArray = true)
+    @FieldObject(SqlItem.class)
     @FieldDesc({"复杂的SQL语句配置，最终执行时会将所有满足条件的SQL语句拼接到一起，注意：sql和sqlConfigs必须只配置一项",
             "提示：如果不配置条件则认为满足条件，SQL语句（段）会生效"})
     SqlItem[] sqlConfigs();

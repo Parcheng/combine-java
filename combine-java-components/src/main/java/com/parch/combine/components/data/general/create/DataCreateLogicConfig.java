@@ -10,7 +10,6 @@ public interface DataCreateLogicConfig extends ILogicConfig {
     @Field(key = "items", name = "配置项集合", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
     @FieldObject(DataCreateItem.class)
     @FieldDesc("创建配置项集合")
-
     @FieldEg(eg = "{\"target\":\"$r.data001.id\",\"type\":\"NUMBER\",\"params\":[\"100000\"]}", desc = "创建一个数字数据为 100000，并将该值赋值到 data001 组件返回结果的 id 字段上")
     @FieldEg(eg = "{\"target\":\"$r.data001.name\",\"type\":\"STRING\",\"params\":[\"zhangsan\"]}", desc = "创建一个字符串数据为 zhangsan，并将该值赋值到 data001 组件返回结果的 name 字段上")
     @FieldEg(eg = "{\"target\":\"$r.data001.deleteFlag\",\"type\":\"BOOLEAN\",\"params\":[\"true\"]}", desc = "创建一个布尔数据为 true，并将该值赋值到 data001 组件返回结果的 deleteFlag 字段上")

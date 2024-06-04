@@ -20,7 +20,7 @@ public interface SystemTemplateInitConfig extends IInitConfig {
 
     interface SystemTemplate {
 
-        @Field(key = "key", name = "模板KEY", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
+        @Field(key = "key", name = "模板KEY", type = FieldTypeEnum.TEXT, isRequired = true)
         String key();
 
         @Field(key = "components", name = "模板包含的组件集合", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)

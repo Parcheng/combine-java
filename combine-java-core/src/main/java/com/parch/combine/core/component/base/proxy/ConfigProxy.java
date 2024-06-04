@@ -18,7 +18,7 @@ public class ConfigProxy implements InvocationHandler {
     public ConfigProxy(String scopeKey, Class<?> configClass, Map<String, Object> config) {
         this.scopeKey = scopeKey;
         this.configClass = configClass;
-        this.config = config == null ? new HashMap<>(1) : null;
+        this.config = config == null ? new HashMap<>(1) : config;
     }
 
     public List<String> init() {

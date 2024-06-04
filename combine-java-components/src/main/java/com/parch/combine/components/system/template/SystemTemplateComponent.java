@@ -4,6 +4,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.vo.DataResult;
 import java.util.*;
 
@@ -20,11 +21,21 @@ public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConf
         SystemTemplateInitConfig initConfig = getInitConfig();
         SystemTemplateLogicConfig logicConfig = getLogicConfig();
 
-        String variableKey = initConfig.variableKey();
-        String[] configs = logicConfig.configs();
+        String[] componentIds = null;
+        String key = logicConfig.key();
+        SystemTemplateInitConfig.SystemTemplate[] configs = initConfig.templates();
+        for (SystemTemplateInitConfig.SystemTemplate item : configs) {
+            if (key.equals(item.key())) {
+                componentIds = item.components();
+            }
+        }
 
-        ComponentContextHandler.getVariables().put(variableKey, configs);
-        DataResult result = manager.getComponent().executeComponents(Arrays.asList(configs));
+        if (componentIds == null) {
+            return DataResult.fail(SystemTemplateErrorEnum.TEMPLATE_IS_NULL);
+        }
+
+        ComponentContextHandler.getVariables().put(initConfig.variableKey(), logicConfig.configs());
+        DataResult result = SubComponentTool.execute(manager, componentIds);
         if (!result.getSuccess()) {
             return DataResult.fail(result.getErrMsg(), result.getShowMsg());
         }

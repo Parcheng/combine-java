@@ -10,7 +10,7 @@ public interface MailSendLogicConfig extends MailLogicConfig {
 
     @Field(key = "to", name = "收件人", type = FieldTypeEnum.TEXT, isRequired = true, isArray = true)
     @FieldEg(eg = "[\"a@qq.com\",\"b@qq.com\"]", desc = "邮件发送给 a@qq.com 和 b@qq.com")
-    List<String> to();
+    String[] to();
 
     @Field(key = "subject", name = "主题", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldEg(eg = "办公用品审批", desc = "邮件的标题为“办公用品审批”")
@@ -18,7 +18,7 @@ public interface MailSendLogicConfig extends MailLogicConfig {
 
     @Field(key = "body", name = "内容配置", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(MailBody.class)
-    List<MailBody> body();
+    MailBody[] body();
 
     interface MailBody {
 

@@ -21,7 +21,7 @@ public interface RedisCommandLogicConfig extends ILogicConfig {
 
         @Field(key = "type", name = "命令类型", type = FieldTypeEnum.TEXT, isRequired = true)
         @FieldSelect(enumClass = RedisCommandTypeEnum.class)
-        RedisCommandTypeEnum type();
+        String type();
 
         @Field(key = "params", name = "命令参数", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
         String[] params();

@@ -4,6 +4,7 @@ import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
+import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 
 public interface DataResetLogicConfig extends ILogicConfig {
 
@@ -22,7 +23,7 @@ public interface DataResetLogicConfig extends ILogicConfig {
         @FieldObject(CompareGroupConfig.class)
         CompareGroupConfig compare();
 
-        @Field(key = "resets", name = "赋值配置项集合", type = FieldTypeEnum.CONFIG)
+        @Field(key = "resets", name = "赋值配置项集合", type = FieldTypeEnum.CONFIG, isArray = true)
         @FieldObject(DataResetConfig.class)
         @FieldDesc("将 “新值” 赋值给 “要重新赋值的字段”")
         @FieldEg(eg = "{\"target\":\"$r.data001.name\",\"type\":\"STRING\",\"value\":\"zhangsan\"}", desc = "将 zhangsan 重新赋值给组件 data001 的 name 字段")
@@ -37,6 +38,7 @@ public interface DataResetLogicConfig extends ILogicConfig {
         String target();
 
         @Field(key = "type", name = "数据类型", type = FieldTypeEnum.SELECT, isRequired = true)
+        @FieldSelect(enumClass = DataTypeEnum.class)
         String type();
 
         @Field(key = "value", name = "新值", type = FieldTypeEnum.ANY, isRequired = true)

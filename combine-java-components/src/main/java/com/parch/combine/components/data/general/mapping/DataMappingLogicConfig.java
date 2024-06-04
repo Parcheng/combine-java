@@ -17,7 +17,7 @@ public interface DataMappingLogicConfig extends ILogicConfig {
     @FieldEg(eg = "{\"fieldName\":\"id\",\"source\":\"#{id}\"}", desc = "将入参的 id 参数的值，赋值给执行结果的 id 字段")
     @FieldEg(eg = "{\"fieldName\":\"name\",\"source\":\"#{$r.data001.name}\"}", desc = "将 data001 组件返回结果的 name 字段的值，赋值给执行结果的 name 字段")
     @FieldEg(eg = "{\"fieldName\":\"age\",\"source\":\"18\"}", desc = "将 18 赋值给执行结果的 age 字段")
-    List<DataMappingItem> items();
+    DataMappingItem[] items();
 
     interface DataMappingItem {
 

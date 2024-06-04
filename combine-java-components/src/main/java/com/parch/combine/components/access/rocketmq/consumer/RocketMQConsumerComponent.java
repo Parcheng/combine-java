@@ -8,6 +8,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
 
+import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.vo.DataResult;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -52,7 +53,7 @@ public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQCons
                     data.put("msgId", msg.getMsgId());
                     data.put("body", JsonUtil.deserialize(new String(msg.getBody()), HashMap.class));
 
-                    DataResult result = manager.execute(finalListenFlowKey, data, new HashMap<>(0), logicConfig.components(), null);
+                    DataResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
                     if (!result.getSuccess()) {
                         ComponentErrorHandler.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic
                                 + " expression=" + expression + " error=" + result.getErrMsg(), null);
