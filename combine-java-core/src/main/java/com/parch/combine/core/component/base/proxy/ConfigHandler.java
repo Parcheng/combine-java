@@ -1,9 +1,11 @@
 package com.parch.combine.core.component.base.proxy;
 
+import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
@@ -45,13 +47,18 @@ public class ConfigHandler {
      */
     public static List<String> check(Class<?> config) {
         List<String> errorMsg = new ArrayList<>();
+        Class<?> superclass = config.getSuperclass();
+        if (superclass != null && superclass != Object.class) {
+            errorMsg.addAll(check(superclass));
+        }
+
 //        if (!config.isInterface()) {
 //            java.lang.reflect.Field[] fields = config.getFields();
 //            for (AnnotatedElement item : fields) {
 //                CheckField(item, errorMsg);
 //            }
 //        }
-        // TODO 父亲方法（字段不用检查，但要在sETTING中添加）
+
         Method[] methods = config.getMethods();
         for (AnnotatedElement item : methods) {
             CheckField(item, errorMsg);
