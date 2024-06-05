@@ -43,7 +43,7 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
                 Object[] params = item.params();
 
                 if (sourceData instanceof Map) {
-                    error = editMap(source, (Map<Object, Object>) sourceData, type, params);
+                    error = editMap(source, (Map<Object, Object>) sourceData, type, dataType, params);
                 } else if (sourceData instanceof Collection) {
                     error = editCollection(source, (Collection<Object>) sourceData, type, dataType, params);
                 } else {
@@ -66,7 +66,7 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
      * @return 错误信息
      */
     @SuppressWarnings("unchecked")
-    private DataEditErrorEnum editMap(String sourcePath, Map<Object, Object> sourceData, DataEditTypeEnum type, Object[] params) {
+    private DataEditErrorEnum editMap(String sourcePath, Map<Object, Object> sourceData, DataEditTypeEnum type, DataTypeEnum dataType, Object[] params) {
         if (sourceData == null) {
             sourceData = new HashMap<>();
         }
@@ -81,12 +81,12 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
 
                     if (param instanceof Map) {
                         sourceData.putAll((Map<String, Object>) param);
-                    } else if (DataTypeIsUtil.isString(param) && param.toString().contains(SymbolConstant.COLON)) {
-                        String[] currSetPath = param.toString().split(SymbolConstant.COLON);
-                        key = DataVariableHelper.parseValue(currSetPath[1], false);
+                    } else if (DataTypeIsUtil.isString(param) && DataStructureHelper.isStructure(param.toString())) {
+                        String[] currSetPath = DataStructureHelper.parseStructure(param.toString());
+                        key = DataVariableHelper.parseValue(currSetPath[0], false);
                         if (key != null) {
-                            value = DataVariableHelper.parseValue(currSetPath[2], false);
-                            value = getValue(sourceData.get(key), DataTypeEnum.get(currSetPath[0]), value);
+                            value = DataVariableHelper.parseValue(currSetPath[1], false);
+                            value = getValue(sourceData.get(key), dataType, value);
                             sourceData.put(key, value);
                         }
                     } else {

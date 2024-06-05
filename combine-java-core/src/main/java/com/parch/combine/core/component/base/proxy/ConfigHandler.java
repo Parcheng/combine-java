@@ -281,7 +281,7 @@ public class ConfigHandler {
                     if (item instanceof Map) {
                         CombineInitVO initVO = manager.getComponent().init(Collections.singletonList((Map<String, Object>) item));
                         if (initVO.isSuccess()) {
-                            itemData = CheckEmptyUtil.isNotEmpty(initVO.getComponentIds()) ? initVO.getComponentIds().get(0) : initVO.getStaticComponentIds().get(0);
+                            itemData = CheckEmptyUtil.isNotEmpty(initVO.getComponentIds()) ? initVO.getComponentIds().get(0) : null;
                         } else {
                             errors.addAll(initVO.getErrorList());
                         }
@@ -301,12 +301,12 @@ public class ConfigHandler {
             }
 
             if (itemData == null) {
-                errors.add((isArray ? ("第" + (i + 1) + "项") : "") + data.getClass() + "数据与类型" + type.name() + "不匹配");
+                errors.add((isArray ? ("第" + (i + 1) + "项-[") : "-[") + item.getClass().getName() + "]数据与类型[" + type.name() + "]不匹配");
             } else {
                 resultData[i] = itemData;
             }
         }
 
-        return new ThreeTuples<>(CheckEmptyUtil.isNotEmpty(errors), isArray ? resultData : resultData[0], errors);
+        return new ThreeTuples<>(CheckEmptyUtil.isEmpty(errors), isArray ? resultData : resultData[0], errors);
     }
 }

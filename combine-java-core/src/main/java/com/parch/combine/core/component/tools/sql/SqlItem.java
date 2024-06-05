@@ -18,7 +18,7 @@ public interface SqlItem {
     @FieldEg(eg = "and name = ${name}", desc = "要执行的SQL语句（段）")
     String sql();
 
-    @Field(key = "compare", name = "比较条件配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "compare", name = "比较条件配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(CompareGroupConfig.class)
     CompareGroupConfig compare();
 }
