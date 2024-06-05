@@ -1,11 +1,9 @@
 package com.parch.combine.core.component.base.proxy;
 
-import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
@@ -38,7 +36,7 @@ public class ConfigHandler {
             return new ThreeTuples<>(false, null, errors);
         }
 
-        T configProxy = (T) Proxy.newProxyInstance(ConfigProxy.class.getClassLoader(), new Class[]{configClass}, proxy);
+        T configProxy = (T) Proxy.newProxyInstance(configClass.getClassLoader(), new Class[]{configClass}, proxy);
         return new ThreeTuples<>(true, configProxy, null);
     }
 
