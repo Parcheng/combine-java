@@ -18,6 +18,7 @@ import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.*;
@@ -236,12 +237,14 @@ public class ConfigHandler {
     @SuppressWarnings("unchecked")
     public static ThreeTuples<Boolean, Object, List<String>> buildFieldData(String scopeKey, FieldTypeEnum type, Object data, boolean isArray, Method method) {
         List<Object> listData = isArray && data instanceof List ? (List<Object>) data : Collections.singletonList(data);
-        Object[] resultData = new Object[listData.size()];
-        List<String> errors = new ArrayList<>();
+        Class<?> returnType = isArray ? method.getReturnType().getComponentType() : method.getReturnType();
 
+        List<String> errors = new ArrayList<>();
+        Object arrayData = Array.newInstance(returnType, listData.size());
         for (int i = 0; i < listData.size(); i++) {
             Object item = listData.get(i);
             Object itemData = null;
+
             switch (type) {
                 case ID:
                 case TEXT:
@@ -253,14 +256,14 @@ public class ConfigHandler {
                     itemData = DataParseUtil.parseBoolean(item);
                     break;
                 case NUMBER:
-                    itemData = DataParseUtil.parseNumber(item);
+                    itemData = DataParseUtil.parseNumber(item, returnType);
                     break;
                 case MAP:
                     itemData = item instanceof Map ? item : null;
                     break;
                 case CONFIG:
                     FieldObject fieldConfig = method.getAnnotation(FieldObject.class);
-                    if (item instanceof Map && fieldConfig != null){
+                    if (item instanceof Map && fieldConfig != null && returnType == fieldConfig.value()){
                         ThreeTuples<Boolean, ?, List<String>> buildResult = build(scopeKey, fieldConfig.value(), (Map<String, Object>) item);
                         if (buildResult.getFirst()) {
                             itemData = buildResult.getSecond();
@@ -273,14 +276,15 @@ public class ConfigHandler {
                     break;
                 case OBJECT:
                     fieldConfig = method.getAnnotation(FieldObject.class);
-                    if (item instanceof Map && fieldConfig != null) {
+                    if (item instanceof Map && fieldConfig != null && returnType == fieldConfig.value()) {
                         // TODO 手动序列化，补校验逻辑
                         try {
-                            itemData = JsonUtil.parseArray(JsonUtil.serialize(item), fieldConfig.value());
+                            itemData = JsonUtil.deserialize(JsonUtil.serialize(item), fieldConfig.value());
                         } catch (Exception e) {
                             errors.add("JSON序列号异常-" + e.getMessage());
                         }
                     }
+                    break;
                 case COMPONENT:
                     CombineManager manager = CombineManagerHandler.get(scopeKey);
                     if (item instanceof Map) {
@@ -289,14 +293,14 @@ public class ConfigHandler {
                             itemData = CheckEmptyUtil.isNotEmpty(initVO.getComponentIds()) ? initVO.getComponentIds().get(0) : null;
                         } else {
                             errors.addAll(initVO.getErrorList());
+                            itemData = CheckEmptyUtil.EMPTY;
                         }
                     } else {
                         AbsComponent<?,?> component = manager.getComponent().getComponent(item.toString());
                         if (component == null) {
-                            errors.add("ID【" + item.toString() + "】的组件不存在");
-                        } else {
-                            itemData = item.toString();
+                            errors.add("ID[" + item.toString() + "]的组件不存在");
                         }
+                        itemData = item.toString();
                     }
                     break;
                 case EXPRESSION:
@@ -307,11 +311,11 @@ public class ConfigHandler {
 
             if (itemData == null) {
                 errors.add((isArray ? ("第" + (i + 1) + "项-[") : "-[") + item.getClass().getName() + "]数据与类型[" + type.name() + "]不匹配");
-            } else {
-                resultData[i] = itemData;
             }
+
+            Array.set(arrayData, i, returnType.cast(itemData));
         }
 
-        return new ThreeTuples<>(CheckEmptyUtil.isEmpty(errors), isArray ? resultData : resultData[0], errors);
+        return new ThreeTuples<>(CheckEmptyUtil.isEmpty(errors), isArray ? arrayData : Array.get(arrayData, 0), errors);
     }
 }

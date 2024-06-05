@@ -106,26 +106,40 @@ public class DataParseUtil {
      * @param data 数据
      * @return 数据
      */
-    public static Object parseNumber(Object data) {
+    public static Object parseNumber(Object data, Class<?> numClass) {
         if (data == null) {
             return null;
         }
 
-        if (data instanceof Double || data instanceof Float ||
-                data instanceof Long || data instanceof Integer || data instanceof Short) {
-            return data;
-        }
-
-        String dataStr = data.toString();
-        if (DataTypeIsUtil.isNumber(dataStr)) {
-            if (dataStr.contains(SymbolConstant.DOT)) {
-                return Double.parseDouble(dataStr);
-            } else {
-                return Long.parseLong(dataStr);
+        Number numberData = null;
+        if (Number.class.isAssignableFrom(data.getClass())) {
+            numberData = (Number) data;
+        } else {
+            String dataStr = data.toString();
+            if (DataTypeIsUtil.isNumber(dataStr)) {
+                if (dataStr.contains(SymbolConstant.DOT)) {
+                    numberData = Double.parseDouble(dataStr);
+                } else {
+                    numberData = Long.parseLong(dataStr);
+                }
             }
         }
 
-        return null;
+        if (numberData != null && numClass != null && Number.class.isAssignableFrom(numClass)) {
+            if (numClass == Double.class) {
+                return numberData.doubleValue();
+            } else if (numClass == Long.class) {
+                return numberData.longValue();
+            } else if (numClass == Float.class) {
+                return numberData.floatValue();
+            } else if (numClass == Integer.class) {
+                return numberData.intValue();
+            } else if (numClass == Short.class) {
+                return numberData.shortValue();
+            }
+        }
+
+        return numberData;
     }
 
     /**
@@ -134,13 +148,13 @@ public class DataParseUtil {
      * @param data 数据
      * @return 数据
      */
-    public static Object parseBoolean(Object data) {
+    public static Boolean parseBoolean(Object data) {
         if (data == null) {
             return null;
         }
 
         if (data instanceof Boolean) {
-            return data;
+            return (Boolean) data;
         }
 
         if (data instanceof Double || data instanceof Float ||

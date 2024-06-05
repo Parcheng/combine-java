@@ -64,7 +64,7 @@ public class DataResetHandler {
             DataTypeEnum dataType = DataTypeEnum.get(config.type());
             switch (dataType) {
                 case NUMBER:
-                    newValue = DataParseUtil.parseNumber(value.toString());
+                    newValue = DataParseUtil.parseNumber(value.toString(), null);
                     break;
                 case BOOLEAN:
                     newValue = Boolean.parseBoolean(value.toString());

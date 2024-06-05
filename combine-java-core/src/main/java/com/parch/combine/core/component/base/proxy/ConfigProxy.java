@@ -66,6 +66,10 @@ public class ConfigProxy implements InvocationHandler {
     }
 
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if ("toString".equals(method.getName())) {
+            return configClass.getName();
+        }
+
         Object defaultValue = null;
         if (method.isDefault()) {
             defaultValue = method.invoke(proxy, args);
