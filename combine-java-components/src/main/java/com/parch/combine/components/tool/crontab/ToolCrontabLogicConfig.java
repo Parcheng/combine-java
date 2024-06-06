@@ -14,9 +14,7 @@ public interface ToolCrontabLogicConfig extends ILogicConfig {
     String startTime();
 
     @Field(key = "initialDelay", name = "首次执行延迟毫秒数", type = FieldTypeEnum.NUMBER, defaultValue = "0")
-    default Integer initialDelay() {
-        return 0;
-    }
+    Integer initialDelay();
 
     @Field(key = "period", name = "执行间隔（毫秒）", type = FieldTypeEnum.NUMBER, parseExpression = false, isRequired = true)
     @FieldDesc("如果设置了固定间隔，那么时间间隔是按任务开始执行时间算周期，否则按任务执行完成时间算周期")

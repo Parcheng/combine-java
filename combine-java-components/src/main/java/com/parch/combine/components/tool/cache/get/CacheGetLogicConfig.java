@@ -10,7 +10,5 @@ public interface CacheGetLogicConfig extends CacheLogicConfig {
 
     @Field(key = "keyMatchRule", name = "KEY匹配规则", type = FieldTypeEnum.SELECT, defaultValue = "EXACT")
     @FieldSelect(enumClass = CacheKeyMatchRuleEnum.class)
-    default String keyMatchRule() {
-        return "EXACT";
-    }
+    String keyMatchRule();
 }

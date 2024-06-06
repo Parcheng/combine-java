@@ -212,7 +212,6 @@ public class MysqlOperationHandler {
             return conn;
         }
 
-
         String driver = "com.mysql.cj.jdbc.Driver";
         // 添加 "?useUnicode=true&characterEncoding=utf-8"
         String url = "jdbc:mysql://"+initConfig.host()+":"+initConfig.port()+"/"+initConfig.dbName();

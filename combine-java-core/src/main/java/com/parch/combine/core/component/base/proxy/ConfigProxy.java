@@ -1,6 +1,7 @@
 package com.parch.combine.core.component.base.proxy;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 
@@ -23,6 +24,7 @@ public class ConfigProxy implements InvocationHandler {
 
     public List<String> init() {
         List<String> errors = new ArrayList<>();
+
         Method[] methods = configClass.getMethods();
         for (Method method : methods) {
             Field field = method.getAnnotation(Field.class);
@@ -32,25 +34,32 @@ public class ConfigProxy implements InvocationHandler {
 
             String key = field.key();
 
-            // 字段必填验证
+            // 空数据处理
             Object configFieldData = config.get(key);
-            if (field.isRequired() && configFieldData == null) {
-                errors.add(key + "字段不能为空");
-                continue;
+            if (CheckEmptyUtil.isNotEmpty(field.defaultValue())) {
+                configFieldData = field.defaultValue();
+                config.put(key, configFieldData);
             }
 
-            // 数据为空将标识设置成空
+            // 空数据处理
             if (configFieldData == null) {
+                // 字段必填验证
+                if (field.isRequired()) {
+                    errors.add(key + "字段不能为空");
+                }
+
+                // 设置数据为空标识
                 configFlagMap.put(key, null);
                 continue;
             }
 
-            // 允许使用表达式，并且数据中包含表达式，标识设置为false（实时解析）
+            // 允许使用表达式，并且数据中包含表达式，标识设置为false（获取时实时解析）
             if (field.parseExpression() && ConfigHandler.fieldDataHasExpression(field.type(), configFieldData, field.isArray())) {
                 configFlagMap.put(key, true);
                 continue;
             }
 
+            // 解析数据
             ThreeTuples<Boolean, Object, List<String>> parseResult = ConfigHandler.buildFieldData(scopeKey, field.type(), configFieldData, field.isArray(), method);
             if (parseResult.getFirst()) {
                 config.put(key, parseResult.getSecond());
@@ -65,35 +74,32 @@ public class ConfigProxy implements InvocationHandler {
         return errors;
     }
 
+
+
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if ("toString".equals(method.getName())) {
-            return configClass.getName();
-        }
-
-        Object defaultValue = null;
-        if (method.isDefault()) {
-            defaultValue = method.invoke(proxy, args);
-        }
-
         Field field = method.getAnnotation(Field.class);
         if (field == null) {
-            return defaultValue;
+            if ("toString".equals(method.getName())) {
+                return configClass.getName();
+            }
+
+            return null;
         }
 
-        Boolean parseExpression = configFlagMap.get(field.key());
+        String key = field.key();
+        Boolean parseExpression = configFlagMap.get(key);
         if (parseExpression == null) {
-            return defaultValue;
+            return null;
         }
 
-        Object configFieldData = config.get(field.key());
+        Object configFieldData = config.get(key);
         if (!parseExpression) {
-            return configFieldData == null ? defaultValue : configFieldData;
-        } else {
-            configFieldData = ConfigHandler.parseFieldData(field.type(), configFieldData, field.isArray());
+            return configFieldData;
         }
 
+        configFieldData = ConfigHandler.parseFieldData(field.type(), configFieldData, field.isArray());
         if (field.isRequired() && configFieldData == null) {
-            String msg = field.key() + "-字段不能为空";
+            String msg = key + " > 字段不能为空";
             ComponentErrorHandler.print(msg);
             throw new Exception(msg);
         }
@@ -103,16 +109,17 @@ public class ConfigProxy implements InvocationHandler {
             if (parseResult.getFirst()) {
                 configFieldData = parseResult.getSecond();
             } else {
+                for (String msg : parseResult.getThird()) {
+                    ComponentErrorHandler.print(key + " > " + msg);
+                }
                 if (field.throwTypeError()) {
-                    for (String msg : parseResult.getThird()) {
-                        ComponentErrorHandler.print(field.key() + "-" + msg);
-                    }
-                    throw new Exception(field.key() + "-动态加载配置数据失败");
+                    throw new Exception(key+ " > 动态加载配置数据失败");
                 }
             }
         }
 
         return configFieldData;
     }
+
 
 }

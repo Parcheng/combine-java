@@ -31,9 +31,7 @@ public interface LogicLoopLogicConfig extends ILogicConfig {
 
     @Field(key = "failStop", name = "逻辑执行失败是否终止", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     @FieldEg(eg = "false", desc = "组件逻辑执行报错时，不停止循环，依然继续执行")
-    default Boolean failStop() {
-        return true;
-    }
+    Boolean failStop();
 
     interface LoopConditionConfig {
 

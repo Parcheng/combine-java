@@ -11,9 +11,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 public interface DataTextSplitLogicConfig extends ILogicConfig {
 
     @Field(key = "isReplace", name = "是否替换掉源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
-    default Boolean isReplace() {
-        return false;
-    }
+    Boolean isReplace();
 
     @Field(key = "source", name = "数据源", type = FieldTypeEnum.EXPRESSION, parseExpression = false, isRequired = true)
     @FieldDesc("注意：非文本类型会先转成JSON再处理")

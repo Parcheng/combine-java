@@ -35,28 +35,20 @@ public interface MysqlInitConfig extends IInitConfig {
     Pool pool();
 
     @Field(key = "printSql", name = "是否打印SQL", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
-    default Boolean printSql() {
-        return true;
-    };
+    Boolean printSql();
 
     interface Pool {
 
-        @Field(key = "max", name = "数据库连接最大数量", type = FieldTypeEnum.NUMBER)
+        @Field(key = "max", name = "数据库连接最大数量", type = FieldTypeEnum.NUMBER, defaultValue = "20")
         @FieldEg(eg = "10", desc = "连接池最大连接数10")
-        default Integer max() {
-            return 20;
-        }
+        Integer max();
 
-        @Field(key = "min", name = "数据库连接最小数量", type = FieldTypeEnum.NUMBER)
+        @Field(key = "min", name = "数据库连接最小数量", type = FieldTypeEnum.NUMBER, defaultValue = "5")
         @FieldEg(eg = "5", desc = "连接池最小连接数5")
-        default Integer min() {
-            return 5;
-        }
+        Integer min();
 
-        @Field(key = "timeout", name = "数据库连接超时时间", type = FieldTypeEnum.NUMBER)
+        @Field(key = "timeout", name = "数据库连接超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "30000")
         @FieldEg(eg = "10000", desc = "连接超时时间为10000毫秒")
-        default Long timeout() {
-            return 30000L;
-        }
+        Long timeout();
     }
 }

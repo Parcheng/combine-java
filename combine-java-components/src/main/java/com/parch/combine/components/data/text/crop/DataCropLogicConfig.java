@@ -14,26 +14,18 @@ public interface DataCropLogicConfig extends ILogicConfig {
 
     @Field(key = "startRow", name = "从第几行开始读取", type = FieldTypeEnum.NUMBER, defaultValue = "1")
     @FieldEg(eg = "2", desc = "从第二行开始读取，可以用于跳过表头")
-    default Integer startRow() {
-        return 1;
-    }
+    Integer startRow();
 
     @Field(key = "startIndex", name = "从行的第几项开始读取", type = FieldTypeEnum.NUMBER, defaultValue = "1")
     @FieldEg(eg = "1", desc = "从首行第一项开始读取")
-    default Integer startIndex() {
-        return 1;
-    }
+    Integer startIndex();
 
     @Field(key = "startSkipCount", name = "每行跳过前几项", type = FieldTypeEnum.NUMBER, defaultValue = "0")
     @FieldDesc("提示：表格文件表示跳过前几列，文本文件表示跳过前几个字符")
     @FieldEg(eg = "5", desc = "读取时每行跳过前五项")
-    default Integer startSkipCount() {
-        return 0;
-    }
+    Integer startSkipCount();
 
     @Field(key = "endDiscardCount", name = "每行丢弃掉后几项", type = FieldTypeEnum.NUMBER, defaultValue = "0")
     @FieldEg(eg = "5", desc = "读取时每行舍弃掉最后五项")
-    default Integer endDiscardCount() {
-        return 0;
-    }
+    Integer endDiscardCount();
 }

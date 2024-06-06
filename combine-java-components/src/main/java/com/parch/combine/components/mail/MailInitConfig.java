@@ -19,9 +19,7 @@ public interface MailInitConfig extends IInitConfig {
     String authCode();
 
     @Field(key = "timeout", name = "超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "10000")
-    default Long timeout() {
-        return 10000L;
-    }
+    Long timeout();
 
     @Field(key = "debug", name = "是否打印日志", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     Boolean debug();

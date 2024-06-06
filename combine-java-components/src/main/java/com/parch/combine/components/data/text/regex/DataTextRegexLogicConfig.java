@@ -17,7 +17,5 @@ public interface DataTextRegexLogicConfig extends ILogicConfig {
 
     @Field(key = "resultMode", name = "返回结果的方式", type = FieldTypeEnum.SELECT, defaultValue = "FULL")
     @FieldSelect(enumClass = DataTextRegexResultModeEnum.class)
-    default String resultMode() {
-        return DataTextRegexResultModeEnum.FULL.name();
-    }
+    String resultMode();
 }

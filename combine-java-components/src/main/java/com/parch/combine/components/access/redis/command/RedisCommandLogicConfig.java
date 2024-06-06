@@ -8,9 +8,7 @@ public interface RedisCommandLogicConfig extends ILogicConfig {
 
     @Field(key = "failStop", name = "失败是否停止", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     @FieldEg(eg = "true", desc = "commands 配置的命令如果某条执行失败，则不继续向下执行，直接返回错误")
-    default Boolean failStop() {
-        return false;
-    };
+    Boolean failStop();
 
     @Field(key = "commands", name = "命令配置集合", type = FieldTypeEnum.CONFIG, isArray = true, isRequired = true)
     @FieldObject(RedisCommand.class)

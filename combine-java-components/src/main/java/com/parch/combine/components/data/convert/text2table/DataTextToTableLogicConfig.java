@@ -18,7 +18,5 @@ public interface DataTextToTableLogicConfig extends ILogicConfig {
     @Field(key = "separator", name = "分隔符", type = FieldTypeEnum.TEXT, defaultValue = "|")
     @FieldDesc("提示：该字段用于区分表格列的分隔符")
     @FieldEg(eg = ",", desc = "文本文件转为表格数据，每一列的数据用逗号进行拆分成列")
-    default String separator() {
-        return "|";
-    }
+    String separator();
 }

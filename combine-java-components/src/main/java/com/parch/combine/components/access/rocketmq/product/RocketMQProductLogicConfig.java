@@ -1,6 +1,5 @@
 package com.parch.combine.components.access.rocketmq.product;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.access.rocketmq.RocketMQLogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -8,9 +7,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 public interface RocketMQProductLogicConfig extends RocketMQLogicConfig {
 
     @Field(key = "tags", name = "标签", type = FieldTypeEnum.TEXT)
-    default String tags() {
-        return CheckEmptyUtil.EMPTY;
-    }
+    String tags();
 
     @Field(key = "producerGroup", name = "生产者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
     String producerGroup();

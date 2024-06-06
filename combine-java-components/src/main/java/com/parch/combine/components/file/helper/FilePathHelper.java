@@ -28,7 +28,7 @@ public class FilePathHelper {
             }
         }
 
-        return base + basePath + path;
+        return base + (basePath == null ? CheckEmptyUtil.EMPTY : basePath) + path;
 
 //        String classLoaderPath = useResourcePath ? ClassLoader.getSystemResource("").getPath() : "";
 //        return classLoaderPath + basePath + path;

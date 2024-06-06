@@ -13,7 +13,7 @@ public interface FileOutputLogicConfig extends ILogicConfig {
     @FieldEg(eg = "$r.data001", desc = "获取 data001 组件的结果数据（文件字节数据）")
     Object source();
 
-    @Field(key = "charset", name = "字符集编码", type = FieldTypeEnum.TEXT, defaultValue = "默认根据系统环境决定")
-    @FieldDesc("注意：仅在文本数据时生效")
+    @Field(key = "charset", name = "字符集编码", type = FieldTypeEnum.TEXT)
+    @FieldDesc("注意：仅在文本数据时生效，默认根据系统环境决定")
     String charset();
 }

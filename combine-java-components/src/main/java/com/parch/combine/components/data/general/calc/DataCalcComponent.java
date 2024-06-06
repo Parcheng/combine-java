@@ -55,6 +55,9 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
         Object calcResult = null;
         DataCalcModeEnum mode = DataCalcModeEnum.get(item.mode());
         Object[] params = item.params();
+        if (params == null) {
+            params = new Object[0];
+        }
         if (params.length < mode.getMinParamCount()) {
             return DataResult.fail(DataCalcErrorEnum.PARAMS_COUNT_ERROR);
         }
@@ -63,9 +66,10 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
             case CALC:
                 try {
                     // 替换表达式中的变量
+                    Object[] finalParams = params;
                     MatcherUtil.matcher(params[0].toString(), DataVariableFlagHelper.getRegex(), matcherStr -> {
                         Object newValue = DataVariableHelper.parseValue(matcherStr, true);
-                        params[0] = params[0].toString().replace(matcherStr, newValue.toString());
+                        finalParams[0] = finalParams[0].toString().replace(matcherStr, newValue.toString());
                     });
                     // 运算表达式
                     calcResult = ExpressionCalcTool.calc(params[0].toString());

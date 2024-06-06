@@ -7,9 +7,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 public interface DataFormatLogicConfig extends ILogicConfig {
 
     @Field(key = "replace", name = "是否替换源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
-    default Boolean replace() {
-        return false;
-    }
+    Boolean replace();
 
     @Field(key = "items", name = "过滤配置集合", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
     @FieldObject(DataFormatItem.class)

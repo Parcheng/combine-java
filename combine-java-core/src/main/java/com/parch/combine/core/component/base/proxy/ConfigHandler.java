@@ -243,13 +243,16 @@ public class ConfigHandler {
         Object arrayData = Array.newInstance(returnType, listData.size());
         for (int i = 0; i < listData.size(); i++) {
             Object item = listData.get(i);
-            Object itemData = null;
+            // 当数据为集合时，集合的某一项为动态取值，可能存在为空的情况
+            if (item == null) {
+                continue;
+            }
 
+            Object itemData = null;
             switch (type) {
                 case ID:
                 case TEXT:
                 case SELECT:
-                    // TODO 检查类型
                     itemData = DataParseUtil.getString(item);
                     break;
                 case BOOLEAN:
@@ -277,7 +280,6 @@ public class ConfigHandler {
                 case OBJECT:
                     fieldConfig = method.getAnnotation(FieldObject.class);
                     if (item instanceof Map && fieldConfig != null && returnType == fieldConfig.value()) {
-                        // TODO 手动序列化，补校验逻辑
                         try {
                             itemData = JsonUtil.deserialize(JsonUtil.serialize(item), fieldConfig.value());
                         } catch (Exception e) {

@@ -14,12 +14,8 @@ public interface CallApiLogicConfig extends CallLogicConfig {
     String mode();
 
     @Field(key = "retry", name = "重试次数", type = FieldTypeEnum.NUMBER, defaultValue = "1")
-    default Integer retry() {
-        return 1;
-    }
+    Integer retry();
 
     @Field(key = "timeout", name = "超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "5000")
-    default Integer timeout() {
-        return 5000;
-    }
+    Integer timeout();
 }

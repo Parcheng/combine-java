@@ -7,9 +7,7 @@ import com.parch.combine.core.component.base.ILogicConfig;
 public interface CacheLogicConfig extends ILogicConfig {
 
     @Field(key = "domain", name = "缓存域", type = FieldTypeEnum.TEXT, defaultValue = "$common")
-    default String domain() {
-        return "$common";
-    }
+    String domain();
 
     @Field(key = "key", name = "缓存KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     String key();

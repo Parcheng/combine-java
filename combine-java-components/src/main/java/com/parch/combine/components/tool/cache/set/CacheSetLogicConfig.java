@@ -9,8 +9,6 @@ public interface CacheSetLogicConfig extends CacheLogicConfig {
     @Field(key = "value", name = "数据/数据引用", type = FieldTypeEnum.TEXT, isRequired = true)
     String value();
 
-    @Field(key = "expires", name = "有效期", type = FieldTypeEnum.NUMBER, defaultValue = "-1（无限制）")
-    default Long expires() {
-        return -1L;
-    }
+    @Field(key = "expires", name = "有效期（默认无限制）", type = FieldTypeEnum.NUMBER, defaultValue = "-1")
+    Long expires();
 }

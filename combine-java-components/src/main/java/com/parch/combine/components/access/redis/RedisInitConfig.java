@@ -25,15 +25,11 @@ public interface RedisInitConfig extends IInitConfig {
 
     @Field(key = "timeout", name = "超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "2000")
     @FieldEg(eg = "6000", desc = "超时时间为 6 秒")
-    default Integer timeout(){
-        return 2000;
-    }
+    Integer timeout();
 
     @Field(key = "maxAttempts", name = "最大重试次数", type = FieldTypeEnum.NUMBER, defaultValue = "10")
     @FieldEg(eg = "10", desc = "最大重试次数 10 次")
-    default Integer maxAttempts(){
-        return 10;
-    }
+    Integer maxAttempts();
 
     @Field(key = "printCommand", name = "是否打印命令信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     Boolean printCommand();
@@ -42,20 +38,14 @@ public interface RedisInitConfig extends IInitConfig {
 
         @Field(key = "max", name = "连接最大数量", type = FieldTypeEnum.NUMBER, defaultValue = "10")
         @FieldEg(eg = "10", desc = "连接池最大连接数10")
-        default Integer max(){
-            return 10;
-        }
+        Integer max();
 
         @Field(key = "min", name = "连接最小数量", type = FieldTypeEnum.NUMBER, defaultValue = "5")
         @FieldEg(eg = "5", desc = "连接池最小连接数5")
-        default Integer min(){
-            return 5;
-        }
+        Integer min();
 
         @Field(key = "timeout", name = "连接超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "10000")
         @FieldEg(eg = "10000", desc = "连接超时时间为10000毫秒")
-        default Long timeout() {
-            return 10000L;
-        }
+        Long timeout();
     }
 }

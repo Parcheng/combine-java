@@ -59,13 +59,19 @@ public class InitConfigManager {
         }
 
         Map<String, Object> preConfig = PRE_CONFIGS.get(key);
+        if (preConfig == null) {
+            preConfig = new HashMap<>();
+            preConfig.put(FieldKeyCanstant.ID, id);
+            preConfig.put(FieldKeyCanstant.TYPE, type);
+        }
+
         ThreeTuples<Boolean, T, List<String>> buildResult = ConfigHandler.build(scopeKey, clazz, preConfig);
         if (buildResult.getFirst()) {
             CONFIGS.put(key, buildResult.getSecond());
             PRE_CONFIGS.remove(key);
             return new ThreeTuples<>(true, buildResult.getSecond(), null);
         } else {
-            return new ThreeTuples<>(true, null, buildResult.getThird());
+            return new ThreeTuples<>(false, null, buildResult.getThird());
         }
     }
 

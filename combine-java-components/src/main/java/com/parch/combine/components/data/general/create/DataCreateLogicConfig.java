@@ -27,7 +27,7 @@ public interface DataCreateLogicConfig extends ILogicConfig {
         @FieldSelect(enumClass = DataTypeEnum.class)
         String type();
 
-        @Field(key = "params", name = "数据值集合", type = FieldTypeEnum.ANY, isRequired = true, isArray = true)
+        @Field(key = "params", name = "数据值集合", type = FieldTypeEnum.ANY, isArray = true)
         @FieldDesc("对象类型值必须为“(字段名:字段值)”格式")
         Object[] params();
     }

@@ -9,9 +9,7 @@ import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 public interface DataResetLogicConfig extends ILogicConfig {
 
     @Field(key = "nullValue", name = "是否允许空值", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
-    default Boolean nullValue() {
-        return true;
-    }
+    Boolean nullValue();
 
     @Field(key = "items", name = "重新设值配置集合，", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
     @FieldObject(DataResetCompare.class)

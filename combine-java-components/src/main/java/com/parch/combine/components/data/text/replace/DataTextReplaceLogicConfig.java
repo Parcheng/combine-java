@@ -9,15 +9,11 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 public interface DataTextReplaceLogicConfig extends ILogicConfig {
 
     @Field(key = "isReplace", name = "是否替换掉源数据", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
-    default Boolean isReplace() {
-        return true;
-    }
+    Boolean isReplace();
 
     @Field(key = "mode", name = "替换方式", type = FieldTypeEnum.SELECT, defaultValue = "ALL")
     @FieldSelect(enumClass = DataTextReplaceModeEnum.class)
-    default String mode() {
-        return DataTextReplaceModeEnum.ALL.name();
-    }
+    String mode();
 
     @Field(key = "source", name = "数据源", type = FieldTypeEnum.EXPRESSION, parseExpression = false, isRequired = true)
     @FieldDesc("支持结构对象、集合和文本类型")

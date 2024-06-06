@@ -23,7 +23,7 @@ public interface DataFilterLogicConfig extends ILogicConfig {
         @Field(key = "target", name = "要过滤的字段的路径", type = FieldTypeEnum.EXPRESSION, parseExpression = false, isRequired = true)
         String target();
 
-        @Field(key = "rule", name = "过滤规则，默认为 CLEAR 规则", type = FieldTypeEnum.TEXT)
+        @Field(key = "rule", name = "过滤规则，默认为 CLEAR 规则", type = FieldTypeEnum.TEXT, defaultValue = "CLEAR")
         @FieldSelect(enumClass = DataFilterRuleEnum.class)
         String rule();
 

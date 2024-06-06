@@ -8,11 +8,9 @@ import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 
 public interface DataVerifyLogicConfig extends ILogicConfig {
 
-    @Field(key = "mode", name = "验证模式", type = FieldTypeEnum.SELECT, defaultValue = "false")
+    @Field(key = "mode", name = "验证模式", type = FieldTypeEnum.SELECT, defaultValue = "FIRST")
     @FieldSelect(enumClass = VerifyModeEnum.class)
-    default String mode() {
-        return VerifyModeEnum.FIRST.name();
-    }
+    String mode();
 
     @Field(key = "defaultMsg", name = "默认错误提示信息", type = FieldTypeEnum.TEXT)
     @FieldDesc("会拼接在 items 中配置错误提示信息之前")
@@ -32,8 +30,6 @@ public interface DataVerifyLogicConfig extends ILogicConfig {
         @FieldObject(DataVerifyItem.class)
         @FieldEg(eg = "名称不正确", desc = "条件成立时，返回“名称不正确”错误信息")
         @FieldEg(eg = "#{$r.data001.error}", desc = "条件成立时，返回 data001 组件返回结果的 error 字段的值")
-        default String msg(){
-            return CheckEmptyUtil.EMPTY;
-        }
+        String msg();
     }
 }

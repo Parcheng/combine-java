@@ -13,9 +13,7 @@ public interface RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
     String consumerGroup();
 
     @Field(key = "expression", name = "表达式", type = FieldTypeEnum.TEXT, defaultValue = "*")
-    default String expression() {
-        return "*";
-    };
+    String expression();
 
     @Field(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
     String[] components();
