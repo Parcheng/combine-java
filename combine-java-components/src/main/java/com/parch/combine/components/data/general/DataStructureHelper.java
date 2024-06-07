@@ -6,7 +6,7 @@ public class DataStructureHelper {
 
     public static boolean isStructure(String value) {
         return value.startsWith(SymbolConstant.LEFT_PARENTHESIS)
-                && value.startsWith(SymbolConstant.RIGHT_PARENTHESIS)
+                && value.endsWith(SymbolConstant.RIGHT_PARENTHESIS)
                 && value.indexOf(SymbolConstant.COLON) > 0;
     }
 
