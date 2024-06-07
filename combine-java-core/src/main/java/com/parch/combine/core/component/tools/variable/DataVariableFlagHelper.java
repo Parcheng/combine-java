@@ -84,10 +84,14 @@ public class DataVariableFlagHelper {
             }
 
             String paramFieldStr = paramStr.substring(2, paramStr.length() -1);
-            Object value = DataFindHandler.find(paramFieldStr);
-            if (value != null) {
-                path = path.replace(paramStr, value.toString());
+            if (path.length() != paramStr.length()) {
+                Object value = DataFindHandler.find(paramFieldStr);
+                if (value != null) {
+                    paramFieldStr = value.toString();
+                }
             }
+
+            path = path.replace(paramStr, paramFieldStr);
         }
 
         return splitPath(path);

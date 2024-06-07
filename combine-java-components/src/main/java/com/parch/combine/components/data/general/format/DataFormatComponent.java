@@ -25,7 +25,7 @@ public class DataFormatComponent extends AbsComponent<DataFormatInitConfig, Data
         // 执行格式化
         DataFormatLogicConfig logicConfig = getLogicConfig();
         DataFormatLogicConfig.DataFormatItem[] items = logicConfig.items();
-        for(DataFormatLogicConfig.DataFormatItem item : items) {
+        for (DataFormatLogicConfig.DataFormatItem item : items) {
             String source = item.source();
 
             DataFormatFunctionEnum functionType = DataFormatFunctionEnum.get(item.function());
