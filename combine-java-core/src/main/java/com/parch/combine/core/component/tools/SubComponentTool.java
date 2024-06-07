@@ -23,7 +23,7 @@ public class SubComponentTool {
             return null;
         }
 
-        AbsComponent<?,?> component = combineManager.getComponent().getComponent(componentId.toString());
+        AbsComponent<?,?> component = combineManager.getComponent().getComponent(componentId);
         return combineManager.getComponent().executeComponent(component);
     }
 

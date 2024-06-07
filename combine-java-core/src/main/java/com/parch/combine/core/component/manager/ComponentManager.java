@@ -144,6 +144,7 @@ public class ComponentManager {
         if (CheckEmptyUtil.isNotEmpty(flags)) {
             for (String flag : flags) {
                 if (ComponentFlagEnum.get(flag) == ComponentFlagEnum.STATIC) {
+                    staticComponentIds.add(component.getId());
                     return;
                 }
             }

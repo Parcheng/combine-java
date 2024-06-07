@@ -36,7 +36,7 @@ public class ConfigProxy implements InvocationHandler {
 
             // 空数据处理
             Object configFieldData = config.get(key);
-            if (CheckEmptyUtil.isNotEmpty(field.defaultValue())) {
+            if (configFieldData == null && CheckEmptyUtil.isNotEmpty(field.defaultValue())) {
                 configFieldData = field.defaultValue();
                 config.put(key, configFieldData);
             }

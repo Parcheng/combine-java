@@ -16,7 +16,7 @@ public interface ILogicConfig {
     @Field(key = "ref", name = "关联初始化配置的ID", type = FieldTypeEnum.TEXT)
     String ref();
 
-    @Field(key = "flag", name = "标识", type = FieldTypeEnum.SELECT, parseExpression = false, isArray = true)
+    @Field(key = "flags", name = "标识", type = FieldTypeEnum.SELECT, parseExpression = false, isArray = true)
     @FieldSelect(enumClass = ComponentFlagEnum.class)
     String[] flags();
 
