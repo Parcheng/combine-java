@@ -4,6 +4,7 @@ import com.parch.combine.core.common.settings.config.*;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.settings.annotations.*;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -43,28 +44,39 @@ public class PropertySettingBuilder {
         java.lang.reflect.Field[] fieldArr = propertyClass.getDeclaredFields();
         for (java.lang.reflect.Field field : fieldArr) {
             field.setAccessible(true);
-            PropertySetting property = setProperty(properties, field, keyPrefix);
-            if (property == null) {
-                continue;
-            }
+            buildProperty(scope, properties, field, keyPrefix, parsedClass);
+        }
 
-            FieldTypeEnum type = property.getType();
-            switch (type) {
-                case CONFIG:
-                    setConfigProperty(scope, properties, property, field, keyPrefix, parsedClass);
-                    break;
-                case SELECT:
-                    setSelect(property, field);
-                    break;
-                default:
-                    break;
-            }
-
-            setEgs(property, field);
+        // 解析方法
+        Method[] methodArr = propertyClass.getMethods();
+        for (Method method : methodArr) {
+            buildProperty(scope, properties, method, keyPrefix, parsedClass);
         }
     }
 
-    private static PropertySetting setProperty(List<PropertySetting> properties, java.lang.reflect.Field field, String keyPrefix) {
+    private static void buildProperty(String scope, List<PropertySetting> properties, AnnotatedElement field, String keyPrefix,  Set<Class<?>> parsedClass) {
+        PropertySetting property = setProperty(properties, field, keyPrefix);
+        if (property == null) {
+            return ;
+        }
+
+        FieldTypeEnum type = property.getType();
+        switch (type) {
+            case CONFIG:
+            case OBJECT:
+                setConfigProperty(scope, properties, property, field, keyPrefix, parsedClass);
+                break;
+            case SELECT:
+                setSelect(property, field);
+                break;
+            default:
+                break;
+        }
+
+        setEgs(property, field);
+    }
+
+    private static PropertySetting setProperty(List<PropertySetting> properties, AnnotatedElement field, String keyPrefix) {
         Field fieldAnnotation = field.getAnnotation(Field.class);
         if (fieldAnnotation == null || field.getAnnotation(Invalid.class) != null) {
             return null;
@@ -88,7 +100,7 @@ public class PropertySettingBuilder {
         return property;
     }
 
-    private static void setConfigProperty(String scope, List<PropertySetting> properties, PropertySetting property, java.lang.reflect.Field field, String keyPrefix, Set<Class<?>> parsedClass) {
+    private static void setConfigProperty(String scope, List<PropertySetting> properties, PropertySetting property, AnnotatedElement field, String keyPrefix, Set<Class<?>> parsedClass) {
         FieldObject fieldObjectAnnotation = field.getAnnotation(FieldObject.class);
         if (fieldObjectAnnotation != null) {
             List<PropertySetting> subProperties = new ArrayList<>();
@@ -115,7 +127,7 @@ public class PropertySettingBuilder {
         }
     }
 
-    private static void setSelect(PropertySetting property, java.lang.reflect.Field field) {
+    private static void setSelect(PropertySetting property, AnnotatedElement field) {
         FieldSelect fieldSelectAnnotation = field.getAnnotation(FieldSelect.class);
         if (fieldSelectAnnotation == null) {
             return;
@@ -138,7 +150,7 @@ public class PropertySettingBuilder {
         property.setOptions(options);
     }
 
-    private static void setEgs(PropertySetting property, java.lang.reflect.Field field) {
+    private static void setEgs(PropertySetting property, AnnotatedElement field) {
         FieldEg[] fieldEgAnnotations = field.getAnnotationsByType(FieldEg.class);
         if (fieldEgAnnotations == null || fieldEgAnnotations.length == 0) {
             return;

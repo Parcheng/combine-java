@@ -51,13 +51,6 @@ public class ConfigHandler {
             errorMsg.addAll(check(superclass));
         }
 
-//        if (!config.isInterface()) {
-//            java.lang.reflect.Field[] fields = config.getFields();
-//            for (AnnotatedElement item : fields) {
-//                CheckField(item, errorMsg);
-//            }
-//        }
-
         Method[] methods = config.getMethods();
         for (AnnotatedElement item : methods) {
             CheckField(item, errorMsg);
