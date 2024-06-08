@@ -75,6 +75,8 @@ public class DataFindHandler {
 
         // 解析 path 路径（将 path 中的 #{...} 解析成值）,并解析为数组
         String[] valuePathArr = DataVariableFlagHelper.parsePath(path);
+        // 解析默认值设置，获取默认值，并将默认值设置从路径中清除
+        Object defaultValue = DataVariableFlagHelper.parseDefault(valuePathArr);
 
         // 全局配置
         String scopeKey = ComponentContextHandler.getScopeKey();
@@ -107,7 +109,8 @@ public class DataFindHandler {
         }
 
         // 查找数据
-        return findData(currData, valuePathArr, startIndex);
+        Object resultData = findData(currData, valuePathArr, startIndex);
+        return resultData == null ? defaultValue : resultData;
     }
 
     /**
@@ -166,6 +169,7 @@ public class DataFindHandler {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static Object findList(Integer dataIndex, Object currData, String[] path, int index) {
         // 验证当前数据是否为集合
         if(!(currData instanceof List)) {
@@ -282,6 +286,8 @@ public class DataFindHandler {
 
         // 解析 path 路径（将 path 中的 #{...} 解析成值），并解析为数组
         String[] valuePathArr = DataVariableFlagHelper.parsePath(path);
+        // 解析默认值设置（将默认值设置从路径中去掉，替换设置不需要默认值）
+        DataVariableFlagHelper.parseDefault(valuePathArr);
 
         // 全局配置
         String scopeKey = ComponentContextHandler.getScopeKey();
