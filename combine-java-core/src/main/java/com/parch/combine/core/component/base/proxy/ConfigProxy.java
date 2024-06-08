@@ -45,7 +45,7 @@ public class ConfigProxy implements InvocationHandler {
             if (configFieldData == null) {
                 // 字段必填验证
                 if (field.isRequired()) {
-                    errors.add(key + "字段不能为空");
+                    errors.add(ComponentErrorHandler.buildFieldMsg(key, "字段不能为空"));
                 }
 
                 // 设置数据为空标识
@@ -66,7 +66,7 @@ public class ConfigProxy implements InvocationHandler {
                 configFlagMap.put(key, false);
             } else {
                 for (String item : parseResult.getThird()) {
-                    errors.add(field.key() + "-" + item);
+                    errors.add(ComponentErrorHandler.buildFieldMsg(field.key(), item));
                 }
             }
         }
@@ -99,7 +99,7 @@ public class ConfigProxy implements InvocationHandler {
 
         configFieldData = ConfigHandler.parseFieldData(field.type(), configFieldData, field.isArray());
         if (field.isRequired() && configFieldData == null) {
-            String msg = key + " > 字段不能为空";
+            String msg = ComponentErrorHandler.buildFieldMsg(key, "字段不能为空");
             ComponentErrorHandler.print(msg);
             throw new Exception(msg);
         }
@@ -110,10 +110,10 @@ public class ConfigProxy implements InvocationHandler {
                 configFieldData = parseResult.getSecond();
             } else {
                 for (String msg : parseResult.getThird()) {
-                    ComponentErrorHandler.print(key + " > " + msg);
+                    ComponentErrorHandler.print(ComponentErrorHandler.buildFieldMsg(key, msg));
                 }
                 if (field.throwTypeError()) {
-                    throw new Exception(key+ " > 动态加载配置数据失败");
+                    throw new Exception(ComponentErrorHandler.buildFieldMsg(key, "动态加载配置数据失败"));
                 }
             }
         }
