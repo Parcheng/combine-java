@@ -9,7 +9,6 @@ import com.parch.combine.core.component.tools.conn.DbConnPoolTool;
 import com.parch.combine.core.component.tools.sql.SqlItem;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.tools.sql.SqlTool;
-import com.parch.combine.core.common.util.TypeConversionUtil;
 
 import javax.sql.DataSource;
 import java.sql.*;
