@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
  */
 public class MatcherUtil {
 
+    private MatcherUtil() {}
+
     /**
      * 匹配
      *

@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 public class PackageScanUtil {
 
+    private PackageScanUtil() {}
+
     public static Set<Class<?>> scan(String packageName) {
         Set<Class<?>> classes = new HashSet<>();
         try {

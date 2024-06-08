@@ -10,6 +10,8 @@ import java.util.Map;
  */
 public class DataTypeIsUtil {
 
+    private DataTypeIsUtil() {}
+
     /**
      * 是否为数字
      *

@@ -5,6 +5,8 @@ package com.parch.combine.core.common.util;
  */
 public class FileNameUtil {
 
+    private FileNameUtil() {}
+
     /**
      * 获取文件名称
      *

@@ -26,7 +26,7 @@ public class JsonUtil {
         OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public JsonUtil() {
+    private JsonUtil() {
     }
 
     public static <T> String serialize(T value, Class<T> clazz, JsonSerializer<T> serializer) {

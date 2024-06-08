@@ -12,6 +12,8 @@ public class CheckEmptyUtil {
     public static final String LF = "\n";
     public static final String CR = "\r";
 
+    private CheckEmptyUtil() {}
+
     /**
      * 判断空
      *

@@ -10,6 +10,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class ResourceFileUtil {
 
+    private ResourceFileUtil() {}
+
     /**
      * 读取系统文件
      *

@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public class DataParseUtil {
 
+    private DataParseUtil() {}
+
     public static Object parse(Object data, Class<?> typeClass) {
         if (data == null) {
             return null;

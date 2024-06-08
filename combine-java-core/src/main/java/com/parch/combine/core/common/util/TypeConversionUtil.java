@@ -5,6 +5,8 @@ package com.parch.combine.core.common.util;
  */
 public class TypeConversionUtil {
 
+    private TypeConversionUtil() {}
+
     public static Integer parseInt(Object data, Integer defaultInt) {
         if (data == null) {
             return defaultInt;
