@@ -143,33 +143,33 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
         switch (type) {
             case SET:
                 for (Object param : params) {
-                    if (param == null) {
+                    if (param == null || !DataStructureHelper.isStructure(param.toString())) {
                         continue;
                     }
 
-                    if (DataStructureHelper.isStructure(param.toString())) {
-                        String[] paramPath = DataStructureHelper.parseStructure(param.toString());
-                        Object key = DataVariableHelper.parseValue(paramPath[0], false);
-                        if (key != null) {
-                            Object value = DataVariableHelper.parseValue(paramPath[1], false);
-                            if (sourceData instanceof List) {
-                                List<Object> listData = (List<Object>) sourceData;
-                                if (DataTypeIsUtil.isInteger(key)) {
-                                    int indexNum = Integer.parseInt(key.toString());
-                                    // 下标越界时补充数据
-                                    if (sourceData.size() <= indexNum) {
-                                        for (int j = 0; j < indexNum + 1 - sourceData.size(); j++) {
-                                            sourceData.add(null);
-                                        }
-                                    }
-                                    value = getValue(listData.get(indexNum), dataType, value);
-                                    listData.set(indexNum, value);
+                    String[] paramPath = DataStructureHelper.parseStructure(param.toString());
+                    Object key = DataVariableHelper.parseValue(paramPath[0], false);
+                    if (key == null) {
+                        continue;
+                    }
+
+                    Object value = DataVariableHelper.parseValue(paramPath[1], false);
+                    if (sourceData instanceof List) {
+                        List<Object> listData = (List<Object>) sourceData;
+                        if (DataTypeIsUtil.isInteger(key)) {
+                            int indexNum = Integer.parseInt(key.toString());
+                            // 下标越界时补充数据
+                            if (sourceData.size() <= indexNum) {
+                                for (int j = 0; j <= indexNum + 1 - sourceData.size(); j++) {
+                                    sourceData.add(null);
                                 }
-                            } else {
-                                value = getValue(null, dataType, value);
-                                sourceData.add(value);
                             }
+                            value = getValue(listData.get(indexNum), dataType, value);
+                            listData.set(indexNum, value);
                         }
+                    } else {
+                        value = getValue(null, dataType, value);
+                        sourceData.add(value);
                     }
                 }
                 break;
