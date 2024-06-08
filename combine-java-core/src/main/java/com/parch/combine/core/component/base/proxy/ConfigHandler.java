@@ -10,6 +10,7 @@ import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
@@ -81,40 +82,40 @@ public class ConfigHandler {
             case TEXT:
             case COMPONENT:
                 if (typeClass != String.class) {
-                    errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，请使用字符串类型");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，请使用字符串类型"));
                 }
                 break;
             case BOOLEAN:
                 if (typeClass != Boolean.class) {
-                    errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，请使用布尔类型");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，请使用布尔类型"));
                 }
                 break;
             case NUMBER:
                 if (!Number.class.isAssignableFrom(typeClass)) {
-                    errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，请使用数字类型");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，请使用数字类型"));
                 }
                 break;
             case SELECT:
                 FieldSelect fieldSelect = item.getAnnotation(FieldSelect.class);
                 if (fieldSelect == null) {
-                    errorMsg.add(field.key() + " > 的类型配置定义缺少配置，请使用 FieldSelect 注解指定配置类");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义缺少配置，请使用 FieldSelect 注解指定配置类"));
                 }
                 if (typeClass != String.class) {
-                    errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，请使用字符串类型");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，请使用字符串类型"));
                 }
                 break;
             case MAP:
                 if (typeClass != Map.class) {
-                    errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，请使用Map类型");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，请使用Map类型"));
                 }
                 break;
             case CONFIG:
                 FieldObject fieldConfig = item.getAnnotation(FieldObject.class);
                 if (fieldConfig == null) {
-                    errorMsg.add(field.key() + " > 的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类"));
                 } else {
                     if (!fieldConfig.value().isAssignableFrom(typeClass)) {
-                        errorMsg.add(field.key() + " > 的类型配置定义与 FieldObject 注解配置不一致");
+                        errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与 FieldObject 注解配置不一致"));
                     }
                     List<String> subErrors = ConfigHandler.check(fieldConfig.value());
                     for (String subError : subErrors) {
@@ -125,27 +126,27 @@ public class ConfigHandler {
             case OBJECT:
                 fieldConfig = item.getAnnotation(FieldObject.class);
                 if (fieldConfig == null) {
-                    errorMsg.add(field.key() + " > 的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类"));
                 }
                 break;
             case EXPRESSION:
                 if (field.parseExpression()) {
                     if (typeClass != Object.class) {
-                        errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，请使用 Object 类型");
+                        errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，请使用 Object 类型"));
                     }
                 } else {
                     if (typeClass != String.class) {
-                        errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，不自动解析表达式时，请使用字符串类型");
+                        errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，不自动解析表达式时，请使用字符串类型"));
                     }
                 }
                 break;
             case ANY:
                 if (typeClass != Object.class) {
-                    errorMsg.add(field.key() + " > 的类型配置定义与方法返回值不匹配，请使用 Object 类型");
+                    errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与方法返回值不匹配，请使用 Object 类型"));
                 }
                 break;
             default:
-                errorMsg.add(field.key() + " > 不支持该类型配置定义");
+                errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "不支持该类型配置定义"));
                 break;
         }
     }
