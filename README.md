@@ -50,7 +50,7 @@ UI的API地址：http://127.0.0.1:8888/combine/page/ui-api<br>
 <dependency>
     <artifactId>combine-java-spring-web</artifactId>
     <groupId>com.parch.combine</groupId>
-    <version>0.6.0</version>
+    <version>0.8.0</version>
 </dependency>
 ```
 
@@ -173,25 +173,6 @@ public class My1Component extends AbsComponent<My1InitConfig, My1LogicConfig> {
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        My1LogicConfig logicConfig = getLogicConfig();
-        My1InitConfig initConfig = getInitConfig();
-
-        // 初始化时的配置检查
-        if (CheckEmptyUtil.isEmpty(logicConfig.getXXX())) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "XXX为空"));
-        }
-        if (CheckEmptyUtil.isEmpty(initConfig.getXXX())) {
-            result.add(ComponentErrorHandler.buildCheckInitMsg(logicConfig, "XXX为空"));
-        }
-
-        ... ...
-
-        return result;
-    }
-
-    @Override
     public DataResult execute() {
         My1LogicConfig logicConfig = getLogicConfig();
         My1InitConfig initConfig = getInitConfig();
@@ -209,18 +190,16 @@ public class My1Component extends AbsComponent<My1InitConfig, My1LogicConfig> {
 
 <br>创建 My1Component 的初始化配置类和逻辑配置类<br>
 ```$xslt
-public class My1LogicConfig extends ILogicConfig {
+public interface My1LogicConfig extends ILogicConfig {
 
     // 使用 Field 相关注解，可以在访问 API 页面时生成自定义组件的描述信息
     @Field(key = "key", name = "XXXX", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldDesc("XXXXXXXXXXXXXXXXXX")
-    private String key;
-
-    ... 其他自定义配置项和GET/SET方法 ...
+    String key();
 }
 
-public class My1InitConfig extends IInitConfig {
-    ... 自定义配置项和GET/SET方法 ...
+public interface My1InitConfig extends IInitConfig {
+    ... 自定义配置项 ...
 }
 ```
 <br>
