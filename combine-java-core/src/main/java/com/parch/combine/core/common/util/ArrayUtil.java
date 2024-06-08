@@ -7,6 +7,8 @@ import java.lang.reflect.Array;
  */
 public class ArrayUtil {
 
+    private ArrayUtil() {}
+
     /**
      * 数组截取
      *

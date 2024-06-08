@@ -18,6 +18,8 @@ public class PrintUtil {
 //        }
 //    }
 
+    private PrintUtil() {}
+
     /**
      * 打印
      *

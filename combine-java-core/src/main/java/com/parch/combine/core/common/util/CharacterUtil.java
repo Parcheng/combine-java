@@ -5,6 +5,8 @@ package com.parch.combine.core.common.util;
  */
 public class CharacterUtil {
 
+    private CharacterUtil() {}
+
     public static String replaceChinese(String str) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < str.length(); i++) {

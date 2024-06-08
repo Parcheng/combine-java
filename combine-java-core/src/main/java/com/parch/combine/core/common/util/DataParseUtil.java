@@ -1,8 +1,9 @@
 package com.parch.combine.core.common.util;
 
-import cn.hutool.core.date.DateUtil;
 import com.parch.combine.core.common.canstant.SymbolConstant;
 
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -11,6 +12,8 @@ import java.util.Map;
  * 数据解析工具类
  */
 public class DataParseUtil {
+
+    private DataParseUtil() {}
 
     public static Object parse(Object data, Class<?> typeClass) {
         if (data == null) {
@@ -89,16 +92,47 @@ public class DataParseUtil {
      * @return 数据
      */
     public static Date parseDate(Object data) {
-        if (data != null) {
-            try {
-                return DateUtil.parse(data.toString());
-            } catch (Exception e) {
+        try {
+            if (data == null) {
                 return null;
+            } else if (data instanceof Data) {
+                return (Date) data;
+            } else if (data instanceof Long) {
+                return new Date((Long) data);
+            } else if (data instanceof String) {
+                String dateString = (String) data;
+                if (dateString.matches("^\\d+$") && dateString.length() == 13) {
+                    return new Date(Long.parseLong(dateString));
+                } else {
+                    dateString = dateString.replaceAll("[/\\-\\s:T]","");
+                    if (dateString.matches("^\\d+$")) {
+                        int length = dateString.length();
+                        if (length == 17) {
+                            return new SimpleDateFormat("yyyyMMddHHmmssSSS").parse(dateString);
+                        } else if (length == 14) {
+                            return new SimpleDateFormat("yyyyMMddHHmmss").parse(dateString);
+                        } else if (length == 12) {
+                            return new SimpleDateFormat("yyyyMMddHHmm").parse(dateString);
+                        } else if (length == 10) {
+                            return new SimpleDateFormat("yyyyMMddHH").parse(dateString);
+                        } else if (length == 8) {
+                            return new SimpleDateFormat("yyyyMMdd").parse(dateString);
+                        } else if (length == 6) {
+                            return new SimpleDateFormat("yyyyMM").parse(dateString);
+                        } else if (length == 4) {
+                            return new SimpleDateFormat("yyyy").parse(dateString);
+                        }
+                    }
+                }
             }
+        } catch (Exception e) {
+            PrintUtil.printError("日期类型转换错误: " + e.getMessage());
+            return null;
         }
 
         return null;
     }
+
 
     /**
      * 解析数字

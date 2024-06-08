@@ -5,6 +5,8 @@ package com.parch.combine.core.common.util;
  */
 public class FlowKeyUtil {
 
+    private FlowKeyUtil() {}
+
     /**
      * 获取KEY
      *

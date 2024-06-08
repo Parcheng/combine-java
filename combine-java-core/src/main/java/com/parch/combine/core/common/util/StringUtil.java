@@ -7,6 +7,8 @@ import java.util.Collection;
  */
 public class StringUtil {
 
+    private StringUtil() {}
+
     /**
      * 字符串拼接
      *
