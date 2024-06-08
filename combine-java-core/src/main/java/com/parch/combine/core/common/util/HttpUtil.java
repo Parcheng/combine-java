@@ -1,6 +1,5 @@
-package com.parch.combine.core.component.tools;
+package com.parch.combine.core.common.util;
 
-import com.parch.combine.core.common.util.IOUtil;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,7 +9,7 @@ import java.util.Map;
 /**
  * HTTP请求帮助类
  */
-public class HttpTool {
+public class HttpUtil {
 
     /**
      * 发送GET请求

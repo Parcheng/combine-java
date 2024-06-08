@@ -17,4 +17,9 @@ public @interface FieldSelect {
      * 下拉枚举Class
      */
     Class<? extends IOptionSetting> enumClass();
+
+    /**
+     * 是否验证下拉值
+     */
+    boolean isVerify() default true;
 }

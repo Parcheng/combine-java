@@ -2,8 +2,8 @@ package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.PrintUtil;
-import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.trigger.*;
 import com.parch.combine.core.ui.tools.ConfigTool;
 
@@ -76,19 +76,19 @@ public class TriggerManager {
         TriggerTypeEnum triggerType = TriggerTypeEnum.get(type);
         switch (triggerType) {
             case CALL_FLOW:
-                return TypeConversionUtil.parseJava(configMap, TriggerCallFlowConfig.class);
+                return DataParseUtil.parseJava(configMap, TriggerCallFlowConfig.class);
             case CALL_URL:
-                return TypeConversionUtil.parseJava(configMap, TriggerCallUrlConfig.class);
+                return DataParseUtil.parseJava(configMap, TriggerCallUrlConfig.class);
             case CALL_FUNC:
-                return TypeConversionUtil.parseJava(configMap, TriggerCallFuncConfig.class);
+                return DataParseUtil.parseJava(configMap, TriggerCallFuncConfig.class);
             case LOAD:
-                return TypeConversionUtil.parseJava(configMap, TriggerLoadConfig.class);
+                return DataParseUtil.parseJava(configMap, TriggerLoadConfig.class);
             case LOAD_DATA:
-                return TypeConversionUtil.parseJava(configMap, TriggerLoadDataConfig.class);
+                return DataParseUtil.parseJava(configMap, TriggerLoadDataConfig.class);
             case SKIP:
-                return TypeConversionUtil.parseJava(configMap, TriggerSkipConfig.class);
+                return DataParseUtil.parseJava(configMap, TriggerSkipConfig.class);
             case CUSTOM:
-                return TypeConversionUtil.parseJava(configMap, TriggerCustomConfig.class);
+                return DataParseUtil.parseJava(configMap, TriggerCustomConfig.class);
             default:
                 PrintUtil.printError("【ui】【trigger】【" + id + "】【" + type + "】类型不存在");
                 return null;

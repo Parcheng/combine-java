@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.base.proxy;
+package com.parch.combine.core.component.tools.config;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.*;
 
-public class ConfigHandler {
+public class ConfigHelper {
 
     /**
      * 构建配置类
@@ -117,7 +117,7 @@ public class ConfigHandler {
                     if (!fieldConfig.value().isAssignableFrom(typeClass)) {
                         errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与 FieldObject 注解配置不一致"));
                     }
-                    List<String> subErrors = ConfigHandler.check(fieldConfig.value());
+                    List<String> subErrors = ConfigHelper.check(fieldConfig.value());
                     for (String subError : subErrors) {
                         errorMsg.add(field.key() + "." + subError);
                     }

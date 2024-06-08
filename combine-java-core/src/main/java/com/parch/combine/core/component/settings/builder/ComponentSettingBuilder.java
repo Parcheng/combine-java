@@ -5,7 +5,6 @@ import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder
 import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.base.IInitConfig;
-import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.settings.annotations.*;
 import com.parch.combine.core.component.settings.config.ComponentResultSetting;
 import com.parch.combine.core.component.settings.config.ComponentSetting;

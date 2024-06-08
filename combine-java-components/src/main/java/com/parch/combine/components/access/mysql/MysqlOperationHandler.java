@@ -1,6 +1,7 @@
 package com.parch.combine.components.access.mysql;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
@@ -141,9 +142,9 @@ public class MysqlOperationHandler {
                     List<Map<String, Object>> countDataList = getResultData(rsCount);
 
                     // 组装结果集
-                    int currPage = TypeConversionUtil.parseInt(params.get(CURR_PAGE_NAME), 0);
-                    int pageSize = TypeConversionUtil.parseInt(params.get(PAGE_SIZE_NAME), 0);
-                    int count = TypeConversionUtil.parseInt(countDataList.get(0).get(COUNT_NAME), 0);
+                    int currPage = DataParseUtil.getInteger(params.get(CURR_PAGE_NAME), 0);
+                    int pageSize = DataParseUtil.getInteger(params.get(PAGE_SIZE_NAME), 0);
+                    int count = DataParseUtil.getInteger(countDataList.get(0).get(COUNT_NAME), 0);
                     result = DataResult.success(dataList, currPage, pageSize, count);
                     break;
                 case DDL:

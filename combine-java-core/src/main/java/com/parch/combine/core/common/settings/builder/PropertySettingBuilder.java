@@ -1,6 +1,7 @@
 package com.parch.combine.core.common.settings.builder;
 
 import com.parch.combine.core.common.settings.config.*;
+import com.parch.combine.core.common.settings.helper.FieldSelectHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.settings.annotations.*;
 
@@ -133,7 +134,7 @@ public class PropertySettingBuilder {
             return;
         }
 
-        IOptionSetting[] optionConfigs = getOptions(fieldSelectAnnotation.enumClass());
+        IOptionSetting[] optionConfigs = FieldSelectHelper.getOptions(fieldSelectAnnotation.enumClass());
         if (optionConfigs == null) {
             return;
         }
@@ -168,17 +169,5 @@ public class PropertySettingBuilder {
         property.setEgs(egs);
     }
 
-    private static IOptionSetting[] getOptions(Class<?> enumClass) {
-        List<PropertyOptionSetting> options = new ArrayList<>();
 
-        try {
-            Method method = enumClass.getDeclaredMethod("values");
-            method.setAccessible(true);
-            return (IOptionSetting[]) method.invoke(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 }

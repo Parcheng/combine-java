@@ -24,7 +24,7 @@ public class PageManager {
             return key;
         }
 
-        HtmlConfig htmlConfig = TypeConversionUtil.parseJava(configMap, HtmlConfig.class);
+        HtmlConfig htmlConfig = DataParseUtil.parseJava(configMap, HtmlConfig.class);
         if (htmlConfig == null) {
             return null;
         }

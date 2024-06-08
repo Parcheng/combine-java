@@ -6,7 +6,7 @@ import com.parch.combine.components.call.CallTypeEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.HttpTool;
+import com.parch.combine.core.common.util.HttpUtil;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.IOException;
@@ -33,13 +33,13 @@ public class CallApiComponent extends CallComponent<CallApiInitConfig, CallApiLo
             CallTypeEnum mode = CallTypeEnum.get(logicConfig.mode());
             switch (mode) {
                 case GET:
-                    result = HttpTool.doGet(url, params, headers, logicConfig.retry(), logicConfig.timeout());
+                    result = HttpUtil.doGet(url, params, headers, logicConfig.retry(), logicConfig.timeout());
                     break;
                 case POST:
-                    result = HttpTool.doPost(url, JsonUtil.serialize(params), headers, logicConfig.retry(), logicConfig.timeout());
+                    result = HttpUtil.doPost(url, JsonUtil.serialize(params), headers, logicConfig.retry(), logicConfig.timeout());
                     break;
                 case FILE:
-                    result = HttpTool.downloadFile(url, params, headers, logicConfig.retry(), logicConfig.timeout());
+                    result = HttpUtil.downloadFile(url, params, headers, logicConfig.retry(), logicConfig.timeout());
                     break;
                 default:
                     break;

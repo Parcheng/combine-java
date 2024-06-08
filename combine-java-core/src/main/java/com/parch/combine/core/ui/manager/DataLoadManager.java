@@ -2,8 +2,8 @@ package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.PrintUtil;
-import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.dataload.*;
 import com.parch.combine.core.ui.tools.ConfigTool;
 
@@ -63,11 +63,11 @@ public class DataLoadManager  {
         DataLoadTypeEnum dataLoadType = DataLoadTypeEnum.get(type);
         switch (dataLoadType) {
             case FLOW:
-                return TypeConversionUtil.parseJava(configMap, FlowDataLoadConfig.class);
+                return DataParseUtil.parseJava(configMap, FlowDataLoadConfig.class);
             case API:
-                return TypeConversionUtil.parseJava(configMap, ApiDataLoadConfig.class);
+                return DataParseUtil.parseJava(configMap, ApiDataLoadConfig.class);
             case FILE:
-                return TypeConversionUtil.parseJava(configMap, FileDataLoadConfig.class);
+                return DataParseUtil.parseJava(configMap, FileDataLoadConfig.class);
             default:
                 PrintUtil.printError("【ui】【dataLoad】【" + id + "】【" + type + "】类型不存在");
                 return null;

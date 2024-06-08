@@ -2,7 +2,7 @@ package com.parch.combine.core.component.base;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
-import com.parch.combine.core.component.base.proxy.ConfigHandler;
+import com.parch.combine.core.component.tools.config.ConfigHelper;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.error.SystemErrorEnum;
@@ -55,7 +55,7 @@ public abstract class AbsComponent<T extends IInitConfig, R extends ILogicConfig
      */
     public final List<String> initConfig(Map<String, Object> logicConfig) {
         List<String> errorMsg = new ArrayList<>();
-        ThreeTuples<Boolean, R, List<String>> logicBuildResult = ConfigHandler.build(scopeKey, logicConfigClass, logicConfig);
+        ThreeTuples<Boolean, R, List<String>> logicBuildResult = ConfigHelper.build(scopeKey, logicConfigClass, logicConfig);
         if (logicBuildResult.getFirst()) {
             this.logicConfig = logicBuildResult.getSecond();
         } else {

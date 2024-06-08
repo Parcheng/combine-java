@@ -3,7 +3,6 @@ package com.parch.combine.components.file.build;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.base.IInitConfig;
-import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.base.FileInfo;
 

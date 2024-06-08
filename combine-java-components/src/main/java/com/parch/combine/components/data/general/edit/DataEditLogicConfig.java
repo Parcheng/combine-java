@@ -2,14 +2,8 @@ package com.parch.combine.components.data.general.edit;
 
 import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.ILogicConfig;
-import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.component.tools.ConfigGroupTool;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public interface DataEditLogicConfig extends ILogicConfig {
 

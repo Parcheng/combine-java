@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.tools;
+package com.parch.combine.core.component.tools.calc;
 
 import com.parch.combine.core.common.util.ArrayUtil;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class ConfigGroupTool {
+public class GroupValueTool {
 
     /**
      * 配置分隔符
@@ -79,7 +79,7 @@ public class ConfigGroupTool {
     public static <T> List<T> buildItemList(List<String> items, Function<String[], T> func) {
         List<T> result = new ArrayList<>();
         for (String itemStr : items) {
-            String[] itemArr = ConfigGroupTool.split(itemStr);
+            String[] itemArr = GroupValueTool.split(itemStr);
             result.add(func.apply(itemArr));
         }
 
