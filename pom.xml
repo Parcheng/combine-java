@@ -13,7 +13,7 @@
 
     <groupId>com.parch.combine</groupId>
     <artifactId>combine-java</artifactId>
-    <version>0.8.0</version>
+    <version>0.9.0</version>
     <name>combine-java</name>
     <description>Combine Java</description>
 
