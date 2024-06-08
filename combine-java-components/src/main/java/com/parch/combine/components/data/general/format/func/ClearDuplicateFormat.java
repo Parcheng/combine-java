@@ -10,13 +10,13 @@ import java.util.*;
 public class ClearDuplicateFormat implements ICustomFormat {
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         return null;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }
@@ -36,7 +36,7 @@ public class ClearDuplicateFormat implements ICustomFormat {
             List<Map<String, Object>> objList = (List<Map<String, Object>>) sourceValue;
             objList.removeIf(item -> {
                 StringBuilder key = new StringBuilder();
-                String[] paramKeys = params.get(0).split(KEY_SEPARATOR);
+                String[] paramKeys = params[0].split(KEY_SEPARATOR);
                 for (String paramKey : paramKeys) {
                     key.append(item.get(paramKey));
                 }

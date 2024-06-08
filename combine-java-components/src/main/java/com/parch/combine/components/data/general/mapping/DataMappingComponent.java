@@ -1,14 +1,9 @@
 package com.parch.combine.components.data.general.mapping;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,36 +20,15 @@ public class DataMappingComponent extends AbsComponent<DataMappingInitConfig, Da
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        DataMappingLogicConfig logicConfig = getLogicConfig();
-        List<DataMappingLogicConfig.DataMappingItem> items = logicConfig.getItems();
-        if (items != null) {
-            for (int i = 0; i < items.size(); i++) {
-                DataMappingLogicConfig.DataMappingItem item = items.get(i);
-                String baseMsg = "第<" + (i+1) + ">条-";
-                if (CheckEmptyUtil.isEmpty(item.getNewFieldName())) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "字段名为空"));
-                }
-                if (CheckEmptyUtil.isEmpty(item.getSource())) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "字段值来源为空"));
-                }
-            }
-        }
-
-        return result;
-    }
-
-    @Override
     public DataResult execute() {
         Map<String, Object> result = new HashMap<>();
 
         // 数据过滤
         DataMappingLogicConfig logicConfig = getLogicConfig();
-        List<DataMappingLogicConfig.DataMappingItem> items = logicConfig.getItems();
+        DataMappingLogicConfig.DataMappingItem[] items = logicConfig.items();
         if (items != null) {
             for (DataMappingLogicConfig.DataMappingItem item : items) {
-                result.put(item.getNewFieldName(), DataVariableHelper.parseValue(item.getSource(), false));
+                result.put(item.fieldName(), item.source());
             }
         }
 

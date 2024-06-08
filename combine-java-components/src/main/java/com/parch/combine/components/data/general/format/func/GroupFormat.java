@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class GroupFormat implements ICustomFormat {
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         List<String> errorMsg = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(params)) {
             errorMsg.add(FormatFuncError.GROUP_KEY_IS_NULL);
@@ -21,7 +21,7 @@ public class GroupFormat implements ICustomFormat {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }
@@ -42,7 +42,7 @@ public class GroupFormat implements ICustomFormat {
         List<Map<String, Object>> dataList = (List<Map<String, Object>>) sourceValue;
         return dataList.stream().collect(Collectors.groupingBy(item -> {
             StringBuilder keys = new StringBuilder(CheckEmptyUtil.EMPTY);
-            String[] paramKeys = params.get(0).split(KEY_SEPARATOR);
+            String[] paramKeys = params[0].split(KEY_SEPARATOR);
             for (String paramKey : paramKeys) {
                 keys.append(item.get(paramKey));
             }

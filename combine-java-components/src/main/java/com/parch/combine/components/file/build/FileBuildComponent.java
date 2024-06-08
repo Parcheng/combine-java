@@ -2,10 +2,11 @@ package com.parch.combine.components.file.build;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.InitConfig;
+import com.parch.combine.core.component.base.IInitConfig;
+import com.parch.combine.core.component.base.old.InitConfig;
 import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.List;
@@ -18,14 +19,8 @@ import java.util.UUID;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class FileBuildComponent<T extends InitConfig, R extends FileBuildLogicConfig> extends AbsComponent<T, R> {
+public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBuildLogicConfig> extends AbsComponent<T, R> {
 
-    /**
-     * 构造器
-     *
-     * @param initConfigClass  初始化配置类Class对象
-     * @param logicConfigClass 业务配置类Class对象
-     */
     public FileBuildComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
         super(initConfigClass, logicConfigClass);
     }
@@ -34,7 +29,7 @@ public abstract class FileBuildComponent<T extends InitConfig, R extends FileBui
     @SuppressWarnings("unchecked")
     public final DataResult execute() {
         FileBuildLogicConfig logicConfig = getLogicConfig();
-        Object data = DataVariableHelper.parseValue(logicConfig.getSource(), true);
+        Object data = logicConfig.source();
         if (data == null) {
             return DataResult.fail(FileBuildErrorEnum.DATA_IS_NULL);
         }
@@ -77,13 +72,14 @@ public abstract class FileBuildComponent<T extends InitConfig, R extends FileBui
         }
 
         // 文件名为空则生成随机文件名
-        if (CheckEmptyUtil.isEmpty(logicConfig.getFileName())) {
-            logicConfig.setFileName(UUID.randomUUID().toString());
+        String fileName = logicConfig.fileName();
+        if (CheckEmptyUtil.isEmpty(fileName)) {
+            fileName = UUID.randomUUID().toString();
         }
 
         // 构建文件信息对象返回
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setName(logicConfig.getFileName());
+        fileInfo.setName(fileName);
         fileInfo.setType(buildInfo.getType());
         fileInfo.setData(buildInfo.getData());
         fileInfo.setSize(buildInfo.getData().length);

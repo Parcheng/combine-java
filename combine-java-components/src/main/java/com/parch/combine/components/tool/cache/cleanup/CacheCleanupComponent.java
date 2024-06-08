@@ -13,34 +13,12 @@ import com.parch.combine.core.component.vo.DataResult;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * 组件设置信息组件
- */
 @Component(key = "cache.cleanup", name = "缓存清理", logicConfigClass = CacheCleanupLogicConfig.class, initConfigClass = CacheCleanupInitConfig.class)
 @ComponentResult(name = "被清理的缓存数据（KEY-VALUE键值对结构）")
 public class CacheCleanupComponent extends AbsCacheComponent<CacheCleanupInitConfig, CacheCleanupLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public CacheCleanupComponent() {
         super(CacheCleanupInitConfig.class, CacheCleanupLogicConfig.class);
-    }
-
-    @Override
-    public List<String> initConfig() {
-        List<String> errorMsg = new ArrayList<>(1);
-        CacheCleanupLogicConfig logicConfig = getLogicConfig();
-        CacheCleanupModeEnum mode = CacheCleanupModeEnum.get(logicConfig.getMode());
-        if (mode == CacheCleanupModeEnum.NONE) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "清理模式不合规"));
-        }
-        CacheKeyMatchRuleEnum keyMatchRule = CacheKeyMatchRuleEnum.get(logicConfig.getKeyMatchRule());
-        if (keyMatchRule == CacheKeyMatchRuleEnum.NONE) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "KEY匹配策略不合规"));
-        }
-
-        return errorMsg;
     }
 
     @Override
@@ -53,16 +31,17 @@ public class CacheCleanupComponent extends AbsCacheComponent<CacheCleanupInitCon
                 return DataResult.success(cleanupData);
             }
 
-            CacheKeyMatchRuleEnum keyMatchRule = CacheKeyMatchRuleEnum.get(logicConfig.getKeyMatchRule());
+            CacheKeyMatchRuleEnum keyMatchRule = CacheKeyMatchRuleEnum.get(logicConfig.keyMatchRule());
             if (keyMatchRule == CacheKeyMatchRuleEnum.NONE) {
                 return DataResult.fail(CacheGetErrorEnum.KEY_MATCH_RULE_IS_ERROR);
             }
 
             Map<String, Object> cleanData = new HashMap<>();
             List<CacheData> dataList = CacheHandler.get(domain, key, keyMatchRule, false);
-            int loopCount = logicConfig.getMaxCount() > 0 && logicConfig.getMaxCount() < dataList.size() ? logicConfig.getMaxCount() : dataList.size();
+            Integer maxCount = logicConfig.maxCount();
+            int loopCount = maxCount > 0 && maxCount < dataList.size() ? maxCount : dataList.size();
 
-            CacheCleanupModeEnum mode = CacheCleanupModeEnum.get(logicConfig.getMode());
+            CacheCleanupModeEnum mode = CacheCleanupModeEnum.get(logicConfig.mode());
             switch (mode) {
                 case EXPIRED:
                     dataList = dataList.stream().filter(CacheHandler::isExpired).collect(Collectors.toList());

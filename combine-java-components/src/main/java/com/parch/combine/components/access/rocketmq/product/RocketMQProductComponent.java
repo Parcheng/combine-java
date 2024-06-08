@@ -7,7 +7,6 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -15,9 +14,6 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.exception.RemotingException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Redis锁组件
@@ -32,36 +28,25 @@ public class RocketMQProductComponent extends AbsRocketMQComponent<RocketMQProdu
     }
 
     @Override
-    public List<String> initConfig() {
-        List<String> errorMsg = new ArrayList<>();
-        RocketMQProductLogicConfig logicConfig = getLogicConfig();
-        if (logicConfig.getContent() == null) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "消息内容为空"));
-        }
-
-        return errorMsg;
-    }
-
-    @Override
     public DataResult execute() {
         RocketMQProductInitConfig initConfig = getInitConfig();
         RocketMQProductLogicConfig logicConfig = getLogicConfig();
 
-        Object producerGroupObj = DataVariableHelper.parseValue(logicConfig.getProducerGroup(), false);
-        String producerGroup = producerGroupObj == null ? logicConfig.getId() : producerGroupObj.toString();
+        String producerGroup = logicConfig.producerGroup();
+        producerGroup = producerGroup == null ? logicConfig.id() : producerGroup;
 
         DefaultMQProducer producer = new DefaultMQProducer(producerGroup);
-        producer.setNamesrvAddr(initConfig.getService());
+        producer.setNamesrvAddr(initConfig.service());
 
-        Object topic = DataVariableHelper.parseValue(logicConfig.getTopic(), false);
-        Object tags = DataVariableHelper.parseValue(logicConfig.getTags(), false);
-        Object content = DataVariableHelper.parse(logicConfig.getContent());
+        String topic = logicConfig.topic();
+        String tags = logicConfig.tags();
+        Object content = logicConfig.content();
         String contentStr = content == null ? CheckEmptyUtil.EMPTY : JsonUtil.serialize(content);
 
         String msgId;
         try {
             producer.start();
-            Message message = new Message(topic.toString(), tags.toString(), contentStr.getBytes());
+            Message message = new Message(topic, tags, contentStr.getBytes());
             SendResult result = producer.send(message);
             msgId = result.getMsgId();
         } catch (MQClientException | InterruptedException | RemotingException | MQBrokerException e) {

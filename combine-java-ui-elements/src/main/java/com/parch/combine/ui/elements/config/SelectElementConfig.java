@@ -29,7 +29,7 @@ public class SelectElementConfig extends ElementConfig<SelectElementTemplateConf
     private String defaultValue;
 
     @Field(key = "option", name = "下拉项配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = OptionElementConfig.class)
+    @FieldObject(OptionElementConfig.class)
     private OptionElementConfig option;
 
     @Field(key = "triggers", name = "下拉框触发配置（用于实现多级联动，暂未不支持使用）", type = FieldTypeEnum.OBJECT, isArray = true)

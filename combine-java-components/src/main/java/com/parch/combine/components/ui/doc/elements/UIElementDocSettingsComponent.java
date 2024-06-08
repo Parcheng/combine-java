@@ -7,8 +7,6 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.ui.settings.PageElementSettingHandler;
 import com.parch.combine.core.ui.settings.config.PageElementClassifySetting;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,16 +14,8 @@ import java.util.List;
 @ComponentResult(name = "所有UI元素API集合")
 public class UIElementDocSettingsComponent extends AbsComponent<UIElementDocSettingsInitConfig, UIElementDocSettingsLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public UIElementDocSettingsComponent() {
         super(UIElementDocSettingsInitConfig.class, UIElementDocSettingsLogicConfig.class);
-    }
-
-    @Override
-    public List<String> init() {
-        return new ArrayList<>();
     }
 
     @Override

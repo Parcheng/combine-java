@@ -18,12 +18,12 @@ public class HtmlConfig implements IInit, ICheck {
     @Field(key ="tempPath" , name = "模板根路径", type = FieldTypeEnum.TEXT, defaultValue = "系统内置模板根路径")
     private String tempPath;
 
-    @Field(key ="metas" , name = "mate标签配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldObject(type = HtmlHeaderMetaConfig.class)
+    @Field(key ="metas" , name = "mate标签配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
+    @FieldObject(HtmlHeaderMetaConfig.class)
     private List<HtmlHeaderMetaConfig> metas;
 
-    @Field(key ="links" , name = "link标签配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldObject(type = HtmlHeaderLinkConfig.class)
+    @Field(key ="links" , name = "link标签配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
+    @FieldObject(HtmlHeaderLinkConfig.class)
     private List<HtmlHeaderLinkConfig> links;
 
     @Field(key ="scripts" , name = "加载script脚本集合", type = FieldTypeEnum.TEXT, isArray = true)
@@ -32,7 +32,8 @@ public class HtmlConfig implements IInit, ICheck {
     @Field(key ="groupIds" , name = "页面元素组ID集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> groupIds;
 
-    @Field(key = "modules", name = "页面元素配置集合", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+    @Field(key = "modules", name = "页面元素配置集合", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
+    @FieldObject(HtmlElementConfig.class)
     private List<HtmlElementConfig> modules;
 
     @Override

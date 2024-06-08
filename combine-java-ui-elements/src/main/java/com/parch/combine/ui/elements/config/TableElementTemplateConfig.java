@@ -33,7 +33,7 @@ public class TableElementTemplateConfig extends ElementTemplateConfig {
     private DomConfig body;
 
     @Field(key = "row", name = "行DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = TableRowDomConfig.class)
+    @FieldObject(TableRowDomConfig.class)
     private TableRowDomConfig row;
 
     @Field(key = "col", name = "单元格DOM配置", type = FieldTypeEnum.OBJECT)

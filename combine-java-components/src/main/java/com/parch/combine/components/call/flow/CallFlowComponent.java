@@ -26,11 +26,6 @@ public class CallFlowComponent extends CallComponent<CallFlowInitConfig, CallFlo
     }
 
     @Override
-    protected List<String> initCallConfig() {
-        return null;
-    }
-
-    @Override
     public DataResult execute(String url, Map<String, Object> params, Map<String, String> headers) {
         // 获取流程的KEY信息
         String[] keyArr = FlowKeyUtil.parseKey(url);

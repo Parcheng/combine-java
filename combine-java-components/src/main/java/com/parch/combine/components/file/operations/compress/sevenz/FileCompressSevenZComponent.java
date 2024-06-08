@@ -24,9 +24,6 @@ import java.util.List;
 @ComponentResult(name = "true 或抛出异常信息")
 public class FileCompressSevenZComponent extends AbsFileCompressComponent<FileCompressSevenZInitConfig, FileCompressSevenZLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public FileCompressSevenZComponent() {
         super(FileCompressSevenZInitConfig.class, FileCompressSevenZLogicConfig.class, FileCompressTypeEnum.ZIP);
     }

@@ -1,16 +1,15 @@
 package com.parch.combine.components.mail.send;
 
+import com.parch.combine.components.mail.helper.MailContentTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.mail.AbsMailComponent;
 import com.parch.combine.components.mail.helper.MimeMessageHelper;
+import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -25,27 +24,8 @@ import java.util.List;
 @ComponentResult(name = "邮件发送成功：true")
 public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, MailSendLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public MailSendComponent() {
         super(MailSendInitConfig.class, MailSendLogicConfig.class);
-    }
-
-
-    @Override
-    protected List<String> checkMailConfig() {
-        MailSendLogicConfig logicConfig = getLogicConfig();
-        List<String> errorMsg = new ArrayList<>();
-
-        if (CheckEmptyUtil.isEmpty(logicConfig.getTo())) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "目标邮箱地址为空"));
-        }
-        if (CheckEmptyUtil.isEmpty(logicConfig.getSubject())) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "标题为空"));
-        }
-
-        return errorMsg;
     }
 
     @Override
@@ -57,9 +37,9 @@ public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, Mail
         InternetAddress from;
         List<InternetAddress> toList = new ArrayList<>();
         try {
-            from = new InternetAddress(initConfig.getMail());
-            for (String to : logicConfig.getTo()) {
-                toList.add(new InternetAddress(TextExpressionHelper.getText(to, to)));
+            from = new InternetAddress(initConfig.mail());
+            for (String to : logicConfig.to()) {
+                toList.add(new InternetAddress(to));
             }
         } catch (MessagingException e) {
             ComponentErrorHandler.print(MailSendErrorEnum.ADDRESS_ERROR, e);
@@ -68,7 +48,7 @@ public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, Mail
 
         try {
             Multipart multipart = new MimeMultipart();
-            for (MailSendLogicConfig.MailBody item : logicConfig.getBody()) {
+            for (MailSendLogicConfig.MailBody item : logicConfig.body()) {
                 multipart.addBodyPart(this.buildBody(item));
             }
 
@@ -76,7 +56,7 @@ public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, Mail
             Message message = new MimeMessage(session);
             message.setFrom(from);
             message.setRecipients(Message.RecipientType.TO, toList.toArray(new InternetAddress[0]));
-            message.setSubject(TextExpressionHelper.getText(logicConfig.getSubject(), "无标题"));
+            message.setSubject(logicConfig.subject());
             message.setContent(multipart);
             message.setSentDate(new Date());
 
@@ -97,31 +77,28 @@ public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, Mail
      * @throws Exception 异常
      */
     private MimeBodyPart buildBody(MailSendLogicConfig.MailBody item) throws Exception {
-        MimeBodyPart part = new MimeBodyPart();;
-        Object path, content;
-        switch (item.getType()) {
+        MimeBodyPart part = new MimeBodyPart();
+
+        String path = item.path();
+        Object content = item.content();
+        MailContentTypeEnum type = MailContentTypeEnum.get(item.type());
+        switch (type) {
             case IMAGE:
-                if (CheckEmptyUtil.isEmpty(item.getPath())) {
-                    path = TextExpressionHelper.getText(item.getPath());
-                    if (path != null) {
-                        MimeMessageHelper.addImage(part, path.toString());
-                    }
+                if (path != null) {
+                    MimeMessageHelper.addImage(part, path);
                 } else {
-                    content = DataVariableHelper.parseValue(item.getContent(),false);
                     if (content instanceof byte[]) {
-                        MimeMessageHelper.addImage(part, (byte[]) content, item.getFileType());
+                        MimeMessageHelper.addImage(part, (byte[]) content, item.fileType());
                     }
                 }
                 break;
             case FILE:
-                content = DataVariableHelper.parseValue(item.getContent(),false);
                 if (content != null) {
-                    MimeMessageHelper.addAttachment(part, content instanceof byte[] ? (byte[]) content : content.toString().getBytes(), item.getFileName());
+                    MimeMessageHelper.addAttachment(part, content instanceof byte[] ? (byte[]) content : content.toString().getBytes(), item.fileName());
                 }
                 break;
             default:
-                content = DataVariableHelper.parseValue(item.getContent(),false);
-                part.setText(content == null ? CheckEmptyUtil.EMPTY : content.toString());
+                part.setText(content == null ? CheckEmptyUtil.EMPTY : DataParseUtil.getString(content));
                 break;
         }
 

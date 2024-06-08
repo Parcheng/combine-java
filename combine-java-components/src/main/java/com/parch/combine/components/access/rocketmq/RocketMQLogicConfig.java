@@ -1,20 +1,13 @@
 package com.parch.combine.components.access.rocketmq;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.core.component.base.old.LogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 
-public abstract class RocketMQLogicConfig extends LogicConfig {
+public interface RocketMQLogicConfig extends ILogicConfig {
 
-    @Field(key = "topic", name = "消息Topic", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
-    private String topic;
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+    @Field(key = "topic", name = "消息Topic", type = FieldTypeEnum.TEXT, isRequired = true)
+    String topic();
 }

@@ -6,18 +6,11 @@ import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
 import com.parch.combine.core.component.vo.DataResult;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
-/**
- * 限流组件
- */
 @Component(key = "semaphore", name = "限流组件", logicConfigClass = ToolSemaphoreLogicConfig.class, initConfigClass = ToolSemaphoreInitConfig.class)
 @ComponentResult(name = "true 或报错")
 public class ToolSemaphoreComponent extends AbsComponent<ToolSemaphoreInitConfig, ToolSemaphoreLogicConfig> {
@@ -29,11 +22,6 @@ public class ToolSemaphoreComponent extends AbsComponent<ToolSemaphoreInitConfig
      */
     public ToolSemaphoreComponent() {
         super(ToolSemaphoreInitConfig.class, ToolSemaphoreLogicConfig.class);
-    }
-
-    @Override
-    public List<String> init() {
-        return new ArrayList<>();
     }
 
     @Override
@@ -68,7 +56,7 @@ public class ToolSemaphoreComponent extends AbsComponent<ToolSemaphoreInitConfig
      */
     private String getKey() {
         ToolSemaphoreLogicConfig config = getLogicConfig();
-        String key = TextExpressionHelper.getText(config.getKey());
+        String key = config.key();
         return CheckEmptyUtil.isEmpty(key) ? ComponentContextHandler.getFlowKey() : key;
     }
 
@@ -82,7 +70,8 @@ public class ToolSemaphoreComponent extends AbsComponent<ToolSemaphoreInitConfig
     private synchronized static Semaphore getSemaphore(String key, ToolSemaphoreInitConfig initConfig) {
         Semaphore semaphore = SEMAPHORE_MAP.get(key);
         if (semaphore == null) {
-            Integer max = initConfig.getKeyMaxes() != null && initConfig.getKeyMaxes().get(key) != null ? initConfig.getKeyMaxes().get(key) : initConfig.getMax();
+            Map<String, Integer> keyMaxes = initConfig.keyMaxes();
+            Integer max = keyMaxes != null && keyMaxes.get(key) != null ? keyMaxes.get(key) : initConfig.max();
             semaphore = new Semaphore(max);
             SEMAPHORE_MAP.put(key, semaphore);
         }

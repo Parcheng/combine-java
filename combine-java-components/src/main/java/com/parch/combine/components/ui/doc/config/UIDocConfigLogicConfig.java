@@ -1,12 +1,6 @@
 package com.parch.combine.components.ui.doc.config;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.ILogicConfig;
 
-/**
- * 逻辑配置类
- */
-public class UIDocConfigLogicConfig extends LogicConfig {
-
-    @Override
-    public void init() {}
+public interface UIDocConfigLogicConfig extends ILogicConfig {
 }

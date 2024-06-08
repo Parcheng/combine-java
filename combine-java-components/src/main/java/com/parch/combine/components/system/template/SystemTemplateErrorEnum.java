@@ -7,6 +7,7 @@ import com.parch.combine.core.component.error.IComponentError;
  */
 public enum SystemTemplateErrorEnum implements IComponentError {
 
+    TEMPLATE_IS_NULL("模板不存在", "模板不存在"),
     ;
 
     private String msg;

@@ -1,7 +1,9 @@
 package com.parch.combine.components.data.general.filter;
 
+
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import java.util.List;
+
+import java.util.Arrays;
 
 /**
  * 数据过滤处理器
@@ -15,12 +17,12 @@ public class DataFilterHandler {
      * @return 结果
      */
     public static DataFilterErrorEnum filter(DataFilterLogicConfig.DataFilterItem config) {
-        DataFilterRuleEnum rule = DataFilterRuleEnum.get(config.getRule());
+        DataFilterRuleEnum rule = DataFilterRuleEnum.get(config.rule());
         switch (rule) {
             case CLEAR:
-                return clear(config.getFieldName());
+                return clear(config.target());
             case REPLACE:
-                return replace(config.getFieldName(), config.getRuleParams());
+                return replace(config.target(), config.params());
             default:
                 return DataFilterErrorEnum.NONE_RULE;
         }
@@ -44,8 +46,8 @@ public class DataFilterHandler {
      * @param params 参数
      * @return 结果
      */
-    private static DataFilterErrorEnum replace(String filedName, List<String> params) {
-        boolean success = DataVariableHelper.replaceValue(filedName, params, " ");
+    private static DataFilterErrorEnum replace(String filedName, String[] params) {
+        boolean success = DataVariableHelper.replaceValue(filedName, Arrays.asList(params), " ");
         return success ? null : DataFilterErrorEnum.REPLACE_ERROR;
     }
 }

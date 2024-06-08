@@ -17,7 +17,7 @@ public class PanelElementConfig extends ElementConfig<PanelElementTemplateConfig
     private String title;
 
     @Field(key = "body", name = "页签内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-    @FieldObject(type = SubElementConfig.class)
+    @FieldObject(SubElementConfig.class)
     private SubElementConfig body;
 
     public PanelElementConfig() {

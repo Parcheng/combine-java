@@ -4,6 +4,8 @@ import com.parch.combine.core.component.error.IComponentError;
 
 public enum DataFormatErrorEnum implements IComponentError {
 
+    PARAMS_ERROR("函数参数不合规", "函数配置错误"),
+    FUNCTION_IS_NULL("函数不存在", "函数配置错误"),
     FAIL("格式化失败", "格式化失败"),
     ;
 

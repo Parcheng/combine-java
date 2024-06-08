@@ -26,14 +26,14 @@ public class NavBarElementConfig extends ElementConfig<NavBarElementTemplateConf
     private Integer defaultChecked;
 
     @Field(key = "nav", name = "导航项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-    @FieldObject(type = NavSettings.class)
+    @FieldObject(NavSettings.class)
     private NavSettings nav;
 
     @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
     private List<NavData> defaultNavs;
 
     @Field(key = "buttons", name = "导航右栏操作配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldObject(type = OptItemSettings.class)
+    @FieldObject(OptItemSettings.class)
     private List<OptItemSettings> opts;
 
     public NavBarElementConfig() {

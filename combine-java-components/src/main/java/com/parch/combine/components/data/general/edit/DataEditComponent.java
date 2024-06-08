@@ -1,71 +1,25 @@
 package com.parch.combine.components.data.general.edit;
 
+import com.parch.combine.components.data.general.DataStructureHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 import com.parch.combine.core.common.canstant.SymbolConstant;
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.*;
 
-/**
- * 运算组件
- */
 @Component(key = "edit", name = "数据修改组件", logicConfigClass = DataEditLogicConfig.class, initConfigClass = DataEditInitConfig.class)
 @ComponentResult(name = "所有被创建的数据集合")
 public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEditLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public DataEditComponent() {
         super(DataEditInitConfig.class, DataEditLogicConfig.class);
-    }
-
-    @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        DataEditLogicConfig logicConfig = getLogicConfig();
-        List<DataEditLogicConfig.DataEditItem> items = logicConfig.getItems();
-        if (items != null) {
-            for (int i = 0; i < items.size(); i++) {
-                DataEditLogicConfig.DataEditItem item = items.get(i);
-                String baseMsg = "第<" + (i+1) + ">条-";
-                if (CheckEmptyUtil.isEmpty(item.getSource())) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "数据来源为空"));
-                }
-                DataEditTypeEnum type = item.getType();
-                if (type == DataEditTypeEnum.NONE) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "类型不合规"));
-                }
-                if (item.getParams().size() < type.getMinParamCount()) {
-                    result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "参数数量不合规"));
-                }
-
-                if (type == DataEditTypeEnum.SET) {
-                    String[] paramPath = item.getParams().get(1).split(SymbolConstant.COLON);
-                    if (paramPath.length < 2) {
-                        result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "对象类型的初始值必须为“索引:字段值”的结构"));
-                        break;
-                    }
-                }
-                if (type == DataEditTypeEnum.PUT) {
-                    String[] paramPath = item.getParams().get(0).split(SymbolConstant.COLON);
-                    if (paramPath.length < 3) {
-                        result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "对象类型的初始值必须为“数据类型:字段名:字段值”的结构"));
-                        break;
-                    }
-                }
-            }
-        }
-
-        return result;
     }
 
     @Override
@@ -73,17 +27,27 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
     public DataResult execute() {
         // 数据过滤
         DataEditLogicConfig logicConfig = getLogicConfig();
-        List<DataEditLogicConfig.DataEditItem> items = logicConfig.getItems();
+        DataEditLogicConfig.DataEditItem[] items = logicConfig.items();
         if (items != null) {
             for (DataEditLogicConfig.DataEditItem item : items) {
                 DataEditErrorEnum error;
-                Object sourceData = DataVariableHelper.parseValue(item.getSource(), true);
+                String source = item.source();
+                Object sourceData = DataVariableHelper.parseValue(source, true);
+
+                DataEditTypeEnum type = DataEditTypeEnum.get(item.type());
+                if (DataEditTypeEnum.NONE == type) {
+                    return DataResult.fail(DataEditErrorEnum.TYPE_ERROR);
+                }
+
+                DataTypeEnum dataType = DataTypeEnum.get(item.dataType());
+                Object[] params = item.params();
+
                 if (sourceData instanceof Map) {
-                    error = editMap((Map<Object, Object>) sourceData, item);
+                    error = editMap(source, (Map<Object, Object>) sourceData, type, dataType, params);
                 } else if (sourceData instanceof Collection) {
-                    error = editCollection((Collection<Object>) sourceData, item);
+                    error = editCollection(source, (Collection<Object>) sourceData, type, dataType, params);
                 } else {
-                    error = editOther(sourceData, item);
+                    error = editOther(source, sourceData, type, dataType, params);
                 }
 
                 if (error != null) {
@@ -99,14 +63,10 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
      * 编辑MAP数据
      *
      * @param sourceData 源数据
-     * @param item 参数配置
      * @return 错误信息
      */
     @SuppressWarnings("unchecked")
-    private DataEditErrorEnum editMap(Map<Object, Object> sourceData, DataEditLogicConfig.DataEditItem item) {
-        String sourcePath = item.getSource();
-        DataEditTypeEnum type = item.getType();
-        List<String> params = item.getParams();
+    private DataEditErrorEnum editMap(String sourcePath, Map<Object, Object> sourceData, DataEditTypeEnum type, DataTypeEnum dataType, Object[] params) {
         if (sourceData == null) {
             sourceData = new HashMap<>();
         }
@@ -114,69 +74,51 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
         Object key, value;
         switch (type) {
             case PUT:
-                String[] setPath = params.get(0).split(SymbolConstant.COLON);
-                key = DataVariableHelper.parseValue(setPath[1], false);
-                if (key != null) {
-                    value = DataVariableHelper.parseValue(setPath[2], false);
-                    value = getValue(sourceData.get(key), setPath[0], value);
-                    sourceData.put(key, value);
-                }
-                break;
-            case PUT_ALL:
-                for (String s : params) {
-                    if (s.contains(SymbolConstant.COLON)) {
-                        String[] currSetPath = s.split(SymbolConstant.COLON);
-                        key = DataVariableHelper.parseValue(currSetPath[1], false);
+                for (Object param : params) {
+                    if (param == null) {
+                        continue;
+                    }
+
+                    if (param instanceof Map) {
+                        sourceData.putAll((Map<String, Object>) param);
+                    } else if (DataTypeIsUtil.isString(param) && DataStructureHelper.isStructure(param.toString())) {
+                        String[] currSetPath = DataStructureHelper.parseStructure(param.toString());
+                        key = DataVariableHelper.parseValue(currSetPath[0], false);
                         if (key != null) {
-                            value = DataVariableHelper.parseValue(currSetPath[2], false);
-                            value = getValue(sourceData.get(key), currSetPath[0], value);
+                            value = DataVariableHelper.parseValue(currSetPath[1], false);
+                            value = getValue(sourceData.get(key), dataType, value);
                             sourceData.put(key, value);
                         }
                     } else {
-                        Object currMapObj = DataVariableHelper.parseValue(s, false);
-                        if (currMapObj == null) {
-                            continue;
-                        }
-                        if (!(currMapObj instanceof Map)) {
-                            return DataEditErrorEnum.PARAM_DATA_NOT_OBJECT;
-                        }
-
-                        Map<Object, Object> currMapData = (Map<Object, Object>) currMapObj;
-                        for (Object newMapKey : currMapData.keySet()) {
-                            sourceData.put(newMapKey, currMapData.get(newMapKey));
-                        }
+                        return DataEditErrorEnum.PARAM_DATA_ERROR;
                     }
                 }
                 break;
             case REMOVE:
             case REMOVE_INDEX:
-                key = DataVariableHelper.parseValue(params.get(0), false);
-                if (key != null) {
-                    sourceData.remove(key);
+                if (params[0] != null) {
+                    sourceData.remove(params[0]);
                 }
                 break;
             case REMOVE_ALL:
-                for (String param : params) {
-                    key = DataVariableHelper.parseValue(param, false);
-                    if (key != null) {
-                        if (key instanceof Map) {
-                            for (Object currMapKey : ((Map<Object, Object>) key).keySet()) {
+                for (Object param : params) {
+                    if (param != null) {
+                        if (param instanceof Map) {
+                            for (Object currMapKey : ((Map<Object, Object>) param).keySet()) {
                                 sourceData.remove(currMapKey);
                             }
-                        } else if (key instanceof Collection) {
-                            for (Object currMapKey : (Collection<Object>) key) {
+                        } else if (param instanceof Collection) {
+                            for (Object currMapKey : (Collection<Object>) param) {
                                 sourceData.remove(currMapKey);
                             }
                         } else {
-                            sourceData.remove(key);
+                            sourceData.remove(param);
                         }
                     }
                 }
                 break;
             case SET:
-            case SET_ALL:
             case ADD:
-            case ADD_ALL:
                 return DataEditErrorEnum.TYPE_ERROR;
             default:
                 return DataEditErrorEnum.UNKNOWN_TYPE;
@@ -190,110 +132,75 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
      * 编辑集合数据
      *
      * @param sourceData 源数据
-     * @param item 参数配置
      * @return 错误信息
      */
     @SuppressWarnings("unchecked")
-    private DataEditErrorEnum editCollection(Collection<Object> sourceData, DataEditLogicConfig.DataEditItem item) {
-        String sourcePath = item.getSource();
-        DataEditTypeEnum type = item.getType();
-        List<String> params = item.getParams();
+    private DataEditErrorEnum editCollection(String sourcePath, Collection<Object> sourceData, DataEditTypeEnum type, DataTypeEnum dataType, Object[] params) {
         if (sourceData == null) {
             sourceData = new ArrayList<>();
         }
 
-        Object index, value;
         switch (type) {
             case SET:
-                String[] setPath = params.get(1).split(SymbolConstant.COLON);
-                index = DataVariableHelper.parseValue(setPath[0], false);
-                if (index != null) {
-                    value = DataVariableHelper.parseValue(setPath[1], false);
+                for (Object param : params) {
+                    if (param == null || !DataStructureHelper.isStructure(param.toString())) {
+                        continue;
+                    }
+
+                    String[] paramPath = DataStructureHelper.parseStructure(param.toString());
+                    Object key = DataVariableHelper.parseValue(paramPath[0], false);
+                    if (key == null) {
+                        continue;
+                    }
+
+                    Object value = DataVariableHelper.parseValue(paramPath[1], false);
                     if (sourceData instanceof List) {
                         List<Object> listData = (List<Object>) sourceData;
-                        if (DataTypeIsUtil.isInteger(index.toString())) {
-                            int indexNum = Integer.parseInt(index.toString());
+                        if (DataTypeIsUtil.isInteger(key)) {
+                            int indexNum = Integer.parseInt(key.toString());
                             // 下标越界时补充数据
                             if (sourceData.size() <= indexNum) {
-                                for (int i = 0; i < indexNum + 1 - sourceData.size(); i++) {
+                                for (int j = 0; j <= indexNum + 1 - sourceData.size(); j++) {
                                     sourceData.add(null);
                                 }
                             }
-                            value = getValue(listData.get(indexNum), params.get(0), value);
+                            value = getValue(listData.get(indexNum), dataType, value);
                             listData.set(indexNum, value);
                         }
-                    }  else {
-                        value = getValue(null, params.get(0), value);
+                    } else {
+                        value = getValue(null, dataType, value);
                         sourceData.add(value);
                     }
                 }
                 break;
-            case SET_ALL:
-                for (int i = 0; i < params.size(); i++) {
-                    if (i == 0) {
-                        continue;
-                    }
-
-                    String[] currSetPath = params.get(i).split(SymbolConstant.COLON);
-                    index = DataVariableHelper.parseValue(currSetPath[0], false);
-                    if (index != null) {
-                        value = DataVariableHelper.parseValue(currSetPath[1], false);
-                        if (sourceData instanceof List) {
-                            List<Object> listData = (List<Object>) sourceData;
-                            if (DataTypeIsUtil.isInteger(index.toString())) {
-                                int indexNum = Integer.parseInt(index.toString());
-                                // 下标越界时补充数据
-                                if (sourceData.size() <= indexNum) {
-                                    for (int j = 0; j < indexNum + 1 - sourceData.size(); j++) {
-                                        sourceData.add(null);
-                                    }
-                                }
-                                value = getValue(listData.get(indexNum), params.get(0), value);
-                                listData.set(indexNum, value);
-                            }
-                        } else {
-                            value = getValue(null, params.get(0), value);
-                            sourceData.add(value);
-                        }
-                    }
-                }
-                break;
             case ADD:
-                value = DataVariableHelper.parseValue(params.get(1), false);
-                sourceData.add(getValue(null, params.get(0), value));
-                break;
-            case ADD_ALL:
-                for (int i = 0; i < params.size(); i++) {
-                    if (i == 0) {
+                for (Object param : params) {
+                    if (param == null) {
                         continue;
                     }
 
-                    value = DataVariableHelper.parseValue(params.get(i), false);
-                    if (value instanceof Collection) {
-                        for (Object obj : (Collection<Object>) value) {
-                            sourceData.add(getValue(null, params.get(0), obj));
+                    if (param instanceof Collection) {
+                        for (Object obj : (Collection<Object>) param) {
+                            sourceData.add(getValue(null, dataType, obj));
                         }
                     } else {
-                        sourceData.add(getValue(null, params.get(0), value));
+                        sourceData.add(getValue(null, dataType, param));
                     }
                 }
                 break;
             case REMOVE:
-                index = DataVariableHelper.parseValue(params.get(0), false);
-                if (index != null) {
-                    Object finalIndex = index;
-                    sourceData.removeIf(i -> i != null && i.toString().equals(finalIndex.toString()));
+                if (params[0] != null) {
+                    sourceData.removeIf(i -> i != null && i.toString().equals(params[0].toString()));
                 }
                 break;
             case REMOVE_INDEX:
-                for (String param : params) {
-                    index = DataVariableHelper.parseValue(param, false);
-                    if (index != null && sourceData instanceof List) {
+                for (Object param : params) {
+                    if (param != null && sourceData instanceof List) {
                         List<Object> indexList = new ArrayList<>();
-                        if (index instanceof Collection) {
-                            indexList.addAll((Collection<Object>) index);
+                        if (param instanceof Collection) {
+                            indexList.addAll((Collection<Object>) param);
                         } else {
-                            indexList.add(index);
+                            indexList.add(param);
                         }
 
                         for (Object indexItem : indexList) {
@@ -308,26 +215,23 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
                 }
                 break;
             case REMOVE_ALL:
-                for (String param : params) {
-                    index = DataVariableHelper.parseValue(param, false);
-                    if (index == null) {
+                for (Object param : params) {
+                    if (param == null) {
                         continue;
                     }
 
-                    if (index instanceof Collection) {
-                        for (Object indexItem : (Collection<Object>) index) {
+                    if (param instanceof Collection) {
+                        for (Object indexItem : (Collection<Object>) param) {
                             if (indexItem != null) {
                                 sourceData.removeIf(i -> i != null && i.toString().equals(indexItem.toString()));
                             }
                         }
                     } else {
-                        Object finalIndex = index;
-                        sourceData.removeIf(i -> i != null && i.toString().equals(finalIndex.toString()));
+                        sourceData.removeIf(i -> i != null && i.toString().equals(param.toString()));
                     }
                 }
                 break;
             case PUT:
-            case PUT_ALL:
                 return DataEditErrorEnum.TYPE_ERROR;
             default:
                 return DataEditErrorEnum.UNKNOWN_TYPE;
@@ -341,29 +245,19 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
      * 编辑其他数据
      *
      * @param sourceData 源数据
-     * @param item 参数配置
      * @return 错误信息
      */
-    private DataEditErrorEnum editOther(Object sourceData, DataEditLogicConfig.DataEditItem item) {
-        String sourcePath = item.getSource();
-        DataEditTypeEnum type = item.getType();
-        List<String> params = item.getParams();
-
-        Object value, newValue;
+    private DataEditErrorEnum editOther(String sourcePath, Object sourceData, DataEditTypeEnum type, DataTypeEnum dataType, Object[] params) {
+        Object newValue;
         switch (type) {
             case SET:
-                String[] setPath = params.get(1).split(SymbolConstant.COLON);
-                value = DataVariableHelper.parseValue(setPath[1], false);
-                newValue = getValue(sourceData, params.get(0), value);
+                newValue = getValue(sourceData, dataType, params[0]);
                 break;
             case REMOVE:
             case REMOVE_INDEX:
             case REMOVE_ALL:
-            case SET_ALL:
             case ADD:
-            case ADD_ALL:
             case PUT:
-            case PUT_ALL:
                 return DataEditErrorEnum.TYPE_ERROR;
             default:
                 return DataEditErrorEnum.UNKNOWN_TYPE;
@@ -377,17 +271,11 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
      * 获取值
      *
      * @param sourceData 源数据
-     * @param type 类型
+     * @param dataType 类型
      * @param value 值
      * @return 值
      */
-    private Object getValue(Object sourceData, String type, Object value) {
-        Object typeObj = DataVariableHelper.parseValue(type, false);
-        DataTypeEnum dataType = DataTypeEnum.get(typeObj == null ? type : typeObj.toString());
-        if (value == null) {
-            return null;
-        }
-
+    private Object getValue(Object sourceData, DataTypeEnum dataType, Object value) {
         // 当类型为NONE时，自动匹配类型
         if (sourceData != null && dataType == DataTypeEnum.NONE) {
             if (sourceData instanceof Boolean) {
@@ -397,6 +285,14 @@ public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEdit
             } else if (sourceData instanceof Date) {
                 dataType = DataTypeEnum.DATE;
             }
+        }
+
+        if (dataType == DataTypeEnum.NONE) {
+            return value;
+        }
+
+        if (value == null) {
+            return null;
         }
 
         // 获取数据

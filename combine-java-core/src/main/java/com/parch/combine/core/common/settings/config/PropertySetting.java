@@ -21,7 +21,7 @@ public class PropertySetting {
 
     private String defaultValue;
 
-    private FieldTypeEnum[] type;
+    private FieldTypeEnum type;
 
     private List<PropertyGroupSetting> group;
 
@@ -55,11 +55,11 @@ public class PropertySetting {
         this.desc = desc;
     }
 
-    public FieldTypeEnum[] getType() {
+    public FieldTypeEnum getType() {
         return type;
     }
 
-    public void setType(FieldTypeEnum[] type) {
+    public void setType(FieldTypeEnum type) {
         this.type = type;
     }
 

@@ -5,20 +5,9 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-/**
- * 文件保存逻辑配置类
- */
-public class FileOutputDiskLogicConfig extends FileOutputLogicConfig {
+public interface FileOutputDiskLogicConfig extends FileOutputLogicConfig {
 
-    @Field(key = "targetPath", name = "目标路径", type = {FieldTypeEnum.TEXT, FieldTypeEnum.EXPRESSION}, isRequired = true)
+    @Field(key = "targetPath", name = "目标路径", type = FieldTypeEnum.TEXT, isRequired = true)
     @FieldEg(eg = "temp/test.txt", desc = "写入到项目 target/class/temp/test.txt 文件中")
-    private String targetPath;
-
-    public String getTargetPath() {
-        return targetPath;
-    }
-
-    public void setTargetPath(String targetPath) {
-        this.targetPath = targetPath;
-    }
+    String targetPath();
 }

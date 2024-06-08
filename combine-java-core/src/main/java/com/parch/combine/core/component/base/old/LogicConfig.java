@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.base;
+package com.parch.combine.core.component.base.old;
 
 import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -7,6 +7,8 @@ import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.ComponentFlagEnum;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -60,6 +60,10 @@ public class CompareTool {
      * @return 是否通过
      */
     public static boolean isPass(CompareGroupConfig config, boolean defaultIsPass) {
+        if (config == null) {
+            return defaultIsPass;
+        }
+
         List<CompareConfig> conditions = config.getConditions();
         String relationStr = config.getRelation();
 

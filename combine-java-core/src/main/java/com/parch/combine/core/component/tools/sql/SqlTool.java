@@ -6,10 +6,11 @@ import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.MatcherUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
+
 
 import java.util.Collection;
 import java.util.List;
@@ -25,15 +26,16 @@ public class SqlTool {
      * @param sqlConfigs SQL配置集合
      * @return SQL语句
      */
-    public static String buildSql(List<SqlItem> sqlConfigs) {
+    public static String buildSql(SqlItem[] sqlConfigs) {
         if (CheckEmptyUtil.isEmpty(sqlConfigs)) {
             return null;
         }
 
         StringBuilder sql = new StringBuilder();
         for (SqlItem item : sqlConfigs) {
-            if (CheckEmptyUtil.isEmpty(item.getConditions()) || CompareTool.isPass(item, false)) {
-                sql.append(CheckEmptyUtil.SPACE).append(item.getSql());
+            CompareGroupConfig compare = item.compare();
+            if (compare == null || CheckEmptyUtil.isEmpty(compare.getConditions()) || CompareTool.isPass(compare, false)) {
+                sql.append(CheckEmptyUtil.SPACE).append(item.sql());
             }
         }
 
@@ -107,8 +109,8 @@ public class SqlTool {
     }
 
     public static String setLimit(String sql, String pageName, String pageSizeName) {
-        Object pageObj = TextExpressionHelper.getObject(pageName);
-        Object pageSizeObj = TextExpressionHelper.getObject(pageSizeName);
+        Object pageObj = DataVariableHelper.parseValue(pageName, false);
+        Object pageSizeObj = DataVariableHelper.parseValue(pageSizeName, false);
 
         // 解析参数
         long page = pageObj == null || !DataTypeIsUtil.isLong(pageObj.toString()) ? 0 : Long.parseLong(pageObj.toString());

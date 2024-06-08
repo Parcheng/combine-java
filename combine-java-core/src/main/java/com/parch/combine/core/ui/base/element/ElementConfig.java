@@ -16,13 +16,13 @@ public abstract class ElementConfig<T extends ElementTemplateConfig> implements 
     @Field(key = "type", name = "元素类型", type = FieldTypeEnum.SELECT, isRequired = true)
     private String type;
 
-    @Field(key = "data", name = "初始数据", type = FieldTypeEnum.OBJECT)
+    @Field(key = "data", name = "初始数据", type = FieldTypeEnum.ANY)
     private Object data;
 
     @Field(key = "refresh", name = "是否支持刷新", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean refresh;
 
-    @Field(key = "defaultData", name = "默认数据", type = FieldTypeEnum.OBJECT)
+    @Field(key = "defaultData", name = "默认数据", type = FieldTypeEnum.ANY)
     private Object defaultData;
 
     @Field(key = "dataLoadId", name = "数据加载配置ID", type = FieldTypeEnum.TEXT)

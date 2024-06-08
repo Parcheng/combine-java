@@ -1,15 +1,11 @@
 package com.parch.combine.components.file.output;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.InitConfig;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
-
-import java.util.ArrayList;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -18,7 +14,7 @@ import java.util.List;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class FileOutputComponent<T extends InitConfig, R extends FileOutputLogicConfig> extends AbsComponent<T, R> {
+public abstract class FileOutputComponent<T extends IInitConfig, R extends FileOutputLogicConfig> extends AbsComponent<T, R> {
 
     /**
      * 构造器
@@ -31,27 +27,11 @@ public abstract class FileOutputComponent<T extends InitConfig, R extends FileOu
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        FileOutputLogicConfig logicConfig = getLogicConfig();
-        if (CheckEmptyUtil.isEmpty(logicConfig.getSource())) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig,  "数据来源不能为空"));
-        }
-        if (logicConfig.getCharset() == null) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "字符集编码不合规"));
-        }
-        result.addAll(initFileConfig());
-        return result;
-    }
-
-    public abstract List<String> initFileConfig();
-
-    @Override
     public final DataResult execute() {
         FileOutputLogicConfig logicConfig = getLogicConfig();
 
         // 获取数据
-        Object dataObj = DataVariableHelper.parseValue(logicConfig.getSource(), true);
+        Object dataObj = logicConfig.source();
         if (dataObj == null) {
             return DataResult.fail(FileExportErrorEnum.DATA_IS_NULL);
         }
@@ -68,7 +48,12 @@ public abstract class FileOutputComponent<T extends InitConfig, R extends FileOu
             if (dataObj instanceof byte[]) {
                 fileInfo.setData((byte[]) dataObj);
             } else {
-                fileInfo.setData(dataObj.toString().getBytes(logicConfig.getCharset()));
+                Charset charset = null;
+                String charsetStr = logicConfig.charset();
+                if (charsetStr != null) {
+                    charset = Charset.forName(charsetStr);
+                }
+                fileInfo.setData(dataObj.toString().getBytes(charset == null ? Charset.defaultCharset() : charset));
             }
         }
 

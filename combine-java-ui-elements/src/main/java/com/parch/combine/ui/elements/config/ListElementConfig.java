@@ -14,7 +14,7 @@ import java.util.List;
 public class ListElementConfig extends ElementConfig<ListElementTemplateConfig> {
 
     @Field(key = "content", name = "列表项内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-    @FieldObject(type = SubElementConfig.class)
+    @FieldObject(SubElementConfig.class)
     private SubElementConfig content;
 
     @Field(key = "defaultText", name = "列表为空时默认显示文本", type = FieldTypeEnum.TEXT)

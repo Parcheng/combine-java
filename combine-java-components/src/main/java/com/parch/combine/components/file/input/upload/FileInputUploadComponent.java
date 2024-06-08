@@ -7,30 +7,14 @@ import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.components.file.input.FileInputComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-/**
- * 文件读取组件
- */
 @Component(order = 200, key = "input.upload", name = "读取上传文件数据组件", logicConfigClass = FileInputUploadLogicConfig.class, initConfigClass = FileInputUploadInitConfig.class)
 @ComponentResult(name = "上传的文件字节信息")
 public class FileInputUploadComponent extends FileInputComponent<FileInputUploadInitConfig, FileInputUploadLogicConfig> {
 
-    private final static String DEFAULT_SEPARATOR = "|";
-
-    /**
-     * 构造器
-     */
     public FileInputUploadComponent() {
         super(FileInputUploadInitConfig.class, FileInputUploadLogicConfig.class);
-    }
-
-    @Override
-    public List<String> init() {
-        return new ArrayList<>();
     }
 
     @Override

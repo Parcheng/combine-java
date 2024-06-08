@@ -18,7 +18,7 @@ import java.util.UUID;
 public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
 
     @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
-    @FieldObject(type = TabItemSettings.class)
+    @FieldObject(TabItemSettings.class)
     private List<TabItemSettings> items;
 
     public TabElementConfig() {
@@ -59,7 +59,7 @@ public class TabElementConfig extends ElementConfig<TabElementTemplateConfig> {
         private Boolean hasClose;
 
         @Field(key = "body", name = "页签内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-        @FieldObject(type = SubElementConfig.class)
+        @FieldObject(SubElementConfig.class)
         private SubElementConfig body;
 
         public String getId() {

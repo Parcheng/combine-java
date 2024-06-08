@@ -6,6 +6,8 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
+import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
+
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 
@@ -26,41 +28,20 @@ public class DataTextReplaceComponent extends AbsComponent<DataTextReplaceInitCo
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        DataTextReplaceLogicConfig logicConfig = getLogicConfig();
-
-        DataTextReplaceModeEnum mode = DataTextReplaceModeEnum.get(logicConfig.getMode());
-        if (mode == DataTextReplaceModeEnum.NONE) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "非法的替换方式"));
-        }
-        if (CheckEmptyUtil.isEmpty(logicConfig.getSource())) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "数据源为空为空"));
-        }
-        if (CheckEmptyUtil.isEmpty(logicConfig.getOldText())) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "旧文本为空"));
-        }
-        if (logicConfig.getNewText() == null) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "新文本为空"));
-        }
-
-        return result;
-    }
-
-    @Override
     public DataResult execute() {
         DataTextReplaceLogicConfig logicConfig = getLogicConfig();
         Object result = null;
 
         try {
-            Object data = DataVariableHelper.parseValue(logicConfig.getSource(), false);
+            String source = logicConfig.source();
+            Object data = DataVariableHelper.parseValue(logicConfig.source(), true);
             if (data != null) {
-                DataTextReplaceModeEnum mode = DataTextReplaceModeEnum.get(logicConfig.getMode());
-                result = replace(mode, logicConfig.getOldText(), logicConfig.getNewText(), data);
+                DataTextReplaceModeEnum mode = DataTextReplaceModeEnum.get(logicConfig.mode());
+                result = replace(mode, logicConfig.oldText(), logicConfig.newText(), data);
             }
-            if (logicConfig.getIsReplace() && DataFindHandler.hasParseFlag(logicConfig.getSource())) {
+            if (logicConfig.isReplace() && DataVariableFlagHelper.hasParseFlag(source)) {
                 Object finalResult = result;
-                DataVariableHelper.replaceValue(logicConfig.getSource(), old -> finalResult);
+                DataVariableHelper.replaceValue(source, old -> finalResult);
             }
         } catch (Exception e) {
             ComponentErrorHandler.print(DataTextReplaceErrorEnum.FAIL, e);

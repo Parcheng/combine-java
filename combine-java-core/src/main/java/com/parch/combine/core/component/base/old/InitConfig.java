@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.base;
+package com.parch.combine.core.component.base.old;
 
 import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.Field;

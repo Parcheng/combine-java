@@ -26,7 +26,7 @@ public class RadioElementConfig extends ElementConfig<RadioElementTemplateConfig
     private String value;
 
     @Field(key = "option", name = "单选项配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = OptionElementConfig.class)
+    @FieldObject(OptionElementConfig.class)
     private OptionElementConfig option;
 
     @Field(key = "disabled", name = "是否禁选", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")

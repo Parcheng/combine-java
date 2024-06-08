@@ -1,12 +1,6 @@
 package com.parch.combine.components.mail;
 
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.ILogicConfig;
 
-/**
- * 逻辑配置类
- */
-public class MailLogicConfig extends LogicConfig {
-
-    @Override
-    public void init() {}
+public interface MailLogicConfig extends ILogicConfig {
 }

@@ -1,9 +1,13 @@
 package com.parch.combine.core.component.handler;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.proxy.ConfigHandler;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.error.SystemErrorHandler;
 import com.parch.combine.core.component.settings.ComponentSettingHandler;
+import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.vo.ComponentClassInitVO;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +32,7 @@ public class ComponentClassHandler {
 
         // 注册所有组件
         for (ComponentClassInitVO vo : components) {
-            register(vo.getKey(), vo.getComponent());
+            vo.setErrorMsg(register(vo.getKey(), vo.getComponent()));
         }
 
         return components;
@@ -40,8 +44,33 @@ public class ComponentClassHandler {
      * @param key 组件Key
      * @param clazz 组件Class对象
      */
-    public static void register(String key, Class<? extends AbsComponent<?, ?>> clazz) {
-        COMPONENT_CLASS_MAP.put(key, clazz);
+    public static List<String> register(String key, Class<? extends AbsComponent<?, ?>> clazz) {
+        List<String> errors = new ArrayList<>();
+        Component componentAnnotation = clazz.getAnnotation(Component.class);
+        if (componentAnnotation == null) {
+            errors.add( "组件类必填使用 Component 注解");
+            return errors;
+        } else {
+            List<String> initErrors = ConfigHandler.check(componentAnnotation.initConfigClass());
+            if (CheckEmptyUtil.isNotEmpty(initErrors)) {
+                for (String item : initErrors) {
+                    errors.add("【初始化配置】" + item);
+                }
+            }
+
+            List<String> logicErrors = ConfigHandler.check(componentAnnotation.logicConfigClass());
+            if (CheckEmptyUtil.isNotEmpty(logicErrors)) {
+                for (String item : logicErrors) {
+                    errors.add("【逻辑配置】" + item);
+                }
+            }
+        }
+
+        if (CheckEmptyUtil.isEmpty(errors)) {
+            COMPONENT_CLASS_MAP.put(key, clazz);
+        }
+
+        return errors;
     }
 
     /**
@@ -50,33 +79,25 @@ public class ComponentClassHandler {
      * @param id 组件ID
      * @param type 组件类型
      */
-    public static AbsComponent<?,?> build(String id, String type, String scopeKey, Map<String, Object> logicConfig) {
-        AbsComponent<?,?> component = null;
+    public static ThreeTuples<Boolean, AbsComponent<?,?>, List<String>> build(String id, String type, String scopeKey, Map<String, Object> logicConfig) {
         try {
             Class<? extends AbsComponent<?, ?>> clazz = COMPONENT_CLASS_MAP.get(type);
-            component = clazz.getDeclaredConstructor().newInstance();
+            AbsComponent<?,?> component = clazz.getDeclaredConstructor().newInstance();
             component.setId(id);
             component.setType(type);
             component.setScopeKey(scopeKey);
-            component.initConfig(logicConfig);
+            List<String> errors = component.initConfig(logicConfig);
+            if (CheckEmptyUtil.isEmpty(errors)) {
+                return new ThreeTuples<>(true, component, null);
+            } else {
+                return new ThreeTuples<>(false, null, errors);
+            }
         } catch (InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             SystemErrorHandler.print(SystemErrorEnum.COMPONENT_BUILD_ERROR, e);
-            return null;
+            return new ThreeTuples<>(false, null, Collections.singletonList("组件构建失败"));
         } catch (Exception e) {
             SystemErrorHandler.print(SystemErrorEnum.SYSTEM_ERROR, e);
-            return null;
+            return new ThreeTuples<>(false, null, Collections.singletonList("组件构建失败"));
         }
-
-        return component;
-    }
-
-    /**
-     * 检查组件配置
-     *
-     * @param component 组件
-     * @return 错误信息集合
-     */
-    public static List<String> init(AbsComponent<?,?> component) {
-        return component.init();
     }
 }

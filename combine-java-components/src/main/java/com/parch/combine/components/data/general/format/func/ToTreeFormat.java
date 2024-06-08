@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 public class ToTreeFormat implements ICustomFormat {
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         List<String> errorMsg = new ArrayList<>();
-        if (CheckEmptyUtil.isEmpty(params) || params.size() < 3) {
+        if (CheckEmptyUtil.isEmpty(params) || params.length < 3) {
             errorMsg.add(FormatFuncError.PARAMS_COUNT_ERROR);
         }
         return errorMsg;
@@ -22,7 +22,7 @@ public class ToTreeFormat implements ICustomFormat {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }
@@ -39,9 +39,9 @@ public class ToTreeFormat implements ICustomFormat {
             throw new Exception(FormatFuncError.DATA_TYPE_NOT_OBJECT_LIST);
         }
 
-        String idField = params.get(0);
-        String parentIdField = params.get(1);
-        String childrenField = params.get(2);
+        String idField = params[0];
+        String parentIdField = params[1];
+        String childrenField = params[2];
 
         // 转Tree
         List<Map<String, Object>> result = new ArrayList<>();

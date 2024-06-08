@@ -7,9 +7,6 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
 import java.util.*;
 
-/**
- * 文件读取组件
- */
 @Component(order = 100, key = "build.text", name = "构建文本文件数据组件", logicConfigClass = FileBuildTextLogicConfig.class, initConfigClass = FileBuildTextInitConfig.class)
 @ComponentResult(name = "文件的字节数据，可以下载/保存成 xlsx 文件（其他格式不行）")
 public class FileBuildTextComponent extends FileBuildComponent<FileBuildTextInitConfig, FileBuildTextLogicConfig> {
@@ -19,16 +16,8 @@ public class FileBuildTextComponent extends FileBuildComponent<FileBuildTextInit
      */
     private static final String FILE_TYPE = "txt";
 
-    /**
-     * 构造器
-     */
     public FileBuildTextComponent() {
         super(FileBuildTextInitConfig.class, FileBuildTextLogicConfig.class);
-    }
-
-    @Override
-    public List<String> init() {
-        return null;
     }
 
     @Override

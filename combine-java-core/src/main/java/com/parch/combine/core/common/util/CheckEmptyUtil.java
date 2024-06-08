@@ -25,6 +25,16 @@ public class CheckEmptyUtil {
     /**
      * 判断空
      *
+     * @param arr 集合
+     * @return 结果
+     */
+    public static boolean isEmpty(Object[] arr) {
+        return arr == null || arr.length == 0;
+    }
+
+    /**
+     * 判断空
+     *
      * @param iterable 集合
      * @return 结果
      */
@@ -40,6 +50,16 @@ public class CheckEmptyUtil {
      */
     public static boolean isNotEmpty(Collection<?> collection) {
         return collection != null && collection.size() > 0;
+    }
+
+    /**
+     * 判断非空
+     *
+     * @param arr 数组
+     * @return 结果
+     */
+    public static boolean isNotEmpty(Object[] arr) {
+        return arr != null && arr.length > 0;
     }
 
     /**

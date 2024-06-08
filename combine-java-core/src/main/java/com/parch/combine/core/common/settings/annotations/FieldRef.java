@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 组件字段
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface FieldRef {
     /**
      * 引用KEY

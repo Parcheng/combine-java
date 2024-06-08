@@ -13,19 +13,19 @@ import java.util.List;
 public class ContentElementConfig extends ElementConfig<ContentElementTemplateConfig> {
 
     @Field(key = "top", name = "顶部图片配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = ContentImgConfig.class)
+    @FieldObject(ContentImgConfig.class)
     private ContentImgConfig top;
 
     @Field(key = "left", name = "左侧图片配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = ContentImgConfig.class)
+    @FieldObject(ContentImgConfig.class)
     private ContentImgConfig left;
 
     @Field(key = "right", name = "右侧图片配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = ContentImgConfig.class)
+    @FieldObject(ContentImgConfig.class)
     private ContentImgConfig right;
 
     @Field(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = ContentConfig.class)
+    @FieldObject(ContentConfig.class)
     private ContentConfig content;
 
     public ContentElementConfig() {

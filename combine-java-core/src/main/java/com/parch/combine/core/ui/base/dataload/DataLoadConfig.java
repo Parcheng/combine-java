@@ -33,8 +33,8 @@ public abstract class DataLoadConfig implements IInit, ICheck {
     @Field(key = "data", name = "加载后的数据二次取值表达式", type = FieldTypeEnum.TEXT, defaultValue = "随机生成")
     private String data;
 
-    @Field(key = "dataMapping", name = "数据映射配置集合", type = FieldTypeEnum.OBJECT, isArray = true, defaultValue = "随机生成")
-    @FieldObject(type = DataMappingConfig.class)
+    @Field(key = "dataMapping", name = "数据映射配置集合", type = FieldTypeEnum.CONFIG, isArray = true, defaultValue = "随机生成")
+    @FieldObject(DataMappingConfig.class)
     private List<DataMappingConfig> dataMapping;
 
     public static class DataMappingConfig {
@@ -42,7 +42,7 @@ public abstract class DataLoadConfig implements IInit, ICheck {
         @Field(key = "source", name = "取值表达式", type = FieldTypeEnum.TEXT)
         private String source;
 
-        @Field(key = "mappings", name = "数据映射，格式为“旧值:新值”的键值对集合", type = FieldTypeEnum.OBJECT)
+        @Field(key = "mappings", name = "数据映射，格式为“旧值:新值”的键值对集合", type = FieldTypeEnum.MAP)
         private Map<String, Object> mappings;
 
         @Field(key = "defaultValue", name = "未命中任何映射时的默认值", type = FieldTypeEnum.TEXT)

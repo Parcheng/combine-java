@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * 组件字段
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface Field {
     /**
      * 字段KEY
@@ -26,7 +26,7 @@ public @interface Field {
     /**
      * 字段类型
      */
-    FieldTypeEnum[] type();
+    FieldTypeEnum type();
 
     /**
      * 字段是否为数组
@@ -42,4 +42,14 @@ public @interface Field {
      * 字段默认值
      */
     String defaultValue() default "";
+
+    /**
+     * 是否解析表达式
+     */
+    boolean parseExpression() default true;
+
+    /**
+     * 是否抛出类型转换错误
+     */
+    boolean throwTypeError() default true;
 }

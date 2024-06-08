@@ -12,6 +12,36 @@ import java.util.Map;
  */
 public class DataParseUtil {
 
+    public static Object parse(Object data, Class<?> typeClass) {
+        if (data == null) {
+            return null;
+        }
+
+        try {
+            if (typeClass.isInstance(data)) {
+                return data;
+            } else if (String.class.equals(typeClass)) {
+                return getString(data);
+            } else if (Double.class.equals(typeClass)) {
+                return Double.parseDouble(data.toString());
+            } else if (Float.class.equals(typeClass)) {
+                return Float.parseFloat(data.toString());
+            } else if (Long.class.equals(typeClass)) {
+                return Long.parseLong(data.toString());
+            } else if (Integer.class.equals(typeClass)) {
+                return Integer.parseInt(data.toString());
+            } else if (Short.class.equals(typeClass)) {
+                return Short.parseShort(data.toString());
+            } else if (Date.class.equals(typeClass)) {
+                return parseDate(data);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static String getString(Object data) {
         return getString(data, null);
     }
@@ -76,15 +106,62 @@ public class DataParseUtil {
      * @param data 数据
      * @return 数据
      */
-    public static Object parseNumber(Object data) {
+    public static Object parseNumber(Object data, Class<?> numClass) {
         if (data == null) {
             return null;
         }
 
-        if (data.toString().contains(SymbolConstant.DOT)) {
-            return Double.parseDouble(data.toString());
+        Number numberData = null;
+        if (Number.class.isAssignableFrom(data.getClass())) {
+            numberData = (Number) data;
         } else {
-            return Long.parseLong(data.toString());
+            String dataStr = data.toString();
+            if (DataTypeIsUtil.isNumber(dataStr)) {
+                if (dataStr.contains(SymbolConstant.DOT)) {
+                    numberData = Double.parseDouble(dataStr);
+                } else {
+                    numberData = Long.parseLong(dataStr);
+                }
+            }
         }
+
+        if (numberData != null && numClass != null && Number.class.isAssignableFrom(numClass)) {
+            if (numClass == Double.class) {
+                return numberData.doubleValue();
+            } else if (numClass == Long.class) {
+                return numberData.longValue();
+            } else if (numClass == Float.class) {
+                return numberData.floatValue();
+            } else if (numClass == Integer.class) {
+                return numberData.intValue();
+            } else if (numClass == Short.class) {
+                return numberData.shortValue();
+            }
+        }
+
+        return numberData;
+    }
+
+    /**
+     * 解析布尔
+     *
+     * @param data 数据
+     * @return 数据
+     */
+    public static Boolean parseBoolean(Object data) {
+        if (data == null) {
+            return null;
+        }
+
+        if (data instanceof Boolean) {
+            return (Boolean) data;
+        }
+
+        if (data instanceof Double || data instanceof Float ||
+                data instanceof Long || data instanceof Integer || data instanceof Short) {
+            return ((Number) data).doubleValue() > 0;
+        }
+
+        return data.toString().equalsIgnoreCase("true");
     }
 }

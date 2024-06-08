@@ -21,7 +21,14 @@ public class CombineJavaStarter {
         PrintHelper.printInit("初始化组件 >>>");
         List<ComponentClassInitVO> components = ComponentClassHandler.init();
         for (ComponentClassInitVO vo : components) {
-            PrintHelper.printInit("组件【" + vo.getKey() + "】初始化完成");
+            if (CheckEmptyUtil.isEmpty(vo.getErrorMsg())) {
+                PrintHelper.printInit("组件【" + vo.getKey() + "】初始化完成");
+            } else {
+                for (String item : vo.getErrorMsg()) {
+                    PrintHelper.printInit("组件【" + vo.getKey() + "】 ERROR " + item);
+                }
+            }
+
         }
         PrintHelper.printInit("=======================================================================================================================================================");
     }

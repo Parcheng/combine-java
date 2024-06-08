@@ -7,9 +7,8 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.ArrayGetTool;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.tools.variable.TextExpressionHelper;
+import com.parch.combine.core.component.tools.ArrayGetTool;
+
 import com.parch.combine.core.component.vo.DataResult;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.params.SetParams;
@@ -29,42 +28,17 @@ public class RedisCommandComponent extends AbsRedisComponent<RedisCommandInitCon
     }
 
     @Override
-    public void initRedisConfig() {}
-
-    @Override
-    public List<String> checkRedisConfig() {
-        List<String> checkMsg = new ArrayList<>();
-        RedisCommandLogicConfig logicConfig = getLogicConfig();
-        if (CheckEmptyUtil.isEmpty(logicConfig.getCommands())) {
-            checkMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "无可执行命令"));
-        }
-        for (int i = 0; i < logicConfig.getCommands().size(); i++) {
-            RedisCommandLogicConfig.RedisCommand item = logicConfig.getCommands().get(i);
-            String baseMsg = "第<" + (i+1) + ">条-";
-            RedisCommandTypeEnum type = item.getType();
-            if (type == RedisCommandTypeEnum.NONE) {
-                checkMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "不支持的命令类型"));
-            }
-            if (item.getParams() == null || item.getParams().length < type.getMinParamCount()) {
-                checkMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "参数数量不合规"));
-            }
-        }
-
-        return checkMsg;
-    }
-
-    @Override
     public DataResult execute() {
         RedisCommandLogicConfig logicConfig = getLogicConfig();
         List<Object> result = new ArrayList<>();
         try (JedisCluster cluster = this.getConn(getInitConfig())) {
-            for (RedisCommandLogicConfig.RedisCommand command : logicConfig.getCommands()) {
+            for (RedisCommandLogicConfig.RedisCommand command : logicConfig.commands()) {
                 Object itemResult = null;
                 try {
                     itemResult = this.executeCommand(cluster, command);
                 } catch (Exception e) {
                     ComponentErrorHandler.print(RedisCommandErrorEnum.UNKNOWN_ERROR, e);
-                    if (logicConfig.getFailStop()) {
+                    if (logicConfig.failStop()) {
                         return DataResult.fail(result, RedisCommandErrorEnum.UNKNOWN_ERROR);
                     }
                 }
@@ -77,8 +51,11 @@ public class RedisCommandComponent extends AbsRedisComponent<RedisCommandInitCon
 
     @SuppressWarnings("unchecked")
     private RedisCommandResult executeCommand(JedisCluster cluster, RedisCommandLogicConfig.RedisCommand command) {
-        RedisCommandTypeEnum type = command.getType();
-        Object[] params = this.parseParams(command.getParams());
+        RedisCommandTypeEnum type = RedisCommandTypeEnum.get(command.type());
+        Object[] params = command.params();
+        if (params.length < type.getMinParamCount()) {
+            return RedisCommandResult.fail("参数数量不合规");
+        }
 
         String key = ArrayGetTool.getString(params, 0);
         if (CheckEmptyUtil.isEmpty(key)) {
@@ -269,13 +246,5 @@ public class RedisCommandComponent extends AbsRedisComponent<RedisCommandInitCon
         }
 
         return RedisCommandResult.fail("未知的命令类型");
-    }
-
-    private Object[] parseParams(String[] params) {
-        Object[] result = new Object[params.length];
-        for (int i = 0; i < params.length; i++) {
-            result[i] = TextExpressionHelper.getText(params[i]);
-        }
-        return result;
     }
 }

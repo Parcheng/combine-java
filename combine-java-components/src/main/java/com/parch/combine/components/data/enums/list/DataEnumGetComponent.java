@@ -1,13 +1,11 @@
 package com.parch.combine.components.data.enums.list;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.components.data.enums.EnumCacheHandler;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataFindHandler;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.ArrayList;
@@ -22,35 +20,21 @@ import java.util.Map;
 @ComponentResult(name = "枚举项集合")
 public class DataEnumGetComponent extends AbsComponent<DataEnumGetInitConfig, DataEnumGetLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public DataEnumGetComponent() {
         super(DataEnumGetInitConfig.class, DataEnumGetLogicConfig.class);
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        DataEnumGetLogicConfig logicConfig = getLogicConfig();
-        if (CheckEmptyUtil.isEmpty(logicConfig.getKey())) {
-            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "枚举KEY为空"));
-        }
-
-        return result;
-    }
-
-    @Override
     public DataResult execute() {
         DataEnumGetLogicConfig logicConfig = getLogicConfig();
-        Object key = DataVariableHelper.parseValue(logicConfig.getKey(), false);
+        String key = logicConfig.key();
         if (key == null) {
             return DataResult.fail(DataEnumGetErrorEnum.KEY_IS_NULL);
         }
 
         List<EnumCacheHandler.EnumItem> items;
         try {
-            items = EnumCacheHandler.get(key.toString());
+            items = EnumCacheHandler.get(key);
         } catch (Exception e) {
             ComponentErrorHandler.print(DataEnumGetErrorEnum.FAIL, e);
             return DataResult.fail(DataEnumGetErrorEnum.FAIL);

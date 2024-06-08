@@ -26,8 +26,8 @@ public class GlobalConfigVO implements IInit {
     @Field(key = "initFlows", name = "初始化要执行的流程KEY集合", type = FieldTypeEnum.TEXT, isArray = true)
     private List<String> initPages = new ArrayList<>();
 
-    @Field(key = "flagConfigs", name = "标识配置集合", type = FieldTypeEnum.OBJECT)
-    @FieldObject(type = FlagConfigs.class)
+    @Field(key = "flagConfigs", name = "标识配置集合", type = FieldTypeEnum.CONFIG)
+    @FieldObject(FlagConfigs.class)
     private FlagConfigs flagConfigs;
 
     public static GlobalConfigVO build(String path) {

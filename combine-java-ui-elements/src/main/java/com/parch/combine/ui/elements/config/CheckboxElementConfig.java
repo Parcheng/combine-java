@@ -4,7 +4,6 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.SubConfig;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.settings.PageSettingCanstant;
 import com.parch.combine.core.ui.settings.annotations.PageElement;
@@ -29,7 +28,7 @@ public class CheckboxElementConfig extends ElementConfig<CheckboxElementTemplate
     private Boolean disabled;
 
     @Field(key = "option", name = "多选项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-    @FieldObject(type = OptionElementConfig.class)
+    @FieldObject(OptionElementConfig.class)
     private OptionElementConfig option;
 
     @Field(key = "triggers", name = "多选框触发配置（用于实现多级联动，暂未不支持使用", type = FieldTypeEnum.TRIGGER, isArray = true)

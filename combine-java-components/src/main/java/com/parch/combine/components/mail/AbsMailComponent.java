@@ -1,9 +1,6 @@
 package com.parch.combine.components.mail;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
-
 import javax.mail.*;
 import java.util.*;
 
@@ -19,30 +16,6 @@ public abstract class AbsMailComponent<T extends MailInitConfig, R extends MailL
         super(tClass, rClass);
     }
 
-    @Override
-    public List<String> init() {
-        MailInitConfig initConfig = getInitConfig();
-        List<String> errorMsg = new ArrayList<>();
-
-        if (CheckEmptyUtil.isEmpty(initConfig.getMail())) {
-            errorMsg.add(ComponentErrorHandler.buildCheckInitMsg(initConfig, "邮箱账户为空"));
-        }
-        if (CheckEmptyUtil.isEmpty(initConfig.getAuthCode())) {
-            errorMsg.add(ComponentErrorHandler.buildCheckInitMsg(initConfig, "邮箱账户密码为空"));
-        }
-        if (CheckEmptyUtil.isEmpty(initConfig.getHost())) {
-            errorMsg.add(ComponentErrorHandler.buildCheckInitMsg(initConfig, "邮箱服务器HOST为空"));
-        }
-        if (initConfig.getPort() == null) {
-            errorMsg.add(ComponentErrorHandler.buildCheckInitMsg(initConfig, "邮箱服务器端口为空"));
-        }
-
-        errorMsg.addAll(checkMailConfig());
-        return errorMsg;
-    }
-
-    protected abstract List<String> checkMailConfig();
-
     /**
      * 获取发件Session
      *
@@ -55,26 +28,30 @@ public abstract class AbsMailComponent<T extends MailInitConfig, R extends MailL
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
-        props.put("mail.smtp.host", initConfig.getHost());
-        props.put("mail.smtp.port", initConfig.getPort());
+        props.put("mail.smtp.host", initConfig.host());
+        props.put("mail.smtp.port", initConfig.port());
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
+        Long timeout = initConfig.timeout();
+
         // 与邮件服务器建立连接的时间限制
-        props.setProperty("mail.smtp.connectiontimeout", initConfig.getTimeout().toString());
+        props.setProperty("mail.smtp.connectiontimeout", timeout.toString());
         // 邮件smtp读取的时间限制
-        props.setProperty("mail.smtp.timeout", initConfig.getTimeout().toString());
+        props.setProperty("mail.smtp.timeout", timeout.toString());
         // 邮件内容上传的时间限制
-        props.setProperty("mail.smtp.writetimeout", initConfig.getTimeout().toString());
+        props.setProperty("mail.smtp.writetimeout", timeout.toString());
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             @Override
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(initConfig.getMail(), initConfig.getAuthCode());
+                return new PasswordAuthentication(initConfig.mail(), initConfig.authCode());
             }
         });
-        session.setDebug(initConfig.getDebug() != null && initConfig.getDebug());
+
+        Boolean debug = initConfig.debug();
+        session.setDebug(debug != null && debug);
         return session;
     }
 
@@ -90,16 +67,18 @@ public abstract class AbsMailComponent<T extends MailInitConfig, R extends MailL
         props.put("mail.store.protocol", "imap");
         props.put("mail.imap.ssl.protocols", "TLSv1.2");
 
-        props.put("mail.imap.host", initConfig.getHost());
-        props.put("mail.imap.port", initConfig.getPort());
+        props.put("mail.imap.host", initConfig.host());
+        props.put("mail.imap.port", initConfig.port());
         props.put("mail.imap.auth", "true");
         props.put("mail.imap.starttls.enable", "true");
         props.put("mail.imap.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
         Session session = Session.getDefaultInstance(props);
-        session.setDebug(initConfig.getDebug() != null && initConfig.getDebug());
+
+        Boolean debug = initConfig.debug();
+        session.setDebug(debug != null && debug);
         Store store = session.getStore("imap");
-        store.connect(initConfig.getMail(), initConfig.getAuthCode());
+        store.connect(initConfig.mail(), initConfig.authCode());
 
         return store;
     }

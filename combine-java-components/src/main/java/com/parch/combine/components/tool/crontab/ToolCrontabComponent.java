@@ -30,43 +30,18 @@ public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, To
     }
 
     @Override
-    public List<String> init() {
-        List<String> errorMsg = new ArrayList<>(1);
-        ToolCrontabLogicConfig logicConfig = getLogicConfig();
-        if (logicConfig.getStartTime() != null && !DataTypeIsUtil.isDate(logicConfig.getStartTime())) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "开始事件日期格式错误"));
-        }
-        if (logicConfig.getPeriod() == null || logicConfig.getPeriod() <= 0) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "执行周期为空或不合法"));
-        }
-        if (logicConfig.getMaxPeriod() != null && logicConfig.getMaxPeriod() <= logicConfig.getPeriod()) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "最大周期必须大于最小周期"));
-        }
-
-        // 初始化逻辑中使用的组件
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentTool.init(manager, logicConfig.getComponents());
-            for (String initErrorMsg : initErrorMsgs) {
-                errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
-            }
-        }
-
-        return errorMsg;
-    }
-
-    @Override
     public DataResult execute() {
         try {
             ToolCrontabLogicConfig logicConfig = getLogicConfig();
             ScheduledExecutorService service = getService();
 
             Date currDate = new Date();
-            Date startTime = logicConfig.getStartTime() == null ? currDate : DataParseUtil.parseDate(logicConfig.getStartTime());
-            long initialDelay = currDate.getTime() - startTime.getTime() + logicConfig.getInitialDelay();
+            Date startTime = logicConfig.startTime() == null ? currDate : DataParseUtil.parseDate(logicConfig.startTime());
+            long initialDelay = currDate.getTime() - startTime.getTime() + logicConfig.initialDelay();
             initialDelay = initialDelay < 0 ? 0 : initialDelay;
 
-            if (logicConfig.getMaxPeriod() == null) {
-                service.scheduleAtFixedRate(this::executeSubComponents, initialDelay, logicConfig.getPeriod(), TimeUnit.MILLISECONDS);
+            if (logicConfig.period() == null) {
+                service.scheduleAtFixedRate(this::executeSubComponents, initialDelay, logicConfig.period(), TimeUnit.MILLISECONDS);
             } else {
                 service.schedule(new CrontabScheduledTask(this), initialDelay, TimeUnit.MILLISECONDS);
             }
@@ -80,22 +55,23 @@ public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, To
 
     protected void executeSubComponents() {
         ToolCrontabLogicConfig logicConfig = getLogicConfig();
-        SubComponentTool.execute(manager, logicConfig.getJobFlowKey(), new HashMap<>(0), logicConfig.getComponents());
+        String jobFlowKey = logicConfig.jobFlowKey();
+        SubComponentTool.execute(manager, jobFlowKey == null ? (logicConfig.id() + "-Listen") : jobFlowKey, new HashMap<>(0), logicConfig.components());
     }
 
     protected ScheduledExecutorService getService() {
         ToolCrontabInitConfig initConfig = getInitConfig();
-        ScheduledExecutorService service = SERVICE_CACHE.get(initConfig.getId());
+        ScheduledExecutorService service = SERVICE_CACHE.get(initConfig.id());
         if (service != null) {
             return service;
         }
 
         synchronized (SERVICE_CACHE) {
-            service = SERVICE_CACHE.get(initConfig.getId());
+            service = SERVICE_CACHE.get(initConfig.id());
             if (service == null) {
-                ThreadFactory threadFactory = new CustomThreadFactory(initConfig.getType() + "-" + initConfig.getId());
-                service = new ScheduledThreadPoolExecutor(initConfig.getPoolSize(), threadFactory);
-                SERVICE_CACHE.put(initConfig.getId(), service);
+                ThreadFactory threadFactory = new CustomThreadFactory(initConfig.type() + "-" + initConfig.id());
+                service = new ScheduledThreadPoolExecutor(initConfig.poolSize(), threadFactory);
+                SERVICE_CACHE.put(initConfig.id(), service);
             }
         }
 
@@ -130,9 +106,10 @@ public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, To
             ToolCrontabLogicConfig logicConfig = component.getLogicConfig();
 
             // 计算周期
-            int period = logicConfig.getPeriod();
-            if (logicConfig.getMaxPeriod() != null) {
-                period = random.nextInt(logicConfig.getMaxPeriod() - logicConfig.getPeriod()) + logicConfig.getPeriod();
+            int period = logicConfig.period();
+            int maxPeriod = logicConfig.maxPeriod();
+            if (logicConfig.maxPeriod() != null) {
+                period = random.nextInt(maxPeriod - period) + period;
             }
 
             // 执行逻辑

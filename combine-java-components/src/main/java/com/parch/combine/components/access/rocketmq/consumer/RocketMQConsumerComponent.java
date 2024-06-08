@@ -1,6 +1,5 @@
 package com.parch.combine.components.access.rocketmq.consumer;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.components.access.rocketmq.AbsRocketMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
@@ -8,18 +7,15 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
+
 import com.parch.combine.core.component.tools.SubComponentTool;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.message.MessageExt;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,51 +32,31 @@ public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQCons
     }
 
     @Override
-    public List<String> initConfig() {
-        List<String> errorMsg = new ArrayList<>();
-        RocketMQConsumerLogicConfig logicConfig = getLogicConfig();
-        if (CheckEmptyUtil.isEmpty(logicConfig.getComponents())) {
-            errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, "处理消息的组件集合为空"));
-        }
-
-        // 初始化逻辑中使用的组件
-        if (CheckEmptyUtil.isNotEmpty(logicConfig.getComponents())) {
-            List<String> initErrorMsgs = SubComponentTool.init(manager, logicConfig.getComponents());
-            for (String initErrorMsg : initErrorMsgs) {
-                errorMsg.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, initErrorMsg));
-            }
-        }
-
-        return errorMsg;
-    }
-
-    @Override
     public DataResult execute() {
         RocketMQConsumerInitConfig initConfig = getInitConfig();
         RocketMQConsumerLogicConfig logicConfig = getLogicConfig();
 
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(logicConfig.getConsumerGroup());
-        consumer.setNamesrvAddr(initConfig.getService());
-
-
-        Object topic = DataVariableHelper.parseValue(logicConfig.getTopic(), false);
-        Object expression = DataVariableHelper.parseValue(logicConfig.getExpression(), false);
+        String consumerGroup = logicConfig.consumerGroup();
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(consumerGroup == null ? logicConfig.id() : consumerGroup);
+        consumer.setNamesrvAddr(initConfig.service());
 
         try {
-            Object listenFlowKeyObj = DataVariableHelper.parseValue(logicConfig.getListenFlowKey(), false);
-            String listenFlowKey = listenFlowKeyObj == null ? logicConfig.getListenFlowKey() : listenFlowKeyObj.toString();
+            String listenFlowKey = logicConfig.listenFlowKey();
+            String finalListenFlowKey = listenFlowKey == null ? (logicConfig.id() + "-Listen") : listenFlowKey;
 
-            consumer.subscribe(topic.toString(), expression.toString());
+            String topic = logicConfig.topic();
+            String expression = logicConfig.expression();
+            consumer.subscribe(topic, expression);
             consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
                 for (MessageExt msg : msgs) {
                     Map<String, Object> data = new HashMap<>();
                     data.put("msgId", msg.getMsgId());
                     data.put("body", JsonUtil.deserialize(new String(msg.getBody()), HashMap.class));
 
-                    DataResult result = SubComponentTool.execute(manager, listenFlowKey, data, logicConfig.getComponents());
+                    DataResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
                     if (!result.getSuccess()) {
-                        ComponentErrorHandler.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic.toString()
-                                + " expression=" + expression.toString() + " error=" + result.getErrMsg(), null);
+                        ComponentErrorHandler.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic
+                                + " expression=" + expression + " error=" + result.getErrMsg(), null);
                     }
                 }
                 

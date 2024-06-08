@@ -5,6 +5,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.vo.DataResult;
 import java.util.ArrayList;
@@ -22,51 +23,26 @@ public class DataResetComponent extends AbsComponent<DataResetInitConfig, DataRe
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        DataResetLogicConfig logicConfig = getLogicConfig();
-        List<DataResetLogicConfig.DataResetCompare> items = logicConfig.getItems();
-        if (items != null) {
-            for (int i = 0; i < items.size(); i++) {
-                DataResetLogicConfig.DataResetCompare item = items.get(i);
-                String baseMsg = "第<" + (i+1) + ">条-";
-                if (item.getResets() != null) {
-                    for (DataResetLogicConfig.DataResetConfig reset : item.getResets()) {
-                        if (CheckEmptyUtil.isEmpty(reset.getFieldName())) {
-                            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "字段名为空"));
-                        }
-                        if(CheckEmptyUtil.isEmpty(reset.getValue())) {
-                            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + "值为空"));
-                        }
-                        String msg = DataResetHandler.checkDataType(reset.getType(), reset.getValue());
-                        if (msg != null) {
-                            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + msg));
-                        }
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    @Override
     public DataResult execute() {
         DataResetLogicConfig logicConfig = getLogicConfig();
-        List<DataResetLogicConfig.DataResetCompare> items = logicConfig.getItems();
+
+        Boolean nullValue = logicConfig.nullValue();
+        DataResetLogicConfig.DataResetCompare[] items = logicConfig.items();
         if (items != null) {
             for (DataResetLogicConfig.DataResetCompare item : items) {
-                if (CheckEmptyUtil.isEmpty(item.getResets())) {
+                DataResetLogicConfig.DataResetConfig[] resets = item.resets();
+                if (CheckEmptyUtil.isEmpty(resets)) {
                     continue;
                 }
 
-                boolean isTrue = CompareTool.isPass(item, true);
+                CompareGroupConfig compare = item.compare();
+                boolean isTrue = CompareTool.isPass(compare, true);
                 if (!isTrue) {
                     continue;
                 }
 
-                for (DataResetLogicConfig.DataResetConfig reset : item.getResets()) {
-                    DataResetErrorEnum msg = DataResetHandler.reset(reset, logicConfig.getNullValue());
+                for (DataResetLogicConfig.DataResetConfig reset : resets) {
+                    DataResetErrorEnum msg = DataResetHandler.reset(reset, nullValue);
                     if (msg != null) {
                         return DataResult.fail(msg);
                     }

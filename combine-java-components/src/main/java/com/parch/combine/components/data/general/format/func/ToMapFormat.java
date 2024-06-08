@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ToMapFormat implements ICustomFormat {
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         List<String> errorMsg = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(params)) {
             errorMsg.add(FormatFuncError.GROUP_KEY_IS_NULL);
@@ -25,7 +25,7 @@ public class ToMapFormat implements ICustomFormat {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }
@@ -43,11 +43,11 @@ public class ToMapFormat implements ICustomFormat {
         }
 
         // 转Map
-        String valueKey = params.size() > 1 ? params.get(1) : null;
+        String valueKey = params.length > 1 ? params[1] : null;
         List<Map<String, Object>> dataList = (List<Map<String, Object>>) sourceValue;
         return dataList.stream().collect(Collectors.toMap(item -> {
             StringBuilder keys = new StringBuilder(CheckEmptyUtil.EMPTY);
-            String[] paramKeys = params.get(0).split(KEY_SEPARATOR);
+            String[] paramKeys = params[0].split(KEY_SEPARATOR);
             for (String paramKey : paramKeys) {
                 keys.append(item.get(paramKey));
             }

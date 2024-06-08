@@ -17,7 +17,7 @@ public class TriggerCustomConfig extends TriggerConfig {
     @Field(key = "functionName", name = "自定义函数名", type = FieldTypeEnum.TEXT, isRequired = true)
     private String functionName;
 
-    @Field(key = "functionParams", name = "自定义函数参数", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "functionParams", name = "自定义函数参数", type = FieldTypeEnum.ANY, isArray = true)
     private List<Object> functionParams;
 
     @Field(key = "toLocalStorage", name = "是否将结果保存到浏览器本地存储", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")

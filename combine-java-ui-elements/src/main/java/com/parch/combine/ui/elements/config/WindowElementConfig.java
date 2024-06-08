@@ -26,7 +26,7 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
     private Integer size;
 
     @Field(key = "content", name = "内容配置", type = FieldTypeEnum.OBJECT, isRequired = true)
-    @FieldObject(type = SubElementConfig.class)
+    @FieldObject(SubElementConfig.class)
     private SubElementConfig body;
 
     @Field(key = "closeTriggers", name = "窗口关闭的触发配置", type = FieldTypeEnum.OBJECT, isArray = true)

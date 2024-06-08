@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.tools.variable;
+package com.parch.combine.core.component.tools;
 
 import com.parch.combine.core.common.util.ArrayUtil;
 import com.parch.combine.core.common.util.DataParseUtil;

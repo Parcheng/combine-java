@@ -1,8 +1,8 @@
 package com.parch.combine.core.component.error;
 
 import com.parch.combine.core.common.util.PrintUtil;
-import com.parch.combine.core.component.base.InitConfig;
-import com.parch.combine.core.component.base.LogicConfig;
+import com.parch.combine.core.component.base.IInitConfig;
+import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.base.AbsComponent;
 
@@ -73,20 +73,18 @@ public class ComponentErrorHandler {
     /**
      * 构建检测初始化配置错误信息
      *
-     * @param config 初始化配置
      * @param msg 错误信息
      */
-    public static String buildCheckInitMsg(InitConfig config, String msg) {
-        return "【" + config.getType() + "】【初始化配置】【" + config.getId() + "】【" + msg + "】";
+    public static String buildCheckInitMsg(String id, String type, String msg) {
+        return "【" + type + "】【初始化配置】【" + id + "】【" + msg + "】";
     }
 
     /**
      * 构建检测逻辑配置错误信息
      *
-     * @param config 逻辑配置
      * @param msg 错误信息
      */
-    public static String buildCheckLogicMsg(LogicConfig config, String msg) {
-        return "【" + config.getType() + "】【逻辑配置】【" + config.getId() + "】【" + msg + "】";
+    public static String buildCheckLogicMsg(String id, String type, String msg) {
+        return "【" + type + "】【逻辑配置】【" + id + "】【" + msg + "】";
     }
 }

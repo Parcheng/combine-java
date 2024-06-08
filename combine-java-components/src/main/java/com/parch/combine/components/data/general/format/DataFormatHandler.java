@@ -23,7 +23,7 @@ public class DataFormatHandler {
      * @param params 参数
      * @return 函数
      */
-    public static List<String> checkParams(DataFormatFunctionEnum function, List<String> params) {
+    public static List<String> checkParams(DataFormatFunctionEnum function, String[] params) {
         ICustomFormat format = getFormatObj(function, params);
         if (format == null) {
             return Collections.singletonList("未知的函数类型");
@@ -39,7 +39,7 @@ public class DataFormatHandler {
      * @param params 参数
      * @return 函数
      */
-    public static DataFindHandler.GetDataFunction<Object> getFunction(DataFormatFunctionEnum function, List<String> params) {
+    public static DataFindHandler.GetDataFunction<Object> getFunction(DataFormatFunctionEnum function, String[] params) {
         ICustomFormat format = getFormatObj(function, params);
         if (format == null) {
             ComponentErrorHandler.print(function + " 函数不存在");
@@ -57,13 +57,13 @@ public class DataFormatHandler {
      * @param params 参数集合
      * @return 格式化函数实例
      */
-    private static ICustomFormat getFormatObj(DataFormatFunctionEnum function, List<String> params) {
+    private static ICustomFormat getFormatObj(DataFormatFunctionEnum function, String[] params) {
         ICustomFormat format;
         if (function == DataFormatFunctionEnum.CUSTOM) {
-            String functionName = params.get(0);
+            String functionName = params[0];
             format = formatFunctionMap.get(functionName);
             if (format == null) {
-                format = loadClass(params.get(0));
+                format = loadClass(params[0]);
                 formatFunctionMap.put(functionName, format);
             }
         } else {

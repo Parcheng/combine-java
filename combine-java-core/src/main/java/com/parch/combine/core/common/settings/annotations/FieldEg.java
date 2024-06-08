@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * 组件字段示例
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.METHOD, ElementType.FIELD})
 @Repeatable(FieldEgs.class)
 public @interface FieldEg {
     /**

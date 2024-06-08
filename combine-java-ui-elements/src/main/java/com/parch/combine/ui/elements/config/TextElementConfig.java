@@ -17,7 +17,7 @@ public class TextElementConfig extends ElementConfig<TextElementTemplateConfig> 
     private Integer retract;
 
     @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
-    @FieldObject(type = TextLineSettings.class)
+    @FieldObject(TextLineSettings.class)
     private List<TextLineSettings> lines;
 
     @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT)

@@ -19,7 +19,7 @@ public class TriggerLoadConfig extends TriggerConfig {
     @Field(key = "parentId", name = "要写入到的父元素DOM ID", type = FieldTypeEnum.TEXT, isRequired = true)
     private String parentId;
 
-    @Field(key = "params", name = "加载元素组的数据", type = FieldTypeEnum.OBJECT)
+    @Field(key = "params", name = "加载元素组的数据", type = FieldTypeEnum.ANY)
     private Object params;
 
     @Override

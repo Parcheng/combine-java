@@ -5,64 +5,25 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
-import com.parch.combine.core.component.tools.compare.CompareConfig;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.vo.DataResult;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-/**
- * 逻辑判断组件
- */
 @Component(key = "judgment", name = "逻辑判断组件", logicConfigClass = LogicJudgmentLogicConfig.class, initConfigClass = LogicJudgmentInitConfig.class)
 @ComponentResult(name = "被执行的组件 ID 集合")
 public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig, LogicJudgmentLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public LogicJudgmentComponent() {
         super(LogicJudgmentInitConfig.class, LogicJudgmentLogicConfig.class);
     }
 
     @Override
-    public List<String> init() {
-        List<String> result = new ArrayList<>();
-        LogicJudgmentLogicConfig logicConfig = getLogicConfig();
-        List<LogicJudgmentLogicConfig.LogicJudgmentItem> items = logicConfig.getItems();
-        if (items != null) {
-            // 遍历检测配置项
-            for (int i = 0; i < items.size(); i++) {
-                LogicJudgmentLogicConfig.LogicJudgmentItem item = items.get(i);
-                String baseMsg = "第<" + (i+1) + ">条-";
-
-                // 检查条件配置
-                if (CheckEmptyUtil.isNotEmpty(item.getConditions())) {
-                    for (CompareConfig config : item.getConditions()) {
-                        for (String compareMsgItem : config.check()) {
-                            result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + compareMsgItem));
-                        }
-                    }
-                }
-
-                // 初始化逻辑中使用的组件
-                if (CheckEmptyUtil.isNotEmpty(item.getComponents())) {
-                    List<String> initErrors = SubComponentTool.init(manager, item.getComponents());
-                    for (String initErrorMsg : initErrors) {
-                        result.add(ComponentErrorHandler.buildCheckLogicMsg(logicConfig, baseMsg + initErrorMsg));
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    @Override
     public DataResult execute() {
-        if (getLogicConfig().getItems() != null) {
-            for (LogicJudgmentLogicConfig.LogicJudgmentItem item : getLogicConfig().getItems()) {
+        LogicJudgmentLogicConfig.LogicJudgmentItem[] items = getLogicConfig().items();
+        if (items != null) {
+            for (LogicJudgmentLogicConfig.LogicJudgmentItem item : items) {
 
                 // 逻辑判断是否通过
                 if (!isPass(item)) {
@@ -70,12 +31,13 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
                 }
 
                 // 没有可执行的组件逻辑
-                if (CheckEmptyUtil.isEmpty(item.getComponents())) {
+                String[] components = item.components();
+                if (CheckEmptyUtil.isEmpty(components)) {
                     break;
                 }
 
                 // 逻辑判断通过，返回执行结果
-                return SubComponentTool.execute(manager, item.getComponents());
+                return SubComponentTool.execute(manager, components);
             }
         }
 
@@ -89,6 +51,10 @@ public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig
      * @return 是否通过
      */
     private boolean isPass(LogicJudgmentLogicConfig.LogicJudgmentItem item) {
-        return CompareTool.isPass(item, true);
+        CompareGroupConfig compare = item.compare();
+        if (compare == null) {
+            return true;
+        }
+        return CompareTool.isPass(compare, true);
     }
 }

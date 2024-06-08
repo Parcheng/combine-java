@@ -17,7 +17,7 @@ import java.util.List;
 public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConfig> {
 
     @Field(key = "items", name = "按钮配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldObject(type = ButtonItemSettings.class)
+    @FieldObject(ButtonItemSettings.class)
     private List<ButtonItemSettings> items;
 
     public ButtonElementConfig() {

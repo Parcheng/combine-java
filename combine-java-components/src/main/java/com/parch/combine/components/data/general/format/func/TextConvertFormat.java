@@ -12,7 +12,7 @@ public class TextConvertFormat implements ICustomFormat {
     private static final String DEFAULT_ROW_SEPARATOR = "\\s+";
 
     @Override
-    public List<String> check(List<String> params) {
+    public List<String> check(String[] params) {
         List<String> errorMsg = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(params)) {
             errorMsg.add(FormatFuncError.PARAMS_IS_NULL);
@@ -20,16 +20,16 @@ public class TextConvertFormat implements ICustomFormat {
         }
 
         // 函数参数验证
-        ConvertType type = ConvertType.get(params.get(0));
+        ConvertType type = ConvertType.get(params[0]);
         switch (type) {
             case MODEL_TO_TEXT:
             case MODELS_TO_TEXTS:
             case TEXT_TO_MODEL:
             case TEXTS_TO_MODELS:
-                if (params.size() < 2 || CheckEmptyUtil.isEmpty(params.get(1))) {
+                if (params.length < 2 || CheckEmptyUtil.isEmpty(params[1])) {
                     errorMsg.add(FormatFuncError.TEXT_CONVERT_KEYS_IS_NULL);
                 }
-                if (params.size() < 3 || CheckEmptyUtil.isEmpty(params.get(2))) {
+                if (params.length < 3 || CheckEmptyUtil.isEmpty(params[2])) {
                     errorMsg.add(FormatFuncError.TEXT_CONVERT_COL_SEPARATOR_IS_NULL);
                 }
             case MODELS_TO_TEXT:
@@ -45,18 +45,18 @@ public class TextConvertFormat implements ICustomFormat {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Object format(Object sourceValue, List<String> params) throws Exception {
+    public Object format(Object sourceValue, String[] params) throws Exception {
         if (sourceValue == null) {
             return null;
         }
 
-        ConvertType type = ConvertType.get(params.get(0));
+        ConvertType type = ConvertType.get(params[0]);
         switch (type) {
             case MODEL_TO_TEXT:
                 if (!(sourceValue instanceof Map)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_OBJECT);
                 }
-                return modelToText((Map<String, Object>) sourceValue, params.get(1), params.get(2));
+                return modelToText((Map<String, Object>) sourceValue, params[1], params[2]);
             case MODELS_TO_TEXT:
                 if (!(sourceValue instanceof List)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_LIST);
@@ -68,7 +68,7 @@ public class TextConvertFormat implements ICustomFormat {
                 if (!(modelsToTextData.get(0) instanceof Map)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_OBJECT_LIST);
                 }
-                return modelsToText((List<Map<String, Object>>) sourceValue, params.get(1), params.get(2), params.get(3));
+                return modelsToText((List<Map<String, Object>>) sourceValue, params[1], params[2], params[3]);
             case MODELS_TO_TEXTS:
                 if (!(sourceValue instanceof List)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_LIST);
@@ -80,18 +80,18 @@ public class TextConvertFormat implements ICustomFormat {
                 if (!(modelsToTextsData.get(0) instanceof Map)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_OBJECT_LIST);
                 }
-                return modelsToTexts((List<Map<String, Object>>) sourceValue, params.get(1), params.get(2));
+                return modelsToTexts((List<Map<String, Object>>) sourceValue, params[1], params[2]);
             case TEXT_TO_MODEL:
                 if (!(sourceValue instanceof String)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_STRING);
                 }
-                return textToModel((String) sourceValue, params.get(1), params.get(2));
+                return textToModel((String) sourceValue, params[1], params[2]);
             case TEXT_TO_MODELS:
                 if (!(sourceValue instanceof String)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_STRING);
                 }
-                String rowSeparator = params.size() < 4 || CheckEmptyUtil.isEmpty(params.get(3)) ? DEFAULT_ROW_SEPARATOR : params.get(3);
-                return textToModels((String) sourceValue, params.get(1), params.get(2), rowSeparator);
+                String rowSeparator = params.length < 4 || CheckEmptyUtil.isEmpty(params[3]) ? DEFAULT_ROW_SEPARATOR : params[3];
+                return textToModels((String) sourceValue, params[1], params[2], rowSeparator);
             case TEXTS_TO_MODELS:
                 if (!(sourceValue instanceof List)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_LIST);
@@ -103,7 +103,7 @@ public class TextConvertFormat implements ICustomFormat {
                 if (!(textsToModelsData.get(0) instanceof String)) {
                     throw new Exception(FormatFuncError.DATA_TYPE_NOT_STRING_LIST);
                 }
-                return textsToModels((List<String>) sourceValue, params.get(1), params.get(2));
+                return textsToModels((List<String>) sourceValue, params[1], params[2]);
             default:
                 return null;
         }

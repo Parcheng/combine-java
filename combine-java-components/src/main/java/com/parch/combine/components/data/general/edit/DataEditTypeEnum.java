@@ -7,20 +7,14 @@ import com.parch.combine.core.common.settings.config.IOptionSetting;
  * 数据编辑类型枚举
  */
 public enum DataEditTypeEnum implements IOptionSetting {
-    ADD(2, "追加", true, "支持集合类型数据",
-            new String[]{"\t参数1：要设置的值"}),
-    ADD_ALL(2, "追加", true,  "支持集合类型数据",
+    ADD(1, "追加", true,  "支持集合类型数据",
             new String[]{"\t参数1-n：要设置的值"}),
 
-    SET(2, "设置", true,  "支持集合和常规（字符串，数字等）类型数据",
-            new String[]{"\t参数1（常规类型）：要设置的值，格式必须为：:字段值", "\t参数1（集合类型）：要设置的值，格式必须为：索引:字段值"}),
-    SET_ALL(2, "设置全部", true,  "",
+    SET(1, "设置", true,  "",
             new String[]{"\t参数1-n（常规类型）：要设置的值，格式必须为：:字段值", "\t参数1-n（集合类型）：要设置的值，格式必须为：索引:字段值"}),
 
-    PUT(1, "添加", true,  "支持结构对象类型数据，格式必须为：数据类型:字段名:字段值",
-            new String[]{"\t参数1：要设置的值，格式必须为：索引:字段值"}),
-    PUT_ALL(1, "添加", true,  "支持对象类型数据，",
-            new String[]{"\t参数1-n：要设置的值，格式可以为：索引:字段值，或#{...}引用的对象类型数据"}),
+    PUT(1, "添加", true,  "支持对象类型数据，",
+            new String[]{"\t参数1-n：要设置的值，格式可以为：(数据类型:字段名:字段值)，或#{...}引用的对象类型数据"}),
 
     REMOVE(1, "删除", true,  "支持对象和集合类型数据，",
             new String[]{"\t参数1（对象类型）：要删除的字段名", "\t参数1（集合类型）：要删除的集合中的值"}),
@@ -47,12 +41,12 @@ public enum DataEditTypeEnum implements IOptionSetting {
         this.details = details;
     }
 
-    public static DataEditTypeEnum get(String sqlType) {
-        if (CheckEmptyUtil.isEmpty(sqlType)) {
+    public static DataEditTypeEnum get(String type) {
+        if (CheckEmptyUtil.isEmpty(type)) {
             return NONE;
         }
         for (DataEditTypeEnum value : DataEditTypeEnum.values()) {
-            if (value.toString().equals(sqlType.toUpperCase())) {
+            if (value.toString().equals(type.toUpperCase())) {
                 return value;
             }
         }

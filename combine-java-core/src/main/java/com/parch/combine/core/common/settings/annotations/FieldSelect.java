@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * 字段下拉
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface FieldSelect {
     /**
      * 下拉枚举Class

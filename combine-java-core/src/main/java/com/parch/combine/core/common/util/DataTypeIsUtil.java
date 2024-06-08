@@ -20,7 +20,7 @@ public class DataTypeIsUtil {
      * @return 结果
      */
     public static boolean isNumber(Object data) {
-        return data != null && NumberUtil.isNumber(data.toString());
+        return data != null && data.toString().matches("-?\\d+(\\.\\d+)?");
     }
 
     /**
@@ -93,7 +93,19 @@ public class DataTypeIsUtil {
      * @return 结果
      */
     public static boolean isBoolean(Object data) {
-        return data != null && ("true".equals(data.toString()) || "false".equals(data.toString()));
+        if (data == null) {
+            return false;
+        }
+
+        if (data instanceof Boolean) {
+            return true;
+        }
+
+        if (data instanceof String) {
+            return "true".equals(data.toString()) || "false".equals(data.toString());
+        }
+
+        return false;
     }
 
     /**

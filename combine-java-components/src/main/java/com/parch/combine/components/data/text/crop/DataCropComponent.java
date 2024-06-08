@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.variable.DataVariableHelper;
+
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.ArrayList;
@@ -18,23 +18,15 @@ import java.util.List;
 @ComponentResult(name = "裁剪后的文本（集合/矩阵）")
 public class DataCropComponent extends AbsComponent<DataCropInitConfig, DataCropLogicConfig> {
 
-    /**
-     * 构造器
-     */
     public DataCropComponent() {
         super(DataCropInitConfig.class, DataCropLogicConfig.class);
-    }
-
-    @Override
-    public List<String> init() {
-        return null;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     protected DataResult execute() {
         DataCropLogicConfig config = getLogicConfig();
-        Object data = DataVariableHelper.parseValue(config.getSource(), false);
+        Object data = config.source();
         if (data == null) {
             return DataResult.success(null);
         }
@@ -51,10 +43,10 @@ public class DataCropComponent extends AbsComponent<DataCropInitConfig, DataCrop
             lines.add(data);
         }
 
-        int startRowIndex = config.getStartRow() - 1;
-        int startIndex = config.getStartIndex()  - 1;
-        int startSkipCount = config.getStartSkipCount() + startIndex;
-        int endDiscardCount = config.getEndDiscardCount();
+        int startRowIndex = config.startRow() - 1;
+        int startIndex = config.startIndex()  - 1;
+        int startSkipCount = config.startSkipCount() + startIndex;
+        int endDiscardCount = config.endDiscardCount();
 
         int rowIndex = 0;
         for (Object rowObj : lines) {
