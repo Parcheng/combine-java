@@ -1,8 +1,5 @@
 package com.parch.combine.core.common.util;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.NumberUtil;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +27,16 @@ public class DataTypeIsUtil {
      * @return 结果
      */
     public static boolean isInteger(Object data) {
-        return data != null && NumberUtil.isInteger(data.toString());
+        if (data == null || CheckEmptyUtil.isEmpty(data.toString())) {
+            return false;
+        } else {
+            try {
+                Integer.parseInt(data.toString());
+                return true;
+            } catch (NumberFormatException var2) {
+                return false;
+            }
+        }
     }
 
     /**
@@ -40,7 +46,16 @@ public class DataTypeIsUtil {
      * @return 结果
      */
     public static boolean isLong(Object data) {
-        return data != null && NumberUtil.isLong(data.toString());
+        if (data == null || CheckEmptyUtil.isEmpty(data.toString())) {
+            return false;
+        } else {
+            try {
+                Long.parseLong(data.toString());
+                return true;
+            } catch (NumberFormatException var2) {
+                return false;
+            }
+        }
     }
 
     /**
@@ -50,7 +65,17 @@ public class DataTypeIsUtil {
      * @return 结果
      */
     public static boolean isDouble(Object data) {
-        return data != null && NumberUtil.isDouble(data.toString());
+        if (data == null || CheckEmptyUtil.isEmpty(data.toString())) {
+            return false;
+        } else {
+            try {
+                Double.parseDouble(data.toString());
+            } catch (NumberFormatException var2) {
+                return false;
+            }
+
+            return true;
+        }
     }
 
     /**
@@ -76,8 +101,7 @@ public class DataTypeIsUtil {
 
         if (data != null) {
             try {
-                DateUtil.parse(data.toString());
-                return true;
+                return DataParseUtil.parseDate(data.toString()) != null;
             } catch (Exception e) {
                 return false;
             }
