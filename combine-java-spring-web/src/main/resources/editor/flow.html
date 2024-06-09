@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FLOW EDITOR</title>
+    <link rel="stylesheet" href="/combine/ui/combine_base.css">
+    <link rel="stylesheet" href="./combine_base.css">
+</head>
+<body>
+    <h1 class="header">【配置文件编辑器】</h1><br>
+    <div id="inits" class="list">
+        <div class="title">
+            <span class="add">+</span>
+            <span class="text">初始化配置</span>
+        </div>
+        <div class="body">
+            <span class="block">Mysql-[121323132324242424]</span>
+            <span class="block">Mysql-[45646655465465464]</span>
+            <span class="block">Mysql-[24234242]</span>
+            <span class="block">Mysql-[454667676899956464554645]</span>
+            <span class="block">Mysql-[34354657567756]</span>
+            <span class="block">Mysql-[2234345749423]</span>
+            <span class="block">Mysql-[2323423423423423454]</span>
+            <span class="block">Mysql-[237895798797294274]</span>
+        </div>
+    </div>
+    <div id="blocks" class="list">
+        <div class="title">
+            <span class="add">+</span>
+            <span class="text">静态组件块配置</span>
+        </div>
+        <div class="body">
+            <span class="block">Mysql-[121323132324242424]</span>
+            <span class="block">Mysql-[45646655465465464]</span>
+            <span class="block">Mysql-[24234242]</span>
+            <span class="block">Mysql-[454667676899956464554645]</span>
+            <span class="block">Mysql-[34354657567756]</span>
+            <span class="block">Mysql-[2234345749423]</span>
+            <span class="block">Mysql-[2323423423423423454]</span>
+            <span class="block">Mysql-[237895798797294274]</span>
+        </div>
+    </div>
+    <div id="flows" class="list">
+        <div class="title">
+            <span class="add">+</span>
+            <span class="text">流程配置</span>
+        </div>
+        <div class="body">
+            <div class="flow">
+                <span class="key">user/list</span>
+                <span class="add">+</span>
+                <span class="block">Mysql-[121323132324242424]</span>
+                <span class="block">Mysql-[45646655465465464]</span>
+                <span class="block">Mysql-[24234242]</span>
+                <span class="block">Mysql-[454667676899956464554645]</span>
+                <span class="block">Mysql-[34354657567756]</span>
+                <span class="block">Mysql-[2234345749423]</span>
+                <span class="block">Mysql-[2323423423423423454]</span>
+                <span class="block">Mysql-[237895798797294274]</span>
+            </div>
+            <div class="flow">
+                <span class="key">user/add</span>
+                <span class="add">+</span>
+                <span class="block">Mysql-[121323132324242424]</span>
+                <span class="block">Mysql-[45646655465465464]</span>
+                <span class="block">Mysql-[24234242]</span>
+                <span class="block">Mysql-[454667676899956464554645]</span>
+                <span class="block">Mysql-[34354657567756]</span>
+                <span class="block">Mysql-[2234345749423]</span>
+                <span class="block">Mysql-[2323423423423423454]</span>
+                <span class="block">Mysql-[237895798797294274]</span>
+            </div>
+        </div>
+    </div>
+    <div id="editor" class="editor">
+        <div class="tools"></div>
+        <div class="body"></div>
+    </div>
+</body>
+<script>
+
+</script>
+<style>
+    body {
+        padding: 10px;
+    }
+
+    .header {
+        color: var(--main_color);
+    }
+
+    .list {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .list .title{
+        width: 100%;
+        height: 35px;
+        background-color: var(--main_color);
+        display: block;
+        border: 1px solid var(--main_color);
+        padding: 0;
+    }
+
+    .list .title .text {
+        padding: 6px;
+        display: inline-block;
+        color: var(--anti_color);
+        vertical-align: top;
+    }
+
+    .list .title .add{
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        border: 1px solid var(--anti_color);
+        color: var(--anti_color);
+        display: inline-block;
+        text-align: center;
+        font-size: 14px;
+        padding: 3px;
+        margin-left: 8px;
+        margin-right: 5px;
+        margin-top: 4px;
+        vertical-align: top;
+        cursor: default;
+    }
+
+    .list .body{
+        display: block;
+        padding: 10px 5px 5px;
+        min-height: 60px;
+     }
+
+    .list .body .flow{
+        width: 100%;
+        display: block;
+        padding: 5px;
+        border-bottom: 1px solid var(--main_color);
+        margin-bottom: 10px;
+    }
+
+    .list .body .flow .key{
+        height: 30px;
+        display: inline-block;
+        background-color: var(--main_color);
+        border: 1px solid var(--main_color);
+        border-radius: 10%;
+        vertical-align: top;
+        font-size: 12px;
+        padding: 7px 10px;
+        color: var(--anti_color);
+        font-weight: bold;
+    }
+
+    .list .body .flow .add{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--main_color);
+        border: 1px solid var(--main_color);
+        color: var(--anti_color);
+        display: inline-block;
+        text-align: center;
+        font-size: 14px;
+        padding: 5px;
+        vertical-align: top;
+        cursor: default;
+    }
+
+     .block{
+        height: 30px;
+        padding: 7px;
+        display: inline-block;
+        border-right: 1px solid var(--main_color);
+        border-left: 1px solid white;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+        font-size: 12px;
+        color: var(--main_color);
+        margin-bottom: 5px;
+        vertical-align: top;
+    }
+
+    .block:hover{
+        border: 1px solid var(--main_color);
+        cursor: default;
+    }
+    
+    
+    
+
+    .editor {
+
+    }
+
+    .editor .tools{
+
+    }
+
+    .editor .body{
+
+    }
+</style>
+</html>
