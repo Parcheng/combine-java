@@ -49,7 +49,7 @@ public class CacheCleanupComponent extends AbsCacheComponent<CacheCleanupInitCon
                     break;
                 case NEAR_EXPIRED:
                     dataList = dataList.stream().filter(data -> !CacheHandler.isExpired(data))
-                            .sorted(Comparator.comparingLong(CacheData::getCreateTime)).toList();
+                            .sorted(Comparator.comparingLong(CacheData::getCreateTime)).collect(Collectors.toList());
                     batchRemove(domain, dataList, cleanData, loopCount);
                     break;
                 case ALL:

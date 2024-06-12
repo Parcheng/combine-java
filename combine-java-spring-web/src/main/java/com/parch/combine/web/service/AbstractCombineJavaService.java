@@ -9,8 +9,8 @@ import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.web.dto.JsonConfigInitDTO;
 import com.parch.combine.web.util.ResourceFileUtil;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -121,7 +121,7 @@ public abstract class AbstractCombineJavaService {
                 FileInfo fileInfo = (FileInfo) result.getData();
                 response.reset();
                 response.setCharacterEncoding("UTF-8");
-                response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileInfo.getName(), StandardCharsets.UTF_8));
+                response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileInfo.getName(), String.valueOf(StandardCharsets.UTF_8)));
                 response.addHeader("Content-Length", "" + fileInfo.getData().length);
                 response.setContentType("application/octet-stream");
 

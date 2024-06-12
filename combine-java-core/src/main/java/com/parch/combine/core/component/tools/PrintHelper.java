@@ -67,7 +67,7 @@ public class PrintHelper {
         Map<String, Object> params = ComponentContextHandler.getParams();
 
         // 过滤掉上传的文件信息
-        String paramJson = JsonUtil.serialize(params, Map.class, new JsonSerializer<>() {
+        String paramJson = JsonUtil.serialize(params, Map.class, new JsonSerializer<Map>() {
             @Override
             public void serialize(Map map, JsonGenerator gen, SerializerProvider serializers) throws IOException {
                 gen.writeStartObject();

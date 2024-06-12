@@ -92,7 +92,7 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
                     start = params[0].toString();
                     end = params[1].toString();
                 } else {
-                    start = "1";
+                    start = "0";
                     end = params[0].toString();
                 }
 
@@ -101,9 +101,9 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
                     return DataResult.fail(DataCalcErrorEnum.RANDOM_RANG_ERROR);
                 }
 
-                int startNum = Math.abs(Integer.parseInt(start));
-                int endNum = Math.abs(Integer.parseInt(end));
-                calcResult = new Random().nextInt(Math.min(startNum, endNum), Math.max(startNum, endNum));
+                int startNum = Integer.parseInt(start);
+                int endNum = Integer.parseInt(end);
+                calcResult = startNum + new Random().nextInt(endNum - startNum);
                 break;
             case UUID:
                 calcResult = UUID.randomUUID().toString();
