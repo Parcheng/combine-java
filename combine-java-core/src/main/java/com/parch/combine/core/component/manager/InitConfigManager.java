@@ -4,7 +4,7 @@ import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.IInitConfig;
-import com.parch.combine.core.component.base.proxy.ConfigHandler;
+import com.parch.combine.core.component.tools.config.ConfigHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +65,7 @@ public class InitConfigManager {
             preConfig.put(FieldKeyCanstant.TYPE, type);
         }
 
-        ThreeTuples<Boolean, T, List<String>> buildResult = ConfigHandler.build(scopeKey, clazz, preConfig);
+        ThreeTuples<Boolean, T, List<String>> buildResult = ConfigHelper.build(scopeKey, clazz, preConfig);
         if (buildResult.getFirst()) {
             CONFIGS.put(key, buildResult.getSecond());
             PRE_CONFIGS.remove(key);

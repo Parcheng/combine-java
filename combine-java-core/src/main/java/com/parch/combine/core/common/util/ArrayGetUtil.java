@@ -1,12 +1,9 @@
-package com.parch.combine.core.component.tools;
-
-import com.parch.combine.core.common.util.ArrayUtil;
-import com.parch.combine.core.common.util.DataParseUtil;
+package com.parch.combine.core.common.util;
 
 /**
  * 参数数据获取工具类
  */
-public class ArrayGetTool {
+public class ArrayGetUtil {
 
     public static String[] splitToString(Object[] arr, int startIndex, int endIndex) {
         Object[] splitArr = ArrayUtil.split(arr, Object.class, startIndex, endIndex);

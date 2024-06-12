@@ -1,10 +1,7 @@
 package com.parch.combine.core.component.tools.sql;
 
 import com.parch.combine.core.common.canstant.SymbolConstant;
-import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.DataTypeIsUtil;
-import com.parch.combine.core.common.util.MatcherUtil;
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.*;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
@@ -48,7 +45,7 @@ public class SqlTool {
         String[] sqlArr = new String[]{sql};
 
         // #{...} 替换为 ? 标识符
-        MatcherUtil.matcher(sqlArr[0], "\\$\\{(.*?)}", paramStr -> {
+        StringUtil.matcher(sqlArr[0], "\\$\\{(.*?)}", paramStr -> {
             if (paramStr.length() <= 3) {
                 ComponentErrorHandler.print("SQL语句替换-参数值为空");
                 return;
@@ -76,7 +73,7 @@ public class SqlTool {
         });
 
         // #{...} 直接替换数据
-        MatcherUtil.matcher(sqlArr[0], "#\\{(.*?)}", paramStr -> {
+        StringUtil.matcher(sqlArr[0], "#\\{(.*?)}", paramStr -> {
             if (paramStr.length() <= 3) {
                 ComponentErrorHandler.print("SQL语句替换-参数值为空");
                 return;

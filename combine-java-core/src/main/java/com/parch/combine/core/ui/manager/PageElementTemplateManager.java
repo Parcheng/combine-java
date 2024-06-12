@@ -1,8 +1,8 @@
 package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.manager.AbsPreLoadConfigManager;
+import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.PrintUtil;
-import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.element.ElementTemplateConfig;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class PageElementTemplateManager extends AbsPreLoadConfigManager<ElementT
             }
         }
 
-        T newConfig = TypeConversionUtil.parseJava(configMap, clazz);
+        T newConfig = DataParseUtil.parseJava(configMap, clazz);
         newConfig.init();
         return newConfig;
     }

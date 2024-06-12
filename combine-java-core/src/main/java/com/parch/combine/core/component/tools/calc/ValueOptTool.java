@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.tools;
+package com.parch.combine.core.component.tools.calc;
 
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.JsonUtil;
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 数据处理工具
  */
-public class ValueTool {
+public class ValueOptTool {
 
     /**
      * 解析值到集合中

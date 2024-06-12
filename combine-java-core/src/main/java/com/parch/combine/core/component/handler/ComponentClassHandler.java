@@ -3,7 +3,7 @@ package com.parch.combine.core.component.handler;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.base.proxy.ConfigHandler;
+import com.parch.combine.core.component.tools.config.ConfigHelper;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.error.SystemErrorHandler;
 import com.parch.combine.core.component.settings.ComponentSettingHandler;
@@ -51,14 +51,14 @@ public class ComponentClassHandler {
             errors.add( "组件类必填使用 Component 注解");
             return errors;
         } else {
-            List<String> initErrors = ConfigHandler.check(componentAnnotation.initConfigClass());
+            List<String> initErrors = ConfigHelper.check(componentAnnotation.initConfigClass());
             if (CheckEmptyUtil.isNotEmpty(initErrors)) {
                 for (String item : initErrors) {
                     errors.add("【初始化配置】" + item);
                 }
             }
 
-            List<String> logicErrors = ConfigHandler.check(componentAnnotation.logicConfigClass());
+            List<String> logicErrors = ConfigHelper.check(componentAnnotation.logicConfigClass());
             if (CheckEmptyUtil.isNotEmpty(logicErrors)) {
                 for (String item : logicErrors) {
                     errors.add("【逻辑配置】" + item);

@@ -66,7 +66,11 @@ public class DataParseUtil {
             return defaultValue;
         }
 
-        return Integer.parseInt(data.toString());
+        try {
+            return Integer.parseInt(data.toString());
+        } catch (Exception e) {
+            return defaultValue;
+        }
     }
 
     public static Long getLong(Object data, Long defaultValue) {
@@ -74,7 +78,11 @@ public class DataParseUtil {
             return defaultValue;
         }
 
-        return Long.parseLong(data.toString());
+        try {
+            return Long.parseLong(data.toString());
+        } catch (Exception e) {
+            return defaultValue;
+        }
     }
 
     public static Double getDouble(Object data, Double defaultValue) {
@@ -82,7 +90,11 @@ public class DataParseUtil {
             return defaultValue;
         }
 
-        return Double.parseDouble(data.toString());
+        try {
+            return Double.parseDouble(data.toString());
+        }  catch (Exception e) {
+            return defaultValue;
+        }
     }
 
     /**
@@ -197,5 +209,10 @@ public class DataParseUtil {
         }
 
         return data.toString().equalsIgnoreCase("true");
+    }
+
+    public static <T> T parseJava(Object data, Class<T> clazz) {
+        String dataString = JsonUtil.serialize(data);
+        return JsonUtil.deserialize(dataString, clazz);
     }
 }

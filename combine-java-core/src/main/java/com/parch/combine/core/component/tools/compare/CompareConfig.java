@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.tools.compare;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.tools.ConfigGroupTool;
+import com.parch.combine.core.component.tools.calc.GroupValueTool;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 
 
@@ -73,9 +73,9 @@ public class CompareConfig {
      */
     public static CompareConfig build(String[] compareConfig) {
         CompareConfig item = new CompareConfig();
-        item.setSource(ConfigGroupTool.getConfigByIndex(compareConfig,0));
-        item.setCompareType(CompareTypeEnum.get(ConfigGroupTool.getConfigByIndex(compareConfig,1)));
-        item.setTarget(ConfigGroupTool.getConfigByIndex(compareConfig,2));
+        item.setSource(GroupValueTool.getConfigByIndex(compareConfig,0));
+        item.setCompareType(CompareTypeEnum.get(GroupValueTool.getConfigByIndex(compareConfig,1)));
+        item.setTarget(GroupValueTool.getConfigByIndex(compareConfig,2));
         return item;
     }
 
@@ -90,11 +90,11 @@ public class CompareConfig {
             return new ArrayList<>();
         }
 
-        return ConfigGroupTool.buildItemList(compareConfigList, conditionStr -> {
+        return GroupValueTool.buildItemList(compareConfigList, conditionStr -> {
             CompareConfig item = new CompareConfig();
-            item.setSource(ConfigGroupTool.getConfigByIndex(conditionStr,0));
-            item.setCompareType(CompareTypeEnum.get(ConfigGroupTool.getConfigByIndex(conditionStr,1)));
-            item.setTarget(ConfigGroupTool.getConfigByIndex(conditionStr,2));
+            item.setSource(GroupValueTool.getConfigByIndex(conditionStr,0));
+            item.setCompareType(CompareTypeEnum.get(GroupValueTool.getConfigByIndex(conditionStr,1)));
+            item.setTarget(GroupValueTool.getConfigByIndex(conditionStr,2));
             return item;
         });
     }

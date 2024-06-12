@@ -3,11 +3,12 @@ package com.parch.combine.web.controller;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.web.service.DefaultCombineJavaService;
 import com.parch.combine.web.service.DefaultCombineJavaUIService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 

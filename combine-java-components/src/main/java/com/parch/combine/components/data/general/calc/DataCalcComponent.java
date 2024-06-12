@@ -2,13 +2,13 @@ package com.parch.combine.components.data.general.calc;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
+import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.tools.ValueTool;
+import com.parch.combine.core.component.tools.calc.ValueOptTool;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
-import com.parch.combine.core.common.util.MatcherUtil;
-import com.parch.combine.core.component.tools.ExpressionCalcTool;
+import com.parch.combine.core.component.tools.calc.ExpressionCalcTool;
 
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
@@ -67,7 +67,7 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
                 try {
                     // 替换表达式中的变量
                     Object[] finalParams = params;
-                    MatcherUtil.matcher(params[0].toString(), DataVariableFlagHelper.getRegex(), matcherStr -> {
+                    StringUtil.matcher(params[0].toString(), DataVariableFlagHelper.getRegex(), matcherStr -> {
                         Object newValue = DataVariableHelper.parseValue(matcherStr, true);
                         finalParams[0] = finalParams[0].toString().replace(matcherStr, newValue.toString());
                     });
@@ -82,9 +82,9 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
             case MIN:
                 List<Object> values = new ArrayList<>();
                 for (Object param : params) {
-                    ValueTool.parseValueToList(param, values);
+                    ValueOptTool.parseValueToList(param, values);
                 }
-                calcResult = mode == DataCalcModeEnum.MAX ? ValueTool.max(values, null) : ValueTool.min(values, null);
+                calcResult = mode == DataCalcModeEnum.MAX ? ValueOptTool.max(values, null) : ValueOptTool.min(values, null);
                 break;
             case RANDOM:
                 String start, end;
@@ -92,7 +92,7 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
                     start = params[0].toString();
                     end = params[1].toString();
                 } else {
-                    start = "1";
+                    start = "0";
                     end = params[0].toString();
                 }
 
@@ -101,9 +101,9 @@ public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalc
                     return DataResult.fail(DataCalcErrorEnum.RANDOM_RANG_ERROR);
                 }
 
-                int startNum = Math.abs(Integer.parseInt(start));
-                int endNum = Math.abs(Integer.parseInt(end));
-                calcResult = new Random().nextInt(Math.min(startNum, endNum), Math.max(startNum, endNum));
+                int startNum = Integer.parseInt(start);
+                int endNum = Integer.parseInt(end);
+                calcResult = startNum + new Random().nextInt(endNum - startNum);
                 break;
             case UUID:
                 calcResult = UUID.randomUUID().toString();

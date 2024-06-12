@@ -1,7 +1,7 @@
 package com.parch.combine.components.data.general.format.func;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.tools.ValueTool;
+import com.parch.combine.core.component.tools.calc.ValueOptTool;
 
 import java.util.*;
 
@@ -51,7 +51,7 @@ public class SortFormat implements ICustomFormat {
 
         // 排序
         List<Object> sortList = new ArrayList<>(list);
-        ValueTool.sort(sortList, keys, !isAsc);
+        ValueOptTool.sort(sortList, keys, !isAsc);
         return sortList;
     }
 }

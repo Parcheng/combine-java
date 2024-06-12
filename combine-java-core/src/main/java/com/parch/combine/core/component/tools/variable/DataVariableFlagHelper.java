@@ -1,5 +1,7 @@
 package com.parch.combine.core.component.tools.variable;
 
+import com.parch.combine.core.common.canstant.SymbolConstant;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -119,5 +121,26 @@ public class DataVariableFlagHelper {
         pathList.add(currPath.toString());
 
         return pathList.toArray(new String[0]);
+    }
+
+    /**
+     * 获取默认值设置（:），并将默认值设置从路径中清除
+     *
+     * @param pathArr 路径数组
+     * @return 默认值
+     */
+    public static String parseDefault(String[] pathArr) {
+        if (pathArr == null || pathArr.length == 0) {
+            return null;
+        }
+
+        String lastPath = pathArr[pathArr.length - 1];
+        if (lastPath.indexOf(SymbolConstant.COLON) > 0) {
+            String[] lastPathArr = lastPath.split(SymbolConstant.COLON);
+            pathArr[pathArr.length - 1] = lastPathArr[0];
+            return lastPathArr[1];
+        }
+
+        return null;
     }
 }

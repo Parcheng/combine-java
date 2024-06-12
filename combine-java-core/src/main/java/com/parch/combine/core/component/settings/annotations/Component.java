@@ -2,8 +2,6 @@ package com.parch.combine.core.component.settings.annotations;
 
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.base.ILogicConfig;
-import com.parch.combine.core.component.base.old.InitConfig;
-import com.parch.combine.core.component.base.old.LogicConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

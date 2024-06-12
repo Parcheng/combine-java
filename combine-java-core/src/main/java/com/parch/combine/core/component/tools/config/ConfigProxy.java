@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.base.proxy;
+package com.parch.combine.core.component.tools.config;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -54,13 +54,13 @@ public class ConfigProxy implements InvocationHandler {
             }
 
             // 允许使用表达式，并且数据中包含表达式，标识设置为false（获取时实时解析）
-            if (field.parseExpression() && ConfigHandler.fieldDataHasExpression(field.type(), configFieldData, field.isArray())) {
+            if (field.parseExpression() && ConfigHelper.fieldDataHasExpression(field.type(), configFieldData, field.isArray())) {
                 configFlagMap.put(key, true);
                 continue;
             }
 
             // 解析数据
-            ThreeTuples<Boolean, Object, List<String>> parseResult = ConfigHandler.buildFieldData(scopeKey, field.type(), configFieldData, field.isArray(), method);
+            ThreeTuples<Boolean, Object, List<String>> parseResult = ConfigHelper.buildFieldData(scopeKey, field.type(), configFieldData, field.isArray(), method);
             if (parseResult.getFirst()) {
                 config.put(key, parseResult.getSecond());
                 configFlagMap.put(key, false);
@@ -97,7 +97,7 @@ public class ConfigProxy implements InvocationHandler {
             return configFieldData;
         }
 
-        configFieldData = ConfigHandler.parseFieldData(field.type(), configFieldData, field.isArray());
+        configFieldData = ConfigHelper.parseFieldData(field.type(), configFieldData, field.isArray());
         if (field.isRequired() && configFieldData == null) {
             String msg = ComponentErrorHandler.buildFieldMsg(key, "字段不能为空");
             ComponentErrorHandler.print(msg);
@@ -105,7 +105,7 @@ public class ConfigProxy implements InvocationHandler {
         }
 
         if (configFieldData != null) {
-            ThreeTuples<Boolean, Object, List<String>> parseResult = ConfigHandler.buildFieldData(scopeKey, field.type(), configFieldData, field.isArray(), method);
+            ThreeTuples<Boolean, Object, List<String>> parseResult = ConfigHelper.buildFieldData(scopeKey, field.type(), configFieldData, field.isArray(), method);
             if (parseResult.getFirst()) {
                 configFieldData = parseResult.getSecond();
             } else {

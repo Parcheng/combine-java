@@ -2,8 +2,8 @@ package com.parch.combine.core.ui.manager;
 
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.PrintUtil;
-import com.parch.combine.core.common.util.TypeConversionUtil;
 import com.parch.combine.core.ui.base.element.ElementConfig;
 import com.parch.combine.core.ui.handler.ElementClassHandler;
 import com.parch.combine.core.ui.tools.ConfigTool;
@@ -53,7 +53,7 @@ public class PageElementManager {
         }
 
         try {
-            ElementConfig<?> config = TypeConversionUtil.parseJava(configMap, elementClass);
+            ElementConfig<?> config = DataParseUtil.parseJava(configMap, elementClass);
             config.init();
             subManager.build(id, config);
             CONFIGS.put(id, config);

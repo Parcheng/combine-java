@@ -24,7 +24,7 @@ public class PackageScanUtil {
             Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources(paths);
             while (resources.hasMoreElements()){
                 URL resource = resources.nextElement();
-                String filePath = URLDecoder.decode(resource.getFile(), StandardCharsets.UTF_8);
+                String filePath = URLDecoder.decode(resource.getFile(), String.valueOf(StandardCharsets.UTF_8));
                 if (filePath.contains(".jar!/")) {
                     findClassesInPackageByJar(packageName, filePath, classes);
                 } else {
