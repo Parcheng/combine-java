@@ -1,4 +1,4 @@
-package com.parch.combine.components.gui.control.from;
+package com.parch.combine.components.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +70,10 @@ public class GUIFromControlComponent {
         panel2.add(label, gbc);
         panel2.add(colorSelect, gbc);
 
+        // JDialog	对话框
 
+        // 颜色 边框 公共类
+        // 是否支持后台运行
         f.add(panel2);
     }
 }

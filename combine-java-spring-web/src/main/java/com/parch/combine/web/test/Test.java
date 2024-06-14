@@ -1,8 +1,11 @@
-package com.parch.combine.components.gui;
+package com.parch.combine.web.test;
 
-import com.parch.combine.components.gui.control.from.GUIFromControlComponent;
+import com.parch.combine.core.component.CombineJavaStarter;
+import com.parch.combine.core.component.service.ICombineJavaService;
+import com.parch.combine.core.component.vo.DataResult;
 
-import javax.swing.*;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Test {
 
@@ -36,10 +39,8 @@ public class Test {
 //        p.setSize(400, 400);
 //        p.setVisible(true);
 
-        JFrame f = new JFrame("测试Swing基本组件");
-        new GUIFromControlComponent().buildItem(f);
-        f.setSize(400, 400);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setVisible(true);
+        ICombineJavaService service = CombineJavaStarter.init("test_combine_config.json");
+        DataResult result = service.execute("gui", "test", new HashMap<>(), new HashMap<>());
+        System.out.println(result.getData());
     }
 }

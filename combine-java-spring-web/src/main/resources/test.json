@@ -1,0 +1,22 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "gui/test": [
+      {
+        "type": "gui.control.input",
+        "elementId": "1",
+        "text": "111111"
+      },{
+        "type": "gui.control.select",
+        "elementId": "2",
+        "value": "2",
+        "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
+      },{
+        "type": "gui.build",
+        "title": "test",
+        "elements": ["1", "2"]
+      }
+    ]
+  }
+}
