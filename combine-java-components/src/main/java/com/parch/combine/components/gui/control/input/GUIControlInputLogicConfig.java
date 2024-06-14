@@ -2,7 +2,6 @@ package com.parch.combine.components.gui.control.input;
 
 import com.parch.combine.components.gui.control.GUIControlLogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public interface GUIControlInputLogicConfig extends GUIControlLogicConfig {
