@@ -6,7 +6,7 @@ public interface IGUIElement {
 
     JComponent build();
 
-    boolean refresh(Object data);
+    boolean setData(Object data);
 
     Object getData();
 

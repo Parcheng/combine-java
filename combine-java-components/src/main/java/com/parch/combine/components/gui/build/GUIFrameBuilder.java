@@ -3,6 +3,9 @@ package com.parch.combine.components.gui.build;
 import com.parch.combine.components.gui.core.GUIElementManagerHandler;
 import com.parch.combine.components.gui.core.IGUIElement;
 import com.parch.combine.components.gui.core.manager.GUIElementManager;
+import com.parch.combine.components.gui.core.style.ElementStyleConstant;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +14,39 @@ public class GUIFrameBuilder {
 
     private String id;
     private String title;
-    private String[] elements;
+
     private Boolean close;
     private Boolean visible;
+
+    private String[] topElements;
+    private String[] bottomElement;
+    private String[] leftElement;
+    private String[] rightElement;
+    private String[] centerElements;
 
     public void build() {
         JFrame frame = new JFrame(title);
         frame.setSize(400, 400);
 
-        if (elements != null) {
-            GUIElementManager manager = GUIElementManagerHandler.getAndRegisterManager(id);
+        GUIElementManager manager = GUIElementManagerHandler.getAndRegisterManager(id);
+        buildLayoutPanel(manager, frame, topElements, BorderLayout.NORTH);
+        buildLayoutPanel(manager, frame, bottomElement, BorderLayout.SOUTH);
+        buildLayoutPanel(manager, frame, leftElement, BorderLayout.WEST);
+        buildLayoutPanel(manager, frame, rightElement, BorderLayout.EAST);
+        buildLayoutPanel(manager, frame, centerElements, BorderLayout.CENTER);
 
-            int i = 0;
+        if (close == null || close) {
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        if (visible == null || visible) {
+            frame.setVisible(true);
+        }
+    }
+
+    private static void buildLayoutPanel(GUIElementManager manager, JFrame frame, String[] elements, String layout) {
+        if (elements != null) {
+            JPanel layoutPanel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+
             for (String elementId : elements) {
                 IGUIElement element = manager.get(elementId);
                 if (element == null) {
@@ -34,30 +58,16 @@ public class GUIFrameBuilder {
                     continue;
                 }
 
-                if (i == 0) {
-                    frame.add(elementComponent, BorderLayout.NORTH);
-                } else {
-                    frame.add(elementComponent, BorderLayout.CENTER);
-                }
 
-                i++;
+                layoutPanel.add(elementComponent);
             }
-        }
 
-        if (close == null || close) {
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }
-        if (visible == null || visible) {
-            frame.setVisible(true);
+            frame.add(layoutPanel, layout);
         }
     }
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setElements(String[] elements) {
-        this.elements = elements;
     }
 
     public void setClose(Boolean close) {
@@ -70,5 +80,25 @@ public class GUIFrameBuilder {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setTopElements(String[] topElements) {
+        this.topElements = topElements;
+    }
+
+    public void setBottomElement(String[] bottomElement) {
+        this.bottomElement = bottomElement;
+    }
+
+    public void setLeftElement(String[] leftElement) {
+        this.leftElement = leftElement;
+    }
+
+    public void setRightElement(String[] rightElement) {
+        this.rightElement = rightElement;
+    }
+
+    public void setCenterElements(String[] centerElements) {
+        this.centerElements = centerElements;
     }
 }

@@ -1,22 +1,23 @@
-package com.parch.combine.components.gui.control.select;
+package com.parch.combine.components.gui.control.radio;
 
 import com.parch.combine.components.gui.control.GUIControlOptionConfig;
 import com.parch.combine.components.gui.core.IGUIElement;
 import com.parch.combine.components.gui.core.style.ElementHelper;
 import com.parch.combine.components.gui.core.style.ElementStyleConstant;
 
-import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.ButtonGroup;
 
-public class GUISelectElement implements IGUIElement {
+public class GUIRadioElement implements IGUIElement {
 
-    private JComboBox<String> comboBox = null;
-    private GUISelectElementTemplate template;
+    private JRadioButton[] radios = null;
+    private GUIRadioElementTemplate template;
     private Config config;
 
-    public GUISelectElement(GUISelectElementTemplate template, Config config) {
-        this.template = template == null ? new GUISelectElementTemplate() : template;
+    public GUIRadioElement(GUIRadioElementTemplate template, Config config) {
+        this.template = template == null ? new GUIRadioElementTemplate() : template;
         this.config = config;
     }
 
@@ -25,45 +26,44 @@ public class GUISelectElement implements IGUIElement {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
         ElementHelper.set(panel, template.getExternal());
 
-        comboBox = new JComboBox<>();
-        int checkIndex = -1;
+        ButtonGroup radioButton = new ButtonGroup();
+        radios = new JRadioButton[config.options.length];
         for (int i = 0; i < config.options.length; i++) {
             GUIControlOptionConfig option = config.options[i];
-            comboBox.addItem(option.getText() == null ? option.getValue() : option.getText());
-            if (checkIndex == -1 && config.value != null && config.value.equals(option.getValue())) {
-                checkIndex = i;
-            }
-        }
-        if (checkIndex != -1) {
-            comboBox.setSelectedIndex(checkIndex);
+            JRadioButton item = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
+                    config.value != null && config.value.equals(option.getValue()));
+            panel.add(item);
+            radioButton.add(item);
+            radios[i] = item;
         }
 
-        panel.add(comboBox);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        if (comboBox == null || data == null) {
-            return false;
-        }
-
         String dataStr = data.toString();
         for (int i = 0; i < config.options.length; i++) {
             GUIControlOptionConfig option = config.options[i];
             if (dataStr != null && dataStr.equals(option.getValue())) {
-                comboBox.setSelectedIndex(i);
-                return true;
+                radios[i].setSelected(true);
+            } else {
+                radios[i].setSelected(false);
             }
         }
 
-        return false;
+        return true;
     }
 
     @Override
     public Object getData() {
-        int index = comboBox.getSelectedIndex();
-        return index > 0 ? config.options[index].getValue() : null;
+        for (int i = 0; i < radios.length; i++) {
+            if (radios[i].isSelected()) {
+                return config.options[i].getValue();
+            }
+        }
+
+        return null;
     }
 
     @Override

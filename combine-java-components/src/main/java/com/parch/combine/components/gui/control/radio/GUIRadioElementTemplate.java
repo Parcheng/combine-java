@@ -1,4 +1,4 @@
-package com.parch.combine.components.gui.control.select;
+package com.parch.combine.components.gui.control.radio;
 
 import com.parch.combine.components.gui.core.style.ElementConfig;
 import com.parch.combine.components.gui.core.style.ElementObjectConstant;
@@ -7,17 +7,17 @@ import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-public class GUISelectElementTemplate {
+public class GUIRadioElementTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "select", name = "下拉元素样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "radio", name = "单选元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig select;
+    private ElementConfig radio;
 
     public ElementConfig getExternal() {
         return external;
@@ -27,11 +27,11 @@ public class GUISelectElementTemplate {
         this.external = external;
     }
 
-    public ElementConfig getSelect() {
-        return select;
+    public ElementConfig getRadio() {
+        return radio;
     }
 
-    public void setSelect(ElementConfig select) {
-        this.select = select;
+    public void setRadio(ElementConfig radio) {
+        this.radio = radio;
     }
 }

@@ -1,6 +1,6 @@
 package com.parch.combine.components.gui.core.style;
 
-public interface ElementObjectCanstant {
+public interface ElementObjectConstant {
 
     String GUI_ELEMENT = "gui-element";
     String GUI_ELEMENT_NAME = "GUI元素配置";

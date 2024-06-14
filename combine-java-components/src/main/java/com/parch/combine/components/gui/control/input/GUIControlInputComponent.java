@@ -17,6 +17,10 @@ public class GUIControlInputComponent extends AbsGUIControlComponent<GUIControlI
     public IGUIElement getElement() {
         GUIControlInputInitConfig initConfig = getInitConfig();
         GUIControlInputLogicConfig logicConfig = getLogicConfig();
-        return new GUIInputElement(initConfig.template(), logicConfig.text(), logicConfig.columns());
+
+        GUIInputElement.Config config = new GUIInputElement.Config();
+        config.text = logicConfig.text();
+        config.columns = logicConfig.columns();
+        return new GUIInputElement(initConfig.template(), config);
     }
 }

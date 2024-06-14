@@ -1,8 +1,7 @@
 package com.parch.combine.components.gui.control.input;
 
 import com.parch.combine.components.gui.core.style.ElementConfig;
-import com.parch.combine.components.gui.core.style.ElementObjectCanstant;
-import com.parch.combine.core.common.base.IInit;
+import com.parch.combine.components.gui.core.style.ElementObjectConstant;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
@@ -12,12 +11,12 @@ public class GUIInputElementTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectCanstant.GUI_ELEMENT)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
     @Field(key = "input", name = "输入元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectCanstant.GUI_ELEMENT)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig input;
 
     public ElementConfig getExternal() {

@@ -7,12 +7,12 @@ import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-@CommonObject(key = ElementObjectCanstant.GUI_ELEMENT, name = ElementObjectCanstant.GUI_ELEMENT_NAME)
+@CommonObject(key = ElementObjectConstant.GUI_ELEMENT, name = ElementObjectConstant.GUI_ELEMENT_NAME)
 public class ElementConfig {
 
     @Field(key = "size", name = "尺寸配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementSizeConfig.class)
-    @FieldRef(key = ElementObjectCanstant.GUI_ELEMENT_SIZE)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_SIZE)
     private ElementSizeConfig size;
 
     public ElementSizeConfig getSize() {

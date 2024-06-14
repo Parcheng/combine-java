@@ -17,6 +17,10 @@ public class GUIControlSelectComponent extends AbsGUIControlComponent<GUIControl
     public IGUIElement getElement() {
         GUIControlSelectInitConfig initConfig = getInitConfig();
         GUIControSelectLogicConfig logicConfig = getLogicConfig();
-        return new GUISelectElement(initConfig.template(), logicConfig.value(), logicConfig.options());
+
+        GUISelectElement.Config config = new GUISelectElement.Config();
+        config.value = logicConfig.value();
+        config.options = logicConfig.options();
+        return new GUISelectElement(initConfig.template(), config);
     }
 }

@@ -24,7 +24,11 @@ public class GUIBuildComponent extends AbsComponent<GUIBuildInitConfig, GUIBuild
         GUIFrameBuilder builder = new GUIFrameBuilder();
         builder.setId(ComponentContextHandler.getId());
         builder.setTitle(logicConfig.title());
-        builder.setElements(logicConfig.elements());
+        builder.setTopElements(logicConfig.topElements());
+        builder.setBottomElement(logicConfig.bottomElement());
+        builder.setLeftElement(logicConfig.leftElement());
+        builder.setRightElement(logicConfig.rightElement());
+        builder.setCenterElements(logicConfig.centerElements());
         builder.setClose(logicConfig.close());
         builder.setVisible(logicConfig.visible());
 
