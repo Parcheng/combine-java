@@ -1,23 +1,23 @@
-package com.parch.combine.gui.base.control.checkbox;
+package com.parch.combine.gui.base.control.button;
 
-import com.parch.combine.gui.core.style.ElementConfig;
-import com.parch.combine.gui.core.style.ElementObjectConstant;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gui.core.style.ElementConfig;
+import com.parch.combine.gui.core.style.ElementObjectConstant;
 
-public class GUICheckboxElementTemplate {
+public class GUIButtonElementTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "checkbox", name = "多选元素样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "button", name = "按钮样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig checkbox;
+    private ElementConfig button;
 
     public ElementConfig getExternal() {
         return external;
@@ -27,11 +27,11 @@ public class GUICheckboxElementTemplate {
         this.external = external;
     }
 
-    public ElementConfig getCheckbox() {
-        return checkbox;
+    public ElementConfig getButton() {
+        return button;
     }
 
-    public void setCheckbox(ElementConfig checkbox) {
-        this.checkbox = checkbox;
+    public void setButton(ElementConfig button) {
+        this.button = button;
     }
 }

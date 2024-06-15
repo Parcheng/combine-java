@@ -1,27 +1,25 @@
-package com.parch.combine.gui.base.control.checkbox;
+package com.parch.combine.gui.base.control.list;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ElementStyleConstant;
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class GUICheckboxElement implements IGUIElement {
+public class GUIListElement implements IGUIElement {
 
     private JCheckBox[] checkbox = null;
-    private GUICheckboxElementTemplate template;
+    private GUIListElementTemplate template;
     private Config config;
 
-    public GUICheckboxElement(GUICheckboxElementTemplate template, Config config) {
-        this.template = template == null ? new GUICheckboxElementTemplate() : template;
+    public GUIListElement(GUIListElementTemplate template, Config config) {
+        this.template = template == null ? new GUIListElementTemplate() : template;
         this.config = config;
     }
 
@@ -30,18 +28,15 @@ public class GUICheckboxElement implements IGUIElement {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
         ElementHelper.set(panel, template.getExternal());
 
-        checkbox = new JCheckBox[config.options.length];
-        for (int i = 0; i < config.options.length; i++) {
-            GUIControlOptionConfig option = config.options[i];
+        DefaultListModel<JComponent> listModel = new DefaultListModel<>();
+        JList<JComponent> list = new JList<>(listModel);
+        list.setCellRenderer((list1, value, index, isSelected, cellHasFocus) -> value);
 
-            JCheckBox checkboxItem = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
-                    hasChecked(config.values, option.getValue()));
-            ElementHelper.set(checkboxItem, template.getCheckbox());
+//        for (IGUIElement element : config.elements) {
+//            listModel.addElement(element.build());
+//        }
 
-            panel.add(checkboxItem);
-            checkbox[i] = checkboxItem;
-        }
-
+        panel.add(new JScrollPane(list), BorderLayout.CENTER);
         return panel;
     }
 

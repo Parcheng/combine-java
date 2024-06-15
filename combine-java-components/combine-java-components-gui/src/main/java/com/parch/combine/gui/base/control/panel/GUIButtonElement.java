@@ -1,27 +1,24 @@
-package com.parch.combine.gui.base.control.checkbox;
+package com.parch.combine.gui.base.control.panel;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ElementStyleConstant;
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class GUICheckboxElement implements IGUIElement {
+public class GUIButtonElement implements IGUIElement {
 
     private JCheckBox[] checkbox = null;
-    private GUICheckboxElementTemplate template;
+    private GUIButtonElementTemplate template;
     private Config config;
 
-    public GUICheckboxElement(GUICheckboxElementTemplate template, Config config) {
-        this.template = template == null ? new GUICheckboxElementTemplate() : template;
+    public GUIButtonElement(GUIButtonElementTemplate template, Config config) {
+        this.template = template == null ? new GUIButtonElementTemplate() : template;
         this.config = config;
     }
 
@@ -33,13 +30,10 @@ public class GUICheckboxElement implements IGUIElement {
         checkbox = new JCheckBox[config.options.length];
         for (int i = 0; i < config.options.length; i++) {
             GUIControlOptionConfig option = config.options[i];
-
-            JCheckBox checkboxItem = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
+            JCheckBox item = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
                     hasChecked(config.values, option.getValue()));
-            ElementHelper.set(checkboxItem, template.getCheckbox());
-
-            panel.add(checkboxItem);
-            checkbox[i] = checkboxItem;
+            panel.add(item);
+            checkbox[i] = item;
         }
 
         return panel;

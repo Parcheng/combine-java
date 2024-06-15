@@ -1,7 +1,5 @@
 package com.parch.combine.gui.core.element;
 
-import com.parch.combine.gui.core.element.GUIElementManager;
-
 import java.util.HashMap;
 import java.util.Map;
 

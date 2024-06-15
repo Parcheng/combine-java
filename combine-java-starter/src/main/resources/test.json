@@ -23,9 +23,21 @@
         "values": ["2", "3"],
         "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
       },{
+        "type": "gui.control.button",
+        "elementId": "button",
+        "text": "添加"
+      },{
+        "type": "gui.control.text",
+        "elementId": "text",
+        "text": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+      },{
+        "type": "gui.control.textarea",
+        "elementId": "textarea",
+        "value": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+      },{
         "type": "gui.build",
         "title": "test",
-        "centerElements": ["input", "select", "radio", "checkbox"]
+        "centerElements": ["input", "select", "radio", "checkbox", "button", "text", "textarea"]
       }
     ]
   }

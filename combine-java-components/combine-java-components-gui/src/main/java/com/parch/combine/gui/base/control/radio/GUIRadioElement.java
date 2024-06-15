@@ -30,11 +30,14 @@ public class GUIRadioElement implements IGUIElement {
         radios = new JRadioButton[config.options.length];
         for (int i = 0; i < config.options.length; i++) {
             GUIControlOptionConfig option = config.options[i];
-            JRadioButton item = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
+
+            JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
                     config.value != null && config.value.equals(option.getValue()));
-            panel.add(item);
-            radioButton.add(item);
-            radios[i] = item;
+            ElementHelper.set(radioItem, template.getRadio());
+
+            panel.add(radioItem);
+            radioButton.add(radioItem);
+            radios[i] = radioItem;
         }
 
         return panel;

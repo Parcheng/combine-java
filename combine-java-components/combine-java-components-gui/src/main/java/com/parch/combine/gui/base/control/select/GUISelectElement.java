@@ -26,6 +26,8 @@ public class GUISelectElement implements IGUIElement {
         ElementHelper.set(panel, template.getExternal());
 
         comboBox = new JComboBox<>();
+        ElementHelper.set(comboBox, template.getSelect());
+
         int checkIndex = -1;
         for (int i = 0; i < config.options.length; i++) {
             GUIControlOptionConfig option = config.options[i];
@@ -34,6 +36,7 @@ public class GUISelectElement implements IGUIElement {
                 checkIndex = i;
             }
         }
+
         if (checkIndex != -1) {
             comboBox.setSelectedIndex(checkIndex);
         }

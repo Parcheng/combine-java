@@ -1,23 +1,23 @@
-package com.parch.combine.gui.base.control.checkbox;
+package com.parch.combine.gui.base.control.textarea;
 
-import com.parch.combine.gui.core.style.ElementConfig;
-import com.parch.combine.gui.core.style.ElementObjectConstant;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gui.core.style.ElementConfig;
+import com.parch.combine.gui.core.style.ElementObjectConstant;
 
-public class GUICheckboxElementTemplate {
+public class GUITextareaElementTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "checkbox", name = "多选元素样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "textArea", name = "多行文本输入框元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig checkbox;
+    private ElementConfig textArea;
 
     public ElementConfig getExternal() {
         return external;
@@ -27,11 +27,11 @@ public class GUICheckboxElementTemplate {
         this.external = external;
     }
 
-    public ElementConfig getCheckbox() {
-        return checkbox;
+    public ElementConfig getTextArea() {
+        return textArea;
     }
 
-    public void setCheckbox(ElementConfig checkbox) {
-        this.checkbox = checkbox;
+    public void setTextArea(ElementConfig textArea) {
+        this.textArea = textArea;
     }
 }

@@ -1,11 +1,12 @@
-package com.parch.combine.web.test;
+package com.parch.combine.starter.test;
 
 import com.parch.combine.core.component.CombineJavaStarter;
 import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.vo.DataResult;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Test {
 
@@ -38,6 +39,19 @@ public class Test {
 //        JWindow p = new JWindow();
 //        p.setSize(400, 400);
 //        p.setVisible(true);
+
+//        JPanel panel2 = new JPanel();
+//        panel2.setLayout(new GridBagLayout());
+//
+//        GridBagConstraints gbc = new GridBagConstraints();
+//        gbc.gridwidth = GridBagConstraints.REMAINDER; // 使组件跨越此行的所有列
+//        gbc.fill = GridBagConstraints.HORIZONTAL; // 水平填充
+//        gbc.weightx = 1.0; // 水平权重设置为1.0，使其宽度尽可能填满
+//
+//        panel2.add(panel, gbc);
+//        panel2.add(button, gbc);
+//        panel2.add(label, gbc);
+//        panel2.add(colorSelect, gbc);
 
         ICombineJavaService service = CombineJavaStarter.init("test_combine_config.json");
         DataResult result = service.execute("gui", "test", new HashMap<>(), new HashMap<>());
