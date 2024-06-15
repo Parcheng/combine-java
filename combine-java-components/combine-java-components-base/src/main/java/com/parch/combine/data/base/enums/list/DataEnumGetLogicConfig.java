@@ -1,0 +1,14 @@
+package com.parch.combine.data.base.enums.list;
+
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.ILogicConfig;
+
+/**
+ * 逻辑配置类
+ */
+public interface DataEnumGetLogicConfig extends ILogicConfig {
+
+    @Field(key = "key", name = "枚举KEY", type = FieldTypeEnum.TEXT, isRequired = true)
+    String key();
+}

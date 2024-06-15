@@ -1,0 +1,7 @@
+package com.parch.combine.file.base.operations.compress.zip;
+
+
+import com.parch.combine.file.base.operations.compress.FileCompressLogicConfig;
+
+public interface FileCompressZipLogicConfig extends FileCompressLogicConfig {
+}
