@@ -31,13 +31,17 @@
         "elementId": "text",
         "text": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
       },{
+        "type": "gui.control.label",
+        "elementId": "label",
+        "text": "22222222222222"
+      },{
         "type": "gui.control.textarea",
         "elementId": "textarea",
         "value": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
       },{
         "type": "gui.build",
         "title": "test",
-        "centerElements": ["input", "select", "radio", "checkbox", "button", "text", "textarea"]
+        "centerElements": ["input", "select", "radio", "checkbox", "button", "text", "label","textarea"]
       }
     ]
   }

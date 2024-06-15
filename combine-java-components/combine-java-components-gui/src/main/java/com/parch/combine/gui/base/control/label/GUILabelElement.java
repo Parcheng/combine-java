@@ -1,4 +1,4 @@
-package com.parch.combine.gui.base.control.text;
+package com.parch.combine.gui.base.control.label;
 
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
@@ -8,14 +8,14 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GUITextElement implements IGUIElement {
+public class GUILabelElement implements IGUIElement {
 
-    private JLabel text = null;
-    private GUITextElementTemplate template;
+    private JLabel label = null;
+    private GUILabelElementTemplate template;
     private Config config;
 
-    public GUITextElement(GUITextElementTemplate template, Config config) {
-        this.template = template == null ? new GUITextElementTemplate() : template;
+    public GUILabelElement(GUILabelElementTemplate template, Config config) {
+        this.template = template == null ? new GUILabelElementTemplate() : template;
         this.config = config;
     }
 
@@ -24,27 +24,27 @@ public class GUITextElement implements IGUIElement {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
         ElementHelper.set(panel, template.getExternal());
 
-        text = new JLabel();
-        ElementHelper.set(text, template.getText());
-        text.setText(config.text);
+        label = new JLabel();
+        ElementHelper.set(label, template.getLabel());
+        label.setText(config.text);
 
-        panel.add(text);
+        panel.add(label);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        if (text == null || data == null) {
+        if (label == null || data == null) {
             return false;
         }
 
-        text.setText(data.toString());
+        label.setText(data.toString());
         return true;
     }
 
     @Override
     public Object getData() {
-        return text.getText();
+        return label.getText();
     }
 
     @Override
