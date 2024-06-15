@@ -1,4 +1,4 @@
-package com.parch.combine.mysql.base;
+package com.parch.combine.mysql.base.execute;
 
 import com.parch.combine.core.component.error.IComponentError;
 

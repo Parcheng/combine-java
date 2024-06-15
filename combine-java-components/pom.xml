@@ -14,10 +14,11 @@
     <version>1.0.0</version>
 
     <modules>
+        <module>combine-java-components-base</module>
+        <module>combine-java-components-gui</module>
         <module>combine-java-components-redis</module>
         <module>combine-java-components-rocketmq</module>
         <module>combine-java-components-mysql</module>
-        <module>combine-java-components-all</module>
     </modules>
 
     <properties>

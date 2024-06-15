@@ -1,4 +1,4 @@
-package com.parch.combine.mysql.base;
+package com.parch.combine.mysql.base.execute;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.settings.config.IOptionSetting;

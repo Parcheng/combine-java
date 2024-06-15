@@ -8,10 +8,10 @@ import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
 import com.parch.combine.core.component.vo.DataResult;
-import com.parch.combine.mysql.base.MysqlErrorEnum;
-import com.parch.combine.mysql.base.MysqlInitConfig;
-import com.parch.combine.mysql.base.MysqlLogicConfig;
-import com.parch.combine.mysql.base.MysqlOperationHandler;
+import com.parch.combine.mysql.base.execute.MysqlErrorEnum;
+import com.parch.combine.mysql.base.execute.MysqlInitConfig;
+import com.parch.combine.mysql.base.execute.MysqlLogicConfig;
+import com.parch.combine.mysql.base.execute.MysqlOperationHandler;
 
 import java.util.Map;
 import java.util.UUID;
