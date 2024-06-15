@@ -52,7 +52,7 @@ public class GUIPanelElement implements IGUIElement {
 
     @Override
     public IGUIElement copy() {
-        return null;
+        return new GUIPanelElement(this.template, this.config);
     }
 
     public static class Config {

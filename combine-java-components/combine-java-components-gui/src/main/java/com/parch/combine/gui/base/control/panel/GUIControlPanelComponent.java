@@ -5,7 +5,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.gui.base.control.AbsGUIControlComponent;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "control.checkbox", name = "GUI多选框控件", logicConfigClass = GUIControlPanelLogicConfig.class, initConfigClass = GUIControlPanelInitConfig.class)
+@Component(key = "control.panel", name = "GUI面板控件", logicConfigClass = GUIControlPanelLogicConfig.class, initConfigClass = GUIControlPanelInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlPanelComponent extends AbsGUIControlComponent<GUIControlPanelInitConfig, GUIControlPanelLogicConfig> {
 
@@ -19,8 +19,8 @@ public class GUIControlPanelComponent extends AbsGUIControlComponent<GUIControlP
         GUIControlPanelLogicConfig logicConfig = getLogicConfig();
 
         GUIPanelElement.Config config = new GUIPanelElement.Config();
-        config.values = logicConfig.values();
-        config.options = logicConfig.options();
+//        config.values = logicConfig.values();
+//        config.options = logicConfig.options();
         return new GUIPanelElement(initConfig.template(), config);
     }
 }
