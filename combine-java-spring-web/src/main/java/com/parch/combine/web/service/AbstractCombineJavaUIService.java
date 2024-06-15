@@ -1,7 +1,7 @@
 package com.parch.combine.web.service;
 
-import com.parch.combine.core.ui.CombineJavaUIStarter;
-import com.parch.combine.core.ui.service.ICombineJavaUIService;
+import com.parch.combine.ui.core.CombineJavaUIStarter;
+import com.parch.combine.ui.core.service.ICombineJavaUIService;
 
 public abstract class AbstractCombineJavaUIService {
 

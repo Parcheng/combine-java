@@ -206,7 +206,7 @@ public interface My1InitConfig extends IInitConfig {
 
 # 自定义UI元素组件
 通过 SPI 加载<br>
-在 resource/META_INFO/services 下创建文件 com.parch.combine.core.ui.spi.AbsGetUIElements<br>
+在 resource/META_INFO/services 下创建文件 AbsGetUIElements<br>
 ```
 com.test.ui.elements.GetMyUIElements
 ```

@@ -7,8 +7,9 @@
     <modules>
         <module>combine-java-core</module>
         <module>combine-java-components</module>
-        <module>combine-java-ui-elements</module>
+        <module>combine-java-ui-html</module>
         <module>combine-java-spring-web</module>
+        <module>combine-java-starter</module>
     </modules>
 
     <groupId>com.parch.combine</groupId>
@@ -19,39 +20,23 @@
 
     <properties>
         <java.version>8</java.version>
-        <jackson.version>2.13.5</jackson.version>
+        <combine-java-core.version>0.9.0</combine-java-core.version>
 
+        <jackson.version>2.13.5</jackson.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
-
-        <poi.version>4.1.2</poi.version>
-        <mail-api.version>1.4.7</mail-api.version>
-        <compress.version>1.20</compress.version>
-        <mysql-connector.version>8.0.33</mysql-connector.version>
         <hikari.version>4.0.3</hikari.version>
-        <jedis.version>3.6.3</jedis.version>
-        <rocketmq.version>4.3.2</rocketmq.version>
-        <pdfbox.version>2.0.12</pdfbox.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi</artifactId>
-                <version>${poi.version}</version>
+                <groupId>com.parch.combine</groupId>
+                <artifactId>combine-java-core</artifactId>
+                <version>${combine-java-core.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml</artifactId>
-                <version>${poi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.pdfbox</groupId>
-                <artifactId>pdfbox</artifactId>
-                <version>${pdfbox.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
@@ -77,33 +62,6 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
             </dependency>
-            <dependency>
-                <groupId>javax.mail</groupId>
-                <artifactId>mail</artifactId>
-                <version>${mail-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${compress.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mysql</groupId>
-                <artifactId>mysql-connector-j</artifactId>
-                <version>${mysql-connector.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>${jedis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-client</artifactId>
-                <version>${rocketmq.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>

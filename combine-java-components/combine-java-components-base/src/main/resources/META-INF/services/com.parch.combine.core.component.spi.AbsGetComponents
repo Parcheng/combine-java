@@ -1,0 +1,7 @@
+com.parch.combine.data.components.GetDataComponents
+com.parch.combine.file.components.GetFileComponents
+com.parch.combine.call.components.GetCallComponents
+com.parch.combine.logic.components.GetLogicComponents
+com.parch.combine.tool.components.GetToolComponents
+com.parch.combine.mail.components.GetMailComponents
+com.parch.combine.system.components.GetSystemComponents

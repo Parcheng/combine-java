@@ -70,6 +70,15 @@ public class ComponentContextHandler {
     }
 
     /**
+     * 获取全局上下文ID
+     *
+     * @return 上下文ID
+     */
+    public static String getId() {
+        return CACHE.get().getId();
+    }
+
+    /**
      * 获取全局上下文对象
      *
      * @return 上下文对象

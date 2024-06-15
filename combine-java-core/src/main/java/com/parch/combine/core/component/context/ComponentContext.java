@@ -5,6 +5,7 @@ import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 全局流程解析上下文对象
@@ -13,6 +14,11 @@ import java.util.Map;
  * @date 2023/4/26
  */
 public class ComponentContext {
+
+    /**
+     * 上下文ID
+     */
+    private String id;
 
     /**
      * 作用域Key
@@ -68,6 +74,10 @@ public class ComponentContext {
      * 已经执行过的组件集合
      */
     private List<AbsComponent<?,?>> executedComponents;
+
+    public ComponentContext() {
+        this.id = UUID.randomUUID().toString();
+    }
 
     public static ComponentContext copy(ComponentContext source) {
         ComponentContext context = new ComponentContext();
@@ -171,5 +181,9 @@ public class ComponentContext {
 
     public void setScopeKey(String scopeKey) {
         this.scopeKey = scopeKey;
+    }
+
+    public String getId() {
+        return id;
     }
 }

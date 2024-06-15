@@ -1,0 +1,32 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "gui/test": [
+      {
+        "type": "gui.control.input",
+        "elementId": "input",
+        "text": "111111"
+      },{
+        "type": "gui.control.select",
+        "elementId": "select",
+        "value": "2",
+        "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
+      },{
+        "type": "gui.control.radio",
+        "elementId": "radio",
+        "value": "2",
+        "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
+      },{
+        "type": "gui.control.checkbox",
+        "elementId": "checkbox",
+        "values": ["2", "3"],
+        "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
+      },{
+        "type": "gui.build",
+        "title": "test",
+        "centerElements": ["input", "select", "radio", "checkbox"]
+      }
+    ]
+  }
+}
