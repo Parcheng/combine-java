@@ -4,7 +4,7 @@ import com.parch.combine.gui.base.control.AbsGUIControlComponent;
 import com.parch.combine.gui.base.control.checkbox.GUICheckboxElement;
 import com.parch.combine.gui.base.control.checkbox.GUIControlCheckboxInitConfig;
 import com.parch.combine.gui.base.control.checkbox.GUIControlCheckboxLogicConfig;
-import com.parch.combine.gui.base.core.IGUIElement;
+import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 

@@ -1,6 +1,6 @@
-package com.parch.combine.gui.base.core.style.config;
+package com.parch.combine.gui.core.style.config;
 
-import com.parch.combine.gui.base.core.style.ElementObjectConstant;
+import com.parch.combine.gui.core.style.ElementObjectConstant;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;

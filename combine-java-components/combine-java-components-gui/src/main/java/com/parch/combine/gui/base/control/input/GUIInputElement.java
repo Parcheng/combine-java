@@ -1,8 +1,8 @@
 package com.parch.combine.gui.base.control.input;
 
-import com.parch.combine.gui.base.core.IGUIElement;
-import com.parch.combine.gui.base.core.style.ElementHelper;
-import com.parch.combine.gui.base.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.style.ElementHelper;
+import com.parch.combine.gui.core.style.ElementStyleConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import javax.swing.JTextField;

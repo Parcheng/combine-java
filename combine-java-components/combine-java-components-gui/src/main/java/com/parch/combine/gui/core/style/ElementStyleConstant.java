@@ -1,4 +1,4 @@
-package com.parch.combine.gui.base.core.style;
+package com.parch.combine.gui.core.style;
 
 import java.awt.FlowLayout;
 

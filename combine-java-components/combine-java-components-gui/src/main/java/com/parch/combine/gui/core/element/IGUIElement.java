@@ -1,4 +1,4 @@
-package com.parch.combine.gui.base.core;
+package com.parch.combine.gui.core.element;
 
 import javax.swing.*;
 

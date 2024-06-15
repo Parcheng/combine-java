@@ -1,6 +1,6 @@
-package com.parch.combine.gui.base.core.style;
+package com.parch.combine.gui.core.style;
 
-import com.parch.combine.gui.base.core.style.config.ElementSizeConfig;
+import com.parch.combine.gui.core.style.config.ElementSizeConfig;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;

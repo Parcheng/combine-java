@@ -1,8 +1,8 @@
 package com.parch.combine.gui.base.control;
 
-import com.parch.combine.gui.base.core.GUIElementManagerHandler;
-import com.parch.combine.gui.base.core.IGUIElement;
-import com.parch.combine.gui.base.core.manager.GUIElementManager;
+import com.parch.combine.gui.core.element.GUIElementManagerHandler;
+import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.vo.DataResult;

@@ -1,6 +1,6 @@
-package com.parch.combine.gui.base.core.style.helper;
+package com.parch.combine.gui.core.style.helper;
 
-import com.parch.combine.gui.base.core.style.config.ElementSizeConfig;
+import com.parch.combine.gui.core.style.config.ElementSizeConfig;
 
 import javax.swing.JComponent;
 import java.awt.Dimension;

@@ -1,6 +1,6 @@
-package com.parch.combine.gui.base.core;
+package com.parch.combine.gui.core.element;
 
-import com.parch.combine.gui.base.core.manager.GUIElementManager;
+import com.parch.combine.gui.core.element.GUIElementManager;
 
 import java.util.HashMap;
 import java.util.Map;
