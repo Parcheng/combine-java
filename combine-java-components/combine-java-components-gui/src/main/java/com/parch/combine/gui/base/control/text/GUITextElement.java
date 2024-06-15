@@ -22,34 +22,43 @@ public class GUITextElement implements IGUIElement {
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-        ElementHelper.set(panel, template.getExternal());
+        ElementHelper.set(panel, this.template.getExternal());
 
-        text = new JLabel();
-        ElementHelper.set(text, template.getText());
-        text.setText(config.text);
+        this.text = new JLabel();
+        ElementHelper.set(this.text, this.template.getText());
+        this.text.setText(this.config.text);
 
-        panel.add(text);
+        panel.add(this.text);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        if (text == null || data == null) {
+        if (data == null) {
             return false;
         }
 
-        text.setText(data.toString());
+        if (this.text != null) {
+            this.text.setText(data.toString());
+        }
+        this.config.text = data.toString();
+
         return true;
     }
 
     @Override
     public Object getData() {
-        return text.getText();
+        return this.text == null ? this.config.text : this.text.getText();
     }
 
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUITextElement(this.template, this.config);
     }
 
     public static class Config {

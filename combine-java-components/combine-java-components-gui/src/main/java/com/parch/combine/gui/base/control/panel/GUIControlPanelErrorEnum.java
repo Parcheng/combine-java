@@ -2,7 +2,7 @@ package com.parch.combine.gui.base.control.panel;
 
 import com.parch.combine.core.component.error.IComponentError;
 
-public enum GUIControlButtonErrorEnum implements IComponentError {
+public enum GUIControlPanelErrorEnum implements IComponentError {
 
     ;
 
@@ -10,7 +10,7 @@ public enum GUIControlButtonErrorEnum implements IComponentError {
 
     private String showMsg;
 
-    GUIControlButtonErrorEnum(String msg, String showMsg) {
+    GUIControlPanelErrorEnum(String msg, String showMsg) {
         this.msg = msg;
         this.showMsg = showMsg;
 

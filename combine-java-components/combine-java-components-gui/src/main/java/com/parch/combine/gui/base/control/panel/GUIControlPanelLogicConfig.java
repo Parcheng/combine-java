@@ -6,7 +6,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.base.control.GUIControlLogicConfig;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 
-public interface GUIControlButtonLogicConfig extends GUIControlLogicConfig {
+public interface GUIControlPanelLogicConfig extends GUIControlLogicConfig {
 
     @Field(key = "values", name = "值集合", type = FieldTypeEnum.TEXT, isArray = true)
     String[] values();

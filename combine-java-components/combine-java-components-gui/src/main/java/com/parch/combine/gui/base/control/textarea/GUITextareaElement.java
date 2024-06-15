@@ -22,46 +22,55 @@ public class GUITextareaElement implements IGUIElement {
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-        ElementHelper.set(panel, template.getExternal());
+        ElementHelper.set(panel, this.template.getExternal());
 
-        textArea = new JTextArea();
+        this.textArea = new JTextArea();
         // 自动换行
-        textArea.setLineWrap(true);
-        ElementHelper.set(textArea, template.getTextArea());
+        this.textArea.setLineWrap(true);
+        ElementHelper.set(this.textArea, this.template.getTextArea());
 
         // 按单词换行
-        if (config.isWrapStyleWord != null) {
-            textArea.setWrapStyleWord(config.isWrapStyleWord);
+        if (this.config.isWrapStyleWord != null) {
+            this.textArea.setWrapStyleWord(this.config.isWrapStyleWord);
         }
-        if (config.columns != null) {
-            textArea.setColumns(config.columns);
+        if (this.config.columns != null) {
+            this.textArea.setColumns(this.config.columns);
         }
-        if (config.value != null) {
-            textArea.setText(config.value);
+        if (this.config.value != null) {
+            this.textArea.setText(this.config.value);
         }
 
-        panel.add(textArea);
+        panel.add(this.textArea);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        if (textArea == null || data == null) {
+        if (data == null) {
             return false;
         }
 
-        textArea.setText(data.toString());
+        if (this.textArea != null) {
+            this.textArea.setText(data.toString());
+        }
+        this.config.value = data.toString();
+
         return true;
     }
 
     @Override
     public Object getData() {
-        return textArea.getText();
+        return this.textArea == null ? this.config.value : this.textArea.getText();
     }
 
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUITextareaElement(this.template, this.config);
     }
 
     public static class Config {

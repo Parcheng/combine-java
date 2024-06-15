@@ -11,4 +11,6 @@ public interface IGUIElement {
     Object getData();
 
     Object call(String key, Object ... params);
+
+    IGUIElement copy();
 }

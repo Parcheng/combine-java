@@ -8,10 +8,9 @@ import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 
 public interface GUIControlListLogicConfig extends GUIControlLogicConfig {
 
-    @Field(key = "values", name = "值集合", type = FieldTypeEnum.TEXT, isArray = true)
-    String[] values();
+    @Field(key = "data", name = "数据集合", type = FieldTypeEnum.ANY, isArray = true)
+    Object[] data();
 
-    @Field(key = "options", name = "选项集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
-    @FieldObject(GUIControlOptionConfig.class)
-    GUIControlOptionConfig[] options();
+    @Field(key = "bodyElementId", name = "集合内容的GUI元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
+    String bodyElementId();
 }

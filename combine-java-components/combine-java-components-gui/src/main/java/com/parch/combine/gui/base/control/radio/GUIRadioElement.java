@@ -27,17 +27,17 @@ public class GUIRadioElement implements IGUIElement {
         ElementHelper.set(panel, template.getExternal());
 
         ButtonGroup radioButton = new ButtonGroup();
-        radios = new JRadioButton[config.options.length];
-        for (int i = 0; i < config.options.length; i++) {
-            GUIControlOptionConfig option = config.options[i];
+        this.radios = new JRadioButton[this.config.options.length];
+        for (int i = 0; i < this.config.options.length; i++) {
+            GUIControlOptionConfig option = this.config.options[i];
 
             JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
-                    config.value != null && config.value.equals(option.getValue()));
-            ElementHelper.set(radioItem, template.getRadio());
+                    this.config.value != null && this.config.value.equals(option.getValue()));
+            ElementHelper.set(radioItem, this.template.getRadio());
 
             panel.add(radioItem);
             radioButton.add(radioItem);
-            radios[i] = radioItem;
+            this.radios[i] = radioItem;
         }
 
         return panel;
@@ -45,13 +45,19 @@ public class GUIRadioElement implements IGUIElement {
 
     @Override
     public boolean setData(Object data) {
+        if (data == null) {
+            return false;
+        }
+
         String dataStr = data.toString();
-        for (int i = 0; i < config.options.length; i++) {
-            GUIControlOptionConfig option = config.options[i];
-            if (dataStr != null && dataStr.equals(option.getValue())) {
-                radios[i].setSelected(true);
-            } else {
-                radios[i].setSelected(false);
+        for (int i = 0; i < this.config.options.length; i++) {
+            GUIControlOptionConfig option = this.config.options[i];
+            boolean selected = dataStr != null && dataStr.equals(option.getValue());
+            if (this.radios != null) {
+                this.radios[i].setSelected(selected);
+            }
+            if (selected) {
+                this.config.value = option.getValue();
             }
         }
 
@@ -60,9 +66,9 @@ public class GUIRadioElement implements IGUIElement {
 
     @Override
     public Object getData() {
-        for (int i = 0; i < radios.length; i++) {
-            if (radios[i].isSelected()) {
-                return config.options[i].getValue();
+        for (int i = 0; i < this.radios.length; i++) {
+            if (this.radios[i].isSelected()) {
+                return this.config.options[i].getValue();
             }
         }
 
@@ -72,6 +78,11 @@ public class GUIRadioElement implements IGUIElement {
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUIRadioElement(this.template, this.config);
     }
 
     public static class Config {

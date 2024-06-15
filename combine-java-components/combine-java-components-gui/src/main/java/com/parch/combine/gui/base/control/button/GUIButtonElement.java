@@ -7,7 +7,6 @@ import com.parch.combine.gui.core.style.ElementStyleConstant;
 import javax.swing.JComponent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import java.awt.*;
 
 public class GUIButtonElement implements IGUIElement {
 
@@ -23,16 +22,16 @@ public class GUIButtonElement implements IGUIElement {
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-        ElementHelper.set(panel, template.getExternal());
+        ElementHelper.set(panel, this.template.getExternal());
 
-        button = new JButton();
-        button.setText(config.text);
+        this.button = new JButton();
+        this.button.setText(this.config.text);
         //button.setBackground(ElementStyleConstant.BG_COLOR);
         // button.setBorder(new EmptyBorder(10, 10, 10, 10));
         // button.setBorder(new LineBorder(ElementStyleConstant.BORDER_COLOR, 1));
         //button.setMargin(new Insets(2, 10, 2, 10));
 
-        ElementHelper.set(button, template.getButton());
+        ElementHelper.set(this.button, this.template.getButton());
 
 //        button.addActionListener(new ActionListener() {
 //            @Override
@@ -41,28 +40,36 @@ public class GUIButtonElement implements IGUIElement {
 //            }
 //        });
 
-        panel.add(button);
+        panel.add(this.button);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        if (button == null || data == null) {
+        if (data == null) {
             return false;
         }
 
-        button.setText(data.toString());
+        if (this.button != null) {
+            this.button.setText(data.toString());
+        }
+        this.config.text = data.toString();
         return true;
     }
 
     @Override
     public Object getData() {
-        return button.getText();
+        return this.button == null ? config.text : this.button.getText();
     }
 
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUIButtonElement(this.template, this.config);
     }
 
     public static class Config {

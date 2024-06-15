@@ -9,6 +9,8 @@ import com.parch.combine.core.component.vo.DataResult;
 
 public abstract class AbsGUIControlComponent<T extends GUIControlInitConfig, R extends GUIControlLogicConfig> extends AbsComponent<T, R> {
 
+    protected GUIElementManager guiElementManager;
+
     public AbsGUIControlComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
         super(initConfigClass, logicConfigClass);
     }
@@ -21,10 +23,10 @@ public abstract class AbsGUIControlComponent<T extends GUIControlInitConfig, R e
         }
 
         String flowContextId = ComponentContextHandler.getId();
-        GUIElementManager manager = GUIElementManagerHandler.getAndRegisterManager(flowContextId);
+        guiElementManager = GUIElementManagerHandler.getAndRegisterManager(flowContextId);
 
         String elementId = getLogicConfig().elementId();
-        manager.register(elementId == null ? getLogicConfig().id() : elementId, element);
+        guiElementManager.register(elementId == null ? getLogicConfig().id() : elementId, element);
 
         // JPanel、JScrollPane、JSplitPane
         return DataResult.success(true);

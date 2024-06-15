@@ -23,39 +23,42 @@ public class GUISelectElement implements IGUIElement {
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-        ElementHelper.set(panel, template.getExternal());
+        ElementHelper.set(panel, this.template.getExternal());
 
-        comboBox = new JComboBox<>();
-        ElementHelper.set(comboBox, template.getSelect());
+        this.comboBox = new JComboBox<>();
+        ElementHelper.set(this.comboBox, this.template.getSelect());
 
         int checkIndex = -1;
-        for (int i = 0; i < config.options.length; i++) {
-            GUIControlOptionConfig option = config.options[i];
-            comboBox.addItem(option.getText() == null ? option.getValue() : option.getText());
-            if (checkIndex == -1 && config.value != null && config.value.equals(option.getValue())) {
+        for (int i = 0; i < this.config.options.length; i++) {
+            GUIControlOptionConfig option = this.config.options[i];
+            this.comboBox.addItem(option.getText() == null ? option.getValue() : option.getText());
+            if (checkIndex == -1 && this.config.value != null && this.config.value.equals(option.getValue())) {
                 checkIndex = i;
             }
         }
 
         if (checkIndex != -1) {
-            comboBox.setSelectedIndex(checkIndex);
+            this.comboBox.setSelectedIndex(checkIndex);
         }
 
-        panel.add(comboBox);
+        panel.add(this.comboBox);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        if (comboBox == null || data == null) {
+        if (data == null) {
             return false;
         }
 
         String dataStr = data.toString();
-        for (int i = 0; i < config.options.length; i++) {
-            GUIControlOptionConfig option = config.options[i];
+        for (int i = 0; i < this.config.options.length; i++) {
+            GUIControlOptionConfig option = this.config.options[i];
             if (dataStr != null && dataStr.equals(option.getValue())) {
-                comboBox.setSelectedIndex(i);
+                if (this.comboBox != null) {
+                    this.comboBox.setSelectedIndex(i);
+                }
+                this.config.value = option.getValue();
                 return true;
             }
         }
@@ -65,13 +68,22 @@ public class GUISelectElement implements IGUIElement {
 
     @Override
     public Object getData() {
-        int index = comboBox.getSelectedIndex();
-        return index > 0 ? config.options[index].getValue() : null;
+        if (this.comboBox == null) {
+            return this.config.value;
+        }
+
+        int index =this.comboBox.getSelectedIndex();
+        return index > 0 ? this.config.options[index].getValue() : null;
     }
 
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUISelectElement(this.template, this.config);
     }
 
     public static class Config {

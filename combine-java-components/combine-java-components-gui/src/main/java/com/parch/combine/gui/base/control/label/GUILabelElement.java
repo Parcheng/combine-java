@@ -22,34 +22,43 @@ public class GUILabelElement implements IGUIElement {
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-        ElementHelper.set(panel, template.getExternal());
+        ElementHelper.set(panel, this.template.getExternal());
 
-        label = new JLabel();
-        ElementHelper.set(label, template.getLabel());
-        label.setText(config.text);
+        this.label = new JLabel();
+        ElementHelper.set(this.label, this.template.getLabel());
+        this.label.setText(this.config.text);
 
-        panel.add(label);
+        panel.add(this.label);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        if (label == null || data == null) {
+        if (data == null) {
             return false;
         }
 
-        label.setText(data.toString());
+        if (this.label != null) {
+            this.label.setText(data.toString());
+        }
+        this.config.text = data.toString();
+
         return true;
     }
 
     @Override
     public Object getData() {
-        return label.getText();
+        return this.label == null ? config.text : this.label.getText();
     }
 
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUILabelElement(this.template, this.config);
     }
 
     public static class Config {
