@@ -1,6 +1,6 @@
 package com.parch.combine.ui.elements;
 
-import com.parch.combine.core.ui.spi.AbsGetUIElements;
+import com.parch.combine.ui.core.spi.AbsGetUIElements;
 
 /**
  * 加载器

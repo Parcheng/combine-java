@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>combine-java-components</artifactId>
+        <groupId>com.parch.combine</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>combine-java-components-all</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <combine-components-base.version>1.0.0</combine-components-base.version>
+        <combine-components-gui.version>1.0.0</combine-components-gui.version>
+        <combine-components-mysql.version>1.0.0</combine-components-mysql.version>
+        <combine-components-redis.version>1.0.0</combine-components-redis.version>
+        <combine-components-rocketmq.version>1.0.0</combine-components-rocketmq.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.parch.combine</groupId>
+            <artifactId>combine-java-components-base</artifactId>
+            <version>${combine-components-base.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.parch.combine</groupId>
+            <artifactId>combine-java-components-gui</artifactId>
+            <version>${combine-components-gui.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.parch.combine</groupId>
+            <artifactId>combine-java-components-mysql</artifactId>
+            <version>${combine-components-mysql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.parch.combine</groupId>
+            <artifactId>combine-java-components-redis</artifactId>
+            <version>${combine-components-redis.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.parch.combine</groupId>
+            <artifactId>combine-java-components-rocketmq</artifactId>
+            <version>${combine-components-rocketmq.version}</version>
+        </dependency>
+    </dependencies>
+</project>

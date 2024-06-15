@@ -7,12 +7,14 @@
         <groupId>com.parch.combine</groupId>
         <version>0.9.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>combine-java-spring-web</artifactId>
 
     <properties>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+        <combine-java-components.version>1.0.0</combine-java-components.version>
+        <combine-java-ui.version>1.0.0</combine-java-ui.version>
     </properties>
 
     <dependencies>
@@ -21,6 +23,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -32,15 +35,16 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.parch.combine</groupId>
-            <artifactId>combine-java-components</artifactId>
-            <version>${project.version}</version>
+            <artifactId>combine-java-components-all</artifactId>
+            <version>${combine-java-components.version}</version>
         </dependency>
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-ui-elements</artifactId>
-            <version>${project.version}</version>
+            <version>${combine-java-ui.version}</version>
         </dependency>
     </dependencies>
 

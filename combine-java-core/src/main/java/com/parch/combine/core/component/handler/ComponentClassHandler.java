@@ -82,6 +82,10 @@ public class ComponentClassHandler {
     public static ThreeTuples<Boolean, AbsComponent<?,?>, List<String>> build(String id, String type, String scopeKey, Map<String, Object> logicConfig) {
         try {
             Class<? extends AbsComponent<?, ?>> clazz = COMPONENT_CLASS_MAP.get(type);
+            if (clazz == null) {
+                return new ThreeTuples<>(false, null, Collections.singletonList("【" + type + "】组件未注册"));
+            }
+
             AbsComponent<?,?> component = clazz.getDeclaredConstructor().newInstance();
             component.setId(id);
             component.setType(type);

@@ -2,7 +2,7 @@ package com.parch.combine.ui.elements.common;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.ui.base.SubConfig;
+import com.parch.combine.ui.core.base.SubConfig;
 
 @SubConfig
 public class OptionElementConfig {

@@ -1,7 +1,7 @@
 package com.parch.combine.ui.elements.config;
 
-import com.parch.combine.core.ui.base.element.ElementConfig;
-import com.parch.combine.core.ui.settings.annotations.PageElement;
+import com.parch.combine.ui.core.base.element.ElementConfig;
+import com.parch.combine.ui.core.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
 import java.util.List;
