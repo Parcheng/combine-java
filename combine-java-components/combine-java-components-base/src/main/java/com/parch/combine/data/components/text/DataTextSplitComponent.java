@@ -1,4 +1,4 @@
-package com.parch.combine.data.base.text.split;
+package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.AbsComponent;
@@ -8,6 +8,9 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.data.base.text.split.DataTextSplitErrorEnum;
+import com.parch.combine.data.base.text.split.DataTextSplitInitConfig;
+import com.parch.combine.data.base.text.split.DataTextSplitLogicConfig;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.parch.combine.data.base.text.replace;
+package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
@@ -7,6 +7,10 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.data.base.text.replace.DataTextReplaceErrorEnum;
+import com.parch.combine.data.base.text.replace.DataTextReplaceInitConfig;
+import com.parch.combine.data.base.text.replace.DataTextReplaceLogicConfig;
+import com.parch.combine.data.base.text.replace.DataTextReplaceModeEnum;
 
 import java.util.*;
 

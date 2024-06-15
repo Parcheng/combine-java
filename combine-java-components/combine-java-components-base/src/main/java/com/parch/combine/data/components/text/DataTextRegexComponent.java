@@ -1,4 +1,4 @@
-package com.parch.combine.data.base.text.regex;
+package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
@@ -6,6 +6,10 @@ import com.parch.combine.core.component.base.AbsComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.data.base.text.regex.DataTextRegexErrorEnum;
+import com.parch.combine.data.base.text.regex.DataTextRegexInitConfig;
+import com.parch.combine.data.base.text.regex.DataTextRegexLogicConfig;
+import com.parch.combine.data.base.text.regex.DataTextRegexResultModeEnum;
 
 import java.util.ArrayList;
 import java.util.Collection;
