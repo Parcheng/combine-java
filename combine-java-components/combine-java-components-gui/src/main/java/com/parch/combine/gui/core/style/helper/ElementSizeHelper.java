@@ -14,11 +14,10 @@ public class ElementSizeHelper {
             return;
         }
 
-        if (sizeConfig.getWidth() == null || sizeConfig.getHeight() == null) {
-            return;
-        }
+        Dimension dimension = new Dimension();
+        dimension.width = sizeConfig.getWidth();
+        dimension.height = sizeConfig.getHeight();
 
-        Dimension dimension = new Dimension(sizeConfig.getWidth(), sizeConfig.getHeight());
         component.setSize(dimension);
         component.setPreferredSize(dimension);
     }

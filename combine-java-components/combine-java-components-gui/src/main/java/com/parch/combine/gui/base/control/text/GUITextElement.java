@@ -2,11 +2,12 @@ package com.parch.combine.gui.base.control.text;
 
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class GUITextElement implements IGUIElement {
 
@@ -21,7 +22,7 @@ public class GUITextElement implements IGUIElement {
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
         ElementHelper.set(panel, this.template.getExternal());
 
         this.text = new JLabel();

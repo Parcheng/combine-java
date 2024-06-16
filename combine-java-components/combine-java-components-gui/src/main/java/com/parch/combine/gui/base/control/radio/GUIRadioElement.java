@@ -3,12 +3,13 @@ package com.parch.combine.gui.base.control.radio;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JRadioButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
+import java.awt.FlowLayout;
 
 public class GUIRadioElement implements IGUIElement {
 
@@ -23,7 +24,7 @@ public class GUIRadioElement implements IGUIElement {
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
         ElementHelper.set(panel, template.getExternal());
 
         ButtonGroup radioButton = new ButtonGroup();

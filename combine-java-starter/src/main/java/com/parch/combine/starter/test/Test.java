@@ -36,13 +36,7 @@ public class Test {
 //        17	JSpinner
 //        JSpinner 是一个单行输入字段，它让用户从一个有序序列中选择一个数字或者一个对象值。
 
-//        JWindow p = new JWindow();
-//        p.setSize(400, 400);
-//        p.setVisible(true);
 
-//        JPanel panel2 = new JPanel();
-//        panel2.setLayout(new GridBagLayout());
-//
 //        GridBagConstraints gbc = new GridBagConstraints();
 //        gbc.gridwidth = GridBagConstraints.REMAINDER; // 使组件跨越此行的所有列
 //        gbc.fill = GridBagConstraints.HORIZONTAL; // 水平填充

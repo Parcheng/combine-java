@@ -3,11 +3,12 @@ package com.parch.combine.gui.base.control.select;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class GUISelectElement implements IGUIElement {
 
@@ -22,7 +23,7 @@ public class GUISelectElement implements IGUIElement {
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
         ElementHelper.set(panel, this.template.getExternal());
 
         this.comboBox = new JComboBox<>();

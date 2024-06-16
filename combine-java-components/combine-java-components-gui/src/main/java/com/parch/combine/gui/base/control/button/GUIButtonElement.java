@@ -2,11 +2,12 @@ package com.parch.combine.gui.base.control.button;
 
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JComponent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class GUIButtonElement implements IGUIElement {
 
@@ -21,15 +22,11 @@ public class GUIButtonElement implements IGUIElement {
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
         ElementHelper.set(panel, this.template.getExternal());
 
         this.button = new JButton();
         this.button.setText(this.config.text);
-        //button.setBackground(ElementStyleConstant.BG_COLOR);
-        // button.setBorder(new EmptyBorder(10, 10, 10, 10));
-        // button.setBorder(new LineBorder(ElementStyleConstant.BORDER_COLOR, 1));
-        //button.setMargin(new Insets(2, 10, 2, 10));
 
         ElementHelper.set(this.button, this.template.getButton());
 

@@ -3,12 +3,13 @@ package com.parch.combine.gui.base.control.checkbox;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class GUICheckboxElement implements IGUIElement {
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
         ElementHelper.set(panel, this.template.getExternal());
 
         this.checkbox = new JCheckBox[this.config.options.length];

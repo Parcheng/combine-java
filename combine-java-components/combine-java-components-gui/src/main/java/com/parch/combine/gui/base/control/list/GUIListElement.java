@@ -2,16 +2,15 @@ package com.parch.combine.gui.base.control.list;
 
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 
-import javax.swing.JViewport;
 import javax.swing.JScrollPane;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +31,7 @@ public class GUIListElement implements IGUIElement {
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
         ElementHelper.set(panel, template.getExternal());
 
         this.listPanel = new JScrollPane(this.buildItem());

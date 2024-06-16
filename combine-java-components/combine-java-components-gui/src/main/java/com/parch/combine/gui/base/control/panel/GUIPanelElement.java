@@ -3,10 +3,11 @@ package com.parch.combine.gui.base.control.panel;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JPanel;
 import javax.swing.JComponent;
+import java.awt.FlowLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class GUIPanelElement implements IGUIElement {
 
     @Override
     public JComponent build() {
-        this.panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+        this.panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
         ElementHelper.set(panel, template.getExternal());
 
         for (JComponent item : buildItems()) {

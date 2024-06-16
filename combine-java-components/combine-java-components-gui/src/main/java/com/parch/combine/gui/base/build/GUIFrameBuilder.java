@@ -3,10 +3,13 @@ package com.parch.combine.gui.base.build;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.GUIElementManager;
-import com.parch.combine.gui.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.style.ConstantHelper;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 public class GUIFrameBuilder {
 
@@ -43,8 +46,7 @@ public class GUIFrameBuilder {
 
     private static void buildLayoutPanel(GUIElementManager manager, JFrame frame, String[] elements, String layout) {
         if (elements != null) {
-            JPanel layoutPanel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-
+            JPanel layoutPanel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
             for (String elementId : elements) {
                 IGUIElement element = manager.get(elementId);
                 if (element == null) {
