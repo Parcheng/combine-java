@@ -23,7 +23,7 @@ public class GUIControlListComponent extends AbsGUIControlComponent<GUIControlLi
 
         GUIListElement.Config config = new GUIListElement.Config();
         config.data = logicConfig.data();
-        config.element = guiElementManager.get(logicConfig.bodyElementId());
+        config.element = super.guiElementManager.get(logicConfig.bodyElementId());
         if (config.element == null) {
             return null;
         }

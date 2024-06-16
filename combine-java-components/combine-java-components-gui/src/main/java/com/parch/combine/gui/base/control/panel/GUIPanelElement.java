@@ -36,7 +36,7 @@ public class GUIPanelElement implements IGUIElement {
 
     public JComponent[] buildItems() {
         Object data = this.config.data;
-        ElementItemConfig[] items = config.elementConfigs;
+        ElementItemConfig[] items = this.config.elementConfigs;
         if (items == null) {
             return new JComponent[0];
         }

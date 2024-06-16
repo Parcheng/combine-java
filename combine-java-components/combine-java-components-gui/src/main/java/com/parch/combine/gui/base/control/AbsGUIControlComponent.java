@@ -17,19 +17,21 @@ public abstract class AbsGUIControlComponent<T extends GUIControlInitConfig, R e
 
     @Override
     public DataResult execute() {
+        initGuiElementManager();
         IGUIElement element = getElement();
         if (element == null) {
             return DataResult.fail(GUIControlErrorEnum.FAIL);
         }
 
-        String flowContextId = ComponentContextHandler.getId();
-        guiElementManager = GUIElementManagerHandler.getAndRegisterManager(flowContextId);
-
         String elementId = getLogicConfig().elementId();
         guiElementManager.register(elementId == null ? getLogicConfig().id() : elementId, element);
 
-        // JPanel、JScrollPane、JSplitPane
         return DataResult.success(true);
+    }
+
+    private void initGuiElementManager() {
+        String flowContextId = ComponentContextHandler.getId();
+        guiElementManager = GUIElementManagerHandler.getAndRegisterManager(flowContextId);
     }
 
     public abstract IGUIElement getElement();

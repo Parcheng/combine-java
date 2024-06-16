@@ -29,14 +29,14 @@ public class GUIControlPanelComponent extends AbsGUIControlComponent<GUIControlP
             return null;
         }
 
-        GUIPanelElement.ElementItemConfig[] elementItems = new GUIPanelElement.ElementItemConfig[elementConfigs.length];
+        config.elementConfigs = new GUIPanelElement.ElementItemConfig[elementConfigs.length];
         for (int i = 0; i < elementConfigs.length; i++) {
             GUIControlPanelLogicConfig.ElementConfig elementConfig = elementConfigs[i];
-            elementItems[i] = new GUIPanelElement.ElementItemConfig();
-            elementItems[i].dataField = elementConfig.dataField();
-            elementItems[i].key = elementConfig.key() == null ? elementItems[i].dataField : elementConfig.key();
-            elementItems[i].element = guiElementManager.get(elementConfig.elementId());
-            if (elementItems[i].element == null) {
+            config.elementConfigs[i] = new GUIPanelElement.ElementItemConfig();
+            config.elementConfigs[i].dataField = elementConfig.dataField();
+            config.elementConfigs[i].key = elementConfig.key() == null ? config.elementConfigs[i].dataField : elementConfig.key();
+            config.elementConfigs[i].element = guiElementManager.get(elementConfig.elementId());
+            if (config.elementConfigs[i].element == null) {
                 return null;
             }
         }

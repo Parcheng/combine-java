@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.control.GUIControlLogicConfig;
 
 public interface GUIControlPanelLogicConfig extends GUIControlLogicConfig {
 
-    @Field(key = "dataField", name = "数据", type = FieldTypeEnum.ANY)
+    @Field(key = "data", name = "数据", type = FieldTypeEnum.ANY)
     Object data();
 
     @Field(key = "bodyElements", name = "内容配置集合", type = FieldTypeEnum.CONFIG, isArray = true, isRequired = true)
