@@ -36,7 +36,7 @@ public class GUIListElement implements IGUIElement {
         ElementHelper.set(panel, template.getExternal());
 
         this.listPanel = new JScrollPane(this.buildItem());
-        panel.add(listPanel, BorderLayout.CENTER);
+        panel.add(listPanel, BorderLayout.WEST);
         return panel;
     }
 
@@ -74,14 +74,10 @@ public class GUIListElement implements IGUIElement {
         }
 
         if (listPanel != null) {
-            JViewport viewport = listPanel.getViewport();
-            for (Component item : viewport.getComponents()) {
-                viewport.remove(item);
-            }
-
-            viewport.add(buildItem());
-            viewport.revalidate();
-            viewport.repaint();
+            listPanel.removeAll();
+            listPanel.add(buildItem());
+            listPanel.revalidate();
+            listPanel.repaint();
         }
 
         return true;
