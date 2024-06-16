@@ -12,7 +12,8 @@
     "alignmentY": "TOP",
     "border": {
       "type": "LINE",
-      "size": 0,
+      "size": 1,
+      "color": "#FFFFFF",
       "top": 0,
       "bottom": 0,
       "left": 0,
