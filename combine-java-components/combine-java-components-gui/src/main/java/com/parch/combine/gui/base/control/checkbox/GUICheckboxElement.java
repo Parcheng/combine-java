@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.control.checkbox;
 
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
@@ -16,21 +17,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class GUICheckboxElement implements IGUIElement {
+public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate, GUICheckboxElement.Config> {
 
     private JCheckBox[] checkbox = null;
-    private GUICheckboxElementTemplate template;
-    private Config config;
 
     public GUICheckboxElement(GUICheckboxElementTemplate template, Config config) {
-        this.template = template == null ? new GUICheckboxElementTemplate() : template;
-        this.config = config;
+        super("checkbox", template, config, GUICheckboxElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, this.template.getExternal());
+        JPanel panel = new JPanel();
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.checkbox = new JCheckBox[this.config.options.length];
         for (int i = 0; i < this.config.options.length; i++) {
@@ -38,7 +36,7 @@ public class GUICheckboxElement implements IGUIElement {
 
             JCheckBox checkboxItem = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
                     hasChecked(this.config.values, option.getValue()));
-            ElementHelper.set(checkboxItem, this.template.getCheckbox());
+            super.loadTemplates(panel, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
 
             panel.add(checkboxItem);
             this.checkbox[i] = checkboxItem;

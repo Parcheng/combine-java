@@ -14,6 +14,9 @@ public class ElementFontConfig {
     @Field(key = "size", name = "字体大小", type = FieldTypeEnum.TEXT, defaultValue = "14")
     private Integer size;
 
+    @Field(key = "bold", name = "字体加粗", type = FieldTypeEnum.BOOLEAN)
+    private Boolean bold;
+
     public String getName() {
         return name;
     }
@@ -28,5 +31,13 @@ public class ElementFontConfig {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public Boolean getBold() {
+        return bold;
+    }
+
+    public void setBold(Boolean bold) {
+        this.bold = bold;
     }
 }

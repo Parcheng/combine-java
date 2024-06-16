@@ -14,10 +14,15 @@ public class GUIListElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "radio", name = "单选元素样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "list", name = "集合元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig radio;
+    private ElementConfig list;
+
+    @Field(key = "item", name = "集合每个元素样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig item;
 
     public ElementConfig getExternal() {
         return external;
@@ -27,11 +32,19 @@ public class GUIListElementTemplate {
         this.external = external;
     }
 
-    public ElementConfig getRadio() {
-        return radio;
+    public ElementConfig getList() {
+        return list;
     }
 
-    public void setRadio(ElementConfig radio) {
-        this.radio = radio;
+    public void setList(ElementConfig list) {
+        this.list = list;
+    }
+
+    public ElementConfig getItem() {
+        return item;
+    }
+
+    public void setItem(ElementConfig item) {
+        this.item = item;
     }
 }

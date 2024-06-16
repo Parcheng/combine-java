@@ -1,7 +1,7 @@
 package com.parch.combine.gui.base.control.list;
 
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JScrollPane;
@@ -9,43 +9,44 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
-import java.awt.BorderLayout;
+import javax.swing.ListCellRenderer;
 import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class GUIListElement implements IGUIElement {
+public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUIListElement.Config> {
 
     JScrollPane listPanel = null;
     private IGUIElement[] elements = null;
-    private GUIListElementTemplate template;
-    private Config config;
 
     public GUIListElement(GUIListElementTemplate template, Config config) {
-        this.template = template == null ? new GUIListElementTemplate() : template;
-        this.config = config;
+        super("list", template, config, GUIListElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, template.getExternal());
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.listPanel = new JScrollPane(this.buildItem());
-        panel.add(listPanel, BorderLayout.WEST);
+        panel.add(this.listPanel, BorderLayout.WEST);
         return panel;
     }
 
     private JList<JComponent> buildItem() {
         DefaultListModel<JComponent> listModel = new DefaultListModel<>();
         JList<JComponent> list = new JList<>(listModel);
-        list.setCellRenderer((list1, value, index, isSelected, cellHasFocus) -> value);
+        list.setCellRenderer(this.getCellRenderer());
+        list.setLayoutOrientation(this.config.orientation);
+
+        super.loadTemplates(list, this.sysTemplate.getList(), this.template.getList());
 
         if (this.config.data != null) {
-            elements = new IGUIElement[this.config.data.length];
+            this.elements = new IGUIElement[this.config.data.length];
             for (int i = 0; i < this.config.data.length; i++) {
                 Object dataItem = this.config.data[i];
                 this.elements[i] = this.config.element.copy();
@@ -55,6 +56,13 @@ public class GUIListElement implements IGUIElement {
         }
 
         return list;
+    }
+
+    private ListCellRenderer<JComponent> getCellRenderer() {
+        return (list, value, index, isSelected, cellHasFocus) -> {
+            super.loadTemplates(value, this.sysTemplate.getItem(), this.template.getItem());
+            return value;
+        };
     }
 
     @Override
@@ -108,6 +116,7 @@ public class GUIListElement implements IGUIElement {
 
     public static class Config {
         public Object[] data;
+        public int orientation;
         public IGUIElement element;
     }
 }

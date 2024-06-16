@@ -1,0 +1,27 @@
+{
+  "external": {
+    "layout": {
+      "type": "BOX",
+      "axis": "X"
+    }
+  },
+  "button": {
+    "fgColor": "#000000",
+    "bgColor": "#c0c0c0",
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "border": {
+      "type": "LINE",
+      "color": "#c0c0c0",
+      "size": 1,
+      "top": 5,
+      "bottom": 5,
+      "left": 10,
+      "right": 10
+    },
+    "font": {
+      "bold": true,
+      "size": 14
+    }
+  }
+}

@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.control.panel;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
@@ -12,21 +13,18 @@ import java.awt.FlowLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GUIPanelElement implements IGUIElement {
+public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIPanelElement.Config> {
 
     private JPanel panel = null;
-    private GUIPanelElementTemplate template;
-    private Config config;
 
     public GUIPanelElement(GUIPanelElementTemplate template, Config config) {
-        this.template = template == null ? new GUIPanelElementTemplate() : template;
-        this.config = config;
+        super("panel", template, config, GUIPanelElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
         this.panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, template.getExternal());
+        super.loadTemplates(this.panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         for (JComponent item : buildItems()) {
             this.panel.add(item);

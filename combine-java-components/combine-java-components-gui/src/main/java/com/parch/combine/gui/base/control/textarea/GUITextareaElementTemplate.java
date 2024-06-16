@@ -14,10 +14,10 @@ public class GUITextareaElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "textArea", name = "多行文本输入框元素样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "textarea", name = "多行文本输入框元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig textArea;
+    private ElementConfig textarea;
 
     public ElementConfig getExternal() {
         return external;
@@ -27,11 +27,11 @@ public class GUITextareaElementTemplate {
         this.external = external;
     }
 
-    public ElementConfig getTextArea() {
-        return textArea;
+    public ElementConfig getTextarea() {
+        return textarea;
     }
 
-    public void setTextArea(ElementConfig textArea) {
-        this.textArea = textArea;
+    public void setTextarea(ElementConfig textarea) {
+        this.textarea = textarea;
     }
 }

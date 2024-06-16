@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.control.select;
 
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
@@ -10,24 +11,21 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 
-public class GUISelectElement implements IGUIElement {
+public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GUISelectElement.Config> {
 
     private JComboBox<String> comboBox = null;
-    private GUISelectElementTemplate template;
-    private Config config;
 
     public GUISelectElement(GUISelectElementTemplate template, Config config) {
-        this.template = template == null ? new GUISelectElementTemplate() : template;
-        this.config = config;
+        super("select", template, config, GUISelectElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, this.template.getExternal());
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.comboBox = new JComboBox<>();
-        ElementHelper.set(this.comboBox, this.template.getSelect());
+        super.loadTemplates(this.comboBox, this.sysTemplate.getSelect(), this.template.getSelect());
 
         int checkIndex = -1;
         for (int i = 0; i < this.config.options.length; i++) {

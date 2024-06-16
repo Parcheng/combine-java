@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.control.radio;
 
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
@@ -11,21 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
 import java.awt.FlowLayout;
 
-public class GUIRadioElement implements IGUIElement {
+public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIRadioElement.Config> {
 
     private JRadioButton[] radios = null;
-    private GUIRadioElementTemplate template;
-    private Config config;
 
     public GUIRadioElement(GUIRadioElementTemplate template, Config config) {
-        this.template = template == null ? new GUIRadioElementTemplate() : template;
-        this.config = config;
+        super("radio", template, config, GUIRadioElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, template.getExternal());
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         ButtonGroup radioButton = new ButtonGroup();
         this.radios = new JRadioButton[this.config.options.length];
@@ -34,7 +32,7 @@ public class GUIRadioElement implements IGUIElement {
 
             JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
                     this.config.value != null && this.config.value.equals(option.getValue()));
-            ElementHelper.set(radioItem, this.template.getRadio());
+            super.loadTemplates(radioItem, this.sysTemplate.getRadio(), this.template.getRadio());
 
             panel.add(radioItem);
             radioButton.add(radioItem);

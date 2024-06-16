@@ -1,0 +1,12 @@
+{
+  "external": {
+    "layout": {
+      "type": "BOX",
+      "axis": "X"
+    }
+  },
+  "textarea": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP"
+  }
+}

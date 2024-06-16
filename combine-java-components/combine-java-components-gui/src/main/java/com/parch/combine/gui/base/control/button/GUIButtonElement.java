@@ -1,7 +1,7 @@
 package com.parch.combine.gui.base.control.button;
 
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JComponent;
@@ -9,26 +9,22 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 
-public class GUIButtonElement implements IGUIElement {
+public class GUIButtonElement extends AbsGUIElement<GUIButtonElementTemplate, GUIButtonElement.Config> {
 
     private JButton button = null;
-    private GUIButtonElementTemplate template;
-    private Config config;
 
     public GUIButtonElement(GUIButtonElementTemplate template, Config config) {
-        this.template = template == null ? new GUIButtonElementTemplate() : template;
-        this.config = config;
+        super("button", template, config, GUIButtonElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, this.template.getExternal());
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.button = new JButton();
+        super.loadTemplates(this.button, this.sysTemplate.getButton(), this.template.getButton());
         this.button.setText(this.config.text);
-
-        ElementHelper.set(this.button, this.template.getButton());
 
 //        button.addActionListener(new ActionListener() {
 //            @Override

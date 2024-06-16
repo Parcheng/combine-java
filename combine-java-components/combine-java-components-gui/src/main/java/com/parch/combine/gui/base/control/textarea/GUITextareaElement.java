@@ -1,5 +1,6 @@
 package com.parch.combine.gui.base.control.textarea;
 
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
@@ -9,26 +10,24 @@ import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 
-public class GUITextareaElement implements IGUIElement {
+public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate, GUITextareaElement.Config> {
 
     private JTextArea textArea = null;
-    private GUITextareaElementTemplate template;
-    private Config config;
 
     public GUITextareaElement(GUITextareaElementTemplate template, Config config) {
-        this.template = template == null ? new GUITextareaElementTemplate() : template;
-        this.config = config;
+        super("textarea", template, config, GUITextareaElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, this.template.getExternal());
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.textArea = new JTextArea();
+        super.loadTemplates(this.textArea, this.sysTemplate.getTextarea(), this.template.getTextarea());
+
         // 自动换行
         this.textArea.setLineWrap(true);
-        ElementHelper.set(this.textArea, this.template.getTextArea());
 
         // 按单词换行
         if (this.config.isWrapStyleWord != null) {

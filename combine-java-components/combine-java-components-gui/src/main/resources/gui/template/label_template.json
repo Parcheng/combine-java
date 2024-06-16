@@ -1,0 +1,16 @@
+{
+  "external": {
+    "layout": {
+      "type": "BOX",
+      "axis": "X"
+    }
+  },
+  "label": {
+    "fgColor": "#000000",
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "font": {
+      "size": 14
+    }
+  }
+}

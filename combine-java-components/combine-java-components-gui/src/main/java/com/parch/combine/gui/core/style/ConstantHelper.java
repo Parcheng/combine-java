@@ -24,6 +24,10 @@ public class ConstantHelper {
     }
 
     public static Color color(String code) {
+        if (code == null) {
+            return null;
+        }
+
         Color color = COLOR_MAP.get(code);
         if (color != null) {
             return color;

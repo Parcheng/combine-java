@@ -14,6 +14,11 @@ public class ElementFontHelper {
             return;
         }
 
-        component.setFont(new Font(config.getName(), Font.PLAIN, config.getSize()));
+        Font font = new Font(config.getName(), Font.PLAIN, config.getSize());
+        if (config.getBold() != null && config.getBold()) {
+            font.deriveFont(Font.BOLD);
+        }
+
+        component.setFont(font);
     }
 }

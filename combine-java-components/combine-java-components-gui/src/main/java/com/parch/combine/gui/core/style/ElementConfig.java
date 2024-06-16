@@ -23,12 +23,12 @@ public class ElementConfig {
     @Field(key = "bgColor", name = "背景色", type = FieldTypeEnum.TEXT)
     private String bgColor;
 
-    @Field(key = "alignmentX", name = "在父容器中X轴的对齐方式", type = FieldTypeEnum.SELECT)
+    @Field(key = "alignmentX", name = "在父容器中X轴的对齐方式", type = FieldTypeEnum.SELECT, defaultValue = "LEFT")
     @FieldSelect(enumClass = AlignmentXEnum.class)
     @FieldDesc("父容器的布局 type 为 BOX 时生效")
     private String alignmentX;
 
-    @Field(key = "alignmentX", name = "在父容器中Y轴的对齐方式", type = FieldTypeEnum.SELECT)
+    @Field(key = "alignmentX", name = "在父容器中Y轴的对齐方式", type = FieldTypeEnum.SELECT, defaultValue = "TOP")
     @FieldSelect(enumClass = AlignmentYEnum.class)
     @FieldDesc("父容器的布局 type 为 BOX 时生效")
     private String alignmentY;

@@ -1,5 +1,6 @@
 package com.parch.combine.gui.base.control.input;
 
+import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.ConstantHelper;
@@ -10,25 +11,22 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 
-public class GUIInputElement implements IGUIElement {
+public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUIInputElement.Config> {
 
     private JTextField input = null;
-    private GUIInputElementTemplate template;
-
-    private Config config;
 
     public GUIInputElement(GUIInputElementTemplate template, Config config) {
-        this.template = template == null ? new GUIInputElementTemplate() : template;
-        this.config = config;
+        super("input", template, config, GUIInputElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
         JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
-        ElementHelper.set(panel, this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal(), this.template.getExternal());
 
         this.input = new JTextField();
-        ElementHelper.set(this.input, this.template.getInput());
+        super.loadTemplates(this.input, this.template.getInput(), this.template.getInput());
+
         if (this.config.text != null) {
             this.input.setText(this.config.text);
         }

@@ -1,0 +1,12 @@
+{
+  "external": {
+    "layout": {
+      "type": "BOX",
+      "axis": "X"
+    }
+  },
+  "select": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP"
+  }
+}
