@@ -3,13 +3,9 @@ package com.parch.combine.gui.base.control.select;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ConstantHelper;
-
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
 
 public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GUISelectElement.Config> {
 
@@ -21,7 +17,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.comboBox = new JComboBox<>();

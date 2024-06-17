@@ -3,14 +3,11 @@ package com.parch.combine.gui.base.control.radio;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JRadioButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
-import java.awt.FlowLayout;
 
 public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIRadioElement.Config> {
 
@@ -22,7 +19,7 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         ButtonGroup radioButton = new ButtonGroup();

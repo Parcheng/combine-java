@@ -61,9 +61,17 @@
           "elementId": "panel-text"
         }
       },{
+        "type": "gui.control.slider",
+        "elementId": "slider",
+        "min": 10,
+        "max": 100,
+        "value": 20,
+        "majorTickSpacing": 20,
+        "minorTickSpacing": 5
+      },{
         "type": "gui.build",
         "title": "test",
-        "centerElements": ["input", "select", "radio", "checkbox", "button", "text", "label","textarea", "list", "panel"]
+        "centerElements": ["input", "select", "radio", "checkbox", "button", "text", "label","textarea", "list", "panel", "slider"]
       }
     ]
   }

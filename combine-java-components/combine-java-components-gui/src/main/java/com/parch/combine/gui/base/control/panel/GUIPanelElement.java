@@ -3,12 +3,9 @@ package com.parch.combine.gui.base.control.panel;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JPanel;
 import javax.swing.JComponent;
-import java.awt.FlowLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +20,7 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
 
     @Override
     public JComponent build() {
-        this.panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        this.panel = new JPanel();
         super.loadTemplates(this.panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         for (JComponent item : buildItems()) {

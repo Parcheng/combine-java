@@ -2,14 +2,11 @@ package com.parch.combine.gui.base.control.input;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ConstantHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import javax.swing.JTextField;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
 
 public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUIInputElement.Config> {
 
@@ -21,7 +18,7 @@ public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUII
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
         super.loadTemplates(panel, this.template.getExternal(), this.template.getExternal());
 
         this.input = new JTextField();

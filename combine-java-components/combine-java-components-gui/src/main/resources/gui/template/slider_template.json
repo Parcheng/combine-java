@@ -1,0 +1,12 @@
+{
+  "external": {
+    "layout": {
+      "type": "BOX",
+      "axis": "X"
+    }
+  },
+  "slider": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP"
+  }
+}

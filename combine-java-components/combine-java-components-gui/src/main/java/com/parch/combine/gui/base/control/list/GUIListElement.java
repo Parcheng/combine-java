@@ -2,7 +2,6 @@ package com.parch.combine.gui.base.control.list;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JScrollPane;
 import javax.swing.JComponent;
@@ -10,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListCellRenderer;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.listPanel = new JScrollPane(this.buildItem());

@@ -2,13 +2,10 @@ package com.parch.combine.gui.base.control.label;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
 
 public class GUILabelElement extends AbsGUIElement<GUILabelElementTemplate, GUILabelElement.Config> {
 
@@ -20,7 +17,7 @@ public class GUILabelElement extends AbsGUIElement<GUILabelElementTemplate, GUIL
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.label = new JLabel();

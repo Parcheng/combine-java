@@ -19,7 +19,7 @@ public class GUIButtonElement extends AbsGUIElement<GUIButtonElementTemplate, GU
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.button = new JButton();

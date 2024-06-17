@@ -2,13 +2,10 @@ package com.parch.combine.gui.base.control.textarea;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.style.ElementHelper;
-import com.parch.combine.gui.core.style.ConstantHelper;
 
 import javax.swing.JComponent;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
 
 public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate, GUITextareaElement.Config> {
 
@@ -20,7 +17,7 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+        JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.textArea = new JTextArea();
