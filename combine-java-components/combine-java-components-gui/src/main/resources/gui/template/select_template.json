@@ -3,10 +3,15 @@
     "layout": {
       "type": "BOX",
       "axis": "X"
-    }
+    },
+    "opaque": false
   },
   "select": {
     "alignmentX": "LEFT",
-    "alignmentY": "TOP"
+    "alignmentY": "TOP",
+    "opaque": false
+  },
+  "option": {
+    "opaque": false
   }
 }

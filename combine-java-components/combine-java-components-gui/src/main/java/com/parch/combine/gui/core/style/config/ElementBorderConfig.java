@@ -2,6 +2,7 @@ package com.parch.combine.gui.core.style.config;
 
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 
@@ -9,6 +10,7 @@ import com.parch.combine.gui.core.style.ElementObjectConstant;
 public class ElementBorderConfig {
 
     @Field(key = "type", name = "边框类型", type = FieldTypeEnum.SELECT, defaultValue = "LINE")
+    @FieldDesc("目前仅支持 LINE 类型")
     private String type;
 
     @Field(key = "color", name = "颜色编码", type = FieldTypeEnum.TEXT, defaultValue = "#FFFFFF")

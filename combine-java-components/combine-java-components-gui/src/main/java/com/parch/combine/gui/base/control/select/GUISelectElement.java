@@ -3,13 +3,12 @@ package com.parch.combine.gui.base.control.select;
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+
+import javax.swing.*;
 
 public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GUISelectElement.Config> {
 
-    private JComboBox<String> comboBox = null;
+    private JComboBox<JComponent> comboBox = null;
 
     public GUISelectElement(GUISelectElementTemplate template, Config config) {
         super("select", template, config, GUISelectElementTemplate.class);
@@ -22,11 +21,16 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
 
         this.comboBox = new JComboBox<>();
         super.loadTemplates(this.comboBox, this.sysTemplate.getSelect(), this.template.getSelect());
+        this.comboBox.setRenderer(getCellRenderer());
 
         int checkIndex = -1;
         for (int i = 0; i < this.config.options.length; i++) {
             GUIControlOptionConfig option = this.config.options[i];
-            this.comboBox.addItem(option.getText() == null ? option.getValue() : option.getText());
+
+            JLabel text = new JLabel();
+            text.setText(option.getText() == null ? option.getValue() : option.getText());
+            this.comboBox.addItem(text);
+
             if (checkIndex == -1 && this.config.value != null && this.config.value.equals(option.getValue())) {
                 checkIndex = i;
             }
@@ -38,6 +42,13 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
 
         panel.add(this.comboBox);
         return panel;
+    }
+
+    private ListCellRenderer<JComponent> getCellRenderer() {
+        return (list, value, index, isSelected, cellHasFocus) -> {
+            super.loadTemplates(value, this.sysTemplate.getOption(), this.template.getOption());
+            return value;
+        };
     }
 
     @Override

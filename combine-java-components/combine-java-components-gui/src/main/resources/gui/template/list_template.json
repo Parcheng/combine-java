@@ -3,11 +3,11 @@
     "layout": {
       "type": "BOX",
       "axis": "X"
-    }
+    },
+    "opaque": false
   },
   "list": {
-    "fgColor": "#000000",
-    "bgColor": "#FFFFFF",
+    "opaque": false,
     "alignmentX": "LEFT",
     "alignmentY": "TOP",
     "border": {
@@ -20,9 +20,8 @@
       "right": 0
     }
   },
-  "item": {
-    "fgColor": "#000000",
-    "bgColor": "#FFFFFF",
+  "option": {
+    "opaque": false,
     "border": {
       "type": "LINE",
       "size": 0,

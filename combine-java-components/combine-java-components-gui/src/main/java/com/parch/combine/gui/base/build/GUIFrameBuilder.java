@@ -5,11 +5,8 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.style.ConstantHelper;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JComponent;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 
 public class GUIFrameBuilder {
 
@@ -46,7 +43,9 @@ public class GUIFrameBuilder {
 
     private static void buildLayoutPanel(GUIElementManager manager, JFrame frame, String[] elements, String layout) {
         if (elements != null) {
-            JPanel layoutPanel = new JPanel(ConstantHelper.layout(FlowLayout.LEFT));
+            JPanel layoutPanel = new JPanel();
+            layoutPanel.setLayout(new BoxLayout(layoutPanel, BoxLayout.Y_AXIS));
+            layoutPanel.setBackground(ConstantHelper.color("#F0FFFF"));
             for (String elementId : elements) {
                 IGUIElement element = manager.get(elementId);
                 if (element == null) {

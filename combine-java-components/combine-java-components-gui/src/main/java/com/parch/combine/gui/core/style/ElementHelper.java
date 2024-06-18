@@ -9,6 +9,7 @@ import com.parch.combine.gui.core.style.helper.ElementLayoutHelper;
 import com.parch.combine.gui.core.style.helper.ElementSizeHelper;
 
 import javax.swing.JComponent;
+import java.awt.*;
 
 public class ElementHelper {
 
@@ -28,6 +29,9 @@ public class ElementHelper {
         }
         if (CheckEmptyUtil.isNotEmpty(elementConfig.getAlignmentY())) {
             component.setAlignmentY(AlignmentYEnum.get(elementConfig.getAlignmentY()).getValue());
+        }
+        if (elementConfig.getOpaque() != null && !elementConfig.getOpaque()) {
+            component.setOpaque(elementConfig.getOpaque());
         }
 
         if (elementConfig.getLayout() != null) {

@@ -19,6 +19,11 @@ public class GUISelectElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig select;
 
+    @Field(key = "option", name = "下拉项样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig option;
+
     public ElementConfig getExternal() {
         return external;
     }
@@ -33,5 +38,13 @@ public class GUISelectElementTemplate {
 
     public void setSelect(ElementConfig select) {
         this.select = select;
+    }
+
+    public ElementConfig getOption() {
+        return option;
+    }
+
+    public void setOption(ElementConfig option) {
+        this.option = option;
     }
 }

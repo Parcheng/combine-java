@@ -33,6 +33,9 @@ public class ElementConfig {
     @FieldDesc("父容器的布局 type 为 BOX 时生效")
     private String alignmentY;
 
+    @Field(key = "opaque", name = "是否为不透明的", type = FieldTypeEnum.BOOLEAN)
+    private Boolean opaque;
+
     @Field(key = "layout", name = "布局配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementLayoutConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_LAYOUT)
@@ -115,5 +118,13 @@ public class ElementConfig {
 
     public void setAlignmentY(String alignmentY) {
         this.alignmentY = alignmentY;
+    }
+
+    public Boolean getOpaque() {
+        return opaque;
+    }
+
+    public void setOpaque(Boolean opaque) {
+        this.opaque = opaque;
     }
 }

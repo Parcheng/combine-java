@@ -36,7 +36,9 @@ public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate
 
             JCheckBox checkboxItem = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
                     hasChecked(this.config.values, option.getValue()));
-            super.loadTemplates(panel, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
+            checkboxItem.setRolloverEnabled(false);
+            checkboxItem.setFocusPainted(false);
+            super.loadTemplates(checkboxItem, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
 
             panel.add(checkboxItem);
             this.checkbox[i] = checkboxItem;

@@ -3,12 +3,14 @@
     "layout": {
       "type": "BOX",
       "axis": "X"
-    }
+    },
+    "opaque": false
   },
   "label": {
     "fgColor": "#000000",
     "alignmentX": "LEFT",
     "alignmentY": "TOP",
+    "opaque": false,
     "font": {
       "size": 14
     }

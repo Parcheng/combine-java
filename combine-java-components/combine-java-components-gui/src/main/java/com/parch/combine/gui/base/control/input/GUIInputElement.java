@@ -19,10 +19,10 @@ public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUII
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.template.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.input = new JTextField();
-        super.loadTemplates(this.input, this.template.getInput(), this.template.getInput());
+        super.loadTemplates(this.input, this.sysTemplate.getInput(), this.template.getInput());
 
         if (this.config.text != null) {
             this.input.setText(this.config.text);

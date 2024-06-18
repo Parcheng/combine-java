@@ -3,10 +3,19 @@
     "layout": {
       "type": "BOX",
       "axis": "X"
-    }
+    },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
+    "opaque": false
   },
   "checkbox": {
     "alignmentX": "LEFT",
-    "alignmentY": "TOP"
+    "alignmentY": "TOP",
+    "opaque": false
   }
 }
