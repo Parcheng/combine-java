@@ -7,6 +7,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import javax.swing.JTextField;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import java.awt.*;
 
 public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUIInputElement.Config> {
 
@@ -23,6 +24,7 @@ public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUII
 
         this.input = new JTextField();
         super.loadTemplates(this.input, this.sysTemplate.getInput(), this.template.getInput());
+
 
         if (this.config.text != null) {
             this.input.setText(this.config.text);

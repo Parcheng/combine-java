@@ -14,6 +14,18 @@ public class ElementSizeConfig {
     @Field(key = "height", name = "高度", type = FieldTypeEnum.NUMBER)
     private Integer height;
 
+    @Field(key = "maxWidth", name = "最大宽度", type = FieldTypeEnum.NUMBER)
+    private Integer maxWidth;
+
+    @Field(key = "maxHeight", name = "最大高度", type = FieldTypeEnum.NUMBER)
+    private Integer maxHeight;
+
+    @Field(key = "minWidth", name = "最小宽度", type = FieldTypeEnum.NUMBER)
+    private Integer minWidth;
+
+    @Field(key = "minHeight", name = "最小高度", type = FieldTypeEnum.NUMBER)
+    private Integer minHeight;
+
     public Integer getWidth() {
         return width;
     }
@@ -28,5 +40,37 @@ public class ElementSizeConfig {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public Integer getMaxWidth() {
+        return maxWidth;
+    }
+
+    public void setMaxWidth(Integer maxWidth) {
+        this.maxWidth = maxWidth;
+    }
+
+    public Integer getMaxHeight() {
+        return maxHeight;
+    }
+
+    public void setMaxHeight(Integer maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
+    public Integer getMinWidth() {
+        return minWidth;
+    }
+
+    public void setMinWidth(Integer minWidth) {
+        this.minWidth = minWidth;
+    }
+
+    public Integer getMinHeight() {
+        return minHeight;
+    }
+
+    public void setMinHeight(Integer minHeight) {
+        this.minHeight = minHeight;
     }
 }

@@ -13,6 +13,9 @@
       "left": 8,
       "right": 8
     },
+    "size": {
+      "maxHeight": 37
+    },
     "opaque": false
   },
   "input": {

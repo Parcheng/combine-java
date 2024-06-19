@@ -14,11 +14,36 @@ public class ElementSizeHelper {
             return;
         }
 
-        Dimension dimension = new Dimension();
-        dimension.width = sizeConfig.getWidth();
-        dimension.height = sizeConfig.getHeight();
+        Dimension dimension = null;
+        if (sizeConfig.getHeight() != null) {
+            dimension = new Dimension();
+            dimension.width = sizeConfig.getWidth() == null ? Integer.MAX_VALUE : sizeConfig.getWidth();
+            dimension.height = sizeConfig.getHeight();
 
-        component.setSize(dimension);
-        component.setPreferredSize(dimension);
+            component.setSize(dimension);
+            component.setPreferredSize(dimension);
+        }
+
+        if (sizeConfig.getMaxHeight() == null) {
+            if (dimension != null) {
+                component.setMaximumSize(dimension);
+            }
+        } else {
+            Dimension maxDimension = new Dimension();
+            maxDimension.width = sizeConfig.getMaxWidth() == null ? Integer.MAX_VALUE : sizeConfig.getMaxWidth();
+            maxDimension.height = sizeConfig.getMaxHeight();
+            component.setMaximumSize(maxDimension);
+        }
+
+        if (sizeConfig.getMinHeight() == null) {
+            if (dimension != null) {
+                component.setMinimumSize(dimension);
+            }
+        } else {
+            Dimension minDimension = new Dimension();
+            minDimension.width = sizeConfig.getMinWidth() == null ? Integer.MAX_VALUE : sizeConfig.getMinWidth();
+            minDimension.height = sizeConfig.getMinHeight();
+            component.setMinimumSize(minDimension);
+        }
     }
 }

@@ -24,6 +24,17 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
         this.slider.setPaintTicks(true);
         this.slider.setPaintLabels(true);
 
+//        JMenuBar menuBar = new JMenuBar();
+//        JMenu fileMenu = new JMenu("File");
+//        JMenuItem newItem = new JMenuItem("New");
+//        JMenuItem openItem = new JMenuItem("Open");
+//        JMenuItem saveItem = new JMenuItem("Save");
+//
+//        fileMenu.add(newItem);
+//        fileMenu.add(openItem);
+//        fileMenu.add(saveItem);
+//        menuBar.add(fileMenu);
+
         panel.add(this.slider);
         return panel;
     }
