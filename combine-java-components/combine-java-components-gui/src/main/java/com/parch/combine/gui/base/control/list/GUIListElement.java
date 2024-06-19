@@ -30,9 +30,11 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
         JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
-        this.listPanel = new JScrollPane(this.buildItem());
-        this.listPanel.setBorder(null);
-        panel.add(this.listPanel, BorderLayout.WEST);
+//        this.listPanel = new JScrollPane(this.buildItem());
+//        this.listPanel.setBorder(null);
+//        this.listPanel.setOpaque(false);
+//        panel.add(this.listPanel, BorderLayout.WEST);
+        panel.add(this.buildItem());
         return panel;
     }
 

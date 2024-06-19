@@ -10,8 +10,7 @@ import com.parch.combine.gui.base.build.GUIBuildErrorEnum;
 import com.parch.combine.gui.base.build.GUIBuildInitConfig;
 import com.parch.combine.gui.base.build.GUIBuildLogicConfig;
 import com.parch.combine.gui.base.build.GUIFrameBuilder;
-
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 @Component(key = "build", name = "GUI构建组件", logicConfigClass = GUIBuildLogicConfig.class, initConfigClass = GUIBuildInitConfig.class)
 @ComponentResult(name = "构建失败的错误信息或 true")
@@ -24,17 +23,26 @@ public class GUIBuildComponent extends AbsComponent<GUIBuildInitConfig, GUIBuild
     @Override
     public DataResult execute() {
         GUIBuildLogicConfig logicConfig = getLogicConfig();
+        GUIBuildInitConfig initConfig = getInitConfig();
 
-        GUIFrameBuilder builder = new GUIFrameBuilder();
+        GUIFrameBuilder builder = new GUIFrameBuilder(initConfig.template());
         builder.setId(ComponentContextHandler.getId());
+        builder.setIcon(logicConfig.icon());
         builder.setTitle(logicConfig.title());
-        builder.setTopElements(logicConfig.topElements());
-        builder.setBottomElement(logicConfig.bottomElement());
-        builder.setLeftElement(logicConfig.leftElement());
-        builder.setRightElement(logicConfig.rightElement());
-        builder.setCenterElements(logicConfig.centerElements());
+        builder.setWidth(logicConfig.width());
+        builder.setHeight(logicConfig.height());
+        builder.setDistanceLeft(logicConfig.distanceLeft());
+        builder.setDistanceTop(logicConfig.distanceTop());
+        builder.setResizable(logicConfig.resizable());
         builder.setClose(logicConfig.close());
         builder.setVisible(logicConfig.visible());
+
+        GUIBuildLogicConfig.ElementGroupConfig elements = logicConfig.elements();
+        builder.setTopElements(elements.top());
+        builder.setBottomElement(elements.bottom());
+        builder.setLeftElement(elements.left());
+        builder.setRightElement(elements.right());
+        builder.setCenterElements(elements.center());
 
         try {
             SwingUtilities.invokeLater(builder::build);

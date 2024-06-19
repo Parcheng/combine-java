@@ -5,6 +5,7 @@ import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GUISelectElement.Config> {
 

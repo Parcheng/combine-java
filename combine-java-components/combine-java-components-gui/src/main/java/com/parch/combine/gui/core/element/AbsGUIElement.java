@@ -18,7 +18,7 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     public AbsGUIElement(String type, T template, C config, Class<T> templateClass) {
         try {
             this.type = type;
-            this.sysTemplate = GUIElementTemplateHelper.getTemplate(type, templateClass);
+            this.sysTemplate = GUIElementTemplateHelper.getControlTemplate(type, templateClass);
             this.template = template;
             this.config = config;
 
@@ -34,12 +34,6 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     }
 
     protected void loadTemplates(JComponent component, ElementConfig ... configs) {
-        if (component == null || configs == null || configs.length == 0) {
-            return;
-        }
-
-        for (ElementConfig config : configs) {
-            ElementHelper.set(component, config);
-        }
+        GUIElementTemplateHelper.loadTemplates(component, configs);
     }
 }

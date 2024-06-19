@@ -1,30 +1,28 @@
 {
   "external": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
     "layout": {
       "type": "BOX",
       "axis": "X"
     },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
     "opaque": false
   },
-  "list": {
-    "opaque": false,
+  "input": {
     "alignmentX": "LEFT",
     "alignmentY": "TOP",
-    "border": {
-      "type": "LINE",
-      "size": 1,
-      "color": "#FFFFFF",
-      "top": 0,
-      "bottom": 0,
-      "left": 0,
-      "right": 0
-    }
-  },
-  "option": {
     "opaque": false,
     "border": {
       "type": "LINE",
-      "size": 0,
+      "color": "#c0c0c0",
+      "size": 1,
       "top": 5,
       "bottom": 5,
       "left": 5,

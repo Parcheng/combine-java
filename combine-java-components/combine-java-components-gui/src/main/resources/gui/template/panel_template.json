@@ -1,9 +1,0 @@
-{
-  "external": {
-    "layout": {
-      "type": "BOX",
-      "axis": "X"
-    },
-    "opaque": false
-  }
-}

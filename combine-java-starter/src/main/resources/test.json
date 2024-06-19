@@ -29,15 +29,15 @@
       },{
         "type": "gui.control.text",
         "elementId": "text",
-        "text": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+        "text": "test111111111111111111111111111111111111111111111111111111111111111111111"
       },{
         "type": "gui.control.label",
         "elementId": "label",
-        "text": "22222222222222"
+        "text": "label22222222222222"
       },{
         "type": "gui.control.textarea",
         "elementId": "textarea",
-        "value": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+        "value": "textarea111111111111111111111111111111111111111111111111111111111111111111111111111111"
       },{
         "type": "gui.control.text",
         "elementId": "list-text",
@@ -54,7 +54,7 @@
       },{
         "type": "gui.control.panel",
         "elementId": "panel",
-        "data": { "text": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" },
+        "data": { "text": "panelXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" },
         "bodyElements": {
           "key": "text",
           "dataField": "text",
@@ -71,7 +71,13 @@
       },{
         "type": "gui.build",
         "title": "test",
-        "centerElements": ["input", "select", "radio", "checkbox", "button", "text", "label","textarea", "list", "panel", "slider"]
+        "width": 600,
+        "height": 400,
+        "distanceTop": 30,
+        "distanceLeft": 100,
+        "elements": {
+          "center": ["input", "select", "radio", "checkbox", "button", "text", "label","textarea", "list", "panel", "slider"]
+        }
       }
     ]
   }
