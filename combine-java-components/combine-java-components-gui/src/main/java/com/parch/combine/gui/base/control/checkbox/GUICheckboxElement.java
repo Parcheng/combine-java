@@ -1,42 +1,47 @@
 package com.parch.combine.gui.base.control.checkbox;
 
 import com.parch.combine.gui.base.control.GUIControlOptionConfig;
-import com.parch.combine.gui.base.core.IGUIElement;
-import com.parch.combine.gui.base.core.style.ElementHelper;
-import com.parch.combine.gui.base.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.style.ElementHelper;
+import com.parch.combine.gui.core.style.ConstantHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class GUICheckboxElement implements IGUIElement {
+public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate, GUICheckboxElement.Config> {
 
     private JCheckBox[] checkbox = null;
-    private GUICheckboxElementTemplate template;
-    private Config config;
 
     public GUICheckboxElement(GUICheckboxElementTemplate template, Config config) {
-        this.template = template == null ? new GUICheckboxElementTemplate() : template;
-        this.config = config;
+        super("checkbox", template, config, GUICheckboxElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-        ElementHelper.set(panel, template.getExternal());
+        JPanel panel = new JPanel();
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
-        checkbox = new JCheckBox[config.options.length];
-        for (int i = 0; i < config.options.length; i++) {
-            GUIControlOptionConfig option = config.options[i];
-            JCheckBox item = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
-                    hasChecked(config.values, option.getValue()));
-            panel.add(item);
-            checkbox[i] = item;
+        this.checkbox = new JCheckBox[this.config.options.length];
+        for (int i = 0; i < this.config.options.length; i++) {
+            GUIControlOptionConfig option = this.config.options[i];
+
+            JCheckBox checkboxItem = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
+                    hasChecked(this.config.values, option.getValue()));
+            checkboxItem.setRolloverEnabled(false);
+            checkboxItem.setFocusPainted(false);
+            super.loadTemplates(checkboxItem, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
+
+            panel.add(checkboxItem);
+            this.checkbox[i] = checkboxItem;
         }
 
         return panel;
@@ -44,7 +49,7 @@ public class GUICheckboxElement implements IGUIElement {
 
     @Override
     public boolean setData(Object data) {
-        if (checkbox == null || data == null) {
+        if (data == null) {
             return false;
         }
 
@@ -62,10 +67,13 @@ public class GUICheckboxElement implements IGUIElement {
             checkData = new String[]{data.toString()};
         }
 
-        for (int i = 0; i < config.options.length; i++) {
-            GUIControlOptionConfig option = config.options[i];
-            checkbox[i].setSelected(hasChecked(checkData, option.getValue()));
+        if (this.checkbox != null) {
+            for (int i = 0; i < this.config.options.length; i++) {
+                GUIControlOptionConfig option = this.config.options[i];
+                this.checkbox[i].setSelected(hasChecked(checkData, option.getValue()));
+            }
         }
+        this.config.values = checkData;
 
         return true;
     }
@@ -84,10 +92,14 @@ public class GUICheckboxElement implements IGUIElement {
 
     @Override
     public Object getData() {
+        if (this.checkbox == null) {
+            return Arrays.asList(this.config.values);
+        }
+
         List<String> data = new ArrayList<>();
-        for (int i = 0; i < checkbox.length; i++) {
-            if (checkbox[i].isSelected()) {
-                data.add(config.options[i].getValue());
+        for (int i = 0; i < this.checkbox.length; i++) {
+            if (this.checkbox[i].isSelected()) {
+                data.add(this.config.options[i].getValue());
             }
         }
 
@@ -97,6 +109,11 @@ public class GUICheckboxElement implements IGUIElement {
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUICheckboxElement(this.template, this.config);
     }
 
     public static class Config {

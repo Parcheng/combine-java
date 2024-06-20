@@ -1,0 +1,37 @@
+{
+  "external": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "layout": {
+      "type": "BOX",
+      "axis": "X"
+    },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
+    "opaque": false
+  },
+  "button": {
+    "fgColor": "#000000",
+    "bgColor": "#c0c0c0",
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "border": {
+      "type": "LINE",
+      "color": "#c0c0c0",
+      "size": 1,
+      "top": 5,
+      "bottom": 5,
+      "left": 10,
+      "right": 10
+    },
+    "font": {
+      "bold": true,
+      "size": 14
+    }
+  }
+}

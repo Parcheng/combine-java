@@ -1,0 +1,92 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "gui/test": [
+      {
+        "type": "gui.control.input",
+        "elementId": "input",
+        "text": "111111"
+      },{
+        "type": "gui.control.select",
+        "elementId": "select",
+        "value": "2",
+        "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
+      },{
+        "type": "gui.control.radio",
+        "elementId": "radio",
+        "value": "2",
+        "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
+      },{
+        "type": "gui.control.checkbox",
+        "elementId": "checkbox",
+        "values": ["2", "3"],
+        "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
+      },{
+        "type": "gui.control.button",
+        "elementId": "button",
+        "text": "添加"
+      },{
+        "type": "gui.control.text",
+        "elementId": "text",
+        "text": "test111111111111111111111111111111111111111111111111111111111111111111111"
+      },{
+        "type": "gui.control.label",
+        "elementId": "label",
+        "text": "label22222222222222"
+      },{
+        "type": "gui.control.textarea",
+        "elementId": "textarea",
+        "value": "textarea111111111111111111111111111111111111111111111111111111111111111111111111111111"
+      },{
+        "type": "gui.control.text",
+        "elementId": "list-text",
+        "text": "未知"
+      },{
+        "type": "gui.control.list",
+        "elementId": "list",
+        "data": ["11111", "2222", "33333", "44444", "55555", "66666", "77777"],
+        "bodyElementId": "list-text"
+      },{
+        "type": "gui.control.text",
+        "elementId": "panel-text",
+        "text": "未知"
+      },{
+        "type": "gui.control.panel",
+        "elementId": "panel",
+        "data": { "text": "panelXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" },
+        "bodyElements": {
+          "key": "text",
+          "dataField": "text",
+          "elementId": "panel-text"
+        }
+      },{
+        "type": "gui.control.slider",
+        "elementId": "slider",
+        "min": 10,
+        "max": 100,
+        "value": 20,
+        "majorTickSpacing": 20,
+        "minorTickSpacing": 5
+      },{
+        "type": "gui.control.img",
+        "elementId": "img",
+        "path": "C:/Users/DXM-0139/Desktop/1.png",
+        "height": 50,
+        "width": 100
+      },{
+        "type": "gui.build",
+        "title": "test",
+        "icon": "C:/Users/DXM-0139/Desktop/1.png",
+        "width": 800,
+        "height": 400,
+        "distanceTop": 30,
+        "distanceLeft": 100,
+        "elements": {
+          "center": ["input", "select", "radio", "checkbox", "button", "text",
+            "label","textarea", "list", "panel", "slider", "img"]
+        }
+      }
+    ]
+  }
+}

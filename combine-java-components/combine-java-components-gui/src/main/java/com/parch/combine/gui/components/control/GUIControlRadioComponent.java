@@ -4,7 +4,7 @@ import com.parch.combine.gui.base.control.AbsGUIControlComponent;
 import com.parch.combine.gui.base.control.radio.GUIControlRadioInitConfig;
 import com.parch.combine.gui.base.control.radio.GUIControlRadioLogicConfig;
 import com.parch.combine.gui.base.control.radio.GUIRadioElement;
-import com.parch.combine.gui.base.core.IGUIElement;
+import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 

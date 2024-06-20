@@ -1,0 +1,14 @@
+{
+  "external": {},
+  "left": {},
+  "right": {},
+  "top": {},
+  "bottom": {},
+  "center": {
+    "layout": {
+      "type": "BOX",
+      "axis": "Y"
+    },
+    "bgColor": "#F0FFFF"
+  }
+}

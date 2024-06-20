@@ -1,58 +1,69 @@
 package com.parch.combine.gui.base.control.input;
 
-import com.parch.combine.gui.base.core.IGUIElement;
-import com.parch.combine.gui.base.core.style.ElementHelper;
-import com.parch.combine.gui.base.core.style.ElementStyleConstant;
+import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import javax.swing.JTextField;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import java.awt.*;
 
-public class GUIInputElement implements IGUIElement {
+public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUIInputElement.Config> {
 
     private JTextField input = null;
-    private GUIInputElementTemplate template;
-
-    private Config config;
 
     public GUIInputElement(GUIInputElementTemplate template, Config config) {
-        this.template = template == null ? new GUIInputElementTemplate() : template;
-        this.config = config;
+        super("input", template, config, GUIInputElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
-        ElementHelper.set(panel, template.getExternal());
+        JPanel panel = new JPanel();
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
-        input = new JTextField();
-        ElementHelper.set(input, template.getInput());
-        if (config.text != null) {
-            input.setText(config.text);
+        this.input = new JTextField();
+        super.loadTemplates(this.input, this.sysTemplate.getInput(), this.template.getInput());
+
+
+        if (this.config.text != null) {
+            this.input.setText(this.config.text);
         }
-        if (config.columns != null) {
-            input.setColumns(config.columns);
+        if (this.config.columns != null) {
+            this.input.setColumns(this.config.columns);
         }
 
-        panel.add(input);
+        panel.add(this.input);
         return panel;
     }
 
     @Override
     public boolean setData(Object data) {
-        this.input.setText(data == null ? CheckEmptyUtil.EMPTY : data.toString());
+        if (data == null) {
+            data = CheckEmptyUtil.EMPTY;
+        }
+
+        if (this.input != null) {
+            this.input.setText(data.toString());
+        }
+        this.config.text = data.toString();
+
         return true;
     }
 
     @Override
     public Object getData() {
-        return input.getText();
+        return this.input == null ? this.config.text : this.input.getText();
     }
 
     @Override
     public Object call(String key, Object... params) {
         return null;
+    }
+
+    @Override
+    public IGUIElement copy() {
+        return new GUIInputElement(this.template, this.config);
     }
 
     public static class Config {

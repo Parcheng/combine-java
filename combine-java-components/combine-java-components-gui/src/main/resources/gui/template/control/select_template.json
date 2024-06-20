@@ -1,0 +1,41 @@
+{
+  "external": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "layout": {
+      "type": "BOX",
+      "axis": "X"
+    },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
+    "opaque": false
+  },
+  "select": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "opaque": false,
+    "font": {
+      "bold": false,
+      "size": 12
+    }
+  },
+  "option": {
+    "bcColor": "#FFFFFF",
+    "border": {
+      "size": 0,
+      "top": 5,
+      "bottom": 5,
+      "left": 5,
+      "right": 5
+    },
+    "font": {
+      "bold": false,
+      "size": 12
+    }
+  }
+}

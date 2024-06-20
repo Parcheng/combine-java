@@ -1,19 +1,31 @@
 package com.parch.combine.gui.base.build;
 
-import com.parch.combine.gui.base.core.GUIElementManagerHandler;
-import com.parch.combine.gui.base.core.IGUIElement;
-import com.parch.combine.gui.base.core.manager.GUIElementManager;
-import com.parch.combine.gui.base.core.style.ElementStyleConstant;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.gui.core.GUIElementTemplateHelper;
+import com.parch.combine.gui.core.element.GUIElementManagerHandler;
+import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.element.GUIElementManager;
+import com.parch.combine.gui.core.style.ElementConfig;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+
+import java.awt.BorderLayout;
 
 public class GUIFrameBuilder {
 
     private String id;
     private String title;
-
+    private String icon;
+    private Integer width;
+    private Integer height;
+    private Integer distanceTop;
+    private Integer distanceLeft;
     private Boolean close;
+    private Boolean resizable;
     private Boolean visible;
 
     private String[] topElements;
@@ -22,17 +34,32 @@ public class GUIFrameBuilder {
     private String[] rightElement;
     private String[] centerElements;
 
+    protected GUIFrameTemplate sysTemplate;
+    protected GUIFrameTemplate template;
+
+    public GUIFrameBuilder(GUIFrameTemplate template) {
+        this.template = template == null ? new GUIFrameTemplate(): template;
+        this.sysTemplate = GUIElementTemplateHelper.getFrameTemplate(GUIFrameTemplate.class);
+    }
+
     public void build() {
         JFrame frame = new JFrame(title);
-        frame.setSize(400, 400);
+        frame.setSize(width, height);
+        frame.setLocation(distanceLeft, distanceTop);
+        if (CheckEmptyUtil.isNotEmpty(icon)) {
+            frame.setIconImage(new ImageIcon(icon).getImage());
+        }
 
         GUIElementManager manager = GUIElementManagerHandler.getAndRegisterManager(id);
-        buildLayoutPanel(manager, frame, topElements, BorderLayout.NORTH);
-        buildLayoutPanel(manager, frame, bottomElement, BorderLayout.SOUTH);
-        buildLayoutPanel(manager, frame, leftElement, BorderLayout.WEST);
-        buildLayoutPanel(manager, frame, rightElement, BorderLayout.EAST);
-        buildLayoutPanel(manager, frame, centerElements, BorderLayout.CENTER);
+        buildLayoutPanel(manager, frame, topElements, BorderLayout.NORTH, sysTemplate.getTop(), template.getTop());
+        buildLayoutPanel(manager, frame,  bottomElement, BorderLayout.SOUTH, sysTemplate.getBottom(), template.getBottom());
+        buildLayoutPanel(manager, frame, leftElement, BorderLayout.WEST, sysTemplate.getLeft(), template.getLeft());
+        buildLayoutPanel(manager, frame, rightElement, BorderLayout.EAST, sysTemplate.getRight(), template.getRight());
+        buildLayoutPanel(manager, frame, centerElements, BorderLayout.CENTER, sysTemplate.getCenter(), template.getCenter());
 
+        if (resizable != null) {
+            frame.setResizable(resizable);
+        }
         if (close == null || close) {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
@@ -41,9 +68,10 @@ public class GUIFrameBuilder {
         }
     }
 
-    private static void buildLayoutPanel(GUIElementManager manager, JFrame frame, String[] elements, String layout) {
+    private static void buildLayoutPanel(GUIElementManager manager, JFrame frame, String[] elements, String layout, ElementConfig... configs) {
         if (elements != null) {
-            JPanel layoutPanel = new JPanel(ElementStyleConstant.LEFT_FLOW_LAYOUT);
+            JPanel layoutPanel = new JPanel();
+            GUIElementTemplateHelper.loadTemplates(layoutPanel, configs);
 
             for (String elementId : elements) {
                 IGUIElement element = manager.get(elementId);
@@ -56,11 +84,12 @@ public class GUIFrameBuilder {
                     continue;
                 }
 
-
                 layoutPanel.add(elementComponent);
             }
 
-            frame.add(layoutPanel, layout);
+            JScrollPane scrollPanel = new JScrollPane(layoutPanel);
+            scrollPanel.setOpaque(false);
+            frame.add(scrollPanel, layout);
         }
     }
 
@@ -98,5 +127,29 @@ public class GUIFrameBuilder {
 
     public void setCenterElements(String[] centerElements) {
         this.centerElements = centerElements;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public void setDistanceTop(Integer distanceTop) {
+        this.distanceTop = distanceTop;
+    }
+
+    public void setDistanceLeft(Integer distanceLeft) {
+        this.distanceLeft = distanceLeft;
+    }
+
+    public void setResizable(Boolean resizable) {
+        this.resizable = resizable;
     }
 }

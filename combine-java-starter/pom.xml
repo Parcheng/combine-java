@@ -27,6 +27,12 @@
         </dependency>
 
         <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-ui-html</artifactId>
             <version>${combine-java-ui-html.version}</version>

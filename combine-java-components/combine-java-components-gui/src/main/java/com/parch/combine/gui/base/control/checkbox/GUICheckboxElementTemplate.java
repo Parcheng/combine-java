@@ -1,7 +1,7 @@
 package com.parch.combine.gui.base.control.checkbox;
 
-import com.parch.combine.gui.base.core.style.ElementConfig;
-import com.parch.combine.gui.base.core.style.ElementObjectConstant;
+import com.parch.combine.gui.core.style.ElementConfig;
+import com.parch.combine.gui.core.style.ElementObjectConstant;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
@@ -14,10 +14,10 @@ public class GUICheckboxElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "radio", name = "单选元素样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "checkbox", name = "多选元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig radio;
+    private ElementConfig checkbox;
 
     public ElementConfig getExternal() {
         return external;
@@ -27,11 +27,11 @@ public class GUICheckboxElementTemplate {
         this.external = external;
     }
 
-    public ElementConfig getRadio() {
-        return radio;
+    public ElementConfig getCheckbox() {
+        return checkbox;
     }
 
-    public void setRadio(ElementConfig radio) {
-        this.radio = radio;
+    public void setCheckbox(ElementConfig checkbox) {
+        this.checkbox = checkbox;
     }
 }
