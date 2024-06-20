@@ -2,33 +2,44 @@ package com.parch.combine.gui.base.control.img;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.style.config.ElementSizeConfig;
 
-import javax.swing.JPanel;
-import javax.swing.JComponent;
-import javax.swing.ImageIcon;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.Image;
 
 public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgElement.Config> {
 
     private JPanel panel = null;
 
     public GUIImgElement(GUIImgElementTemplate template, Config config) {
-        super("button", template, config, GUIImgElementTemplate.class);
+        super("img", template, config, GUIImgElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
-        this.panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics graphics) {
-                super.paintComponent(graphics);
-                ImageIcon icon = new ImageIcon(config.path);
-                graphics.drawImage(icon.getImage(), config.x, config.y, this);
-            }
-        };
-
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        this.panel = new JPanel();
+        loadTemplates(this.panel, sysTemplate.getExternal(), template.getExternal());
+        panel.add(buildImg());
         return panel;
+    }
+
+    private JLabel buildImg() {
+        JLabel label = new JLabel();
+        ImageIcon icon = new ImageIcon(config.path);
+        if (config.width != null || config.height != null) {
+            if (config.width == null) {
+                config.width = icon.getIconWidth();
+            }
+            if (config.height == null) {
+                config.height = icon.getIconHeight();
+            }
+            Image newImg = icon.getImage().getScaledInstance(config.width, config.height, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(newImg);
+        }
+        label.setIcon(icon);
+
+        return label;
     }
 
     @Override
@@ -38,7 +49,7 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
         }
 
         config.path = data.toString();
-        panel.repaint();
+        panel.add(buildImg());
         return true;
     }
 
@@ -61,5 +72,7 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
         public String path;
         public Integer x;
         public Integer y;
+        public Integer width;
+        public Integer height;
     }
 }

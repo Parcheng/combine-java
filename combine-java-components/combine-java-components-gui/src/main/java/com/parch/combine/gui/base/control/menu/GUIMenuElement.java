@@ -3,14 +3,18 @@ package com.parch.combine.gui.base.control.menu;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-import javax.swing.*;
+import javax.swing.JMenuBar;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMenuElement.Config> {
 
-    private JSlider slider = null;
+    private JMenuBar menuBar = null;
 
     public GUIMenuElement(GUIMenuElementTemplate template, Config config) {
-        super("button", template, config, GUIMenuElementTemplate.class);
+        super("menu", template, config, GUIMenuElementTemplate.class);
     }
 
     @Override
@@ -18,25 +22,34 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
         JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
-        this.slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
-        this.slider.setMajorTickSpacing(20);
-        this.slider.setMinorTickSpacing(5);
-        this.slider.setPaintTicks(true);
-        this.slider.setPaintLabels(true);
+        this.menuBar = new JMenuBar();
+        JMenuItem[] items = buildMenu(this.config.items);
+        for (JMenuItem item : items) {
+            this.menuBar.add(item);
+        }
 
-//        JMenuBar menuBar = new JMenuBar();
-//        JMenu fileMenu = new JMenu("File");
-//        JMenuItem newItem = new JMenuItem("New");
-//        JMenuItem openItem = new JMenuItem("Open");
-//        JMenuItem saveItem = new JMenuItem("Save");
-//
-//        fileMenu.add(newItem);
-//        fileMenu.add(openItem);
-//        fileMenu.add(saveItem);
-//        menuBar.add(fileMenu);
+        // fileMenu.setSelected(true);
 
-        panel.add(this.slider);
+        panel.add(this.menuBar);
         return panel;
+    }
+
+    private JMenuItem[] buildMenu(ConfigDataItem[] items) {
+        JMenuItem[] menus = new JMenuItem[items.length];
+        for (int i = 0; i < items.length; i++) {
+            ConfigDataItem item = items[i];
+            if (item.items == null || item.items.length ==0) {
+                menus[i] = new JMenuItem(item.text);
+            } else {
+                menus[i] = new JMenu(item.text);
+                JMenuItem[] subMenus = buildMenu(item.items);
+                for (JMenuItem subItem : subMenus) {
+                    menus[i].add(subItem);
+                }
+            }
+        }
+
+        return menus;
     }
 
     @Override
@@ -48,7 +61,7 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
 //        if (this.button != null) {
 //            this.button.setText(data.toString());
 //        }
-        this.config.text = data.toString();
+//        this.config.text = data.toString();
         return true;
     }
 
@@ -69,6 +82,13 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
     }
 
     public static class Config {
+        public String[] checkPath;
+        public ConfigDataItem[] items;
+    }
+
+    public static class ConfigDataItem {
+        public String key;
         public String text;
+        public ConfigDataItem[] items;
     }
 }

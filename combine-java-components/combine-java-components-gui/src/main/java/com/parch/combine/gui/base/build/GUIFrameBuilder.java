@@ -8,9 +8,11 @@ import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.style.ElementConfig;
 
 import javax.swing.JFrame;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+
 import java.awt.BorderLayout;
 
 public class GUIFrameBuilder {
@@ -82,11 +84,12 @@ public class GUIFrameBuilder {
                     continue;
                 }
 
-
                 layoutPanel.add(elementComponent);
             }
 
-            frame.add(layoutPanel, layout);
+            JScrollPane scrollPanel = new JScrollPane(layoutPanel);
+            scrollPanel.setOpaque(false);
+            frame.add(scrollPanel, layout);
         }
     }
 

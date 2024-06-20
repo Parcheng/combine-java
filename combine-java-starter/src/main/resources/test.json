@@ -69,14 +69,22 @@
         "majorTickSpacing": 20,
         "minorTickSpacing": 5
       },{
+        "type": "gui.control.img",
+        "elementId": "img",
+        "path": "C:/Users/DXM-0139/Desktop/1.png",
+        "height": 50,
+        "width": 100
+      },{
         "type": "gui.build",
         "title": "test",
-        "width": 600,
+        "icon": "C:/Users/DXM-0139/Desktop/1.png",
+        "width": 800,
         "height": 400,
         "distanceTop": 30,
         "distanceLeft": 100,
         "elements": {
-          "center": ["input", "select", "radio", "checkbox", "button", "text", "label","textarea", "list", "panel", "slider"]
+          "center": ["input", "select", "radio", "checkbox", "button", "text",
+            "label","textarea", "list", "panel", "slider", "img"]
         }
       }
     ]
