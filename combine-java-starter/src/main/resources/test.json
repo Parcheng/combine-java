@@ -71,20 +71,36 @@
       },{
         "type": "gui.control.img",
         "elementId": "img",
-        "path": "C:/Users/DXM-0139/Desktop/1.png",
+        "path": "1.png",
         "height": 50,
         "width": 100
       },{
+        "type": "gui.control.menu",
+        "elementId": "menu",
+        "checkedPath": ["a", "a2", "a23"],
+        "items": [{
+          "text": "a",
+          "items": [
+            { "text": "a1", "items": [{"text": "a11"},{"text": "a12"}] },
+            { "text": "a2", "items": [{"text": "a21"},{"text": "a22"},{"text": "a23"}] },
+            { "text": "a3" }
+          ]
+        },{ "text": "b" },{ "text": "c" },{ "text": "d" }]
+      },{
+        "type": "gui.control.html",
+        "elementId": "html",
+        "path": "page_test.html"
+      },{
         "type": "gui.build",
         "title": "test",
-        "icon": "C:/Users/DXM-0139/Desktop/1.png",
+        "icon": "1.png",
         "width": 800,
         "height": 400,
         "distanceTop": 30,
         "distanceLeft": 100,
         "elements": {
           "center": ["input", "select", "radio", "checkbox", "button", "text",
-            "label","textarea", "list", "panel", "slider", "img"]
+            "label","textarea", "list", "panel", "slider", "img", "menu", "html"]
         }
       }
     ]

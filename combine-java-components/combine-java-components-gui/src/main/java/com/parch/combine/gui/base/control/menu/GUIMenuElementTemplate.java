@@ -14,10 +14,25 @@ public class GUIMenuElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "button", name = "按钮样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "bar", name = "菜单条元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig button;
+    private ElementConfig bar;
+
+    @Field(key = "mainItem", name = "主菜单样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig mainItem;
+
+    @Field(key = "item", name = "子菜单样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig item;
+
+    @Field(key = "itemActive", name = "菜单选中样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig itemActive;
 
     public ElementConfig getExternal() {
         return external;
@@ -27,11 +42,35 @@ public class GUIMenuElementTemplate {
         this.external = external;
     }
 
-    public ElementConfig getButton() {
-        return button;
+    public ElementConfig getMainItem() {
+        return mainItem;
     }
 
-    public void setButton(ElementConfig button) {
-        this.button = button;
+    public void setMainItem(ElementConfig mainItem) {
+        this.mainItem = mainItem;
+    }
+
+    public ElementConfig getItem() {
+        return item;
+    }
+
+    public void setItem(ElementConfig item) {
+        this.item = item;
+    }
+
+    public ElementConfig getBar() {
+        return bar;
+    }
+
+    public void setBar(ElementConfig bar) {
+        this.bar = bar;
+    }
+
+    public ElementConfig getItemActive() {
+        return itemActive;
+    }
+
+    public void setItemActive(ElementConfig itemActive) {
+        this.itemActive = itemActive;
     }
 }

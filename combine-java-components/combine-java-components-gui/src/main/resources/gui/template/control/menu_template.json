@@ -14,5 +14,41 @@
       "right": 8
     },
     "opaque": false
+  },
+  "bar": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "bgColor": "#c0c0c0",
+    "border": {
+      "size": 0
+    }
+  },
+  "mainItem": {
+    "fgColor": "#FFFFFF",
+    "bgColor": "#c0c0c0",
+    "border": {
+      "color": "#FFFFFF",
+      "size": 1,
+      "top": 4,
+      "bottom": 3,
+      "left": 15,
+      "right": 15
+    }
+  },
+  "item": {
+    "fgColor": "#000000",
+    "bgColor": "#c0c0c0",
+    "border": {
+      "color": "#000000",
+      "size": 1,
+      "top": 5,
+      "bottom": 5,
+      "left": 8,
+      "right": 8
+    }
+  },
+  "itemActive": {
+    "fgColor": "#FFFFFF",
+    "bgColor": "#000000"
   }
 }
