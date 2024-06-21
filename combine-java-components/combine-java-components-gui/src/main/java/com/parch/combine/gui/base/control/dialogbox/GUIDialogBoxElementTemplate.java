@@ -14,24 +14,11 @@ public class GUIDialogBoxElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig external;
 
-    @Field(key = "button", name = "按钮样式配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig button;
-
     public ElementConfig getExternal() {
         return external;
     }
 
     public void setExternal(ElementConfig external) {
         this.external = external;
-    }
-
-    public ElementConfig getButton() {
-        return button;
-    }
-
-    public void setButton(ElementConfig button) {
-        this.button = button;
     }
 }

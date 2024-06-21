@@ -52,7 +52,7 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
                 Object dataItem = this.config.data[i];
                 this.elements[i] = this.config.element.copy();
                 this.elements[i].setData(dataItem);
-                listModel.addElement(this.elements[i].build());
+                listModel.addElement(this.elements[i].build(this.frame));
             }
         }
 

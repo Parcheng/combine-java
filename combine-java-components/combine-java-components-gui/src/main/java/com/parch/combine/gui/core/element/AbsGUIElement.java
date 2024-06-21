@@ -5,7 +5,7 @@ import com.parch.combine.gui.core.GUIElementTemplateHelper;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementHelper;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 
 public abstract class AbsGUIElement<T, C> implements IGUIElement {
@@ -14,6 +14,7 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     protected T sysTemplate;
     protected T template;
     protected C config;
+    protected JFrame frame;
 
     public AbsGUIElement(String type, T template, C config, Class<T> templateClass) {
         try {
@@ -32,6 +33,13 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
             PrintUtil.printError("【GUIElement】【" + type + "】模板加载失败！");
         }
     }
+
+    public JComponent build(JFrame frame){
+        this.frame = frame;
+        return build();
+    }
+
+    protected abstract JComponent build();
 
     protected void loadTemplates(JComponent component, ElementConfig ... configs) {
         GUIElementTemplateHelper.loadTemplates(component, configs);

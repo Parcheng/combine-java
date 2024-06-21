@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public interface IGUIElement {
 
-    JComponent build();
+    JComponent build(JFrame frame);
 
     boolean setData(Object data);
 

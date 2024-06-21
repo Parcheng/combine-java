@@ -50,7 +50,7 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
             }
 
             config.element.setData(itemData);
-            body[i] = config.element.build();
+            body[i] = config.element.build(this.frame);
         }
 
         return body;

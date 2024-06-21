@@ -91,6 +91,9 @@
         "elementId": "html",
         "path": "page_test.html"
       },{
+        "type": "gui.control.dialogbox",
+        "elementId": "dialogbox"
+      },{
         "type": "gui.build",
         "title": "test",
         "icon": "1.png",
@@ -100,7 +103,7 @@
         "distanceLeft": 100,
         "elements": {
           "center": ["input", "select", "radio", "checkbox", "button", "text",
-            "label","textarea", "list", "panel", "slider", "img", "menu", "html"]
+            "label","textarea", "list", "panel", "slider", "img", "menu", "html", "dialogBox", "text2"]
         }
       }
     ]

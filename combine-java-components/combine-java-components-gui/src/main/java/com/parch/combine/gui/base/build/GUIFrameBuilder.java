@@ -80,7 +80,7 @@ public class GUIFrameBuilder {
                     continue;
                 }
 
-                JComponent elementComponent = element.build();
+                JComponent elementComponent = element.build(frame);
                 if (elementComponent == null) {
                     continue;
                 }

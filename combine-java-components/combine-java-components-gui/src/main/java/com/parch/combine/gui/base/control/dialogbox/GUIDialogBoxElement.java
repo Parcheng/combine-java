@@ -5,47 +5,37 @@ import com.parch.combine.gui.core.element.IGUIElement;
 
 import javax.swing.*;
 
+
 public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTemplate, GUIDialogBoxElement.Config> {
 
-    private JMenuBar menuBar = null;
+    private JPanel panel = null;
 
     public GUIDialogBoxElement(GUIDialogBoxElementTemplate template, Config config) {
-        super("menu", template, config, GUIDialogBoxElementTemplate.class);
+        super("dialogbox", template, config, GUIDialogBoxElementTemplate.class);
     }
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        this.panel = new JPanel();
+        super.loadTemplates(this.panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
-        this.menuBar = new JMenuBar();
-        JMenuItem[] items = buildMenu(this.config.items);
-        for (JMenuItem item : items) {
-            this.menuBar.add(item);
-        }
+//        JButton button = new JButton("Open Sub Popup");
+//        button.setBounds(50, 50, 150, 30);
+//        button.addActionListener(e -> {
+//            // 创建一个子弹窗
+//            JDialog subPopup = new JDialog(frame, "Sub Popup", true);
+//            subPopup.setSize(200, 100);
+//            subPopup.setLocationRelativeTo(null); // 将子弹窗设置为居中显示
+//
+//            JLabel label = new JLabel("弹窗功能暂未实现");
+//             label.setHorizontalAlignment(SwingConstants.CENTER);
+//
+//            subPopup.add(label);
+//            subPopup.setVisible(true);
+//        });
 
-        // fileMenu.setSelected(true);
-
-        panel.add(this.menuBar);
-        return panel;
-    }
-
-    private JMenuItem[] buildMenu(ConfigDataItem[] items) {
-        JMenuItem[] menus = new JMenuItem[items.length];
-        for (int i = 0; i < items.length; i++) {
-            ConfigDataItem item = items[i];
-            if (item.items == null || item.items.length ==0) {
-                menus[i] = new JMenuItem(item.text);
-            } else {
-                menus[i] = new JMenu(item.text);
-                JMenuItem[] subMenus = buildMenu(item.items);
-                for (JMenuItem subItem : subMenus) {
-                    menus[i].add(subItem);
-                }
-            }
-        }
-
-        return menus;
+//        this.panel.add(label);
+        return this.panel;
     }
 
     @Override
@@ -78,13 +68,5 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
     }
 
     public static class Config {
-        public String[] checkPath;
-        public ConfigDataItem[] items;
-    }
-
-    public static class ConfigDataItem {
-        public String key;
-        public String text;
-        public ConfigDataItem[] items;
     }
 }
