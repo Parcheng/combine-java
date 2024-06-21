@@ -3,6 +3,7 @@ package com.parch.combine.core.common.util;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -11,6 +12,14 @@ import java.nio.charset.StandardCharsets;
 public class ResourceFileUtil {
 
     private ResourceFileUtil() {}
+
+    public static URL getURL(String path) {
+        if (path.charAt(0) == '/') {
+            path = path.substring(1);
+        }
+
+        return ClassLoader.getSystemClassLoader().getResource(path);
+    }
 
     /**
      * 读取系统文件

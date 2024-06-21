@@ -46,21 +46,26 @@ public class ConfigHelper {
      * 检查配置类是否合法
      */
     public static List<String> check(Class<?> config) {
+        return check(config, new HashSet<>());
+    }
+
+
+    public static List<String> check(Class<?> config, Set<Class<?>> checkedClass) {
         List<String> errorMsg = new ArrayList<>();
         Class<?> superclass = config.getSuperclass();
         if (superclass != null && superclass != Object.class) {
-            errorMsg.addAll(check(superclass));
+            errorMsg.addAll(check(superclass, checkedClass));
         }
 
         Method[] methods = config.getMethods();
         for (AnnotatedElement item : methods) {
-            CheckField(item, errorMsg);
+            checkField(item, new HashSet<>(checkedClass), errorMsg);
         }
 
         return errorMsg;
     }
 
-    private static void CheckField(AnnotatedElement item, List<String> errorMsg) {
+    private static void checkField(AnnotatedElement item, Set<Class<?>> checkedClass, List<String> errorMsg) {
         Field field = item.getAnnotation(Field.class);
         if (field == null) {
             return;
@@ -75,6 +80,12 @@ public class ConfigHelper {
                 return;
             }
         }
+
+        // 防递归引用死循环
+        if (checkedClass.contains(typeClass)) {
+            return;
+        }
+        checkedClass.add(typeClass);
 
         FieldTypeEnum type = field.type();
         switch (type) {
@@ -117,7 +128,7 @@ public class ConfigHelper {
                     if (!fieldConfig.value().isAssignableFrom(typeClass)) {
                         errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与 FieldObject 注解配置不一致"));
                     }
-                    List<String> subErrors = ConfigHelper.check(fieldConfig.value());
+                    List<String> subErrors = ConfigHelper.check(fieldConfig.value(), checkedClass);
                     for (String subError : subErrors) {
                         errorMsg.add(field.key() + "." + subError);
                     }

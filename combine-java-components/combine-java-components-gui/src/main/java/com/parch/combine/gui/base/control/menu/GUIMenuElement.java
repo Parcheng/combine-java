@@ -8,9 +8,12 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMenuElement.Config> {
 
+    private static Integer MAX_LAYER = 99;
     private JMenuBar menuBar = null;
 
     public GUIMenuElement(GUIMenuElementTemplate template, Config config) {
@@ -23,33 +26,58 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.menuBar = new JMenuBar();
-        JMenuItem[] items = buildMenu(this.config.items);
-        for (JMenuItem item : items) {
-            this.menuBar.add(item);
-        }
-
-        // fileMenu.setSelected(true);
+        super.loadTemplates(this.menuBar, this.sysTemplate.getBar(), this.template.getBar());
+        buildMenu();
 
         panel.add(this.menuBar);
         return panel;
     }
 
-    private JMenuItem[] buildMenu(ConfigDataItem[] items) {
+    private void buildMenu() {
+        JMenuItem[] items = buildMenu(this.config.items, 0);
+        for (JMenuItem item : items) {
+            super.loadTemplates(item, this.sysTemplate.getMainItem(), this.template.getMainItem());
+            if (item.isSelected()) {
+                super.loadTemplates(item, this.sysTemplate.getItemActive(), this.template.getItemActive());
+            }
+            this.menuBar.add(item);
+        }
+    }
+
+    private JMenuItem[] buildMenu(ConfigDataItem[] items, int layer) {
+        if (layer > MAX_LAYER) {
+            return new JMenuItem[0];
+        }
+
         JMenuItem[] menus = new JMenuItem[items.length];
         for (int i = 0; i < items.length; i++) {
             ConfigDataItem item = items[i];
             if (item.items == null || item.items.length ==0) {
-                menus[i] = new JMenuItem(item.text);
+                menus[i] =  layer == 0 ? new JMenu(item.text) : new JMenuItem(item.text);
             } else {
                 menus[i] = new JMenu(item.text);
-                JMenuItem[] subMenus = buildMenu(item.items);
+                JMenuItem[] subMenus = buildMenu(item.items, layer+1);
                 for (JMenuItem subItem : subMenus) {
+                    super.loadTemplates(subItem, this.sysTemplate.getItem(), this.template.getItem());
+                    if (subItem.isSelected()) {
+                        super.loadTemplates(subItem, this.sysTemplate.getItemActive(), this.template.getItemActive());
+                    }
                     menus[i].add(subItem);
                 }
             }
+
+            menus[i].setSelected(hasChecked(item.key, layer));
         }
 
         return menus;
+    }
+
+    private boolean hasChecked(String key, int layer) {
+        if (key == null || config.checkPath == null || config.checkPath.length <= layer) {
+            return false;
+        }
+
+        return key.equals(config.checkPath[layer]);
     }
 
     @Override
@@ -58,17 +86,29 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
             return false;
         }
 
-//        if (this.button != null) {
-//            this.button.setText(data.toString());
-//        }
-//        this.config.text = data.toString();
+        if (!(data instanceof Iterable)) {
+            List<String> dataList = new ArrayList<>();
+            dataList.add(data.toString());
+            data = dataList;
+        }
+
+        List<String> path = new ArrayList<>();
+        for (Object item : (Iterable<?>) data) {
+            path.add(item.toString());
+        }
+
+        config.checkPath = path.toArray(new String[0]);
+        buildMenu();
         return true;
     }
 
     @Override
     public Object getData() {
+        if (this.menuBar == null) {
+            return config.checkPath;
+        }
+
         return null;
-        // this.button == null ? config.text : this.button.getText();
     }
 
     @Override

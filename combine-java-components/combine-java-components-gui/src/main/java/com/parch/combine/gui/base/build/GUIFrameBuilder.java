@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.build;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.gui.core.GUIElementTemplateHelper;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
 import com.parch.combine.gui.core.element.IGUIElement;
@@ -47,7 +48,7 @@ public class GUIFrameBuilder {
         frame.setSize(width, height);
         frame.setLocation(distanceLeft, distanceTop);
         if (CheckEmptyUtil.isNotEmpty(icon)) {
-            frame.setIconImage(new ImageIcon(icon).getImage());
+            frame.setIconImage(new ImageIcon(ResourceFileUtil.getURL(icon)).getImage());
         }
 
         GUIElementManager manager = GUIElementManagerHandler.getAndRegisterManager(id);
