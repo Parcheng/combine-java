@@ -3,6 +3,7 @@ package com.parch.combine.gui.base.build.control.panel;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JPanel;
 import javax.swing.JComponent;
@@ -51,6 +52,7 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
 
             config.element.setValue(itemData);
             body[i] = config.element.build(this.frame);
+            super.registerEvents(body[i], config.events);
         }
 
         return body;
@@ -113,5 +115,6 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
         public String key;
         public String dataField;
         public IGUIElement element;
+        public EventConfig[] events;
     }
 }

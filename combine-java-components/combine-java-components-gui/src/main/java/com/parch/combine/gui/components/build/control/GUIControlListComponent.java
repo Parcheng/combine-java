@@ -26,6 +26,7 @@ public class GUIControlListComponent extends AbsGUIControlComponent<GUIControlLi
         config.data = logicConfig.value();
         config.orientation = ListOrientationEnum.get(logicConfig.orientation()).getValue();
         config.element = super.guiElementManager.get(logicConfig.bodyElementId());
+        config.events = logicConfig.events();
         if (config.element == null) {
             return null;
         }

@@ -2,6 +2,7 @@ package com.parch.combine.gui.base.build.control.textarea;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
 import javax.swing.JTextArea;
@@ -23,6 +24,7 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
 
         this.textArea = new JTextArea();
         super.loadTemplates(this.textArea, this.sysTemplate.getTextarea(), this.template.getTextarea());
+        super.registerEvents(this.textArea, this.config.events);
 
         // 自动换行
         this.textArea.setLineWrap(true);
@@ -75,5 +77,6 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
         public String value;
         public Integer columns;
         public Boolean isWrapStyleWord;
+        public EventConfig[] events;
     }
 }

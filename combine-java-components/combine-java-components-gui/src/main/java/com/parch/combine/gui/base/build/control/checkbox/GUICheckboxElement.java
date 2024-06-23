@@ -4,6 +4,7 @@ import com.parch.combine.gui.base.build.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -37,6 +38,7 @@ public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate
             checkboxItem.setRolloverEnabled(false);
             checkboxItem.setFocusPainted(false);
             super.loadTemplates(checkboxItem, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
+            super.registerEvents(checkboxItem, this.config.events);
 
             panel.add(checkboxItem);
             this.checkbox[i] = checkboxItem;
@@ -117,5 +119,6 @@ public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate
     public static class Config {
         public String[] values;
         public GUIControlOptionConfig[] options;
+        public EventConfig[] events;
     }
 }

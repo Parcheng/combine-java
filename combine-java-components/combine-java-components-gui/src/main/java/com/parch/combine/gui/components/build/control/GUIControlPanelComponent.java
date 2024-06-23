@@ -35,6 +35,7 @@ public class GUIControlPanelComponent extends AbsGUIControlComponent<GUIControlP
             config.elementConfigs[i] = new GUIPanelElement.ElementItemConfig();
             config.elementConfigs[i].dataField = elementConfig.dataField();
             config.elementConfigs[i].key = elementConfig.key() == null ? config.elementConfigs[i].dataField : elementConfig.key();
+            config.elementConfigs[i].events = elementConfig.events();
             config.elementConfigs[i].element = guiElementManager.get(elementConfig.elementId());
             if (config.elementConfigs[i].element == null) {
                 return null;

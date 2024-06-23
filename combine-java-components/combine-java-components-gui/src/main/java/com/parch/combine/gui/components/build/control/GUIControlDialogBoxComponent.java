@@ -22,6 +22,7 @@ public class GUIControlDialogBoxComponent extends AbsGUIControlComponent<GUICont
         GUIControlDialogBoxLogicConfig logicConfig = getLogicConfig();
 
         GUIDialogBoxElement.Config config = new GUIDialogBoxElement.Config();
+        config.events = logicConfig.events();
         return new GUIDialogBoxElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

@@ -25,6 +25,7 @@ public class GUIControlImgComponent extends AbsGUIControlComponent<GUIControlImg
         config.path = logicConfig.path();
         config.width = logicConfig.width();
         config.height = logicConfig.height();
+        config.events = logicConfig.events();
         return new GUIImgElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

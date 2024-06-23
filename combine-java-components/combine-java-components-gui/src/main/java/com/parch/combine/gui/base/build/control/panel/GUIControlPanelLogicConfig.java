@@ -5,6 +5,7 @@ import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.base.build.GUIControlLogicConfig;
+import com.parch.combine.gui.core.event.EventConfig;
 
 public interface GUIControlPanelLogicConfig extends GUIControlLogicConfig {
 
@@ -27,5 +28,9 @@ public interface GUIControlPanelLogicConfig extends GUIControlLogicConfig {
 
         @Field(key = "elementId", name = "内容的GUI元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
         String elementId();
+
+        @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+        @FieldObject(EventConfig.class)
+        EventConfig[] events();
     }
 }

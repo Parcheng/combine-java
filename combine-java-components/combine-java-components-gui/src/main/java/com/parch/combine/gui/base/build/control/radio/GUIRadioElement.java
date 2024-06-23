@@ -3,6 +3,7 @@ package com.parch.combine.gui.base.build.control.radio;
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JRadioButton;
 import javax.swing.JComponent;
@@ -31,6 +32,7 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
             JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
                     this.config.value != null && this.config.value.equals(option.getValue()));
             super.loadTemplates(radioItem, this.sysTemplate.getRadio(), this.template.getRadio());
+            super.registerEvents(radioItem, this.config.events);
 
             panel.add(radioItem);
             radioButton.add(radioItem);
@@ -85,5 +87,6 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
     public static class Config {
         public String value;
         public GUIControlOptionConfig[] options;
+        public EventConfig[] events;
     }
 }

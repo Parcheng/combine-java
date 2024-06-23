@@ -2,6 +2,7 @@ package com.parch.combine.gui.base.build.control.menu;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JMenuBar;
 import javax.swing.JComponent;
@@ -54,7 +55,8 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
         for (int i = 0; i < items.length; i++) {
             ConfigDataItem item = items[i];
             if (item.items == null || item.items.length ==0) {
-                menus[i] =  layer == 0 ? new JMenu(item.text) : new JMenuItem(item.text);
+                menus[i] = layer == 0 ? new JMenu(item.text) : new JMenuItem(item.text);
+                super.registerEvents(menus[i], item.events);
             } else {
                 menus[i] = new JMenu(item.text);
                 JMenuItem[] subMenus = buildMenu(item.items, layer+1);
@@ -131,5 +133,6 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
         public String key;
         public String text;
         public ConfigDataItem[] items;
+        public EventConfig[] events;
     }
 }

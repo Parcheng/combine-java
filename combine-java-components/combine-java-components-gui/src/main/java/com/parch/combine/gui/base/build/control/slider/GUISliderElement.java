@@ -3,6 +3,7 @@ package com.parch.combine.gui.base.build.control.slider;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
 import javax.swing.JSlider;
@@ -24,6 +25,7 @@ public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GU
 
         this.slider = new JSlider(config.orientation, config.min, config.max, config.value);
         super.loadTemplates(this.slider, this.sysTemplate.getSlider(), this.template.getSlider());
+        super.registerEvents(this.slider, this.config.events);
 
         if (this.config.majorTickSpacing != null) {
             this.slider.setMajorTickSpacing(config.majorTickSpacing);
@@ -84,5 +86,6 @@ public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GU
         public Integer minorTickSpacing;
         public Boolean paintTicks;
         public Boolean paintLabels;
+        public EventConfig[] events;
     }
 }

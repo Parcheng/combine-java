@@ -3,6 +3,7 @@ package com.parch.combine.gui.base.build.control.select;
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.*;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
         this.comboBox = new JComboBox<>();
         super.loadTemplates(this.comboBox, this.sysTemplate.getSelect(), this.template.getSelect());
         this.comboBox.setRenderer(getCellRenderer());
+        super.registerEvents(this.comboBox, this.config.events);
 
         int checkIndex = -1;
         for (int i = 0; i < this.config.options.length; i++) {
@@ -96,5 +98,6 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
     public static class Config {
         public String value;
         public GUIControlOptionConfig[] options;
+        public EventConfig[] events;
     }
 }

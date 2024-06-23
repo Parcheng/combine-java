@@ -2,6 +2,7 @@ package com.parch.combine.gui.base.build.control.dialogbox;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.*;
 import java.util.Map;
@@ -69,5 +70,6 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
     }
 
     public static class Config {
+        public EventConfig[] events;
     }
 }

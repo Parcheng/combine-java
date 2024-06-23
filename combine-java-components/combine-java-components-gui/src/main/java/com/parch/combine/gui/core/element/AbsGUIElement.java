@@ -2,6 +2,8 @@ package com.parch.combine.gui.core.element;
 
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.gui.core.GUIElementTemplateHelper;
+import com.parch.combine.gui.core.event.EventConfig;
+import com.parch.combine.gui.core.event.GUIEventHandler;
 import com.parch.combine.gui.core.style.ElementConfig;
 
 import javax.swing.JFrame;
@@ -51,6 +53,16 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
 
     protected void loadTemplates(JComponent component, ElementConfig ... configs) {
         GUIElementTemplateHelper.loadTemplates(component, configs);
+    }
+
+    protected void registerEvents(JComponent component, EventConfig[] events) {
+        if (events == null || events.length == 0) {
+            return;
+        }
+
+        for (EventConfig event : events) {
+            GUIEventHandler.binding(component, event, this);
+        }
     }
 
     public String getScopeKey() {

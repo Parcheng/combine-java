@@ -2,6 +2,7 @@ package com.parch.combine.gui.base.build.control.button;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ public class GUIButtonElement extends AbsGUIElement<GUIButtonElementTemplate, GU
         this.button = new JButton();
         super.loadTemplates(this.button, this.sysTemplate.getButton(), this.template.getButton());
         this.button.setText(this.config.text);
+        super.registerEvents(this.button, this.config.events);
 
         panel.add(this.button);
         return panel;
@@ -59,5 +61,6 @@ public class GUIButtonElement extends AbsGUIElement<GUIButtonElementTemplate, GU
 
     public static class Config {
         public String text;
+        public EventConfig[] events;
     }
 }

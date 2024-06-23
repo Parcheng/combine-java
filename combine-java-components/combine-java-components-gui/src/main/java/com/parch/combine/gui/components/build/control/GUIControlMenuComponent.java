@@ -38,6 +38,7 @@ public class GUIControlMenuComponent extends AbsGUIControlComponent<GUIControlMe
             GUIMenuElement.ConfigDataItem item = new GUIMenuElement.ConfigDataItem();
             item.text = config.text();
             item.key = config.key();
+            item.events = config.events();
             if (item.key == null) {
                 item.key = item.text;
             }

@@ -24,6 +24,7 @@ public class GUIControlInputComponent extends AbsGUIControlComponent<GUIControlI
         GUIInputElement.Config config = new GUIInputElement.Config();
         config.text = logicConfig.text();
         config.columns = logicConfig.columns();
+        config.events = logicConfig.events();
         return new GUIInputElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

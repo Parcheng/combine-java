@@ -25,6 +25,7 @@ public class GUIControlTextareaComponent extends AbsGUIControlComponent<GUIContr
         config.value = logicConfig.value();
         config.columns = logicConfig.columns();
         config.isWrapStyleWord = logicConfig.isWrapStyleWord();
+        config.events = logicConfig.events();
         return new GUITextareaElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

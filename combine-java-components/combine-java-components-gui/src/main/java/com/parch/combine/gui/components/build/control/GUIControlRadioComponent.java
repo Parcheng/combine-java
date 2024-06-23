@@ -24,6 +24,7 @@ public class GUIControlRadioComponent extends AbsGUIControlComponent<GUIControlR
         GUIRadioElement.Config config = new GUIRadioElement.Config();
         config.value = logicConfig.value();
         config.options = logicConfig.options();
+        config.events = logicConfig.events();
         return new GUIRadioElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

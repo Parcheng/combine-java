@@ -3,6 +3,7 @@ package com.parch.combine.gui.base.build.control.input;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JTextField;
 import javax.swing.JComponent;
@@ -24,7 +25,7 @@ public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUII
 
         this.input = new JTextField();
         super.loadTemplates(this.input, this.sysTemplate.getInput(), this.template.getInput());
-
+        super.registerEvents(this.input, this.config.events);
 
         if (this.config.text != null) {
             this.input.setText(this.config.text);
@@ -69,5 +70,6 @@ public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUII
     public static class Config {
         public String text;
         public Integer columns;
+        public EventConfig[] events;
     }
 }

@@ -23,6 +23,7 @@ public class GUIControlButtonComponent extends AbsGUIControlComponent<GUIControl
 
         GUIButtonElement.Config config = new GUIButtonElement.Config();
         config.text = logicConfig.text();
+        config.events = logicConfig.events();
         return new GUIButtonElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

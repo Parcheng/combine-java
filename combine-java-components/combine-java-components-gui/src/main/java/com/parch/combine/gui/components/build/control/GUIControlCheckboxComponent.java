@@ -24,6 +24,7 @@ public class GUIControlCheckboxComponent extends AbsGUIControlComponent<GUIContr
         GUICheckboxElement.Config config = new GUICheckboxElement.Config();
         config.values = logicConfig.values();
         config.options = logicConfig.options();
+        config.events = logicConfig.events();
         return new GUICheckboxElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

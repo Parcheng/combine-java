@@ -24,6 +24,7 @@ public class GUIControlHtmlComponent extends AbsGUIControlComponent<GUIControlHt
         GUIHtmlElement.Config config = new GUIHtmlElement.Config();
         config.path = logicConfig.path();
         config.errorText = logicConfig.errorText();
+        config.events = logicConfig.events();
         return new GUIHtmlElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

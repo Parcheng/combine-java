@@ -23,6 +23,7 @@ public class GUIControlTextComponent extends AbsGUIControlComponent<GUIControlTe
 
         GUITextElement.Config config = new GUITextElement.Config();
         config.text = logicConfig.text();
+        config.events = logicConfig.events();
         return new GUITextElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

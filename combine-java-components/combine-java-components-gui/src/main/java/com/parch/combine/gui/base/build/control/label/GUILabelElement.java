@@ -2,6 +2,7 @@ package com.parch.combine.gui.base.build.control.label;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -24,6 +25,7 @@ public class GUILabelElement extends AbsGUIElement<GUILabelElementTemplate, GUIL
         this.label = new JLabel();
         super.loadTemplates(this.label, this.sysTemplate.getLabel(), this.template.getLabel());
         this.label.setText(this.config.text);
+        super.registerEvents(this.label, this.config.events);
 
         panel.add(this.label);
         return panel;
@@ -60,5 +62,6 @@ public class GUILabelElement extends AbsGUIElement<GUILabelElementTemplate, GUIL
 
     public static class Config {
         public String text;
+        public EventConfig[] events;
     }
 }

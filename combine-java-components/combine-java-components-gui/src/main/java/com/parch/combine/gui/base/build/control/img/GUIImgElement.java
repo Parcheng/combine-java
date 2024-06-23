@@ -3,6 +3,7 @@ package com.parch.combine.gui.base.build.control.img;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
 import javax.swing.ImageIcon;
@@ -41,6 +42,7 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
             icon = new ImageIcon(newImg);
         }
         label.setIcon(icon);
+        super.registerEvents(label, this.config.events);
 
         return label;
     }
@@ -73,9 +75,8 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
 
     public static class Config {
         public String path;
-        public Integer x;
-        public Integer y;
         public Integer width;
         public Integer height;
+        public EventConfig[] events;
     }
 }

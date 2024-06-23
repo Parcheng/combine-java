@@ -4,6 +4,7 @@ import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JEditorPane;
 import javax.swing.JComponent;
@@ -25,6 +26,8 @@ public class GUIHtmlElement extends AbsGUIElement<GUIHtmlElementTemplate, GUIHtm
 
         this.page = new JEditorPane();
         setUrl();
+        super.registerEvents(this.page, this.config.events);
+
         panel.add(this.page);
 
         super.loadTemplates(panel, this.sysTemplate.getPage(), this.template.getPage());
@@ -77,5 +80,6 @@ public class GUIHtmlElement extends AbsGUIElement<GUIHtmlElementTemplate, GUIHtm
     public static class Config {
         public String path;
         public String errorText;
+        public EventConfig[] events;
     }
 }

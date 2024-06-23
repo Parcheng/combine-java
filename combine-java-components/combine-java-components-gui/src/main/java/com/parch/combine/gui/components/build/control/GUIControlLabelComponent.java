@@ -23,6 +23,7 @@ public class GUIControlLabelComponent extends AbsGUIControlComponent<GUIControlL
 
         GUILabelElement.Config config = new GUILabelElement.Config();
         config.text = logicConfig.text();
+        config.events = logicConfig.events();
         return new GUILabelElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

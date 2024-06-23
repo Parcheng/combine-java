@@ -2,6 +2,7 @@ package com.parch.combine.gui.base.build.control.list;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JScrollPane;
 import javax.swing.JComponent;
@@ -47,7 +48,10 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
                 Object dataItem = this.config.data[i];
                 this.elements[i] = this.config.element.copy();
                 this.elements[i].setValue(dataItem);
-                listModel.addElement(this.elements[i].build(this.frame));
+
+                JComponent component = this.elements[i].build(this.frame);
+                super.registerEvents(component, this.config.events);
+                listModel.addElement(component);
             }
         }
 
@@ -114,5 +118,6 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
         public Object[] data;
         public int orientation;
         public IGUIElement element;
+        public EventConfig[] events;
     }
 }

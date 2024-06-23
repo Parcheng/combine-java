@@ -31,6 +31,7 @@ public class GUIControlSliderComponent extends AbsGUIControlComponent<GUIControl
         config.majorTickSpacing = logicConfig.majorTickSpacing();
         config.paintLabels = logicConfig.paintLabels();
         config.paintTicks = logicConfig.paintTicks();
+        config.events = logicConfig.events();
         return new GUISliderElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

@@ -9,9 +9,9 @@ import javax.swing.JComponent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class GUIListenerHandler {
+public class GUIEventHandler {
 
-    public void binding(JComponent guiComponent, EventConfig config, AbsGUIElement<?, ?> element) {
+    public static void binding(JComponent guiComponent, EventConfig config, AbsGUIElement<?, ?> element) {
         if (element == null) {
             PrintUtil.printError("【GUI EVENT BINDING】ERROR: 绑定事件的 GUI 元素不存在");
             return;
