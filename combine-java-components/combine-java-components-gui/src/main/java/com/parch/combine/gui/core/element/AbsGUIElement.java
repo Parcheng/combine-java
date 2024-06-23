@@ -3,12 +3,17 @@ package com.parch.combine.gui.core.element;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.gui.core.GUIElementTemplateHelper;
 import com.parch.combine.gui.core.style.ElementConfig;
-import com.parch.combine.gui.core.style.ElementHelper;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 public abstract class AbsGUIElement<T, C> implements IGUIElement {
+
+    protected String scopeKey;
+    protected String id;
+    protected Map<String, Object> data;
 
     protected String type;
     protected T sysTemplate;
@@ -16,8 +21,11 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     protected C config;
     protected JFrame frame;
 
-    public AbsGUIElement(String type, T template, C config, Class<T> templateClass) {
+    public AbsGUIElement(String scopeKey, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
         try {
+            this.id = id;
+            this.scopeKey = scopeKey;
+            this.data = data;
             this.type = type;
             this.sysTemplate = GUIElementTemplateHelper.getControlTemplate(type, templateClass);
             this.template = template;
@@ -43,5 +51,22 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
 
     protected void loadTemplates(JComponent component, ElementConfig ... configs) {
         GUIElementTemplateHelper.loadTemplates(component, configs);
+    }
+
+    public String getScopeKey() {
+        return scopeKey;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    @Override
+    public Map<String, Object> getData() {
+        return data;
     }
 }
