@@ -15,8 +15,8 @@ public class GUIHtmlElement extends AbsGUIElement<GUIHtmlElementTemplate, GUIHtm
 
     private JEditorPane page = null;
 
-    public GUIHtmlElement(String scopeKey, String elementId, Map<String, Object> data, GUIHtmlElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "html", template, config, GUIHtmlElementTemplate.class);
+    public GUIHtmlElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIHtmlElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "html", template, config, GUIHtmlElementTemplate.class);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GUIHtmlElement extends AbsGUIElement<GUIHtmlElementTemplate, GUIHtm
 
     @Override
     public IGUIElement copy() {
-        return new GUIHtmlElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIHtmlElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

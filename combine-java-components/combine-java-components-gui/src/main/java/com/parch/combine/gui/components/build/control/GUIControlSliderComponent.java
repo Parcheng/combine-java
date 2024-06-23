@@ -18,7 +18,7 @@ public class GUIControlSliderComponent extends AbsGUIControlComponent<GUIControl
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlSliderInitConfig initConfig = getInitConfig();
         GUIControlSliderLogicConfig logicConfig = getLogicConfig();
 
@@ -32,6 +32,6 @@ public class GUIControlSliderComponent extends AbsGUIControlComponent<GUIControl
         config.paintLabels = logicConfig.paintLabels();
         config.paintTicks = logicConfig.paintTicks();
         config.events = logicConfig.events();
-        return new GUISliderElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUISliderElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

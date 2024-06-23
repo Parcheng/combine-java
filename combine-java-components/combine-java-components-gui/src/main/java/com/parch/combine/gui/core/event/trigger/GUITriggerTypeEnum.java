@@ -6,6 +6,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 public enum GUITriggerTypeEnum implements IOptionSetting {
 
     COMPONENT("执行组件", true),
+    DIALOG_BOX("弹窗", true),
     NONE("未知", false);
 
     private String name;

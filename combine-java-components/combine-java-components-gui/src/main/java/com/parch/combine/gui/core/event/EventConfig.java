@@ -5,6 +5,7 @@ import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.event.trigger.ComponentTriggerProcessor;
+import com.parch.combine.gui.core.event.trigger.DialogBoxTriggerProcessor;
 import com.parch.combine.gui.core.event.trigger.GUITriggerTypeEnum;
 
 public class EventConfig {
@@ -20,6 +21,10 @@ public class EventConfig {
     @Field(key = "componentTrigger", name = "组件执行触发配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ComponentTriggerProcessor.Config.class)
     private ComponentTriggerProcessor.Config componentTrigger;
+
+    @Field(key = "dialogBoxTrigger", name = "弹窗执行触发配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(DialogBoxTriggerProcessor.Config.class)
+    private DialogBoxTriggerProcessor.Config dialogBoxTrigger;
 
     public String getEventType() {
         return eventType;
@@ -43,5 +48,13 @@ public class EventConfig {
 
     public void setComponentTrigger(ComponentTriggerProcessor.Config componentTrigger) {
         this.componentTrigger = componentTrigger;
+    }
+
+    public DialogBoxTriggerProcessor.Config getDialogBoxTrigger() {
+        return dialogBoxTrigger;
+    }
+
+    public void setDialogBoxTrigger(DialogBoxTriggerProcessor.Config dialogBoxTrigger) {
+        this.dialogBoxTrigger = dialogBoxTrigger;
     }
 }

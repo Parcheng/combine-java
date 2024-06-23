@@ -15,8 +15,8 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
 
     private JRadioButton[] radios = null;
 
-    public GUIRadioElement(String scopeKey, String elementId, Map<String, Object> data, GUIRadioElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "radio", template, config, GUIRadioElementTemplate.class);
+    public GUIRadioElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIRadioElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "radio", template, config, GUIRadioElementTemplate.class);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
 
     @Override
     public IGUIElement copy() {
-        return new GUIRadioElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIRadioElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

@@ -16,8 +16,8 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
 
     private JPanel panel = null;
 
-    public GUIImgElement(String scopeKey, String elementId, Map<String, Object> data, GUIImgElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "img", template, config, GUIImgElementTemplate.class);
+    public GUIImgElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIImgElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "img", template, config, GUIImgElementTemplate.class);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
 
     @Override
     public IGUIElement copy() {
-        return new GUIImgElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIImgElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

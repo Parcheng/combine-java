@@ -17,7 +17,7 @@ public class GUIControlImgComponent extends AbsGUIControlComponent<GUIControlImg
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlImgInitConfig initConfig = getInitConfig();
         GUIControlImgLogicConfig logicConfig = getLogicConfig();
 
@@ -26,6 +26,6 @@ public class GUIControlImgComponent extends AbsGUIControlComponent<GUIControlImg
         config.width = logicConfig.width();
         config.height = logicConfig.height();
         config.events = logicConfig.events();
-        return new GUIImgElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIImgElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

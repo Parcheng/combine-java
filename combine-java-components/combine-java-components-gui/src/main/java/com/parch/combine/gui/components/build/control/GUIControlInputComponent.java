@@ -17,7 +17,7 @@ public class GUIControlInputComponent extends AbsGUIControlComponent<GUIControlI
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlInputInitConfig initConfig = getInitConfig();
         GUIControlInputLogicConfig logicConfig = getLogicConfig();
 
@@ -25,6 +25,6 @@ public class GUIControlInputComponent extends AbsGUIControlComponent<GUIControlI
         config.text = logicConfig.text();
         config.columns = logicConfig.columns();
         config.events = logicConfig.events();
-        return new GUIInputElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIInputElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

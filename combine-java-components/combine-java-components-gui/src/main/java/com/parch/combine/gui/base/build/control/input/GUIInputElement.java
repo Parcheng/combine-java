@@ -14,8 +14,8 @@ public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUII
 
     private JTextField input = null;
 
-    public GUIInputElement(String scopeKey, String elementId, Map<String, Object> data, GUIInputElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "input", template, config, GUIInputElementTemplate.class);
+    public GUIInputElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIInputElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "input", template, config, GUIInputElementTemplate.class);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUII
 
     @Override
     public IGUIElement copy() {
-        return new GUIInputElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIInputElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

@@ -14,6 +14,7 @@ import java.util.Map;
 public abstract class AbsGUIElement<T, C> implements IGUIElement {
 
     protected String scopeKey;
+    protected String domain;
     protected String id;
     protected Map<String, Object> data;
 
@@ -23,10 +24,11 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     protected C config;
     protected JFrame frame;
 
-    public AbsGUIElement(String scopeKey, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
+    public AbsGUIElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
         try {
             this.id = id;
             this.scopeKey = scopeKey;
+            this.domain = domain;
             this.data = data;
             this.type = type;
             this.sysTemplate = GUIElementTemplateHelper.getControlTemplate(type, templateClass);
@@ -75,6 +77,10 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    public String getDomain() {
+        return domain;
     }
 
     @Override

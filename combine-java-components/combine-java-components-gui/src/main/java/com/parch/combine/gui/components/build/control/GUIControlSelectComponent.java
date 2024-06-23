@@ -17,7 +17,7 @@ public class GUIControlSelectComponent extends AbsGUIControlComponent<GUIControl
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlSelectInitConfig initConfig = getInitConfig();
         GUIControSelectLogicConfig logicConfig = getLogicConfig();
 
@@ -25,6 +25,6 @@ public class GUIControlSelectComponent extends AbsGUIControlComponent<GUIControl
         config.value = logicConfig.value();
         config.options = logicConfig.options();
         config.events = logicConfig.events();
-        return new GUISelectElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUISelectElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

@@ -17,13 +17,13 @@ public class GUIControlLabelComponent extends AbsGUIControlComponent<GUIControlL
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlLabelInitConfig initConfig = getInitConfig();
         GUIControlLabelLogicConfig logicConfig = getLogicConfig();
 
         GUILabelElement.Config config = new GUILabelElement.Config();
         config.text = logicConfig.text();
         config.events = logicConfig.events();
-        return new GUILabelElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUILabelElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

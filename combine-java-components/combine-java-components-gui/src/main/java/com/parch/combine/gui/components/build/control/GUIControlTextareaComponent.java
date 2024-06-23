@@ -17,7 +17,7 @@ public class GUIControlTextareaComponent extends AbsGUIControlComponent<GUIContr
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlTextareaInitConfig initConfig = getInitConfig();
         GUIControlTextareaLogicConfig logicConfig = getLogicConfig();
 
@@ -26,6 +26,6 @@ public class GUIControlTextareaComponent extends AbsGUIControlComponent<GUIContr
         config.columns = logicConfig.columns();
         config.isWrapStyleWord = logicConfig.isWrapStyleWord();
         config.events = logicConfig.events();
-        return new GUITextareaElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUITextareaElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

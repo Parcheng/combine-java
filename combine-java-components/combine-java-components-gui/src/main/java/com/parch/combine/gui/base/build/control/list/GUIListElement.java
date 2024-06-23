@@ -22,8 +22,8 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
     JScrollPane listPanel = null;
     private IGUIElement[] elements = null;
 
-    public GUIListElement(String scopeKey, String elementId, Map<String, Object> data, GUIListElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "list", template, config, GUIListElementTemplate.class);
+    public GUIListElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIListElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "list", template, config, GUIListElementTemplate.class);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
 
     @Override
     public IGUIElement copy() {
-        return new GUIListElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIListElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

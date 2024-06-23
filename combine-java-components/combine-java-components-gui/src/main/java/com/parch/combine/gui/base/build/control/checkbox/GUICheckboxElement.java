@@ -20,8 +20,8 @@ public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate
 
     private JCheckBox[] checkbox = null;
 
-    public GUICheckboxElement(String scopeKey, String elementId, Map<String, Object> data, GUICheckboxElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "checkbox", template, config, GUICheckboxElementTemplate.class);
+    public GUICheckboxElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUICheckboxElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "checkbox", template, config, GUICheckboxElementTemplate.class);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate
 
     @Override
     public IGUIElement copy() {
-        return new GUICheckboxElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUICheckboxElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

@@ -26,7 +26,7 @@ public class GUIBuildComponent extends AbsComponent<GUIBuildInitConfig, GUIBuild
         GUIBuildInitConfig initConfig = getInitConfig();
 
         GUIFrameBuilder builder = new GUIFrameBuilder(initConfig.template());
-        builder.setId(ComponentContextHandler.getId());
+        builder.setDomain(logicConfig.domain());
         builder.setIcon(logicConfig.icon());
         builder.setTitle(logicConfig.title());
         builder.setWidth(logicConfig.width());

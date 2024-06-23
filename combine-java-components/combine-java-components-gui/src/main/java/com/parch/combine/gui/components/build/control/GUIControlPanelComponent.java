@@ -17,7 +17,7 @@ public class GUIControlPanelComponent extends AbsGUIControlComponent<GUIControlP
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlPanelInitConfig initConfig = getInitConfig();
         GUIControlPanelLogicConfig logicConfig = getLogicConfig();
 
@@ -42,6 +42,6 @@ public class GUIControlPanelComponent extends AbsGUIControlComponent<GUIControlP
             }
         }
 
-        return new GUIPanelElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIPanelElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

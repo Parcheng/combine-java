@@ -15,8 +15,8 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
 
     private JPanel panel = null;
 
-    public GUIPanelElement(String scopeKey, String elementId, Map<String, Object> data, GUIPanelElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "panel", template, config, GUIPanelElementTemplate.class);
+    public GUIPanelElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIPanelElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "panel", template, config, GUIPanelElementTemplate.class);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
 
     @Override
     public IGUIElement copy() {
-        return new GUIPanelElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIPanelElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

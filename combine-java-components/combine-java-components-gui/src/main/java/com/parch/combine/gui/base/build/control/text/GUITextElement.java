@@ -13,8 +13,8 @@ public class GUITextElement extends AbsGUIElement<GUITextElementTemplate, GUITex
 
     private JLabel text = null;
 
-    public GUITextElement(String scopeKey, String elementId, Map<String, Object> data, GUITextElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "text", template, config, GUITextElementTemplate.class);
+    public GUITextElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUITextElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "text", template, config, GUITextElementTemplate.class);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class GUITextElement extends AbsGUIElement<GUITextElementTemplate, GUITex
 
     @Override
     public IGUIElement copy() {
-        return new GUITextElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUITextElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

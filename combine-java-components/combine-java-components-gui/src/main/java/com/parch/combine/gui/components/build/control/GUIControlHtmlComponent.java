@@ -17,7 +17,7 @@ public class GUIControlHtmlComponent extends AbsGUIControlComponent<GUIControlHt
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlHtmlInitConfig initConfig = getInitConfig();
         GUIControlHtmlLogicConfig logicConfig = getLogicConfig();
 
@@ -25,6 +25,6 @@ public class GUIControlHtmlComponent extends AbsGUIControlComponent<GUIControlHt
         config.path = logicConfig.path();
         config.errorText = logicConfig.errorText();
         config.events = logicConfig.events();
-        return new GUIHtmlElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIHtmlElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

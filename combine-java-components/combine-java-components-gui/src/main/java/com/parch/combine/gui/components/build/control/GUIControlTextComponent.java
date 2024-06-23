@@ -17,13 +17,13 @@ public class GUIControlTextComponent extends AbsGUIControlComponent<GUIControlTe
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlTextInitConfig initConfig = getInitConfig();
         GUIControlTextLogicConfig logicConfig = getLogicConfig();
 
         GUITextElement.Config config = new GUITextElement.Config();
         config.text = logicConfig.text();
         config.events = logicConfig.events();
-        return new GUITextElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUITextElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

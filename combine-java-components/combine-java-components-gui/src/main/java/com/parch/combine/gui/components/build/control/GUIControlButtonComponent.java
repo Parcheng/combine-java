@@ -17,13 +17,13 @@ public class GUIControlButtonComponent extends AbsGUIControlComponent<GUIControl
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlButtonInitConfig initConfig = getInitConfig();
         GUIControlButtonLogicConfig logicConfig = getLogicConfig();
 
         GUIButtonElement.Config config = new GUIButtonElement.Config();
         config.text = logicConfig.text();
         config.events = logicConfig.events();
-        return new GUIButtonElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIButtonElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

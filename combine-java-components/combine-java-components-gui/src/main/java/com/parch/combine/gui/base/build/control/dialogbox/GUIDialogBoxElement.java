@@ -12,8 +12,8 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
 
     private JPanel panel = null;
 
-    public GUIDialogBoxElement(String scopeKey, String elementId, Map<String, Object> data, GUIDialogBoxElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "dialogbox", template, config, GUIDialogBoxElementTemplate.class);
+    public GUIDialogBoxElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIDialogBoxElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "dialogbox", template, config, GUIDialogBoxElementTemplate.class);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
 
     @Override
     public IGUIElement copy() {
-        return new GUIDialogBoxElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIDialogBoxElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

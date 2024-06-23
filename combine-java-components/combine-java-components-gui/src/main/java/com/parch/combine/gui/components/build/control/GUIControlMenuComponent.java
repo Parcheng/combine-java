@@ -17,14 +17,14 @@ public class GUIControlMenuComponent extends AbsGUIControlComponent<GUIControlMe
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlMenuInitConfig initConfig = getInitConfig();
         GUIControlMenuLogicConfig logicConfig = getLogicConfig();
 
         GUIMenuElement.Config config = new GUIMenuElement.Config();
         config.checkPath = logicConfig.checkedPath();
         config.items = buildItems(logicConfig.items());
-        return new GUIMenuElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIMenuElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 
     private GUIMenuElement.ConfigDataItem[] buildItems(GUIControlMenuLogicConfig.MenuConfig[] configs) {

@@ -17,7 +17,7 @@ public class GUIControlCheckboxComponent extends AbsGUIControlComponent<GUIContr
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlCheckboxInitConfig initConfig = getInitConfig();
         GUIControlCheckboxLogicConfig logicConfig = getLogicConfig();
 
@@ -25,6 +25,6 @@ public class GUIControlCheckboxComponent extends AbsGUIControlComponent<GUIContr
         config.values = logicConfig.values();
         config.options = logicConfig.options();
         config.events = logicConfig.events();
-        return new GUICheckboxElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUICheckboxElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

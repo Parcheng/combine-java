@@ -18,7 +18,7 @@ import java.awt.BorderLayout;
 
 public class GUIFrameBuilder {
 
-    private String id;
+    private String domain;
     private String title;
     private String icon;
     private Integer width;
@@ -51,7 +51,7 @@ public class GUIFrameBuilder {
             frame.setIconImage(new ImageIcon(ResourceFileUtil.getURL(icon)).getImage());
         }
 
-        GUIElementManager manager = GUIElementManagerHandler.getAndRegisterManager(id);
+        GUIElementManager manager = GUIElementManagerHandler.getAndRegisterManager(domain);
         buildLayoutPanel(manager, frame, topElements, BorderLayout.NORTH, sysTemplate.getTop(), template.getTop());
         buildLayoutPanel(manager, frame,  bottomElement, BorderLayout.SOUTH, sysTemplate.getBottom(), template.getBottom());
         buildLayoutPanel(manager, frame, leftElement, BorderLayout.WEST, sysTemplate.getLeft(), template.getLeft());
@@ -106,8 +106,8 @@ public class GUIFrameBuilder {
         this.visible = visible;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public void setTopElements(String[] topElements) {

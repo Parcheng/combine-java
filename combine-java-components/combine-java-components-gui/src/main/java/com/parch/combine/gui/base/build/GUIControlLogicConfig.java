@@ -9,6 +9,9 @@ import java.util.Map;
 
 public interface GUIControlLogicConfig extends ILogicConfig {
 
+    @Field(key = "domain", name = "域", type = FieldTypeEnum.TEXT, defaultValue = "$common")
+    String domain();
+
     @Field(key = "elementId", name = "元素ID", type = FieldTypeEnum.TEXT)
     @FieldDesc("用于动态控制该控件，或获取数据等操作，默认为组件ID")
     String elementId();

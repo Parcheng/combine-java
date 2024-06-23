@@ -14,8 +14,8 @@ public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GU
 
     private JSlider slider = null;
 
-    public GUISliderElement(String scopeKey, String elementId, Map<String, Object> data, GUISliderElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "slider", template, config, GUISliderElementTemplate.class);
+    public GUISliderElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUISliderElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "slider", template, config, GUISliderElementTemplate.class);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GU
 
     @Override
     public IGUIElement copy() {
-        return new GUISliderElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUISliderElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

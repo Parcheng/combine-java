@@ -18,8 +18,8 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
     private static Integer MAX_LAYER = 99;
     private JMenuBar menuBar = null;
 
-    public GUIMenuElement(String scopeKey, String elementId, Map<String, Object> data, GUIMenuElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "menu", template, config, GUIMenuElementTemplate.class);
+    public GUIMenuElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIMenuElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "menu", template, config, GUIMenuElementTemplate.class);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMen
 
     @Override
     public IGUIElement copy() {
-        return new GUIMenuElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIMenuElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

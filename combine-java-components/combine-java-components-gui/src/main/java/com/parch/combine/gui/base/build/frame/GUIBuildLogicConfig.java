@@ -7,6 +7,9 @@ import com.parch.combine.core.component.base.ILogicConfig;
 
 public interface GUIBuildLogicConfig extends ILogicConfig {
 
+    @Field(key = "domain", name = "域", type = FieldTypeEnum.TEXT, defaultValue = "$common")
+    String domain();
+
     @Field(key = "icon", name = "图标", type = FieldTypeEnum.TEXT)
     String icon();
 

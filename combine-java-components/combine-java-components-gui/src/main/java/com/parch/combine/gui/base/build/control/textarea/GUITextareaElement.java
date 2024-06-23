@@ -13,8 +13,8 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
 
     private JTextArea textArea = null;
 
-    public GUITextareaElement(String scopeKey, String elementId, Map<String, Object> data, GUITextareaElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "textarea", template, config, GUITextareaElementTemplate.class);
+    public GUITextareaElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUITextareaElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "textarea", template, config, GUITextareaElementTemplate.class);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
 
     @Override
     public IGUIElement copy() {
-        return new GUITextareaElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUITextareaElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

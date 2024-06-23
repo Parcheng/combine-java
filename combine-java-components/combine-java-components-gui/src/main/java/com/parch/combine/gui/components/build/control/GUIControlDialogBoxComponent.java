@@ -17,12 +17,12 @@ public class GUIControlDialogBoxComponent extends AbsGUIControlComponent<GUICont
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlDialogBoxInitConfig initConfig = getInitConfig();
         GUIControlDialogBoxLogicConfig logicConfig = getLogicConfig();
 
         GUIDialogBoxElement.Config config = new GUIDialogBoxElement.Config();
         config.events = logicConfig.events();
-        return new GUIDialogBoxElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIDialogBoxElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

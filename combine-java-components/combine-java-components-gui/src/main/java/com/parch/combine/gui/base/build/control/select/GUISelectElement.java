@@ -12,8 +12,8 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
 
     private JComboBox<JComponent> comboBox = null;
 
-    public GUISelectElement(String scopeKey, String elementId, Map<String, Object> data, GUISelectElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "select", template, config, GUISelectElementTemplate.class);
+    public GUISelectElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUISelectElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "select", template, config, GUISelectElementTemplate.class);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
 
     @Override
     public IGUIElement copy() {
-        return new GUISelectElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUISelectElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

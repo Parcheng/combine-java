@@ -13,8 +13,8 @@ public class GUILabelElement extends AbsGUIElement<GUILabelElementTemplate, GUIL
 
     private JLabel label = null;
 
-    public GUILabelElement(String scopeKey, String elementId, Map<String, Object> data, GUILabelElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "label", template, config, GUILabelElementTemplate.class);
+    public GUILabelElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUILabelElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "label", template, config, GUILabelElementTemplate.class);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class GUILabelElement extends AbsGUIElement<GUILabelElementTemplate, GUIL
 
     @Override
     public IGUIElement copy() {
-        return new GUILabelElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUILabelElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

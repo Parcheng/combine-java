@@ -18,7 +18,7 @@ public class GUIControlListComponent extends AbsGUIControlComponent<GUIControlLi
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlListInitConfig initConfig = getInitConfig();
         GUIControlListLogicConfig logicConfig = getLogicConfig();
 
@@ -31,6 +31,6 @@ public class GUIControlListComponent extends AbsGUIControlComponent<GUIControlLi
             return null;
         }
 
-        return new GUIListElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIListElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

@@ -13,8 +13,8 @@ public class GUIButtonElement extends AbsGUIElement<GUIButtonElementTemplate, GU
 
     private JButton button = null;
 
-    public GUIButtonElement(String scopeKey, String elementId, Map<String, Object> data, GUIButtonElementTemplate template, Config config) {
-        super(scopeKey, elementId, data, "button", template, config, GUIButtonElementTemplate.class);
+    public GUIButtonElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIButtonElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "button", template, config, GUIButtonElementTemplate.class);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class GUIButtonElement extends AbsGUIElement<GUIButtonElementTemplate, GU
 
     @Override
     public IGUIElement copy() {
-        return new GUIButtonElement(this.scopeKey, this.id, this.data, this.template, this.config);
+        return new GUIButtonElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config {

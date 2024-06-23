@@ -21,7 +21,7 @@ public class ComponentTriggerProcessor extends AbsTriggerProcessor<ComponentTrig
 
     @Override
     public void trigger(ComponentEvent event) {
-        SubComponentTool.execute(manager, config.getKey(), config.getParams(), config.getElementIds().toArray(new String[0]));
+        SubComponentTool.execute(manager, config.getKey(), config.getParams(), config.getComponentIds().toArray(new String[0]));
     }
 
     public static class Config {
@@ -29,8 +29,8 @@ public class ComponentTriggerProcessor extends AbsTriggerProcessor<ComponentTrig
         @Field(key = "key", name = "自定义流程KEY", type = FieldTypeEnum.TEXT)
         private String key;
 
-        @Field(key = "elementIds", name = "组件集合", type = FieldTypeEnum.TEXT, isArray = true)
-        private List<String> elementIds;
+        @Field(key = "componentIds", name = "组件集合", type = FieldTypeEnum.TEXT, isArray = true)
+        private List<String> componentIds;
 
         @Field(key = "params", name = "参数", type = FieldTypeEnum.MAP)
         private Map<String, Object> params;
@@ -43,12 +43,12 @@ public class ComponentTriggerProcessor extends AbsTriggerProcessor<ComponentTrig
             this.key = key;
         }
 
-        public List<String> getElementIds() {
-            return elementIds;
+        public List<String> getComponentIds() {
+            return componentIds;
         }
 
-        public void setElementIds(List<String> elementIds) {
-            this.elementIds = elementIds;
+        public void setComponentIds(List<String> componentIds) {
+            this.componentIds = componentIds;
         }
 
         public Map<String, Object> getParams() {

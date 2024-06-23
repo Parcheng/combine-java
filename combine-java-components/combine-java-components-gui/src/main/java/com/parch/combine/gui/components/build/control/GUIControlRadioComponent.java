@@ -17,7 +17,7 @@ public class GUIControlRadioComponent extends AbsGUIControlComponent<GUIControlR
     }
 
     @Override
-    public IGUIElement getElement(String elementId) {
+    public IGUIElement getElement() {
         GUIControlRadioInitConfig initConfig = getInitConfig();
         GUIControlRadioLogicConfig logicConfig = getLogicConfig();
 
@@ -25,6 +25,6 @@ public class GUIControlRadioComponent extends AbsGUIControlComponent<GUIControlR
         config.value = logicConfig.value();
         config.options = logicConfig.options();
         config.events = logicConfig.events();
-        return new GUIRadioElement(getScopeKey(), elementId, logicConfig.data(), initConfig.template(), config);
+        return new GUIRadioElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }
