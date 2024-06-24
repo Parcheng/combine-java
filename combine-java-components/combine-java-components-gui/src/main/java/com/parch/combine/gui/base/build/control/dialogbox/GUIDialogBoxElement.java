@@ -1,16 +1,17 @@
 package com.parch.combine.gui.base.build.control.dialogbox;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.event.EventConfig;
-
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JComponent;
+import java.awt.BorderLayout;
 import java.util.Map;
 
 
 public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTemplate, GUIDialogBoxElement.Config> {
 
-    private JPanel panel = null;
+    private JDialog dialog;
 
     public GUIDialogBoxElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIDialogBoxElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "dialogbox", template, config, GUIDialogBoxElementTemplate.class);
@@ -18,26 +19,25 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
 
     @Override
     public JComponent build() {
-        this.panel = new JPanel();
-        super.loadTemplates(this.panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        this.dialog = new JDialog();
 
-//        JButton button = new JButton("Open Sub Popup");
-//        button.setBounds(50, 50, 150, 30);
-//        button.addActionListener(e -> {
-//            // 创建一个子弹窗
-//            JDialog subPopup = new JDialog(frame, "Sub Popup", true);
-//            subPopup.setSize(200, 100);
-//            subPopup.setLocationRelativeTo(null); // 将子弹窗设置为居中显示
-//
-//            JLabel label = new JLabel("弹窗功能暂未实现");
-//             label.setHorizontalAlignment(SwingConstants.CENTER);
-//
-//            subPopup.add(label);
-//            subPopup.setVisible(true);
-//        });
+        this.dialog.setTitle(this.config.title == null ? CheckEmptyUtil.EMPTY : this.config.title);
+        this.dialog.setLocationRelativeTo(null);
+        this.dialog.setModal(true);
+        this.dialog.setLayout(new BorderLayout());
 
-//        this.panel.add(label);
-        return this.panel;
+        int left = frame.getX() + frame.getWidth()/2;
+        int top = frame.getY() + frame.getHeight()/2;
+        this.dialog.setBounds(left, top, this.config.width, this.config.height);
+
+        if (CheckEmptyUtil.isNotEmpty(this.config.elements)) {
+            for (IGUIElement element : this.config.elements) {
+                dialog.add(element.build(frame));
+            }
+        }
+
+        this.dialog.setVisible(this.config.visible);
+        return null;
     }
 
     @Override
@@ -56,7 +56,6 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
     @Override
     public Object getValue() {
         return null;
-        // this.button == null ? config.text : this.button.getText();
     }
 
     @Override
@@ -69,7 +68,20 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
         return new GUIDialogBoxElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
+    @Override
+    public void setVisible(Boolean isVisible) {
+        if (this.dialog == null || isVisible == null) {
+            return;
+        }
+
+        this.dialog.setVisible(isVisible);
+    }
+
     public static class Config {
-        public EventConfig[] events;
+        public String title;
+        public Integer width;
+        public Integer height;
+        public Boolean visible;
+        public IGUIElement[] elements;
     }
 }

@@ -16,4 +16,6 @@ public interface IGUIElement {
     Object call(String key, Object ... params);
 
     IGUIElement copy();
+
+    void setVisible(Boolean isVisible);
 }

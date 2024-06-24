@@ -24,6 +24,8 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     protected C config;
     protected JFrame frame;
 
+    protected JComponent component;
+
     public AbsGUIElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
         try {
             this.id = id;
@@ -48,7 +50,8 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
 
     public JComponent build(JFrame frame){
         this.frame = frame;
-        return build();
+        this.component = build();
+        return this.component;
     }
 
     protected abstract JComponent build();
@@ -86,5 +89,15 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     @Override
     public Map<String, Object> getData() {
         return data;
+    }
+
+
+    @Override
+    public void setVisible(Boolean isVisible) {
+        if (this.component == null || isVisible == null) {
+            return;
+        }
+
+        this.component.setVisible(isVisible);
     }
 }
