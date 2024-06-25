@@ -4,7 +4,6 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
-import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
 import com.parch.combine.gui.core.element.IGUIElement;
@@ -62,18 +61,8 @@ public class GUITriggerBuilder {
                     PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 配置未定义");
                     return null;
                 }
-                if (CheckEmptyUtil.isEmpty(dialogBoxConfig.getElementIds())) {
-                    PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 未定义要显示的GUI元素");
-                    return null;
-                }
-                for (String elementId : dialogBoxConfig.getElementIds()) {
-                    if (guiElementManager.get(elementId) == null) {
-                        PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 的 " + elementId + " 元素不存在");
-                        return null;
-                    }
-                }
 
-                return new DialogBoxTriggerProcessor(guiElementManager, element.getFrame(), dialogBoxConfig);
+                return new DialogBoxTriggerProcessor(element.getFrame(), dialogBoxConfig);
             case NONE:
             default:
                 PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 触发类型不合法");
