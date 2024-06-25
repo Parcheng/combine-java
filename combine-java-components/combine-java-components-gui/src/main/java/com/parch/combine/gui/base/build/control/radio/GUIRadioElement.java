@@ -1,7 +1,7 @@
 package com.parch.combine.gui.base.build.control.radio;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
 import java.util.Map;
 
-public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIRadioElement.Config> {
+public class GUIRadioElement extends AbsComponentElement<GUIRadioElementTemplate, GUIRadioElement.Config> {
 
     private JRadioButton[] radios = null;
 

@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.text;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUITextElement extends AbsGUIElement<GUITextElementTemplate, GUITextElement.Config> {
+public class GUITextElement extends AbsComponentElement<GUITextElementTemplate, GUITextElement.Config> {
 
     private JLabel text = null;
 

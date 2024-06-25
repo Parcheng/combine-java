@@ -1,8 +1,7 @@
 package com.parch.combine.gui.base.build.control.panel;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
@@ -10,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JComponent;
 import java.util.Map;
 
-public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIPanelElement.Config> {
+public class GUIPanelElement extends AbsComponentElement<GUIPanelElementTemplate, GUIPanelElement.Config> {
 
     private JPanel panel = null;
 

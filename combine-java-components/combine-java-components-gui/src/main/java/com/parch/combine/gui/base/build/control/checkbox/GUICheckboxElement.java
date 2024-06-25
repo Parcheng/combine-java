@@ -1,7 +1,7 @@
 package com.parch.combine.gui.base.build.control.checkbox;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.event.EventConfig;
@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class GUICheckboxElement extends AbsGUIElement<GUICheckboxElementTemplate, GUICheckboxElement.Config> {
+public class GUICheckboxElement extends AbsComponentElement<GUICheckboxElementTemplate, GUICheckboxElement.Config> {
 
     private JCheckBox[] checkbox = null;
 

@@ -1,44 +1,43 @@
 package com.parch.combine.gui.base.build.control.dialogbox;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
+import com.parch.combine.gui.core.element.AbsWindowGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
 import javax.swing.JDialog;
 import javax.swing.JComponent;
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.util.Map;
 
-public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTemplate, GUIDialogBoxElement.Config> {
-
-    private JDialog dialog;
+public class GUIDialogBoxElement extends AbsWindowGUIElement<GUIDialogBoxElementTemplate, GUIDialogBoxElement.Config> {
 
     public GUIDialogBoxElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIDialogBoxElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "dialogbox", template, config, GUIDialogBoxElementTemplate.class);
     }
 
     @Override
-    public JComponent build() {
-        this.dialog = new JDialog();
+    public Window build() {
+        JDialog dialog = new JDialog();
 
-        this.dialog.setTitle(this.config.title == null ? CheckEmptyUtil.EMPTY : this.config.title);
-        this.dialog.setLocationRelativeTo(null);
-        this.dialog.setModal(true);
-        this.dialog.setLayout(new BorderLayout());
+        dialog.setTitle(this.config.title == null ? CheckEmptyUtil.EMPTY : this.config.title);
+        dialog.setLocationRelativeTo(null);
+        dialog.setModal(true);
+        dialog.setLayout(new BorderLayout());
 
         int left = frame.getX() + frame.getWidth()/2;
         int top = frame.getY() + frame.getHeight()/2;
-        this.dialog.setBounds(left, top, this.config.width, this.config.height);
+        dialog.setBounds(left, top, this.config.width, this.config.height);
 
         JComponent[] body = GUISubElementHelper.build(data, this.config.elementConfigs, this);
         for (JComponent item : body) {
-            this.dialog.add(item);
+            dialog.add(item);
         }
 
-        this.dialog.setVisible(this.config.visible);
-        return null;
+        dialog.setVisible(this.config.visible);
+        return dialog;
     }
 
     @Override
@@ -67,15 +66,6 @@ public class GUIDialogBoxElement extends AbsGUIElement<GUIDialogBoxElementTempla
     @Override
     public IGUIElement copy() {
         return new GUIDialogBoxElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
-    }
-
-    @Override
-    public void setVisible(Boolean isVisible) {
-        if (this.dialog == null || isVisible == null) {
-            return;
-        }
-
-        this.dialog.setVisible(isVisible);
     }
 
     public static class Config {

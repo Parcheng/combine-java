@@ -2,7 +2,7 @@ package com.parch.combine.gui.base.build.control.html;
 
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUIHtmlElement extends AbsGUIElement<GUIHtmlElementTemplate, GUIHtmlElement.Config> {
+public class GUIHtmlElement extends AbsComponentElement<GUIHtmlElementTemplate, GUIHtmlElement.Config> {
 
     private JEditorPane page = null;
 

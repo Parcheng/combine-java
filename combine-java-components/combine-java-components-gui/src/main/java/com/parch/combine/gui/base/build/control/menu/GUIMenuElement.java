@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.menu;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GUIMenuElement extends AbsGUIElement<GUIMenuElementTemplate, GUIMenuElement.Config> {
+public class GUIMenuElement extends AbsComponentElement<GUIMenuElementTemplate, GUIMenuElement.Config> {
 
     private static Integer MAX_LAYER = 99;
     private JMenuBar menuBar = null;

@@ -1,7 +1,7 @@
 package com.parch.combine.gui.base.build.control.img;
 
 import com.parch.combine.core.common.util.ResourceFileUtil;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import java.awt.Image;
 import java.util.Map;
 
-public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgElement.Config> {
+public class GUIImgElement extends AbsComponentElement<GUIImgElementTemplate, GUIImgElement.Config> {
 
     private JPanel panel = null;
 

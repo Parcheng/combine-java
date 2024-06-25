@@ -1,14 +1,14 @@
 package com.parch.combine.gui.base.build.control.select;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.*;
 import java.util.Map;
 
-public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GUISelectElement.Config> {
+public class GUISelectElement extends AbsComponentElement<GUISelectElementTemplate, GUISelectElement.Config> {
 
     private JComboBox<JComponent> comboBox = null;
 

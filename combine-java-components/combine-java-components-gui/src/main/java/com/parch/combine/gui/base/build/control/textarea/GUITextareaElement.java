@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.textarea;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -9,7 +9,7 @@ import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate, GUITextareaElement.Config> {
+public class GUITextareaElement extends AbsComponentElement<GUITextareaElementTemplate, GUITextareaElement.Config> {
 
     private JTextArea textArea = null;
 

@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.input;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.event.EventConfig;
@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUIInputElement extends AbsGUIElement<GUIInputElementTemplate, GUIInputElement.Config> {
+public class GUIInputElement extends AbsComponentElement<GUIInputElementTemplate, GUIInputElement.Config> {
 
     private JTextField input = null;
 

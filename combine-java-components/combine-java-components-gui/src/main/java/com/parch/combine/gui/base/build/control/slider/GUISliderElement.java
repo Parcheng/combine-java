@@ -1,7 +1,7 @@
 package com.parch.combine.gui.base.build.control.slider;
 
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -10,7 +10,7 @@ import javax.swing.JSlider;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GUISliderElement.Config> {
+public class GUISliderElement extends AbsComponentElement<GUISliderElementTemplate, GUISliderElement.Config> {
 
     private JSlider slider = null;
 

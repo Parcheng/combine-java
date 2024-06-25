@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.button;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUIButtonElement extends AbsGUIElement<GUIButtonElementTemplate, GUIButtonElement.Config> {
+public class GUIButtonElement extends AbsComponentElement<GUIButtonElementTemplate, GUIButtonElement.Config> {
 
     private JButton button = null;
 

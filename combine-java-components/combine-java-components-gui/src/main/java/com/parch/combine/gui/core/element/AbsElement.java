@@ -6,12 +6,12 @@ import com.parch.combine.gui.core.event.EventConfig;
 import com.parch.combine.gui.core.event.GUIEventHandler;
 import com.parch.combine.gui.core.style.ElementConfig;
 
-import javax.swing.JFrame;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-public abstract class AbsGUIElement<T, C> implements IGUIElement {
+public abstract class AbsElement<T, C> implements IGUIElement {
 
     protected String scopeKey;
     protected String domain;
@@ -24,18 +24,17 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     protected C config;
     protected JFrame frame;
 
-    protected JComponent component;
-
-    public AbsGUIElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
+    public AbsElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
         try {
             this.id = id;
             this.scopeKey = scopeKey;
             this.domain = domain;
             this.data = data;
             this.type = type;
+            this.config = config;
+
             this.sysTemplate = GUIElementTemplateHelper.getControlTemplate(type, templateClass);
             this.template = template;
-            this.config = config;
 
             if (this.sysTemplate == null) {
                 this.sysTemplate = templateClass.getDeclaredConstructor().newInstance();
@@ -47,14 +46,6 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
             PrintUtil.printError("【GUIElement】【" + type + "】模板加载失败！");
         }
     }
-
-    public JComponent build(JFrame frame){
-        this.frame = frame;
-        this.component = build();
-        return this.component;
-    }
-
-    protected abstract JComponent build();
 
     protected void loadTemplates(JComponent component, ElementConfig ... configs) {
         GUIElementTemplateHelper.loadTemplates(component, configs);
@@ -87,15 +78,5 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     @Override
     public Map<String, Object> getData() {
         return data;
-    }
-
-
-    @Override
-    public void setVisible(Boolean isVisible) {
-        if (this.component == null || isVisible == null) {
-            return;
-        }
-
-        this.component.setVisible(isVisible);
     }
 }

@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.list;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbsComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUIListElement.Config> {
+public class GUIListElement extends AbsComponentElement<GUIListElementTemplate, GUIListElement.Config> {
 
     private JPanel panel = null;
     private GUISubElementConfig[][] elementConfigs = null;
