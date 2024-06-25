@@ -9,6 +9,8 @@ import com.parch.combine.gui.base.build.control.dialogbox.GUIDialogBoxElement;
 import com.parch.combine.gui.base.build.control.panel.GUIControlPanelLogicConfig;
 import com.parch.combine.gui.base.build.control.panel.GUIPanelElement;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
+import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
 @Component(key = "build.control.dialogbox", name = "GUI对话窗模块", logicConfigClass = GUIControlDialogBoxLogicConfig.class, initConfigClass = GUIControlDialogBoxInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
@@ -29,24 +31,12 @@ public class GUIControlDialogBoxComponent extends AbsGUIControlComponent<GUICont
         config.height = logicConfig.height();
         config.visible = logicConfig.visible();
 
-//        GUIControlPanelLogicConfig.ElementConfig[] elementConfigs = logicConfig.bodyElements();
-//        if (elementConfigs == null) {
-//            return null;
-//        }
-//
-//        config.elementConfigs = new GUIPanelElement.ElementItemConfig[elementConfigs.length];
-//        for (int i = 0; i < elementConfigs.length; i++) {
-//            GUIControlPanelLogicConfig.ElementConfig elementConfig = elementConfigs[i];
-//            config.elementConfigs[i] = new GUIPanelElement.ElementItemConfig();
-//            config.elementConfigs[i].dataField = elementConfig.dataField();
-//            config.elementConfigs[i].key = elementConfig.key() == null ? config.elementConfigs[i].dataField : elementConfig.key();
-//            config.elementConfigs[i].events = elementConfig.events();
-//            config.elementConfigs[i].element = guiElementManager.get(elementConfig.elementId());
-//            if (config.elementConfigs[i].element == null) {
-//                return null;
-//            }
-//        }
+        GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.bodyElements());
+        if (elements == null) {
+            return null;
+        }
 
+        config.elementConfigs = elements;
         return new GUIDialogBoxElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

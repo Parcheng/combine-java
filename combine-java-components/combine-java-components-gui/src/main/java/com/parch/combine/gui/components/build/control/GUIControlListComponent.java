@@ -8,6 +8,8 @@ import com.parch.combine.gui.base.build.control.list.GUIControlListLogicConfig;
 import com.parch.combine.gui.base.build.control.list.GUIListElement;
 import com.parch.combine.gui.base.build.control.list.ListOrientationEnum;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
+import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
 @Component(key = "build.control.list", name = "GUI列表控件", logicConfigClass = GUIControlListLogicConfig.class, initConfigClass = GUIControlListInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
@@ -25,12 +27,13 @@ public class GUIControlListComponent extends AbsGUIControlComponent<GUIControlLi
         GUIListElement.Config config = new GUIListElement.Config();
         config.data = logicConfig.value();
         config.orientation = ListOrientationEnum.get(logicConfig.orientation()).getValue();
-        config.element = super.guiElementManager.get(logicConfig.bodyElementId());
-        config.events = logicConfig.events();
-        if (config.element == null) {
+
+        GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.bodyElements());
+        if (elements == null) {
             return null;
         }
 
+        config.elementConfigs = elements;
         return new GUIListElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

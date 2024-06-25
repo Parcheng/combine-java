@@ -1,6 +1,7 @@
 package com.parch.combine.gui.core.element;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
 import java.util.Map;
 
 public interface IGUIElement {
@@ -11,11 +12,17 @@ public interface IGUIElement {
 
     Object getValue();
 
-    Map<String, Object> getData();
-
     Object call(String key, Object ... params);
 
     IGUIElement copy();
 
     void setVisible(Boolean isVisible);
+
+    String getScopeKey();
+
+    String getDomain();
+
+    JFrame getFrame();
+
+    Map<String, Object> getData();
 }

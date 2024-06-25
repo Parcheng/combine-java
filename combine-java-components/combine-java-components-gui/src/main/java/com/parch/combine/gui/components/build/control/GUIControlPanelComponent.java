@@ -6,6 +6,8 @@ import com.parch.combine.gui.base.build.AbsGUIControlComponent;
 import com.parch.combine.gui.base.build.control.panel.GUIControlPanelInitConfig;
 import com.parch.combine.gui.base.build.control.panel.GUIControlPanelLogicConfig;
 import com.parch.combine.gui.base.build.control.panel.GUIPanelElement;
+import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
+import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 import com.parch.combine.gui.core.element.IGUIElement;
 
 @Component(key = "build.control.panel", name = "GUI面板控件", logicConfigClass = GUIControlPanelLogicConfig.class, initConfigClass = GUIControlPanelInitConfig.class)
@@ -24,24 +26,12 @@ public class GUIControlPanelComponent extends AbsGUIControlComponent<GUIControlP
         GUIPanelElement.Config config = new GUIPanelElement.Config();
         config.data = logicConfig.value();
 
-        GUIControlPanelLogicConfig.ElementConfig[] elementConfigs = logicConfig.bodyElements();
-        if (elementConfigs == null) {
+        GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.bodyElements());
+        if (elements == null) {
             return null;
         }
 
-        config.elementConfigs = new GUIPanelElement.ElementItemConfig[elementConfigs.length];
-        for (int i = 0; i < elementConfigs.length; i++) {
-            GUIControlPanelLogicConfig.ElementConfig elementConfig = elementConfigs[i];
-            config.elementConfigs[i] = new GUIPanelElement.ElementItemConfig();
-            config.elementConfigs[i].dataField = elementConfig.dataField();
-            config.elementConfigs[i].key = elementConfig.key() == null ? config.elementConfigs[i].dataField : elementConfig.key();
-            config.elementConfigs[i].events = elementConfig.events();
-            config.elementConfigs[i].element = guiElementManager.get(elementConfig.elementId());
-            if (config.elementConfigs[i].element == null) {
-                return null;
-            }
-        }
-
+        config.elementConfigs = elements;
         return new GUIPanelElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

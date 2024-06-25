@@ -15,8 +15,6 @@ import java.util.List;
 @ComponentResult(name = "调用结果")
 public class GUIOperationCallComponent extends AbsGUIOperationComponent<GUIOperationCallInitConfig, GUIOperationCallLogicConfig> {
 
-    private List<HashMap> result;
-
     public GUIOperationCallComponent() {
         super(GUIOperationCallInitConfig.class, GUIOperationCallLogicConfig.class);
     }

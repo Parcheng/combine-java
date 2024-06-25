@@ -2,6 +2,7 @@ package com.parch.combine.gui.core.event;
 
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.trigger.GUITriggerBuilder;
 import com.parch.combine.gui.core.event.trigger.ITriggerProcessor;
 
@@ -11,7 +12,17 @@ import java.awt.event.MouseEvent;
 
 public class GUIEventHandler {
 
-    public static void binding(JComponent guiComponent, EventConfig config, AbsGUIElement<?, ?> element) {
+    public static void bindings(JComponent component, EventConfig[] events, IGUIElement element) {
+        if (events == null || events.length == 0) {
+            return;
+        }
+
+        for (EventConfig event : events) {
+            binding(component, event, element);
+        }
+    }
+
+    public static void binding(JComponent guiComponent, EventConfig config, IGUIElement element) {
         if (element == null) {
             PrintUtil.printError("【GUI EVENT BINDING】ERROR: 绑定事件的 GUI 元素不存在");
             return;

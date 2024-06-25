@@ -61,27 +61,25 @@ public abstract class AbsGUIElement<T, C> implements IGUIElement {
     }
 
     protected void registerEvents(JComponent component, EventConfig[] events) {
-        if (events == null || events.length == 0) {
-            return;
-        }
-
-        for (EventConfig event : events) {
-            GUIEventHandler.binding(component, event, this);
-        }
-    }
-
-    public String getScopeKey() {
-        return scopeKey;
+        GUIEventHandler.bindings(component, events, this);
     }
 
     public String getId() {
         return id;
     }
 
+
+    @Override
+    public String getScopeKey() {
+        return scopeKey;
+    }
+
+    @Override
     public JFrame getFrame() {
         return frame;
     }
 
+    @Override
     public String getDomain() {
         return domain;
     }

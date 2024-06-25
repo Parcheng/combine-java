@@ -7,6 +7,7 @@ import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
+import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.UUID;
 
 public class GUITriggerBuilder {
 
-    public static ITriggerProcessor build(EventConfig config, AbsGUIElement<?, ?> element) {
+    public static ITriggerProcessor build(EventConfig config, IGUIElement element) {
         String triggerType = config.getTriggerType();
         GUITriggerTypeEnum trigger = GUITriggerTypeEnum.get(triggerType);
         switch (trigger) {

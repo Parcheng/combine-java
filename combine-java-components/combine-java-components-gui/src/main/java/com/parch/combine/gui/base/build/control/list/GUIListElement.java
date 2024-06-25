@@ -2,9 +2,8 @@ package com.parch.combine.gui.base.build.control.list;
 
 import com.parch.combine.gui.core.element.AbsGUIElement;
 import com.parch.combine.gui.core.element.IGUIElement;
-import com.parch.combine.gui.core.event.EventConfig;
-
-import javax.swing.JScrollPane;
+import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
+import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JList;
@@ -19,8 +18,8 @@ import java.util.Map;
 
 public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUIListElement.Config> {
 
-    JScrollPane listPanel = null;
-    private IGUIElement[] elements = null;
+    private JPanel panel = null;
+    private GUISubElementConfig[][] elementConfigs = null;
 
     public GUIListElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIListElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "list", template, config, GUIListElementTemplate.class);
@@ -43,15 +42,26 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
         super.loadTemplates(list, this.sysTemplate.getList(), this.template.getList());
 
         if (this.config.data != null) {
-            this.elements = new IGUIElement[this.config.data.length];
-            for (int i = 0; i < this.config.data.length; i++) {
-                Object dataItem = this.config.data[i];
-                this.elements[i] = this.config.element.copy();
-                this.elements[i].setValue(dataItem);
+            int dataLength = this.config.data.length;
+            int elementConfigLength = this.config.elementConfigs.length;
 
-                JComponent component = this.elements[i].build(this.frame);
-                super.registerEvents(component, this.config.events);
-                listModel.addElement(component);
+            this.elementConfigs = new GUISubElementConfig[dataLength][];
+            for (int i = 0; i < dataLength; i++) {
+                Object dataItem = this.config.data[i];
+
+                this.elementConfigs[i] = new GUISubElementConfig[elementConfigLength];
+                for (int j = 0; j < this.config.elementConfigs.length; j++) {
+                    GUISubElementConfig configItem = this.config.elementConfigs[j];
+                    this.elementConfigs[i][j] = GUISubElementConfig.copy(configItem);
+                }
+
+                JComponent[] body = GUISubElementHelper.build(dataItem, this.elementConfigs[i], this);
+                JPanel item = new JPanel();
+                for (JComponent jComponent : body) {
+                    item.add(jComponent);
+                }
+
+                listModel.addElement(item);
             }
         }
 
@@ -72,7 +82,7 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
         }
 
         Collection<?> listData = (Collection<?>) data;
-        this.config.data = new Object[listData.size()];
+        this.config.data = listData.toArray(new Object[0]);
 
         int i = 0;
         for (Object dataItem : listData) {
@@ -80,11 +90,11 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
             i++;
         }
 
-        if (listPanel != null) {
-            listPanel.removeAll();
-            listPanel.add(buildItem());
-            listPanel.revalidate();
-            listPanel.repaint();
+        if (panel != null) {
+            panel.removeAll();
+            panel.add(buildItem());
+            panel.revalidate();
+            panel.repaint();
         }
 
         return true;
@@ -92,13 +102,13 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
 
     @Override
     public Object getValue() {
-        if (this.elements == null) {
+        if (this.elementConfigs == null) {
             return Arrays.asList(this.config.data);
         }
 
         List<Object> data = new ArrayList<>();
-        for (IGUIElement element : this.elements) {
-            data.add(element.getData());
+        for (GUISubElementConfig[] item : this.elementConfigs) {
+            data.add(GUISubElementHelper.getValue(item));
         }
 
         return data.size() > 0 ? data : null;
@@ -117,7 +127,6 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
     public static class Config {
         public Object[] data;
         public int orientation;
-        public IGUIElement element;
-        public EventConfig[] events;
+        public GUISubElementConfig[] elementConfigs;
     }
 }
