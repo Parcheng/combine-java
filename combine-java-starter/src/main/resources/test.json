@@ -4,64 +4,78 @@
   "flows": {
     "gui/test": [
       {
-        "type": "gui.control.input",
+        "type": "gui.build.control.input",
         "elementId": "input",
         "text": "111111"
       },{
-        "type": "gui.control.select",
+        "type": "gui.build.control.select",
         "elementId": "select",
         "value": "2",
         "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
       },{
-        "type": "gui.control.radio",
+        "type": "gui.build.control.radio",
         "elementId": "radio",
         "value": "2",
         "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
       },{
-        "type": "gui.control.checkbox",
+        "type": "gui.build.control.checkbox",
         "elementId": "checkbox",
         "values": ["2", "3"],
         "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
       },{
-        "type": "gui.control.button",
-        "elementId": "button",
-        "text": "添加"
+        "type": "gui.build.control.text",
+        "elementId": "button-text",
+        "text": "按钮被点击"
       },{
-        "type": "gui.control.text",
+        "type": "gui.build.control.button",
+        "elementId": "button",
+        "text": "添加",
+        "events": {
+          "eventType": "click",
+          "triggerType": "DIALOG_BOX",
+          "dialogBoxTrigger": {
+            "title": "xxxxxx",
+            "width": 300,
+            "height": 150,
+            "elementIds": ["button-text"]
+          }
+        }
+      },{
+        "type": "gui.build.control.text",
         "elementId": "text",
         "text": "test111111111111111111111111111111111111111111111111111111111111111111111"
       },{
-        "type": "gui.control.label",
+        "type": "gui.build.control.label",
         "elementId": "label",
         "text": "label22222222222222"
       },{
-        "type": "gui.control.textarea",
+        "type": "gui.build.control.textarea",
         "elementId": "textarea",
         "value": "textarea111111111111111111111111111111111111111111111111111111111111111111111111111111"
       },{
-        "type": "gui.control.text",
+        "type": "gui.build.control.text",
         "elementId": "list-text",
         "text": "未知"
       },{
-        "type": "gui.control.list",
+        "type": "gui.build.control.list",
         "elementId": "list",
-        "data": ["11111", "2222", "33333", "44444", "55555", "66666", "77777"],
-        "bodyElementId": "list-text"
+        "value": ["11111", "2222", "33333", "44444", "55555", "66666", "77777"],
+        "bodyElements": { "elementId": "list-text" }
       },{
-        "type": "gui.control.text",
+        "type": "gui.build.control.text",
         "elementId": "panel-text",
         "text": "未知"
       },{
-        "type": "gui.control.panel",
+        "type": "gui.build.control.panel",
         "elementId": "panel",
-        "data": { "text": "panelXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" },
+        "value": { "text": "panelXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" },
         "bodyElements": {
           "key": "text",
           "dataField": "text",
           "elementId": "panel-text"
         }
       },{
-        "type": "gui.control.slider",
+        "type": "gui.build.control.slider",
         "elementId": "slider",
         "min": 10,
         "max": 100,
@@ -69,13 +83,13 @@
         "majorTickSpacing": 20,
         "minorTickSpacing": 5
       },{
-        "type": "gui.control.img",
+        "type": "gui.build.control.img",
         "elementId": "img",
         "path": "1.png",
         "height": 50,
         "width": 100
       },{
-        "type": "gui.control.menu",
+        "type": "gui.build.control.menu",
         "elementId": "menu",
         "checkedPath": ["a", "a2", "a23"],
         "items": [{
@@ -87,9 +101,17 @@
           ]
         },{ "text": "b" },{ "text": "c" },{ "text": "d" }]
       },{
-        "type": "gui.control.html",
+        "type": "gui.build.control.html",
         "elementId": "html",
         "path": "page_test.html"
+      },{
+        "type": "gui.build.control.dialogbox",
+        "elementId": "dialogBox",
+        "title": "dialog-box",
+        "width": 200,
+        "height": 100,
+        "visible": true,
+        "bodyElements": { "elementId": "list-text" }
       },{
         "type": "gui.build",
         "title": "test",
@@ -100,7 +122,7 @@
         "distanceLeft": 100,
         "elements": {
           "center": ["input", "select", "radio", "checkbox", "button", "text",
-            "label","textarea", "list", "panel", "slider", "img", "menu", "html"]
+            "label","textarea", "list", "panel", "slider", "img", "menu", "html", "dialogBox", "text2"]
         }
       }
     ]

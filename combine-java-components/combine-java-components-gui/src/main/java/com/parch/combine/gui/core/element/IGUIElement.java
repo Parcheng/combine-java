@@ -1,16 +1,28 @@
 package com.parch.combine.gui.core.element;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+import java.util.Map;
 
 public interface IGUIElement {
 
-    JComponent build();
+    JComponent build(JFrame frame);
 
-    boolean setData(Object data);
+    boolean setValue(Object data);
 
-    Object getData();
+    Object getValue();
 
     Object call(String key, Object ... params);
 
     IGUIElement copy();
+
+    void setVisible(Boolean isVisible);
+
+    String getScopeKey();
+
+    String getDomain();
+
+    JFrame getFrame();
+
+    Map<String, Object> getData();
 }
