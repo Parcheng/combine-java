@@ -1,6 +1,6 @@
 package com.parch.combine.file.base.output;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.error.IComponentError;
@@ -14,7 +14,7 @@ import java.nio.charset.Charset;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class FileOutputComponent<T extends IInitConfig, R extends FileOutputLogicConfig> extends AbsComponent<T, R> {
+public abstract class FileOutputComponent<T extends IInitConfig, R extends FileOutputLogicConfig> extends AbstractComponent<T, R> {
 
     /**
      * 构造器

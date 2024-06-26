@@ -1,6 +1,6 @@
 package com.parch.combine.tool.components;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContext;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.manager.CombineManager;
@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 
 @Component(key = "async", name = "异步执行组件", logicConfigClass = ToolAsyncLogicConfig.class, initConfigClass = ToolAsyncInitConfig.class)
 @ComponentResult(name = "true 已被提交执行成功")
-public class ToolAsyncComponent extends AbsComponent<ToolAsyncInitConfig, ToolAsyncLogicConfig> {
+public class ToolAsyncComponent extends AbstractComponent<ToolAsyncInitConfig, ToolAsyncLogicConfig> {
 
     private static final Map<String, ExecutorService> POOL_MAP = new HashMap<>(8);
 

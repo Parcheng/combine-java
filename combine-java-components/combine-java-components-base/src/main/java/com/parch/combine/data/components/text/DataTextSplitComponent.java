@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Component(order = 2, key = "text.split", name = "文本拆分组件", logicConfigClass = DataTextSplitLogicConfig.class, initConfigClass = DataTextSplitInitConfig.class)
 @ComponentResult(name = "拆分后的文本集合")
-public class DataTextSplitComponent extends AbsComponent<DataTextSplitInitConfig, DataTextSplitLogicConfig> {
+public class DataTextSplitComponent extends AbstractComponent<DataTextSplitInitConfig, DataTextSplitLogicConfig> {
 
     public DataTextSplitComponent() {
         super(DataTextSplitInitConfig.class, DataTextSplitLogicConfig.class);

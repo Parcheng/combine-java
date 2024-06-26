@@ -145,7 +145,7 @@ public class CombineTestController {
 
 # 自定义组件
 通过 SPI 加载<br>
-在 resource/META_INFO/services 下创建文件 com.parch.combine.core.component.spi.AbsGetComponents<br>
+在 resource/META_INFO/services 下创建文件 com.parch.combine.core.component.spi.AbstractGetComponents<br>
 ```
 com.test.components.GetMyComponents
 ```

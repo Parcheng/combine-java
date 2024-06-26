@@ -1,7 +1,7 @@
 package com.parch.combine.logic.components;
 
 import com.parch.combine.core.common.canstant.SymbolConstant;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Component(key = "loop", name = "逻辑循环组件", logicConfigClass = LogicLoopLogicConfig.class, initConfigClass = LogicLoopInitConfig.class)
 @ComponentResult(name = "逻辑循环执行")
-public class LogicLoopComponent extends AbsComponent<LogicLoopInitConfig, LogicLoopLogicConfig> {
+public class LogicLoopComponent extends AbstractComponent<LogicLoopInitConfig, LogicLoopLogicConfig> {
 
     private final static String INDEX_FILED = "$index";
     private final static String ITEM_FILED = "$item";

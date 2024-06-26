@@ -1,8 +1,8 @@
 package com.parch.combine.gui.base.build.control.dialogbox;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.gui.core.element.AbsComponentElement;
-import com.parch.combine.gui.core.element.AbsWindowGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIWindowElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
@@ -12,7 +12,7 @@ import javax.swing.JComponent;
 import java.awt.*;
 import java.util.Map;
 
-public class GUIDialogBoxElement extends AbsWindowGUIElement<GUIDialogBoxElementTemplate, GUIDialogBoxElement.Config> {
+public class GUIDialogBoxElement extends AbstractGUIWindowElement<GUIDialogBoxElementTemplate, GUIDialogBoxElement.Config, Object> {
 
     public GUIDialogBoxElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIDialogBoxElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "dialogbox", template, config, GUIDialogBoxElementTemplate.class);
@@ -36,7 +36,6 @@ public class GUIDialogBoxElement extends AbsWindowGUIElement<GUIDialogBoxElement
             dialog.add(item);
         }
 
-        dialog.setVisible(this.config.visible);
         return dialog;
     }
 
@@ -46,13 +45,14 @@ public class GUIDialogBoxElement extends AbsWindowGUIElement<GUIDialogBoxElement
             return false;
         }
 
-        return GUISubElementHelper.setValue(this.config.data, this.config.elementConfigs);
+        this.value = data;
+        return GUISubElementHelper.setValue(this.value, this.config.elementConfigs);
     }
 
     @Override
     public Object getValue() {
         if (this.config.elementConfigs == null) {
-            return this.config.data;
+            return this.value;
         }
 
         return GUISubElementHelper.getValue(this.config.elementConfigs);
@@ -68,12 +68,10 @@ public class GUIDialogBoxElement extends AbsWindowGUIElement<GUIDialogBoxElement
         return new GUIDialogBoxElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public Object data;
+    public static class Config extends GUIElementConfig<Object> {
         public String title;
         public Integer width;
         public Integer height;
-        public Boolean visible;
         public GUISubElementConfig[] elementConfigs;
     }
 }

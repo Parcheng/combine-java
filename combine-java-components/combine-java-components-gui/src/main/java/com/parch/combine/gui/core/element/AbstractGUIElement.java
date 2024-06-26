@@ -8,10 +8,11 @@ import com.parch.combine.gui.core.style.ElementConfig;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import java.awt.Container;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-public abstract class AbsElement<T, C> implements IGUIElement {
+public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> implements IGUIElement {
 
     protected String scopeKey;
     protected String domain;
@@ -22,9 +23,13 @@ public abstract class AbsElement<T, C> implements IGUIElement {
     protected T sysTemplate;
     protected T template;
     protected C config;
-    protected JFrame frame;
+    protected V value;
 
-    public AbsElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
+    protected JFrame frame;
+    protected Boolean visible;
+    protected Container container;
+
+    public AbstractGUIElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
         try {
             this.id = id;
             this.scopeKey = scopeKey;
@@ -32,6 +37,8 @@ public abstract class AbsElement<T, C> implements IGUIElement {
             this.data = data;
             this.type = type;
             this.config = config;
+            this.value = config.value;
+            this.visible = config.visible;
 
             this.sysTemplate = GUIElementTemplateHelper.getControlTemplate(type, templateClass);
             this.template = template;
@@ -78,5 +85,18 @@ public abstract class AbsElement<T, C> implements IGUIElement {
     @Override
     public Map<String, Object> getData() {
         return data;
+    }
+
+    @Override
+    public void setVisible(Boolean visible) {
+        this.visible = visible != null && visible;
+        if (this.container != null) {
+            this.container.setVisible(this.visible);
+        }
+    }
+
+    @Override
+    public boolean isVisible() {
+        return visible != null && visible;
     }
 }

@@ -2,7 +2,7 @@ package com.parch.combine.gui.components.build.control;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.gui.base.build.AbsGUIControlComponent;
+import com.parch.combine.gui.base.build.AbstractGUIControlComponent;
 import com.parch.combine.gui.base.build.control.slider.GUIControlSliderInitConfig;
 import com.parch.combine.gui.base.build.control.slider.GUIControlSliderLogicConfig;
 import com.parch.combine.gui.base.build.control.slider.GUISliderElement;
@@ -11,7 +11,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 
 @Component(key = "build.control.slider", name = "GUI滑块模块", logicConfigClass = GUIControlSliderLogicConfig.class, initConfigClass = GUIControlSliderInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
-public class GUIControlSliderComponent extends AbsGUIControlComponent<GUIControlSliderInitConfig, GUIControlSliderLogicConfig> {
+public class GUIControlSliderComponent extends AbstractGUIControlComponent<GUIControlSliderInitConfig, GUIControlSliderLogicConfig> {
 
     public GUIControlSliderComponent() {
         super(GUIControlSliderInitConfig.class, GUIControlSliderLogicConfig.class);

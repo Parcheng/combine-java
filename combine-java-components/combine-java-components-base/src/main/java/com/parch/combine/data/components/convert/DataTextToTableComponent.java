@@ -1,6 +1,6 @@
 package com.parch.combine.data.components.convert;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component(order = 100, key = "convert.text-table", name = "文本转为表格组件", logicConfigClass = DataTextToTableLogicConfig.class, initConfigClass = DataTextToTableInitConfig.class)
 @ComponentResult(name = "表格格式的数据（二维数组的矩阵）")
-public class DataTextToTableComponent extends AbsComponent<DataTextToTableInitConfig, DataTextToTableLogicConfig> {
+public class DataTextToTableComponent extends AbstractComponent<DataTextToTableInitConfig, DataTextToTableLogicConfig> {
 
     public DataTextToTableComponent() {
         super(DataTextToTableInitConfig.class, DataTextToTableLogicConfig.class);

@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.build.control.label;
 
-import com.parch.combine.gui.core.element.AbsComponentElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -9,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUILabelElement extends AbsComponentElement<GUILabelElementTemplate, GUILabelElement.Config> {
+public class GUILabelElement extends AbstractGUIComponentElement<GUILabelElementTemplate, GUILabelElement.Config, String> {
 
     private JLabel label = null;
 
@@ -24,7 +25,7 @@ public class GUILabelElement extends AbsComponentElement<GUILabelElementTemplate
 
         this.label = new JLabel();
         super.loadTemplates(this.label, this.sysTemplate.getLabel(), this.template.getLabel());
-        this.label.setText(this.config.text);
+        this.label.setText(this.value);
         super.registerEvents(this.label, this.config.events);
 
         panel.add(this.label);
@@ -40,14 +41,14 @@ public class GUILabelElement extends AbsComponentElement<GUILabelElementTemplate
         if (this.label != null) {
             this.label.setText(data.toString());
         }
-        this.config.text = data.toString();
+        this.value = data.toString();
 
         return true;
     }
 
     @Override
     public Object getValue() {
-        return this.label == null ? config.text : this.label.getText();
+        return this.label == null ? this.value : this.label.getText();
     }
 
     @Override
@@ -60,8 +61,7 @@ public class GUILabelElement extends AbsComponentElement<GUILabelElementTemplate
         return new GUILabelElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String text;
+    public static class Config extends GUIElementConfig<String> {
         public EventConfig[] events;
     }
 }

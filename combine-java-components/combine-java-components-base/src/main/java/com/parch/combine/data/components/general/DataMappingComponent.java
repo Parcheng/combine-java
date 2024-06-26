@@ -1,6 +1,6 @@
 package com.parch.combine.data.components.general;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Component(key = "mapping", name = "数据映射组件", logicConfigClass = DataMappingLogicConfig.class, initConfigClass = DataMappingInitConfig.class)
 @ComponentResult(name = "由 items 中配置的所有 “字段名” 组成的对象")
-public class DataMappingComponent extends AbsComponent<DataMappingInitConfig, DataMappingLogicConfig> {
+public class DataMappingComponent extends AbstractComponent<DataMappingInitConfig, DataMappingLogicConfig> {
 
     /**
      * 构造器

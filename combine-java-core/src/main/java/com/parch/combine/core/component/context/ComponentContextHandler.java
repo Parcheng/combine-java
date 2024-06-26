@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.context;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.core.component.vo.DataResult;
@@ -242,7 +242,7 @@ public class ComponentContextHandler {
      *
      * @param component 当前组件
      */
-    public static void setCurrComponent(AbsComponent<?, ?> component) {
+    public static void setCurrComponent(AbstractComponent<?, ?> component) {
         CACHE.get().setCurrComponent(component);
     }
 
@@ -258,7 +258,7 @@ public class ComponentContextHandler {
      *
      * @return 当前组件
      */
-    public static AbsComponent<?, ?> getCurrComponent() {
+    public static AbstractComponent<?, ?> getCurrComponent() {
         return CACHE.get() == null ? null : CACHE.get().getCurrComponent();
     }
 
@@ -267,7 +267,7 @@ public class ComponentContextHandler {
      *
      * @param component 组件
      */
-    public static void addExecutedComponent(AbsComponent<?, ?> component) {
+    public static void addExecutedComponent(AbstractComponent<?, ?> component) {
         CACHE.get().getExecutedComponents().add(component);
     }
 
@@ -276,7 +276,7 @@ public class ComponentContextHandler {
      *
      * @return 当前组件
      */
-    public static List<AbsComponent<?, ?>> getExecutedComponents() {
+    public static List<AbstractComponent<?, ?>> getExecutedComponents() {
         return CACHE.get().getExecutedComponents();
     }
 

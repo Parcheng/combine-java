@@ -2,7 +2,7 @@ package com.parch.combine.data.components.enums;
 
 import com.parch.combine.data.base.enums.EnumCacheHandler;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Component(order = 1, key = "enum.mapping", name = "枚举映射组件", logicConfigClass = DataEnumMappingLogicConfig.class, initConfigClass = DataEnumMappingInitConfig.class)
 @ComponentDesc("将数据中的枚举编码映射为枚举名称")
 @ComponentResult(name = "映射后的数据（集）")
-public class DataEnumMappingComponent extends AbsComponent<DataEnumMappingInitConfig, DataEnumMappingLogicConfig> {
+public class DataEnumMappingComponent extends AbstractComponent<DataEnumMappingInitConfig, DataEnumMappingLogicConfig> {
 
     public DataEnumMappingComponent() {
         super(DataEnumMappingInitConfig.class, DataEnumMappingLogicConfig.class);

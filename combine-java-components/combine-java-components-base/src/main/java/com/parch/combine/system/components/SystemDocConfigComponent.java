@@ -3,7 +3,7 @@ package com.parch.combine.system.components;
 import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Component(key = "doc.config", name = "获取系统设置API", logicConfigClass = SystemDocConfigLogicConfig.class, initConfigClass = SystemDocConfigInitConfig.class)
 @ComponentResult(name = "系统设置信息API")
-public class SystemDocConfigComponent extends AbsComponent<SystemDocConfigInitConfig, SystemDocConfigLogicConfig> {
+public class SystemDocConfigComponent extends AbstractComponent<SystemDocConfigInitConfig, SystemDocConfigLogicConfig> {
 
     private List<HashMap> result;
 

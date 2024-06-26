@@ -2,7 +2,7 @@ package com.parch.combine.tool.components.event;
 
 import com.parch.combine.tool.base.event.EventSubjectHandler;
 import com.parch.combine.tool.base.event.IEventObserver;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 
 @Component(order = 100, key = "event.listener", name = "注册事件监听组件", logicConfigClass = ToolEventListenerLogicConfig.class, initConfigClass = ToolEventListenerInitConfig.class)
 @ComponentResult(name = "异常信息或 true 注册成功")
-public class ToolEventListenerComponent extends AbsComponent<ToolEventListenerInitConfig, ToolEventListenerLogicConfig> {
+public class ToolEventListenerComponent extends AbstractComponent<ToolEventListenerInitConfig, ToolEventListenerLogicConfig> {
 
     public ToolEventListenerComponent() {
         super(ToolEventListenerInitConfig.class, ToolEventListenerLogicConfig.class);

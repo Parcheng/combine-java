@@ -1,7 +1,7 @@
 package com.parch.combine.file.components.operations;
 
 import com.parch.combine.file.base.helper.FilePathHelper;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -14,7 +14,7 @@ import java.io.File;
 
 @Component(order = 320, key = "operations.delete", name = "文件/目录删除组件", logicConfigClass = FileDeleteLogicConfig.class, initConfigClass = FileDeleteInitConfig.class)
 @ComponentResult(name = "被删除文件数量")
-public class FileDeleteComponent extends AbsComponent<FileDeleteInitConfig, FileDeleteLogicConfig> {
+public class FileDeleteComponent extends AbstractComponent<FileDeleteInitConfig, FileDeleteLogicConfig> {
 
     public FileDeleteComponent() {
         super(FileDeleteInitConfig.class, FileDeleteLogicConfig.class);

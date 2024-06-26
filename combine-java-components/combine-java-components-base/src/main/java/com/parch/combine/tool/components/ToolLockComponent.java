@@ -1,7 +1,7 @@
 package com.parch.combine.tool.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Component(key = "lock", name = "锁组件", logicConfigClass = ToolLockLogicConfig.class, initConfigClass = ToolLockInitConfig.class)
 @ComponentResult(name = "true 或报错")
-public class ToolLockComponent extends AbsComponent<ToolLockInitConfig, ToolLockLogicConfig> {
+public class ToolLockComponent extends AbstractComponent<ToolLockInitConfig, ToolLockLogicConfig> {
 
     private final static Map<String, ReentrantLock> LOCK_MAP = new HashMap<>(16);
 

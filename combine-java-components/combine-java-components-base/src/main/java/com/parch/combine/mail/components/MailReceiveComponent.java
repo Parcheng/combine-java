@@ -1,6 +1,6 @@
 package com.parch.combine.mail.components;
 
-import com.parch.combine.mail.base.AbsMailComponent;
+import com.parch.combine.mail.base.AbstractMailComponent;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Component(key = "receive", name = "邮件收取组件", logicConfigClass = MailReceiveLogicConfig.class, initConfigClass = MailReceiveInitConfig.class)
 @ComponentDesc("依赖 mail，推荐版本 1.4.7")
 @ComponentResult(name = "获取的邮件列表")
-public class MailReceiveComponent extends AbsMailComponent<MailReceiveInitConfig, MailReceiveLogicConfig> {
+public class MailReceiveComponent extends AbstractMailComponent<MailReceiveInitConfig, MailReceiveLogicConfig> {
 
     public MailReceiveComponent() {
         super(MailReceiveInitConfig.class, MailReceiveLogicConfig.class);

@@ -1,7 +1,7 @@
 package com.parch.combine.file.components.operations;
 
 import com.parch.combine.file.base.helper.FileHelper;
-import com.parch.combine.file.base.operations.compress.AbsFileCompressComponent;
+import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
@@ -28,7 +28,7 @@ import java.util.List;
 @Component(order = 310, key = "operations.compress.7z", name = "7Z压缩解压组件", logicConfigClass = FileCompressSevenZLogicConfig.class, initConfigClass = FileCompressSevenZInitConfig.class)
 @ComponentDesc("依赖 commons-compress，推荐版本 1.20")
 @ComponentResult(name = "true 或抛出异常信息")
-public class FileCompressSevenZComponent extends AbsFileCompressComponent<FileCompressSevenZInitConfig, FileCompressSevenZLogicConfig> {
+public class FileCompressSevenZComponent extends AbstractFileCompressComponent<FileCompressSevenZInitConfig, FileCompressSevenZLogicConfig> {
 
     public FileCompressSevenZComponent() {
         super(FileCompressSevenZInitConfig.class, FileCompressSevenZLogicConfig.class, FileCompressTypeEnum.ZIP);

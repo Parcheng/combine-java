@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import java.awt.event.ComponentEvent;
 
-public class DialogBoxTriggerProcessor extends AbsTriggerProcessor<DialogBoxTriggerProcessor.Config>{
+public class DialogBoxTriggerProcessor extends AbstractTriggerProcessor<DialogBoxTriggerProcessor.Config> {
 
     public DialogBoxTriggerProcessor(JFrame frame, DialogBoxTriggerProcessor.Config config) {
         super(frame, config);

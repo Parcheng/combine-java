@@ -1,6 +1,6 @@
 package com.parch.combine.data.components.text;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -19,7 +19,7 @@ import java.util.*;
  */
 @Component(order = 2, key = "text.replace", name = "文本替换组件", logicConfigClass = DataTextReplaceLogicConfig.class, initConfigClass = DataTextReplaceInitConfig.class)
 @ComponentResult(name = "替换后的文本")
-public class DataTextReplaceComponent extends AbsComponent<DataTextReplaceInitConfig, DataTextReplaceLogicConfig> {
+public class DataTextReplaceComponent extends AbstractComponent<DataTextReplaceInitConfig, DataTextReplaceLogicConfig> {
 
     /**
      * 构造器

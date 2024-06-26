@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbsPreLoadConfigManager<C> {
+public abstract class AbstractPreLoadConfigManager<C> {
 
     protected final Map<String, C> CONFIGS = new HashMap<>();
 

@@ -1,12 +1,12 @@
 package com.parch.combine.call.base;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.Map;
 
-public abstract class CallComponent<T extends IInitConfig, R extends CallLogicConfig> extends AbsComponent<T, R> {
+public abstract class CallComponent<T extends IInitConfig, R extends CallLogicConfig> extends AbstractComponent<T, R> {
 
     public CallComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
         super(initConfigClass, logicConfigClass);

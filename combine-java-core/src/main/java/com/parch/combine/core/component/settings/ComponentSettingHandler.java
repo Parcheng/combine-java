@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.settings;
 
-import com.parch.combine.core.component.spi.AbsGetComponents;
+import com.parch.combine.core.component.spi.AbstractGetComponents;
 import com.parch.combine.core.component.spi.IGetComponents;
 import com.parch.combine.core.component.vo.ComponentClassInitVO;
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
@@ -22,7 +22,7 @@ public class ComponentSettingHandler {
     public static List<ComponentClassInitVO> getComponents() {
         // 通过SPI加在所有组件
         List<ComponentClassInitVO> components = new ArrayList<>();
-        ServiceLoader<AbsGetComponents> spiList = ServiceLoader.load(AbsGetComponents.class);
+        ServiceLoader<AbstractGetComponents> spiList = ServiceLoader.load(AbstractGetComponents.class);
         for (IGetComponents service : spiList) {
             components.addAll(service.get());
         }
@@ -38,7 +38,7 @@ public class ComponentSettingHandler {
     public static List<ComponentClassifySetting> getSettings() {
         // 通过SPI加在所有组件
         List<ComponentClassifySetting> settings = new ArrayList<>();
-        ServiceLoader<AbsGetComponents> spiList = ServiceLoader.load(AbsGetComponents.class);
+        ServiceLoader<AbstractGetComponents> spiList = ServiceLoader.load(AbstractGetComponents.class);
         for (IGetComponents service : spiList) {
             settings.add(service.getSetting());
         }

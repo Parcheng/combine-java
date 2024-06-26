@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.vo;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ public class ComponentClassInitVO {
     /**
      * 组件类描述
      */
-    private Class<? extends AbsComponent<?, ?>> component;
+    private Class<? extends AbstractComponent<?, ?>> component;
 
-    public ComponentClassInitVO(String key, Class<? extends AbsComponent<?, ?>> component) {
+    public ComponentClassInitVO(String key, Class<? extends AbstractComponent<?, ?>> component) {
         this.key = key;
         this.component = component;
     }
@@ -37,11 +37,11 @@ public class ComponentClassInitVO {
         this.key = key;
     }
 
-    public Class<? extends AbsComponent<?, ?>> getComponent() {
+    public Class<? extends AbstractComponent<?, ?>> getComponent() {
         return component;
     }
 
-    public void setComponent(Class<? extends AbsComponent<?, ?>> component) {
+    public void setComponent(Class<? extends AbstractComponent<?, ?>> component) {
         this.component = component;
     }
 

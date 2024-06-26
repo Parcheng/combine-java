@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.general;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Component(key = "format", name = "数据格式化组件", logicConfigClass = DataFormatLogicConfig.class, initConfigClass = DataFormatInitConfig.class)
 @ComponentResult(name = "所有格式化后的新值集合")
-public class DataFormatComponent extends AbsComponent<DataFormatInitConfig, DataFormatLogicConfig> {
+public class DataFormatComponent extends AbstractComponent<DataFormatInitConfig, DataFormatLogicConfig> {
 
     public DataFormatComponent() {
         super(DataFormatInitConfig.class, DataFormatLogicConfig.class);

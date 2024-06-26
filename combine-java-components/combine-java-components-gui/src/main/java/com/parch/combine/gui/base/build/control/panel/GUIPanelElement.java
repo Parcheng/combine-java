@@ -1,7 +1,8 @@
 package com.parch.combine.gui.base.build.control.panel;
 
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
-import com.parch.combine.gui.core.element.AbsComponentElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
@@ -9,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JComponent;
 import java.util.Map;
 
-public class GUIPanelElement extends AbsComponentElement<GUIPanelElementTemplate, GUIPanelElement.Config> {
+public class GUIPanelElement extends AbstractGUIComponentElement<GUIPanelElementTemplate, GUIPanelElement.Config, Object> {
 
     private JPanel panel = null;
 
@@ -30,7 +31,7 @@ public class GUIPanelElement extends AbsComponentElement<GUIPanelElementTemplate
     }
 
     public JComponent[] buildItems() {
-        Object data = this.config.data;
+        Object data = this.value;
         GUISubElementConfig[] items = this.config.elementConfigs;
         if (items == null) {
             return new JComponent[0];
@@ -45,13 +46,14 @@ public class GUIPanelElement extends AbsComponentElement<GUIPanelElementTemplate
             return false;
         }
 
+        this.value = data;
         return GUISubElementHelper.setValue(data, this.config.elementConfigs);
     }
 
     @Override
     public Object getValue() {
         if (this.config.elementConfigs == null) {
-            return this.config.data;
+            return this.value;
         }
 
         return GUISubElementHelper.getValue(this.config.elementConfigs);
@@ -67,8 +69,7 @@ public class GUIPanelElement extends AbsComponentElement<GUIPanelElementTemplate
         return new GUIPanelElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public Object data;
+    public static class Config extends GUIElementConfig<Object> {
         public GUISubElementConfig[] elementConfigs;
     }
 }

@@ -1,7 +1,7 @@
 package com.parch.combine.redis.base;
 
 import com.parch.combine.core.common.canstant.SymbolConstant;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ILogicConfig;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Redis连接处理器
  */
-public abstract class AbsRedisComponent<T extends RedisInitConfig, R extends ILogicConfig> extends AbsComponent<T, R> {
+public abstract class AbstractRedisComponent<T extends RedisInitConfig, R extends ILogicConfig> extends AbstractComponent<T, R> {
 
     private static Map<String, JedisCluster> POOL_MAP = new HashMap<>();
 
@@ -22,7 +22,7 @@ public abstract class AbsRedisComponent<T extends RedisInitConfig, R extends ILo
      * @param initConfigClass  初始化配置类Class对象
      * @param logicConfigClass 业务配置类Class对象
      */
-    public AbsRedisComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
+    public AbstractRedisComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
         super(initConfigClass, logicConfigClass);
     }
 

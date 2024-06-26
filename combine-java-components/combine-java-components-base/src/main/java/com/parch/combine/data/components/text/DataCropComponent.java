@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -17,7 +17,7 @@ import java.util.List;
 @Component(order = 2, key = "text.crop", name = "文本数据裁剪组件", logicConfigClass = DataCropLogicConfig.class, initConfigClass = DataCropInitConfig.class)
 @ComponentDesc("支持文本矩阵（二维数组），文本集合，单文本格式的数据")
 @ComponentResult(name = "裁剪后的文本（集合/矩阵）")
-public class DataCropComponent extends AbsComponent<DataCropInitConfig, DataCropLogicConfig> {
+public class DataCropComponent extends AbstractComponent<DataCropInitConfig, DataCropLogicConfig> {
 
     public DataCropComponent() {
         super(DataCropInitConfig.class, DataCropLogicConfig.class);

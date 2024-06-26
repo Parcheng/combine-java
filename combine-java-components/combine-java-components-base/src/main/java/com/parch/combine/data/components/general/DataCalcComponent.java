@@ -3,7 +3,7 @@ package com.parch.combine.data.components.general;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.StringUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @Component(key = "calc", name = "数据计算组件", logicConfigClass = DataCalcLogicConfig.class, initConfigClass = DataCalcInitConfig.class)
 @ComponentResult(name = "调用API返回的数据")
-public class DataCalcComponent extends AbsComponent<DataCalcInitConfig, DataCalcLogicConfig> {
+public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, DataCalcLogicConfig> {
 
     public DataCalcComponent() {
         super(DataCalcInitConfig.class, DataCalcLogicConfig.class);

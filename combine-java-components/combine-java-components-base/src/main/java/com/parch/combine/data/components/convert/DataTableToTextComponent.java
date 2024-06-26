@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.convert;
 
 import com.parch.combine.core.common.util.StringUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component(order = 100, key = "convert.table-text", name = "表格转文本数据组件", logicConfigClass = DataTableToTextLogicConfig.class, initConfigClass = DataTableToTextInitConfig.class)
 @ComponentResult(name = "文本行集合")
-public class DataTableToTextComponent extends AbsComponent<DataTableToTextInitConfig, DataTableToTextLogicConfig> {
+public class DataTableToTextComponent extends AbstractComponent<DataTableToTextInitConfig, DataTableToTextLogicConfig> {
 
     public DataTableToTextComponent() {
         super(DataTableToTextInitConfig.class, DataTableToTextLogicConfig.class);

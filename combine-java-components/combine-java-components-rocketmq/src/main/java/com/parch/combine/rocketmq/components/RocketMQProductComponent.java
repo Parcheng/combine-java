@@ -2,7 +2,7 @@ package com.parch.combine.rocketmq.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.rocketmq.base.AbsRocketMQComponent;
+import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
@@ -21,7 +21,7 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 @Component(key = "product", name = "RocketMQ生产者组件", logicConfigClass = RocketMQProductLogicConfig.class, initConfigClass = RocketMQProductInitConfig.class)
 @ComponentDesc("依赖 rocketmq-client，推荐版本 4.9.4")
 @ComponentResult(name = "Message ID")
-public class RocketMQProductComponent extends AbsRocketMQComponent<RocketMQProductInitConfig, RocketMQProductLogicConfig> {
+public class RocketMQProductComponent extends AbstractRocketMQComponent<RocketMQProductInitConfig, RocketMQProductLogicConfig> {
 
     public RocketMQProductComponent() {
         super(RocketMQProductInitConfig.class, RocketMQProductLogicConfig.class);

@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.build.control.menu;
 
-import com.parch.combine.gui.core.element.AbsComponentElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GUIMenuElement extends AbsComponentElement<GUIMenuElementTemplate, GUIMenuElement.Config> {
+public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTemplate, GUIMenuElement.Config, String[]> {
 
     private static Integer MAX_LAYER = 99;
     private JMenuBar menuBar = null;
@@ -76,11 +77,11 @@ public class GUIMenuElement extends AbsComponentElement<GUIMenuElementTemplate, 
     }
 
     private boolean hasChecked(String key, int layer) {
-        if (key == null || config.checkPath == null || config.checkPath.length <= layer) {
+        if (key == null || this.value == null || this.value.length <= layer) {
             return false;
         }
 
-        return key.equals(config.checkPath[layer]);
+        return key.equals(this.value[layer]);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class GUIMenuElement extends AbsComponentElement<GUIMenuElementTemplate, 
             path.add(item.toString());
         }
 
-        config.checkPath = path.toArray(new String[0]);
+        this.value = path.toArray(new String[0]);
         buildMenu();
         return true;
     }
@@ -108,7 +109,7 @@ public class GUIMenuElement extends AbsComponentElement<GUIMenuElementTemplate, 
     @Override
     public Object getValue() {
         if (this.menuBar == null) {
-            return config.checkPath;
+            return this.value;
         }
 
         return null;
@@ -124,8 +125,7 @@ public class GUIMenuElement extends AbsComponentElement<GUIMenuElementTemplate, 
         return new GUIMenuElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String[] checkPath;
+    public static class Config extends GUIElementConfig<String[]> {
         public ConfigDataItem[] items;
     }
 

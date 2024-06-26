@@ -1,6 +1,6 @@
 package com.parch.combine.tool.components.cache;
 
-import com.parch.combine.tool.base.cache.AbsCacheComponent;
+import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheData;
 import com.parch.combine.tool.base.cache.CacheHandler;
 import com.parch.combine.tool.base.cache.CacheKeyMatchRuleEnum;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Component(key = "cache.cleanup", name = "缓存清理", logicConfigClass = CacheCleanupLogicConfig.class, initConfigClass = CacheCleanupInitConfig.class)
 @ComponentResult(name = "被清理的缓存数据（KEY-VALUE键值对结构）")
-public class CacheCleanupComponent extends AbsCacheComponent<CacheCleanupInitConfig, CacheCleanupLogicConfig> {
+public class CacheCleanupComponent extends AbstractCacheComponent<CacheCleanupInitConfig, CacheCleanupLogicConfig> {
 
     public CacheCleanupComponent() {
         super(CacheCleanupInitConfig.class, CacheCleanupLogicConfig.class);

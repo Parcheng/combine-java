@@ -2,7 +2,8 @@ package com.parch.combine.gui.base.build.control.html;
 
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
-import com.parch.combine.gui.core.element.AbsComponentElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
@@ -11,7 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUIHtmlElement extends AbsComponentElement<GUIHtmlElementTemplate, GUIHtmlElement.Config> {
+public class GUIHtmlElement extends AbstractGUIComponentElement<GUIHtmlElementTemplate, GUIHtmlElement.Config, String> {
 
     private JEditorPane page = null;
 
@@ -36,15 +37,15 @@ public class GUIHtmlElement extends AbsComponentElement<GUIHtmlElementTemplate, 
 
     private void setUrl() {
         try {
-            if (config.path.startsWith("http")) {
-                this.page.setPage(config.path);
+            if (this.value.startsWith("http")) {
+                this.page.setPage(this.value);
             } else {
-                this.page.setPage(ResourceFileUtil.getURL(config.path));
+                this.page.setPage(ResourceFileUtil.getURL(this.value));
             }
         }catch (Exception e) {
             this.page.setContentType("text/html");
             this.page.setText("<html><body" + config.errorText + "</body></html>");
-            PrintUtil.printError("【GUI-构建PAGE】【" + config.path+ "】失败：" + e.getMessage());
+            PrintUtil.printError("【GUI-构建PAGE】【" + this.value + "】失败：" + e.getMessage());
         }
     }
 
@@ -54,7 +55,7 @@ public class GUIHtmlElement extends AbsComponentElement<GUIHtmlElementTemplate, 
             return false;
         }
 
-        this.config.path = data.toString();
+        this.value = data.toString();
         if (this.page != null) {
             setUrl();
         }
@@ -64,7 +65,7 @@ public class GUIHtmlElement extends AbsComponentElement<GUIHtmlElementTemplate, 
 
     @Override
     public Object getValue() {
-        return this.page == null ? config.path : this.page.getPage().getPath();
+        return this.page == null ? this.value : this.page.getPage().getPath();
     }
 
     @Override
@@ -77,8 +78,7 @@ public class GUIHtmlElement extends AbsComponentElement<GUIHtmlElementTemplate, 
         return new GUIHtmlElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String path;
+    public static class Config extends GUIElementConfig<String> {
         public String errorText;
         public EventConfig[] events;
     }

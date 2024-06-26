@@ -1,6 +1,6 @@
 package com.parch.combine.system.components;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -12,7 +12,7 @@ import com.parch.combine.system.base.template.SystemTemplateLogicConfig;
 
 @Component(key = "template", name = "模板组件", logicConfigClass = SystemTemplateLogicConfig.class, initConfigClass = SystemTemplateInitConfig.class)
 @ComponentResult(name = "模板中组件报错信息或 true")
-public class SystemTemplateComponent extends AbsComponent<SystemTemplateInitConfig, SystemTemplateLogicConfig> {
+public class SystemTemplateComponent extends AbstractComponent<SystemTemplateInitConfig, SystemTemplateLogicConfig> {
 
     public SystemTemplateComponent() {
         super(SystemTemplateInitConfig.class, SystemTemplateLogicConfig.class);

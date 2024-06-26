@@ -17,7 +17,7 @@ import java.util.*;
 /**
  * 组件公共父类
  */
-public abstract class AbsComponent<T extends IInitConfig, R extends ILogicConfig> {
+public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicConfig> {
 
     private String id;
 
@@ -43,7 +43,7 @@ public abstract class AbsComponent<T extends IInitConfig, R extends ILogicConfig
      * @param initConfigClass 初始化配置类Class对象
      * @param logicConfigClass 业务配置类Class对象
      */
-    public AbsComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
+    public AbstractComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
         this.initConfigClass = initConfigClass;
         this.logicConfigClass = logicConfigClass;
     }

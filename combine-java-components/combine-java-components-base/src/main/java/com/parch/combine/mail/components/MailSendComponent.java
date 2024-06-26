@@ -1,6 +1,6 @@
 package com.parch.combine.mail.components;
 
-import com.parch.combine.mail.base.AbsMailComponent;
+import com.parch.combine.mail.base.AbstractMailComponent;
 import com.parch.combine.mail.base.helper.MailContentTypeEnum;
 import com.parch.combine.mail.base.helper.MimeMessageHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -30,7 +30,7 @@ import java.util.List;
 @Component(key = "send", name = "邮件发送组件", logicConfigClass = MailSendLogicConfig.class, initConfigClass = MailSendInitConfig.class)
 @ComponentDesc("依赖 poi 和 poi-ooxml，推荐版本 4.1.2")
 @ComponentResult(name = "邮件发送成功：true")
-public class MailSendComponent extends AbsMailComponent<MailSendInitConfig, MailSendLogicConfig> {
+public class MailSendComponent extends AbstractMailComponent<MailSendInitConfig, MailSendLogicConfig> {
 
     public MailSendComponent() {
         super(MailSendInitConfig.class, MailSendLogicConfig.class);

@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.build.control.input;
 
-import com.parch.combine.gui.core.element.AbsComponentElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.event.EventConfig;
@@ -10,7 +11,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUIInputElement extends AbsComponentElement<GUIInputElementTemplate, GUIInputElement.Config> {
+public class GUIInputElement extends AbstractGUIComponentElement<GUIInputElementTemplate, GUIInputElement.Config, String> {
 
     private JTextField input = null;
 
@@ -27,8 +28,8 @@ public class GUIInputElement extends AbsComponentElement<GUIInputElementTemplate
         super.loadTemplates(this.input, this.sysTemplate.getInput(), this.template.getInput());
         super.registerEvents(this.input, this.config.events);
 
-        if (this.config.text != null) {
-            this.input.setText(this.config.text);
+        if (this.value != null) {
+            this.input.setText(this.value);
         }
         if (this.config.columns != null) {
             this.input.setColumns(this.config.columns);
@@ -47,14 +48,14 @@ public class GUIInputElement extends AbsComponentElement<GUIInputElementTemplate
         if (this.input != null) {
             this.input.setText(data.toString());
         }
-        this.config.text = data.toString();
+        this.value = data.toString();
 
         return true;
     }
 
     @Override
     public Object getValue() {
-        return this.input == null ? this.config.text : this.input.getText();
+        return this.input == null ? this.value : this.input.getText();
     }
 
     @Override
@@ -67,8 +68,7 @@ public class GUIInputElement extends AbsComponentElement<GUIInputElementTemplate
         return new GUIInputElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String text;
+    public static class Config extends GUIElementConfig<String> {
         public Integer columns;
         public EventConfig[] events;
     }

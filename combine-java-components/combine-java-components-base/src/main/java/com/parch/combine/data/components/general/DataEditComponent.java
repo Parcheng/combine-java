@@ -4,7 +4,7 @@ import com.parch.combine.data.base.general.DataStructureHelper;
 import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
@@ -19,7 +19,7 @@ import java.util.*;
 
 @Component(key = "edit", name = "数据修改组件", logicConfigClass = DataEditLogicConfig.class, initConfigClass = DataEditInitConfig.class)
 @ComponentResult(name = "所有被创建的数据集合")
-public class DataEditComponent extends AbsComponent<DataEditInitConfig, DataEditLogicConfig> {
+public class DataEditComponent extends AbstractComponent<DataEditInitConfig, DataEditLogicConfig> {
 
     public DataEditComponent() {
         super(DataEditInitConfig.class, DataEditLogicConfig.class);

@@ -3,7 +3,7 @@ package com.parch.combine.core.component.vo;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -234,7 +234,7 @@ public class DataResult {
     private static DataResult build() {
         DataResult result = new DataResult();
 
-        AbsComponent<?, ?> component = ComponentContextHandler.getCurrComponent();
+        AbstractComponent<?, ?> component = ComponentContextHandler.getCurrComponent();
         if (component != null) {
             result.setId(component.getId());
             result.setErrMsg("【" + component.getId() + "】【" + component.getType() + "】");

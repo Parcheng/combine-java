@@ -3,17 +3,17 @@ package com.parch.combine.file.base.operations.compress;
 import com.parch.combine.file.base.helper.FilePathHelper;
 import com.parch.combine.file.base.operations.FileOperationsInitConfig;
 import com.parch.combine.core.common.util.FileNameUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.List;
 
-public abstract class AbsFileCompressComponent<T extends FileOperationsInitConfig, R extends FileCompressLogicConfig> extends AbsComponent<T, R> {
+public abstract class AbstractFileCompressComponent<T extends FileOperationsInitConfig, R extends FileCompressLogicConfig> extends AbstractComponent<T, R> {
 
     protected FileCompressTypeEnum type;
 
-    public AbsFileCompressComponent(Class<T> initClass, Class<R> logicClass, FileCompressTypeEnum type) {
+    public AbstractFileCompressComponent(Class<T> initClass, Class<R> logicClass, FileCompressTypeEnum type) {
         super(initClass, logicClass);
         this.type = type;
     }

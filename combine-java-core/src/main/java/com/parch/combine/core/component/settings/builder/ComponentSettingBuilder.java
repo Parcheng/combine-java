@@ -3,7 +3,7 @@ package com.parch.combine.core.component.settings.builder;
 import com.parch.combine.core.common.settings.annotations.Invalid;
 import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
 import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.settings.annotations.*;
 import com.parch.combine.core.component.settings.config.ComponentResultSetting;
@@ -27,7 +27,7 @@ public class ComponentSettingBuilder {
         componentSetting.setKey(scope + "." + componentAnnotation.key());
         componentSetting.setName(componentAnnotation.name());
         componentSetting.setDesc(new ArrayList<>());
-        componentSetting.setComponentClass((Class<? extends AbsComponent<?, ?>>) componentClass);
+        componentSetting.setComponentClass((Class<? extends AbstractComponent<?, ?>>) componentClass);
         ComponentDesc componentDescAnnotation = componentClass.getAnnotation(ComponentDesc.class);
         if (componentDescAnnotation != null) {
             componentSetting.getDesc().addAll(Arrays.asList(componentDescAnnotation.value()));

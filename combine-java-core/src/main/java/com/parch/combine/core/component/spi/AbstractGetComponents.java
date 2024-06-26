@@ -8,15 +8,15 @@ import com.parch.combine.core.component.settings.builder.ComponentClassifySettin
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbsGetComponents implements IGetComponents {
+public abstract class AbstractGetComponents implements IGetComponents {
 
     private ComponentClassifySetting setting;
 
-    public AbsGetComponents(String key, String name, Class<?> baseClass) {
+    public AbstractGetComponents(String key, String name, Class<?> baseClass) {
         setting = ComponentClassifySettingBuilder.build(key, name, baseClass);
     }
 
-    public AbsGetComponents(String key, String name, String packagePath) {
+    public AbstractGetComponents(String key, String name, String packagePath) {
         setting = ComponentClassifySettingBuilder.build(key, name, packagePath);
     }
 

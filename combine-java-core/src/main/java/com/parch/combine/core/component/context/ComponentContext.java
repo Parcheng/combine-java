@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.context;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.List;
@@ -68,12 +68,12 @@ public class ComponentContext {
     /**
      * 当前组件
      */
-    private AbsComponent<?,?> currComponent;
+    private AbstractComponent<?,?> currComponent;
 
     /**
      * 已经执行过的组件集合
      */
-    private List<AbsComponent<?,?>> executedComponents;
+    private List<AbstractComponent<?,?>> executedComponents;
 
     public ComponentContext() {
         this.id = UUID.randomUUID().toString();
@@ -127,19 +127,19 @@ public class ComponentContext {
         this.lastResult = lastResult;
     }
 
-    public AbsComponent<?, ?> getCurrComponent() {
+    public AbstractComponent<?, ?> getCurrComponent() {
         return currComponent;
     }
 
-    public void setCurrComponent(AbsComponent<?, ?> currComponent) {
+    public void setCurrComponent(AbstractComponent<?, ?> currComponent) {
         this.currComponent = currComponent;
     }
 
-    public List<AbsComponent<?, ?>> getExecutedComponents() {
+    public List<AbstractComponent<?, ?>> getExecutedComponents() {
         return executedComponents;
     }
 
-    public void setExecutedComponents(List<AbsComponent<?, ?>> executedComponents) {
+    public void setExecutedComponents(List<AbstractComponent<?, ?>> executedComponents) {
         this.executedComponents = executedComponents;
     }
 

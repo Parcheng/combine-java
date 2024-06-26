@@ -1,7 +1,7 @@
 package com.parch.combine.rocketmq.components;
 
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.rocketmq.base.AbsRocketMQComponent;
+import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
@@ -25,7 +25,7 @@ import java.util.Map;
 @ComponentDesc("依赖 rocketmq-client，推荐版本 4.9.4")
 @ComponentResult(name = "异常信息或 true")
 @ComponentResultDesc("消息数据格式：{ msgId: ‘消息ID’, body: ‘消息内容’ }")
-public class RocketMQConsumerComponent extends AbsRocketMQComponent<RocketMQConsumerInitConfig, RocketMQConsumerLogicConfig> {
+public class RocketMQConsumerComponent extends AbstractRocketMQComponent<RocketMQConsumerInitConfig, RocketMQConsumerLogicConfig> {
 
     public RocketMQConsumerComponent() {
         super(RocketMQConsumerInitConfig.class, RocketMQConsumerLogicConfig.class);

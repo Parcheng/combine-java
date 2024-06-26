@@ -1,6 +1,6 @@
 package com.parch.combine.tool.components.cache;
 
-import com.parch.combine.tool.base.cache.AbsCacheComponent;
+import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheData;
 import com.parch.combine.tool.base.cache.CacheHandler;
 import com.parch.combine.tool.base.cache.CacheKeyMatchRuleEnum;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Component(key = "cache.get", name = "获取缓存数据", logicConfigClass = CacheGetLogicConfig.class, initConfigClass = CacheGetInitConfig.class)
 @ComponentResult(name = "缓存数据值")
-public class CacheGetComponent extends AbsCacheComponent<CacheGetInitConfig, CacheGetLogicConfig> {
+public class CacheGetComponent extends AbstractCacheComponent<CacheGetInitConfig, CacheGetLogicConfig> {
 
     public CacheGetComponent() {
         super(CacheGetInitConfig.class, CacheGetLogicConfig.class);

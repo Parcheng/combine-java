@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.general;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
@@ -14,7 +14,7 @@ import com.parch.combine.data.base.general.reset.DataResetLogicConfig;
 
 @Component(key = "reset", name = "数据重置组件", logicConfigClass = DataResetLogicConfig.class, initConfigClass = DataResetInitConfig.class)
 @ComponentResult(name = "是否全部赋值成功 true | false")
-public class DataResetComponent extends AbsComponent<DataResetInitConfig, DataResetLogicConfig> {
+public class DataResetComponent extends AbstractComponent<DataResetInitConfig, DataResetLogicConfig> {
 
     /**
      * 构造器

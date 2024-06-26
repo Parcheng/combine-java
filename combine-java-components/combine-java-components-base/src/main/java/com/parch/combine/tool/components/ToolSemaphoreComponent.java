@@ -1,7 +1,7 @@
 package com.parch.combine.tool.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -17,7 +17,7 @@ import java.util.concurrent.Semaphore;
 
 @Component(key = "semaphore", name = "限流组件", logicConfigClass = ToolSemaphoreLogicConfig.class, initConfigClass = ToolSemaphoreInitConfig.class)
 @ComponentResult(name = "true 或报错")
-public class ToolSemaphoreComponent extends AbsComponent<ToolSemaphoreInitConfig, ToolSemaphoreLogicConfig> {
+public class ToolSemaphoreComponent extends AbstractComponent<ToolSemaphoreInitConfig, ToolSemaphoreLogicConfig> {
 
     private final static Map<String, Semaphore> SEMAPHORE_MAP = new HashMap<>(16);
 
