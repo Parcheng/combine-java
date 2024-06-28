@@ -1,9 +1,11 @@
 package com.parch.combine.gui.base.build.control.dialogbox;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.gui.core.call.GUIElementCallFunctionHelper;
 import com.parch.combine.gui.core.element.AbstractGUIWindowElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
@@ -59,13 +61,13 @@ public class GUIDialogBoxElement extends AbstractGUIWindowElement<GUIDialogBoxEl
     }
 
     @Override
-    public Object call(String key, Object... params) {
-        return null;
+    public IGUIElement copy() {
+        return new GUIDialogBoxElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     @Override
-    public IGUIElement copy() {
-        return new GUIDialogBoxElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
+        return GUIElementCallFunctionHelper.buildElementFunction(this.id, this.domain, this.container, this.frame);
     }
 
     public static class Config extends GUIElementConfig<Object> {

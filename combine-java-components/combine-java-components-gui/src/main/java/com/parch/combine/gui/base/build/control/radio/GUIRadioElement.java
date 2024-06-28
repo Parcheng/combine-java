@@ -4,6 +4,7 @@ import com.parch.combine.gui.base.build.GUIControlOptionConfig;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JRadioButton;
@@ -80,7 +81,7 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
     }
 
     @Override
-    public Object call(String key, Object... params) {
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
         return null;
     }
 

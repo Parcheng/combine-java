@@ -1,8 +1,10 @@
 package com.parch.combine.gui.base.build.control.list;
 
+import com.parch.combine.gui.core.call.GUIElementCallFunctionHelper;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 import javax.swing.JComponent;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTemplate, GUIListElement.Config, Object[]> {
 
     private JPanel panel = null;
+    JList<JComponent> list = null;
     private GUISubElementConfig[][] elementConfigs = null;
 
     public GUIListElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIListElementTemplate template, Config config) {
@@ -36,7 +39,7 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
 
     private JList<JComponent> buildItem() {
         DefaultListModel<JComponent> listModel = new DefaultListModel<>();
-        JList<JComponent> list = new JList<>(listModel);
+        this.list = new JList<>(listModel);
         list.setCellRenderer(this.getCellRenderer());
         list.setLayoutOrientation(this.config.orientation);
 
@@ -116,13 +119,13 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
     }
 
     @Override
-    public Object call(String key, Object... params) {
-        return null;
+    public IGUIElement copy() {
+        return new GUIListElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     @Override
-    public IGUIElement copy() {
-        return new GUIListElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
+        return GUIElementCallFunctionHelper.buildElementFunction(this.id, this.domain, this.list, this.frame);
     }
 
     public static class Config extends GUIElementConfig<Object[]> {

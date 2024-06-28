@@ -2,6 +2,7 @@ package com.parch.combine.gui.core.element;
 
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.gui.core.GUIElementTemplateHelper;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 import com.parch.combine.gui.core.event.GUIEventHandler;
 import com.parch.combine.gui.core.style.ElementConfig;
@@ -29,7 +30,9 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
     protected Boolean visible;
     protected Container container;
 
-    public AbstractGUIElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
+    protected Map<String, IGUIElementCallFunction> callFunctionMap;
+
+    protected AbstractGUIElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
         try {
             this.id = id;
             this.scopeKey = scopeKey;
@@ -39,6 +42,7 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
             this.config = config;
             this.value = config.value;
             this.visible = config.visible;
+            this.callFunctionMap = this.initCallFunction();
 
             this.sysTemplate = GUIElementTemplateHelper.getControlTemplate(type, templateClass);
             this.template = template;
@@ -66,6 +70,21 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
         return id;
     }
 
+    @Override
+    public final Object call(String key, Object... params) {
+        if (callFunctionMap == null || key == null) {
+            return null;
+        }
+
+        IGUIElementCallFunction function = callFunctionMap.get(key);
+        if (function == null) {
+            return null;
+        }
+
+        return function.execute(params);
+    }
+
+    public abstract Map<String, IGUIElementCallFunction> initCallFunction();
 
     @Override
     public String getScopeKey() {
