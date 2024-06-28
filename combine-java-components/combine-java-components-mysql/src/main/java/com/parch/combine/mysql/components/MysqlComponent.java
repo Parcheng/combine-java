@@ -1,6 +1,6 @@
 package com.parch.combine.mysql.components;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -37,7 +37,7 @@ import java.util.UUID;
         "\tdata: {数组集合（实际的SQL查询结果集合）",
         "}"
 })
-public class MysqlComponent extends AbsComponent<MysqlInitConfig, MysqlLogicConfig> {
+public class MysqlComponent extends AbstractComponent<MysqlInitConfig, MysqlLogicConfig> {
 
     /**
      * 默认的缓存连接Key

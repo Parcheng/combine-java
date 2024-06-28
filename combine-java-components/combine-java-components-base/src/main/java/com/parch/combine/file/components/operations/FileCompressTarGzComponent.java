@@ -1,7 +1,7 @@
 package com.parch.combine.file.components.operations;
 
 import com.parch.combine.file.base.helper.FileHelper;
-import com.parch.combine.file.base.operations.compress.AbsFileCompressComponent;
+import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
@@ -27,7 +27,7 @@ import java.util.List;
 @Component(order = 310, key = "operations.compress.targz", name = "tar.gz压缩解压组件", logicConfigClass = FileCompressTarGzLogicConfig.class, initConfigClass = FileCompressTarGzInitConfig.class)
 @ComponentDesc("依赖 commons-compress，推荐版本 1.20")
 @ComponentResult(name = "true 或抛出异常信息")
-public class FileCompressTarGzComponent extends AbsFileCompressComponent<FileCompressTarGzInitConfig, FileCompressTarGzLogicConfig> {
+public class FileCompressTarGzComponent extends AbstractFileCompressComponent<FileCompressTarGzInitConfig, FileCompressTarGzLogicConfig> {
 
     public FileCompressTarGzComponent() {
         super(FileCompressTarGzInitConfig.class, FileCompressTarGzLogicConfig.class, FileCompressTypeEnum.ZIP);

@@ -1,10 +1,8 @@
 package com.parch.combine.core.component.error;
 
 import com.parch.combine.core.common.util.PrintUtil;
-import com.parch.combine.core.component.base.IInitConfig;
-import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 
 /**
  * 组件异常处理器
@@ -46,7 +44,7 @@ public class ComponentErrorHandler {
      * @param e 异常对象
      */
     public static void print(String msg, Exception e) {
-        AbsComponent<?, ?> component = ComponentContextHandler.getCurrComponent();
+        AbstractComponent<?, ?> component = ComponentContextHandler.getCurrComponent();
         print(component, msg, e);
     }
 
@@ -56,7 +54,7 @@ public class ComponentErrorHandler {
      * @param msg 错误信息
      * @param e 异常对象
      */
-    public static void print(AbsComponent<?, ?> component, String msg, Exception e) {
+    public static void print(AbstractComponent<?, ?> component, String msg, Exception e) {
         // 拼接错误信息字符串
         if (component == null) {
             PrintUtil.printError("【未知组件】" + msg);

@@ -10,7 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.util.List;
 import java.util.Map;
 
-public class ComponentTriggerProcessor extends AbsTriggerProcessor<ComponentTriggerProcessor.Config>{
+public class ComponentTriggerProcessor extends AbstractTriggerProcessor<ComponentTriggerProcessor.Config> {
 
     private CombineManager manager;
 

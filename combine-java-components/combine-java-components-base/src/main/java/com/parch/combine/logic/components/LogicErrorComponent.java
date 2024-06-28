@@ -1,7 +1,7 @@
 package com.parch.combine.logic.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.compare.CompareTool;
@@ -11,7 +11,7 @@ import com.parch.combine.logic.base.error.LogicErrorLogicConfig;
 
 @Component(key = "error", name = "错误抛出组件", logicConfigClass = LogicErrorLogicConfig.class, initConfigClass = LogicErrorInitConfig.class)
 @ComponentResult(name = "配置的错误信息或 true")
-public class LogicErrorComponent extends AbsComponent<LogicErrorInitConfig, LogicErrorLogicConfig> {
+public class LogicErrorComponent extends AbstractComponent<LogicErrorInitConfig, LogicErrorLogicConfig> {
 
     public LogicErrorComponent() {
         super(LogicErrorInitConfig.class, LogicErrorLogicConfig.class);

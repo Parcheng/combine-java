@@ -7,7 +7,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.core.common.util.StringUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.vo.DataResult;
@@ -86,7 +86,7 @@ public class PrintHelper {
     /**
      * 打印结果信息
      */
-    public static void printComponentResult(AbsComponent<?,?> component, DataResult result) {
+    public static void printComponentResult(AbstractComponent<?,?> component, DataResult result) {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
         // 拼接错误信息字符串

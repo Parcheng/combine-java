@@ -9,7 +9,7 @@ import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
@@ -303,7 +303,7 @@ public class ConfigHelper {
                             itemData = CheckEmptyUtil.EMPTY;
                         }
                     } else {
-                        AbsComponent<?,?> component = manager.getComponent().getComponent(item.toString());
+                        AbstractComponent<?,?> component = manager.getComponent().getComponent(item.toString());
                         if (component == null) {
                             errors.add("ID[" + item.toString() + "]的组件不存在");
                         }

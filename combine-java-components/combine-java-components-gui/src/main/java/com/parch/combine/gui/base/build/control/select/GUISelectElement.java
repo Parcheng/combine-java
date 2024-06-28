@@ -1,14 +1,16 @@
 package com.parch.combine.gui.base.build.control.select;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.*;
 import java.util.Map;
 
-public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GUISelectElement.Config> {
+public class GUISelectElement extends AbstractGUIComponentElement<GUISelectElementTemplate, GUISelectElement.Config, String> {
 
     private JComboBox<JComponent> comboBox = null;
 
@@ -34,7 +36,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
             text.setText(option.getText() == null ? option.getValue() : option.getText());
             this.comboBox.addItem(text);
 
-            if (checkIndex == -1 && this.config.value != null && this.config.value.equals(option.getValue())) {
+            if (checkIndex == -1 && this.value != null && this.value.equals(option.getValue())) {
                 checkIndex = i;
             }
         }
@@ -67,7 +69,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
                 if (this.comboBox != null) {
                     this.comboBox.setSelectedIndex(i);
                 }
-                this.config.value = option.getValue();
+                this.value = option.getValue();
                 return true;
             }
         }
@@ -78,7 +80,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
     @Override
     public Object getValue() {
         if (this.comboBox == null) {
-            return this.config.value;
+            return this.value;
         }
 
         int index =this.comboBox.getSelectedIndex();
@@ -86,7 +88,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
     }
 
     @Override
-    public Object call(String key, Object... params) {
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
         return null;
     }
 
@@ -95,8 +97,7 @@ public class GUISelectElement extends AbsGUIElement<GUISelectElementTemplate, GU
         return new GUISelectElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String value;
+    public static class Config extends GUIElementConfig<String> {
         public GUIControlOptionConfig[] options;
         public EventConfig[] events;
     }

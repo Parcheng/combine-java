@@ -1,15 +1,15 @@
 package com.parch.combine.gui.base.operations;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-public abstract class AbsGUIOperationComponent<T extends IInitConfig, R extends GUIOperationConfig> extends AbsComponent<T, R> {
+public abstract class AbstractGUIOperationComponent<T extends IInitConfig, R extends GUIOperationConfig> extends AbstractComponent<T, R> {
 
-    public AbsGUIOperationComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
+    public AbstractGUIOperationComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
         super(initConfigClass, logicConfigClass);
     }
 

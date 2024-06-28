@@ -1,8 +1,10 @@
 package com.parch.combine.gui.base.build.control.panel;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.gui.core.call.GUIElementCallFunctionHelper;
+import com.parch.combine.gui.core.element.GUIElementConfig;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
@@ -10,9 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JComponent;
 import java.util.Map;
 
-public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIPanelElement.Config> {
-
-    private JPanel panel = null;
+public class GUIPanelElement extends AbstractGUIComponentElement<GUIPanelElementTemplate, GUIPanelElement.Config, Object> {
 
     public GUIPanelElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIPanelElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "panel", template, config, GUIPanelElementTemplate.class);
@@ -20,18 +20,18 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
 
     @Override
     public JComponent build() {
-        this.panel = new JPanel();
-        super.loadTemplates(this.panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        JPanel panel = new JPanel();
+        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         for (JComponent item : buildItems()) {
-            this.panel.add(item);
+            panel.add(item);
         }
 
         return panel;
     }
 
     public JComponent[] buildItems() {
-        Object data = this.config.data;
+        Object data = this.value;
         GUISubElementConfig[] items = this.config.elementConfigs;
         if (items == null) {
             return new JComponent[0];
@@ -46,21 +46,17 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
             return false;
         }
 
+        this.value = data;
         return GUISubElementHelper.setValue(data, this.config.elementConfigs);
     }
 
     @Override
     public Object getValue() {
         if (this.config.elementConfigs == null) {
-            return this.config.data;
+            return this.value;
         }
 
         return GUISubElementHelper.getValue(this.config.elementConfigs);
-    }
-
-    @Override
-    public Object call(String key, Object... params) {
-        return null;
     }
 
     @Override
@@ -68,8 +64,12 @@ public class GUIPanelElement extends AbsGUIElement<GUIPanelElementTemplate, GUIP
         return new GUIPanelElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public Object data;
+    @Override
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
+        return GUIElementCallFunctionHelper.buildElementFunction(this.id, this.domain, this.container, this.frame);
+    }
+
+    public static class Config extends GUIElementConfig<Object> {
         public GUISubElementConfig[] elementConfigs;
     }
 }

@@ -1,7 +1,10 @@
 package com.parch.combine.gui.base.build.control.list;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.call.GUIElementCallFunctionHelper;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 import javax.swing.JComponent;
@@ -16,9 +19,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUIListElement.Config> {
+public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTemplate, GUIListElement.Config, Object[]> {
 
     private JPanel panel = null;
+    JList<JComponent> list = null;
     private GUISubElementConfig[][] elementConfigs = null;
 
     public GUIListElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIListElementTemplate template, Config config) {
@@ -35,19 +39,19 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
 
     private JList<JComponent> buildItem() {
         DefaultListModel<JComponent> listModel = new DefaultListModel<>();
-        JList<JComponent> list = new JList<>(listModel);
+        this.list = new JList<>(listModel);
         list.setCellRenderer(this.getCellRenderer());
         list.setLayoutOrientation(this.config.orientation);
 
         super.loadTemplates(list, this.sysTemplate.getList(), this.template.getList());
 
-        if (this.config.data != null) {
-            int dataLength = this.config.data.length;
+        if (this.value != null) {
+            int dataLength = this.value.length;
             int elementConfigLength = this.config.elementConfigs.length;
 
             this.elementConfigs = new GUISubElementConfig[dataLength][];
             for (int i = 0; i < dataLength; i++) {
-                Object dataItem = this.config.data[i];
+                Object dataItem = this.value[i];
 
                 this.elementConfigs[i] = new GUISubElementConfig[elementConfigLength];
                 for (int j = 0; j < this.config.elementConfigs.length; j++) {
@@ -82,11 +86,11 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
         }
 
         Collection<?> listData = (Collection<?>) data;
-        this.config.data = listData.toArray(new Object[0]);
+        this.value = listData.toArray(new Object[0]);
 
         int i = 0;
         for (Object dataItem : listData) {
-            this.config.data[i] = dataItem;
+            this.value[i] = dataItem;
             i++;
         }
 
@@ -103,7 +107,7 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
     @Override
     public Object getValue() {
         if (this.elementConfigs == null) {
-            return Arrays.asList(this.config.data);
+            return Arrays.asList(this.value);
         }
 
         List<Object> data = new ArrayList<>();
@@ -115,17 +119,16 @@ public class GUIListElement extends AbsGUIElement<GUIListElementTemplate, GUILis
     }
 
     @Override
-    public Object call(String key, Object... params) {
-        return null;
-    }
-
-    @Override
     public IGUIElement copy() {
         return new GUIListElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public Object[] data;
+    @Override
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
+        return GUIElementCallFunctionHelper.buildElementFunction(this.id, this.domain, this.list, this.frame);
+    }
+
+    public static class Config extends GUIElementConfig<Object[]> {
         public int orientation;
         public GUISubElementConfig[] elementConfigs;
     }

@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.general;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -16,7 +16,7 @@ import com.parch.combine.data.base.general.filter.DataFilterLogicConfig;
  */
 @Component(key = "filter", name = "数据过滤组件", logicConfigClass = DataFilterLogicConfig.class, initConfigClass = DataFilterInitConfig.class)
 @ComponentResult(name = "参数 resultId 指定组件的结果，或上一步组件的结果")
-public class DataFilterComponent extends AbsComponent<DataFilterInitConfig, DataFilterLogicConfig> {
+public class DataFilterComponent extends AbstractComponent<DataFilterInitConfig, DataFilterLogicConfig> {
 
     /**
      * 构造器

@@ -2,7 +2,7 @@ package com.parch.combine.core.component.settings.config;
 
 import com.parch.combine.core.common.settings.config.CommonObjectSetting;
 import com.parch.combine.core.common.settings.config.PropertySetting;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class ComponentSetting {
 
-    private Class<? extends AbsComponent<?, ?>> componentClass;
+    private Class<? extends AbstractComponent<?, ?>> componentClass;
 
     private int order;
 
@@ -95,11 +95,11 @@ public class ComponentSetting {
         this.key = key;
     }
 
-    public void setComponentClass(Class<? extends AbsComponent<?, ?>> componentClass) {
+    public void setComponentClass(Class<? extends AbstractComponent<?, ?>> componentClass) {
         this.componentClass = componentClass;
     }
 
-    public Class<? extends AbsComponent<?, ?>> thisComponentClass() {
+    public Class<? extends AbstractComponent<?, ?>> thisComponentClass() {
         return componentClass;
     }
 

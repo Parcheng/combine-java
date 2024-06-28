@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.tools;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.manager.CombineManager;
 
@@ -23,7 +23,7 @@ public class SubComponentTool {
             return null;
         }
 
-        AbsComponent<?,?> component = combineManager.getComponent().getComponent(componentId);
+        AbstractComponent<?,?> component = combineManager.getComponent().getComponent(componentId);
         return combineManager.getComponent().executeComponent(component);
     }
 

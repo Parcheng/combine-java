@@ -1,7 +1,6 @@
 package com.parch.combine.gui.components.build;
 
-import com.parch.combine.core.component.base.AbsComponent;
-import com.parch.combine.core.component.context.ComponentContextHandler;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -14,7 +13,7 @@ import javax.swing.SwingUtilities;
 
 @Component(key = "build", name = "GUI构建组件", logicConfigClass = GUIBuildLogicConfig.class, initConfigClass = GUIBuildInitConfig.class)
 @ComponentResult(name = "构建失败的错误信息或 true")
-public class GUIBuildComponent extends AbsComponent<GUIBuildInitConfig, GUIBuildLogicConfig> {
+public class GUIBuildComponent extends AbstractComponent<GUIBuildInitConfig, GUIBuildLogicConfig> {
 
     public GUIBuildComponent() {
         super(GUIBuildInitConfig.class, GUIBuildLogicConfig.class);

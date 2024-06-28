@@ -23,10 +23,6 @@
         "values": ["2", "3"],
         "options": [{"text": "1111", "value": "1"},{"text": "2222", "value": "2"},{"text": "3333", "value": "3"}]
       },{
-        "type": "gui.build.control.text",
-        "elementId": "button-text",
-        "text": "按钮被点击"
-      },{
         "type": "gui.build.control.button",
         "elementId": "button",
         "text": "添加",
@@ -35,9 +31,7 @@
           "triggerType": "DIALOG_BOX",
           "dialogBoxTrigger": {
             "title": "xxxxxx",
-            "width": 300,
-            "height": 150,
-            "elementIds": ["button-text"]
+            "text": "按钮被点击"
           }
         }
       },{

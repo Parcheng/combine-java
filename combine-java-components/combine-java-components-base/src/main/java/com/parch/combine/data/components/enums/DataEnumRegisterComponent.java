@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.enums;
 
 import com.parch.combine.data.base.enums.EnumCacheHandler;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component(order = 1, key = "enum.register", name = "枚举注册组件", logicConfigClass = DataEnumRegisterLogicConfig.class, initConfigClass = DataEnumRegisterInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
-public class DataEnumRegisterComponent extends AbsComponent<DataEnumRegisterInitConfig, DataEnumRegisterLogicConfig> {
+public class DataEnumRegisterComponent extends AbstractComponent<DataEnumRegisterInitConfig, DataEnumRegisterLogicConfig> {
 
     public DataEnumRegisterComponent() {
         super(DataEnumRegisterInitConfig.class, DataEnumRegisterLogicConfig.class);

@@ -1,6 +1,6 @@
 package com.parch.combine.mail.base;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -11,12 +11,12 @@ import java.util.Properties;
 /**
  * 邮件组件
  */
-public abstract class AbsMailComponent<T extends MailInitConfig, R extends MailLogicConfig> extends AbsComponent<T, R> {
+public abstract class AbstractMailComponent<T extends MailInitConfig, R extends MailLogicConfig> extends AbstractComponent<T, R> {
 
     /**
      * 构造器
      */
-    public AbsMailComponent(Class<T> tClass, Class<R> rClass) {
+    public AbstractMailComponent(Class<T> tClass, Class<R> rClass) {
         super(tClass, rClass);
     }
 

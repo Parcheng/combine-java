@@ -1,6 +1,6 @@
 package com.parch.combine.tool.components.cache;
 
-import com.parch.combine.tool.base.cache.AbsCacheComponent;
+import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -12,7 +12,7 @@ import com.parch.combine.tool.base.cache.set.CacheSetLogicConfig;
 
 @Component(key = "cache.set", name = "设置缓存", logicConfigClass = CacheSetLogicConfig.class, initConfigClass = CacheSetInitConfig.class)
 @ComponentResult(name = "异常信息或 true")
-public class CacheSetComponent extends AbsCacheComponent<CacheSetInitConfig, CacheSetLogicConfig> {
+public class CacheSetComponent extends AbstractCacheComponent<CacheSetInitConfig, CacheSetLogicConfig> {
 
     public CacheSetComponent() {
         super(CacheSetInitConfig.class, CacheSetLogicConfig.class);

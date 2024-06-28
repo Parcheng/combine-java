@@ -1,8 +1,10 @@
 package com.parch.combine.gui.base.build.control.slider;
 
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
@@ -10,7 +12,7 @@ import javax.swing.JSlider;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GUISliderElement.Config> {
+public class GUISliderElement extends AbstractGUIComponentElement<GUISliderElementTemplate, GUISliderElement.Config, Integer> {
 
     private JSlider slider = null;
 
@@ -58,17 +60,17 @@ public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GU
         if (this.slider != null) {
             this.slider.setValue(intData);
         }
-        this.config.value = intData;
+        this.value = intData;
         return true;
     }
 
     @Override
     public Object getValue() {
-        return this.slider == null ? config.value : this.slider.getValue();
+        return this.slider == null ? this.value : this.slider.getValue();
     }
 
     @Override
-    public Object call(String key, Object... params) {
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
         return null;
     }
 
@@ -77,11 +79,10 @@ public class GUISliderElement extends AbsGUIElement<GUISliderElementTemplate, GU
         return new GUISliderElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
+    public static class Config extends GUIElementConfig<Integer> {
         public int orientation;
         public Integer min;
         public Integer max;
-        public Integer value;
         public Integer majorTickSpacing;
         public Integer minorTickSpacing;
         public Boolean paintTicks;

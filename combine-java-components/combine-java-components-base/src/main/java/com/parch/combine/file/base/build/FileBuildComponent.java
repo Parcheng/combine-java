@@ -1,7 +1,7 @@
 package com.parch.combine.file.base.build;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.error.IComponentError;
@@ -17,7 +17,7 @@ import java.util.UUID;
  * @param <T> 初始化配置
  * @param <R> 逻辑配置
  */
-public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBuildLogicConfig> extends AbsComponent<T, R> {
+public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBuildLogicConfig> extends AbstractComponent<T, R> {
 
     public FileBuildComponent(Class<T> initConfigClass, Class<R> logicConfigClass) {
         super(initConfigClass, logicConfigClass);

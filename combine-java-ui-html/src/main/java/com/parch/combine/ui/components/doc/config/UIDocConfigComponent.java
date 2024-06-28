@@ -3,7 +3,7 @@ package com.parch.combine.ui.components.doc.config;
 import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.DataResult;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component(order = 900, key = "doc.config", name = "获取UI设置API", logicConfigClass = UIDocConfigLogicConfig.class, initConfigClass = UIDocConfigInitConfig.class)
 @ComponentResult(name = "UI设置API")
-public class UIDocConfigComponent extends AbsComponent<UIDocConfigInitConfig, UIDocConfigLogicConfig> {
+public class UIDocConfigComponent extends AbstractComponent<UIDocConfigInitConfig, UIDocConfigLogicConfig> {
 
     private static List<HashMap> result;
 

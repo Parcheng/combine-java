@@ -1,8 +1,10 @@
 package com.parch.combine.gui.base.build.control.img;
 
 import com.parch.combine.core.common.util.ResourceFileUtil;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
@@ -12,7 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Image;
 import java.util.Map;
 
-public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgElement.Config> {
+public class GUIImgElement extends AbstractGUIComponentElement<GUIImgElementTemplate, GUIImgElement.Config, String> {
 
     private JPanel panel = null;
 
@@ -30,7 +32,7 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
 
     private JLabel buildImg() {
         JLabel label = new JLabel();
-        ImageIcon icon = new ImageIcon(ResourceFileUtil.getURL(config.path));
+        ImageIcon icon = new ImageIcon(ResourceFileUtil.getURL(this.value));
         if (config.width != null || config.height != null) {
             if (config.width == null) {
                 config.width = icon.getIconWidth();
@@ -53,18 +55,18 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
             return false;
         }
 
-        config.path = data.toString();
+        this.value = data.toString();
         panel.add(buildImg());
         return true;
     }
 
     @Override
     public Object getValue() {
-        return config.path;
+        return this.value;
     }
 
     @Override
-    public Object call(String key, Object... params) {
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
         return null;
     }
 
@@ -73,8 +75,7 @@ public class GUIImgElement extends AbsGUIElement<GUIImgElementTemplate, GUIImgEl
         return new GUIImgElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String path;
+    public static class Config extends GUIElementConfig<String> {
         public Integer width;
         public Integer height;
         public EventConfig[] events;

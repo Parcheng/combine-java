@@ -8,15 +8,15 @@ import com.parch.combine.ui.core.vo.PageElementClassInitVO;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbsGetUIElements implements IGetUIElements {
+public abstract class AbstractGetUIElements implements IGetUIElements {
 
     private PageElementClassifySetting setting;
 
-    public AbsGetUIElements(String key, String name, Class<?> baseClass) {
+    public AbstractGetUIElements(String key, String name, Class<?> baseClass) {
         setting = PageElementClassifySettingBuilder.build(key, name, baseClass);
     }
 
-    public AbsGetUIElements(String key, String name, String packagePath) {
+    public AbstractGetUIElements(String key, String name, String packagePath) {
         setting = PageElementClassifySettingBuilder.build(key, name, packagePath);
     }
 

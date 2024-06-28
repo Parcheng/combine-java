@@ -4,7 +4,7 @@ import com.parch.combine.data.base.general.DataStructureHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
@@ -18,7 +18,7 @@ import java.util.*;
 
 @Component(key = "create", name = "数据创建组件", logicConfigClass = DataCreateLogicConfig.class, initConfigClass = DataCreateInitConfig.class)
 @ComponentResult(name = "所有被创建的数据集合")
-public class DataCreateComponent extends AbsComponent<DataCreateInitConfig, DataCreateLogicConfig> {
+public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig, DataCreateLogicConfig> {
 
     public DataCreateComponent() {
         super(DataCreateInitConfig.class, DataCreateLogicConfig.class);

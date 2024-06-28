@@ -3,7 +3,7 @@ package com.parch.combine.core.component.manager;
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ComponentFlagEnum;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.handler.ComponentClassHandler;
@@ -20,7 +20,7 @@ public class ComponentManager {
 
     private String scopeKey;
 
-    private final Map<String, AbsComponent<?,?>> COMPONENT_MAP = new HashMap<>();
+    private final Map<String, AbstractComponent<?,?>> COMPONENT_MAP = new HashMap<>();
 
     public ComponentManager(String scopeKey) {
         this.scopeKey = scopeKey;
@@ -103,7 +103,7 @@ public class ComponentManager {
         }
 
         // 判断组件是否已经构建过
-        AbsComponent<?,?> component = COMPONENT_MAP.get(componentId);
+        AbstractComponent<?,?> component = COMPONENT_MAP.get(componentId);
         if (component != null) {
             addComponentId(componentIds, staticComponentIds, component);
             return;
@@ -117,7 +117,7 @@ public class ComponentManager {
 
         // 构建组件
         String componentType = typeObj.toString();
-        ThreeTuples<Boolean, AbsComponent<?,?>, List<String>> buildResult = ComponentClassHandler.build(componentId, componentType, scopeKey, logicConfig);
+        ThreeTuples<Boolean, AbstractComponent<?,?>, List<String>> buildResult = ComponentClassHandler.build(componentId, componentType, scopeKey, logicConfig);
         if (buildResult.getFirst()) {
             component = buildResult.getSecond();
 
@@ -138,7 +138,7 @@ public class ComponentManager {
      * @param componentIds 组件ID集合
      * @param component 组件
      */
-    protected void addComponentId(List<String> componentIds, List<String> staticComponentIds, AbsComponent<?,?> component) {
+    protected void addComponentId(List<String> componentIds, List<String> staticComponentIds, AbstractComponent<?,?> component) {
         // 静态逻辑块只构建，不加入到流程中
         String[] flags = component.getLogicConfig().flags();
         if (CheckEmptyUtil.isNotEmpty(flags)) {
@@ -171,7 +171,7 @@ public class ComponentManager {
         }
 
         // 按顺序执行-已执行组件的结束函数
-        for (AbsComponent<?,?> component : ComponentContextHandler.getExecutedComponents()) {
+        for (AbstractComponent<?,?> component : ComponentContextHandler.getExecutedComponents()) {
             component.end();
         }
 
@@ -184,7 +184,7 @@ public class ComponentManager {
      * @param component 组件对象
      * @return 结果
      */
-    public DataResult executeComponent(AbsComponent<?,?> component) {
+    public DataResult executeComponent(AbstractComponent<?,?> component) {
         // 运行组件逻辑
         return component.run();
     }
@@ -195,7 +195,7 @@ public class ComponentManager {
      * @param componentId 组件ID
      * @return 组件
      */
-    public AbsComponent<?,?> getComponent(String componentId) {
+    public AbstractComponent<?,?> getComponent(String componentId) {
         return COMPONENT_MAP.get(componentId);
     }
 

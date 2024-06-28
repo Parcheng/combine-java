@@ -1,12 +1,12 @@
 package com.parch.combine.tool.base.cache;
 
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.vo.DataResult;
 
-public abstract class AbsCacheComponent<I extends IInitConfig, T extends CacheLogicConfig> extends AbsComponent<I, T> {
+public abstract class AbstractCacheComponent<I extends IInitConfig, T extends CacheLogicConfig> extends AbstractComponent<I, T> {
 
-    public AbsCacheComponent(Class<I> initConfigClass, Class<T> logicConfigClass) {
+    public AbstractCacheComponent(Class<I> initConfigClass, Class<T> logicConfigClass) {
         super(initConfigClass, logicConfigClass);
     }
 

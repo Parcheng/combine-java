@@ -1,8 +1,10 @@
 package com.parch.combine.gui.base.build.control.radio;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JRadioButton;
@@ -11,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
 import java.util.Map;
 
-public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIRadioElement.Config> {
+public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElementTemplate, GUIRadioElement.Config, String> {
 
     private JRadioButton[] radios = null;
 
@@ -30,7 +32,7 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
             GUIControlOptionConfig option = this.config.options[i];
 
             JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
-                    this.config.value != null && this.config.value.equals(option.getValue()));
+                    this.value != null && this.value.equals(option.getValue()));
             super.loadTemplates(radioItem, this.sysTemplate.getRadio(), this.template.getRadio());
             super.registerEvents(radioItem, this.config.events);
 
@@ -56,7 +58,7 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
                 this.radios[i].setSelected(selected);
             }
             if (selected) {
-                this.config.value = option.getValue();
+                this.value = option.getValue();
             }
         }
 
@@ -65,6 +67,10 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
 
     @Override
     public Object getValue() {
+        if (this.radios == null) {
+            return this.value;
+        }
+
         for (int i = 0; i < this.radios.length; i++) {
             if (this.radios[i].isSelected()) {
                 return this.config.options[i].getValue();
@@ -75,7 +81,7 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
     }
 
     @Override
-    public Object call(String key, Object... params) {
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
         return null;
     }
 
@@ -84,8 +90,7 @@ public class GUIRadioElement extends AbsGUIElement<GUIRadioElementTemplate, GUIR
         return new GUIRadioElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String value;
+    public static class Config extends GUIElementConfig<String> {
         public GUIControlOptionConfig[] options;
         public EventConfig[] events;
     }

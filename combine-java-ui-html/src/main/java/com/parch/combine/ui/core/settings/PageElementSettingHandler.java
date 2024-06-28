@@ -1,7 +1,7 @@
 package com.parch.combine.ui.core.settings;
 
 import com.parch.combine.ui.core.settings.config.PageElementClassifySetting;
-import com.parch.combine.ui.core.spi.AbsGetUIElements;
+import com.parch.combine.ui.core.spi.AbstractGetUIElements;
 import com.parch.combine.ui.core.spi.IGetUIElements;
 import com.parch.combine.ui.core.vo.PageElementClassInitVO;
 
@@ -19,7 +19,7 @@ public class PageElementSettingHandler {
     public static List<PageElementClassInitVO> getElements() {
         // 通过SPI加在所有组件
         List<PageElementClassInitVO> elements = new ArrayList<>();
-        ServiceLoader<AbsGetUIElements> spiList = ServiceLoader.load(AbsGetUIElements.class);
+        ServiceLoader<AbstractGetUIElements> spiList = ServiceLoader.load(AbstractGetUIElements.class);
         for (IGetUIElements service : spiList) {
             elements.addAll(service.get());
         }
@@ -35,7 +35,7 @@ public class PageElementSettingHandler {
     public static List<PageElementClassifySetting> getSettings() {
         // 通过SPI加在所有组件
         List<PageElementClassifySetting> settings = new ArrayList<>();
-        ServiceLoader<AbsGetUIElements> spiList = ServiceLoader.load(AbsGetUIElements.class);
+        ServiceLoader<AbstractGetUIElements> spiList = ServiceLoader.load(AbstractGetUIElements.class);
         for (IGetUIElements service : spiList) {
             settings.add(service.getSetting());
         }

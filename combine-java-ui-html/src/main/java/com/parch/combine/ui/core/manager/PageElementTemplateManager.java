@@ -1,13 +1,13 @@
 package com.parch.combine.ui.core.manager;
 
-import com.parch.combine.core.common.manager.AbsPreLoadConfigManager;
+import com.parch.combine.core.common.manager.AbstractPreLoadConfigManager;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.PrintUtil;
 import com.parch.combine.ui.core.base.element.ElementTemplateConfig;
 
 import java.util.Map;
 
-public class PageElementTemplateManager extends AbsPreLoadConfigManager<ElementTemplateConfig> {
+public class PageElementTemplateManager extends AbstractPreLoadConfigManager<ElementTemplateConfig> {
 
     @Override
     protected <T extends ElementTemplateConfig> T initConfig(String id, String type, Map<String, Object> configMap, Class<T> clazz) {

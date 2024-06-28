@@ -1,7 +1,7 @@
 package com.parch.combine.tool.components;
 
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component(key = "crontab", name = "定时任务", logicConfigClass = ToolCrontabLogicConfig.class, initConfigClass = ToolCrontabInitConfig.class)
 @ComponentResult(name = "异常信息或 true")
-public class ToolCrontabComponent extends AbsComponent<ToolCrontabInitConfig, ToolCrontabLogicConfig> {
+public class ToolCrontabComponent extends AbstractComponent<ToolCrontabInitConfig, ToolCrontabLogicConfig> {
 
     private static final Map<String, ScheduledExecutorService> SERVICE_CACHE = new HashMap<>(1);
 

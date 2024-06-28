@@ -1,7 +1,9 @@
 package com.parch.combine.gui.base.build.control.textarea;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
@@ -9,7 +11,7 @@ import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate, GUITextareaElement.Config> {
+public class GUITextareaElement extends AbstractGUIComponentElement<GUITextareaElementTemplate, GUITextareaElement.Config, String> {
 
     private JTextArea textArea = null;
 
@@ -36,8 +38,8 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
         if (this.config.columns != null) {
             this.textArea.setColumns(this.config.columns);
         }
-        if (this.config.value != null) {
-            this.textArea.setText(this.config.value);
+        if (this.value != null) {
+            this.textArea.setText(this.value);
         }
 
         panel.add(this.textArea);
@@ -53,18 +55,18 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
         if (this.textArea != null) {
             this.textArea.setText(data.toString());
         }
-        this.config.value = data.toString();
+        this.value = data.toString();
 
         return true;
     }
 
     @Override
     public Object getValue() {
-        return this.textArea == null ? this.config.value : this.textArea.getText();
+        return this.textArea == null ? this.value : this.textArea.getText();
     }
 
     @Override
-    public Object call(String key, Object... params) {
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
         return null;
     }
 
@@ -73,8 +75,7 @@ public class GUITextareaElement extends AbsGUIElement<GUITextareaElementTemplate
         return new GUITextareaElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String value;
+    public static class Config extends GUIElementConfig<String> {
         public Integer columns;
         public Boolean isWrapStyleWord;
         public EventConfig[] events;

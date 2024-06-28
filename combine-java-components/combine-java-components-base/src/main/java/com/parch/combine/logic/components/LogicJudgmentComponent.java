@@ -1,7 +1,7 @@
 package com.parch.combine.logic.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 @Component(key = "judgment", name = "逻辑判断组件", logicConfigClass = LogicJudgmentLogicConfig.class, initConfigClass = LogicJudgmentInitConfig.class)
 @ComponentResult(name = "被执行的组件 ID 集合")
-public class LogicJudgmentComponent extends AbsComponent<LogicJudgmentInitConfig, LogicJudgmentLogicConfig> {
+public class LogicJudgmentComponent extends AbstractComponent<LogicJudgmentInitConfig, LogicJudgmentLogicConfig> {
 
     public LogicJudgmentComponent() {
         super(LogicJudgmentInitConfig.class, LogicJudgmentLogicConfig.class);

@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.enums;
 
 import com.parch.combine.data.base.enums.EnumCacheHandler;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Component(order = 1, key = "enum.get", name = "枚举获取组件", logicConfigClass = DataEnumGetLogicConfig.class, initConfigClass = DataEnumGetInitConfig.class)
 @ComponentResult(name = "枚举项集合")
-public class DataEnumGetComponent extends AbsComponent<DataEnumGetInitConfig, DataEnumGetLogicConfig> {
+public class DataEnumGetComponent extends AbstractComponent<DataEnumGetInitConfig, DataEnumGetLogicConfig> {
 
     public DataEnumGetComponent() {
         super(DataEnumGetInitConfig.class, DataEnumGetLogicConfig.class);

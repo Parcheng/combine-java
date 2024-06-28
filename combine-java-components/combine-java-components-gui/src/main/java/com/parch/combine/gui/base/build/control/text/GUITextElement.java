@@ -1,7 +1,9 @@
 package com.parch.combine.gui.base.build.control.text;
 
-import com.parch.combine.gui.core.element.AbsGUIElement;
+import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JComponent;
@@ -9,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.Map;
 
-public class GUITextElement extends AbsGUIElement<GUITextElementTemplate, GUITextElement.Config> {
+public class GUITextElement extends AbstractGUIComponentElement<GUITextElementTemplate, GUITextElement.Config, String> {
 
     private JLabel text = null;
 
@@ -24,7 +26,7 @@ public class GUITextElement extends AbsGUIElement<GUITextElementTemplate, GUITex
 
         this.text = new JLabel();
         super.loadTemplates(this.text, this.sysTemplate.getText(), this.template.getText());
-        this.text.setText(this.config.text);
+        this.text.setText(this.value);
         super.registerEvents(this.text, this.config.events);
 
         panel.add(this.text);
@@ -40,18 +42,18 @@ public class GUITextElement extends AbsGUIElement<GUITextElementTemplate, GUITex
         if (this.text != null) {
             this.text.setText(data.toString());
         }
-        this.config.text = data.toString();
+        this.value = data.toString();
 
         return true;
     }
 
     @Override
     public Object getValue() {
-        return this.text == null ? this.config.text : this.text.getText();
+        return this.text == null ? this.value : this.text.getText();
     }
 
     @Override
-    public Object call(String key, Object... params) {
+    public Map<String, IGUIElementCallFunction> initCallFunction() {
         return null;
     }
 
@@ -60,8 +62,7 @@ public class GUITextElement extends AbsGUIElement<GUITextElementTemplate, GUITex
         return new GUITextElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config {
-        public String text;
+    public static class Config extends GUIElementConfig<String> {
         public EventConfig[] events;
     }
 }

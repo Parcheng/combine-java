@@ -5,7 +5,7 @@ import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.file.base.operations.copy.FileCopyInitConfig;
 import com.parch.combine.file.base.operations.copy.FileCopyLogicConfig;
 import com.parch.combine.file.base.operations.delete.FileDeleteErrorEnum;
-import com.parch.combine.core.component.base.AbsComponent;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -15,7 +15,7 @@ import java.io.*;
 
 @Component(order = 320, key = "operations.copy", name = "文件/目录拷贝组件", logicConfigClass = FileCopyLogicConfig.class, initConfigClass = FileCopyInitConfig.class)
 @ComponentResult(name = "true 或抛出异常信息")
-public class FileCopyComponent extends AbsComponent<FileCopyInitConfig, FileCopyLogicConfig> {
+public class FileCopyComponent extends AbstractComponent<FileCopyInitConfig, FileCopyLogicConfig> {
 
     public FileCopyComponent() {
         super(FileCopyInitConfig.class, FileCopyLogicConfig.class);

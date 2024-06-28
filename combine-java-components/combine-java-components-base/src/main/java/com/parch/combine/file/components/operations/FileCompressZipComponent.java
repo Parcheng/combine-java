@@ -1,7 +1,7 @@
 package com.parch.combine.file.components.operations;
 
 import com.parch.combine.file.base.helper.FileHelper;
-import com.parch.combine.file.base.operations.compress.AbsFileCompressComponent;
+import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -19,7 +19,7 @@ import java.util.zip.ZipOutputStream;
 
 @Component(order = 310, key = "operations.compress.zip", name = "ZIP压缩解压组件", logicConfigClass = FileCompressZipLogicConfig.class, initConfigClass = FileCompressZipInitConfig.class)
 @ComponentResult(name = "true 或抛出异常信息")
-public class FileCompressZipComponent extends AbsFileCompressComponent<FileCompressZipInitConfig, FileCompressZipLogicConfig> {
+public class FileCompressZipComponent extends AbstractFileCompressComponent<FileCompressZipInitConfig, FileCompressZipLogicConfig> {
 
     public FileCompressZipComponent() {
         super(FileCompressZipInitConfig.class, FileCompressZipLogicConfig.class, FileCompressTypeEnum.ZIP);

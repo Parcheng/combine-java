@@ -18,6 +18,8 @@ public interface IGUIElement {
 
     void setVisible(Boolean isVisible);
 
+    boolean isVisible();
+
     String getScopeKey();
 
     String getDomain();
