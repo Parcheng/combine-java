@@ -5,11 +5,11 @@ import com.parch.combine.gui.core.element.GUIElementManager;
 import javax.swing.JFrame;
 import java.awt.Container;
 
-public class GUISetElementFunction extends GUIAddElementFunction{
+public class GUIResetElementFunction extends GUIAppendElementFunction {
 
-    public GUISetElementFunction(String id, GUIElementManager guiElementManager, Container container, JFrame frame) {
+    public GUIResetElementFunction(String id, GUIElementManager guiElementManager, Container container, JFrame frame) {
         super(id, guiElementManager, container, frame);
-        this.key = "SET_ELEMENT";
+        this.key = "RESET_ELEMENT";
     }
 
     @Override

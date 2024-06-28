@@ -1,8 +1,8 @@
 package com.parch.combine.gui.core.call;
 
-import com.parch.combine.gui.core.call.function.GUIAddElementFunction;
+import com.parch.combine.gui.core.call.function.GUIAppendElementFunction;
 import com.parch.combine.gui.core.call.function.GUICleanElementFunction;
-import com.parch.combine.gui.core.call.function.GUISetElementFunction;
+import com.parch.combine.gui.core.call.function.GUIResetElementFunction;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
 
@@ -19,10 +19,10 @@ public class GUIElementCallFunctionHelper {
         GUIElementManager guiElementManager = GUIElementManagerHandler.getManager(domain);
         Map<String, IGUIElementCallFunction> functionMap = new HashMap<>(8);
 
-        GUIAddElementFunction addElement = new GUIAddElementFunction(id, guiElementManager, container, frame);
+        GUIAppendElementFunction addElement = new GUIAppendElementFunction(id, guiElementManager, container, frame);
         functionMap.put(addElement.getKey(), addElement);
 
-        GUISetElementFunction setElement = new GUISetElementFunction(id, guiElementManager, container, frame);
+        GUIResetElementFunction setElement = new GUIResetElementFunction(id, guiElementManager, container, frame);
         functionMap.put(addElement.getKey(), setElement);
 
         GUICleanElementFunction cleanElement = new GUICleanElementFunction(id, container);

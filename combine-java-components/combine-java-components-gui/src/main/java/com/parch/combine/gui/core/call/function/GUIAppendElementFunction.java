@@ -7,14 +7,14 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import javax.swing.JFrame;
 import java.awt.Container;
 
-public class GUIAddElementFunction extends AbstractGUIElementCallFunction{
+public class GUIAppendElementFunction extends AbstractGUIElementCallFunction{
 
     protected Container container;
     protected JFrame frame;
     protected GUIElementManager guiElementManager;
 
-    public GUIAddElementFunction(String id, GUIElementManager guiElementManager, Container container, JFrame frame) {
-        super(id, "ADD_ELEMENT");
+    public GUIAppendElementFunction(String id, GUIElementManager guiElementManager, Container container, JFrame frame) {
+        super(id, "APPEND_ELEMENT");
         this.guiElementManager = guiElementManager;
         this.container = container;
         this.frame = frame;
