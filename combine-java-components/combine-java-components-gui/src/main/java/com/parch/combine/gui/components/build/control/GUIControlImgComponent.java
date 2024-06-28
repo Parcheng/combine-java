@@ -22,6 +22,7 @@ public class GUIControlImgComponent extends AbstractGUIControlComponent<GUIContr
         GUIControlImgLogicConfig logicConfig = getLogicConfig();
 
         GUIImgElement.Config config = new GUIImgElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.path();
         config.width = logicConfig.width();
         config.height = logicConfig.height();

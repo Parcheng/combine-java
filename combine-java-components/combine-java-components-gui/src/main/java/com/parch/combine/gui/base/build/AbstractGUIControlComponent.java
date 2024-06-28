@@ -1,5 +1,6 @@
 package com.parch.combine.gui.base.build;
 
+import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.GUIElementManager;
@@ -35,6 +36,10 @@ public abstract class AbstractGUIControlComponent<T extends GUIControlInitConfig
 
         this.elementId = getLogicConfig().elementId();
         this.elementId = elementId == null ? getLogicConfig().id() : elementId;
+    }
+
+    protected void initConfig(GUIElementConfig<?> config) {
+        config.visible = getLogicConfig().visible();
     }
 
     public abstract IGUIElement getElement();

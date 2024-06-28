@@ -22,6 +22,7 @@ public class GUIControlCheckboxComponent extends AbstractGUIControlComponent<GUI
         GUIControlCheckboxLogicConfig logicConfig = getLogicConfig();
 
         GUICheckboxElement.Config config = new GUICheckboxElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.values();
         config.options = logicConfig.options();
         config.events = logicConfig.events();

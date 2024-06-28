@@ -24,6 +24,7 @@ public class GUIControlDialogBoxComponent extends AbstractGUIControlComponent<GU
         GUIControlDialogBoxLogicConfig logicConfig = getLogicConfig();
 
         GUIDialogBoxElement.Config config = new GUIDialogBoxElement.Config();
+        super.initConfig(config);
         config.title = logicConfig.title();
         config.width = logicConfig.width();
         config.height = logicConfig.height();

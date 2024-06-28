@@ -23,6 +23,7 @@ public class GUIControlSliderComponent extends AbstractGUIControlComponent<GUICo
         GUIControlSliderLogicConfig logicConfig = getLogicConfig();
 
         GUISliderElement.Config config = new GUISliderElement.Config();
+        super.initConfig(config);
         config.orientation = SliderOrientationEnum.get(logicConfig.orientation()).getValue();
         config.min = logicConfig.min();
         config.max = logicConfig.max();

@@ -22,6 +22,7 @@ public class GUIControlTextComponent extends AbstractGUIControlComponent<GUICont
         GUIControlTextLogicConfig logicConfig = getLogicConfig();
 
         GUITextElement.Config config = new GUITextElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.text();
         config.events = logicConfig.events();
         return new GUITextElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);

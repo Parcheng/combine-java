@@ -22,6 +22,7 @@ public class GUIControlLabelComponent extends AbstractGUIControlComponent<GUICon
         GUIControlLabelLogicConfig logicConfig = getLogicConfig();
 
         GUILabelElement.Config config = new GUILabelElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.text();
         config.events = logicConfig.events();
         return new GUILabelElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);

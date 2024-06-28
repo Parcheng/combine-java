@@ -22,6 +22,7 @@ public class GUIControlInputComponent extends AbstractGUIControlComponent<GUICon
         GUIControlInputLogicConfig logicConfig = getLogicConfig();
 
         GUIInputElement.Config config = new GUIInputElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.text();
         config.columns = logicConfig.columns();
         config.events = logicConfig.events();

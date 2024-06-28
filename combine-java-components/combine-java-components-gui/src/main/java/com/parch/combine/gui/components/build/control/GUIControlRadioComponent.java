@@ -22,6 +22,7 @@ public class GUIControlRadioComponent extends AbstractGUIControlComponent<GUICon
         GUIControlRadioLogicConfig logicConfig = getLogicConfig();
 
         GUIRadioElement.Config config = new GUIRadioElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.value();
         config.options = logicConfig.options();
         config.events = logicConfig.events();

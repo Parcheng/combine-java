@@ -22,6 +22,7 @@ public class GUIControlButtonComponent extends AbstractGUIControlComponent<GUICo
         GUIControlButtonLogicConfig logicConfig = getLogicConfig();
 
         GUIButtonElement.Config config = new GUIButtonElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.text();
         config.events = logicConfig.events();
         return new GUIButtonElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);

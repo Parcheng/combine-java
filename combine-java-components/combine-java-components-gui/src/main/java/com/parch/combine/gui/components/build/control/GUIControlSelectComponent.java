@@ -22,6 +22,7 @@ public class GUIControlSelectComponent extends AbstractGUIControlComponent<GUICo
         GUIControSelectLogicConfig logicConfig = getLogicConfig();
 
         GUISelectElement.Config config = new GUISelectElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.value();
         config.options = logicConfig.options();
         config.events = logicConfig.events();

@@ -22,6 +22,7 @@ public class GUIControlHtmlComponent extends AbstractGUIControlComponent<GUICont
         GUIControlHtmlLogicConfig logicConfig = getLogicConfig();
 
         GUIHtmlElement.Config config = new GUIHtmlElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.path();
         config.errorText = logicConfig.errorText();
         config.events = logicConfig.events();

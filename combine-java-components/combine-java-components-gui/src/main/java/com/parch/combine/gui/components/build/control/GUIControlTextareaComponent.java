@@ -22,6 +22,7 @@ public class GUIControlTextareaComponent extends AbstractGUIControlComponent<GUI
         GUIControlTextareaLogicConfig logicConfig = getLogicConfig();
 
         GUITextareaElement.Config config = new GUITextareaElement.Config();
+        super.initConfig(config);
         config.value = logicConfig.value();
         config.columns = logicConfig.columns();
         config.isWrapStyleWord = logicConfig.isWrapStyleWord();
