@@ -9,6 +9,6 @@ public interface GUIOperationCallLogicConfig extends GUIOperationConfig {
     @Field(key = "key", name = "函数KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     String key();
 
-    @Field(key = "params", name = "函数参数", type = FieldTypeEnum.ANY, isRequired = true)
+    @Field(key = "params", name = "函数参数", type = FieldTypeEnum.ANY, isArray = true)
     Object[] params();
 }

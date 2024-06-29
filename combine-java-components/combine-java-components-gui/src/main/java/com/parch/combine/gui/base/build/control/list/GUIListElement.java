@@ -125,7 +125,7 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
 
     @Override
     public Map<String, IGUIElementCallFunction> initCallFunction() {
-        return GUIElementCallFunctionHelper.buildElementFunction(this.id, this.domain, this.list, this.frame);
+        return GUIElementCallFunctionHelper.buildElementFunction(this);
     }
 
     public static class Config extends GUIElementConfig<Object[]> {

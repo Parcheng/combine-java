@@ -14,4 +14,8 @@ public class GUIElementManager {
     public IGUIElement get(String id) {
         return elementMap.get(id);
     }
+
+    public boolean isExist(String id) {
+        return elementMap.containsKey(id);
+    }
 }

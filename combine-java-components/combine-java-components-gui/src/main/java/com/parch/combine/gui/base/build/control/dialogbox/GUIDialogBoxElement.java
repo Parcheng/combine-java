@@ -67,7 +67,7 @@ public class GUIDialogBoxElement extends AbstractGUIWindowElement<GUIDialogBoxEl
 
     @Override
     public Map<String, IGUIElementCallFunction> initCallFunction() {
-        return GUIElementCallFunctionHelper.buildElementFunction(this.id, this.domain, this.container, this.frame);
+        return GUIElementCallFunctionHelper.buildElementFunction(this);
     }
 
     public static class Config extends GUIElementConfig<Object> {

@@ -2,6 +2,7 @@ package com.parch.combine.gui.core.element;
 
 import javax.swing.JFrame;
 import javax.swing.JComponent;
+import java.awt.Container;
 import java.util.Map;
 
 public interface IGUIElement {
@@ -19,6 +20,10 @@ public interface IGUIElement {
     void setVisible(Boolean isVisible);
 
     boolean isVisible();
+
+    String getId();
+
+    Container getContainer();
 
     String getScopeKey();
 

@@ -3,11 +3,17 @@
 **JDK版本：8**<br>
 <br>
 
-**工程包含四个模块：**<br>
+**工程结果：**<br>
 **combine-java-core**：核心包，所有的核心功能都在这里<br>
-**combine-java-components**：系统自带的组件包，封装了一些公共组件<br>
-**combine-java-ui-elements**：系统自带的UI元素组件包，封装了一些公共UI元素组件<br>
-**combine-java-spring-web**：快速使用模块，内置了 SpringBoot3，项目直接通过 pom 引入该模块即可快速使用。该工程可以直接启动，仅提供了 API 相关的页面和接口<br>
+**combine-java-components**：系统组件包POM工程<br>
+**&emsp;&emsp; combine-java-components-base**: 基础组件包<br>
+**&emsp;&emsp; combine-java-components-gui**: SWING视图组件包<br>
+**&emsp;&emsp; combine-java-components-mysql**: MySql数据库组件包<br>
+**&emsp;&emsp; combine-java-components-redis**: Redis组件包<br>
+**&emsp;&emsp; combine-java-components-rocketmq**: RocketMQ组件包<br>
+**combine-java-ui-html**：系统自带的UI页面组件包，封装了一些公共UI元素组件<br>
+**combine-java-starter**：快速使用模块，包含了组件核心包、所有系统组件包、UI页面组件包，通过 POM 引入后即可使用全部功能<br>
+**combine-java-spring-web**：内置了 SpringBoot 的快速使用模块，项目直接通过 pom 引入后即可快速使用。该工程可以直接启动，仅提供了 API 相关的页面和接口<br>
 <br>
 
 **本地启动并访问 API：**<br>

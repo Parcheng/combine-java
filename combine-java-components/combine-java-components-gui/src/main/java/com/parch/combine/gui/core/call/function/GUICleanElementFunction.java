@@ -1,23 +1,23 @@
 package com.parch.combine.gui.core.call.function;
 
+import com.parch.combine.gui.core.element.IGUIElement;
+
 import java.awt.Container;
 
 public class GUICleanElementFunction extends AbstractGUIElementCallFunction{
 
-    protected Container container;
-
-    public GUICleanElementFunction(String id, Container container) {
-        super(id, "CLEAN_ELEMENT");
-        this.container = container;
+    public GUICleanElementFunction(String id, IGUIElement element) {
+        super(id, "CLEAN_ELEMENT", element);
     }
 
     @Override
     public Object execute(Object... params) {
-        if (container == null) {
+        if (element.getContainer() == null) {
             return false;
         }
 
-        container.removeAll();
+        element.getContainer().removeAll();
+        element.getContainer().repaint();
         return true;
     }
 }

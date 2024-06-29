@@ -20,13 +20,17 @@ public abstract class AbstractGUIControlComponent<T extends GUIControlInitConfig
     @Override
     public DataResult execute() {
         initGuiElementManager();
+
+        if (guiElementManager.isExist(elementId) && !getLogicConfig().replace()) {
+            return DataResult.success(true);
+        }
+
         IGUIElement element = this.getElement();
         if (element == null) {
             return DataResult.fail(GUIControlErrorEnum.FAIL);
         }
 
         guiElementManager.register(elementId, element);
-
         return DataResult.success(true);
     }
 
