@@ -66,10 +66,6 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
         GUIEventHandler.bindings(component, events, this);
     }
 
-    public String getId() {
-        return id;
-    }
-
     @Override
     public final Object call(String key, Object... params) {
         if (callFunctionMap == null || key == null) {
@@ -85,6 +81,16 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
     }
 
     public abstract Map<String, IGUIElementCallFunction> initCallFunction();
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public Container getContainer() {
+        return container;
+    }
 
     @Override
     public String getScopeKey() {

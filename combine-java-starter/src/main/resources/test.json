@@ -35,9 +35,32 @@
           }
         }
       },{
+        "type": "gui.build.control.button",
+        "elementId": "button-call",
+        "text": "CALL",
+        "events": {
+          "eventType": "click",
+          "triggerType": "COMPONENT",
+          "componentTrigger": {
+            "key": "CALL_TEST",
+            "componentIds": ["testCall"],
+            "params": {}
+          }
+        }
+      },{
+        "id": "testCall",
+        "type": "call.flow",
+        "url": "element/opt",
+        "params": {},
+        "flags": "STATIC"
+      },{
         "type": "gui.build.control.text",
         "elementId": "text",
         "text": "test111111111111111111111111111111111111111111111111111111111111111111111"
+      },{
+        "type": "gui.build.control.text",
+        "elementId": "text-2",
+        "text": "test222222222222222222222222222222222222222222222222222222222222222222222"
       },{
         "type": "gui.build.control.label",
         "elementId": "label",
@@ -68,6 +91,20 @@
           "dataField": "text",
           "elementId": "panel-text"
         }
+      },{
+        "type": "gui.build.control.text",
+        "elementId": "panel-text-2",
+        "text": "未知2222222222222"
+      },{
+        "type": "gui.build.control.panel",
+        "elementId": "panel-2",
+        "value": { "text": "panelyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" },
+        "bodyElements": {
+          "key": "text",
+          "dataField": "text",
+          "elementId": "panel-text-2"
+        },
+        "visible": false
       },{
         "type": "gui.build.control.slider",
         "elementId": "slider",
@@ -115,9 +152,54 @@
         "distanceTop": 30,
         "distanceLeft": 100,
         "elements": {
-          "center": ["input", "select", "radio", "checkbox", "button", "text",
-            "label","textarea", "list", "panel", "slider", "img", "menu", "html", "dialogBox", "text2"]
+          "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label",
+            "textarea", "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2"]
         }
+      }
+    ],
+    "element/opt": [
+      {
+        "type": "gui.build.control.text",
+        "elementId": "element-set-text",
+        "text": "未知"
+      },{
+        "type": "gui.build.control.text",
+        "elementId": "element-add-text",
+        "text": "2222222222222222222222222222222222222"
+      },{
+        "id": "element-text-value",
+        "type": "gui.operations.value.get",
+        "elementId": "text"
+      }, {
+        "type": "gui.operations.value.set",
+        "elementId": "element-set-text",
+        "value": "#{$r.element-text-value}"
+      },{
+        "type": "gui.operations.value.set",
+        "elementId": "text-2",
+        "value": "#{$r.element-text-value}"
+      },{
+        "type": "gui.operations.call",
+        "elementId": "panel",
+        "key": "RESET_ELEMENT",
+        "params": ["element-set-text"]
+      },{
+        "type": "gui.operations.call",
+        "elementId": "panel",
+        "key": "APPEND_ELEMENT",
+        "params": ["element-add-text"]
+      },{
+        "type": "gui.operations.call",
+        "elementId": "list",
+        "key": "CLEAN_ELEMENT"
+      },{
+        "type": "gui.operations.visible",
+        "elementId": "panel-2",
+        "visible": true
+      },{
+        "type": "gui.operations.visible",
+        "elementId": "input",
+        "visible": false
       }
     ]
   }
