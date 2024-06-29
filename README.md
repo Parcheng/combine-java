@@ -12,7 +12,7 @@
 **&nbsp;-&nbsp;combine-java-components-redis**: 系统内置组件 - Redis组件包<br>
 **&nbsp;-&nbsp;combine-java-components-rocketmq**: 系统内置组件 - RocketMQ组件包<br>
 **combine-java-ui-html**：系统自带的UI页面组件包，封装了一些公共UI元素组件<br>
-**combine-java-starter**：快速使用模块，包含了组件核心包、所有系统组件包、UI页面组件包，通过 POM 引入后即可使用全部功能<br>
+**combine-java-starter**：快速使用模块，包含了核心包、所有组件包、页面组件包，通过 POM 引入后即可使用全部功能<br>
 **combine-java-spring-web**：内置了 SpringBoot 的快速使用模块，项目直接通过 pom 引入后即可快速使用。该工程可以直接启动，仅提供了 API 相关的页面和接口<br>
 <br>
 
