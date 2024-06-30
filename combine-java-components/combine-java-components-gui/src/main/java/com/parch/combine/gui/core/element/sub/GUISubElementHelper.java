@@ -6,7 +6,9 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.GUIEventHandler;
 
 import javax.swing.JComponent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GUISubElementHelper {
@@ -51,10 +53,26 @@ public class GUISubElementHelper {
         return elements;
     }
 
+    public static JComponent[] copyAndBuild(Object data, GUISubElementConfig[] newSubElements, GUISubElementConfig[] sourceSubElements, IGUIElement element) {
+        for (int i = 0; i < sourceSubElements.length; i++) {
+            if (newSubElements.length == i) {
+                break;
+            }
+
+            GUISubElementConfig configItem = sourceSubElements[i];
+            newSubElements[i] = GUISubElementConfig.copy(configItem);
+        }
+        return GUISubElementHelper.build(data, newSubElements, element);
+    }
+
     public static JComponent[] build(Object data, GUISubElementConfig[] subElements, IGUIElement element) {
         JComponent[] body = new JComponent[subElements.length];
         for (int i = 0; i < subElements.length; i++) {
             GUISubElementConfig config = subElements[i];
+            if (config == null) {
+                continue;
+            }
+
             Object itemData = null;
             if (data != null) {
                 if (CheckEmptyUtil.isEmpty(config.dataField)) {
@@ -110,6 +128,15 @@ public class GUISubElementHelper {
             }
 
             data.put(itemConfig.key, itemData);
+        }
+
+        return data;
+    }
+
+    public static List<Object> getValueList(GUISubElementConfig[][] elements) {
+        List<Object> data = new ArrayList<>();
+        for (GUISubElementConfig[] item : elements) {
+            data.add(getValue(item));
         }
 
         return data;

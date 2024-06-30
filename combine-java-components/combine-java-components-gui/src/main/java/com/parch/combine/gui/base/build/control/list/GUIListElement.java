@@ -13,7 +13,6 @@ import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListCellRenderer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -54,12 +53,8 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
                 Object dataItem = this.value[i];
 
                 this.elementConfigs[i] = new GUISubElementConfig[elementConfigLength];
-                for (int j = 0; j < this.config.elementConfigs.length; j++) {
-                    GUISubElementConfig configItem = this.config.elementConfigs[j];
-                    this.elementConfigs[i][j] = GUISubElementConfig.copy(configItem);
-                }
+                JComponent[] body = GUISubElementHelper.copyAndBuild(dataItem, this.elementConfigs[i], this.config.elementConfigs, this);
 
-                JComponent[] body = GUISubElementHelper.build(dataItem, this.elementConfigs[i], this);
                 JPanel item = new JPanel();
                 for (JComponent jComponent : body) {
                     item.add(jComponent);
@@ -88,12 +83,6 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
         Collection<?> listData = (Collection<?>) data;
         this.value = listData.toArray(new Object[0]);
 
-        int i = 0;
-        for (Object dataItem : listData) {
-            this.value[i] = dataItem;
-            i++;
-        }
-
         if (panel != null) {
             panel.removeAll();
             panel.add(buildItem());
@@ -110,11 +99,7 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
             return Arrays.asList(this.value);
         }
 
-        List<Object> data = new ArrayList<>();
-        for (GUISubElementConfig[] item : this.elementConfigs) {
-            data.add(GUISubElementHelper.getValue(item));
-        }
-
+        List<Object> data = GUISubElementHelper.getValueList(this.elementConfigs);
         return data.size() > 0 ? data : null;
     }
 

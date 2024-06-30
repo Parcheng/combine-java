@@ -1,4 +1,4 @@
-package com.parch.combine.gui.base.build.control.text;
+package com.parch.combine.gui.base.build.control.from;
 
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
@@ -9,12 +9,12 @@ import com.parch.combine.gui.core.event.EventConfig;
 import javax.swing.*;
 import java.util.Map;
 
-public class GUITextElement extends AbstractGUIComponentElement<GUITextElementTemplate, GUITextElement.Config, String> {
+public class GUIFromElement extends AbstractGUIComponentElement<GUIFromElementTemplate, GUIFromElement.Config, String> {
 
     private JLabel text = null;
 
-    public GUITextElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUITextElementTemplate template, Config config) {
-        super(scopeKey, domain, elementId, data, "text", template, config, GUITextElementTemplate.class);
+    public GUIFromElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIFromElementTemplate template, Config config) {
+        super(scopeKey, domain, elementId, data, "text", template, config, GUIFromElementTemplate.class);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class GUITextElement extends AbstractGUIComponentElement<GUITextElementTe
 
     @Override
     public IGUIElement copy() {
-        return new GUITextElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
+        return new GUIFromElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
     public static class Config extends GUIElementConfig<String> {
