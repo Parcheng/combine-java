@@ -7,6 +7,8 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 
+import java.util.List;
+
 public class GUITableElementTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
@@ -24,10 +26,10 @@ public class GUITableElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig header;
 
-    @Field(key = "cell", name = "单元格样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "cell", name = "单元格样式配置", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig cell;
+    private List<ElementConfig> cells;
 
     public ElementConfig getExternal() {
         return external;
@@ -53,11 +55,11 @@ public class GUITableElementTemplate {
         this.table = table;
     }
 
-    public ElementConfig getCell() {
-        return cell;
+    public List<ElementConfig> getCells() {
+        return cells;
     }
 
-    public void setCell(ElementConfig cell) {
-        this.cell = cell;
+    public void setCells(List<ElementConfig> cells) {
+        this.cells = cells;
     }
 }

@@ -20,16 +20,31 @@
   },
   "header": {
     "border": {
-      "size": 0
+      "size": 0,
+      "left": 8
     },
+    "bgColor": "#c0c0c0",
+    "opaque": true,
     "font": {
       "bold": true,
       "size": 14
     }
   },
-  "cell": {
-    "border": {
-      "size": 0
+  "cells": [
+    {
+      "border": {
+        "size": 0,
+        "left": 8
+      },
+      "opaque": true,
+      "bgColor": "#DCDCDC"
+    },{
+      "border": {
+        "size": 0,
+        "left": 8
+      },
+      "opaque": true,
+      "bgColor": "#FFFFFF"
     }
-  }
+  ]
 }

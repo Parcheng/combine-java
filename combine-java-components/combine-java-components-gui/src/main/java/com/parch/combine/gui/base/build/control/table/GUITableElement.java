@@ -7,20 +7,17 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
-import com.parch.combine.gui.core.event.EventConfig;
-
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JComponent;
+import javax.swing.JTable;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
-import java.awt.*;
+import java.awt.Component;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 public class GUITableElement extends AbstractGUIComponentElement<GUITableElementTemplate, GUITableElement.Config, Map<String, Object>[]> {
 
@@ -61,12 +58,19 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
     }
 
     private TableCellRenderer getCellRenderer() {
+        int sysCellCount = sysTemplate.getCells() == null ? 0 : sysTemplate.getCells().size();
+        int cellCount = template.getCells() == null ? 0 : template.getCells().size();
         return new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JComponent component = (JComponent) value;
                 if (component != null) {
-                    loadTemplates(component, sysTemplate.getCell(), template.getCell());
+                    if (row == 0) {
+                        loadTemplates(component, sysTemplate.getHeader(), template.getHeader());
+                    } else {
+                        loadTemplates(component, sysCellCount == 0 ? null : sysTemplate.getCells().get(row % sysCellCount),
+                                cellCount == 0 ? null : template.getCells().get(row % cellCount));
+                    }
                 }
                 return component;
             }
@@ -79,7 +83,6 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
         Object[] header = new Object[this.config.headNames.length];
         for (int j = 0; j < this.config.headNames.length; j++) {
             JLabel headerCell = new JLabel(this.config.headNames[j]);
-            super.loadTemplates(headerCell, this.sysTemplate.getHeader(), this.template.getHeader());
             header[j] = headerCell;
         }
         model.addRow(header);

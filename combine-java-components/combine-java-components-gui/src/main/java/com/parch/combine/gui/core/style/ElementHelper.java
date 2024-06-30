@@ -30,7 +30,7 @@ public class ElementHelper {
         if (CheckEmptyUtil.isNotEmpty(elementConfig.getAlignmentY())) {
             component.setAlignmentY(AlignmentYEnum.get(elementConfig.getAlignmentY()).getValue());
         }
-        if (elementConfig.getOpaque() != null && !elementConfig.getOpaque()) {
+        if (elementConfig.getOpaque() != null) {
             component.setOpaque(elementConfig.getOpaque());
         }
 
