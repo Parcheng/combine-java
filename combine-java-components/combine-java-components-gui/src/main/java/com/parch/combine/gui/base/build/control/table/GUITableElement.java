@@ -12,11 +12,15 @@ import com.parch.combine.gui.core.event.EventConfig;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 public class GUITableElement extends AbstractGUIComponentElement<GUITableElementTemplate, GUITableElement.Config, Map<String, Object>[]> {
 
@@ -43,16 +47,42 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
 
         // 创建表格并将模型设置为默认
         JTable table = new JTable(model);
+        table.setShowGrid(false);
+        if (this.config.rowHeight != null) {
+            table.setRowHeight(this.config.rowHeight);
+        }
+        if (this.config.rowMargin != null) {
+            table.setRowMargin(this.config.rowMargin);
+        }
         super.loadTemplates(table, this.sysTemplate.getTable(), this.template.getTable());
-
-        JTableHeader header = table.getTableHeader();
-        super.loadTemplates(header, this.sysTemplate.getHeader(), this.template.getHeader());
+        table.setDefaultRenderer(Object.class, this.getCellRenderer());
 
         return table;
     }
 
+    private TableCellRenderer getCellRenderer() {
+        return new TableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JComponent component = (JComponent) value;
+                if (component != null) {
+                    loadTemplates(component, sysTemplate.getCell(), template.getCell());
+                }
+                return component;
+            }
+        };
+    }
+
     private void buildHeader(DefaultTableModel model) {
         model.setColumnIdentifiers(this.config.headNames);
+
+        Object[] header = new Object[this.config.headNames.length];
+        for (int j = 0; j < this.config.headNames.length; j++) {
+            JLabel headerCell = new JLabel(this.config.headNames[j]);
+            super.loadTemplates(headerCell, this.sysTemplate.getHeader(), this.template.getHeader());
+            header[j] = headerCell;
+        }
+        model.addRow(header);
     }
 
     private void buildBody(DefaultTableModel model) {
@@ -64,6 +94,8 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
         int colCount = this.config.headNames.length;
         int colConfigCount = this.config.columnConfigs.length;
         this.elementConfigs = new GUISubElementConfig[this.value.length][];
+
+        JLabel emptyLabel = new JLabel(CheckEmptyUtil.EMPTY);
 
         for (int i = 0; i < dataCount; i++) {
             Map<String, Object> dataItem = this.value[i];
@@ -78,7 +110,7 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
                 if (j < colConfigCount) {
                     row[j] = body[j];
                 } else {
-                    row[j] = CheckEmptyUtil.EMPTY;
+                    row[j] = emptyLabel;
                 }
             }
 
@@ -91,7 +123,7 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
             for (int i = 0; i < fillRowCount; i++) {
                 Object[] row = new Object[colCount];
                 for (int j = 0; j < colCount; j++) {
-                    row[j] = CheckEmptyUtil.EMPTY;
+                    row[j] = emptyLabel;
                 }
                 model.addRow(row);
             }
@@ -151,6 +183,8 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
 
     public static class Config extends GUIElementConfig<Map<String, Object>[]> {
         public Integer minRow;
+        public Integer rowHeight;
+        public Integer rowMargin;
         public String[] headNames;
         public GUISubElementConfig[] columnConfigs;
     }

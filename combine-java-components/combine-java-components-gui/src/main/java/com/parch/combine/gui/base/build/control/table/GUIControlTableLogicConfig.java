@@ -16,6 +16,12 @@ public interface GUIControlTableLogicConfig extends GUIControlLogicConfig {
     @Field(key = "minRow", name = "最小显示行", type = FieldTypeEnum.NUMBER)
     Integer minRow();
 
+    @Field(key = "rowHeight", name = "行高度", type = FieldTypeEnum.NUMBER)
+    Integer rowHeight();
+
+    @Field(key = "rowMargin", name = "行内容边距", type = FieldTypeEnum.NUMBER)
+    Integer rowMargin();
+
     @Field(key = "headNames", name = "表格头", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
     String[] headNames();
 

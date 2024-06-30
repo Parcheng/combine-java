@@ -144,6 +144,26 @@
         "visible": true,
         "bodyElements": { "elementId": "list-text" }
       },{
+        "type": "gui.build.control.text",
+        "elementId": "table-td",
+        "text": "空"
+      },{
+        "type": "gui.build.control.table",
+        "elementId": "table",
+        "minRow": 10,
+        "rowHeight": 30,
+        "value": [
+          { "id": 1, "name": "11111", "desc": "XXXXXX" },
+          { "id": 2, "name": "22222", "desc": "YYYYYY" },
+          { "id": 3, "name": "33333", "desc": "ZZZZZZ" }
+        ],
+        "headNames": ["ID", "名称", "描述"],
+        "rowElements": [
+          {"dataField": "id", "elementId": "table-td"},
+          {"dataField": "name", "elementId": "table-td"},
+          {"dataField": "desc", "elementId": "table-td"}
+        ]
+      },{
         "type": "gui.build",
         "title": "test",
         "icon": "1.png",
@@ -153,7 +173,8 @@
         "distanceLeft": 100,
         "elements": {
           "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label",
-            "textarea", "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2"]
+            "textarea", "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table"
+          ]
         }
       }
     ],

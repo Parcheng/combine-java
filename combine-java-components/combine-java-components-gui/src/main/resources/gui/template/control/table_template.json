@@ -6,10 +6,30 @@
       "type": "BOX",
       "axis": "X"
     },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
     "opaque": false
   },
   "table": {
+    "opaque": false
   },
   "header": {
+    "border": {
+      "size": 0
+    },
+    "font": {
+      "bold": true,
+      "size": 14
+    }
+  },
+  "cell": {
+    "border": {
+      "size": 0
+    }
   }
 }

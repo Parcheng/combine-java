@@ -1,8 +1,11 @@
-package com.parch.combine.gui.base.build.control.table;
+package com.parch.combine.gui.components.build.control;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.gui.base.build.AbstractGUIControlComponent;
+import com.parch.combine.gui.base.build.control.table.GUIControlTableInitConfig;
+import com.parch.combine.gui.base.build.control.table.GUIControlTableLogicConfig;
+import com.parch.combine.gui.base.build.control.table.GUITableElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
@@ -24,6 +27,9 @@ public class GUIControlTableComponent extends AbstractGUIControlComponent<GUICon
         super.initConfig(config);
         config.value = logicConfig.value();
         config.headNames = logicConfig.headNames();
+        config.minRow = logicConfig.minRow();
+        config.rowHeight = logicConfig.rowHeight();
+        config.rowMargin = logicConfig.rowMargin();
 
         GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.rowElements());
         if (elements == null) {

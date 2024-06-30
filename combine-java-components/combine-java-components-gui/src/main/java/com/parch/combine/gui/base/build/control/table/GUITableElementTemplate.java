@@ -24,6 +24,11 @@ public class GUITableElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig header;
 
+    @Field(key = "cell", name = "单元格样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig cell;
+
     public ElementConfig getExternal() {
         return external;
     }
@@ -46,5 +51,13 @@ public class GUITableElementTemplate {
 
     public void setTable(ElementConfig table) {
         this.table = table;
+    }
+
+    public ElementConfig getCell() {
+        return cell;
+    }
+
+    public void setCell(ElementConfig cell) {
+        this.cell = cell;
     }
 }
