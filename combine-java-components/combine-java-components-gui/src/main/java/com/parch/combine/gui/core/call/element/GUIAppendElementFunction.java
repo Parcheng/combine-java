@@ -1,4 +1,4 @@
-package com.parch.combine.gui.core.call.function;
+package com.parch.combine.gui.core.call.element;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.GUIElementManager;
