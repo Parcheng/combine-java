@@ -25,6 +25,8 @@ public class GUIControlInputComponent extends AbstractGUIControlComponent<GUICon
         super.initConfig(config);
         config.value = logicConfig.text();
         config.columns = logicConfig.columns();
+        config.prefix = logicConfig.prefix();
+        config.suffix = logicConfig.suffix();
         config.events = logicConfig.events();
         return new GUIInputElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }

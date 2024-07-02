@@ -14,6 +14,12 @@ public interface GUIControlInputLogicConfig extends GUIControlLogicConfig {
     @Field(key = "columns", name = "输入框长度（单位:字符数）", type = FieldTypeEnum.NUMBER, defaultValue = "15")
     Integer columns();
 
+    @Field(key = "prefix", name = "前缀", type = FieldTypeEnum.TEXT)
+    String prefix();
+
+    @Field(key = "suffix", name = "后缀", type = FieldTypeEnum.TEXT)
+    String suffix();
+
     @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
