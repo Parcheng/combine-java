@@ -1,4 +1,4 @@
-package com.parch.combine.gui.base.build.control.button;
+package com.parch.combine.gui.base.build.control.buttons;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldMapValue;
@@ -10,7 +10,7 @@ import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 import java.util.Map;
 
-public class GUIButtonElementTemplate {
+public class GUIButtonGroupElementTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
@@ -26,6 +26,7 @@ public class GUIButtonElementTemplate {
     @FieldMapValue(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private Map<String, ElementConfig> buttonTypes;
+
     public ElementConfig getExternal() {
         return external;
     }

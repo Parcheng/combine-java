@@ -1,21 +1,18 @@
-package com.parch.combine.rocketmq.base.consumer;
+package com.parch.combine.rabbitmq.base.subscribe;
 
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.rocketmq.base.RocketMQLogicConfig;
+import com.parch.combine.rabbitmq.base.RabbitMQLogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-public interface RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
+public interface RabbitMQSubscribeLogicConfig extends RabbitMQLogicConfig {
 
     @Field(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT)
     @FieldDesc("组件自动生成")
     String listenFlowKey();
 
-    @Field(key = "consumerGroup", name = "消费者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")
-    String consumerGroup();
-
-    @Field(key = "expression", name = "表达式", type = FieldTypeEnum.TEXT, defaultValue = "*")
-    String expression();
+    @Field(key = "count", name = "拉取消息数量", type = FieldTypeEnum.NUMBER, defaultValue = "5")
+    Integer count();
 
     @Field(key = "components", name = "监听到消息后要执行的组件集合", type = FieldTypeEnum.COMPONENT, isArray = true, isRequired = true)
     String[] components();

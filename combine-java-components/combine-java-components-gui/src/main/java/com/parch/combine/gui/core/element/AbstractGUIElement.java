@@ -62,6 +62,10 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
         GUIElementTemplateHelper.loadTemplates(component, configs);
     }
 
+    protected void loadFancyTemplates(JComponent component, String key, Map<String, ElementConfig>... configs) {
+        GUIElementTemplateHelper.loadFancyTemplates(component, key, configs);
+    }
+
     protected void registerEvents(JComponent component, EventConfig[] events) {
         GUIEventHandler.bindings(component, events, this);
     }
