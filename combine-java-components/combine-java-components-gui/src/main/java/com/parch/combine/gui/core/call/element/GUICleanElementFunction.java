@@ -1,8 +1,6 @@
-package com.parch.combine.gui.core.call.function;
+package com.parch.combine.gui.core.call.element;
 
 import com.parch.combine.gui.core.element.IGUIElement;
-
-import java.awt.Container;
 
 public class GUICleanElementFunction extends AbstractGUIElementCallFunction{
 

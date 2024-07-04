@@ -19,6 +19,11 @@ public class GUIInputElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig input;
 
+    @Field(key = "symbol", name = "前后缀元素样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig symbol;
+
     public ElementConfig getExternal() {
         return external;
     }
@@ -33,5 +38,13 @@ public class GUIInputElementTemplate {
 
     public void setInput(ElementConfig input) {
         this.input = input;
+    }
+
+    public ElementConfig getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(ElementConfig symbol) {
+        this.symbol = symbol;
     }
 }

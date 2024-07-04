@@ -8,6 +8,7 @@ import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 
 import javax.swing.JTextField;
+import javax.swing.JLabel;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import java.util.Map;
@@ -25,6 +26,8 @@ public class GUIInputElement extends AbstractGUIComponentElement<GUIInputElement
         JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
+        this.addSymbol(panel, this.config.prefix);
+
         this.input = new JTextField();
         super.loadTemplates(this.input, this.sysTemplate.getInput(), this.template.getInput());
         super.registerEvents(this.input, this.config.events);
@@ -37,7 +40,19 @@ public class GUIInputElement extends AbstractGUIComponentElement<GUIInputElement
         }
 
         panel.add(this.input);
+
+        this.addSymbol(panel, this.config.suffix);
         return panel;
+    }
+
+    public void addSymbol(JPanel panel, String text) {
+        if (CheckEmptyUtil.isEmpty(text)) {
+            return;
+        }
+
+        JLabel label = new JLabel(text);
+        super.loadTemplates(label, this.sysTemplate.getSymbol(), this.template.getSymbol());
+        panel.add(label);
     }
 
     @Override
@@ -72,5 +87,7 @@ public class GUIInputElement extends AbstractGUIComponentElement<GUIInputElement
     public static class Config extends GUIElementConfig<String> {
         public Integer columns;
         public EventConfig[] events;
+        public String prefix;
+        public String suffix;
     }
 }

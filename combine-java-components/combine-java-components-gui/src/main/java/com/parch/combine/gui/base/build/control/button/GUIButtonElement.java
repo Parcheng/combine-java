@@ -1,10 +1,12 @@
 package com.parch.combine.gui.base.build.control.button;
 
+import com.parch.combine.gui.core.GUIElementTemplateHelper;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
+import com.parch.combine.gui.core.event.GUIEventHandler;
 
 import javax.swing.JComponent;
 import javax.swing.JButton;
@@ -20,12 +22,14 @@ public class GUIButtonElement extends AbstractGUIComponentElement<GUIButtonEleme
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public JComponent build() {
         JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
         this.button = new JButton();
         super.loadTemplates(this.button, this.sysTemplate.getButton(), this.template.getButton());
+        super.loadFancyTemplates(this.button, this.config.type, this.sysTemplate.getButtonTypes(), this.template.getButtonTypes());
         this.button.setText(this.value);
         super.registerEvents(this.button, this.config.events);
 
@@ -62,6 +66,7 @@ public class GUIButtonElement extends AbstractGUIComponentElement<GUIButtonEleme
     }
 
     public static class Config extends GUIElementConfig<String> {
+        public String type;
         public EventConfig[] events;
     }
 }

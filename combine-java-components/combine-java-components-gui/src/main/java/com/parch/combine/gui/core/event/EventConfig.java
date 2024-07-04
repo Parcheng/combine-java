@@ -1,6 +1,7 @@
 package com.parch.combine.gui.core.event;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
@@ -9,6 +10,10 @@ import com.parch.combine.gui.core.event.trigger.DialogBoxTriggerProcessor;
 import com.parch.combine.gui.core.event.trigger.GUITriggerTypeEnum;
 
 public class EventConfig {
+
+    @Field(key = "eventKey", name = "事件ID", type = FieldTypeEnum.TEXT)
+    @FieldDesc("用于引用")
+    private String eventKey;
 
     @Field(key = "eventType", name = "事件类型", type = FieldTypeEnum.SELECT, isRequired = true)
     @FieldSelect(enumClass = GUIEventTypeEnum.class)
@@ -56,5 +61,13 @@ public class EventConfig {
 
     public void setDialogBoxTrigger(DialogBoxTriggerProcessor.Config dialogBoxTrigger) {
         this.dialogBoxTrigger = dialogBoxTrigger;
+    }
+
+    public String getEventKey() {
+        return eventKey;
+    }
+
+    public void setEventKey(String eventKey) {
+        this.eventKey = eventKey;
     }
 }

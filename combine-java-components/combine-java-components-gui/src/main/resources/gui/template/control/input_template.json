@@ -31,5 +31,17 @@
       "left": 5,
       "right": 5
     }
+  },
+  "Symbol": {
+    "alignmentX": "LEFT",
+    "alignmentY": "TOP",
+    "opaque": false,
+    "border": {
+      "size": 0,
+      "top": 5,
+      "bottom": 5,
+      "left": 5,
+      "right": 5
+    }
   }
 }

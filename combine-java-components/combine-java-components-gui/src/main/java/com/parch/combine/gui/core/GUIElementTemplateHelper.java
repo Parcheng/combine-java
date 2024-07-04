@@ -71,4 +71,17 @@ public class GUIElementTemplateHelper {
             ElementHelper.set(component, config);
         }
     }
+
+    public static void loadFancyTemplates(JComponent component, String key, Map<String, ElementConfig>... configs) {
+        if (component == null || configs == null || configs.length == 0 || CheckEmptyUtil.isEmpty(key)) {
+            return;
+        }
+
+        for (Map<String, ElementConfig> configMap : configs) {
+            ElementConfig config = configMap.get(key);
+            if (config != null) {
+                ElementHelper.set(component, config);
+            }
+        }
+    }
 }

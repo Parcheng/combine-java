@@ -1,6 +1,8 @@
 package com.parch.combine.gui.base.build.control.checkbox;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
+import com.parch.combine.gui.core.call.GUIElementCallFunctionHelper;
+import com.parch.combine.gui.core.call.option.IGUIOptionHandler;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
@@ -18,9 +20,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxElementTemplate, GUICheckboxElement.Config, String[]> {
+public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxElementTemplate, GUICheckboxElement.Config, String[]> implements IGUIOptionHandler {
 
-    private JCheckBox[] checkbox = null;
+    private JPanel panel = null;
+    private List<JCheckBox> checkbox = null;
+    private List<GUIControlOptionConfig> options = null;
 
     public GUICheckboxElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUICheckboxElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "checkbox", template, config, GUICheckboxElementTemplate.class);
@@ -28,25 +32,54 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel();
+        this.panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
-        this.checkbox = new JCheckBox[this.config.options.length];
-        for (int i = 0; i < this.config.options.length; i++) {
-            GUIControlOptionConfig option = this.config.options[i];
+        this.checkbox = new ArrayList<>();
+        this.options = new ArrayList<>();
+        this.setOptions(this.config.options);
+        return this.panel;
+    }
 
-            JCheckBox checkboxItem = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
-                    hasChecked(this.value, option.getValue()));
-            checkboxItem.setRolloverEnabled(false);
-            checkboxItem.setFocusPainted(false);
-            super.loadTemplates(checkboxItem, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
-            super.registerEvents(checkboxItem, this.config.events);
-
-            panel.add(checkboxItem);
-            this.checkbox[i] = checkboxItem;
+    @Override
+    public boolean setOptions(GUIControlOptionConfig[] options) {
+        if (this.panel == null) {
+            return false;
         }
 
-        return panel;
+        for (GUIControlOptionConfig option : options) {
+            addOption(option);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean addOption(GUIControlOptionConfig option) {
+        if (this.panel == null || this.checkbox == null || this.options == null || option == null) {
+            return false;
+        }
+
+        JCheckBox checkboxItem = new JCheckBox(option.getText() == null ? option.getValue() : option.getText(),
+                hasChecked(this.value, option.getValue()));
+        checkboxItem.setRolloverEnabled(false);
+        checkboxItem.setFocusPainted(false);
+        super.loadTemplates(checkboxItem, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
+        super.registerEvents(checkboxItem, this.config.events);
+
+        this.panel.add(checkboxItem);
+        this.checkbox.add(checkboxItem);
+        this.options.add(option);
+
+        return true;
+    }
+
+    @Override
+    public boolean cleanOptions() {
+        this.options = new ArrayList<>();
+        this.checkbox = new ArrayList<>();
+        this.panel.removeAll();
+        return true;
     }
 
     @Override
@@ -55,27 +88,25 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
             return false;
         }
 
-        String[] checkData;
         if (data instanceof Collection) {
             Collection<?> listData = (Collection<?>) data;
-            checkData = new String[listData.size()];
+            this.value = new String[listData.size()];
 
             int i = 0;
             for (Object dataItem : listData) {
-                checkData[i] = dataItem == null ? CheckEmptyUtil.EMPTY : dataItem.toString();
+                this.value[i] = dataItem == null ? CheckEmptyUtil.EMPTY : dataItem.toString();
                 i++;
             }
         } else {
-            checkData = new String[]{data.toString()};
+            this.value = new String[]{data.toString()};
         }
 
-        if (this.checkbox != null) {
+        if (this.checkbox != null && this.options != null) {
             for (int i = 0; i < this.config.options.length; i++) {
                 GUIControlOptionConfig option = this.config.options[i];
-                this.checkbox[i].setSelected(hasChecked(checkData, option.getValue()));
+                this.checkbox.get(i).setSelected(hasChecked(this.value, option.getValue()));
             }
         }
-        this.value = checkData;
 
         return true;
     }
@@ -94,13 +125,13 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
 
     @Override
     public Object getValue() {
-        if (this.checkbox == null) {
+        if (this.checkbox == null || this.options == null) {
             return Arrays.asList(this.value);
         }
 
         List<String> data = new ArrayList<>();
-        for (int i = 0; i < this.checkbox.length; i++) {
-            if (this.checkbox[i].isSelected()) {
+        for (int i = 0; i < this.checkbox.size(); i++) {
+            if (this.checkbox.get(i).isSelected()) {
                 data.add(this.config.options[i].getValue());
             }
         }
@@ -110,7 +141,7 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
 
     @Override
     public Map<String, IGUIElementCallFunction> initCallFunction() {
-        return null;
+        return GUIElementCallFunctionHelper.buildOptionFunction(this);
     }
 
     @Override

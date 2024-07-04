@@ -1,12 +1,14 @@
 package com.parch.combine.rocketmq.base.consumer;
 
+import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.rocketmq.base.RocketMQLogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public interface RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
 
-    @Field(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT, defaultValue = "组件自动生成")
+    @Field(key = "listenFlowKey", name = "监听流程的KEY", type = FieldTypeEnum.TEXT)
+    @FieldDesc("组件自动生成")
     String listenFlowKey();
 
     @Field(key = "consumerGroup", name = "消费者组", type = FieldTypeEnum.TEXT, defaultValue = "逻辑配置ID")

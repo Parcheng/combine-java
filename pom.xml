@@ -10,6 +10,7 @@
         <module>combine-java-ui-html</module>
         <module>combine-java-spring-web</module>
         <module>combine-java-starter</module>
+        <module>combine-java-components/combine-java-components-rabbitmq</module>
     </modules>
 
     <groupId>com.parch.combine</groupId>

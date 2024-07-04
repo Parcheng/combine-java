@@ -1,6 +1,8 @@
 package com.parch.combine.gui.base.build.control.radio;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
+import com.parch.combine.gui.core.call.GUIElementCallFunctionHelper;
+import com.parch.combine.gui.core.call.option.IGUIOptionHandler;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
@@ -11,11 +13,16 @@ import javax.swing.JRadioButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.ButtonGroup;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElementTemplate, GUIRadioElement.Config, String> {
+public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElementTemplate, GUIRadioElement.Config, String> implements IGUIOptionHandler {
 
-    private JRadioButton[] radios = null;
+    private JPanel panel = null;
+    private ButtonGroup radioButton = null;
+    private List<JRadioButton> radios = null;
+    private List<GUIControlOptionConfig> options = null;
 
     public GUIRadioElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIRadioElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "radio", template, config, GUIRadioElementTemplate.class);
@@ -23,25 +30,56 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel();
+        this.panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
 
-        ButtonGroup radioButton = new ButtonGroup();
-        this.radios = new JRadioButton[this.config.options.length];
-        for (int i = 0; i < this.config.options.length; i++) {
-            GUIControlOptionConfig option = this.config.options[i];
+        this.radios = new ArrayList<>();
+        this.options = new ArrayList<>();
+        this.setOptions(this.config.options);
+        return this.panel;
+    }
 
-            JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
-                    this.value != null && this.value.equals(option.getValue()));
-            super.loadTemplates(radioItem, this.sysTemplate.getRadio(), this.template.getRadio());
-            super.registerEvents(radioItem, this.config.events);
-
-            panel.add(radioItem);
-            radioButton.add(radioItem);
-            this.radios[i] = radioItem;
+    @Override
+    public boolean setOptions(GUIControlOptionConfig[] options) {
+        if (options == null) {
+            return false;
         }
 
-        return panel;
+        this.radioButton = new ButtonGroup();
+        this.radios = new ArrayList<>();
+        for (GUIControlOptionConfig option : options) {
+            this.addOption(option);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean addOption(GUIControlOptionConfig option) {
+        if (this.panel == null || this.radios == null || this.options == null || option == null || this.radioButton == null) {
+            return false;
+        }
+
+        JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
+                this.value != null && this.value.equals(option.getValue()));
+        super.loadTemplates(radioItem, this.sysTemplate.getRadio(), this.template.getRadio());
+        super.registerEvents(radioItem, this.config.events);
+
+        panel.add(radioItem);
+        this.radioButton.add(radioItem);
+        this.radios.add(radioItem);
+        this.options.add(option);
+
+        return true;
+    }
+
+    @Override
+    public boolean cleanOptions() {
+        this.options = new ArrayList<>();
+        this.radios = new ArrayList<>();
+        this.radioButton = null;
+        this.panel.removeAll();
+        return true;
     }
 
     @Override
@@ -50,15 +88,14 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
             return false;
         }
 
-        String dataStr = data.toString();
-        for (int i = 0; i < this.config.options.length; i++) {
-            GUIControlOptionConfig option = this.config.options[i];
-            boolean selected = dataStr != null && dataStr.equals(option.getValue());
-            if (this.radios != null) {
-                this.radios[i].setSelected(selected);
-            }
-            if (selected) {
-                this.value = option.getValue();
+        this.value = data.toString();
+        if (this.options != null && this.radios != null) {
+            for (int i = 0; i < this.options.size(); i++) {
+                GUIControlOptionConfig option = this.options.get(i);
+                boolean selected = this.value.equals(option.getValue());
+                if (this.radios != null) {
+                    this.radios.get(i).setSelected(selected);
+                }
             }
         }
 
@@ -67,13 +104,13 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
 
     @Override
     public Object getValue() {
-        if (this.radios == null) {
+        if (this.radios == null || this.options == null) {
             return this.value;
         }
 
-        for (int i = 0; i < this.radios.length; i++) {
-            if (this.radios[i].isSelected()) {
-                return this.config.options[i].getValue();
+        for (int i = 0; i < this.radios.size(); i++) {
+            if (this.radios.get(i).isSelected()) {
+                return this.options.get(i).getValue();
             }
         }
 
@@ -82,7 +119,7 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
 
     @Override
     public Map<String, IGUIElementCallFunction> initCallFunction() {
-        return null;
+        return GUIElementCallFunctionHelper.buildOptionFunction(this);
     }
 
     @Override
