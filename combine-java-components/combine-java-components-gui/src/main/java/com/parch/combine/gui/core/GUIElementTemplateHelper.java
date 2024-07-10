@@ -78,6 +78,10 @@ public class GUIElementTemplateHelper {
         }
 
         for (Map<String, ElementConfig> configMap : configs) {
+            if (configMap == null) {
+                continue;
+            }
+
             ElementConfig config = configMap.get(key);
             if (config != null) {
                 ElementHelper.set(component, config);

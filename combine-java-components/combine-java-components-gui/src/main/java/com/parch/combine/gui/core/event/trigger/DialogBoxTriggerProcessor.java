@@ -15,7 +15,7 @@ public class DialogBoxTriggerProcessor extends AbstractTriggerProcessor<DialogBo
 
     @Override
     public void trigger(ComponentEvent event) {
-        JOptionPane.showMessageDialog(frame, config.getText(), config.getTitle(), JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(frame, config.getText(), config.getTitle(), JOptionPane.PLAIN_MESSAGE, null);
     }
 
     public static class Config {

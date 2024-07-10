@@ -161,7 +161,7 @@ public class RabbitMQHelper {
         return false;
     }
 
-    public static void destroy() {
+    public synchronized static void destroy() {
         PRODUCER_MAP.forEach((s, channel) -> {
             try {
                 if (channel.isOpen()) {
