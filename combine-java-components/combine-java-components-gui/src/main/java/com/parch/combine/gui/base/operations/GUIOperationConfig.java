@@ -1,12 +1,8 @@
 package com.parch.combine.gui.base.operations;
 
 import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.util.Map;
 
 public interface GUIOperationConfig extends ILogicConfig {
 

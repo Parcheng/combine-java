@@ -13,6 +13,9 @@ public interface GUIControlListLogicConfig extends GUIControlLogicConfig {
     @Field(key = "value", name = "集合数据集合", type = FieldTypeEnum.ANY, isArray = true)
     Object[] value();
 
+    @Field(key = "emptyTipText", name = "空列表提示文本(多行)", type = FieldTypeEnum.TEXT, isArray = true)
+    String[] emptyTipText();
+
     @Field(key = "orientation", name = "排列方式", type = FieldTypeEnum.SELECT, defaultValue = "VERTICAL")
     @FieldSelect(enumClass = ListOrientationEnum.class)
     String orientation();
