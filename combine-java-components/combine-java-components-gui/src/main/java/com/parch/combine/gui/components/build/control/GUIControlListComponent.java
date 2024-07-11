@@ -28,6 +28,7 @@ public class GUIControlListComponent extends AbstractGUIControlComponent<GUICont
         super.initConfig(config);
         config.value = logicConfig.value();
         config.orientation = ListOrientationEnum.get(logicConfig.orientation()).getValue();
+        config.emptyTipText = logicConfig.emptyTipText();
 
         GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.bodyElements());
         if (elements == null) {

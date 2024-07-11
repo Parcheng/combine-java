@@ -7,10 +7,13 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
-import javax.swing.JComponent;
+
 import javax.swing.JPanel;
-import javax.swing.JList;
+import javax.swing.JComponent;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.ListCellRenderer;
 
 import java.util.Arrays;
@@ -20,8 +23,8 @@ import java.util.Map;
 
 public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTemplate, GUIListElement.Config, Object[]> {
 
-    private JPanel panel = null;
-    JList<JComponent> list = null;
+    private JPanel emptyPanel = null;
+    private DefaultListModel<JComponent> listModel = null;
     private GUISubElementConfig[][] elementConfigs = null;
 
     public GUIListElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIListElementTemplate template, Config config) {
@@ -32,19 +35,48 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
     public JComponent build() {
         JPanel panel = new JPanel();
         super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
-        panel.add(this.buildItem());
+
+        this.emptyPanel = new JPanel();
+        super.loadTemplates(this.emptyPanel, this.sysTemplate.getEmpty(), this.template.getEmpty());
+        this.buildEmptyText();
+        this.emptyPanel.setVisible(false);
+        panel.add(emptyPanel);
+
+
+        this.listModel = new DefaultListModel<>();
+        JList<JComponent> list = new JList<>(this.listModel);
+        list.setModel(this.listModel);
+        list.setCellRenderer(this.getCellRenderer());
+        list.setLayoutOrientation(this.config.orientation);
+        super.loadTemplates(list, this.sysTemplate.getList(), this.template.getList());
+        this.buildListItems();
+        panel.add(list);
+
         return panel;
     }
 
-    private JList<JComponent> buildItem() {
-        DefaultListModel<JComponent> listModel = new DefaultListModel<>();
-        this.list = new JList<>(listModel);
-        list.setCellRenderer(this.getCellRenderer());
-        list.setLayoutOrientation(this.config.orientation);
+    private void buildEmptyText() {
+        if (this.emptyPanel == null) {
+            return;
+        }
 
-        super.loadTemplates(list, this.sysTemplate.getList(), this.template.getList());
+        if (this.config.emptyTipText != null) {
+            for (String textItem : this.config.emptyTipText) {
+                JLabel label = new JLabel(textItem);
+                label.setHorizontalAlignment(SwingConstants.CENTER);
+                label.setVerticalAlignment(SwingConstants.CENTER);
+                this.emptyPanel.add(label);
+            }
+        }
+    }
 
-        if (this.value != null) {
+    private void buildListItems() {
+        if (this.listModel == null) {
+            return;
+        }
+
+        boolean isShow = false;
+        if (this.value != null && this.value.length > 0) {
             int dataLength = this.value.length;
             int elementConfigLength = this.config.elementConfigs.length;
 
@@ -62,9 +94,13 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
 
                 listModel.addElement(item);
             }
+
+            isShow = true;
         }
 
-        return list;
+        if (this.emptyPanel != null){
+            this.emptyPanel.setVisible(isShow);
+        }
     }
 
     private ListCellRenderer<JComponent> getCellRenderer() {
@@ -83,11 +119,9 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
         Collection<?> listData = (Collection<?>) data;
         this.value = listData.toArray(new Object[0]);
 
-        if (panel != null) {
-            panel.removeAll();
-            panel.add(buildItem());
-            panel.revalidate();
-            panel.repaint();
+        if (this.listModel != null) {
+            this.listModel.removeAllElements();
+            this.buildListItems();
         }
 
         return true;
@@ -116,5 +150,7 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
     public static class Config extends GUIElementConfig<Object[]> {
         public int orientation;
         public GUISubElementConfig[] elementConfigs;
+
+        public String[] emptyTipText;
     }
 }

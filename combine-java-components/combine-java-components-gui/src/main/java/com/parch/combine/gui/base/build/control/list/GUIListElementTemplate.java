@@ -19,6 +19,11 @@ public class GUIListElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig list;
 
+    @Field(key = "empty", name = "空列表提示元素样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig empty;
+
     @Field(key = "item", name = "集合每个元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
@@ -46,5 +51,13 @@ public class GUIListElementTemplate {
 
     public void setItem(ElementConfig item) {
         this.item = item;
+    }
+
+    public ElementConfig getEmpty() {
+        return empty;
+    }
+
+    public void setEmpty(ElementConfig empty) {
+        this.empty = empty;
     }
 }
