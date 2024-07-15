@@ -1,5 +1,7 @@
 package com.parch.combine.gui.core.element;
 
+import com.parch.combine.gui.core.style.config.ElementGridConfig;
+
 import javax.swing.JFrame;
 import javax.swing.JComponent;
 import java.awt.Container;
@@ -30,6 +32,8 @@ public interface IGUIElement {
     String getDomain();
 
     JFrame getFrame();
+
+    <T extends BaseGUIElementTemplate> T getTemplate();
 
     Map<String, Object> getData();
 }

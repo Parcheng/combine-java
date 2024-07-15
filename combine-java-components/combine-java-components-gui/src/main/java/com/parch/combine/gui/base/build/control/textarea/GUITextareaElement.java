@@ -22,10 +22,9 @@ public class GUITextareaElement extends AbstractGUIComponentElement<GUITextareaE
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.textArea = new JTextArea();
-        super.loadTemplates(this.textArea, this.sysTemplate.getTextarea(), this.template.getTextarea());
         super.registerEvents(this.textArea, this.config.events);
 
         // 自动换行
@@ -42,7 +41,7 @@ public class GUITextareaElement extends AbstractGUIComponentElement<GUITextareaE
             this.textArea.setText(this.value);
         }
 
-        panel.add(this.textArea);
+        super.addSubComponent(panel, this.textArea,  this.template.getTextarea());
         return panel;
     }
 

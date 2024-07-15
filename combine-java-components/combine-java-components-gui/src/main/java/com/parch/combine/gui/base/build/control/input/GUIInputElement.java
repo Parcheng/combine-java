@@ -24,14 +24,12 @@ public class GUIInputElement extends AbstractGUIComponentElement<GUIInputElement
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.addSymbol(panel, this.config.prefix);
 
         this.input = new JTextField();
-        super.loadTemplates(this.input, this.sysTemplate.getInput(), this.template.getInput());
         super.registerEvents(this.input, this.config.events);
-
         if (this.value != null) {
             this.input.setText(this.value);
         }
@@ -39,7 +37,7 @@ public class GUIInputElement extends AbstractGUIComponentElement<GUIInputElement
             this.input.setColumns(this.config.columns);
         }
 
-        panel.add(this.input);
+        super.addSubComponent(panel, this.input, this.template.getInput());
 
         this.addSymbol(panel, this.config.suffix);
         return panel;
@@ -50,9 +48,7 @@ public class GUIInputElement extends AbstractGUIComponentElement<GUIInputElement
             return;
         }
 
-        JLabel label = new JLabel(text);
-        super.loadTemplates(label, this.sysTemplate.getSymbol(), this.template.getSymbol());
-        panel.add(label);
+        super.addSubComponent(panel, new JLabel(text), this.template.getSymbol());
     }
 
     @Override

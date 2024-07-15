@@ -20,14 +20,13 @@ public class GUITextElement extends AbstractGUIComponentElement<GUITextElementTe
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.text = new JLabel();
-        super.loadTemplates(this.text, this.sysTemplate.getText(), this.template.getText());
         this.text.setText(this.value);
         super.registerEvents(this.text, this.config.events);
 
-        panel.add(this.text);
+        super.addSubComponent(panel, this.text, this.template.getText());
         return panel;
     }
 

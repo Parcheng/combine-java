@@ -31,7 +31,7 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
     @Override
     public JComponent build() {
         this.panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.radios = new ArrayList<>();
         this.options = new ArrayList<>();
@@ -62,10 +62,10 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
 
         JRadioButton radioItem = new JRadioButton(option.getText() == null ? option.getValue() : option.getText(),
                 this.value != null && this.value.equals(option.getValue()));
-        super.loadTemplates(radioItem, this.sysTemplate.getRadio(), this.template.getRadio());
-        super.registerEvents(radioItem, this.config.events);
 
-        panel.add(radioItem);
+        super.registerEvents(radioItem, this.config.events);
+        super.addSubComponent(this.panel, radioItem, this.template.getRadio());
+
         this.radioButton.add(radioItem);
         this.radios.add(radioItem);
         this.options.add(option);

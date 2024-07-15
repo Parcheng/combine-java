@@ -1,0 +1,76 @@
+package com.parch.combine.gui.core.style.config;
+
+import com.parch.combine.core.common.settings.annotations.CommonObject;
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gui.core.style.ElementObjectConstant;
+
+@CommonObject(key = ElementObjectConstant.GUI_ELEMENT_GRID, name = ElementObjectConstant.GUI_ELEMENT_GRID_NAME)
+public class ElementGridConfig {
+
+    @Field(key = "", name = "X轴宽度占比", type = FieldTypeEnum.NUMBER)
+    private Double weightX;
+
+    @Field(key = "", name = "Y轴占高度比", type = FieldTypeEnum.NUMBER)
+    private Double weightY;
+
+    @Field(key = "occupyX", name = "X轴占据列数", type = FieldTypeEnum.NUMBER)
+    private Integer occupyX;
+
+    @Field(key = "occupyY", name = "Y轴占据行数", type = FieldTypeEnum.NUMBER)
+    private Integer occupyY;
+
+    @Field(key = "positionX", name = "在X轴的列位置", type = FieldTypeEnum.NUMBER)
+    private Integer positionX;
+
+    @Field(key = "positionY", name = "在Y轴的行位置", type = FieldTypeEnum.NUMBER)
+    private Integer positionY;
+
+    public Double getWeightX() {
+        return weightX;
+    }
+
+    public void setWeightX(Double weightX) {
+        this.weightX = weightX;
+    }
+
+    public Double getWeightY() {
+        return weightY;
+    }
+
+    public void setWeightY(Double weightY) {
+        this.weightY = weightY;
+    }
+
+    public Integer getOccupyX() {
+        return occupyX;
+    }
+
+    public void setOccupyX(Integer occupyX) {
+        this.occupyX = occupyX;
+    }
+
+    public Integer getOccupyY() {
+        return occupyY;
+    }
+
+    public void setOccupyY(Integer occupyY) {
+        this.occupyY = occupyY;
+    }
+
+    public Integer getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(Integer positionX) {
+        this.positionX = positionX;
+    }
+
+    public Integer getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(Integer positionY) {
+        this.positionY = positionY;
+    }
+}

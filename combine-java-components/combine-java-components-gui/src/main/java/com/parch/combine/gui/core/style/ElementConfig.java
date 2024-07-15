@@ -1,10 +1,11 @@
 package com.parch.combine.gui.core.style;
 
+import com.parch.combine.core.common.base.IMerge;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.gui.core.style.config.ElementBorderConfig;
 import com.parch.combine.gui.core.style.config.ElementFontConfig;
-import com.parch.combine.gui.core.style.config.ElementLayoutConfig;
+import com.parch.combine.gui.core.style.config.ElementGridConfig;
 import com.parch.combine.gui.core.style.config.ElementSizeConfig;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
@@ -15,7 +16,7 @@ import com.parch.combine.gui.core.style.enums.AlignmentXEnum;
 import com.parch.combine.gui.core.style.enums.AlignmentYEnum;
 
 @CommonObject(key = ElementObjectConstant.GUI_ELEMENT, name = ElementObjectConstant.GUI_ELEMENT_NAME)
-public class ElementConfig {
+public class ElementConfig implements IMerge<ElementConfig> {
 
     @Field(key = "fgColor", name = "前景色（字体）", type = FieldTypeEnum.TEXT)
     private String fgColor;
@@ -36,11 +37,6 @@ public class ElementConfig {
     @Field(key = "opaque", name = "是否为不透明的", type = FieldTypeEnum.BOOLEAN)
     private Boolean opaque;
 
-    @Field(key = "layout", name = "布局配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(ElementLayoutConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_LAYOUT)
-    private ElementLayoutConfig layout;
-
     @Field(key = "size", name = "尺寸配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementSizeConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_SIZE)
@@ -55,6 +51,11 @@ public class ElementConfig {
     @FieldObject(ElementFontConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_FONT)
     private ElementFontConfig font;
+
+    @Field(key = "grid", name = "网格布局配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementGridConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_GRID)
+    private ElementGridConfig grid;
 
     public ElementSizeConfig getSize() {
         return size;
@@ -96,14 +97,6 @@ public class ElementConfig {
         this.bgColor = bgColor;
     }
 
-    public ElementLayoutConfig getLayout() {
-        return layout;
-    }
-
-    public void setLayout(ElementLayoutConfig layout) {
-        this.layout = layout;
-    }
-
     public String getAlignmentX() {
         return alignmentX;
     }
@@ -126,5 +119,13 @@ public class ElementConfig {
 
     public void setOpaque(Boolean opaque) {
         this.opaque = opaque;
+    }
+
+    public ElementGridConfig getGrid() {
+        return grid;
+    }
+
+    public void setGrid(ElementGridConfig grid) {
+        this.grid = grid;
     }
 }

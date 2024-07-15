@@ -39,12 +39,11 @@ public class GUIButtonGroupElement extends AbstractGUIComponentElement<GUIButton
     @Override
     public JComponent build() {
         this.buttonGroup = new JPanel();
-        super.loadTemplates(buttonGroup, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(buttonGroup, this.template.getExternal());
         this.buildButtons();
         return buttonGroup;
     }
 
-    @SuppressWarnings("unchecked")
     public void buildButtons() {
         if (this.value == null || this.buttonGroup == null) {
             return;
@@ -52,19 +51,18 @@ public class GUIButtonGroupElement extends AbstractGUIComponentElement<GUIButton
 
         for (ItemConfig itemConfig : this.value) {
             JButton button = new JButton();
-            super.loadTemplates(button, this.sysTemplate.getButton(), this.template.getButton());
-            super.loadFancyTemplates(button, itemConfig.type, this.sysTemplate.getButtonTypes(), this.template.getButtonTypes());
             button.setText(itemConfig.value);
 
-            if (eventMap != null && itemConfig.eventKeys != null && itemConfig.eventKeys.length > 0) {
+            if (this.eventMap != null && itemConfig.eventKeys != null && itemConfig.eventKeys.length > 0) {
                 EventConfig[] events = new EventConfig[itemConfig.eventKeys.length];
                 for (int i = 0; i < itemConfig.eventKeys.length; i++) {
-                    events[i] = eventMap.get(itemConfig.eventKeys[i]);
+                    events[i] = this.eventMap.get(itemConfig.eventKeys[i]);
                 }
                 super.registerEvents(button, events);
             }
 
-            this.buttonGroup.add(button);
+            super.addSubComponent(this.buttonGroup, button, this.template.getButton());
+            super.loadFancyTemplates(button, itemConfig.type, this.template.getButtonTypes());
         }
     }
 

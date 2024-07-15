@@ -5,6 +5,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import java.awt.*;
 
+@Deprecated
 public enum LayoutTypeEnum implements IOptionSetting {
 
     FLOW("流式布局", true),

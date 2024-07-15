@@ -4,21 +4,22 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gui.core.element.BaseGUIElementTemplate;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 
-public class GUIImgElementTemplate {
+public class GUIImgElementTemplate extends BaseGUIElementTemplate {
 
-    @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "img", name = "图片元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig external;
+    private ElementConfig img;
 
-    public ElementConfig getExternal() {
-        return external;
+    public ElementConfig getImg() {
+        return img;
     }
 
-    public void setExternal(ElementConfig external) {
-        this.external = external;
+    public void setImg(ElementConfig img) {
+        this.img = img;
     }
 }

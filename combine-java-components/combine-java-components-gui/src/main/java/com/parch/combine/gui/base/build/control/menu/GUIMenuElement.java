@@ -27,22 +27,21 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.menuBar = new JMenuBar();
-        super.loadTemplates(this.menuBar, this.sysTemplate.getBar(), this.template.getBar());
-        buildMenu();
+        this.buildMenu();
+        super.addSubComponent(panel, this.menuBar, this.template.getBar());
 
-        panel.add(this.menuBar);
         return panel;
     }
 
     private void buildMenu() {
         JMenuItem[] items = buildMenu(this.config.items, 0);
         for (JMenuItem item : items) {
-            super.loadTemplates(item, this.sysTemplate.getMainItem(), this.template.getMainItem());
+            super.loadTemplates(item, this.template.getMainItem());
             if (item.isSelected()) {
-                super.loadTemplates(item, this.sysTemplate.getItemActive(), this.template.getItemActive());
+                super.loadTemplates(item, this.template.getItemActive());
             }
             this.menuBar.add(item);
         }
@@ -63,9 +62,9 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
                 menus[i] = new JMenu(item.text);
                 JMenuItem[] subMenus = buildMenu(item.items, layer+1);
                 for (JMenuItem subItem : subMenus) {
-                    super.loadTemplates(subItem, this.sysTemplate.getItem(), this.template.getItem());
+                    super.loadTemplates(subItem, this.template.getItem());
                     if (subItem.isSelected()) {
-                        super.loadTemplates(subItem, this.sysTemplate.getItemActive(), this.template.getItemActive());
+                        super.loadTemplates(subItem, this.template.getItemActive());
                     }
                     menus[i].add(subItem);
                 }

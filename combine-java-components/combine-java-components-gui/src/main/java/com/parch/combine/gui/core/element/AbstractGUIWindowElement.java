@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import java.awt.Window;
 import java.util.Map;
 
-public abstract class AbstractGUIWindowElement<T, C extends GUIElementConfig<V>, V> extends AbstractGUIElement<T, C, V> {
+public abstract class AbstractGUIWindowElement<T extends BaseGUIElementTemplate, C extends GUIElementConfig<V>, V> extends AbstractGUIElement<T, C, V> {
 
     protected AbstractGUIWindowElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
         super(scopeKey, domain, id, data, type, template, config, templateClass);

@@ -14,6 +14,6 @@ public interface ElementObjectConstant {
     String GUI_ELEMENT_FONT = "gui-font";
     String GUI_ELEMENT_FONT_NAME = "GUI元素字体配置";
 
-    String GUI_ELEMENT_LAYOUT = "gui-layout";
-    String GUI_ELEMENT_LAYOUT_NAME = "GUI元素布局配置";
+    String GUI_ELEMENT_GRID = "gui-grid";
+    String GUI_ELEMENT_GRID_NAME = "GUI元素网格布局配置";
 }

@@ -9,8 +9,7 @@ import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 
-import javax.swing.JDialog;
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
@@ -33,11 +32,11 @@ public class GUIDialogBoxElement extends AbstractGUIWindowElement<GUIDialogBoxEl
         int top = frame.getY() + frame.getHeight()/2;
         dialog.setBounds(left, top, this.config.width, this.config.height);
 
-        JComponent[] body = GUISubElementHelper.build(data, this.config.elementConfigs, this);
-        for (JComponent item : body) {
-            dialog.add(item);
-        }
+        JPanel panel = new JPanel();
+        super.loadTemplates(panel, this.template.getExternal());
+        GUISubElementHelper.build(panel, data, this.config.elementConfigs, this);
 
+        dialog.add(panel);
         return dialog;
     }
 

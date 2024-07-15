@@ -5,12 +5,13 @@ import com.parch.combine.core.common.settings.annotations.FieldMapValue;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gui.core.element.BaseGUIElementTemplate;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 import java.util.Map;
 
-public class GUIButtonGroupElementTemplate {
+public class GUIButtonGroupElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)

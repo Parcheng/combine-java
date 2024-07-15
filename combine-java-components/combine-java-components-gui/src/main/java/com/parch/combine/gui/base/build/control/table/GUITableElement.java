@@ -31,8 +31,8 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
     @Override
     public JComponent build() {
         this.panel = new JPanel();
-        super.loadTemplates(this.panel, this.sysTemplate.getExternal(), this.template.getExternal());
-        panel.add(buildTable());
+        super.loadTemplates(this.panel, this.template.getExternal());
+        super.addSubComponent(this.panel, buildTable(), this.template.getTable());
         return this.panel;
     }
 
@@ -51,14 +51,12 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
         if (this.config.rowMargin != null) {
             table.setRowMargin(this.config.rowMargin);
         }
-        super.loadTemplates(table, this.sysTemplate.getTable(), this.template.getTable());
         table.setDefaultRenderer(Object.class, this.getCellRenderer());
 
         return table;
     }
 
     private TableCellRenderer getCellRenderer() {
-        int sysCellCount = sysTemplate.getCells() == null ? 0 : sysTemplate.getCells().size();
         int cellCount = template.getCells() == null ? 0 : template.getCells().size();
         return new TableCellRenderer() {
             @Override
@@ -66,10 +64,9 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
                 JComponent component = (JComponent) value;
                 if (component != null) {
                     if (row == 0) {
-                        loadTemplates(component, sysTemplate.getHeader(), template.getHeader());
+                        loadTemplates(component, template.getHeader());
                     } else {
-                        loadTemplates(component, sysCellCount == 0 ? null : sysTemplate.getCells().get(row % sysCellCount),
-                                cellCount == 0 ? null : template.getCells().get(row % cellCount));
+                        loadTemplates(component, cellCount == 0 ? null : template.getCells().get(row % cellCount));
                     }
                 }
                 return component;
@@ -105,7 +102,7 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
 
             // 复制元素配置
             this.elementConfigs[i] = new GUISubElementConfig[colConfigCount];
-            JComponent[] body = GUISubElementHelper.copyAndBuild(dataItem, this.elementConfigs[i], this.config.columnConfigs, this);
+            JComponent[] body = GUISubElementHelper.copyAndBuild(null, dataItem, this.elementConfigs[i], this.config.columnConfigs, this);
 
             // 构建行数据
             Object[] row = new Object[colCount];

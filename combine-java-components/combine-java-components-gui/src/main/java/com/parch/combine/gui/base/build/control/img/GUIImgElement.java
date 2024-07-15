@@ -25,8 +25,9 @@ public class GUIImgElement extends AbstractGUIComponentElement<GUIImgElementTemp
     @Override
     public JComponent build() {
         this.panel = new JPanel();
-        loadTemplates(this.panel, sysTemplate.getExternal(), template.getExternal());
-        panel.add(buildImg());
+        loadTemplates(this.panel, template.getExternal());
+        super.addSubComponent(this.panel, buildImg(), template.getImg());
+
         return panel;
     }
 

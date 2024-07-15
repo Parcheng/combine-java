@@ -4,6 +4,8 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.GUIEventHandler;
+import com.parch.combine.gui.core.style.ElementHelper;
+import com.parch.combine.gui.core.style.config.ElementGridConfig;
 
 import javax.swing.JComponent;
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class GUISubElementHelper {
         return elements;
     }
 
-    public static JComponent[] copyAndBuild(Object data, GUISubElementConfig[] newSubElements, GUISubElementConfig[] sourceSubElements, IGUIElement element) {
+    public static JComponent[] copyAndBuild(JComponent parent, Object data, GUISubElementConfig[] newSubElements, GUISubElementConfig[] sourceSubElements, IGUIElement element) {
         for (int i = 0; i < sourceSubElements.length; i++) {
             if (newSubElements.length == i) {
                 break;
@@ -62,10 +64,10 @@ public class GUISubElementHelper {
             GUISubElementConfig configItem = sourceSubElements[i];
             newSubElements[i] = GUISubElementConfig.copy(configItem);
         }
-        return GUISubElementHelper.build(data, newSubElements, element);
+        return GUISubElementHelper.build(parent, data, newSubElements, element);
     }
 
-    public static JComponent[] build(Object data, GUISubElementConfig[] subElements, IGUIElement element) {
+    public static JComponent[] build(JComponent parent, Object data, GUISubElementConfig[] subElements, IGUIElement element) {
         JComponent[] body = new JComponent[subElements.length];
         for (int i = 0; i < subElements.length; i++) {
             GUISubElementConfig config = subElements[i];
@@ -78,16 +80,24 @@ public class GUISubElementHelper {
                 if (CheckEmptyUtil.isEmpty(config.dataField)) {
                     itemData = data;
                 } else if (data instanceof Map) {
-                    itemData =  ((Map<?, ?>) data).get(config.dataField);
+                    itemData = ((Map<?, ?>) data).get(config.dataField);
                 }
             }
 
             config.element.setValue(itemData);
             body[i] = config.element.build(element.getFrame());
             GUIEventHandler.bindings(body[i], config.events, element);
+            if (parent != null) {
+                ElementHelper.addSubComponent(parent, body[i], getGridConfig(element));
+            }
         }
 
         return body;
+    }
+
+    private static ElementGridConfig getGridConfig(IGUIElement element) {
+        return element.getTemplate() == null || element.getTemplate().getExternal() == null ?
+                null : element.getTemplate().getExternal().getGrid();
     }
 
     @SuppressWarnings("unchecked")

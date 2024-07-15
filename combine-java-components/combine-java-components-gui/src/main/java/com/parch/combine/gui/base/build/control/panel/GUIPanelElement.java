@@ -21,23 +21,20 @@ public class GUIPanelElement extends AbstractGUIComponentElement<GUIPanelElement
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
-
-        for (JComponent item : buildItems()) {
-            panel.add(item);
-        }
+        super.loadTemplates(panel, this.template.getExternal());
+        this.buildItems(panel);
 
         return panel;
     }
 
-    public JComponent[] buildItems() {
+    public void buildItems(JPanel panel) {
         Object data = this.value;
         GUISubElementConfig[] items = this.config.elementConfigs;
         if (items == null) {
-            return new JComponent[0];
+            return;
         }
 
-        return GUISubElementHelper.build(data, items, this);
+        GUISubElementHelper.build(panel, data, items, this);
     }
 
     @Override

@@ -25,15 +25,14 @@ public class GUIButtonElement extends AbstractGUIComponentElement<GUIButtonEleme
     @SuppressWarnings("unchecked")
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.button = new JButton();
-        super.loadTemplates(this.button, this.sysTemplate.getButton(), this.template.getButton());
-        super.loadFancyTemplates(this.button, this.config.type, this.sysTemplate.getButtonTypes(), this.template.getButtonTypes());
         this.button.setText(this.value);
         super.registerEvents(this.button, this.config.events);
+        super.addSubComponent(panel, this.button, this.template.getButton());
+        super.loadFancyTemplates(this.button, this.config.type, this.template.getButtonTypes());
 
-        panel.add(this.button);
         return panel;
     }
 

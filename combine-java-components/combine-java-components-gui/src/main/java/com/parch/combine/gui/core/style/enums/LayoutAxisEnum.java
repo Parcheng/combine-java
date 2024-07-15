@@ -5,6 +5,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import javax.swing.BoxLayout;
 
+@Deprecated
 public enum LayoutAxisEnum implements IOptionSetting {
     X("X轴方向排列", BoxLayout.X_AXIS, true),
     Y("Y轴方向排列", BoxLayout.Y_AXIS, true);
