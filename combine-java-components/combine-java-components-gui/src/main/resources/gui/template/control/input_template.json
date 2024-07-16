@@ -6,6 +6,11 @@
       "type": "BOX",
       "axis": "X"
     },
+    "grid": {
+      "weightX": 1,
+      "occupyX": 2,
+      "occupyY": 2
+    },
     "border": {
       "size": 0,
       "top": 4,
