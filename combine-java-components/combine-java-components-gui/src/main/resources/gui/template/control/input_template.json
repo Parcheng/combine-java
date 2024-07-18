@@ -1,12 +1,11 @@
 {
   "external": {
-    "alignmentX": "LEFT",
-    "alignmentY": "TOP",
     "layout": {
       "type": "BOX",
       "axis": "X"
     },
     "grid": {
+      "fill": "ALL",
       "weightX": 1,
       "occupyX": 2,
       "occupyY": 2
@@ -24,9 +23,11 @@
     "opaque": false
   },
   "input": {
-    "alignmentX": "LEFT",
-    "alignmentY": "TOP",
     "opaque": false,
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
+    },
     "border": {
       "type": "LINE",
       "color": "#c0c0c0",
@@ -38,9 +39,11 @@
     }
   },
   "Symbol": {
-    "alignmentX": "LEFT",
-    "alignmentY": "TOP",
     "opaque": false,
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
+    },
     "border": {
       "size": 0,
       "top": 5,

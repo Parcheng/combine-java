@@ -49,14 +49,13 @@ public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C ext
     }
 
     private void loadTemplate(T template, Class<T> templateClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        if (template == null) {
+            template = templateClass.getDeclaredConstructor().newInstance();
+        }
+
         T sysTemplate =  GUIElementTemplateHelper.getControlTemplate(type, templateClass);
         if (sysTemplate == null) {
             this.template = template;
-            return;
-        }
-
-        if (template == null) {
-            this.template = sysTemplate;
             return;
         }
 
@@ -80,7 +79,7 @@ public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C ext
             return;
         }
 
-        loadTemplates(component, config);
+        loadTemplates(subComponent, config);
         ElementHelper.addSubComponent(component, subComponent, config == null ? null : config.getGrid());
     }
 

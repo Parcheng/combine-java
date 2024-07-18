@@ -1,6 +1,7 @@
 package com.parch.combine.gui.core.style.helper;
 
 import com.parch.combine.gui.core.style.config.ElementGridConfig;
+import com.parch.combine.gui.core.style.enums.GridFillEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +13,13 @@ public class ElementGridHelper {
     public static void setSubComponent(JComponent component, JComponent subComponent, ElementGridConfig config) {
         if (component instanceof JPanel) {
             GridBagConstraints gbc = new GridBagConstraints();
-            gbc.fill = GridBagConstraints.BOTH;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.anchor = GridBagConstraints.WEST;
 
             if (config != null) {
+                if (config.getFill() != null) {
+                    gbc.fill = GridFillEnum.get(config.getFill()).getValue();
+                }
                 if (config.getWeightX() != null) {
                     gbc.weightx = config.getWeightX();
                 }

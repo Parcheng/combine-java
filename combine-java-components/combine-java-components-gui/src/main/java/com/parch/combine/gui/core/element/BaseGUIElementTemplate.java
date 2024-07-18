@@ -7,6 +7,7 @@ import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
+import com.parch.combine.gui.core.style.config.ElementGridConfig;
 
 public class BaseGUIElementTemplate implements IMerge<BaseGUIElementTemplate> {
 
@@ -17,6 +18,10 @@ public class BaseGUIElementTemplate implements IMerge<BaseGUIElementTemplate> {
 
     public ElementConfig getExternal() {
         return external;
+    }
+
+    public ElementGridConfig getExternalGrid() {
+        return external == null ? null : external.getGrid();
     }
 
     public void setExternal(ElementConfig external) {

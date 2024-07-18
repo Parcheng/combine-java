@@ -172,8 +172,7 @@
         "distanceTop": 30,
         "distanceLeft": 100,
         "elements": {
-          "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label",
-            "textarea", "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table"
+          "center": ["input", "select", "button"
           ]
         }
       }

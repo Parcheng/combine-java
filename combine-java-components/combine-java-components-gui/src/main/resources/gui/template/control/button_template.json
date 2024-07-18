@@ -1,15 +1,11 @@
 {
   "external": {
-    "alignmentX": "LEFT",
-    "alignmentY": "TOP",
-    "layout": {
-      "type": "BOX",
-      "axis": "X"
-    },
     "grid": {
+      "fill": "ALL",
       "weightX": 1,
       "occupyX": 2,
-      "occupyY": 2
+      "occupyY": 2,
+      "positionY": 3
     },
     "border": {
       "size": 0,
@@ -23,8 +19,11 @@
   "button": {
     "fgColor": "#000000",
     "bgColor": "#c0c0c0",
-    "alignmentX": "LEFT",
-    "alignmentY": "TOP",
+    "grid": {
+      "fill": "ALL",
+      "weightX": 0,
+      "weightY": 0
+    },
     "border": {
       "type": "LINE",
       "color": "#c0c0c0",
