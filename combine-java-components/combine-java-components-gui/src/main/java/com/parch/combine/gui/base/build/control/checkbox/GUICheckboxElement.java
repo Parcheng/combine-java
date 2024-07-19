@@ -32,13 +32,16 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
 
     @Override
     public JComponent build() {
-        this.panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        JPanel external = new JPanel();
+        super.loadTemplates(external, this.template.getExternal());
 
+        this.panel = new JPanel();
         this.checkbox = new ArrayList<>();
         this.options = new ArrayList<>();
         this.setOptions(this.config.options);
-        return this.panel;
+
+        super.addSubComponent(external, this.panel, this.template.getCheckboxes());
+        return external;
     }
 
     @Override
@@ -64,10 +67,10 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
                 hasChecked(this.value, option.getValue()));
         checkboxItem.setRolloverEnabled(false);
         checkboxItem.setFocusPainted(false);
-        super.loadTemplates(checkboxItem, this.sysTemplate.getCheckbox(), this.template.getCheckbox());
-        super.registerEvents(checkboxItem, this.config.events);
 
-        this.panel.add(checkboxItem);
+        super.registerEvents(checkboxItem, this.config.events);
+        super.addSubComponent(this.panel, checkboxItem, this.template.getCheckbox());
+
         this.checkbox.add(checkboxItem);
         this.options.add(option);
 

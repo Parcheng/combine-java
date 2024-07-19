@@ -1,10 +1,8 @@
 {
   "external": {
-    "alignmentX": "LEFT",
-    "alignmentY": "TOP",
-    "layout": {
-      "type": "BOX",
-      "axis": "X"
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
     },
     "border": {
       "size": 0,
@@ -16,12 +14,15 @@
     "opaque": false
   },
   "select": {
-    "alignmentX": "LEFT",
-    "alignmentY": "TOP",
     "opaque": false,
     "font": {
       "bold": false,
       "size": 12
+    },
+    "grid": {
+      "fill": "NONE",
+      "weightX": 1,
+      "weightY": 1
     }
   },
   "option": {

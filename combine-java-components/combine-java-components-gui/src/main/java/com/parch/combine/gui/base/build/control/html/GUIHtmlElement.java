@@ -24,15 +24,13 @@ public class GUIHtmlElement extends AbstractGUIComponentElement<GUIHtmlElementTe
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.page = new JEditorPane();
-        setUrl();
+        this.setUrl();
         super.registerEvents(this.page, this.config.events);
+        super.addSubComponent(panel, this.page, this.template.getPage());
 
-        panel.add(this.page);
-
-        super.loadTemplates(panel, this.sysTemplate.getPage(), this.template.getPage());
         return panel;
     }
 

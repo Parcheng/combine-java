@@ -1,32 +1,30 @@
 package com.parch.combine.gui.core.style.helper;
 
-import com.parch.combine.gui.core.style.config.ElementLayoutConfig;
-import com.parch.combine.gui.core.style.enums.LayoutAlignTypeEnum;
-import com.parch.combine.gui.core.style.enums.LayoutAxisEnum;
+import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.enums.LayoutTypeEnum;
 
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 
 public class ElementLayoutHelper {
 
     private ElementLayoutHelper(){}
 
-    public static void set(JComponent component, ElementLayoutConfig config) {
-        if (config == null) {
+    public static void init(JComponent component, ElementConfig config) {
+        if (!(component instanceof JPanel)) {
             return;
         }
 
-        LayoutTypeEnum type = LayoutTypeEnum.get(config.getType());
-        switch (type) {
+        LayoutTypeEnum layout = LayoutTypeEnum.get(config == null ? null : config.getLayout());
+        switch (layout) {
             case FLOW:
-                LayoutAlignTypeEnum alignTypeEnum = LayoutAlignTypeEnum.get(config.getAlign());
-                component.setLayout(new FlowLayout(alignTypeEnum.getValue(), config.getHgap(), config.getVgap()));
+                component.setLayout(new FlowLayout(FlowLayout.LEFT));
                 break;
-            case BOX:
-                LayoutAxisEnum axis = LayoutAxisEnum.get(config.getAxis());
-                component.setLayout(new BoxLayout(component, axis.getValue()));
+            case GRID:
+            default:
+                component.setLayout(new GridBagLayout());
                 break;
         }
     }

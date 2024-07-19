@@ -22,14 +22,14 @@ public class GUILabelElement extends AbstractGUIComponentElement<GUILabelElement
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.label = new JLabel();
-        super.loadTemplates(this.label, this.sysTemplate.getLabel(), this.template.getLabel());
         this.label.setText(this.value);
-        super.registerEvents(this.label, this.config.events);
 
-        panel.add(this.label);
+        super.registerEvents(this.label, this.config.events);
+        super.addSubComponent(panel, this.label, this.template.getLabel());
+
         return panel;
     }
 

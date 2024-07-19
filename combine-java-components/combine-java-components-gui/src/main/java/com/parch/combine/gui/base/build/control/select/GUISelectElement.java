@@ -26,15 +26,14 @@ public class GUISelectElement extends AbstractGUIComponentElement<GUISelectEleme
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.comboBox = new JComboBox<>();
-        super.loadTemplates(this.comboBox, this.sysTemplate.getSelect(), this.template.getSelect());
         this.comboBox.setRenderer(getCellRenderer());
         super.registerEvents(this.comboBox, this.config.events);
-
         this.setOptions(this.config.options);
-        panel.add(this.comboBox);
+
+        super.addSubComponent(panel, this.comboBox, this.template.getSelect());
         return panel;
     }
 
@@ -91,7 +90,7 @@ public class GUISelectElement extends AbstractGUIComponentElement<GUISelectEleme
 
     private ListCellRenderer<JComponent> getCellRenderer() {
         return (list, value, index, isSelected, cellHasFocus) -> {
-            super.loadTemplates(value, this.sysTemplate.getOption(), this.template.getOption());
+            super.loadTemplates(value, this.template.getOption());
             return value;
         };
     }

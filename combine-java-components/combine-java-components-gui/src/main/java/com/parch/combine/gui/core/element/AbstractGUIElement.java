@@ -6,6 +6,7 @@ import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
 import com.parch.combine.gui.core.event.GUIEventHandler;
 import com.parch.combine.gui.core.style.ElementConfig;
+import com.parch.combine.gui.core.style.ElementHelper;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -13,7 +14,7 @@ import java.awt.Container;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> implements IGUIElement {
+public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C extends GUIElementConfig<V>, V> implements IGUIElement {
 
     protected String scopeKey;
     protected String domain;
@@ -21,7 +22,6 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
     protected Map<String, Object> data;
 
     protected String type;
-    protected T sysTemplate;
     protected T template;
     protected C config;
     protected V value;
@@ -29,7 +29,6 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
     protected JFrame frame;
     protected Boolean visible;
     protected Container container;
-
     protected Map<String, IGUIElementCallFunction> callFunctionMap;
 
     protected AbstractGUIElement(String scopeKey, String domain, String id, Map<String, Object> data, String type, T template, C config, Class<T> templateClass) {
@@ -43,28 +42,45 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
             this.value = config.value;
             this.visible = config.visible;
             this.callFunctionMap = this.initCallFunction();
-
-            this.sysTemplate = GUIElementTemplateHelper.getControlTemplate(type, templateClass);
-            this.template = template;
-
-            if (this.sysTemplate == null) {
-                this.sysTemplate = templateClass.getDeclaredConstructor().newInstance();
-            }
-            if (this.template == null) {
-                this.template = templateClass.getDeclaredConstructor().newInstance();
-            }
+            this.loadTemplate(template, templateClass);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             PrintUtil.printError("【GUIElement】【" + type + "】模板加载失败！");
         }
     }
 
-    protected void loadTemplates(JComponent component, ElementConfig ... configs) {
-        GUIElementTemplateHelper.loadTemplates(component, configs);
+    private void loadTemplate(T template, Class<T> templateClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        if (template == null) {
+            template = templateClass.getDeclaredConstructor().newInstance();
+        }
+
+        T sysTemplate =  GUIElementTemplateHelper.getControlTemplate(type, templateClass);
+        if (sysTemplate != null) {
+            template.merge(sysTemplate);
+        }
+
+        this.template = template;
     }
 
-    protected void loadFancyTemplates(JComponent component, String key, Map<String, ElementConfig>... configs) {
-        GUIElementTemplateHelper.loadFancyTemplates(component, key, configs);
+    protected void loadTemplates(JComponent component, ElementConfig config) {
+        GUIElementTemplateHelper.loadTemplates(component, config);
     }
+
+    protected void loadFancyTemplates(JComponent component, String key, Map<String, ElementConfig> config) {
+        if (key == null || config == null) {
+            return;
+        }
+        GUIElementTemplateHelper.loadTemplates(component, config.get(key));
+    }
+
+    protected void addSubComponent(JComponent component, JComponent subComponent, ElementConfig config) {
+        if (component == null || subComponent == null) {
+            return;
+        }
+
+        loadTemplates(subComponent, config);
+        ElementHelper.addSubComponent(component, subComponent, config == null ? null : config.getGrid(), null);
+    }
+
 
     protected void registerEvents(JComponent component, EventConfig[] events) {
         GUIEventHandler.bindings(component, events, this);
@@ -72,11 +88,11 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
 
     @Override
     public final Object call(String key, Object... params) {
-        if (callFunctionMap == null || key == null) {
+        if (this.callFunctionMap == null || key == null) {
             return null;
         }
 
-        IGUIElementCallFunction function = callFunctionMap.get(key);
+        IGUIElementCallFunction function = this.callFunctionMap.get(key);
         if (function == null) {
             return null;
         }
@@ -88,32 +104,36 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
 
     @Override
     public String getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public Container getContainer() {
-        return container;
+        return this.container;
     }
 
     @Override
     public String getScopeKey() {
-        return scopeKey;
+        return this.scopeKey;
     }
 
     @Override
     public JFrame getFrame() {
-        return frame;
+        return this.frame;
     }
 
     @Override
     public String getDomain() {
-        return domain;
+        return this.domain;
     }
 
     @Override
     public Map<String, Object> getData() {
-        return data;
+        return this.data;
+    }
+
+    public T getTemplate() {
+        return this.template;
     }
 
     @Override
@@ -126,6 +146,6 @@ public abstract class AbstractGUIElement<T, C extends GUIElementConfig<V>, V> im
 
     @Override
     public boolean isVisible() {
-        return visible != null && visible;
+        return this.visible != null && this.visible;
     }
 }

@@ -62,30 +62,11 @@ public class GUIElementTemplateHelper {
         return null;
     }
 
-    public static void loadTemplates(JComponent component, ElementConfig... configs) {
-        if (component == null || configs == null || configs.length == 0) {
+    public static void loadTemplates(JComponent component, ElementConfig config) {
+        if (component == null || config == null) {
             return;
         }
 
-        for (ElementConfig config : configs) {
-            ElementHelper.set(component, config);
-        }
-    }
-
-    public static void loadFancyTemplates(JComponent component, String key, Map<String, ElementConfig>... configs) {
-        if (component == null || configs == null || configs.length == 0 || CheckEmptyUtil.isEmpty(key)) {
-            return;
-        }
-
-        for (Map<String, ElementConfig> configMap : configs) {
-            if (configMap == null) {
-                continue;
-            }
-
-            ElementConfig config = configMap.get(key);
-            if (config != null) {
-                ElementHelper.set(component, config);
-            }
-        }
+        ElementHelper.set(component, config);
     }
 }

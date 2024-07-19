@@ -1,19 +1,24 @@
 package com.parch.combine.gui.core.style;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.gui.core.style.config.ElementGridConfig;
 import com.parch.combine.gui.core.style.enums.AlignmentXEnum;
 import com.parch.combine.gui.core.style.enums.AlignmentYEnum;
+import com.parch.combine.gui.core.style.enums.LayoutTypeEnum;
 import com.parch.combine.gui.core.style.helper.ElementBorderHelper;
 import com.parch.combine.gui.core.style.helper.ElementFontHelper;
+import com.parch.combine.gui.core.style.helper.ElementGridHelper;
 import com.parch.combine.gui.core.style.helper.ElementLayoutHelper;
 import com.parch.combine.gui.core.style.helper.ElementSizeHelper;
+import com.parch.combine.gui.core.style.settings.ElementGridSettings;
 
 import javax.swing.JComponent;
-import java.awt.*;
 
 public class ElementHelper {
 
     public static void set(JComponent component, ElementConfig elementConfig) {
+        ElementLayoutHelper.init(component, elementConfig);
+
         if (elementConfig == null) {
             return;
         }
@@ -34,10 +39,6 @@ public class ElementHelper {
             component.setOpaque(elementConfig.getOpaque());
         }
 
-        if (elementConfig.getLayout() != null) {
-            ElementLayoutHelper.set(component, elementConfig.getLayout());
-        }
-
         if (elementConfig.getSize() != null) {
             ElementSizeHelper.set(component, elementConfig.getSize());
         }
@@ -49,5 +50,13 @@ public class ElementHelper {
         if (elementConfig.getFont() != null) {
             ElementFontHelper.set(component, elementConfig.getFont());
         }
+    }
+
+    public static void addSubComponent(JComponent component, JComponent subComponent, ElementGridConfig gridConfig, ElementGridSettings settings) {
+        if (component == null || subComponent == null) {
+            return;
+        }
+
+        ElementGridHelper.setSubComponent(component, subComponent, gridConfig, settings);
     }
 }

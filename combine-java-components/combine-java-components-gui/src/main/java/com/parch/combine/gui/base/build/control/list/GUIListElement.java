@@ -34,13 +34,12 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel, this.template.getExternal());
 
         this.emptyPanel = new JPanel();
-        super.loadTemplates(this.emptyPanel, this.sysTemplate.getEmpty(), this.template.getEmpty());
         this.buildEmptyText();
         this.emptyPanel.setVisible(false);
-        panel.add(emptyPanel);
+        super.addSubComponent(panel, this.emptyPanel, this.template.getEmpty());
 
 
         this.listModel = new DefaultListModel<>();
@@ -48,9 +47,8 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
         list.setModel(this.listModel);
         list.setCellRenderer(this.getCellRenderer());
         list.setLayoutOrientation(this.config.orientation);
-        super.loadTemplates(list, this.sysTemplate.getList(), this.template.getList());
         this.buildListItems();
-        panel.add(list);
+        super.addSubComponent(panel, list, this.template.getList());
 
         return panel;
     }
@@ -85,13 +83,10 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
                 Object dataItem = this.value[i];
 
                 this.elementConfigs[i] = new GUISubElementConfig[elementConfigLength];
-                JComponent[] body = GUISubElementHelper.copyAndBuild(dataItem, this.elementConfigs[i], this.config.elementConfigs, this);
 
                 JPanel item = new JPanel();
-                for (JComponent jComponent : body) {
-                    item.add(jComponent);
-                }
-
+                super.loadTemplates(item, this.template.getItem());
+                GUISubElementHelper.copyAndBuild(item, dataItem, this.elementConfigs[i], this.config.elementConfigs, this);
                 listModel.addElement(item);
             }
 
@@ -105,7 +100,7 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
 
     private ListCellRenderer<JComponent> getCellRenderer() {
         return (list, value, index, isSelected, cellHasFocus) -> {
-            super.loadTemplates(value, this.sysTemplate.getItem(), this.template.getItem());
+            super.loadTemplates(value, this.template.getItem());
             return value;
         };
     }

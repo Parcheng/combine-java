@@ -23,10 +23,9 @@ public class GUISliderElement extends AbstractGUIComponentElement<GUISliderEleme
     @Override
     public JComponent build() {
         JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.sysTemplate.getExternal(), this.template.getExternal());
+        super.loadTemplates(panel,  this.template.getExternal());
 
         this.slider = new JSlider(config.orientation, config.min, config.max, config.value);
-        super.loadTemplates(this.slider, this.sysTemplate.getSlider(), this.template.getSlider());
         super.registerEvents(this.slider, this.config.events);
 
         if (this.config.majorTickSpacing != null) {
@@ -42,7 +41,7 @@ public class GUISliderElement extends AbstractGUIComponentElement<GUISliderEleme
             this.slider.setPaintLabels(this.config.paintLabels);
         }
 
-        panel.add(this.slider);
+        super.addSubComponent(panel, this.slider, this.template.getSlider());
         return panel;
     }
 
