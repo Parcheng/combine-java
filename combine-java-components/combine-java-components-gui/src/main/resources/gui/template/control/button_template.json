@@ -2,10 +2,7 @@
   "external": {
     "grid": {
       "fill": "ALL",
-      "weightX": 1,
-      "occupyX": 2,
-      "occupyY": 2,
-      "positionY": 3
+      "weightX": 1
     },
     "border": {
       "size": 0,
@@ -20,9 +17,9 @@
     "fgColor": "#000000",
     "bgColor": "#c0c0c0",
     "grid": {
-      "fill": "ALL",
-      "weightX": 0,
-      "weightY": 0
+      "fill": "NONE",
+      "weightX": 1,
+      "weightY": 1
     },
     "border": {
       "type": "LINE",

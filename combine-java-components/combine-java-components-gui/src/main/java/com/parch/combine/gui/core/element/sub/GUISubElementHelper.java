@@ -6,6 +6,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.GUIEventHandler;
 import com.parch.combine.gui.core.style.ElementHelper;
 import com.parch.combine.gui.core.style.config.ElementGridConfig;
+import com.parch.combine.gui.core.style.settings.ElementGridSettings;
 
 import javax.swing.JComponent;
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class GUISubElementHelper {
 
     public static JComponent[] build(JComponent parent, Object data, GUISubElementConfig[] subElements, IGUIElement element) {
         JComponent[] body = new JComponent[subElements.length];
+        int rowCount = 1;
         for (int i = 0; i < subElements.length; i++) {
             GUISubElementConfig config = subElements[i];
             if (config == null) {
@@ -88,7 +90,8 @@ public class GUISubElementHelper {
             body[i] = config.element.build(element.getFrame());
             GUIEventHandler.bindings(body[i], config.events, element);
             if (parent != null) {
-                ElementHelper.addSubComponent(parent, body[i], getGridConfig(element));
+                ElementHelper.addSubComponent(parent, body[i],
+                        getGridConfig(element), new ElementGridSettings(1, rowCount++));
             }
         }
 

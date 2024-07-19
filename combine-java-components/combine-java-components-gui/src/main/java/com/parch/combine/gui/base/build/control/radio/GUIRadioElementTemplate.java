@@ -10,10 +10,23 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public class GUIRadioElementTemplate extends BaseGUIElementTemplate {
 
+    @Field(key = "radios", name = "单选元素集合样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig radios;
+
     @Field(key = "radio", name = "单选元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig radio;
+
+    public ElementConfig getRadios() {
+        return radios;
+    }
+
+    public void setRadios(ElementConfig radios) {
+        this.radios = radios;
+    }
 
     public ElementConfig getRadio() {
         return radio;

@@ -32,13 +32,16 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
 
     @Override
     public JComponent build() {
-        this.panel = new JPanel();
-        super.loadTemplates(panel, this.template.getExternal());
+        JPanel external = new JPanel();
+        super.loadTemplates(external, this.template.getExternal());
 
+        this.panel = new JPanel();
         this.checkbox = new ArrayList<>();
         this.options = new ArrayList<>();
         this.setOptions(this.config.options);
-        return this.panel;
+
+        super.addSubComponent(external, this.panel, this.template.getCheckboxes());
+        return external;
     }
 
     @Override

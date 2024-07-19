@@ -10,6 +10,11 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public class GUICheckboxElementTemplate extends BaseGUIElementTemplate {
 
+    @Field(key = "checkboxes", name = "多选元素集合样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig checkboxes;
+
     @Field(key = "checkbox", name = "多选元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
@@ -21,5 +26,13 @@ public class GUICheckboxElementTemplate extends BaseGUIElementTemplate {
 
     public void setCheckbox(ElementConfig checkbox) {
         this.checkbox = checkbox;
+    }
+
+    public ElementConfig getCheckboxes() {
+        return checkboxes;
+    }
+
+    public void setCheckboxes(ElementConfig checkboxes) {
+        this.checkboxes = checkboxes;
     }
 }

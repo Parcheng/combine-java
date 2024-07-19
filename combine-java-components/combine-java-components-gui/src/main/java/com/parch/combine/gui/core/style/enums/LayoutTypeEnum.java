@@ -5,11 +5,10 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import java.awt.*;
 
-@Deprecated
 public enum LayoutTypeEnum implements IOptionSetting {
 
-    FLOW("流式布局", true),
-    BOX("盒子布局", true);
+    GRID("网格布局", true),
+    FLOW("流式布局", true);
 
     private String name;
     private boolean isValid;
@@ -21,14 +20,14 @@ public enum LayoutTypeEnum implements IOptionSetting {
 
     public static LayoutTypeEnum get(String type) {
         if (CheckEmptyUtil.isEmpty(type)) {
-            return FLOW;
+            return GRID;
         }
         for (LayoutTypeEnum value : LayoutTypeEnum.values()) {
             if (value.toString().equals(type.toUpperCase())) {
                 return value;
             }
         }
-        return FLOW;
+        return GRID;
     }
 
 

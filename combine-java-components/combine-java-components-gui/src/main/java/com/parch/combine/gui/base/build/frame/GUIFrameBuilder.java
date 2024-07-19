@@ -8,6 +8,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementHelper;
+import com.parch.combine.gui.core.style.settings.ElementGridSettings;
 
 import javax.swing.JFrame;
 import javax.swing.JComponent;
@@ -75,8 +76,9 @@ public class GUIFrameBuilder {
             JPanel layoutPanel = new JPanel();
             GUIElementTemplateHelper.loadTemplates(layoutPanel, configs[0]);
 
-            for (String elementId : elements) {
-                IGUIElement element = manager.get(elementId);
+            int rowCount = 1;
+            for (String s : elements) {
+                IGUIElement element = manager.get(s);
                 if (element == null) {
                     continue;
                 }
@@ -86,7 +88,8 @@ public class GUIFrameBuilder {
                     continue;
                 }
 
-                ElementHelper.addSubComponent(layoutPanel, elementComponent, element.getTemplate().getExternalGrid());
+                ElementHelper.addSubComponent(layoutPanel, elementComponent,
+                        element.getTemplate().getExternalGrid(), new ElementGridSettings(1, rowCount++));
             }
 
             JScrollPane scrollPanel = new JScrollPane(layoutPanel);

@@ -2,8 +2,7 @@
   "external": {
     "grid": {
       "fill": "ALL",
-      "weightX": 1,
-      "positionY": 2
+      "weightX": 1
     },
     "border": {
       "size": 0,
@@ -21,8 +20,9 @@
       "size": 12
     },
     "grid": {
-      "fill": "ALL",
-      "weightX": 1
+      "fill": "NONE",
+      "weightX": 1,
+      "weightY": 1
     }
   },
   "option": {

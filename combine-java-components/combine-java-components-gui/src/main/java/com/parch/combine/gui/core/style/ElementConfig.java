@@ -14,9 +14,14 @@ import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.enums.AlignmentXEnum;
 import com.parch.combine.gui.core.style.enums.AlignmentYEnum;
+import com.parch.combine.gui.core.style.enums.LayoutTypeEnum;
 
 @CommonObject(key = ElementObjectConstant.GUI_ELEMENT, name = ElementObjectConstant.GUI_ELEMENT_NAME)
 public class ElementConfig implements IMerge<ElementConfig> {
+
+    @Field(key = "layout", name = "布局类型", type = FieldTypeEnum.SELECT, defaultValue = "GRID")
+    @FieldSelect(enumClass = LayoutTypeEnum.class)
+    private String layout;
 
     @Field(key = "fgColor", name = "前景色（字体）", type = FieldTypeEnum.TEXT)
     private String fgColor;
@@ -127,5 +132,13 @@ public class ElementConfig implements IMerge<ElementConfig> {
 
     public void setGrid(ElementGridConfig grid) {
         this.grid = grid;
+    }
+
+    public String getLayout() {
+        return layout;
+    }
+
+    public void setLayout(String layout) {
+        this.layout = layout;
     }
 }

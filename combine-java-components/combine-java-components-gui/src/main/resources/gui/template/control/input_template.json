@@ -1,14 +1,8 @@
 {
   "external": {
-    "layout": {
-      "type": "BOX",
-      "axis": "X"
-    },
     "grid": {
       "fill": "ALL",
-      "weightX": 1,
-      "occupyX": 2,
-      "occupyY": 2
+      "weightX": 1
     },
     "border": {
       "size": 0,
@@ -25,8 +19,9 @@
   "input": {
     "opaque": false,
     "grid": {
-      "fill": "ALL",
-      "weightX": 1
+      "fill": "NONE",
+      "weightX": 1,
+      "weightY": 0
     },
     "border": {
       "type": "LINE",
@@ -41,8 +36,9 @@
   "Symbol": {
     "opaque": false,
     "grid": {
-      "fill": "ALL",
-      "weightX": 1
+      "fill": "NONE",
+      "weightX": 1,
+      "weightY": 1
     },
     "border": {
       "size": 0,

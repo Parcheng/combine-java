@@ -54,12 +54,10 @@ public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C ext
         }
 
         T sysTemplate =  GUIElementTemplateHelper.getControlTemplate(type, templateClass);
-        if (sysTemplate == null) {
-            this.template = template;
-            return;
+        if (sysTemplate != null) {
+            template.merge(sysTemplate);
         }
 
-        template.merge(sysTemplate);
         this.template = template;
     }
 
@@ -80,7 +78,7 @@ public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C ext
         }
 
         loadTemplates(subComponent, config);
-        ElementHelper.addSubComponent(component, subComponent, config == null ? null : config.getGrid());
+        ElementHelper.addSubComponent(component, subComponent, config == null ? null : config.getGrid(), null);
     }
 
 
