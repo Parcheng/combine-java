@@ -1,5 +1,7 @@
 package com.parch.combine.core.common.base;
 
+import com.parch.combine.core.common.util.PrintUtil;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +11,7 @@ import java.util.Map;
 public interface IMerge<T> {
 
     @SuppressWarnings("unchecked")
-    default void merge(T source) throws IllegalAccessException {
+    default void merge(T source) {
         if (source == null) {
             return;
         }
@@ -28,27 +30,31 @@ public interface IMerge<T> {
             currClass = currClass.getSuperclass();
         }
 
-        for (Field field : fieldList) {
-            field.setAccessible(true);
+        try {
+            for (Field field : fieldList) {
+                field.setAccessible(true);
 
-            Object sourceFieldValue = field.get(source);
-            if (sourceFieldValue == null) {
-                continue;
-            }
+                Object sourceFieldValue = field.get(source);
+                if (sourceFieldValue == null) {
+                    continue;
+                }
 
-            Object thisFieldValue = field.get(this);
-            if (thisFieldValue == null) {
-                field.set(this, sourceFieldValue);
-                continue;
-            }
+                Object thisFieldValue = field.get(this);
+                if (thisFieldValue == null) {
+                    field.set(this, sourceFieldValue);
+                    continue;
+                }
 
-            if (IMerge.class.isAssignableFrom(field.getType())) {
-                ((IMerge) thisFieldValue).merge(sourceFieldValue);
-            } else if (Map.class.isAssignableFrom(field.getType())) {
-                ((Map) thisFieldValue).putAll((Map) thisFieldValue);
-            } else {
-                field.set(this, sourceFieldValue);
+                if (IMerge.class.isAssignableFrom(field.getType())) {
+                    ((IMerge) thisFieldValue).merge(sourceFieldValue);
+                } else if (Map.class.isAssignableFrom(field.getType())) {
+                    ((Map) thisFieldValue).putAll((Map) thisFieldValue);
+                } else {
+                    field.set(this, sourceFieldValue);
+                }
             }
+        } catch (IllegalAccessException e) {
+            PrintUtil.printError("Merge Error:" + e.getMessage());
         }
-    };
+    }
 }

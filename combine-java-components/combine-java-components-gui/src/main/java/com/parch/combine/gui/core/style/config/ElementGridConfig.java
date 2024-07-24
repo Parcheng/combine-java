@@ -1,14 +1,16 @@
 package com.parch.combine.gui.core.style.config;
 
+import com.parch.combine.core.common.base.IMerge;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 import com.parch.combine.gui.core.style.enums.GridFillEnum;
 
 @CommonObject(key = ElementObjectConstant.GUI_ELEMENT_GRID, name = ElementObjectConstant.GUI_ELEMENT_GRID_NAME)
-public class ElementGridConfig {
+public class ElementGridConfig implements IMerge<ElementGridConfig> {
 
     @Field(key = "fill", name = "填充方向", type = FieldTypeEnum.SELECT, defaultValue = "NONE")
     @FieldSelect(enumClass = GridFillEnum.class)

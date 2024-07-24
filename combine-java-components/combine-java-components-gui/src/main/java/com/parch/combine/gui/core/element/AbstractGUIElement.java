@@ -7,6 +7,7 @@ import com.parch.combine.gui.core.event.EventConfig;
 import com.parch.combine.gui.core.event.GUIEventHandler;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementHelper;
+import com.parch.combine.gui.core.style.config.ElementGridConfig;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -73,12 +74,16 @@ public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C ext
     }
 
     protected void addSubComponent(JComponent component, JComponent subComponent, ElementConfig config) {
+        addSubComponent(component, subComponent, config, config == null ? null : config.getGrid());
+    }
+
+    protected void addSubComponent(JComponent component, JComponent subComponent, ElementConfig config, ElementGridConfig gridConfig) {
         if (component == null || subComponent == null) {
             return;
         }
 
         loadTemplates(subComponent, config);
-        ElementHelper.addSubComponent(component, subComponent, config == null ? null : config.getGrid(), null);
+        ElementHelper.addSubComponent(component, subComponent, gridConfig, null);
     }
 
 
