@@ -18,27 +18,6 @@ public class GUISubElementHelper {
 
     private GUISubElementHelper(){}
 
-    public static GUISubElementConfig[] convert(GUIElementManager guiElementManager, SubElementLogicConfig[] elementConfigs) {
-        if (elementConfigs == null) {
-            return null;
-        }
-
-        GUISubElementConfig[] guiElements = new GUISubElementConfig[elementConfigs.length];
-        for (int i = 0; i < elementConfigs.length; i++) {
-            SubElementLogicConfig elementConfig = elementConfigs[i];
-            guiElements[i] = new GUISubElementConfig();
-            guiElements[i].dataField = elementConfig.dataField();
-            guiElements[i].key = elementConfig.key() == null ? guiElements[i].dataField : elementConfig.key();
-            guiElements[i].events = elementConfig.events();
-            guiElements[i].element = guiElementManager.get(elementConfig.elementId());
-            if (guiElements[i].element == null) {
-                return null;
-            }
-        }
-
-        return guiElements;
-    }
-
     public static IGUIElement[] parse(GUIElementManager guiElementManager, String[] elementIds) {
         if (elementIds == null) {
             return null;
@@ -56,23 +35,42 @@ public class GUISubElementHelper {
         return elements;
     }
 
-    public static JComponent[] copyAndBuild(JComponent parent, Object data, GUISubElementConfig[] newSubElements, GUISubElementConfig[] sourceSubElements, IGUIElement element) {
-        for (int i = 0; i < sourceSubElements.length; i++) {
-            if (newSubElements.length == i) {
-                break;
+    public static void setSubComponent(JComponent parent, GUISubElementConfig[] subElements) {
+        if (parent == null) {
+            return;
+        }
+
+        int rowCount = 1;
+        for (GUISubElementConfig config : subElements) {
+            if (config == null || config.buildResult == null) {
+                continue;
             }
 
+            ElementGridConfig gridConfig = config.element.getTemplate() == null
+                    || config.element.getTemplate().getExternal() == null ?
+                    null : config.element.getTemplate().getExternal().getGrid();
+            ElementHelper.addSubComponent(parent, config.buildResult, gridConfig, new ElementGridSettings(1, rowCount++));
+        }
+    }
+
+    public static GUISubElementConfig[] copyAndBuild(Object data, GUISubElementConfig[] sourceSubElements, IGUIElement element) {
+        GUISubElementConfig[] newSubElements = new GUISubElementConfig[sourceSubElements.length];
+        for (int i = 0; i < sourceSubElements.length; i++) {
             GUISubElementConfig configItem = sourceSubElements[i];
             newSubElements[i] = GUISubElementConfig.copy(configItem);
         }
-        return GUISubElementHelper.build(parent, data, newSubElements, element);
+        GUISubElementHelper.build(data, element, newSubElements);
+        return newSubElements;
     }
 
-    public static JComponent[] build(JComponent parent, Object data, GUISubElementConfig[] subElements, IGUIElement element) {
-        JComponent[] body = new JComponent[subElements.length];
-        int rowCount = 1;
-        for (int i = 0; i < subElements.length; i++) {
-            GUISubElementConfig config = subElements[i];
+    public static GUISubElementConfig copyAndBuild(Object data, GUISubElementConfig sourceSubElement, IGUIElement element) {
+        GUISubElementConfig newSubElement = GUISubElementConfig.copy(sourceSubElement);
+        GUISubElementHelper.build(data, element, newSubElement);
+        return newSubElement;
+    }
+
+    private static void build(Object data, IGUIElement element, GUISubElementConfig ... subElements) {
+        for (GUISubElementConfig config : subElements) {
             if (config == null) {
                 continue;
             }
@@ -85,22 +83,14 @@ public class GUISubElementHelper {
                     itemData = ((Map<?, ?>) data).get(config.dataField);
                 }
             }
+            if (itemData == null) {
+                itemData = config.defaultValue;
+            }
 
             config.element.setValue(itemData);
-            body[i] = config.element.build(element.getFrame());
-            GUIEventHandler.bindings(body[i], config.events, element);
-            if (parent != null) {
-                ElementHelper.addSubComponent(parent, body[i],
-                        getGridConfig(element), new ElementGridSettings(1, rowCount++));
-            }
+            config.buildResult = config.element.build(element.getFrame());
+            GUIEventHandler.bindings(config.buildResult, config.events, element);
         }
-
-        return body;
-    }
-
-    private static ElementGridConfig getGridConfig(IGUIElement element) {
-        return element.getTemplate() == null || element.getTemplate().getExternal() == null ?
-                null : element.getTemplate().getExternal().getGrid();
     }
 
     @SuppressWarnings("unchecked")
@@ -113,15 +103,26 @@ public class GUISubElementHelper {
         if (data instanceof Map) {
             mapData = (Map<String, Object>) data;
             for (GUISubElementConfig element : elements) {
-                if (element.dataField == null) {
-                    element.element.setValue(data);
-                } else {
-                    element.element.setValue(mapData.get(element.dataField));
+                if (element == null) {
+                    continue;
                 }
+
+                Object currData;
+                if (element.dataField == null) {
+                    currData = data;
+                } else {
+                    currData = mapData.get(element.dataField);
+                }
+
+                element.element.setValue(currData == null ? element.defaultValue : currData);
             }
         } else {
             for (GUISubElementConfig element : elements) {
-                element.element.setValue(data);
+                if (element == null) {
+                    continue;
+                }
+
+                element.element.setValue(data == null ? element.defaultValue : data);
             }
         }
 
@@ -133,20 +134,25 @@ public class GUISubElementHelper {
             return null;
         }
 
-        Map<String, Object> data = new HashMap<>();
-        for (GUISubElementConfig itemConfig : elements) {
-            Object itemData = itemConfig.element.getData();
-            if (itemConfig.key == null) {
-                return itemData;
-            }
-
-            data.put(itemConfig.key, itemData);
+        if (elements.length == 1 && elements[0] != null && elements[0].key == null) {
+            Object data = elements[0].element.getData();
+            return data == null ? elements[0].defaultValue : data;
         }
 
-        return data;
+        Map<String, Object> data = new HashMap<>();
+        for (GUISubElementConfig itemConfig : elements) {
+            if (itemConfig == null || itemConfig.key == null) {
+                continue;
+            }
+
+            Object itemData = itemConfig.element.getData();
+            data.put(itemConfig.key, itemData == null ? itemConfig.defaultValue : itemData);
+        }
+
+        return data.isEmpty() ? null : data;
     }
 
-    public static List<Object> getValueList(GUISubElementConfig[][] elements) {
+    public static List<Object> batchGetValue(GUISubElementConfig[][] elements) {
         List<Object> data = new ArrayList<>();
         for (GUISubElementConfig[] item : elements) {
             data.add(getValue(item));

@@ -27,7 +27,7 @@ public class GUIControlPanelComponent extends AbstractGUIControlComponent<GUICon
         super.initConfig(config);
         config.value = logicConfig.value();
 
-        GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.bodyElements());
+        GUISubElementConfig[] elements = GUISubElementConfig.convert(guiElementManager, logicConfig.bodyElements());
         if (elements == null) {
             return null;
         }

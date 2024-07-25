@@ -31,7 +31,7 @@ public class GUIControlTableComponent extends AbstractGUIControlComponent<GUICon
         config.rowHeight = logicConfig.rowHeight();
         config.rowMargin = logicConfig.rowMargin();
 
-        GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.rowElements());
+        GUISubElementConfig[] elements = GUISubElementConfig.convert(guiElementManager, logicConfig.rowElements());
         if (elements == null) {
             return null;
         }

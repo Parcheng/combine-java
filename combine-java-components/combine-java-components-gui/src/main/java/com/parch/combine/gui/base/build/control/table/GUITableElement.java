@@ -100,18 +100,21 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
         for (int i = 0; i < dataCount; i++) {
             Map<String, Object> dataItem = this.value[i];
 
-            // 复制元素配置
-            this.elementConfigs[i] = new GUISubElementConfig[colConfigCount];
-            JComponent[] body = GUISubElementHelper.copyAndBuild(null, dataItem, this.elementConfigs[i], this.config.columnConfigs, this);
+            // 复制元素配置集合
+            this.elementConfigs[i] = GUISubElementHelper.copyAndBuild(dataItem, this.config.columnConfigs, this);
 
             // 构建行数据
             Object[] row = new Object[colCount];
             for (int j = 0; j < colCount; j++) {
                 if (j < colConfigCount) {
-                    row[j] = body[j];
-                } else {
-                    row[j] = emptyLabel;
+                    GUISubElementConfig currConfig = this.elementConfigs[i][j];
+                    if (currConfig != null && currConfig.buildResult != null) {
+                        row[j] = currConfig.buildResult;
+                        continue;
+                    }
                 }
+
+                row[j] = emptyLabel;
             }
 
             // 添加行
@@ -167,8 +170,8 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
             return Arrays.asList(this.value);
         }
 
-        List<Object> data = GUISubElementHelper.getValueList(this.elementConfigs);
-        return data.size() > 0 ? data : null;
+        List<Object> data = GUISubElementHelper.batchGetValue(this.elementConfigs);
+        return !data.isEmpty() ? data : null;
     }
 
     @Override

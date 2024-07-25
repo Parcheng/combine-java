@@ -1,0 +1,35 @@
+{
+  "external": {
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
+    },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
+    "opaque": false
+  },
+  "item": {
+    "opaque": false,
+    "border": {
+      "size": 0
+    }
+  },
+  "label": {
+    "opaque": false,
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
+  },
+  "control": {
+    "control": false
+  }
+}

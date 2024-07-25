@@ -31,7 +31,7 @@ public class GUIControlDialogBoxComponent extends AbstractGUIControlComponent<GU
         config.visible = logicConfig.visible();
         config.value = logicConfig.data();
 
-        GUISubElementConfig[] elements = GUISubElementHelper.convert(guiElementManager, logicConfig.bodyElements());
+        GUISubElementConfig[] elements = GUISubElementConfig.convert(guiElementManager, logicConfig.bodyElements());
         if (elements == null) {
             return null;
         }

@@ -164,6 +164,30 @@
           {"dataField": "desc", "elementId": "table-td"}
         ]
       },{
+        "type": "gui.build.control.from",
+        "elementId": "from",
+        "value": { "name": "123456789", "type": "3" },
+        "rate": 0.5,
+        "labelRate": 0.3,
+        "elementRate": 0.7,
+        "items": [{
+          "label": "NAME",
+          "key":"name",
+          "dataField": "name",
+          "elementId": "input"
+        },{
+          "label": "TYPE",
+          "key":"type",
+          "dataField": "type",
+          "elementId": "select"
+        },{
+          "label": "TEST",
+          "key":"test",
+          "dataField": "test",
+          "defaultValue": "TTTTTTTT",
+          "elementId": "panel-text"
+        }]
+      },{
         "type": "gui.build",
         "title": "test",
         "icon": "1.png",
@@ -173,7 +197,7 @@
         "distanceLeft": 100,
         "elements": {
           "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label",
-            "textarea", "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table"]
+            "textarea", "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table", "from"]
         }
       }
     ],

@@ -16,8 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.ListCellRenderer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +88,8 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
 
                 JPanel item = new JPanel();
                 super.loadTemplates(item, this.template.getItem());
-                GUISubElementHelper.copyAndBuild(item, dataItem, this.elementConfigs[i], this.config.elementConfigs, this);
+                this.elementConfigs[i] = GUISubElementHelper.copyAndBuild(dataItem, this.config.elementConfigs, this);
+                GUISubElementHelper.setSubComponent(item, this.elementConfigs[i]);
                 listModel.addElement(item);
             }
 
@@ -107,6 +110,9 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
 
     @Override
     public boolean setValue(Object data) {
+        if (data == null) {
+            data = Collections.emptyList();
+        }
         if (!(data instanceof Collection)) {
             return false;
         }
@@ -128,8 +134,8 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
             return Arrays.asList(this.value);
         }
 
-        List<Object> data = GUISubElementHelper.getValueList(this.elementConfigs);
-        return data.size() > 0 ? data : null;
+        List<Object> data = GUISubElementHelper.batchGetValue(this.elementConfigs);
+        return !data.isEmpty() ? data : null;
     }
 
     @Override

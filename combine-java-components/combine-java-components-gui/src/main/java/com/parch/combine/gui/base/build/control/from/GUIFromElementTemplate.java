@@ -10,16 +10,42 @@ import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 public class GUIFromElementTemplate extends BaseGUIElementTemplate {
 
-    @Field(key = "text", name = "文本样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "item", name = "FROM项样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig text;
+    private ElementConfig item;
 
-    public ElementConfig getText() {
-        return text;
+    @Field(key = "label", name = "左侧文本样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig label;
+
+    @Field(key = "control", name = "右侧控件样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig control;
+
+    public ElementConfig getItem() {
+        return item;
     }
 
-    public void setText(ElementConfig text) {
-        this.text = text;
+    public void setItem(ElementConfig item) {
+        this.item = item;
+    }
+
+    public ElementConfig getLabel() {
+        return label;
+    }
+
+    public void setLabel(ElementConfig label) {
+        this.label = label;
+    }
+
+    public ElementConfig getControl() {
+        return control;
+    }
+
+    public void setControl(ElementConfig control) {
+        this.control = control;
     }
 }
