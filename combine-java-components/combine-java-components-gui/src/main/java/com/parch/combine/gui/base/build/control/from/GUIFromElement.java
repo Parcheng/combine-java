@@ -10,9 +10,13 @@ import com.parch.combine.gui.core.style.config.ElementGridConfig;
 import com.parch.combine.gui.core.style.enums.GridFillEnum;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class GUIFromElement extends AbstractGUIComponentElement<GUIFromElementTemplate, GUIFromElement.Config, Map<String, Object>> {
+
+    private List<GUISubElementConfig> subConfigs;
 
     public GUIFromElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIFromElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "from", template, config, GUIFromElementTemplate.class);
@@ -41,6 +45,7 @@ public class GUIFromElement extends AbstractGUIComponentElement<GUIFromElementTe
         int currLine = 0;
         double currLineWeight = 0D;
         float configRate = this.config.rate == null ? 1 : this.config.rate;
+        this.subConfigs = new ArrayList<>();
         for (ItemConfig item : this.config.items) {
             if (item == null) {
                 continue;
@@ -90,14 +95,16 @@ public class GUIFromElement extends AbstractGUIComponentElement<GUIFromElementTe
         if (itemData == null) {
             itemData = item.defaultValue;
         }
-        GUISubElementHelper.build(elementPanel, itemData, new GUISubElementConfig[]{item.element}, this);
+
+        GUISubElementConfig subConfig = GUISubElementHelper.copyAndBuild(itemData, item.element, this);
+        this.subConfigs.add(subConfig);
 
         float currElementRate = item.elementRate == null ? configElementRate : item.elementRate;
         if (currLineWeight + currElementRate > 1) {
             currLine++;
         }
 
-        super.addSubComponent(parent, label, this.template.getLabel(), this.buildGridConfig(currElementRate, currLine));
+        super.addSubComponent(parent, subConfig.buildResult, this.template.getControl(), this.buildGridConfig(currElementRate, currLine));
     }
 
     private ElementGridConfig buildGridConfig(double rate, int line) {

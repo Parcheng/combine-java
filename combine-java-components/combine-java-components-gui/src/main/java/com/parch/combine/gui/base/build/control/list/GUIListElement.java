@@ -86,7 +86,8 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
 
                 JPanel item = new JPanel();
                 super.loadTemplates(item, this.template.getItem());
-                GUISubElementHelper.copyAndBuild(item, dataItem, this.elementConfigs[i], this.config.elementConfigs, this);
+                this.elementConfigs[i] = GUISubElementHelper.copyAndBuild(dataItem, this.config.elementConfigs, this);
+                GUISubElementHelper.setSubComponent(item, this.elementConfigs[i]);
                 listModel.addElement(item);
             }
 

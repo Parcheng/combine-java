@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class GUIPanelElement extends AbstractGUIComponentElement<GUIPanelElementTemplate, GUIPanelElement.Config, Object> {
 
+    private GUISubElementConfig[] subConfigs;
+
     public GUIPanelElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIPanelElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "panel", template, config, GUIPanelElementTemplate.class);
     }
@@ -34,7 +36,8 @@ public class GUIPanelElement extends AbstractGUIComponentElement<GUIPanelElement
             return;
         }
 
-        GUISubElementHelper.build(panel, data, items, this);
+        this.subConfigs = GUISubElementHelper.copyAndBuild(data, this.config.elementConfigs, this);
+        GUISubElementHelper.setSubComponent(panel, this.subConfigs);
     }
 
     @Override
@@ -44,16 +47,16 @@ public class GUIPanelElement extends AbstractGUIComponentElement<GUIPanelElement
         }
 
         this.value = data;
-        return GUISubElementHelper.setValue(data, this.config.elementConfigs);
+        return GUISubElementHelper.setValue(data, this.subConfigs);
     }
 
     @Override
     public Object getValue() {
-        if (this.config.elementConfigs == null) {
+        if (this.subConfigs == null) {
             return this.value;
         }
 
-        return GUISubElementHelper.getValue(this.config.elementConfigs);
+        return GUISubElementHelper.getValue(this.subConfigs);
     }
 
     @Override

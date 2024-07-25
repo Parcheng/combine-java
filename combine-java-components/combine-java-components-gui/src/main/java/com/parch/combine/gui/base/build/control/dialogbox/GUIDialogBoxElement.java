@@ -15,6 +15,8 @@ import java.util.Map;
 
 public class GUIDialogBoxElement extends AbstractGUIWindowElement<GUIDialogBoxElementTemplate, GUIDialogBoxElement.Config, Object> {
 
+    private GUISubElementConfig[] subConfigs;
+
     public GUIDialogBoxElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIDialogBoxElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "dialogbox", template, config, GUIDialogBoxElementTemplate.class);
     }
@@ -34,7 +36,8 @@ public class GUIDialogBoxElement extends AbstractGUIWindowElement<GUIDialogBoxEl
 
         JPanel panel = new JPanel();
         super.loadTemplates(panel, this.template.getExternal());
-        GUISubElementHelper.build(panel, data, this.config.elementConfigs, this);
+        this.subConfigs = GUISubElementHelper.copyAndBuild(data, this.config.elementConfigs, this);
+        GUISubElementHelper.setSubComponent(panel, this.subConfigs);
 
         dialog.add(panel);
         return dialog;
@@ -47,16 +50,16 @@ public class GUIDialogBoxElement extends AbstractGUIWindowElement<GUIDialogBoxEl
         }
 
         this.value = data;
-        return GUISubElementHelper.setValue(this.value, this.config.elementConfigs);
+        return GUISubElementHelper.setValue(this.value, this.subConfigs);
     }
 
     @Override
     public Object getValue() {
-        if (this.config.elementConfigs == null) {
+        if (this.subConfigs == null) {
             return this.value;
         }
 
-        return GUISubElementHelper.getValue(this.config.elementConfigs);
+        return GUISubElementHelper.getValue(this.subConfigs);
     }
 
     @Override

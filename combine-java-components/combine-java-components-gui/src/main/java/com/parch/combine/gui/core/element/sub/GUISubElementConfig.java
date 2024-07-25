@@ -3,11 +3,14 @@ package com.parch.combine.gui.core.element.sub;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 
+import javax.swing.*;
+
 public class GUISubElementConfig {
     public String key;
     public String dataField;
     public IGUIElement element;
     public EventConfig[] events;
+    public JComponent buildResult;
 
     public static GUISubElementConfig copy(GUISubElementConfig source) {
         GUISubElementConfig newConfig = new GUISubElementConfig();
