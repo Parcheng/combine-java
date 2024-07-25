@@ -8,10 +8,19 @@ import com.parch.combine.gui.core.event.EventConfig;
 
 public interface GUIControlPagingLogicConfig extends GUIControlLogicConfig {
 
-    @Field(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT, isRequired = true)
-    String text();
+    @Field(key = "value", name = "值配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldObject(PageValue.class)
+    PageValue value();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldObject(EventConfig.class)
-    EventConfig[] events();
+    interface PageValue {
+
+        @Field(key = "page", name = "当前页", type = FieldTypeEnum.NUMBER, defaultValue = "1")
+        Integer page();
+
+        @Field(key = "pageSize", name = "每页数据量", type = FieldTypeEnum.NUMBER, defaultValue = "10")
+        Integer pageSize();
+
+        @Field(key = "dataCount", name = "总数据量", type = FieldTypeEnum.NUMBER, defaultValue = "0")
+        Long dataCount();
+    }
 }

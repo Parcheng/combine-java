@@ -20,8 +20,8 @@ public class GUIControlPagingComponent extends AbstractGUIControlComponent<GUICo
 
         GUIPagingElement.Config config = new GUIPagingElement.Config();
         super.initConfig(config);
-        config.value = logicConfig.text();
-        config.events = logicConfig.events();
+//        config.value = logicConfig.text();
+//        config.events = logicConfig.events();
         return new GUIPagingElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 }

@@ -18,27 +18,6 @@ public class GUISubElementHelper {
 
     private GUISubElementHelper(){}
 
-    public static GUISubElementConfig[] convert(GUIElementManager guiElementManager, SubElementLogicConfig[] elementConfigs) {
-        if (elementConfigs == null) {
-            return null;
-        }
-
-        GUISubElementConfig[] guiElements = new GUISubElementConfig[elementConfigs.length];
-        for (int i = 0; i < elementConfigs.length; i++) {
-            SubElementLogicConfig elementConfig = elementConfigs[i];
-            guiElements[i] = new GUISubElementConfig();
-            guiElements[i].dataField = elementConfig.dataField();
-            guiElements[i].key = elementConfig.key() == null ? guiElements[i].dataField : elementConfig.key();
-            guiElements[i].events = elementConfig.events();
-            guiElements[i].element = guiElementManager.get(elementConfig.elementId());
-            if (guiElements[i].element == null) {
-                return null;
-            }
-        }
-
-        return guiElements;
-    }
-
     public static IGUIElement[] parse(GUIElementManager guiElementManager, String[] elementIds) {
         if (elementIds == null) {
             return null;
@@ -104,6 +83,9 @@ public class GUISubElementHelper {
                     itemData = ((Map<?, ?>) data).get(config.dataField);
                 }
             }
+            if (itemData == null) {
+                itemData = config.defaultValue;
+            }
 
             config.element.setValue(itemData);
             config.buildResult = config.element.build(element.getFrame());
@@ -121,15 +103,26 @@ public class GUISubElementHelper {
         if (data instanceof Map) {
             mapData = (Map<String, Object>) data;
             for (GUISubElementConfig element : elements) {
-                if (element.dataField == null) {
-                    element.element.setValue(data);
-                } else {
-                    element.element.setValue(mapData.get(element.dataField));
+                if (element == null) {
+                    continue;
                 }
+
+                Object currData;
+                if (element.dataField == null) {
+                    currData = data;
+                } else {
+                    currData = mapData.get(element.dataField);
+                }
+
+                element.element.setValue(currData == null ? element.defaultValue : currData);
             }
         } else {
             for (GUISubElementConfig element : elements) {
-                element.element.setValue(data);
+                if (element == null) {
+                    continue;
+                }
+
+                element.element.setValue(data == null ? element.defaultValue : data);
             }
         }
 
@@ -141,20 +134,25 @@ public class GUISubElementHelper {
             return null;
         }
 
-        Map<String, Object> data = new HashMap<>();
-        for (GUISubElementConfig itemConfig : elements) {
-            Object itemData = itemConfig.element.getData();
-            if (itemConfig.key == null) {
-                return itemData;
-            }
-
-            data.put(itemConfig.key, itemData);
+        if (elements.length == 1 && elements[0] != null && elements[0].key == null) {
+            Object data = elements[0].element.getData();
+            return data == null ? elements[0].defaultValue : data;
         }
 
-        return data;
+        Map<String, Object> data = new HashMap<>();
+        for (GUISubElementConfig itemConfig : elements) {
+            if (itemConfig == null || itemConfig.key == null) {
+                continue;
+            }
+
+            Object itemData = itemConfig.element.getData();
+            data.put(itemConfig.key, itemData == null ? itemConfig.defaultValue : itemData);
+        }
+
+        return data.isEmpty() ? null : data;
     }
 
-    public static List<Object> getValueList(GUISubElementConfig[][] elements) {
+    public static List<Object> batchGetValue(GUISubElementConfig[][] elements) {
         List<Object> data = new ArrayList<>();
         for (GUISubElementConfig[] item : elements) {
             data.add(getValue(item));

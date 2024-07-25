@@ -16,6 +16,9 @@ public interface SubElementLogicConfig {
     @FieldDesc("从 data 中取 dataField 的值，用于构建 GUI 元素")
     String dataField();
 
+    @Field(key = "defaultValue", name = "默认值", type = FieldTypeEnum.ANY)
+    Object defaultValue();
+
     @Field(key = "elementId", name = "内容的GUI元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
     String elementId();
 

@@ -10,16 +10,42 @@ import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 public class GUIPagingElementTemplate extends BaseGUIElementTemplate {
 
-    @Field(key = "text", name = "文本样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "page", name = "页码样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
-    private ElementConfig text;
+    private ElementConfig page;
 
-    public ElementConfig getText() {
-        return text;
+    @Field(key = "checked", name = "选中时样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig checked;
+
+    @Field(key = "disable", name = "禁选时样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig disable;
+
+    public ElementConfig getPage() {
+        return page;
     }
 
-    public void setText(ElementConfig text) {
-        this.text = text;
+    public void setPage(ElementConfig page) {
+        this.page = page;
+    }
+
+    public ElementConfig getChecked() {
+        return checked;
+    }
+
+    public void setChecked(ElementConfig checked) {
+        this.checked = checked;
+    }
+
+    public ElementConfig getDisable() {
+        return disable;
+    }
+
+    public void setDisable(ElementConfig disable) {
+        this.disable = disable;
     }
 }

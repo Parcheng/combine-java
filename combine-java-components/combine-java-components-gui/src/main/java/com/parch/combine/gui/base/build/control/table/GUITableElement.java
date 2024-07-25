@@ -170,8 +170,8 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
             return Arrays.asList(this.value);
         }
 
-        List<Object> data = GUISubElementHelper.getValueList(this.elementConfigs);
-        return data.size() > 0 ? data : null;
+        List<Object> data = GUISubElementHelper.batchGetValue(this.elementConfigs);
+        return !data.isEmpty() ? data : null;
     }
 
     @Override

@@ -15,25 +15,21 @@
   },
   "item": {
     "opaque": false,
-    "grid": {
-      "fill": "NONE",
-      "weightX": 1,
-      "weightY": 0
-    },
     "border": {
-      "type": "LINE",
-      "color": "#c0c0c0",
-      "size": 1,
-      "top": 5,
-      "bottom": 5,
-      "left": 5,
-      "right": 5
+      "size": 0
     }
   },
   "label": {
-    "opaque": false
+    "opaque": false,
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
   },
-  "row": {
+  "control": {
     "control": false
   }
 }
