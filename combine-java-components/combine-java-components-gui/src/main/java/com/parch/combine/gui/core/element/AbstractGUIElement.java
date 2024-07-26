@@ -87,7 +87,7 @@ public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C ext
     }
 
 
-    protected void registerEvents(JComponent component, EventConfig[] events) {
+    protected void registerEvents(JComponent component, EventConfig ... events) {
         GUIEventHandler.bindings(component, events, this);
     }
 

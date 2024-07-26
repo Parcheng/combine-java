@@ -8,6 +8,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.event.trigger.ComponentTriggerProcessor;
 import com.parch.combine.gui.core.event.trigger.DialogBoxTriggerProcessor;
 import com.parch.combine.gui.core.event.trigger.GUITriggerTypeEnum;
+import com.parch.combine.gui.core.event.trigger.InternalTriggerProcessor;
 
 public class EventConfig {
 
@@ -30,6 +31,8 @@ public class EventConfig {
     @Field(key = "dialogBoxTrigger", name = "弹窗执行触发配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(DialogBoxTriggerProcessor.Config.class)
     private DialogBoxTriggerProcessor.Config dialogBoxTrigger;
+
+    private InternalTriggerProcessor.Config internalTrigger;
 
     public String getEventType() {
         return eventType;
@@ -69,5 +72,13 @@ public class EventConfig {
 
     public void setEventKey(String eventKey) {
         this.eventKey = eventKey;
+    }
+
+    public InternalTriggerProcessor.Config getInternalTrigger() {
+        return internalTrigger;
+    }
+
+    public void setInternalTrigger(InternalTriggerProcessor.Config internalTrigger) {
+        this.internalTrigger = internalTrigger;
     }
 }

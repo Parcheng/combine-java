@@ -1,11 +1,11 @@
-package com.parch.combine.gui.base.build.control.paging;
+package com.parch.combine.gui.base.build.control.tree;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.base.build.GUIControlInitConfig;
 
-public interface GUIControlPagingInitConfig extends GUIControlInitConfig {
+public interface GUIControlTreeInitConfig extends GUIControlInitConfig {
 
     @Field(key = "previousText", name = "上一页显示文本", type = FieldTypeEnum.TEXT, defaultValue = "<")
     String previousText();
@@ -19,10 +19,7 @@ public interface GUIControlPagingInitConfig extends GUIControlInitConfig {
     @Field(key = "lastText", name = "末页显示文本", type = FieldTypeEnum.TEXT, defaultValue = "END")
     String lastText();
 
-    @Field(key = "showCount", name = "显示多少个分页页签", type = FieldTypeEnum.NUMBER, defaultValue = "10")
-    Integer showCount();
-
     @Field(key = "template", name = "模板样式配置", type = FieldTypeEnum.OBJECT)
-    @FieldObject(GUIPagingElementTemplate.class)
-    GUIPagingElementTemplate template();
+    @FieldObject(GUITreeElementTemplate.class)
+    GUITreeElementTemplate template();
 }

@@ -63,6 +63,18 @@ public class GUITriggerBuilder {
                 }
 
                 return new DialogBoxTriggerProcessor(element.getFrame(), dialogBoxConfig);
+            case INTERNAL:
+                InternalTriggerProcessor.Config internalTrigger = config.getInternalTrigger();
+                if (internalTrigger == null) {
+                    PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 配置未定义");
+                    return null;
+                }
+                if (internalTrigger.getFunc() == null) {
+                    PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 的函数未定义");
+                    return null;
+                }
+
+                return new InternalTriggerProcessor(element.getFrame(), internalTrigger);
             case NONE:
             default:
                 PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 触发类型不合法");

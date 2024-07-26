@@ -1,10 +1,17 @@
 package com.parch.combine.gui.base.build.control.paging;
 
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
+import com.parch.combine.gui.core.event.EventConfig;
+import com.parch.combine.gui.core.event.GUIEventTypeEnum;
+import com.parch.combine.gui.core.event.trigger.GUITriggerTypeEnum;
+import com.parch.combine.gui.core.event.trigger.InternalTriggerProcessor;
+import com.parch.combine.gui.core.style.ElementConfig;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -30,6 +37,56 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
 //        super.addSubComponent(panel, this.text, this.template.getText());
 
         return panel;
+    }
+
+    private void buildItems() {
+        JPanel panel = new JPanel();
+
+        int pageNum = this.config.value.page;
+        this.buildItem(panel, this.config.firstText, 1, pageNum == 1 ? -1 : 0);
+        this.buildItem(panel, this.config.previousText, pageNum - 1, pageNum == 1 ? -1 : 0);
+
+        int maxPage = (int)(this.config.value.dataCount / this.config.value.pageSize);
+        maxPage = this.config.value.dataCount % this.config.value.pageSize > 0 ? (maxPage + 1) : maxPage;
+
+        int showPageTagCount = Math.min(this.config.showPageTagCount, maxPage);
+        for (int i = 0; i < showPageTagCount; i++) {
+            // TODO
+        }
+
+        this.buildItem(panel, this.config.nextText, pageNum + 1, pageNum >= maxPage ? -1 : 0);
+        this.buildItem(panel, this.config.lastText, maxPage, pageNum == maxPage ? -1 : 0);
+
+    }
+
+
+    private void buildItem(JPanel parent, String pageNumText, int pageNum, int state) {
+        JLabel item = new JLabel();
+        item.setText(pageNumText);
+
+        ElementConfig elementConfig;
+        if (state == 0) {
+            super.registerEvents(item, this.buildEvent(pageNum));
+            elementConfig = this.template.getPage();
+        } else if (state > 0) {
+            elementConfig = this.template.getChecked();
+        } else {
+            elementConfig = this.template.getDisable();
+        }
+
+        super.addSubComponent(parent, this.text, elementConfig);
+    }
+
+    private EventConfig buildEvent(int pageNum) {
+        EventConfig eventConfig = new EventConfig();
+        eventConfig.setEventType(GUIEventTypeEnum.CLICK.getKey());
+        eventConfig.setTriggerType(GUITriggerTypeEnum.INTERNAL.getKey());
+
+        InternalTriggerProcessor.Config config = new InternalTriggerProcessor.Config();
+        config.setFunc(event -> this.setValue(pageNum));
+        eventConfig.setInternalTrigger(config);
+
+        return eventConfig;
     }
 
     @Override
@@ -85,6 +142,11 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
     }
 
     public static class Config extends GUIElementConfig<ConfigValue> {
+        public int showPageTagCount;
+        public String previousText;
+        public String nextText;
+        public String firstText;
+        public String lastText;
     }
 
     public static class ConfigValue {
