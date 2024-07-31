@@ -1,0 +1,46 @@
+{
+  "external": {
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
+    },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
+    "opaque": false
+  },
+  "page": {
+    "opaque": false,
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
+  },
+  "checked": {
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
+  },
+  "disable": {
+    "fgColor": "#FFFFFF",
+    "opaque": false,
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
+  }
+}

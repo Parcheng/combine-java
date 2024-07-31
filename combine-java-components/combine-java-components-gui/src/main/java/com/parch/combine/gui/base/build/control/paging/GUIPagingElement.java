@@ -1,7 +1,5 @@
 package com.parch.combine.gui.base.build.control.paging;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
@@ -13,13 +11,15 @@ import com.parch.combine.gui.core.event.trigger.GUITriggerTypeEnum;
 import com.parch.combine.gui.core.event.trigger.InternalTriggerProcessor;
 import com.parch.combine.gui.core.style.ElementConfig;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingElementTemplate, GUIPagingElement.Config, GUIPagingElement.ConfigValue> {
 
-    private JLabel text = null;
+    private JPanel panel = null;
 
     public GUIPagingElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIPagingElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "paging", template, config, GUIPagingElementTemplate.class);
@@ -27,36 +27,40 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel();
+        this.panel = new JPanel();
         super.loadTemplates(panel, this.template.getExternal());
-
-//        this.text = new JLabel();
-//        this.text.setText(this.value);
-//
-//        super.registerEvents(this.text, this.config.events);
-//        super.addSubComponent(panel, this.text, this.template.getText());
-
-        return panel;
+        this.buildItems();
+        return this.panel;
     }
 
     private void buildItems() {
-        JPanel panel = new JPanel();
+        if (this.panel == null) {
+            return;
+        }
 
         int pageNum = this.config.value.page;
-        this.buildItem(panel, this.config.firstText, 1, pageNum == 1 ? -1 : 0);
-        this.buildItem(panel, this.config.previousText, pageNum - 1, pageNum == 1 ? -1 : 0);
+        this.buildItem(this.panel, this.config.firstText, 1, pageNum == 1 ? -1 : 0);
+        this.buildItem(this.panel, this.config.previousText, pageNum - 1, pageNum == 1 ? -1 : 0);
 
         int maxPage = (int)(this.config.value.dataCount / this.config.value.pageSize);
         maxPage = this.config.value.dataCount % this.config.value.pageSize > 0 ? (maxPage + 1) : maxPage;
 
-        int showPageTagCount = Math.min(this.config.showPageTagCount, maxPage);
+        int showPageTagCount = this.config.showPageTagCount;
+        int startNum = Math.max(pageNum - showPageTagCount / 2, 1);
+        if (startNum - 1 + showPageTagCount > maxPage) {
+            startNum = 1 + showPageTagCount - maxPage;
+            if (startNum < 1) {
+                showPageTagCount = showPageTagCount + startNum - 1;
+                startNum = 1;
+            }
+        }
         for (int i = 0; i < showPageTagCount; i++) {
-            // TODO
+            int currPageNum = startNum + i;
+            this.buildItem(this.panel, String.valueOf(currPageNum), currPageNum, pageNum == currPageNum ? 1 : 0);
         }
 
-        this.buildItem(panel, this.config.nextText, pageNum + 1, pageNum >= maxPage ? -1 : 0);
-        this.buildItem(panel, this.config.lastText, maxPage, pageNum == maxPage ? -1 : 0);
-
+        this.buildItem(this.panel, this.config.nextText, pageNum + 1, pageNum >= maxPage ? -1 : 0);
+        this.buildItem(this.panel, this.config.lastText, maxPage, pageNum == maxPage ? -1 : 0);
     }
 
 
@@ -74,7 +78,7 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
             elementConfig = this.template.getDisable();
         }
 
-        super.addSubComponent(parent, this.text, elementConfig);
+        super.addSubComponent(parent, item, elementConfig);
     }
 
     private EventConfig buildEvent(int pageNum) {
@@ -115,8 +119,9 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
             success = true;
         }
 
-        if (success) {
-            // TODO
+        if (success && this.panel != null) {
+            this.panel.removeAll();
+            this.buildItems();
         }
 
         return success;
