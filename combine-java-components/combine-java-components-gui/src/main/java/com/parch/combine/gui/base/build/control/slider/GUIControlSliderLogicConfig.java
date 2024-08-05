@@ -34,7 +34,7 @@ public interface GUIControlSliderLogicConfig extends GUIControlLogicConfig {
     @Field(key = "paintLabels", name = "是否显示刻度标签", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     Boolean paintLabels();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 }

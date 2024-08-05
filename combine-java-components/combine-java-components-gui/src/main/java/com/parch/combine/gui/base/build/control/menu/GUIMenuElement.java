@@ -57,7 +57,7 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
             ConfigDataItem item = items[i];
             if (item.items == null || item.items.length ==0) {
                 menus[i] = layer == 0 ? new JMenu(item.text) : new JMenuItem(item.text);
-                super.registerEvents(menus[i], item.events);
+                super.registerEvents(menus[i], this.config.events);
             } else {
                 menus[i] = new JMenu(item.text);
                 JMenuItem[] subMenus = buildMenu(item.items, layer+1);
@@ -127,12 +127,12 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
 
     public static class Config extends GUIElementConfig<String[]> {
         public ConfigDataItem[] items;
+        public EventConfig[] events;
     }
 
     public static class ConfigDataItem {
         public String key;
         public String text;
         public ConfigDataItem[] items;
-        public EventConfig[] events;
     }
 }

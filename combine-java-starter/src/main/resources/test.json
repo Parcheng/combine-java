@@ -196,6 +196,30 @@
           "dataCount": 1000
         }
       },{
+        "type": "gui.build.control.tree",
+        "elementId": "tree",
+        "value": "222",
+        "items": [
+          {
+            "key": 1, "text": "aaaaaaa",
+            "children": [
+              { "key": 11,  "text": "11111111111111111111" },
+              { "key": 12,  "text": "12121212121212121212" }
+            ]
+          },{
+            "key": 2, "text": "bbbbbbbbbbb",
+            "children": [
+              { "key": 21,  "text": "21212121212121" },
+              { "key": 22,  "text": "22222222222222",
+                "children": [
+                  { "key": 221,  "text": "221221221221221221" },
+                  { "key": 222,  "text": "222-222-222-222-222" }
+                ]
+              }
+            ]
+          },{ "key": 3,  "text": "cccccccccccc" }
+        ]
+      },{
         "type": "gui.build",
         "title": "test",
         "icon": "1.png",
@@ -205,7 +229,7 @@
         "distanceLeft": 100,
         "elements": {
           "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label", "textarea",
-            "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table", "from", "paging"]
+            "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table", "from", "paging", "tree"]
         }
       }
     ],

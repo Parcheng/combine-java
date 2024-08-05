@@ -25,6 +25,7 @@ public class GUIControlMenuComponent extends AbstractGUIControlComponent<GUICont
         super.initConfig(config);
         config.value = logicConfig.checkedPath();
         config.items = buildItems(logicConfig.items());
+        config.events = logicConfig.events();
         return new GUIMenuElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
     }
 
@@ -39,7 +40,6 @@ public class GUIControlMenuComponent extends AbstractGUIControlComponent<GUICont
             GUIMenuElement.ConfigDataItem item = new GUIMenuElement.ConfigDataItem();
             item.text = config.text();
             item.key = config.key();
-            item.events = config.events();
             if (item.key == null) {
                 item.key = item.text;
             }

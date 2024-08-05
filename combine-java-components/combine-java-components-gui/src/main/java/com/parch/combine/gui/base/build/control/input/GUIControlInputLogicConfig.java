@@ -20,7 +20,7 @@ public interface GUIControlInputLogicConfig extends GUIControlLogicConfig {
     @Field(key = "suffix", name = "后缀", type = FieldTypeEnum.TEXT)
     String suffix();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 }

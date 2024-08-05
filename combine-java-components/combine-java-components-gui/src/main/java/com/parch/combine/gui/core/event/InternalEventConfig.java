@@ -27,7 +27,7 @@ public class InternalEventConfig implements EventConfig {
 
     @Override
     public String eventKey() {
-        return key;
+        return this.key;
     }
 
     @Override

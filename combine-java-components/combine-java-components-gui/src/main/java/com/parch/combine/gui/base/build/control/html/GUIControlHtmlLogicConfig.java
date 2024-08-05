@@ -14,7 +14,7 @@ public interface GUIControlHtmlLogicConfig extends GUIControlLogicConfig {
     @Field(key = "errorText", name = "加载失败显示文本", type = FieldTypeEnum.TEXT, defaultValue = "Load Error")
     String errorText();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 }

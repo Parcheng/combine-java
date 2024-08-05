@@ -13,34 +13,53 @@
     },
     "opaque": false
   },
-  "items": [
+  "texts": [
     {
-      "opaque": false,
+      "fgColor": "#FFFFFF",
+      "bgColor": "#333333",
       "border": {
-        "size": 0,
-        "top": 3,
-        "bottom": 3,
+        "type": "LINE",
+        "color": "#FFFFFF",
+        "size": 1,
+        "top": 10,
+        "bottom": 10,
         "left": 8,
         "right": 8
       }
     },{
-      "opaque": false,
+      "fgColor": "#FFFFFF",
+      "bgColor": "#666666",
       "border": {
-        "size": 0,
-        "top": 3,
-        "bottom": 3,
+        "type": "LINE",
+        "color": "#FFFFFF",
+        "size": 1,
+        "top": 8,
+        "bottom": 8,
         "left": 8,
         "right": 8
       }
     },{
-      "opaque": false,
+      "fgColor": "#FFFFFF",
+      "bgColor": "#999999",
       "border": {
-        "size": 0,
-        "top": 3,
-        "bottom": 3,
+        "type": "LINE",
+        "color": "#FFFFFF",
+        "size": 1,
+        "top": 8,
+        "bottom": 8,
         "left": 8,
         "right": 8
       }
     }
-  ]
+  ],
+  "children": {
+    "border": {
+      "size": 0,
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "opaque": false
+  }
 }

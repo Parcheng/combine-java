@@ -31,7 +31,7 @@ public class GUIButtonGroupElement extends AbstractGUIComponentElement<GUIButton
         if (config.events != null) {
             eventMap = new HashMap<>(16);
             for (EventConfig event : config.events) {
-                eventMap.put(event.getEventKey(), event);
+                eventMap.put(event.eventKey(), event);
             }
         }
     }

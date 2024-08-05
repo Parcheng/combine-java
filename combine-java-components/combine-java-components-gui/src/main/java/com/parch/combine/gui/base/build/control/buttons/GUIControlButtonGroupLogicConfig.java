@@ -11,7 +11,7 @@ public interface GUIControlButtonGroupLogicConfig extends GUIControlLogicConfig 
     @Field(key = "defaultText", name = "默认按钮文本", type = FieldTypeEnum.TEXT, defaultValue = "未知")
     String defaultText();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 

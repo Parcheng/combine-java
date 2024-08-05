@@ -11,15 +11,15 @@ import com.parch.combine.gui.core.event.EventConfig;
 
 public interface GUIControlTreeLogicConfig extends GUIControlLogicConfig {
 
-    @Field(key = "values", name = "默认选择集合配置", type = FieldTypeEnum.TEXT, isArray = true)
+    @Field(key = "value", name = "默认选择", type = FieldTypeEnum.TEXT)
     @FieldObject(ItemConfig.class)
-    String[] values();
+    String value();
 
-    @Field(key = "items", name = "树配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @Field(key = "items", name = "树配置", type = FieldTypeEnum.CONFIG, isArray = true, isRequired = true)
     @FieldObject(ItemConfig.class)
     ItemConfig[] items();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 

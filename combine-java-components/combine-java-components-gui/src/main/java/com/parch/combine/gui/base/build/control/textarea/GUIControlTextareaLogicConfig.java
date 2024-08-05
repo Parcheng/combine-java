@@ -17,7 +17,7 @@ public interface GUIControlTextareaLogicConfig extends GUIControlLogicConfig {
     @Field(key = "isWrapStyleWord", name = "是否按单词换行", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     Boolean isWrapStyleWord();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 }

@@ -12,6 +12,10 @@ import com.parch.combine.gui.core.event.trigger.InternalTriggerProcessor;
 
 public interface EventConfig {
 
+    @Field(key = "eventKey", name = "事件ID", type = FieldTypeEnum.TEXT)
+    @FieldDesc("用于引用")
+    String eventKey();
+
     @Field(key = "eventType", name = "事件类型", type = FieldTypeEnum.SELECT, isRequired = true)
     @FieldSelect(enumClass = GUIEventTypeEnum.class)
     String eventType();
