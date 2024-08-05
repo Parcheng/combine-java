@@ -11,7 +11,7 @@ public interface GUIControlLabelLogicConfig extends GUIControlLogicConfig {
     @Field(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT, isRequired = true)
     String text();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 }

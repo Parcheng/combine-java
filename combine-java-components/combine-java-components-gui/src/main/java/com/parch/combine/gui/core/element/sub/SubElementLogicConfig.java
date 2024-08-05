@@ -22,7 +22,7 @@ public interface SubElementLogicConfig {
     @Field(key = "elementId", name = "内容的GUI元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
     String elementId();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 }

@@ -1,0 +1,48 @@
+{
+  "external": {
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
+    },
+    "border": {
+      "size": 0,
+      "top": 4,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    },
+    "opaque": false
+  },
+  "page": {
+    "opaque": false,
+    "border": {
+      "size": 0,
+      "top": 3,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
+  },
+  "checked": {
+    "border": {
+      "type": "LINE",
+      "color": "#000000",
+      "size": 1,
+      "top": 3,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
+  },
+  "disable": {
+    "fgColor": "#A9A9A9",
+    "opaque": false,
+    "border": {
+      "size": 0,
+      "top": 3,
+      "bottom": 3,
+      "left": 8,
+      "right": 8
+    }
+  }
+}

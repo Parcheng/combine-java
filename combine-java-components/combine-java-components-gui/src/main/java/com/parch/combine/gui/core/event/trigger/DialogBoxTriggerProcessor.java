@@ -13,53 +13,36 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.ComponentEvent;
 
-public class DialogBoxTriggerProcessor extends AbstractTriggerProcessor<DialogBoxTriggerProcessor.Config> {
+public class DialogBoxTriggerProcessor extends AbstractTriggerProcessor {
+
+    private final String title;
+    private final String text;
+    private final String align;
 
     public DialogBoxTriggerProcessor(JFrame frame, DialogBoxTriggerProcessor.Config config) {
-        super(frame, config);
+        super(frame);
+        this.title = config.title();
+        this.text = config.text();
+        this.align = config.align();
     }
 
     @Override
     public void trigger(ComponentEvent event) {
-        JLabel label = new JLabel(config.getText());
-        label.setHorizontalAlignment(GUIAlignTypeEnum.get(config.getAlign()).getValue());
-        JOptionPane.showMessageDialog(frame, label, config.getTitle(), JOptionPane.PLAIN_MESSAGE, null);
+        JLabel label = new JLabel(text);
+        label.setHorizontalAlignment(GUIAlignTypeEnum.get(align).getValue());
+        JOptionPane.showMessageDialog(frame, label, title, JOptionPane.PLAIN_MESSAGE, null);
     }
 
-    public static class Config {
+    public interface Config {
 
         @Field(key = "title", name = "标题", type = FieldTypeEnum.TEXT)
-        private String title;
+        String title();
 
         @Field(key = "text", name = "内容", type = FieldTypeEnum.TEXT, isRequired = true)
-        private String text;
+        String text();
 
         @Field(key = "align", name = "对齐方式", type = FieldTypeEnum.SELECT)
         @FieldSelect(enumClass = GUIAlignTypeEnum.class)
-        private String align;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        public String getAlign() {
-            return align;
-        }
-
-        public void setAlign(String align) {
-            this.align = align;
-        }
+        String align();
     }
 }

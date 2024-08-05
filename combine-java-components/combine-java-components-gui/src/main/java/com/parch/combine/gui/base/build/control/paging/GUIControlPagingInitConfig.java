@@ -19,6 +19,9 @@ public interface GUIControlPagingInitConfig extends GUIControlInitConfig {
     @Field(key = "lastText", name = "末页显示文本", type = FieldTypeEnum.TEXT, defaultValue = "END")
     String lastText();
 
+    @Field(key = "showCount", name = "显示多少个分页页签", type = FieldTypeEnum.NUMBER, defaultValue = "10")
+    Integer showCount();
+
     @Field(key = "template", name = "模板样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(GUIPagingElementTemplate.class)
     GUIPagingElementTemplate template();

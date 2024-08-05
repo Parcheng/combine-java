@@ -14,7 +14,7 @@ public interface GUIControlButtonLogicConfig extends GUIControlLogicConfig {
     @Field(key = "buttonType", name = "按钮类型", type = FieldTypeEnum.TEXT)
     String buttonType();
 
-    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+    @Field(key = "events", name = "事件配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(EventConfig.class)
     EventConfig[] events();
 }
