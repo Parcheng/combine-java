@@ -15,7 +15,7 @@ import java.util.UUID;
 public class GUITriggerBuilder {
 
     public static ITriggerProcessor build(EventConfig config, IGUIElement element) {
-        String triggerType = config.getTriggerType();
+        String triggerType = config.triggerType();
         GUITriggerTypeEnum trigger = GUITriggerTypeEnum.get(triggerType);
         switch (trigger) {
             case COMPONENT:
@@ -25,27 +25,22 @@ public class GUITriggerBuilder {
                     return null;
                 }
 
-                ComponentTriggerProcessor.Config componentConfig = config.getComponentTrigger();
+                ComponentTriggerProcessor.Config componentConfig = config.componentTrigger();
                 if (componentConfig == null) {
                     PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 配置未定义");
                     return null;
                 }
-                if (CheckEmptyUtil.isEmpty(componentConfig.getComponentIds())) {
+
+                String[] componentIds = componentConfig.componentIds();
+                if (CheckEmptyUtil.isEmpty(componentIds)) {
                     PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 未定义要执行的组件");
                     return null;
                 }
-                for (String componentId : componentConfig.getComponentIds()) {
+                for (String componentId : componentIds) {
                     if (manager.getComponent().getComponent(componentId) == null) {
                         PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 的 " + componentId + " 组件不存在");
                         return null;
                     }
-                }
-
-                if (CheckEmptyUtil.isEmpty(componentConfig.getKey())) {
-                    componentConfig.setKey(UUID.randomUUID().toString());
-                }
-                if (componentConfig.getParams() == null) {
-                    componentConfig.setParams(new HashMap<>(0));
                 }
 
                 return new ComponentTriggerProcessor(manager, element.getFrame(), componentConfig);
@@ -56,7 +51,7 @@ public class GUITriggerBuilder {
                     return null;
                 }
 
-                DialogBoxTriggerProcessor.Config dialogBoxConfig = config.getDialogBoxTrigger();
+                DialogBoxTriggerProcessor.Config dialogBoxConfig = config.dialogBoxTrigger();
                 if (dialogBoxConfig == null) {
                     PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 配置未定义");
                     return null;
@@ -64,7 +59,7 @@ public class GUITriggerBuilder {
 
                 return new DialogBoxTriggerProcessor(element.getFrame(), dialogBoxConfig);
             case INTERNAL:
-                InternalTriggerProcessor.Config internalTrigger = config.getInternalTrigger();
+                InternalTriggerProcessor.Config internalTrigger = config.internalTrigger();
                 if (internalTrigger == null) {
                     PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 配置未定义");
                     return null;

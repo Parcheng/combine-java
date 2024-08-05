@@ -188,6 +188,14 @@
           "elementId": "panel-text"
         }]
       },{
+        "type": "gui.build.control.paging",
+        "elementId": "paging",
+        "value": {
+          "page": 12,
+          "pageSize": 10,
+          "dataCount": 1000
+        }
+      },{
         "type": "gui.build",
         "title": "test",
         "icon": "1.png",
@@ -196,8 +204,8 @@
         "distanceTop": 30,
         "distanceLeft": 100,
         "elements": {
-          "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label",
-            "textarea", "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table", "from"]
+          "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label", "textarea",
+            "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table", "from", "paging"]
         }
       }
     ],

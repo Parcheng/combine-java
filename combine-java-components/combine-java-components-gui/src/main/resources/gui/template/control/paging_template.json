@@ -17,7 +17,7 @@
     "opaque": false,
     "border": {
       "size": 0,
-      "top": 4,
+      "top": 3,
       "bottom": 3,
       "left": 8,
       "right": 8
@@ -25,19 +25,21 @@
   },
   "checked": {
     "border": {
-      "size": 0,
-      "top": 4,
+      "type": "LINE",
+      "color": "#000000",
+      "size": 1,
+      "top": 3,
       "bottom": 3,
       "left": 8,
       "right": 8
     }
   },
   "disable": {
-    "fgColor": "#FFFFFF",
+    "fgColor": "#A9A9A9",
     "opaque": false,
     "border": {
       "size": 0,
-      "top": 4,
+      "top": 3,
       "bottom": 3,
       "left": 8,
       "right": 8

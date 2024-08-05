@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 public class GUIEventHandler {
 
     public static void bindings(JComponent component, EventConfig[] events, IGUIElement element) {
-        if (events == null || events.length == 0) {
+        if (events == null) {
             return;
         }
 
@@ -27,9 +27,9 @@ public class GUIEventHandler {
             return;
         }
 
-        GUIEventTypeEnum event = GUIEventTypeEnum.get(config.getEventType());
+        GUIEventTypeEnum event = GUIEventTypeEnum.get(config.eventType());
         if (event == null || event == GUIEventTypeEnum.NONE) {
-            PrintUtil.printError("【GUI EVENT BINDING】ERROR: " + config.getEventType() + " 事件类型不合法");
+            PrintUtil.printError("【GUI EVENT BINDING】ERROR: " + config.eventType() + " 事件类型不合法");
             return;
         }
 

@@ -4,16 +4,19 @@ import javax.swing.JFrame;
 import java.awt.event.ComponentEvent;
 import java.util.function.Consumer;
 
-public class InternalTriggerProcessor extends AbstractTriggerProcessor<InternalTriggerProcessor.Config>{
+public class InternalTriggerProcessor extends AbstractTriggerProcessor{
+
+    private Consumer<ComponentEvent> func;
 
     public InternalTriggerProcessor(JFrame frame, InternalTriggerProcessor.Config config) {
-        super(frame, config);
+        super(frame);
+        this.func = config.getFunc();
     }
 
     @Override
     public void trigger(ComponentEvent event) {
-        if (this.config.getFunc() != null) {
-            this.config.getFunc().accept(event);
+        if (this.func != null) {
+            this.func.accept(event);
         }
     }
 

@@ -7,6 +7,9 @@ import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
 import com.parch.combine.gui.core.event.GUIEventTypeEnum;
+import com.parch.combine.gui.core.event.InternalEventConfig;
+import com.parch.combine.gui.core.event.trigger.ComponentTriggerProcessor;
+import com.parch.combine.gui.core.event.trigger.DialogBoxTriggerProcessor;
 import com.parch.combine.gui.core.event.trigger.GUITriggerTypeEnum;
 import com.parch.combine.gui.core.event.trigger.InternalTriggerProcessor;
 import com.parch.combine.gui.core.style.ElementConfig;
@@ -38,25 +41,25 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
             return;
         }
 
-        int pageNum = this.config.value.page;
+        int maxPage = (int)(this.config.value.dataCount / this.config.value.pageSize);
+        maxPage = this.config.value.dataCount % this.config.value.pageSize > 0 ? (maxPage + 1) : maxPage;
+        int pageNum = Math.min(this.config.value.page, maxPage);
+        int showPageTagCount = this.config.showPageTagCount;
+
         this.buildItem(this.panel, this.config.firstText, 1, pageNum == 1 ? -1 : 0);
         this.buildItem(this.panel, this.config.previousText, pageNum - 1, pageNum == 1 ? -1 : 0);
 
-        int maxPage = (int)(this.config.value.dataCount / this.config.value.pageSize);
-        maxPage = this.config.value.dataCount % this.config.value.pageSize > 0 ? (maxPage + 1) : maxPage;
-
-        int showPageTagCount = this.config.showPageTagCount;
-        int startNum = Math.max(pageNum - showPageTagCount / 2, 1);
-        if (startNum - 1 + showPageTagCount > maxPage) {
-            startNum = 1 + showPageTagCount - maxPage;
-            if (startNum < 1) {
-                showPageTagCount = showPageTagCount + startNum - 1;
-                startNum = 1;
-            }
+        int startIndex = (showPageTagCount / 2) < pageNum ? (pageNum - showPageTagCount / 2) : 0;
+        for (int i = startIndex + 1; i < pageNum; i++) {
+            this.buildItem(this.panel, String.valueOf(i), i, 0);
         }
-        for (int i = 0; i < showPageTagCount; i++) {
-            int currPageNum = startNum + i;
-            this.buildItem(this.panel, String.valueOf(currPageNum), currPageNum, pageNum == currPageNum ? 1 : 0);
+
+        this.buildItem(this.panel, String.valueOf(pageNum), pageNum, 1);
+
+        int endIndex = pageNum + (showPageTagCount - (pageNum - startIndex));
+        endIndex = Math.min(endIndex, maxPage);
+        for (int i = pageNum + 1; i <= endIndex; i++) {
+            this.buildItem(this.panel, String.valueOf(i), i, 0);
         }
 
         this.buildItem(this.panel, this.config.nextText, pageNum + 1, pageNum >= maxPage ? -1 : 0);
@@ -82,15 +85,8 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
     }
 
     private EventConfig buildEvent(int pageNum) {
-        EventConfig eventConfig = new EventConfig();
-        eventConfig.setEventType(GUIEventTypeEnum.CLICK.getKey());
-        eventConfig.setTriggerType(GUITriggerTypeEnum.INTERNAL.getKey());
-
-        InternalTriggerProcessor.Config config = new InternalTriggerProcessor.Config();
-        config.setFunc(event -> this.setValue(pageNum));
-        eventConfig.setInternalTrigger(config);
-
-        return eventConfig;
+        return new InternalEventConfig(null, GUIEventTypeEnum.CLICK,
+                GUITriggerTypeEnum.INTERNAL, event -> this.setValue(pageNum));
     }
 
     @Override
@@ -122,6 +118,8 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
         if (success && this.panel != null) {
             this.panel.removeAll();
             this.buildItems();
+            this.panel.revalidate();
+            this.panel.repaint();
         }
 
         return success;
