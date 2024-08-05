@@ -14,41 +14,63 @@
     "opaque": false
   },
   "bar": {
-    "grid": {
-      "fill": "NONE",
-      "weightX": 1
-    },
-    "bgColor": "#c0c0c0",
+    "bgColor": "#999999",
     "border": {
       "size": 0
     }
   },
-  "mainItem": {
+  "title": {
     "fgColor": "#FFFFFF",
-    "bgColor": "#c0c0c0",
+    "bgColor": "#999999",
     "border": {
-      "color": "#FFFFFF",
-      "size": 1,
-      "top": 4,
-      "bottom": 3,
+      "size": 0,
+      "top": 5,
+      "bottom": 5,
       "left": 15,
       "right": 15
     }
   },
-  "item": {
-    "fgColor": "#000000",
-    "bgColor": "#c0c0c0",
+  "mainItem": {
+    "fgColor": "#FFFFFF",
+    "bgColor": "#999999",
     "border": {
-      "color": "#000000",
+      "color": "#FFFFFF",
       "size": 1,
       "top": 5,
       "bottom": 5,
-      "left": 8,
-      "right": 8
+      "left": 15,
+      "right": 15
+    }
+  },
+  "subBars": [
+    {
+      "fgColor": "#FFFFFF",
+      "bgColor": "#666666",
+      "border": {
+        "size": 0
+      }
+    },{
+      "fgColor": "#FFFFFF",
+      "bgColor": "#333333",
+      "border": {
+        "size": 0
+      }
+    }
+  ],
+  "item": {
+    "fgColor": "#FFFFFF",
+    "bgColor": "#666666",
+    "border": {
+      "color": "#FFFFFF",
+      "size": 1,
+      "top": 5,
+      "bottom": 5,
+      "left": 15,
+      "right": 15
     }
   },
   "itemActive": {
-    "fgColor": "#FFFFFF",
-    "bgColor": "#000000"
+    "fgColor": "#000000",
+    "bgColor": "#FFFFFF"
   }
 }

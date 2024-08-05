@@ -6,6 +6,12 @@
     },
     "opaque": false
   },
+  "empty": {
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
+    }
+  },
   "list": {
     "grid": {
       "fill": "ALL",
@@ -21,6 +27,10 @@
     "opaque": false
   },
   "item": {
-    "bgColor": "#FFFFFF"
+    "grid": {
+      "fill": "ALL",
+      "weightX": 1
+    },
+    "opaque": false
   }
 }

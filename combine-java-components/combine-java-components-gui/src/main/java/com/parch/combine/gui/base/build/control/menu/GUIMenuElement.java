@@ -1,24 +1,28 @@
 package com.parch.combine.gui.base.build.control.menu;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
+import com.parch.combine.gui.core.style.ElementConfig;
+import com.parch.combine.gui.core.style.config.ElementGridConfig;
+import com.parch.combine.gui.core.style.enums.GridFillEnum;
 
-import javax.swing.JMenuBar;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTemplate, GUIMenuElement.Config, String[]> {
+public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTemplate, GUIMenuElement.Config, String> {
 
     private static Integer MAX_LAYER = 99;
-    private JMenuBar menuBar = null;
+    private JPanel panel = null;
+
+    private Map<String, JPanel> itemMap;
+    private Map<String, String> keyUpLevelMap;
 
     public GUIMenuElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIMenuElementTemplate template, Config config) {
         super(scopeKey, domain, elementId, data, "menu", template, config, GUIMenuElementTemplate.class);
@@ -26,93 +30,92 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel();
+        this.panel = new JPanel();
         super.loadTemplates(panel, this.template.getExternal());
-
-        this.menuBar = new JMenuBar();
         this.buildMenu();
-        super.addSubComponent(panel, this.menuBar, this.template.getBar());
-
         return panel;
     }
 
     private void buildMenu() {
-        JMenuItem[] items = buildMenu(this.config.items, 0);
-        for (JMenuItem item : items) {
-            super.loadTemplates(item, this.template.getMainItem());
-            if (item.isSelected()) {
-                super.loadTemplates(item, this.template.getItemActive());
+        this.itemMap = new HashMap<>();
+        this.keyUpLevelMap = new HashMap<>();
+
+        JPanel mainMenu = new JPanel();
+        super.addSubComponent(this.panel, mainMenu, this.template.getBar(), this.buildGridConfig(1, 1));
+
+        int colIndex = 1;
+        if (CheckEmptyUtil.isNotEmpty(this.config.title)) {
+            JButton title = new JButton(this.config.title);
+            super.addSubComponent(mainMenu, title, this.template.getTitle(), this.buildGridConfig(colIndex, 1));
+        }
+
+        for (ConfigDataItem item : this.config.items) {
+            if (CheckEmptyUtil.isEmpty(item.key)) {
+                continue;
             }
-            this.menuBar.add(item);
+
+            JButton itemMenu = new JButton(item.text);
+            super.addSubComponent(mainMenu, itemMenu, this.template.getItem(), this.buildGridConfig(colIndex, 1));
+            this.buildSubMenu(item.items, 2, item.key);
+
+            this.keyUpLevelMap.put(item.key, null);
+            // this.itemMap.put(item.key, itemMenu);
         }
     }
 
-    private JMenuItem[] buildMenu(ConfigDataItem[] items, int layer) {
-        if (layer > MAX_LAYER) {
-            return new JMenuItem[0];
+    private void buildSubMenu(ConfigDataItem[] items, int lineIndex, String parentKey) {
+        if (lineIndex > MAX_LAYER) {
+            return;
         }
 
-        JMenuItem[] menus = new JMenuItem[items.length];
-        for (int i = 0; i < items.length; i++) {
-            ConfigDataItem item = items[i];
-            if (item.items == null || item.items.length ==0) {
-                menus[i] = layer == 0 ? new JMenu(item.text) : new JMenuItem(item.text);
-                super.registerEvents(menus[i], this.config.events);
-            } else {
-                menus[i] = new JMenu(item.text);
-                JMenuItem[] subMenus = buildMenu(item.items, layer+1);
-                for (JMenuItem subItem : subMenus) {
-                    super.loadTemplates(subItem, this.template.getItem());
-                    if (subItem.isSelected()) {
-                        super.loadTemplates(subItem, this.template.getItemActive());
-                    }
-                    menus[i].add(subItem);
-                }
-            }
+        JPanel subMenu = new JPanel();
+        super.addSubComponent(this.panel, subMenu, getElementConfigByLayer(lineIndex - 2), this.buildGridConfig(1, lineIndex));
+        subMenu.setVisible(false);
 
-            menus[i].setSelected(hasChecked(item.key, layer));
+        int colIndex = 1;
+        for (ConfigDataItem item : items) {
+            JButton itemMenu = new JButton(item.text);
+            super.addSubComponent(subMenu, itemMenu, this.template.getMainItem(), this.buildGridConfig(colIndex, 1));
+            this.buildSubMenu(item.items, lineIndex + 1, item.key);
+            keyUpLevelMap.put(item.key, parentKey);
+        }
+    }
+
+    private ElementGridConfig buildGridConfig(int col, int line) {
+        ElementGridConfig itemGridConfig = new ElementGridConfig();
+        itemGridConfig.setFill(GridFillEnum.NONE.getKey());
+        itemGridConfig.setPositionX(col);
+        itemGridConfig.setPositionY(line);
+        return itemGridConfig;
+    }
+
+    private ElementConfig getElementConfigByLayer(int layer) {
+        ElementConfig[] templateItems = this.template.getSubBars();
+        if (CheckEmptyUtil.isEmpty(templateItems)) {
+            return new ElementConfig();
         }
 
-        return menus;
+        return templateItems[(layer)%templateItems.length];
     }
 
     private boolean hasChecked(String key, int layer) {
-        if (key == null || this.value == null || this.value.length <= layer) {
-            return false;
-        }
+//        if (key == null || this.value == null || this.value.length <= layer) {
+//            return false;
+//        }
 
-        return key.equals(this.value[layer]);
+        return false; // key.equals(this.value[layer]);
     }
 
     @Override
     public boolean setValue(Object data) {
-        if (data == null) {
-            return false;
-        }
-
-        if (!(data instanceof Iterable)) {
-            List<String> dataList = new ArrayList<>();
-            dataList.add(data.toString());
-            data = dataList;
-        }
-
-        List<String> path = new ArrayList<>();
-        for (Object item : (Iterable<?>) data) {
-            path.add(item.toString());
-        }
-
-        this.value = path.toArray(new String[0]);
-        buildMenu();
+        this.value = data == null ? null : data.toString();
+        // TODO Checked func
         return true;
     }
 
     @Override
     public Object getValue() {
-        if (this.menuBar == null) {
-            return this.value;
-        }
-
-        return null;
+        return this.value;
     }
 
     @Override
@@ -125,7 +128,8 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
         return new GUIMenuElement(this.scopeKey, this.domain, this.id, this.data, this.template, this.config);
     }
 
-    public static class Config extends GUIElementConfig<String[]> {
+    public static class Config extends GUIElementConfig<String> {
+        public String title;
         public ConfigDataItem[] items;
         public EventConfig[] events;
     }

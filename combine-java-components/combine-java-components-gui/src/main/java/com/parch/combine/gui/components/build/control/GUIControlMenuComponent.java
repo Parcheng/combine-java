@@ -23,7 +23,8 @@ public class GUIControlMenuComponent extends AbstractGUIControlComponent<GUICont
 
         GUIMenuElement.Config config = new GUIMenuElement.Config();
         super.initConfig(config);
-        config.value = logicConfig.checkedPath();
+        config.value = logicConfig.checked();
+        config.title = logicConfig.title();
         config.items = buildItems(logicConfig.items());
         config.events = logicConfig.events();
         return new GUIMenuElement(getScopeKey(), this.domain, this.elementId, logicConfig.data(), initConfig.template(), config);
