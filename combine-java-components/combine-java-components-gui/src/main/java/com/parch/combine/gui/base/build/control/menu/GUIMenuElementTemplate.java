@@ -10,17 +10,27 @@ import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 public class GUIMenuElementTemplate extends BaseGUIElementTemplate {
 
+    @Field(key = "title", name = "菜单标题样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig title;
+
     @Field(key = "bar", name = "菜单条元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig bar;
+
+    @Field(key = "bar", name = "菜单条元素样式配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(ElementConfig.class)
+    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    private ElementConfig[] subBars;
 
     @Field(key = "mainItem", name = "主菜单样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig mainItem;
 
-    @Field(key = "item", name = "子菜单样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "item", name = "子菜单选择项样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig item;
@@ -60,5 +70,21 @@ public class GUIMenuElementTemplate extends BaseGUIElementTemplate {
 
     public void setItemActive(ElementConfig itemActive) {
         this.itemActive = itemActive;
+    }
+
+    public ElementConfig getTitle() {
+        return title;
+    }
+
+    public void setTitle(ElementConfig title) {
+        this.title = title;
+    }
+
+    public ElementConfig[] getSubBars() {
+        return subBars;
+    }
+
+    public void setSubBars(ElementConfig[] subBars) {
+        this.subBars = subBars;
     }
 }

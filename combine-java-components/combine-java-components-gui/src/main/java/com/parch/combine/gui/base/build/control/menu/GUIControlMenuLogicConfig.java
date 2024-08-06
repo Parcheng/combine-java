@@ -9,8 +9,11 @@ import com.parch.combine.gui.core.event.EventConfig;
 
 public interface GUIControlMenuLogicConfig extends GUIControlLogicConfig {
 
-    @Field(key = "checkedPath", name = "默认选中的菜单", type = FieldTypeEnum.TEXT, isArray = true)
-    String[] checkedPath();
+    @Field(key = "title", name = "导航标题", type = FieldTypeEnum.TEXT)
+    String title();
+
+    @Field(key = "checked", name = "默认选中的菜单", type = FieldTypeEnum.TEXT)
+    String checked();
 
     @Field(key = "items", name = "子菜单项", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(MenuConfig.class)

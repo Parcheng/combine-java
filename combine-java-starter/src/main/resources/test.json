@@ -122,7 +122,8 @@
       },{
         "type": "gui.build.control.menu",
         "elementId": "menu",
-        "checkedPath": ["a", "a2", "a23"],
+        "title": "MENU-TEST",
+        "checked": "a23",
         "items": [{
           "text": "a",
           "items": [

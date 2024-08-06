@@ -100,7 +100,7 @@ public class GUITreeElement extends AbstractGUIComponentElement<GUITreeElementTe
                 GUITriggerTypeEnum.INTERNAL, event -> this.setValue(key));
     }
 
-    private void checked() {
+    private synchronized void checked() {
         if (this.childrenMap == null || this.keyUpLevelMap == null) {
             return;
         }
@@ -128,7 +128,7 @@ public class GUITreeElement extends AbstractGUIComponentElement<GUITreeElementTe
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         this.value = data == null ? null : data.toString();
         this.checked();
         return true;

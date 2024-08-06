@@ -6,7 +6,9 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 public enum GUIEventTypeEnum implements IOptionSetting {
 
     CLICK("单击", true),
-    DBLCLICK("双击", true),
+    DBL_CLICK("双击", true),
+    MOVE_IN("鼠标移入", true),
+    MOVE_OUT("鼠标移出", true),
     NONE("未知", false);
 
     private String name;
