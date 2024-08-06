@@ -13,7 +13,11 @@ import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.config.ElementGridConfig;
 import com.parch.combine.gui.core.style.enums.GridFillEnum;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JComponent;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +31,9 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
     private Map<String, MenuItemCache> itemMap;
     private Map<String, JPanel> subBarMap;
 
-    private JLabel showMainItem = null;
-    private final List<JLabel> showItems = new ArrayList<>();
+    private JLabel checkedMainItem = null;
+    private final List<JLabel> checkedItems = new ArrayList<>();
+
     private final List<JPanel> showBar = new ArrayList<>();
 
     public GUIMenuElement(String scopeKey, String domain, String elementId, Map<String, Object> data, GUIMenuElementTemplate template, Config config) {
@@ -38,9 +43,9 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
     @Override
     public JComponent build() {
         this.panel = new JPanel();
-        super.loadTemplates(panel, this.template.getExternal());
+        super.loadTemplates(this.panel, this.template.getExternal());
         this.buildMenu();
-        return panel;
+        return this.panel;
     }
 
     private void buildMenu() {
@@ -62,7 +67,7 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
                 continue;
             }
 
-            JLabel itemMenu = this.buildItemMenu(item.key, item.text, this.config.events);
+            JLabel itemMenu = this.buildItemMenu(item.key, item.text, 1, this.config.events);
             super.addSubComponent(mainMenu, itemMenu, this.template.getMainItem(), this.buildGridConfig(colIndex, 1));
             this.buildSubMenu(item.items, 2, item.key);
             this.itemMap.put(item.key, new MenuItemCache(item.key, itemMenu, mainMenu, null));
@@ -83,19 +88,26 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
 
         int colIndex = 1;
         for (ConfigDataItem item : items) {
-            JLabel itemMenu = this.buildItemMenu(item.key, item.text, this.config.events);
+            JLabel itemMenu = this.buildItemMenu(item.key, item.text, lineIndex, this.config.events);
             super.addSubComponent(subMenu, itemMenu, this.template.getItem(), this.buildGridConfig(colIndex, 1));
             this.buildSubMenu(item.items, lineIndex + 1, item.key);
+            if (item.items == null || item.items.length == 0) {
+                super.registerEvents(itemMenu, new InternalEventConfig(null, GUIEventTypeEnum.CLICK,
+                        GUITriggerTypeEnum.INTERNAL, event -> this.hideSubBar(1)));
+            }
             this.itemMap.put(item.key, new MenuItemCache(item.key, itemMenu, subMenu, parentKey));
             this.subBarMap.put(parentKey, subMenu);
             colIndex++;
         }
     }
 
-    private JLabel buildItemMenu(String key, String text, EventConfig[] events) {
+    private JLabel buildItemMenu(String key, String text, int lineIndex, EventConfig[] events) {
         JLabel itemMenu = new JLabel(text);
         itemMenu.setHorizontalAlignment(SwingConstants.CENTER);
-        super.registerEvents(itemMenu, this.buildEvent(key));
+        super.registerEvents(itemMenu, new InternalEventConfig(null, GUIEventTypeEnum.CLICK,
+                GUITriggerTypeEnum.INTERNAL, event -> this.setValue(key)));
+        super.registerEvents(itemMenu, new InternalEventConfig(null, GUIEventTypeEnum.MOVE_IN,
+                GUITriggerTypeEnum.INTERNAL, event -> this.showSubBar(key, lineIndex - 1)));
         super.registerEvents(itemMenu, events);
         return itemMenu;
     }
@@ -118,25 +130,12 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
         return templateItems[(layer)%templateItems.length];
     }
 
-    private EventConfig buildEvent(String key) {
-        return new InternalEventConfig(null, GUIEventTypeEnum.CLICK,
-                GUITriggerTypeEnum.INTERNAL, event -> this.setValue(key));
-    }
-
     private synchronized void checked() {
         if (this.panel == null) {
             return;
         }
 
-        this.showBar.forEach(item -> item.setVisible(false));
-        this.showBar.clear();
-
-        if (this.showMainItem != null) {
-            super.loadTemplates(this.showMainItem, this.template.getMainItem());
-        }
-        this.showItems.forEach(item -> super.loadTemplates(item, this.template.getItem()));
-        this.showItems.clear();
-
+        this.unchecked();
         if (CheckEmptyUtil.isEmpty(this.config.value) || this.itemMap == null) {
             return;
         }
@@ -146,28 +145,49 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
             if (currItem.title != null) {
                 super.loadTemplates(currItem.title, this.template.getItemActive());
                 if (currItem.isMain) {
-                    this.showMainItem = currItem.title;
+                    this.checkedMainItem = currItem.title;
                 } else {
-                    this.showItems.add(currItem.title);
+                    this.checkedItems.add(currItem.title);
                 }
             }
 
-            JPanel subBar = subBarMap.get(currItem.key);
-            if (subBar != null) {
-                subBar.setVisible(true);
-                this.showBar.add(subBar);
-            }
-
-            if (currItem.isMain) {
-                break;
-            }
-
-            if (currItem.bar != null) {
-                currItem.bar.setVisible(true);
-                this.showBar.add(currItem.bar);
-            }
-            currItem = itemMap.get(currItem.parentKey);
+            currItem = currItem.isMain ? null : itemMap.get(currItem.parentKey);
         }
+    }
+
+    private synchronized void showSubBar(String key, int line) {
+        this.hideSubBar(line + 1);
+        JPanel subBar = this.subBarMap.get(key);
+        if (subBar != null) {
+            subBar.setVisible(true);
+            this.showBar.add(subBar);
+        }
+    }
+
+    private synchronized void hideSubBar(int line) {
+        if (line <= 1) {
+            this.showBar.forEach(item -> item.setVisible(false));
+            this.showBar.clear();
+            return;
+        }
+
+        int showBarSize = this.showBar.size();
+        if (showBarSize < line) {
+            return;
+        }
+
+        for (int i = showBarSize - 1; i >= line; i--) {
+            this.showBar.get(i).setVisible(false);
+            this.showBar.remove(i);
+        }
+    }
+
+    private synchronized void unchecked() {
+        if (this.checkedMainItem != null) {
+            super.loadTemplates(this.checkedMainItem, this.template.getMainItem());
+        }
+        this.checkedItems.forEach(item -> super.loadTemplates(item, this.template.getItem()));
+        this.checkedItems.clear();
     }
 
     @Override
