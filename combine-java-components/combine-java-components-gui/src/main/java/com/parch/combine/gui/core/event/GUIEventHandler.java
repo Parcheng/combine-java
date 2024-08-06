@@ -8,6 +8,7 @@ import com.parch.combine.gui.core.event.trigger.ITriggerProcessor;
 import javax.swing.JComponent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class GUIEventHandler {
 
@@ -55,12 +56,44 @@ public class GUIEventHandler {
                     }
                 });
                 break;
-            case DBLCLICK:
+            case DBL_CLICK:
                 guiComponent.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent event) {
                         if (event.getClickCount() == 2) {
                             triggerProcessor.trigger(event);
                         }
+                    }
+                });
+                break;
+            case MOVE_IN:
+                guiComponent.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {}
+                    @Override
+                    public void mousePressed(MouseEvent e) {}
+                    @Override
+                    public void mouseReleased(MouseEvent e) {}
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        triggerProcessor.trigger(e);
+                    }
+                    @Override
+                    public void mouseExited(MouseEvent e) {}
+                });
+                break;
+            case MOVE_OUT:
+                guiComponent.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {}
+                    @Override
+                    public void mousePressed(MouseEvent e) {}
+                    @Override
+                    public void mouseReleased(MouseEvent e) {}
+                    @Override
+                    public void mouseEntered(MouseEvent e) {}
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        triggerProcessor.trigger(e);
                     }
                 });
                 break;

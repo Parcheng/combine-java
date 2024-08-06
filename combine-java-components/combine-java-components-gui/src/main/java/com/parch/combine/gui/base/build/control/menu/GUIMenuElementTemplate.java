@@ -30,7 +30,7 @@ public class GUIMenuElementTemplate extends BaseGUIElementTemplate {
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig mainItem;
 
-    @Field(key = "item", name = "子菜单样式配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "item", name = "子菜单选择项样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
     @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
     private ElementConfig item;
