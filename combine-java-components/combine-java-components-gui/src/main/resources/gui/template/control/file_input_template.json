@@ -20,8 +20,8 @@
     "opaque": false,
     "grid": {
       "fill": "NONE",
-      "weightX": 1,
-      "weightY": 0
+      "positionX": 1,
+      "positionY": 1
     },
     "border": {
       "type": "LINE",
@@ -33,19 +33,21 @@
       "right": 5
     }
   },
-  "symbol": {
-    "opaque": false,
+  "choose": {
+    "fgColor": "#000000",
+    "bgColor": "#c0c0c0",
     "grid": {
       "fill": "NONE",
       "weightX": 1,
-      "weightY": 1
+      "positionX": 2,
+      "positionY": 1
     },
     "border": {
       "size": 0,
-      "top": 5,
-      "bottom": 5,
-      "left": 5,
-      "right": 5
+      "top": 6,
+      "bottom": 6,
+      "left": 7,
+      "right": 7
     }
   }
 }

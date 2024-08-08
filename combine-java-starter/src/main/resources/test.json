@@ -221,6 +221,10 @@
           },{ "key": 3,  "text": "cccccccccccc" }
         ]
       },{
+        "type": "gui.build.control.file",
+        "elementId": "file",
+        "text": "111111"
+      },{
         "type": "gui.build",
         "title": "test",
         "icon": "1.png",
@@ -229,7 +233,7 @@
         "distanceTop": 30,
         "distanceLeft": 100,
         "elements": {
-          "center": ["input", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label", "textarea",
+          "center": ["input", "file", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label", "textarea",
             "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table", "from", "paging", "tree"]
         }
       }
