@@ -29,12 +29,6 @@ public class ElementHelper {
         if (CheckEmptyUtil.isNotEmpty(elementConfig.getBgColor())) {
             component.setBackground(ConstantHelper.color(elementConfig.getBgColor()));
         }
-        if (CheckEmptyUtil.isNotEmpty(elementConfig.getAlignmentX())) {
-            component.setAlignmentX(AlignmentXEnum.get(elementConfig.getAlignmentX()).getValue());
-        }
-        if (CheckEmptyUtil.isNotEmpty(elementConfig.getAlignmentY())) {
-            component.setAlignmentY(AlignmentYEnum.get(elementConfig.getAlignmentY()).getValue());
-        }
         if (elementConfig.getOpaque() != null) {
             component.setOpaque(elementConfig.getOpaque());
         }
