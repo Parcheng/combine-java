@@ -7,7 +7,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ComponentFlagEnum;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.handler.ComponentClassHandler;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
 
 import java.util.*;
@@ -159,9 +159,9 @@ public class ComponentManager {
      * @param componentIds 组件集合
      * @return 结果
      */
-    public DataResult executeComponents(List<String> componentIds) {
+    public ComponentDataResult executeComponents(List<String> componentIds) {
         // 按顺序执行组件逻辑
-        DataResult dataResult = null;
+        ComponentDataResult dataResult = null;
 
         for (String componentKey : componentIds) {
             dataResult = executeComponent(getComponent(componentKey));
@@ -184,7 +184,7 @@ public class ComponentManager {
      * @param component 组件对象
      * @return 结果
      */
-    public DataResult executeComponent(AbstractComponent<?,?> component) {
+    public ComponentDataResult executeComponent(AbstractComponent<?,?> component) {
         // 运行组件逻辑
         return component.run();
     }

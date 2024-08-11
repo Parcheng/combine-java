@@ -1,5 +1,6 @@
 package com.parch.combine.data.components.general;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.DataStructureHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
@@ -9,7 +10,6 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.data.base.general.create.DataCreateErrorEnum;
 import com.parch.combine.data.base.general.create.DataCreateInitConfig;
 import com.parch.combine.data.base.general.create.DataCreateLogicConfig;
@@ -26,14 +26,14 @@ public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig,
 
     @Override
     @SuppressWarnings("unchecked")
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         List<Object> result = new ArrayList<>();
 
         // 数据过滤
         DataCreateLogicConfig logicConfig = getLogicConfig();
         DataCreateLogicConfig.DataCreateItem[] items = logicConfig.items();
         if (items == null) {
-            return DataResult.success(result);
+            return ComponentDataResult.success(result);
         }
 
         // 创建数据
@@ -66,7 +66,7 @@ public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig,
                             } else if (DataTypeIsUtil.isDouble(numObj.toString())) {
                                 createData = Double.parseDouble(numObj.toString());
                             } else {
-                                return DataResult.fail(DataCreateErrorEnum.DATE_ERROR);
+                                return ComponentDataResult.fail(DataCreateErrorEnum.DATE_ERROR);
                             }
                         }
                     }
@@ -75,7 +75,7 @@ public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig,
                     if (size > 0) {
                         createData = DataParseUtil.parseDate(params[0]);
                         if (createData == null) {
-                            return DataResult.fail(DataCreateErrorEnum.DATE_ERROR);
+                            return ComponentDataResult.fail(DataCreateErrorEnum.DATE_ERROR);
                         }
                     } else {
                         createData = new Date();
@@ -94,7 +94,7 @@ public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig,
                                     objectData.put(key.toString(), DataVariableHelper.parseValue(paramPath[1], false));
                                 }
                             } else {
-                                return DataResult.fail(DataCreateErrorEnum.OBJECT_ERROR);
+                                return ComponentDataResult.fail(DataCreateErrorEnum.OBJECT_ERROR);
                             }
                         }
                     }
@@ -108,7 +108,7 @@ public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig,
                     createData = listData;
                     break;
                 default:
-                    return DataResult.fail(DataCreateErrorEnum.FAIL);
+                    return ComponentDataResult.fail(DataCreateErrorEnum.FAIL);
             }
 
             result.add(createData);
@@ -119,6 +119,6 @@ public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig,
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

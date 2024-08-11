@@ -6,7 +6,7 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.mail.base.receive.MailReceiveErrorEnum;
 import com.parch.combine.mail.base.receive.MailReceiveInitConfig;
 import com.parch.combine.mail.base.receive.MailReceiveLogicConfig;
@@ -31,7 +31,7 @@ public class MailReceiveComponent extends AbstractMailComponent<MailReceiveInitC
     }
 
     @Override
-    protected DataResult execute() {
+    protected ComponentDataResult execute() {
         // MailReceiveLogicConfig logicConfig = getLogicConfig();
         List<Map<String, Object>> result = new ArrayList<>();
         try {
@@ -69,10 +69,10 @@ public class MailReceiveComponent extends AbstractMailComponent<MailReceiveInitC
 
         } catch (Exception e) {
             ComponentErrorHandler.print(MailReceiveErrorEnum.FAIL, e);
-            return DataResult.fail(MailReceiveErrorEnum.FAIL);
+            return ComponentDataResult.fail(MailReceiveErrorEnum.FAIL);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 
 

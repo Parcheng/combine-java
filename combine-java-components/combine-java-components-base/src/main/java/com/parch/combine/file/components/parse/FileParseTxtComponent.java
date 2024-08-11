@@ -6,7 +6,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.parse.txt.FileParseTxtErrorEnum;
 import com.parch.combine.file.base.parse.txt.FileParseTxtInitConfig;
 import com.parch.combine.file.base.parse.txt.FileParseTxtLogicConfig;
@@ -30,7 +30,7 @@ public class FileParseTxtComponent extends FileParseComponent<FileParseTxtInitCo
     }
 
     @Override
-    protected DataResult execute(FileInfo fileInfo) {
+    protected ComponentDataResult execute(FileInfo fileInfo) {
         List<String> result = new ArrayList<>();
         ByteArrayInputStream is = new ByteArrayInputStream(fileInfo.getData());
         try (BufferedReader in = new BufferedReader(new InputStreamReader(is))) {
@@ -40,9 +40,9 @@ public class FileParseTxtComponent extends FileParseComponent<FileParseTxtInitCo
             }
         } catch (IOException e) {
             ComponentErrorHandler.print(FileParseTxtErrorEnum.FAIL, e);
-            return DataResult.fail(FileParseTxtErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileParseTxtErrorEnum.FAIL);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

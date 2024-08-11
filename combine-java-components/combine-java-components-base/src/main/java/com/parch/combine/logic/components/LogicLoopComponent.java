@@ -7,7 +7,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.compare.CompareTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.logic.base.loop.LogicLoopErrorEnum;
 import com.parch.combine.logic.base.loop.LogicLoopInitConfig;
 import com.parch.combine.logic.base.loop.LogicLoopLogicConfig;
@@ -29,7 +29,7 @@ public class LogicLoopComponent extends AbstractComponent<LogicLoopInitConfig, L
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         LogicLoopLogicConfig logicConfig = getLogicConfig();
 
         Collection<?> list = null;
@@ -39,7 +39,7 @@ public class LogicLoopComponent extends AbstractComponent<LogicLoopInitConfig, L
         if (data != null) {
             // 验证数据类型
             if (!(data instanceof Collection)) {
-                return DataResult.fail(LogicLoopErrorEnum.DATA_ERROR);
+                return ComponentDataResult.fail(LogicLoopErrorEnum.DATA_ERROR);
             }
 
             // 数据转换
@@ -83,15 +83,15 @@ public class LogicLoopComponent extends AbstractComponent<LogicLoopInitConfig, L
             }
 
             // 执行组件逻辑
-            DataResult result = SubComponentTool.execute(manager, logicConfig.components());
+            ComponentDataResult result = SubComponentTool.execute(manager, logicConfig.components());
             if (logicConfig.failStop() && !result.getSuccess()) {
-                return DataResult.fail(result.getErrMsg(), result.getShowMsg());
+                return ComponentDataResult.fail(result.getErrMsg(), result.getShowMsg());
             }
         }
 
         // 执行完成清理流程中变量
         ComponentContextHandler.getVariables().remove(variableKey);
 
-        return DataResult.success(loopedCont);
+        return ComponentDataResult.success(loopedCont);
     }
 }

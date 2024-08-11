@@ -1,5 +1,6 @@
 package com.parch.combine.data.components.enums;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.enums.EnumCacheHandler;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
@@ -8,7 +9,6 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.data.base.enums.mapping.DataEnumMappingErrorEnum;
 import com.parch.combine.data.base.enums.mapping.DataEnumMappingInitConfig;
 import com.parch.combine.data.base.enums.mapping.DataEnumMappingLogicConfig;
@@ -28,7 +28,7 @@ public class DataEnumMappingComponent extends AbstractComponent<DataEnumMappingI
 
     @Override
     @SuppressWarnings("unchecked")
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         DataEnumMappingLogicConfig logicConfig = getLogicConfig();
 
         Collection<Map<String, Object>> data;
@@ -39,7 +39,7 @@ public class DataEnumMappingComponent extends AbstractComponent<DataEnumMappingI
         } else if (sourceData instanceof Collection) {
             data = (Collection<Map<String, Object>>) sourceData;
         } else {
-            return DataResult.fail(DataEnumMappingErrorEnum.DATA_TYPE_ERROR);
+            return ComponentDataResult.fail(DataEnumMappingErrorEnum.DATA_TYPE_ERROR);
         }
 
         DataEnumMappingLogicConfig.MappingItem[] items = logicConfig.items();
@@ -90,18 +90,18 @@ public class DataEnumMappingComponent extends AbstractComponent<DataEnumMappingI
 
         } catch (Exception e) {
             ComponentErrorHandler.print(DataEnumMappingErrorEnum.FAIL, e);
-            return DataResult.fail(DataEnumMappingErrorEnum.FAIL);
+            return ComponentDataResult.fail(DataEnumMappingErrorEnum.FAIL);
         }
 
         Object result = sourceData;
         String resultId = logicConfig.resultId();
         if (CheckEmptyUtil.isNotEmpty(resultId)) {
-            DataResult componentResult = ComponentContextHandler.getResultData(resultId);
+            ComponentDataResult componentResult = ComponentContextHandler.getResultData(resultId);
             if (componentResult != null) {
                 result = componentResult.getData();
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

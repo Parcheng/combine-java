@@ -3,7 +3,7 @@ package com.parch.combine.data.components.general;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.mapping.DataMappingInitConfig;
 import com.parch.combine.data.base.general.mapping.DataMappingLogicConfig;
 
@@ -22,7 +22,7 @@ public class DataMappingComponent extends AbstractComponent<DataMappingInitConfi
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         Map<String, Object> result = new HashMap<>();
 
         // 数据过滤
@@ -34,6 +34,6 @@ public class DataMappingComponent extends AbstractComponent<DataMappingInitConfi
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

@@ -1,5 +1,6 @@
 package com.parch.combine.tool.components.cache;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheData;
 import com.parch.combine.tool.base.cache.CacheHandler;
@@ -12,7 +13,6 @@ import com.parch.combine.tool.base.cache.get.CacheGetErrorEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -29,18 +29,18 @@ public class CacheCleanupComponent extends AbstractCacheComponent<CacheCleanupIn
     }
 
     @Override
-    public DataResult execute(String domain, String key) {
+    public ComponentDataResult execute(String domain, String key) {
         try {
             CacheCleanupLogicConfig logicConfig = getLogicConfig();
             Map<String, Object> cleanupData = new HashMap<>();
             Map<String, CacheData> domainCache = CacheHandler.get(domain);
             if (domainCache == null) {
-                return DataResult.success(cleanupData);
+                return ComponentDataResult.success(cleanupData);
             }
 
             CacheKeyMatchRuleEnum keyMatchRule = CacheKeyMatchRuleEnum.get(logicConfig.keyMatchRule());
             if (keyMatchRule == CacheKeyMatchRuleEnum.NONE) {
-                return DataResult.fail(CacheGetErrorEnum.KEY_MATCH_RULE_IS_ERROR);
+                return ComponentDataResult.fail(CacheGetErrorEnum.KEY_MATCH_RULE_IS_ERROR);
             }
 
             Map<String, Object> cleanData = new HashMap<>();
@@ -63,13 +63,13 @@ public class CacheCleanupComponent extends AbstractCacheComponent<CacheCleanupIn
                     batchRemove(domain, dataList, cleanData, loopCount);
                     break;
                 default:
-                    return DataResult.fail(CacheCleanupErrorEnum.MODE_ERROR);
+                    return ComponentDataResult.fail(CacheCleanupErrorEnum.MODE_ERROR);
             }
 
-            return DataResult.success(cleanData);
+            return ComponentDataResult.success(cleanData);
         } catch (Exception e) {
             ComponentErrorHandler.print(CacheCleanupErrorEnum.FAIL, e);
-            return DataResult.fail(CacheCleanupErrorEnum.FAIL);
+            return ComponentDataResult.fail(CacheCleanupErrorEnum.FAIL);
         }
     }
 

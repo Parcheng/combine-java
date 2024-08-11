@@ -3,7 +3,7 @@ package com.parch.combine.data.components.general;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.verify.DataVerifyErrorEnum;
 import com.parch.combine.data.base.general.verify.DataVerifyHandler;
 import com.parch.combine.data.base.general.verify.DataVerifyInitConfig;
@@ -22,7 +22,7 @@ public class DataVerifyComponent extends AbstractComponent<DataVerifyInitConfig,
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         List<String> result = new ArrayList<>();
 
         // 数据过滤
@@ -34,25 +34,25 @@ public class DataVerifyComponent extends AbstractComponent<DataVerifyInitConfig,
             for (DataVerifyLogicConfig.DataVerifyItem item : items) {
                 DataVerifyErrorEnum msg = DataVerifyHandler.verify(item, defaultMsg, result);
                 if (msg != null) {
-                    return DataResult.fail(msg);
+                    return ComponentDataResult.fail(msg);
                 }
             }
         }
 
         // 验证通过
         if (result.size() == 0) {
-            return DataResult.success(true);
+            return ComponentDataResult.success(true);
         }
 
         // 验证不通过，根据模式处理返回的错误信息
         VerifyModeEnum mode = VerifyModeEnum.get(logicConfig.mode());
         switch (mode) {
             case FIRST:
-                return DataResult.fail(result.get(0), DataVerifyErrorEnum.VERIFY_NO_PASS, result.get(0));
+                return ComponentDataResult.fail(result.get(0), DataVerifyErrorEnum.VERIFY_NO_PASS, result.get(0));
             case ALL:
-                return DataResult.fail(result, DataVerifyErrorEnum.VERIFY_NO_PASS, "验证不通过");
+                return ComponentDataResult.fail(result, DataVerifyErrorEnum.VERIFY_NO_PASS, "验证不通过");
             default:
-                return DataResult.fail(DataVerifyErrorEnum.MODE_ERROR);
+                return ComponentDataResult.fail(DataVerifyErrorEnum.MODE_ERROR);
         }
     }
 }

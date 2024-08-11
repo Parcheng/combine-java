@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.filter.DataFilterErrorEnum;
 import com.parch.combine.data.base.general.filter.DataFilterHandler;
 import com.parch.combine.data.base.general.filter.DataFilterInitConfig;
@@ -26,7 +26,7 @@ public class DataFilterComponent extends AbstractComponent<DataFilterInitConfig,
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         // 数据过滤
         DataFilterLogicConfig logicConfig = getLogicConfig();
         DataFilterLogicConfig.DataFilterItem[] items = logicConfig.items();
@@ -34,16 +34,16 @@ public class DataFilterComponent extends AbstractComponent<DataFilterInitConfig,
             for (DataFilterLogicConfig.DataFilterItem item : items) {
                 DataFilterErrorEnum msg = DataFilterHandler.filter(item);
                 if (msg != null) {
-                    return DataResult.fail(msg);
+                    return ComponentDataResult.fail(msg);
                 }
             }
         }
 
         // 获取其他组件的执行结果（配置了resultId就按该字段去，否则取上一步的执行结果）
         String resultId = logicConfig.resultId();
-        DataResult result = CheckEmptyUtil.isEmpty(resultId) ? ComponentContextHandler.getLastResultData() : ComponentContextHandler.getResultData(resultId);
+        ComponentDataResult result = CheckEmptyUtil.isEmpty(resultId) ? ComponentContextHandler.getLastResultData() : ComponentContextHandler.getResultData(resultId);
         if (result == null) {
-            return DataResult.fail(DataFilterErrorEnum.RESULT_ERROR);
+            return ComponentDataResult.fail(DataFilterErrorEnum.RESULT_ERROR);
         }
         result.setId(logicConfig.id());
         return result;

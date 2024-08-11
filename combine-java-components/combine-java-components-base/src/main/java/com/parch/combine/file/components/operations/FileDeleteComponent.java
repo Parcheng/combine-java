@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.operations.delete.FileDeleteErrorEnum;
 import com.parch.combine.file.base.operations.delete.FileDeleteInitConfig;
 import com.parch.combine.file.base.operations.delete.FileDeleteLogicConfig;
@@ -21,28 +21,28 @@ public class FileDeleteComponent extends AbstractComponent<FileDeleteInitConfig,
     }
 
     @Override
-    protected DataResult execute() {
+    protected ComponentDataResult execute() {
         FileDeleteInitConfig initConfig = getInitConfig();
         FileDeleteLogicConfig logicConfig = getLogicConfig();
 
         String sourcePath = logicConfig.source();
         if (sourcePath == null) {
             ComponentErrorHandler.print(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
-            return DataResult.fail(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
+            return ComponentDataResult.fail(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
         }
 
         File source = new File(FilePathHelper.getFinalPath(initConfig.useSystemDir(), initConfig.dir(), sourcePath));
         if (!source.exists()) {
             ComponentErrorHandler.print(FileDeleteErrorEnum.FILE_NOT_EXIST);
-            return DataResult.fail(FileDeleteErrorEnum.FILE_NOT_EXIST);
+            return ComponentDataResult.fail(FileDeleteErrorEnum.FILE_NOT_EXIST);
         }
 
         try {
             int count = delete(source);
-            return DataResult.success(count);
+            return ComponentDataResult.success(count);
         } catch (Exception e) {
             ComponentErrorHandler.print(FileDeleteErrorEnum.FAIL, e);
-            return DataResult.fail(FileDeleteErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileDeleteErrorEnum.FAIL);
         }
     }
 

@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.format.DataFormatErrorEnum;
 import com.parch.combine.data.base.general.format.DataFormatFunctionEnum;
 import com.parch.combine.data.base.general.format.DataFormatHandler;
@@ -24,7 +24,7 @@ public class DataFormatComponent extends AbstractComponent<DataFormatInitConfig,
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         List<Object> result = new ArrayList<>();
 
         // 执行格式化
@@ -35,25 +35,25 @@ public class DataFormatComponent extends AbstractComponent<DataFormatInitConfig,
 
             DataFormatFunctionEnum functionType = DataFormatFunctionEnum.get(item.function());
             if (functionType == DataFormatFunctionEnum.NONE) {
-                return DataResult.fail(DataFormatErrorEnum.FUNCTION_IS_NULL);
+                return ComponentDataResult.fail(DataFormatErrorEnum.FUNCTION_IS_NULL);
             }
 
             String[] params = item.params();
             List<String> errors = DataFormatHandler.checkParams(functionType, params);
             if (CheckEmptyUtil.isNotEmpty(errors)) {
-                return DataResult.fail(errors, DataFormatErrorEnum.PARAMS_ERROR);
+                return ComponentDataResult.fail(errors, DataFormatErrorEnum.PARAMS_ERROR);
             }
 
             // 获取可执行格式化函数
             DataFindHandler.GetDataFunction<Object> function = DataFormatHandler.getFunction(functionType, params);
             if (function == null) {
-                return DataResult.fail(DataFormatErrorEnum.FAIL);
+                return ComponentDataResult.fail(DataFormatErrorEnum.FAIL);
             }
 
             // 执行替换操作
             if (logicConfig.replace()) {
                 if (!DataFindHandler.replaceAsFunc(source, function)) {
-                    return DataResult.fail(DataFormatErrorEnum.FAIL);
+                    return ComponentDataResult.fail(DataFormatErrorEnum.FAIL);
                 }
                 result.add(DataFindHandler.find(source));
             } else {
@@ -65,6 +65,6 @@ public class DataFormatComponent extends AbstractComponent<DataFormatInitConfig,
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

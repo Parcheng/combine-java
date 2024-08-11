@@ -11,7 +11,7 @@ import com.parch.combine.core.component.tools.calc.ExpressionCalcTool;
 import com.parch.combine.core.component.tools.calc.ValueOptTool;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.calc.DataCalcErrorEnum;
 import com.parch.combine.data.base.general.calc.DataCalcInitConfig;
 import com.parch.combine.data.base.general.calc.DataCalcLogicConfig;
@@ -31,7 +31,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         List<Object> result = new ArrayList<>();
 
         // 数据过滤
@@ -49,7 +49,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 
     /**
@@ -66,7 +66,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
             params = new Object[0];
         }
         if (params.length < mode.getMinParamCount()) {
-            return DataResult.fail(DataCalcErrorEnum.PARAMS_COUNT_ERROR);
+            return ComponentDataResult.fail(DataCalcErrorEnum.PARAMS_COUNT_ERROR);
         }
 
         switch (mode) {
@@ -82,7 +82,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
                     calcResult = ExpressionCalcTool.calc(params[0].toString());
                 } catch (Exception e) {
                     ComponentErrorHandler.print(DataCalcErrorEnum.CALC_ERROR, e);
-                    return DataResult.fail(DataCalcErrorEnum.CALC_ERROR);
+                    return ComponentDataResult.fail(DataCalcErrorEnum.CALC_ERROR);
                 }
                 break;
             case MAX:
@@ -105,7 +105,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
 
                 if (!DataTypeIsUtil.isInteger(start) || !DataTypeIsUtil.isInteger(end)) {
                     ComponentErrorHandler.print(DataCalcErrorEnum.RANDOM_RANG_ERROR);
-                    return DataResult.fail(DataCalcErrorEnum.RANDOM_RANG_ERROR);
+                    return ComponentDataResult.fail(DataCalcErrorEnum.RANDOM_RANG_ERROR);
                 }
 
                 int startNum = Integer.parseInt(start);
@@ -121,7 +121,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
 
         // 运算失败
         if (calcResult == null) {
-            return DataResult.fail(DataCalcErrorEnum.FAIL);
+            return ComponentDataResult.fail(DataCalcErrorEnum.FAIL);
         }
 
         return calcResult;

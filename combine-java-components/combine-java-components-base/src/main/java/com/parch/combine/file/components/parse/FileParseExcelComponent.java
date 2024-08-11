@@ -1,5 +1,6 @@
 package com.parch.combine.file.components.parse;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.FilePostfixEnum;
 import com.parch.combine.file.base.parse.FileParseComponent;
 import com.parch.combine.file.base.parse.excel.FileParseExcelErrorEnum;
@@ -12,7 +13,6 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -38,7 +38,7 @@ public class FileParseExcelComponent extends FileParseComponent<FileParseExcelIn
     }
 
     @Override
-    protected DataResult execute(FileInfo fileInfo) {
+    protected ComponentDataResult execute(FileInfo fileInfo) {
         List<List<String>> result = new ArrayList<>();
 
         // 根据类型解析文件
@@ -54,10 +54,10 @@ public class FileParseExcelComponent extends FileParseComponent<FileParseExcelIn
             }
         } catch (IOException e) {
             ComponentErrorHandler.print(FileParseTxtErrorEnum.FAIL, e);
-            return DataResult.fail(FileParseExcelErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileParseExcelErrorEnum.FAIL);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 
     /**

@@ -8,7 +8,7 @@ import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.system.base.doc.config.SystemDocConfigErrorEnum;
 import com.parch.combine.system.base.doc.config.SystemDocConfigInitConfig;
 import com.parch.combine.system.base.doc.config.SystemDocConfigLogicConfig;
@@ -27,10 +27,10 @@ public class SystemDocConfigComponent extends AbstractComponent<SystemDocConfigI
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         GlobalContext context = GlobalContextHandler.get(getScopeKey());
         if (context == null) {
-            return DataResult.fail(SystemDocConfigErrorEnum.FAIL);
+            return ComponentDataResult.fail(SystemDocConfigErrorEnum.FAIL);
         }
 
         if (result == null) {
@@ -43,6 +43,6 @@ public class SystemDocConfigComponent extends AbstractComponent<SystemDocConfigI
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

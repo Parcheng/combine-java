@@ -1,5 +1,6 @@
 package com.parch.combine.file.components.operations;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.helper.FileHelper;
 import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
@@ -8,7 +9,6 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.file.base.operations.compress.sevenz.FileCompressSevenZErrorEnum;
 import com.parch.combine.file.base.operations.compress.sevenz.FileCompressSevenZInitConfig;
 import com.parch.combine.file.base.operations.compress.sevenz.FileCompressSevenZLogicConfig;
@@ -40,13 +40,13 @@ public class FileCompressSevenZComponent extends AbstractFileCompressComponent<F
     }
 
     @Override
-    protected DataResult execute(String sourcePath, String targetPath, boolean compress) {
+    protected ComponentDataResult execute(String sourcePath, String targetPath, boolean compress) {
         boolean success = compress ? z(sourcePath, targetPath) : unz(sourcePath, targetPath);
         if (!success) {
-            return DataResult.fail(FileCompressSevenZErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileCompressSevenZErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     private boolean z(String source, String target) {

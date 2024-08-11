@@ -1,12 +1,12 @@
 package com.parch.combine.redis.components;
 
 import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.redis.base.AbstractRedisComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.redis.base.lua.RedisLuaInitConfig;
 import com.parch.combine.redis.base.lua.RedisLuaLogicConfig;
 import redis.clients.jedis.JedisCluster;
@@ -23,14 +23,14 @@ public class RedisLuaComponent extends AbstractRedisComponent<RedisLuaInitConfig
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RedisLuaLogicConfig logicConfig = getLogicConfig();
 
         List<String> keys = Arrays.asList(logicConfig.keys());
         List<String> args = Arrays.asList(logicConfig.args());
         String scriptCode = StringUtil.join(logicConfig.scriptLines(), "\n");
         try (JedisCluster cluster = this.getConn(getInitConfig())) {
-            return DataResult.success(cluster.eval(scriptCode, keys, args));
+            return ComponentDataResult.success(cluster.eval(scriptCode, keys, args));
         }
     }
 }

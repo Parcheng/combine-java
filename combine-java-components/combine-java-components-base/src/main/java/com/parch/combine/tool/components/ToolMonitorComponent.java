@@ -4,7 +4,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.monitor.ToolMonitorErrorEnum;
 import com.parch.combine.tool.base.monitor.ToolMonitorInitConfig;
 import com.parch.combine.tool.base.monitor.ToolMonitorLogicConfig;
@@ -24,7 +24,7 @@ public class ToolMonitorComponent extends AbstractComponent<ToolMonitorInitConfi
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         Map<String, Object> monitorData = new HashMap<>();
 
         try {
@@ -56,9 +56,9 @@ public class ToolMonitorComponent extends AbstractComponent<ToolMonitorInitConfi
             monitorData.put(keyConfig.threadCount(), threadCount);
         } catch (Exception e) {
             ComponentErrorHandler.print(ToolMonitorErrorEnum.FAIL, e);
-            return DataResult.fail(ToolMonitorErrorEnum.FAIL);
+            return ComponentDataResult.fail(ToolMonitorErrorEnum.FAIL);
         }
 
-        return DataResult.success(monitorData);
+        return ComponentDataResult.success(monitorData);
     }
 }

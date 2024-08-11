@@ -7,7 +7,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.text.split.DataTextSplitErrorEnum;
 import com.parch.combine.data.base.text.split.DataTextSplitInitConfig;
 import com.parch.combine.data.base.text.split.DataTextSplitLogicConfig;
@@ -25,14 +25,14 @@ public class DataTextSplitComponent extends AbstractComponent<DataTextSplitInitC
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         DataTextSplitLogicConfig logicConfig = getLogicConfig();
         List<String> result = null;
 
         try {
             String regex = logicConfig.regex();
             if (regex == null) {
-                return DataResult.fail(DataTextSplitErrorEnum.REGEX_IS_NULL);
+                return ComponentDataResult.fail(DataTextSplitErrorEnum.REGEX_IS_NULL);
             }
 
             String source = logicConfig.source();
@@ -48,9 +48,9 @@ public class DataTextSplitComponent extends AbstractComponent<DataTextSplitInitC
             }
         } catch (Exception e) {
             ComponentErrorHandler.print(DataTextSplitErrorEnum.FAIL, e);
-            return DataResult.fail(DataTextSplitErrorEnum.FAIL);
+            return ComponentDataResult.fail(DataTextSplitErrorEnum.FAIL);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

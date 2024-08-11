@@ -7,7 +7,7 @@ import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.tools.PrintHelper;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
@@ -83,13 +83,16 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
      *
      * @return 结果
      */
-    public DataResult run() {
+    public ComponentDataResult run() {
+        long startTime = System.currentTimeMillis();
+        ComponentDataResult result = null;
+
         try {
             // 向上下文中设置当前执行的组件对象
             ComponentContextHandler.setCurrComponent(this);
 
             // 执行组件逻辑
-            DataResult result = this.execute();
+            result = this.execute();
 
             // 将执行结果设置到上下文中
             ComponentContextHandler.setResultData(this.getId(), result);
@@ -98,23 +101,32 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
             if (CheckEmptyUtil.isNotEmpty(logicConfig.showMsg())) {
                 result.setShowMsg(logicConfig.showMsg());
             }
-
-            // 打印日志
-            if (logicConfig.printResult() == null ? GlobalContextHandler.get(scopeKey).getPrintComponentResult() : logicConfig.printResult()) {
-                PrintHelper.printComponentResult(this, result);
-            }
-
-            // 清当前执行的组件对象
-            ComponentContextHandler.clearCurrComponent();
-
-            return result;
         } catch (Exception e) {
             ComponentErrorHandler.print(SystemErrorEnum.SYSTEM_ERROR, e);
-            return DataResult.fail(SystemErrorEnum.SYSTEM_ERROR);
         } finally {
-            // 将执当前组件加入到已执行组件集合中
-            ComponentContextHandler.addExecutedComponent(this);
+            try {
+                // 异常情况 result 为空
+                if (result == null) {
+                    result = ComponentDataResult.fail(SystemErrorEnum.SYSTEM_ERROR);
+                }
+
+                // 记录运行世界
+                result.setRunTime(System.currentTimeMillis() - startTime);
+
+                // 打印日志
+                if (logicConfig.printResult() == null ? GlobalContextHandler.get(scopeKey).getPrintComponentResult() : logicConfig.printResult()) {
+                    PrintHelper.printComponentResult(this, result);
+                }
+
+                // 清当前执行的组件对象
+                ComponentContextHandler.clearCurrComponent();
+            } finally {
+                // 将执当前组件加入到已执行组件集合中
+                ComponentContextHandler.addExecutedComponent(this);
+            }
         }
+
+        return result;
     }
 
     /**
@@ -122,7 +134,7 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
      *
      * @return 结果
      */
-    protected abstract DataResult execute();
+    protected abstract ComponentDataResult execute();
 
     /**
      * 结束函数

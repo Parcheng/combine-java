@@ -1,6 +1,7 @@
 package com.parch.combine.rocketmq.components;
 
 import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -9,7 +10,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
 
 import com.parch.combine.core.component.tools.SubComponentTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.rocketmq.base.consumer.RocketMQConsumerErrorEnum;
 import com.parch.combine.rocketmq.base.consumer.RocketMQConsumerInitConfig;
 import com.parch.combine.rocketmq.base.consumer.RocketMQConsumerLogicConfig;
@@ -32,7 +33,7 @@ public class RocketMQConsumerComponent extends AbstractRocketMQComponent<RocketM
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RocketMQConsumerInitConfig initConfig = getInitConfig();
         RocketMQConsumerLogicConfig logicConfig = getLogicConfig();
 
@@ -53,7 +54,7 @@ public class RocketMQConsumerComponent extends AbstractRocketMQComponent<RocketM
                     data.put("msgId", msg.getMsgId());
                     data.put("body", JsonUtil.deserialize(new String(msg.getBody()), HashMap.class));
 
-                    DataResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
+                    FlowResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
                     if (!result.getSuccess()) {
                         ComponentErrorHandler.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic
                                 + " expression=" + expression + " error=" + result.getErrMsg(), null);
@@ -65,9 +66,9 @@ public class RocketMQConsumerComponent extends AbstractRocketMQComponent<RocketM
             consumer.start();
         } catch (MQClientException e) {
             ComponentErrorHandler.print(RocketMQConsumerErrorEnum.FAIL, e);
-            return DataResult.fail(RocketMQConsumerErrorEnum.FAIL);
+            return ComponentDataResult.fail(RocketMQConsumerErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

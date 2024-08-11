@@ -4,7 +4,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gui.base.build.frame.GUIBuildErrorEnum;
 import com.parch.combine.gui.base.build.frame.GUIBuildInitConfig;
 import com.parch.combine.gui.base.build.frame.GUIBuildLogicConfig;
@@ -20,7 +20,7 @@ public class GUIBuildComponent extends AbstractComponent<GUIBuildInitConfig, GUI
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         GUIBuildLogicConfig logicConfig = getLogicConfig();
         GUIBuildInitConfig initConfig = getInitConfig();
 
@@ -47,9 +47,9 @@ public class GUIBuildComponent extends AbstractComponent<GUIBuildInitConfig, GUI
             SwingUtilities.invokeLater(builder::build);
         } catch (Exception e) {
             ComponentErrorHandler.print(GUIBuildErrorEnum.FAIL, e);
-            return DataResult.fail(GUIBuildErrorEnum.FAIL);
+            return ComponentDataResult.fail(GUIBuildErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

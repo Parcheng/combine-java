@@ -6,7 +6,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.text.replace.DataTextReplaceErrorEnum;
 import com.parch.combine.data.base.text.replace.DataTextReplaceInitConfig;
 import com.parch.combine.data.base.text.replace.DataTextReplaceLogicConfig;
@@ -29,7 +29,7 @@ public class DataTextReplaceComponent extends AbstractComponent<DataTextReplaceI
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         DataTextReplaceLogicConfig logicConfig = getLogicConfig();
         Object result = null;
 
@@ -46,10 +46,10 @@ public class DataTextReplaceComponent extends AbstractComponent<DataTextReplaceI
             }
         } catch (Exception e) {
             ComponentErrorHandler.print(DataTextReplaceErrorEnum.FAIL, e);
-            return DataResult.fail(DataTextReplaceErrorEnum.FAIL);
+            return ComponentDataResult.fail(DataTextReplaceErrorEnum.FAIL);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 
     @SuppressWarnings("unchecked")

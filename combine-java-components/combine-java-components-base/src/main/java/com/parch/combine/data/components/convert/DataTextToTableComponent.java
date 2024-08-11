@@ -3,7 +3,7 @@ package com.parch.combine.data.components.convert;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.convert.text2table.DataTextToTableInitConfig;
 import com.parch.combine.data.base.convert.text2table.DataTextToTableLogicConfig;
 
@@ -23,13 +23,13 @@ public class DataTextToTableComponent extends AbstractComponent<DataTextToTableI
 
     @Override
     @SuppressWarnings("unchecked")
-    protected DataResult execute() {
+    protected ComponentDataResult execute() {
         List<List<String>> table = new ArrayList<>();
         DataTextToTableLogicConfig config = getLogicConfig();
 
         Object data = config.source();
         if (data == null) {
-            return DataResult.success(table);
+            return ComponentDataResult.success(table);
         }
 
         Collection<String> textLines;
@@ -50,6 +50,6 @@ public class DataTextToTableComponent extends AbstractComponent<DataTextToTableI
             }
         }
 
-        return DataResult.success(table);
+        return ComponentDataResult.success(table);
     }
 }

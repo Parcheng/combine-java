@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.text.crop.DataCropInitConfig;
 import com.parch.combine.data.base.text.crop.DataCropLogicConfig;
 
@@ -25,11 +25,11 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
 
     @Override
     @SuppressWarnings("unchecked")
-    protected DataResult execute() {
+    protected ComponentDataResult execute() {
         DataCropLogicConfig config = getLogicConfig();
         Object data = config.source();
         if (data == null) {
-            return DataResult.success(null);
+            return ComponentDataResult.success(null);
         }
 
         List<Object> result = new ArrayList<>();
@@ -89,6 +89,6 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
             }
         };
 
-        return DataResult.success(isArray ? result : (result.size() > 0 ? result.get(0) : null));
+        return ComponentDataResult.success(isArray ? result : (result.size() > 0 ? result.get(0) : null));
     }
 }

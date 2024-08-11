@@ -7,7 +7,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.logic.base.judgment.LogicJudgmentInitConfig;
 import com.parch.combine.logic.base.judgment.LogicJudgmentLogicConfig;
 
@@ -22,7 +22,7 @@ public class LogicJudgmentComponent extends AbstractComponent<LogicJudgmentInitC
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         LogicJudgmentLogicConfig.LogicJudgmentItem[] items = getLogicConfig().items();
         if (items != null) {
             for (LogicJudgmentLogicConfig.LogicJudgmentItem item : items) {
@@ -43,7 +43,7 @@ public class LogicJudgmentComponent extends AbstractComponent<LogicJudgmentInitC
             }
         }
 
-        return DataResult.success(new ArrayList<>());
+        return ComponentDataResult.success(new ArrayList<>());
     }
 
     /**

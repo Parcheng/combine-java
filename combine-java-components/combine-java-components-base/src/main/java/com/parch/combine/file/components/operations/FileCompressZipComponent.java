@@ -1,12 +1,12 @@
 package com.parch.combine.file.components.operations;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.helper.FileHelper;
 import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.file.base.operations.compress.zip.FileCompressZipErrorEnum;
 import com.parch.combine.file.base.operations.compress.zip.FileCompressZipInitConfig;
 import com.parch.combine.file.base.operations.compress.zip.FileCompressZipLogicConfig;
@@ -31,13 +31,13 @@ public class FileCompressZipComponent extends AbstractFileCompressComponent<File
     }
 
     @Override
-    protected DataResult execute(String sourcePath, String targetPath, boolean compress) {
+    protected ComponentDataResult execute(String sourcePath, String targetPath, boolean compress) {
         boolean success = compress ? zip(sourcePath, targetPath) : unzip(sourcePath, targetPath);
         if (!success) {
-            return DataResult.fail(FileCompressZipErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileCompressZipErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     private boolean zip(String source, String target) {

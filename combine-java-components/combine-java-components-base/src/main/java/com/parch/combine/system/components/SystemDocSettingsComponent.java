@@ -6,7 +6,7 @@ import com.parch.combine.core.component.settings.ComponentSettingHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.system.base.doc.components.SystemDocSettingsInitConfig;
 import com.parch.combine.system.base.doc.components.SystemDocSettingsLogicConfig;
 
@@ -22,9 +22,9 @@ public class SystemDocSettingsComponent extends AbstractComponent<SystemDocSetti
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         List<ComponentClassifySetting> settings = ComponentSettingHandler.getSettings();
         String json = JsonUtil.serialize(settings);
-        return DataResult.success(JsonUtil.parseArray(json, HashMap.class));
+        return ComponentDataResult.success(JsonUtil.parseArray(json, HashMap.class));
     }
 }

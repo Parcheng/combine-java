@@ -1,5 +1,6 @@
 package com.parch.combine.mail.components;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.mail.base.AbstractMailComponent;
 import com.parch.combine.mail.base.helper.MailContentTypeEnum;
 import com.parch.combine.mail.base.helper.MimeMessageHelper;
@@ -9,7 +10,6 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.mail.base.send.MailSendErrorEnum;
 import com.parch.combine.mail.base.send.MailSendInitConfig;
 import com.parch.combine.mail.base.send.MailSendLogicConfig;
@@ -37,7 +37,7 @@ public class MailSendComponent extends AbstractMailComponent<MailSendInitConfig,
     }
 
     @Override
-    protected DataResult execute() {
+    protected ComponentDataResult execute() {
         MailSendInitConfig initConfig = getInitConfig();
         MailSendLogicConfig logicConfig = getLogicConfig();
         Session session = getSendSession();
@@ -51,7 +51,7 @@ public class MailSendComponent extends AbstractMailComponent<MailSendInitConfig,
             }
         } catch (MessagingException e) {
             ComponentErrorHandler.print(MailSendErrorEnum.ADDRESS_ERROR, e);
-            return DataResult.fail(MailSendErrorEnum.ADDRESS_ERROR);
+            return ComponentDataResult.fail(MailSendErrorEnum.ADDRESS_ERROR);
         }
 
         try {
@@ -71,10 +71,10 @@ public class MailSendComponent extends AbstractMailComponent<MailSendInitConfig,
             Transport.send(message);
         } catch (Exception e) {
             ComponentErrorHandler.print(MailSendErrorEnum.FAIL, e);
-            return DataResult.fail(MailSendErrorEnum.FAIL);
+            return ComponentDataResult.fail(MailSendErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     /**

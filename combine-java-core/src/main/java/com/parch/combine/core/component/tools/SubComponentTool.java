@@ -1,8 +1,9 @@
 package com.parch.combine.core.component.tools;
 
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.manager.CombineManager;
+import com.parch.combine.core.component.vo.FlowResult;
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class SubComponentTool {
      *
      * @return 结果
      */
-    public static DataResult execute(CombineManager combineManager, String componentId) {
+    public static ComponentDataResult execute(CombineManager combineManager, String componentId) {
         if (componentId == null) {
             return null;
         }
@@ -34,19 +35,19 @@ public class SubComponentTool {
      *
      * @return 结果
      */
-    public static DataResult execute(CombineManager combineManager, String[] componentIds) {
+    public static ComponentDataResult execute(CombineManager combineManager, String[] componentIds) {
         for (String componentId : componentIds) {
-            DataResult result = execute(combineManager, componentId);
+            ComponentDataResult result = execute(combineManager, componentId);
             if (result != null) {
                 if (!result.getSuccess()) {
-                    return DataResult.fail(result.getErrMsg(), result.getShowMsg());
+                    return ComponentDataResult.fail(result.getErrMsg(), result.getShowMsg());
                 } else if (result.isStop()) {
-                    return DataResult.build(result);
+                    return ComponentDataResult.build(result);
                 }
             }
         }
 
-        return DataResult.success(componentIds);
+        return ComponentDataResult.success(componentIds);
     }
 
     /**
@@ -57,7 +58,7 @@ public class SubComponentTool {
      * @param componentIds 组件ID集合
      * @return 结果
      */
-    public static DataResult execute(CombineManager combineManager, String key, Map<String, Object> data, String[] componentIds) {
+    public static FlowResult execute(CombineManager combineManager, String key, Map<String, Object> data, String[] componentIds) {
         return combineManager.execute(key, data, new HashMap<>(0), Arrays.asList(componentIds), null);
     }
 }

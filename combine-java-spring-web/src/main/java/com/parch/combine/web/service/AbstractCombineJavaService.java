@@ -6,7 +6,7 @@ import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.service.ICombineJavaService;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.web.dto.JsonConfigInitDTO;
 import com.parch.combine.web.util.ResourceFileUtil;
 import javax.servlet.http.HttpServletRequest;
@@ -28,12 +28,12 @@ public abstract class AbstractCombineJavaService {
         service = CombineJavaStarter.init(configPath);
     }
 
-    public DataResult call(Map<String, Object> params, String domain, String function, HttpServletRequest request, HttpServletResponse response) {
+    public ComponentDataResult call(Map<String, Object> params, String domain, String function, HttpServletRequest request, HttpServletResponse response) {
         return execute(params, null, domain, function, request, response);
     }
 
     @SuppressWarnings("unchecked")
-    public DataResult uploadAndCall(String paramJson, MultipartFile file, String domain, String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ComponentDataResult uploadAndCall(String paramJson, MultipartFile file, String domain, String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 入参
         Map<String, Object> params;
         if (CheckEmptyUtil.isEmpty(paramJson)) {
@@ -79,13 +79,13 @@ public abstract class AbstractCombineJavaService {
         return result;
     }
 
-    private DataResult execute(Map<String, Object> params, FileInfo fileInfo, String domain, String function, HttpServletRequest request, HttpServletResponse response) {
+    private ComponentDataResult execute(Map<String, Object> params, FileInfo fileInfo, String domain, String function, HttpServletRequest request, HttpServletResponse response) {
         List<String> componentIds = service.getComponentIds(domain, function);
         if (componentIds == null) {
-            return DataResult.fail("接口未注册", "接口不存在");
+            return ComponentDataResult.fail("接口未注册", "接口不存在");
         }
 
-        DataResult result = service.execute(domain, function, params, getHeaders(request), fileInfo);
+        ComponentDataResult result = service.execute(domain, function, params, getHeaders(request), fileInfo);
         responseHandler(result, response);
         return result;
     }
@@ -115,7 +115,7 @@ public abstract class AbstractCombineJavaService {
      * @param result 结果对象
      * @param response 相应对象
      */
-    private void responseHandler(DataResult result, HttpServletResponse response) {
+    private void responseHandler(ComponentDataResult result, HttpServletResponse response) {
         try {
             if (result.isDownload() && result.getData() instanceof FileInfo) {
                 FileInfo fileInfo = (FileInfo) result.getData();

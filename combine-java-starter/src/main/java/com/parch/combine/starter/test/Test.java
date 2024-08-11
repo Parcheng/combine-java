@@ -2,10 +2,8 @@ package com.parch.combine.starter.test;
 
 import com.parch.combine.core.component.CombineJavaStarter;
 import com.parch.combine.core.component.service.ICombineJavaService;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.FlowResult;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.HashMap;
 
 public class Test {
@@ -48,7 +46,7 @@ public class Test {
 //        panel2.add(colorSelect, gbc);
 
         ICombineJavaService service = CombineJavaStarter.init("test_combine_config.json");
-        DataResult result = service.execute("gui", "test", new HashMap<>(), new HashMap<>());
+        FlowResult result = service.execute("gui", "test", new HashMap<>(), new HashMap<>());
         System.out.println(result.getData());
     }
 }

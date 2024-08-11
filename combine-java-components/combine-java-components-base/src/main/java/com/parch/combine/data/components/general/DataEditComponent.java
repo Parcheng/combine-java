@@ -9,7 +9,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.edit.DataEditErrorEnum;
 import com.parch.combine.data.base.general.edit.DataEditInitConfig;
 import com.parch.combine.data.base.general.edit.DataEditLogicConfig;
@@ -27,7 +27,7 @@ public class DataEditComponent extends AbstractComponent<DataEditInitConfig, Dat
 
     @Override
     @SuppressWarnings("unchecked")
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         // 数据过滤
         DataEditLogicConfig logicConfig = getLogicConfig();
         DataEditLogicConfig.DataEditItem[] items = logicConfig.items();
@@ -39,7 +39,7 @@ public class DataEditComponent extends AbstractComponent<DataEditInitConfig, Dat
 
                 DataEditTypeEnum type = DataEditTypeEnum.get(item.type());
                 if (DataEditTypeEnum.NONE == type) {
-                    return DataResult.fail(DataEditErrorEnum.TYPE_ERROR);
+                    return ComponentDataResult.fail(DataEditErrorEnum.TYPE_ERROR);
                 }
 
                 DataTypeEnum dataType = DataTypeEnum.get(item.dataType());
@@ -54,12 +54,12 @@ public class DataEditComponent extends AbstractComponent<DataEditInitConfig, Dat
                 }
 
                 if (error != null) {
-                    return DataResult.fail(error);
+                    return ComponentDataResult.fail(error);
                 }
             }
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     /**

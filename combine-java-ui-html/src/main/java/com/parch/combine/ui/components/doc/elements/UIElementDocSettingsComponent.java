@@ -4,7 +4,7 @@ import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.ui.core.settings.PageElementSettingHandler;
 import com.parch.combine.ui.core.settings.config.PageElementClassifySetting;
 
@@ -20,9 +20,9 @@ public class UIElementDocSettingsComponent extends AbstractComponent<UIElementDo
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         List<PageElementClassifySetting> settings = PageElementSettingHandler.getSettings();
         String json = JsonUtil.serialize(settings);
-        return DataResult.success(JsonUtil.parseArray(json, HashMap.class));
+        return ComponentDataResult.success(JsonUtil.parseArray(json, HashMap.class));
     }
 }

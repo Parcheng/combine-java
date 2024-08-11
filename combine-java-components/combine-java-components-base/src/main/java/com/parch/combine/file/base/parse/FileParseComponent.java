@@ -7,7 +7,7 @@ import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.IComponentError;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public abstract class FileParseComponent<T extends IInitConfig, R extends FilePa
 
     @Override
     @SuppressWarnings("unchecked")
-    public final DataResult execute() {
+    public final ComponentDataResult execute() {
         FileInfo fileInfo = new FileInfo();;
 
         // 根据Source获取文件信息（Source为空表示从接口上传文件）
@@ -64,12 +64,12 @@ public abstract class FileParseComponent<T extends IInitConfig, R extends FilePa
         }
 
         if (fileInfo.getType() == null || !fileTypes.contains(fileInfo.getType().toUpperCase())) {
-            return DataResult.fail(FileParseErrorEnum.FILE_TYPE_ERROR);
+            return ComponentDataResult.fail(FileParseErrorEnum.FILE_TYPE_ERROR);
         }
 
         // 判断文件是否为空
         if (fileInfo.getData() == null || fileInfo.getData().length == 0) {
-            return DataResult.fail(FileParseErrorEnum.FILE_IS_NULL);
+            return ComponentDataResult.fail(FileParseErrorEnum.FILE_IS_NULL);
         }
 
         fileInfo.setSize(fileInfo.getData().length);
@@ -82,7 +82,7 @@ public abstract class FileParseComponent<T extends IInitConfig, R extends FilePa
      * @param fileInfo 文件信息
      * @return 结果
      */
-    protected abstract DataResult execute(FileInfo fileInfo);
+    protected abstract ComponentDataResult execute(FileInfo fileInfo);
 
     /**
      * 文件上传异常枚举

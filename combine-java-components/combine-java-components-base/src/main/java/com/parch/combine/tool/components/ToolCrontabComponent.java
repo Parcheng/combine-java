@@ -6,7 +6,7 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.crontab.ToolCrontabErrorEnum;
 import com.parch.combine.tool.base.crontab.ToolCrontabInitConfig;
 import com.parch.combine.tool.base.crontab.ToolCrontabLogicConfig;
@@ -37,7 +37,7 @@ public class ToolCrontabComponent extends AbstractComponent<ToolCrontabInitConfi
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         try {
             ToolCrontabLogicConfig logicConfig = getLogicConfig();
             ScheduledExecutorService service = getService();
@@ -54,10 +54,10 @@ public class ToolCrontabComponent extends AbstractComponent<ToolCrontabInitConfi
             }
         } catch (Exception e) {
             ComponentErrorHandler.print(ToolCrontabErrorEnum.FAIL, e);
-            return DataResult.fail(ToolCrontabErrorEnum.FAIL);
+            return ComponentDataResult.fail(ToolCrontabErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     protected void executeSubComponents() {
