@@ -25,6 +25,7 @@
 
         <jackson.version>2.13.5</jackson.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
+        <logback.version>1.2.3</logback.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
         <hikari.version>4.0.3</hikari.version>

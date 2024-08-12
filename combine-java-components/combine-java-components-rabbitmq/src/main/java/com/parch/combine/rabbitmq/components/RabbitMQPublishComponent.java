@@ -4,7 +4,7 @@ import com.parch.combine.rabbitmq.base.AbstractRabbitMQComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.rabbitmq.base.helper.RabbitMQHelper;
 import com.parch.combine.rabbitmq.base.publish.RabbitMQPublishErrorEnum;
 import com.parch.combine.rabbitmq.base.publish.RabbitMQPublishInitConfig;
@@ -22,7 +22,7 @@ public class RabbitMQPublishComponent extends AbstractRabbitMQComponent<RabbitMQ
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RabbitMQPublishInitConfig initConfig = getInitConfig();
         RabbitMQPublishLogicConfig logicConfig = getLogicConfig();
 
@@ -31,9 +31,9 @@ public class RabbitMQPublishComponent extends AbstractRabbitMQComponent<RabbitMQ
 
         boolean success = RabbitMQHelper.publish(channel, initConfig.queue(), logicConfig.content(), logicConfig.confirm());
         if (!success) {
-            return DataResult.fail(RabbitMQPublishErrorEnum.FAIL);
+            return ComponentDataResult.fail(RabbitMQPublishErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

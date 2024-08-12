@@ -46,20 +46,20 @@ public class CombineJavaStarter {
         GlobalContext context = GlobalContextHandler.get(scopeKey);
         PrintHelper.printInit("=======================================================================================================================================================");
         PrintHelper.printInit("初始化全局设置 [" + path + "] >>>");
-        PrintHelper.printInit("加载配置文件设置   -> " + StringUtil.join(context.getInitConfigs(), ","));
-        PrintHelper.printInit("初始化流程设置     -> " + StringUtil.join(context.getInitFlows(), ","));
-        PrintHelper.printInit("是否开放配置注册   -> " + context.getOpenRegisterConfig());
-        PrintHelper.printInit("流程链路请求ID字段 -> " + context.getRequestIdKey());
-        PrintHelper.printInit("打印组件执行结果   -> " + context.getPrintComponentResult());
+        PrintHelper.printInit("加载配置文件设置   -- " + StringUtil.join(context.getInitConfigs(), ","));
+        PrintHelper.printInit("初始化流程设置     -- " + StringUtil.join(context.getInitFlows(), ","));
+        PrintHelper.printInit("是否开放配置注册   -- " + context.getOpenRegisterConfig());
+        PrintHelper.printInit("流程链路请求ID字段 -- " + context.getRequestIdKey());
+        PrintHelper.printInit("打印组件执行结果   -- " + context.getPrintComponentResult());
         PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 
         PrintHelper.printInit("初始化流程 >>>");
         for (String initConfigPath : context.getInitConfigs()) {
             combineWebService.registerFlowAsPath(initConfigPath, vo -> {
-                PrintHelper.printInit(vo.getFlowKey() + " | " + StringUtil.join(vo.getComponentIds(), ", "));
+                PrintHelper.printInit(vo.getFlowKey() + " -- " + StringUtil.join(vo.getComponentIds(), " > "));
                 if (CheckEmptyUtil.isNotEmpty(vo.getStaticComponentIds())) {
-                    PrintHelper.printInit(vo.getFlowKey() + " STATIC | " + StringUtil.join(vo.getStaticComponentIds(), ", "));
+                    PrintHelper.printInit(vo.getFlowKey() + "(STATIC) -- " + StringUtil.join(vo.getStaticComponentIds(), ", "));
                 }
                 if (CheckEmptyUtil.isNotEmpty(vo.getErrorList())) {
                     for (String errorMsg : vo.getErrorList()) {

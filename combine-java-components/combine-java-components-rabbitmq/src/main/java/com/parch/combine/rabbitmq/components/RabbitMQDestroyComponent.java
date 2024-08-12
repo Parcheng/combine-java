@@ -3,7 +3,7 @@ package com.parch.combine.rabbitmq.components;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.rabbitmq.base.destroy.RabbitMQDestroyInitConfig;
 import com.parch.combine.rabbitmq.base.destroy.RabbitMQDestroyLogicConfig;
 import com.parch.combine.rabbitmq.base.helper.RabbitMQHelper;
@@ -17,8 +17,8 @@ public class RabbitMQDestroyComponent extends AbstractComponent<RabbitMQDestroyI
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RabbitMQHelper.destroy();
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }
