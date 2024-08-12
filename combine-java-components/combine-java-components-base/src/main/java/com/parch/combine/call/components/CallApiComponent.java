@@ -10,7 +10,7 @@ import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class CallApiComponent extends CallComponent<CallApiInitConfig, CallApiLo
     }
 
     @Override
-    public DataResult execute(String url, Map<String, Object> params, Map<String, String> headers) {
+    public ComponentDataResult execute(String url, Map<String, Object> params, Map<String, String> headers) {
         CallApiLogicConfig logicConfig = getLogicConfig();
 
         Object result = null;
@@ -49,9 +49,9 @@ public class CallApiComponent extends CallComponent<CallApiInitConfig, CallApiLo
             }
         } catch (IOException e) {
             ComponentErrorHandler.print(CallApiErrorEnum.FAIL, e);
-            return DataResult.fail(CallApiErrorEnum.FAIL);
+            return ComponentDataResult.fail(CallApiErrorEnum.FAIL);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

@@ -1,5 +1,6 @@
 package com.parch.combine.file.components.operations;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.helper.FileHelper;
 import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
@@ -8,7 +9,6 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.file.base.operations.compress.targz.FileCompressTarGzErrorEnum;
 import com.parch.combine.file.base.operations.compress.targz.FileCompressTarGzInitConfig;
 import com.parch.combine.file.base.operations.compress.targz.FileCompressTarGzLogicConfig;
@@ -39,13 +39,13 @@ public class FileCompressTarGzComponent extends AbstractFileCompressComponent<Fi
     }
 
     @Override
-    protected DataResult execute(String sourcePath, String targetPath, boolean compress) {
+    protected ComponentDataResult execute(String sourcePath, String targetPath, boolean compress) {
         boolean success = compress ? tar(sourcePath, targetPath) : untar(sourcePath, targetPath);
         if (!success) {
-            return DataResult.fail(FileCompressTarGzErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileCompressTarGzErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     private boolean tar(String source, String target) {

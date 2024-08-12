@@ -1,5 +1,6 @@
 package com.parch.combine.tool.components.cache;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheData;
 import com.parch.combine.tool.base.cache.CacheHandler;
@@ -7,7 +8,6 @@ import com.parch.combine.tool.base.cache.CacheKeyMatchRuleEnum;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.tool.base.cache.get.CacheGetErrorEnum;
 import com.parch.combine.tool.base.cache.get.CacheGetInitConfig;
 import com.parch.combine.tool.base.cache.get.CacheGetLogicConfig;
@@ -24,29 +24,29 @@ public class CacheGetComponent extends AbstractCacheComponent<CacheGetInitConfig
     }
 
     @Override
-    public DataResult execute(String domain, String key) {
+    public ComponentDataResult execute(String domain, String key) {
         try {
             CacheGetInitConfig initConfig = getInitConfig();
             CacheGetLogicConfig logicConfig = getLogicConfig();
 
             CacheKeyMatchRuleEnum keyMatchRule = CacheKeyMatchRuleEnum.get(logicConfig.keyMatchRule());
             if (keyMatchRule == CacheKeyMatchRuleEnum.NONE) {
-                return DataResult.fail(CacheGetErrorEnum.KEY_MATCH_RULE_IS_ERROR);
+                return ComponentDataResult.fail(CacheGetErrorEnum.KEY_MATCH_RULE_IS_ERROR);
             }
 
             List<CacheData> results = CacheHandler.get(domain, key, keyMatchRule, initConfig.renewal());
             if (results.isEmpty()) {
-                return DataResult.success(results);
+                return ComponentDataResult.success(results);
             }
 
             if (keyMatchRule == CacheKeyMatchRuleEnum.EXACT) {
-                return DataResult.success(results.get(0).getData());
+                return ComponentDataResult.success(results.get(0).getData());
             } else {
-                return DataResult.success(results.stream().map(CacheData::getData).collect(Collectors.toList()));
+                return ComponentDataResult.success(results.stream().map(CacheData::getData).collect(Collectors.toList()));
             }
         } catch (Exception e) {
             ComponentErrorHandler.print(CacheGetErrorEnum.FAIL, e);
-            return DataResult.fail(CacheGetErrorEnum.FAIL);
+            return ComponentDataResult.fail(CacheGetErrorEnum.FAIL);
         }
     }
 }

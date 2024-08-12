@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.service;
 
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.manager.ComponentManager;
 
@@ -46,7 +46,7 @@ public interface ICombineJavaService {
      * @param headers  请求头
      * @return 结果集
      */
-    DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers);
+    FlowResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers);
 
     /**
      * 执行业务逻辑集合
@@ -58,7 +58,7 @@ public interface ICombineJavaService {
      * @param fileInfo 文件信息
      * @return 结果集
      */
-    DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo);
+    FlowResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo);
 
     /**
      * 执行任何业务逻辑集合（包括不允许外部触发的）
@@ -69,7 +69,7 @@ public interface ICombineJavaService {
      * @param headers  请求头
      * @return 结果集
      */
-    DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers);
+    FlowResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers);
 
     /**
      * 执行任何业务逻辑集合（包括不允许外部触发的）
@@ -81,7 +81,7 @@ public interface ICombineJavaService {
      * @param fileInfo 文件信息
      * @return 结果集
      */
-    DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo);
+    FlowResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo);
 
     /**
      * 执行任何业务逻辑集合（包括不允许外部触发的）
@@ -92,7 +92,7 @@ public interface ICombineJavaService {
      * @param headers 请求头
      * @return 结果集
      */
-    DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo file, ComponentManager.Function func);
+    FlowResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo file, ComponentManager.Function func);
 
     /**
      * 执行任何业务逻辑集合（包括不允许外部触发的）
@@ -102,7 +102,7 @@ public interface ICombineJavaService {
      * @param headers 请求头
      * @return 结果集
      */
-    DataResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func);
+    FlowResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func);
 
 
     String getScopeKey();

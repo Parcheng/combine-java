@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.compare.CompareTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.logic.base.error.LogicErrorInitConfig;
 import com.parch.combine.logic.base.error.LogicErrorLogicConfig;
 
@@ -18,7 +18,7 @@ public class LogicErrorComponent extends AbstractComponent<LogicErrorInitConfig,
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         LogicErrorLogicConfig.LogicErrorItem[] items = getLogicConfig().items();
         if (items != null) {
             for (LogicErrorLogicConfig.LogicErrorItem item : items) {
@@ -29,11 +29,11 @@ public class LogicErrorComponent extends AbstractComponent<LogicErrorInitConfig,
                 }
 
                 // 输出对应的错误信息
-                return DataResult.fail(item.errorMsg(), item.showMsg());
+                return ComponentDataResult.fail(item.errorMsg(), item.showMsg());
             }
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     /**

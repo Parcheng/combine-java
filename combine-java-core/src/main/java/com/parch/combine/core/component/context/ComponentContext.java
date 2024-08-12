@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.context;
 
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 import java.util.List;
 import java.util.Map;
@@ -53,12 +53,12 @@ public class ComponentContext {
     /**
      * 组件结果数据
      */
-    private Map<String, DataResult> resultMap;
+    private Map<String, ComponentDataResult> resultMap;
 
     /**
      * 最后一个结果（冗余字段）
      */
-    private DataResult lastResult;
+    private ComponentDataResult lastResult;
 
     /**
      * 流程中数据
@@ -103,11 +103,11 @@ public class ComponentContext {
         this.params = params;
     }
 
-    public Map<String, DataResult> getResultMap() {
+    public Map<String, ComponentDataResult> getResultMap() {
         return resultMap;
     }
 
-    public void setResultMap(Map<String, DataResult> resultMap) {
+    public void setResultMap(Map<String, ComponentDataResult> resultMap) {
         this.resultMap = resultMap;
     }
 
@@ -119,11 +119,11 @@ public class ComponentContext {
         this.data = data;
     }
 
-    public DataResult getLastResult() {
+    public ComponentDataResult getLastResult() {
         return lastResult;
     }
 
-    public void setLastResult(DataResult lastResult) {
+    public void setLastResult(ComponentDataResult lastResult) {
         this.lastResult = lastResult;
     }
 

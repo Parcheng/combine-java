@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.lock.ToolLockErrorEnum;
 import com.parch.combine.tool.base.lock.ToolLockInitConfig;
 import com.parch.combine.tool.base.lock.ToolLockLogicConfig;
@@ -25,7 +25,7 @@ public class ToolLockComponent extends AbstractComponent<ToolLockInitConfig, Too
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         ToolLockInitConfig initConfig = getInitConfig();
         ToolLockLogicConfig logicConfig = getLogicConfig();
         try {
@@ -39,10 +39,10 @@ public class ToolLockComponent extends AbstractComponent<ToolLockInitConfig, Too
             }
         } catch (Exception e) {
             ComponentErrorHandler.print(ToolLockErrorEnum.FAIL, e);
-            return DataResult.fail(ToolLockErrorEnum.FAIL);
+            return ComponentDataResult.fail(ToolLockErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     @Override

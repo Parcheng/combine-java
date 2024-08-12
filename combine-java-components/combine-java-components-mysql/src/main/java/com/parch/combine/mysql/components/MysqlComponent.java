@@ -7,7 +7,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.settings.annotations.ComponentResultDesc;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.mysql.base.execute.MysqlErrorEnum;
 import com.parch.combine.mysql.base.execute.MysqlInitConfig;
 import com.parch.combine.mysql.base.execute.MysqlLogicConfig;
@@ -49,7 +49,7 @@ public class MysqlComponent extends AbstractComponent<MysqlInitConfig, MysqlLogi
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         // 上下文获取入参
         Map<String, Object> params = ComponentContextHandler.getParams();
 
@@ -72,7 +72,7 @@ public class MysqlComponent extends AbstractComponent<MysqlInitConfig, MysqlLogi
             Object connKeyObj = ComponentContextHandler.getRuntimeData(CONN_KEY);
             connKey = connKeyObj == null ? null : connKeyObj.toString();
 
-            DataResult result = ComponentContextHandler.getResultData(getLogicConfig().id());
+            ComponentDataResult result = ComponentContextHandler.getResultData(getLogicConfig().id());
             success = result != null && result.getSuccess();
         } catch (Exception e) {
             ComponentErrorHandler.print(MysqlErrorEnum.END_FUNCTION_ERROR, e);

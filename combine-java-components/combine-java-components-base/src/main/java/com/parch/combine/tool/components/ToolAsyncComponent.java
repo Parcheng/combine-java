@@ -8,7 +8,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.thread.ThreadPoolTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.async.ToolAsyncInitConfig;
 import com.parch.combine.tool.base.async.ToolAsyncLogicConfig;
 
@@ -27,11 +27,11 @@ public class ToolAsyncComponent extends AbstractComponent<ToolAsyncInitConfig, T
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         ToolAsyncLogicConfig logicConfig = getLogicConfig();
         ExecutorService executor = ThreadPoolTool.getPool(getInitConfig().pool());
         executor.execute(new Task(manager, logicConfig.components(), ComponentContextHandler.getContext()));
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     private static class Task implements Runnable {

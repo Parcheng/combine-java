@@ -7,7 +7,7 @@ import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.conn.DbConnPoolTool;
 import com.parch.combine.core.component.tools.sql.SqlItem;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.tools.sql.SqlTool;
 
 import javax.sql.DataSource;
@@ -39,7 +39,7 @@ public class MysqlOperationHandler {
      * @param initConfig 初始化配置
      * @return 结果集
      */
-    public static DataResult execute(String connKey, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
+    public static ComponentDataResult execute(String connKey, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
         Connection conn;
         try {
             conn = getConnection(connKey, initConfig);
@@ -47,10 +47,10 @@ public class MysqlOperationHandler {
             return execute(conn, params, logicConfig, initConfig);
         } catch (SQLException e) {
             ComponentErrorHandler.print(MysqlErrorEnum.CONN_ERROR, e);
-            return DataResult.fail(MysqlErrorEnum.CONN_ERROR);
+            return ComponentDataResult.fail(MysqlErrorEnum.CONN_ERROR);
         } catch (ClassNotFoundException e) {
             ComponentErrorHandler.print(MysqlErrorEnum.LOAD_JDBC_ERROR, e);
-            return DataResult.fail(MysqlErrorEnum.LOAD_JDBC_ERROR);
+            return ComponentDataResult.fail(MysqlErrorEnum.LOAD_JDBC_ERROR);
         }
     }
 
@@ -62,8 +62,8 @@ public class MysqlOperationHandler {
      * @param logicConfig 逻辑配置
      * @return 结果集
      */
-    public static DataResult execute(Connection conn, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
-        DataResult result;
+    public static ComponentDataResult execute(Connection conn, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
+        ComponentDataResult result;
 
         SqlItem[] sqlItems = logicConfig.sqlConfigs();
         if (CheckEmptyUtil.isEmpty(sqlItems)) {
@@ -100,29 +100,29 @@ public class MysqlOperationHandler {
                     if (rowsAffected > 0) {
                         ResultSet generatedKeys = ps.getGeneratedKeys();
                         if (generatedKeys.next()) {
-                            result = DataResult.success(generatedKeys.getLong(1));
+                            result = ComponentDataResult.success(generatedKeys.getLong(1));
                             break;
                         }
                     }
-                    result = DataResult.success(-1);
+                    result = ComponentDataResult.success(-1);
                     break;
                 case INSERT:
                 case UPDATE:
                 case DELETE:
                     ps = getPreparedStatement(conn, changeSql, sqlParams);
-                    result =  DataResult.success(ps.executeUpdate());
+                    result =  ComponentDataResult.success(ps.executeUpdate());
                     break;
                 case SELECT:
                     ps = getPreparedStatement(conn, changeSql, sqlParams);
                     rs = ps.executeQuery();
                     List<Map<String, Object>> dataList = getResultData(rs);
-                    result =  DataResult.success(dataList);
+                    result =  ComponentDataResult.success(dataList);
                     break;
                 case SELECT_ONE:
                     ps = getPreparedStatement(conn, changeSql, sqlParams);
                     rs = ps.executeQuery();
                     dataList = getResultData(rs);
-                    result =  DataResult.success(!dataList.isEmpty() ? dataList.get(0) : null);
+                    result =  ComponentDataResult.success(!dataList.isEmpty() ? dataList.get(0) : null);
                     break;
                 case SELECT_LIMIT:
                     // 分页查询
@@ -144,26 +144,26 @@ public class MysqlOperationHandler {
                     int currPage = DataParseUtil.getInteger(params.get(CURR_PAGE_NAME), 0);
                     int pageSize = DataParseUtil.getInteger(params.get(PAGE_SIZE_NAME), 0);
                     int count = DataParseUtil.getInteger(countDataList.get(0).get(COUNT_NAME), 0);
-                    result = DataResult.success(dataList, currPage, pageSize, count);
+                    result = ComponentDataResult.success(dataList, currPage, pageSize, count);
                     break;
                 case DDL:
                     ps = getPreparedStatement(conn, changeSql, sqlParams);
                     ps.execute();
-                    result =  DataResult.success(true);
+                    result =  ComponentDataResult.success(true);
                     break;
                 default:
                     ComponentErrorHandler.print(MysqlErrorEnum.SQL_TYPE_ERROR);
-                    result = DataResult.fail(MysqlErrorEnum.SQL_TYPE_ERROR);
+                    result = ComponentDataResult.fail(MysqlErrorEnum.SQL_TYPE_ERROR);
                     break;
             }
 
             return result;
         } catch (SQLException e) {
             ComponentErrorHandler.print(MysqlErrorEnum.SQL_EXECUTE_ERROR, e);
-            result = DataResult.fail(MysqlErrorEnum.SQL_EXECUTE_ERROR);
+            result = ComponentDataResult.fail(MysqlErrorEnum.SQL_EXECUTE_ERROR);
         } catch (Exception e) {
             ComponentErrorHandler.print(MysqlErrorEnum.UNKNOWN_ERROR, e);
-            result = DataResult.fail(MysqlErrorEnum.UNKNOWN_ERROR);
+            result = ComponentDataResult.fail(MysqlErrorEnum.UNKNOWN_ERROR);
         } finally {
             closeStatement(ps, rs);
             closeStatement(psCount, rsCount);

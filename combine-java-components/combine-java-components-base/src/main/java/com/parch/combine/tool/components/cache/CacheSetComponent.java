@@ -1,11 +1,11 @@
 package com.parch.combine.tool.components.cache;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.tool.base.cache.set.CacheSetErrorEnum;
 import com.parch.combine.tool.base.cache.set.CacheSetInitConfig;
 import com.parch.combine.tool.base.cache.set.CacheSetLogicConfig;
@@ -19,22 +19,22 @@ public class CacheSetComponent extends AbstractCacheComponent<CacheSetInitConfig
     }
 
     @Override
-    public DataResult execute(String domain, String key) {
+    public ComponentDataResult execute(String domain, String key) {
         try {
             CacheSetInitConfig initConfig = getInitConfig();
             CacheSetLogicConfig logicConfig = getLogicConfig();
 
             Object finalValue = logicConfig.value();
             if (finalValue == null) {
-                return DataResult.fail(CacheSetErrorEnum.VALUE_IS_NULL);
+                return ComponentDataResult.fail(CacheSetErrorEnum.VALUE_IS_NULL);
             }
 
             CacheHandler.set(domain, key, finalValue, logicConfig.expires(), initConfig.domainCapacity(), initConfig.keyCapacity());
         } catch (Exception e) {
             ComponentErrorHandler.print(CacheSetErrorEnum.FAIL, e);
-            return DataResult.fail(CacheSetErrorEnum.FAIL);
+            return ComponentDataResult.fail(CacheSetErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

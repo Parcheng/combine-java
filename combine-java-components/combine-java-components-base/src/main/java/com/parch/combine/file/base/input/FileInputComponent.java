@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.error.IComponentError;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 /**
  * 文件输入组件基类
@@ -20,15 +20,15 @@ public abstract class FileInputComponent<T extends IInitConfig, R extends ILogic
     }
 
     @Override
-    public final DataResult execute() {
+    public final ComponentDataResult execute() {
         FileInfo fileInfo = new FileInfo();
         IComponentError error = execute(fileInfo);
         if (error != null) {
-            DataResult.fail(error);
+            ComponentDataResult.fail(error);
         }
 
         // 返回结果
-        return DataResult.success(fileInfo);
+        return ComponentDataResult.success(fileInfo);
     }
 
     /**

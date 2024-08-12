@@ -6,7 +6,7 @@ import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.ui.core.base.HtmlConfig;
 
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class UIPageDocConfigComponent extends AbstractComponent<UIPageDocConfigI
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         if (result == null) {
             synchronized (UIPageDocConfigComponent.class) {
                 if (result == null) {
@@ -37,6 +37,6 @@ public class UIPageDocConfigComponent extends AbstractComponent<UIPageDocConfigI
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

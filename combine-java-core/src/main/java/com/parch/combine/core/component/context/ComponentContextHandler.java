@@ -3,7 +3,7 @@ package com.parch.combine.core.component.context;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.FileParamKey;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 import java.util.*;
 
@@ -119,7 +119,7 @@ public class ComponentContextHandler {
      *
      * @return 执行结果
      */
-    public static DataResult getLastResultData() {
+    public static ComponentDataResult getLastResultData() {
         return CACHE.get().getLastResult();
     }
 
@@ -128,7 +128,7 @@ public class ComponentContextHandler {
      *
      * @return 结果
      */
-    public static Map<String, DataResult> getResultData() {
+    public static Map<String, ComponentDataResult> getResultData() {
         return CACHE.get().getResultMap();
     }
 
@@ -138,7 +138,7 @@ public class ComponentContextHandler {
      * @param key 组件Key
      * @return 结果
      */
-    public static DataResult getResultData(String key) {
+    public static ComponentDataResult getResultData(String key) {
         return CACHE.get().getResultMap().get(key);
     }
 
@@ -147,7 +147,7 @@ public class ComponentContextHandler {
      *
      * @param key 组件Key
      */
-    public static void setResultData(String key, DataResult dataResult) {
+    public static void setResultData(String key, ComponentDataResult dataResult) {
         CACHE.get().getResultMap().put(key, dataResult);
         CACHE.get().setLastResult(dataResult);
     }

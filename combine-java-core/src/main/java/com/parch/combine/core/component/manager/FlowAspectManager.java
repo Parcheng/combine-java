@@ -3,7 +3,7 @@ package com.parch.combine.core.component.manager;
 import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.vo.FlowAspectVO;
 import com.parch.combine.core.component.vo.CombineInitVO;
 
@@ -91,11 +91,11 @@ class FlowAspectManager {
         return true;
     }
 
-    public DataResult executeBefore(String flowKey) {
+    public ComponentDataResult executeBefore(String flowKey) {
         return execute(flowKey, BEFORE_FLOWS);
     }
 
-    public DataResult executeAfter(String flowKey) {
+    public ComponentDataResult executeAfter(String flowKey) {
         return execute(flowKey, AFTER_FLOWS);
     }
 
@@ -105,8 +105,8 @@ class FlowAspectManager {
      * @param flowKey 流程KEY
      * @return 结果
      */
-    private DataResult execute(String flowKey, List<AspectConfig> aspectList) {
-        DataResult result = null;
+    private ComponentDataResult execute(String flowKey, List<AspectConfig> aspectList) {
+        ComponentDataResult result = null;
         for (AspectConfig item : aspectList) {
             if (item.contain(flowKey)) {
                 result = component.executeComponents(item.getComponents());
@@ -116,7 +116,7 @@ class FlowAspectManager {
             }
         }
 
-        return result == null ? DataResult.success(true) : result;
+        return result == null ? ComponentDataResult.success(true) : result;
     }
 
     /**

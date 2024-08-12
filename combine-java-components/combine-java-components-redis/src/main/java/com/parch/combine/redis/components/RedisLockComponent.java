@@ -1,13 +1,13 @@
 package com.parch.combine.redis.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.redis.base.AbstractRedisComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.redis.base.lock.RedisLockInitConfig;
 import com.parch.combine.redis.base.lock.RedisLockLogicConfig;
 import redis.clients.jedis.JedisCluster;
@@ -28,7 +28,7 @@ public class RedisLockComponent extends AbstractRedisComponent<RedisLockInitConf
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RedisLockLogicConfig logicConfig = getLogicConfig();
 
         boolean result;
@@ -43,7 +43,7 @@ public class RedisLockComponent extends AbstractRedisComponent<RedisLockInitConf
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 
     public String getKey() {

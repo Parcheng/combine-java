@@ -1,12 +1,12 @@
 package com.parch.combine.file.components.output;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.helper.FilePathHelper;
 import com.parch.combine.file.base.output.FileOutputComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.file.base.output.disk.FileOutputDiskErrorEnum;
 import com.parch.combine.file.base.output.disk.FileOutputDiskInitConfig;
 import com.parch.combine.file.base.output.disk.FileOutputDiskLogicConfig;
@@ -24,14 +24,14 @@ public class FileOutputDiskComponent extends FileOutputComponent<FileOutputDiskI
     }
 
     @Override
-    public DataResult execute(FileInfo fileInfo) {
+    public ComponentDataResult execute(FileInfo fileInfo) {
         FileOutputDiskInitConfig initConfig = getInitConfig();
         FileOutputDiskLogicConfig logicConfig = getLogicConfig();
 
         String targetPath = logicConfig.targetPath();
         if (targetPath == null) {
             ComponentErrorHandler.print(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
-            return DataResult.fail(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
+            return ComponentDataResult.fail(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
         }
 
         // 组装文件写入路径
@@ -49,9 +49,9 @@ public class FileOutputDiskComponent extends FileOutputComponent<FileOutputDiskI
             fos.write(fileInfo.getData());
         } catch (IOException e) {
             ComponentErrorHandler.print(FileOutputDiskErrorEnum.FAIL, e);
-            return DataResult.fail(FileOutputDiskErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileOutputDiskErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

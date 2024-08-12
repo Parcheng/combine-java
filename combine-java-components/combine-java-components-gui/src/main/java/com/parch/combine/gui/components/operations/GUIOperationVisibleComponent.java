@@ -2,7 +2,7 @@ package com.parch.combine.gui.components.operations;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gui.base.operations.AbstractGUIOperationComponent;
 import com.parch.combine.gui.base.operations.visible.GUIOperationVisibleInitConfig;
 import com.parch.combine.gui.base.operations.visible.GUIOperationVisibleLogicConfig;
@@ -17,9 +17,9 @@ public class GUIOperationVisibleComponent extends AbstractGUIOperationComponent<
     }
 
     @Override
-    public DataResult execute(IGUIElement element) {
+    public ComponentDataResult execute(IGUIElement element) {
         GUIOperationVisibleLogicConfig logicConfig = getLogicConfig();
         element.setVisible(logicConfig.visible());
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

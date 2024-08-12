@@ -1,5 +1,6 @@
 package com.parch.combine.file.components.operations;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.helper.FilePathHelper;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.file.base.operations.copy.FileCopyInitConfig;
@@ -9,7 +10,6 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 
 import java.io.*;
 
@@ -22,13 +22,13 @@ public class FileCopyComponent extends AbstractComponent<FileCopyInitConfig, Fil
     }
 
     @Override
-    protected DataResult execute() {
+    protected ComponentDataResult execute() {
         boolean success = copy();
         if (!success) {
-            return DataResult.fail(FileDeleteErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileDeleteErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     private boolean copy() {

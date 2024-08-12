@@ -10,7 +10,8 @@ import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
+import com.parch.combine.core.component.vo.FlowResult;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -86,16 +87,24 @@ public class PrintHelper {
     /**
      * 打印结果信息
      */
-    public static void printComponentResult(AbstractComponent<?,?> component, DataResult result) {
+    public static void printComponentResult(AbstractComponent<?,?> component, ComponentDataResult result) {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
-        // 拼接错误信息字符串
         if (component == null) {
             PrintUtil.printInfo("[" + requestId + "][" + flowKey + "][未知组件]");
             return;
         }
 
-        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "][" + component.getType() + "] RESULT -> " + JsonUtil.serialize(result));
+        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "][" + component.getType() + "] COMPONENT-RESULT -> " + JsonUtil.serialize(result));
+    }
+
+    /**
+     * 打印结果信息
+     */
+    public static void printFlowResult(FlowResult result) {
+        String requestId = ComponentContextHandler.getRequestId();
+        String flowKey = ComponentContextHandler.getFlowKey();
+        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "] FLOW-RESULT -> " + JsonUtil.serialize(result));
     }
 
     /**

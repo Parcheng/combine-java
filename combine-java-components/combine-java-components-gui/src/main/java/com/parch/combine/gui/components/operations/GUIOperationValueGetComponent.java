@@ -2,7 +2,7 @@ package com.parch.combine.gui.components.operations;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gui.base.operations.AbstractGUIOperationComponent;
 import com.parch.combine.gui.base.operations.value.get.GUIOperationValueGetInitConfig;
 import com.parch.combine.gui.base.operations.value.get.GUIOperationValueGetLogicConfig;
@@ -17,7 +17,7 @@ public class GUIOperationValueGetComponent extends AbstractGUIOperationComponent
     }
 
     @Override
-    public DataResult execute(IGUIElement element) {
-        return DataResult.success(element.getValue());
+    public ComponentDataResult execute(IGUIElement element) {
+        return ComponentDataResult.success(element.getValue());
     }
 }

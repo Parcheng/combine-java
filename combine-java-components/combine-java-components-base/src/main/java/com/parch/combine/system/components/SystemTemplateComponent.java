@@ -5,7 +5,7 @@ import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.system.base.template.SystemTemplateErrorEnum;
 import com.parch.combine.system.base.template.SystemTemplateInitConfig;
 import com.parch.combine.system.base.template.SystemTemplateLogicConfig;
@@ -19,7 +19,7 @@ public class SystemTemplateComponent extends AbstractComponent<SystemTemplateIni
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         SystemTemplateInitConfig initConfig = getInitConfig();
         SystemTemplateLogicConfig logicConfig = getLogicConfig();
 
@@ -33,15 +33,15 @@ public class SystemTemplateComponent extends AbstractComponent<SystemTemplateIni
         }
 
         if (componentIds == null) {
-            return DataResult.fail(SystemTemplateErrorEnum.TEMPLATE_IS_NULL);
+            return ComponentDataResult.fail(SystemTemplateErrorEnum.TEMPLATE_IS_NULL);
         }
 
         ComponentContextHandler.getVariables().put(initConfig.variableKey(), logicConfig.configs());
-        DataResult result = SubComponentTool.execute(manager, componentIds);
+        ComponentDataResult result = SubComponentTool.execute(manager, componentIds);
         if (!result.getSuccess()) {
-            return DataResult.fail(result.getErrMsg(), result.getShowMsg());
+            return ComponentDataResult.fail(result.getErrMsg(), result.getShowMsg());
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

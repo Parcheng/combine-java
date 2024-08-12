@@ -1,11 +1,11 @@
 package com.parch.combine.gui.base.build;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.vo.DataResult;
 
 public abstract class AbstractGUIControlComponent<T extends GUIControlInitConfig, R extends GUIControlLogicConfig> extends AbstractComponent<T, R> {
 
@@ -18,20 +18,20 @@ public abstract class AbstractGUIControlComponent<T extends GUIControlInitConfig
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         initGuiElementManager();
 
         if (guiElementManager.isExist(elementId) && !getLogicConfig().replace()) {
-            return DataResult.success(true);
+            return ComponentDataResult.success(true);
         }
 
         IGUIElement element = this.getElement();
         if (element == null) {
-            return DataResult.fail(GUIControlErrorEnum.FAIL);
+            return ComponentDataResult.fail(GUIControlErrorEnum.FAIL);
         }
 
         guiElementManager.register(elementId, element);
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     private void initGuiElementManager() {

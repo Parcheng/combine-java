@@ -6,7 +6,7 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.thread.ThreadPoolTool;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.countdown.ToolCountDownLatchInitConfig;
 import com.parch.combine.tool.base.countdown.ToolCountDownLatchLogicConfig;
 
@@ -26,7 +26,7 @@ public class ToolCountDownLatchComponent extends AbstractComponent<ToolCountDown
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         ToolCountDownLatchLogicConfig logicConfig = getLogicConfig();
 
         ToolCountDownLatchLogicConfig.ItemConfig[] items = logicConfig.items();
@@ -50,7 +50,7 @@ public class ToolCountDownLatchComponent extends AbstractComponent<ToolCountDown
             }
         }
 
-        DataResult result = SubComponentTool.execute(manager, logicConfig.components());
-        return DataResult.success(result.getData());
+        ComponentDataResult result = SubComponentTool.execute(manager, logicConfig.components());
+        return ComponentDataResult.success(result.getData());
     }
 }

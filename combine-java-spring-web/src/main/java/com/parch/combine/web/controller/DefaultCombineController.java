@@ -1,6 +1,6 @@
 package com.parch.combine.web.controller;
 
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.web.service.DefaultCombineJavaService;
 import com.parch.combine.web.service.DefaultCombineJavaUIService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +23,12 @@ public class DefaultCombineController {
     private DefaultCombineJavaUIService defaultCombineJavaUIService;
 
     @PostMapping("flow/{domain}/{function}")
-    public DataResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
+    public ComponentDataResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
         return defaultCombineWebService.call(params, domain, function, request, response);
     }
 
     @PostMapping("file-flow/{domain}/{function}")
-    public DataResult uploadAndCall(@RequestParam("params") String paramJson, @RequestParam("file") MultipartFile file, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ComponentDataResult uploadAndCall(@RequestParam("params") String paramJson, @RequestParam("file") MultipartFile file, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return defaultCombineWebService.uploadAndCall(paramJson, file, domain, function, request, response);
     }
 

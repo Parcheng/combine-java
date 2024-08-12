@@ -5,7 +5,7 @@ import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.text.regex.DataTextRegexErrorEnum;
 import com.parch.combine.data.base.text.regex.DataTextRegexInitConfig;
 import com.parch.combine.data.base.text.regex.DataTextRegexLogicConfig;
@@ -27,15 +27,15 @@ public class DataTextRegexComponent extends AbstractComponent<DataTextRegexInitC
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         DataTextRegexLogicConfig logicConfig = getLogicConfig();
         String text = getSourceText();
         String regex = logicConfig.regex();
         if (regex == null) {
-            return DataResult.fail(DataTextRegexErrorEnum.REGEX_IS_NULL);
+            return ComponentDataResult.fail(DataTextRegexErrorEnum.REGEX_IS_NULL);
         }
 
-        return DataResult.success(match(text, DataTextRegexResultModeEnum.get(logicConfig.resultMode()), regex));
+        return ComponentDataResult.success(match(text, DataTextRegexResultModeEnum.get(logicConfig.resultMode()), regex));
     }
 
     private String getSourceText() {

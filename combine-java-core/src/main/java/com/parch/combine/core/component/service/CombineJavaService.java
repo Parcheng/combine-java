@@ -9,11 +9,11 @@ import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.manager.ComponentManager;
+import com.parch.combine.core.component.vo.FlowResult;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -71,12 +71,12 @@ public class CombineJavaService implements ICombineJavaService {
     }
 
     @Override
-    public DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers) {
+    public FlowResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers) {
         return execute(domain, function, params, headers, null);
     }
 
     @Override
-    public DataResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
+    public FlowResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
         GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(getScopeKey()).getFlagConfigs();
         if (CheckEmptyUtil.isNotEmpty(flagConfigs.getInnerFlow()) && domain.startsWith(flagConfigs.getInnerFlow())) {
             throw new SysException(CommonErrorEnum.FLOW_IS_PROTECTED);
@@ -85,17 +85,17 @@ public class CombineJavaService implements ICombineJavaService {
     }
 
     @Override
-    public DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers) {
+    public FlowResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers) {
         return executeAny(domain, function, params, headers, null);
     }
 
     @Override
-    public DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
+    public FlowResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
         return executeAny(domain, function, params, headers, fileInfo, null);
     }
 
     @Override
-    public DataResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo file, ComponentManager.Function func) {
+    public FlowResult executeAny(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo file, ComponentManager.Function func) {
         List<String> componentIds = this.getComponentIds(domain, function);
         if (CheckEmptyUtil.isEmpty(componentIds)) {
             throw new SysException(CommonErrorEnum.FLOW_COMPONENT_IS_NULL);
@@ -105,7 +105,7 @@ public class CombineJavaService implements ICombineJavaService {
     }
 
     @Override
-    public DataResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func) {
+    public FlowResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func) {
         return combineManager.execute(key, params, headers, file, componentIds, func);
     }
 

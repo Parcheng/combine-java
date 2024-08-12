@@ -6,7 +6,7 @@ import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.semaphore.ToolSemaphoreErrorEnum;
 import com.parch.combine.tool.base.semaphore.ToolSemaphoreInitConfig;
 import com.parch.combine.tool.base.semaphore.ToolSemaphoreLogicConfig;
@@ -29,17 +29,17 @@ public class ToolSemaphoreComponent extends AbstractComponent<ToolSemaphoreInitC
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         try {
             String key = getKey();
             Semaphore semaphore = getSemaphore(key, getInitConfig());
             semaphore.acquire();
         } catch (InterruptedException e) {
             ComponentErrorHandler.print(ToolSemaphoreErrorEnum.FAIL, e);
-            return DataResult.fail(ToolSemaphoreErrorEnum.FAIL);
+            return ComponentDataResult.fail(ToolSemaphoreErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     @Override

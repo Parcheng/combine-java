@@ -2,12 +2,12 @@ package com.parch.combine.rocketmq.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.rocketmq.base.product.RocketMQProductErrorEnum;
 import com.parch.combine.rocketmq.base.product.RocketMQProductInitConfig;
 import com.parch.combine.rocketmq.base.product.RocketMQProductLogicConfig;
@@ -28,7 +28,7 @@ public class RocketMQProductComponent extends AbstractRocketMQComponent<RocketMQ
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RocketMQProductInitConfig initConfig = getInitConfig();
         RocketMQProductLogicConfig logicConfig = getLogicConfig();
 
@@ -51,12 +51,12 @@ public class RocketMQProductComponent extends AbstractRocketMQComponent<RocketMQ
             msgId = result.getMsgId();
         } catch (MQClientException | InterruptedException | RemotingException | MQBrokerException e) {
             ComponentErrorHandler.print(RocketMQProductErrorEnum.FAIL, e);
-            return DataResult.fail(RocketMQProductErrorEnum.FAIL);
+            return ComponentDataResult.fail(RocketMQProductErrorEnum.FAIL);
         } finally {
             producer.shutdown();
         }
 
-        return DataResult.success(msgId);
+        return ComponentDataResult.success(msgId);
     }
 
 

@@ -2,6 +2,7 @@ package com.parch.combine.redis.components;
 
 import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.*;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.redis.base.AbstractRedisComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -9,7 +10,6 @@ import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.common.util.ArrayGetUtil;
 
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.redis.base.command.RedisCommandErrorEnum;
 import com.parch.combine.redis.base.command.RedisCommandInitConfig;
 import com.parch.combine.redis.base.command.RedisCommandLogicConfig;
@@ -30,7 +30,7 @@ public class RedisCommandComponent extends AbstractRedisComponent<RedisCommandIn
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RedisCommandLogicConfig logicConfig = getLogicConfig();
         List<Object> result = new ArrayList<>();
         try (JedisCluster cluster = this.getConn(getInitConfig())) {
@@ -41,14 +41,14 @@ public class RedisCommandComponent extends AbstractRedisComponent<RedisCommandIn
                 } catch (Exception e) {
                     ComponentErrorHandler.print(RedisCommandErrorEnum.UNKNOWN_ERROR, e);
                     if (logicConfig.failStop()) {
-                        return DataResult.fail(result, RedisCommandErrorEnum.UNKNOWN_ERROR);
+                        return ComponentDataResult.fail(result, RedisCommandErrorEnum.UNKNOWN_ERROR);
                     }
                 }
                 result.add(itemResult);
             }
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 
     @SuppressWarnings("unchecked")

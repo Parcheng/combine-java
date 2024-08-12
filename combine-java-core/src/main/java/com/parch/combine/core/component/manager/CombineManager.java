@@ -6,9 +6,10 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.CombineInitVO;
+import com.parch.combine.core.component.vo.FlowResult;
 
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class CombineManager {
      * @param func 自定义函数
      * @return 结果集
      */
-    public DataResult execute(String key, Map<String, Object> params, Map<String, String> headers, List<String> componentIds, ComponentManager.Function func) {
+    public FlowResult execute(String key, Map<String, Object> params, Map<String, String> headers, List<String> componentIds, ComponentManager.Function func) {
         return execute(key, params, headers, null, componentIds, func);
     }
 
@@ -80,7 +81,9 @@ public class CombineManager {
      * @param func 自定义函数
      * @return 结果集
      */
-    public DataResult execute(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func) {
+    public FlowResult execute(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func) {
+        long startTime = System.currentTimeMillis();
+
         // 初始化流程上下文
         ComponentContextHandler.init(scopeKey, key, params, headers, file);
         // 打印请求头和参数信息
@@ -93,11 +96,11 @@ public class CombineManager {
         }
 
         // 执行前置逻辑
-        DataResult result = flowAspect.executeBefore(key);
+        ComponentDataResult componentResult = flowAspect.executeBefore(key);
 
         // 执行流程逻辑
-        if (result.getSuccess() && !result.isStop() && CheckEmptyUtil.isNotEmpty(componentIds)) {
-            result = component.executeComponents(componentIds);
+        if (componentResult.getSuccess() && !componentResult.isStop() && CheckEmptyUtil.isNotEmpty(componentIds)) {
+            componentResult = component.executeComponents(componentIds);
         }
 
         // 执行后置逻辑
@@ -107,6 +110,11 @@ public class CombineManager {
         if (func != null) {
             func.after();
         }
+
+        // 构造Flow结果
+        FlowResult result = FlowResult.build(componentResult);
+        result.setRunTime(System.currentTimeMillis() - startTime);
+        PrintHelper.printFlowResult(result);
 
         // 清除缓存
         ComponentContextHandler.clear();

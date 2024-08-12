@@ -2,7 +2,7 @@ package com.parch.combine.gui.components.operations;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gui.base.operations.AbstractGUIOperationComponent;
 import com.parch.combine.gui.base.operations.call.GUIOperationCallInitConfig;
 import com.parch.combine.gui.base.operations.call.GUIOperationCallLogicConfig;
@@ -17,7 +17,7 @@ public class GUIOperationCallComponent extends AbstractGUIOperationComponent<GUI
     }
 
     @Override
-    public DataResult execute(IGUIElement element) {
+    public ComponentDataResult execute(IGUIElement element) {
         GUIOperationCallLogicConfig logicConfig = getLogicConfig();
         Object[] params = logicConfig.params();
 
@@ -28,6 +28,6 @@ public class GUIOperationCallComponent extends AbstractGUIOperationComponent<GUI
             result = element.call(logicConfig.key(), params);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

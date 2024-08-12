@@ -1,5 +1,6 @@
 package com.parch.combine.file.components.parse;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.FilePostfixEnum;
 import com.parch.combine.file.base.parse.FileParseComponent;
 import com.parch.combine.core.component.base.FileInfo;
@@ -7,7 +8,6 @@ import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.file.base.parse.pdf.FileParsePdfErrorEnum;
 import com.parch.combine.file.base.parse.pdf.FileParsePdfInitConfig;
 import com.parch.combine.file.base.parse.pdf.FileParsePdfLogicConfig;
@@ -29,16 +29,16 @@ public class FileParsePdfComponent extends FileParseComponent<FileParsePdfInitCo
     }
 
     @Override
-    protected DataResult execute(FileInfo fileInfo) {
+    protected ComponentDataResult execute(FileInfo fileInfo) {
         String result;
         try (PDDocument document = PDDocument.load(fileInfo.getData())){
             PDFTextStripper pdfTextStripper = new PDFTextStripper();
             result = pdfTextStripper.getText(document);
         } catch (IOException e) {
             ComponentErrorHandler.print(FileParsePdfErrorEnum.FAIL, e);
-            return DataResult.fail(FileParsePdfErrorEnum.FAIL);
+            return ComponentDataResult.fail(FileParsePdfErrorEnum.FAIL);
         }
 
-        return DataResult.success(result);
+        return ComponentDataResult.success(result);
     }
 }

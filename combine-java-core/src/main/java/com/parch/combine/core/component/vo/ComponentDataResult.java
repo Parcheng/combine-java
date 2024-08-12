@@ -8,7 +8,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataResult {
+public class ComponentDataResult {
 
     private String id;
 
@@ -26,7 +26,9 @@ public class DataResult {
 
     private Object data;
 
-    private DataResult() {
+    private long runTime;
+
+    private ComponentDataResult() {
     }
 
     public String getId() {
@@ -100,14 +102,22 @@ public class DataResult {
         this.dataFlag = dataFlag;
     }
 
+    public long getRunTime() {
+        return runTime;
+    }
+
+    public void setRunTime(long runTime) {
+        this.runTime = runTime;
+    }
+
     /**
      * 文件下载
      *
      * @param data 结果数据
      * @return 结果对象
      */
-    public static DataResult download(Object data) {
-        DataResult result = success(data);
+    public static ComponentDataResult download(Object data) {
+        ComponentDataResult result = success(data);
         result.setDownload(true);
         return result;
     }
@@ -118,8 +128,8 @@ public class DataResult {
      * @param data 结果数据
      * @return 结果对象
      */
-    public static DataResult success(Object data) {
-        DataResult result = build();
+    public static ComponentDataResult success(Object data) {
+        ComponentDataResult result = build();
         result.setSuccess(true);
         result.setData(data);
         result.setErrMsg(null);
@@ -132,8 +142,8 @@ public class DataResult {
      * @param data 结果数据
      * @return 结果对象
      */
-    public static DataResult successAndStop(Object data) {
-        DataResult result = success(data);
+    public static ComponentDataResult successAndStop(Object data) {
+        ComponentDataResult result = success(data);
         result.setStop(true);
         return result;
     }
@@ -147,8 +157,8 @@ public class DataResult {
      * @param totalCount 数据条数
      * @return 结果对象
      */
-    public static DataResult success(Object data, int currPage, int pageSize, int totalCount) {
-        DataResult result = build();
+    public static ComponentDataResult success(Object data, int currPage, int pageSize, int totalCount) {
+        ComponentDataResult result = build();
         result.setSuccess(true);
         result.setErrMsg(null);
 
@@ -172,8 +182,8 @@ public class DataResult {
      * @param error 错误信息
      * @return 结果对象
      */
-    public static DataResult fail(IComponentError error, Object ... msgParams) {
-        DataResult result = build();
+    public static ComponentDataResult fail(IComponentError error, Object ... msgParams) {
+        ComponentDataResult result = build();
         result.setSuccess(false);
         result.setErrMsg(String.format(error.getMsg(), msgParams));
         result.setShowMsg(String.format(error.getShowMsg(), msgParams));
@@ -187,8 +197,8 @@ public class DataResult {
      * @param error 错误信息
      * @return 结果对象
      */
-    public static DataResult fail(Object data, IComponentError error, Object ... msgParams) {
-        DataResult result = fail(error, msgParams);
+    public static ComponentDataResult fail(Object data, IComponentError error, Object ... msgParams) {
+        ComponentDataResult result = fail(error, msgParams);
         result.setData(data);
         return result;
     }
@@ -200,8 +210,8 @@ public class DataResult {
      * @param showMsg 显示错误信息
      * @return 结果对象
      */
-    public static DataResult fail(String msg, String showMsg) {
-        DataResult result = new DataResult();
+    public static ComponentDataResult fail(String msg, String showMsg) {
+        ComponentDataResult result = new ComponentDataResult();
         result.setSuccess(false);
         result.setErrMsg(msg);
         result.setShowMsg(showMsg);
@@ -214,8 +224,8 @@ public class DataResult {
      * @param source 来源数据
      * @return 结果对象
      */
-    public static DataResult build(DataResult source) {
-        DataResult result = build();
+    public static ComponentDataResult build(ComponentDataResult source) {
+        ComponentDataResult result = build();
         result.setSuccess(source.getSuccess());
         result.setDownload(source.isDownload());
         result.setStop(source.isStop());
@@ -231,8 +241,8 @@ public class DataResult {
      *
      * @return DataResult对象
      */
-    private static DataResult build() {
-        DataResult result = new DataResult();
+    private static ComponentDataResult build() {
+        ComponentDataResult result = new ComponentDataResult();
 
         AbstractComponent<?, ?> component = ComponentContextHandler.getCurrComponent();
         if (component != null) {

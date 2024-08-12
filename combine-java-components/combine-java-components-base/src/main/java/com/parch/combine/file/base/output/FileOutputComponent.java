@@ -4,7 +4,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.error.IComponentError;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 import java.nio.charset.Charset;
 
@@ -27,13 +27,13 @@ public abstract class FileOutputComponent<T extends IInitConfig, R extends FileO
     }
 
     @Override
-    public final DataResult execute() {
+    public final ComponentDataResult execute() {
         FileOutputLogicConfig logicConfig = getLogicConfig();
 
         // 获取数据
         Object dataObj = logicConfig.source();
         if (dataObj == null) {
-            return DataResult.fail(FileExportErrorEnum.DATA_IS_NULL);
+            return ComponentDataResult.fail(FileExportErrorEnum.DATA_IS_NULL);
         }
 
         // 处理要写入的数据
@@ -41,7 +41,7 @@ public abstract class FileOutputComponent<T extends IInitConfig, R extends FileO
         if (dataObj instanceof FileInfo) {
             fileInfo = (FileInfo) dataObj;
             if (fileInfo.getData() == null) {
-                return DataResult.fail(FileExportErrorEnum.DATA_IS_NULL);
+                return ComponentDataResult.fail(FileExportErrorEnum.DATA_IS_NULL);
             }
         } else {
             fileInfo = new FileInfo();
@@ -70,7 +70,7 @@ public abstract class FileOutputComponent<T extends IInitConfig, R extends FileO
      * @param fileInfo 文件信息
      * @return 结果
      */
-    protected abstract DataResult execute(FileInfo fileInfo);
+    protected abstract ComponentDataResult execute(FileInfo fileInfo);
 
     /**
      * 文件保存异常信息

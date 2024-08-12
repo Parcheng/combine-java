@@ -2,7 +2,7 @@ package com.parch.combine.call.base;
 
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.IInitConfig;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 import java.util.Map;
 
@@ -13,7 +13,7 @@ public abstract class CallComponent<T extends IInitConfig, R extends CallLogicCo
     }
 
     @Override
-    public final DataResult execute() {
+    public final ComponentDataResult execute() {
         CallLogicConfig logicConfig = getLogicConfig();
         return execute(logicConfig.url(), logicConfig.params(), logicConfig.headers());
     }
@@ -25,5 +25,5 @@ public abstract class CallComponent<T extends IInitConfig, R extends CallLogicCo
      * @param params 参数
      * @return 结果
      */
-    public abstract DataResult execute(String url, Map<String, Object> params, Map<String, String> headers);
+    public abstract ComponentDataResult execute(String url, Map<String, Object> params, Map<String, String> headers);
 }

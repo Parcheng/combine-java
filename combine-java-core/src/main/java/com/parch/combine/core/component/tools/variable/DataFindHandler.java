@@ -7,12 +7,10 @@ import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.common.canstant.SymbolConstant;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 数据处理帮助类
@@ -126,8 +124,8 @@ public class DataFindHandler {
         String param = path[index];
 
         // 结果中的数据取值
-        if (currData instanceof DataResult) {
-            DataResult resultData = (DataResult) currData;
+        if (currData instanceof ComponentDataResult) {
+            ComponentDataResult resultData = (ComponentDataResult) currData;
             // 解析特殊符号
             Object parseResultData = parseResultDataFlag(resultData, param);
             if (parseResultData == null) {
@@ -215,7 +213,7 @@ public class DataFindHandler {
 
         // 当前位置为倒数第二级，可以直接返回值
         if (index == path.length - 1) {
-            return currData instanceof DataResult ? ((DataResult) currData).getData() : currData;
+            return currData instanceof ComponentDataResult ? ((ComponentDataResult) currData).getData() : currData;
         } else {
             return findData(currData, path, index + 1);
         }
@@ -255,7 +253,7 @@ public class DataFindHandler {
      * @param param 参数
      * @return
      */
-    private static Object parseResultDataFlag(DataResult data, String param) {
+    private static Object parseResultDataFlag(ComponentDataResult data, String param) {
         String scopeKey = ComponentContextHandler.getScopeKey();
         GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
         if (param.equals(flagConfigs.getComponentResultShowMsg())) {
@@ -331,8 +329,8 @@ public class DataFindHandler {
         }
 
         // 结果中的数据取值
-        if (data instanceof DataResult) {
-            data = ((DataResult) data).getData();
+        if (data instanceof ComponentDataResult) {
+            data = ((ComponentDataResult) data).getData();
         }
 
         // 集合类型取值（包含左右方括号表示集合类型，要按照下标取值）

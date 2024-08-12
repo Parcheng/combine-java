@@ -4,7 +4,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.sleep.ToolSleepErrorEnum;
 import com.parch.combine.tool.base.sleep.ToolSleepInitConfig;
 import com.parch.combine.tool.base.sleep.ToolSleepLogicConfig;
@@ -18,15 +18,15 @@ public class ToolSleepComponent extends AbstractComponent<ToolSleepInitConfig, T
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         ToolSleepLogicConfig logicConfig = getLogicConfig();
         try {
             Thread.sleep(logicConfig.time());
         } catch (InterruptedException e) {
             ComponentErrorHandler.print(ToolSleepErrorEnum.FAIL, e);
-            return DataResult.fail(ToolSleepErrorEnum.FAIL);
+            return ComponentDataResult.fail(ToolSleepErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }

@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.core.component.error.IComponentError;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 
 import java.util.List;
 import java.util.Map;
@@ -25,11 +25,11 @@ public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBu
 
     @Override
     @SuppressWarnings("unchecked")
-    public final DataResult execute() {
+    public final ComponentDataResult execute() {
         FileBuildLogicConfig logicConfig = getLogicConfig();
         Object data = logicConfig.source();
         if (data == null) {
-            return DataResult.fail(FileBuildErrorEnum.DATA_IS_NULL);
+            return ComponentDataResult.fail(FileBuildErrorEnum.DATA_IS_NULL);
         }
 
         // 根据数据类型，调用不通的处理方法
@@ -37,7 +37,7 @@ public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBu
         if (data instanceof List) {
             List<?> list = (List<?>) data;
             if (CheckEmptyUtil.isEmpty(list)) {
-                return DataResult.fail(FileBuildErrorEnum.DATA_IS_NULL);
+                return ComponentDataResult.fail(FileBuildErrorEnum.DATA_IS_NULL);
             }
 
             Object firstItem = list.get(0);
@@ -46,7 +46,7 @@ public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBu
             } else if (firstItem instanceof String) {
                 buildInfo = buildFromTextList((List<String>) data);
             } else {
-                return DataResult.fail(FileBuildErrorEnum.DATA_TYPE_ERROR);
+                return ComponentDataResult.fail(FileBuildErrorEnum.DATA_TYPE_ERROR);
             }
         } else if (data instanceof Map) {
             buildInfo = buildFromObject((Map<String, Object>) data);
@@ -55,18 +55,18 @@ public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBu
         } else if (data instanceof String) {
             buildInfo = buildFromText(data.toString());
         } else {
-            return DataResult.fail(FileBuildErrorEnum.DATA_TYPE_ERROR);
+            return ComponentDataResult.fail(FileBuildErrorEnum.DATA_TYPE_ERROR);
         }
 
         // 检验构建后的文件信息
         if (buildInfo == null) {
-            return DataResult.fail(FileBuildErrorEnum.BUILD_IS_FAIL);
+            return ComponentDataResult.fail(FileBuildErrorEnum.BUILD_IS_FAIL);
         }
         if (buildInfo.getError() != null) {
-            return DataResult.fail(buildInfo.getError());
+            return ComponentDataResult.fail(buildInfo.getError());
         }
         if (buildInfo.getData() == null) {
-            return DataResult.fail(FileBuildErrorEnum.BUILD_IS_FAIL);
+            return ComponentDataResult.fail(FileBuildErrorEnum.BUILD_IS_FAIL);
         }
 
         // 文件名为空则生成随机文件名
@@ -81,7 +81,7 @@ public abstract class FileBuildComponent<T extends IInitConfig, R extends FileBu
         fileInfo.setType(buildInfo.getType());
         fileInfo.setData(buildInfo.getData());
         fileInfo.setSize(buildInfo.getData().length);
-        return DataResult.success(fileInfo);
+        return ComponentDataResult.success(fileInfo);
     }
 
     /**

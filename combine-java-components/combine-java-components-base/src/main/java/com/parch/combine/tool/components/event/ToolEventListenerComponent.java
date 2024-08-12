@@ -1,5 +1,6 @@
 package com.parch.combine.tool.components.event;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.event.EventSubjectHandler;
 import com.parch.combine.tool.base.event.IEventObserver;
 import com.parch.combine.core.component.base.AbstractComponent;
@@ -10,7 +11,6 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.thread.ThreadPoolConfig;
 import com.parch.combine.core.component.tools.thread.ThreadPoolTool;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.tool.base.event.listener.ToolEventListenerErrorEnum;
 import com.parch.combine.tool.base.event.listener.ToolEventListenerInitConfig;
 import com.parch.combine.tool.base.event.listener.ToolEventListenerLogicConfig;
@@ -27,17 +27,17 @@ public class ToolEventListenerComponent extends AbstractComponent<ToolEventListe
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         try {
             ToolEventListenerLogicConfig logicConfig = getLogicConfig();
             EventSubjectHandler.subscribe(logicConfig.eventKey(),
                     new EventObserver(getInitConfig().pool(), logicConfig.components(), manager));
         } catch (Exception e) {
             ComponentErrorHandler.print(ToolEventListenerErrorEnum.FAIL, e);
-            return DataResult.fail(ToolEventListenerErrorEnum.FAIL);
+            return ComponentDataResult.fail(ToolEventListenerErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 
     private static class EventObserver implements IEventObserver {
