@@ -82,4 +82,12 @@ public class FlowResult {
         }
         return result;
     }
+
+    public static FlowResult fail(String showMsg, String errMsg) {
+        FlowResult result = new FlowResult();
+        result.setSuccess(false);
+        result.setShowMsg(showMsg);
+        result.setErrMsg(errMsg);
+        return result;
+    }
 }

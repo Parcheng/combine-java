@@ -10,14 +10,6 @@ public class PrintUtil {
 
     private static final Logger logger = LoggerFactory.getLogger("[combine-java]");
 
-//    public static void init(String filePath) {
-//        try {
-//            System.setOut(new PrintStream(new FileOutputStream(filePath, true)));
-//        } catch (Exception e) {
-//            printError(e.getMessage());
-//        }
-//    }
-
     private PrintUtil() {}
 
     /**
@@ -27,7 +19,6 @@ public class PrintUtil {
      */
     public static void print(String msg) {
         logger.info(msg);
-//        System.out.println(msg);
     }
 
     /**
@@ -36,10 +27,9 @@ public class PrintUtil {
      * @param msg 信息
      */
     public static void printError(String msg) {
+        System.out.print("\u001B[31m");
         logger.error(msg);
-//        System.out.print("\u001B[31m");
-//        System.out.println(msg);
-//        System.out.print("\u001B[0m");
+        System.out.print("\u001B[0m");
     }
 
     /**
@@ -48,9 +38,8 @@ public class PrintUtil {
      * @param msg 信息
      */
     public static void printWarn(String msg) {
-        logger.warn(msg);
 //        System.out.print("\u001B[33m");
-//        System.out.println(msg);
+        logger.warn(msg);
 //        System.out.print("\u001B[0m");
     }
 
@@ -60,10 +49,9 @@ public class PrintUtil {
      * @param msg 信息
      */
     public static void printInfo(String msg) {
+        // System.out.print("\u001B[36m");
         logger.info(msg);
-//        System.out.print("\u001B[36m");
-//        System.out.println(msg);
-//        System.out.print("\u001B[0m");
+        // System.out.print("\u001B[0m");
     }
 
     /**
@@ -72,9 +60,8 @@ public class PrintUtil {
      * @param msg 信息
      */
     public static void printMark(String msg) {
-        logger.info(msg);
 //        System.out.print("\u001B[32m");
-//        System.out.println(msg);
+        logger.info(msg);
 //        System.out.print("\u001B[0m");
     }
 }

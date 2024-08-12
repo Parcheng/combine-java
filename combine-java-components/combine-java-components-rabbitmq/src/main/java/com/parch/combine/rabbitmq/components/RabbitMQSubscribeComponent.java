@@ -1,5 +1,7 @@
 package com.parch.combine.rabbitmq.components;
 
+import com.parch.combine.core.component.vo.ComponentDataResult;
+import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.rabbitmq.base.AbstractRabbitMQComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -7,7 +9,6 @@ import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
 import com.parch.combine.core.component.tools.SubComponentTool;
-import com.parch.combine.core.component.vo.DataResult;
 import com.parch.combine.rabbitmq.base.subscribe.RabbitMQSubscribeErrorEnum;
 import com.parch.combine.rabbitmq.base.subscribe.RabbitMQSubscribeInitConfig;
 import com.parch.combine.rabbitmq.base.subscribe.RabbitMQSubscribeLogicConfig;
@@ -25,7 +26,7 @@ public class RabbitMQSubscribeComponent extends AbstractRabbitMQComponent<Rabbit
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RabbitMQSubscribeInitConfig initConfig = getInitConfig();
         RabbitMQSubscribeLogicConfig logicConfig = getLogicConfig();
 
@@ -36,7 +37,7 @@ public class RabbitMQSubscribeComponent extends AbstractRabbitMQComponent<Rabbit
         String finalListenFlowKey = listenFlowKey == null ? (logicConfig.id() + "-Listen") : listenFlowKey;
 
         String consumerTag = RabbitMQHelper.subscribe(channel, initConfig.queue(), logicConfig.count(), data -> {
-            DataResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
+            FlowResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
             if (!result.getSuccess()) {
                 ComponentErrorHandler.print(this, "消息消费失败, queue=" + initConfig.queue().queueName() + " error=" + result.getErrMsg(), null);
                 return false;
@@ -46,9 +47,9 @@ public class RabbitMQSubscribeComponent extends AbstractRabbitMQComponent<Rabbit
         });
 
         if (consumerTag == null) {
-            return DataResult.fail(RabbitMQSubscribeErrorEnum.FAIL);
+            return ComponentDataResult.fail(RabbitMQSubscribeErrorEnum.FAIL);
         }
 
-        return DataResult.success(consumerTag);
+        return ComponentDataResult.success(consumerTag);
     }
 }

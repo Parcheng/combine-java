@@ -3,7 +3,7 @@ package com.parch.combine.rabbitmq.components;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.core.component.vo.DataResult;
+import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.rabbitmq.base.AbstractRabbitMQComponent;
 import com.parch.combine.rabbitmq.base.cancel.RabbitMQCancelErrorEnum;
 import com.parch.combine.rabbitmq.base.cancel.RabbitMQCancelInitConfig;
@@ -22,7 +22,7 @@ public class RabbitMQCancelComponent extends AbstractRabbitMQComponent<RabbitMQC
     }
 
     @Override
-    public DataResult execute() {
+    public ComponentDataResult execute() {
         RabbitMQCancelInitConfig initConfig = getInitConfig();
         RabbitMQCancelLogicConfig logicConfig = getLogicConfig();
 
@@ -31,9 +31,9 @@ public class RabbitMQCancelComponent extends AbstractRabbitMQComponent<RabbitMQC
 
         boolean success = RabbitMQHelper.unSubscribe(channel, logicConfig.key());
         if (!success) {
-            return DataResult.fail(RabbitMQCancelErrorEnum.FAIL);
+            return ComponentDataResult.fail(RabbitMQCancelErrorEnum.FAIL);
         }
 
-        return DataResult.success(true);
+        return ComponentDataResult.success(true);
     }
 }
