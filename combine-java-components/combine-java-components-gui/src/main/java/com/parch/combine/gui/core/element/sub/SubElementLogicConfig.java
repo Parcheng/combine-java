@@ -19,6 +19,10 @@ public interface SubElementLogicConfig {
     @Field(key = "defaultValue", name = "默认值", type = FieldTypeEnum.ANY)
     Object defaultValue();
 
+    @Field(key = "hasNullAssignment", name = "是否允许空赋值", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    @FieldDesc("当的数据为空时，如果该值为 true 表示覆盖原有GUI控件值，否则忽略该空数据不覆盖原有GUI控件值")
+    Boolean hasNullAssignment();
+
     @Field(key = "elementId", name = "内容的GUI元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
     String elementId();
 

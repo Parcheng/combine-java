@@ -35,13 +35,17 @@ public class GUIHtmlElement extends AbstractGUIComponentElement<GUIHtmlElementTe
     }
 
     private void setUrl() {
+        if (this.page == null) {
+            return;
+        }
+
         try {
             if (this.value.startsWith("http")) {
                 this.page.setPage(this.value);
             } else {
                 this.page.setPage(ResourceFileUtil.getURL(this.value));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             this.page.setContentType("text/html");
             this.page.setText("<html><body" + config.errorText + "</body></html>");
             PrintUtil.printError("【GUI-构建PAGE】【" + this.value + "】失败：" + e.getMessage());
@@ -49,14 +53,14 @@ public class GUIHtmlElement extends AbstractGUIComponentElement<GUIHtmlElementTe
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             return false;
         }
 
         this.value = data.toString();
         if (this.page != null) {
-            setUrl();
+            this.setUrl();
         }
 
         return true;

@@ -31,7 +31,7 @@ public class GUITriggerBuilder {
                     return null;
                 }
 
-                String[] componentIds = componentConfig.componentIds();
+                String[] componentIds = componentConfig.components();
                 if (CheckEmptyUtil.isEmpty(componentIds)) {
                     PrintUtil.printError("【GUI EVENT BINDING】Trigger ERROR " + triggerType + " 未定义要执行的组件");
                     return null;

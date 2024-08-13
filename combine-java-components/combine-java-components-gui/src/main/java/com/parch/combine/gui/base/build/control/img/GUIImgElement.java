@@ -34,14 +34,14 @@ public class GUIImgElement extends AbstractGUIComponentElement<GUIImgElementTemp
     private JLabel buildImg() {
         JLabel label = new JLabel();
         ImageIcon icon = new ImageIcon(ResourceFileUtil.getURL(this.value));
-        if (config.width != null || config.height != null) {
-            if (config.width == null) {
-                config.width = icon.getIconWidth();
+        if (this.config.width != null || this.config.height != null) {
+            if (this.config.width == null) {
+                this.config.width = icon.getIconWidth();
             }
-            if (config.height == null) {
-                config.height = icon.getIconHeight();
+            if (this.config.height == null) {
+                this.config.height = icon.getIconHeight();
             }
-            Image newImg = icon.getImage().getScaledInstance(config.width, config.height, Image.SCALE_SMOOTH);
+            Image newImg = icon.getImage().getScaledInstance(this.config.width, this.config.height, Image.SCALE_SMOOTH);
             icon = new ImageIcon(newImg);
         }
         label.setIcon(icon);
@@ -51,13 +51,13 @@ public class GUIImgElement extends AbstractGUIComponentElement<GUIImgElementTemp
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             return false;
         }
 
         this.value = data.toString();
-        panel.add(buildImg());
+        panel.add(this.buildImg());
         return true;
     }
 

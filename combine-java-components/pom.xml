@@ -5,13 +5,12 @@
     <parent>
         <artifactId>combine-java</artifactId>
         <groupId>com.parch.combine</groupId>
-        <version>0.9.0</version>
+        <version>0.10.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>combine-java-components</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
 
     <modules>
         <module>combine-java-components-base</module>
@@ -28,6 +27,7 @@
         <mysql-connector.version>8.0.33</mysql-connector.version>
         <jedis.version>3.6.3</jedis.version>
         <rocketmq.version>4.3.2</rocketmq.version>
+        <rabbitmq.version>5.13.1</rabbitmq.version>
         <pdfbox.version>2.0.12</pdfbox.version>
     </properties>
 
@@ -74,6 +74,11 @@
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-client</artifactId>
                 <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>${rabbitmq.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

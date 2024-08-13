@@ -106,7 +106,7 @@ public class GUIFromElement extends AbstractGUIComponentElement<GUIFromElementTe
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             data = Collections.emptyMap();;
         }

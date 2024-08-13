@@ -191,7 +191,7 @@ public class GUIMenuElement extends AbstractGUIComponentElement<GUIMenuElementTe
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         this.value = data == null ? null : data.toString();
         this.checked();
         return true;

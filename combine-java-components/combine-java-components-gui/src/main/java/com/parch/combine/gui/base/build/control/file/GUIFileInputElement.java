@@ -53,7 +53,7 @@ public class GUIFileInputElement extends AbstractGUIComponentElement<GUIFileInpu
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             data = CheckEmptyUtil.EMPTY;
         }

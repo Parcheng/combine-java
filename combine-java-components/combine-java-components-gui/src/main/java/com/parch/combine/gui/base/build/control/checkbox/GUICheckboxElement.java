@@ -36,8 +36,6 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
         super.loadTemplates(external, this.template.getExternal());
 
         this.panel = new JPanel();
-        this.checkbox = new ArrayList<>();
-        this.options = new ArrayList<>();
         this.setOptions(this.config.options);
 
         super.addSubComponent(external, this.panel, this.template.getCheckboxes());
@@ -45,11 +43,13 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
     }
 
     @Override
-    public boolean setOptions(GUIControlOptionConfig[] options) {
+    public synchronized boolean setOptions(GUIControlOptionConfig[] options) {
         if (this.panel == null) {
             return false;
         }
 
+        this.checkbox = new ArrayList<>();
+        this.options = new ArrayList<>();
         for (GUIControlOptionConfig option : options) {
             addOption(option);
         }
@@ -78,7 +78,7 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
     }
 
     @Override
-    public boolean cleanOptions() {
+    public synchronized boolean cleanOptions() {
         this.options = new ArrayList<>();
         this.checkbox = new ArrayList<>();
         this.panel.removeAll();
@@ -86,7 +86,7 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             return false;
         }
@@ -139,7 +139,7 @@ public class GUICheckboxElement extends AbstractGUIComponentElement<GUICheckboxE
             }
         }
 
-        return data.size() > 0 ? data : null;
+        return CheckEmptyUtil.isNotEmpty(data) ? data : null;
     }
 
     @Override

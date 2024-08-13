@@ -5,21 +5,10 @@
     <parent>
         <artifactId>combine-java</artifactId>
         <groupId>com.parch.combine</groupId>
-        <version>0.9.0</version>
+        <version>0.10.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>combine-java-starter</artifactId>
-
-    <properties>
-        <combine-java-ui-html.version>1.0.0</combine-java-ui-html.version>
-        <combine-java-components-base.version>1.0.0</combine-java-components-base.version>
-        <combine-java-components-gui.version>1.0.0</combine-java-components-gui.version>
-        <combine-java-components-mysql.version>1.0.0</combine-java-components-mysql.version>
-        <combine-java-components-redis.version>1.0.0</combine-java-components-redis.version>
-        <combine-java-components-rocketmq.version>1.0.0</combine-java-components-rocketmq.version>
-        <combine-java-components-rabbitmq.version>1.0.0</combine-java-components-rabbitmq.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -36,37 +25,37 @@
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-ui-html</artifactId>
-            <version>${combine-java-ui-html.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-components-base</artifactId>
-            <version>${combine-java-components-base.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-components-gui</artifactId>
-            <version>${combine-java-components-gui.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-components-mysql</artifactId>
-            <version>${combine-java-components-mysql.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-components-redis</artifactId>
-            <version>${combine-java-components-redis.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-components-rocketmq</artifactId>
-            <version>${combine-java-components-rocketmq.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-components-rabbitmq</artifactId>
-            <version>${combine-java-components-rabbitmq.version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

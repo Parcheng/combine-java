@@ -10,7 +10,7 @@ public abstract class AbstractGUIComponentElement<T extends BaseGUIElementTempla
         super(scopeKey, domain, id, data, type, template, config, templateClass);
     }
 
-    public final JComponent build(JFrame frame){
+    public final synchronized JComponent build(JFrame frame){
         this.frame = frame;
         JComponent component = build();
         this.container = component;

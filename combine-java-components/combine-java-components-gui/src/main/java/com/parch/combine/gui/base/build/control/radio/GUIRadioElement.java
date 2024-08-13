@@ -43,7 +43,7 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
     }
 
     @Override
-    public boolean setOptions(GUIControlOptionConfig[] options) {
+    public synchronized boolean setOptions(GUIControlOptionConfig[] options) {
         if (options == null) {
             return false;
         }
@@ -77,7 +77,7 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
     }
 
     @Override
-    public boolean cleanOptions() {
+    public synchronized boolean cleanOptions() {
         this.options = new ArrayList<>();
         this.radios = new ArrayList<>();
         this.radioButton = null;
@@ -86,7 +86,7 @@ public class GUIRadioElement extends AbstractGUIComponentElement<GUIRadioElement
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             return false;
         }

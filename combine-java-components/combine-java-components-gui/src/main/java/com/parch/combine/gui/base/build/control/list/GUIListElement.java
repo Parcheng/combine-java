@@ -100,7 +100,7 @@ public class GUIListElement extends AbstractGUIComponentElement<GUIListElementTe
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             data = Collections.emptyList();
         }

@@ -1,12 +1,10 @@
 package com.parch.combine.gui.base.build.control.button;
 
-import com.parch.combine.gui.core.GUIElementTemplateHelper;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
-import com.parch.combine.gui.core.event.GUIEventHandler;
 
 import javax.swing.JComponent;
 import javax.swing.JButton;
@@ -37,7 +35,7 @@ public class GUIButtonElement extends AbstractGUIComponentElement<GUIButtonEleme
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             return false;
         }

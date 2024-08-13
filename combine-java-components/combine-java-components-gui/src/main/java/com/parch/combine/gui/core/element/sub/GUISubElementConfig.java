@@ -16,6 +16,7 @@ public class GUISubElementConfig {
     public String key;
     public String dataField;
     public Object defaultValue;
+    public boolean hasNullAssignment;
     public IGUIElement element;
     public EventConfig[] events;
     public JComponent buildResult;
@@ -26,6 +27,7 @@ public class GUISubElementConfig {
         this.key = elementConfig.key() == null ? this.dataField : elementConfig.key();
         this.events = elementConfig.events();
         this.element = guiElementManager.get(elementConfig.elementId());
+        this.hasNullAssignment = elementConfig.hasNullAssignment();
     }
 
     public static GUISubElementConfig[] convert(GUIElementManager guiElementManager, SubElementLogicConfig[] elementConfigs) {
