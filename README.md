@@ -1,19 +1,21 @@
 # 介绍
 **combine-java** 是一个轻量级低代码框架，在框架中一切的功能皆为组件，您可以自由将各种组件组合在一起进行编排，实现自己的业务功能。<br>
-**JDK版本：8**<br>
+**推荐JDK版本：11+**<br>
 <br>
 
 **工程结构：**<br>
 **combine-java-core**：核心模块，所有的核心功能都在这里<br>
 **combine-java-components**：系统内置组模块 - POM工程<br>
-**&nbsp;-&nbsp;combine-java-components-base**: 系统内置组件 - 基础组件包<br>
-**&nbsp;-&nbsp;combine-java-components-gui**: 系统内置组件 - SWING视图组件包<br>
-**&nbsp;-&nbsp;combine-java-components-mysql**: 系统内置组件 - MySql数据库组件包<br>
-**&nbsp;-&nbsp;combine-java-components-redis**: 系统内置组件 - Redis组件包<br>
-**&nbsp;-&nbsp;combine-java-components-rocketmq**: 系统内置组件 - RocketMQ组件包<br>
 **combine-java-ui-html**：系统自带的UI页面组件模块，封装了一些公共UI元素组件<br>
 **combine-java-starter**：快速使用模块，包含：核心模块、所有系统组件、页面组件模块，通过 POM 引入后即可使用全部功能<br>
 **combine-java-spring-web**：内置了 SpringBoot 的快速使用模块，项目直接通过 pom 引入后即可快速使用。该工程可以直接启动，仅提供了 API 相关的页面和接口<br>
+<br>
+**系统内置组模块（combine-java-components）包含：**<br>
+**combine-java-components-base**: 系统内置组件 - 基础组件包<br>
+**combine-java-components-gui**: 系统内置组件 - SWING视图组件包<br>
+**combine-java-components-mysql**: 系统内置组件 - MySql数据库组件包<br>
+**combine-java-components-redis**: 系统内置组件 - Redis组件包<br>
+**combine-java-components-rocketmq**: 系统内置组件 - RocketMQ组件包<br>
 <br>
 
 **本地启动并访问 API：**<br>
@@ -97,12 +99,12 @@ public class CombineTestController {
     private CombineJavaPageService combineJavaPageService;
 
     @PostMapping("flow/{domain}/{function}")
-    public DataResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
+    public FlowResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
         return combineWebService.call(params, domain, function, request, response);
     }
 
     @PostMapping("file-flow/{domain}/{function}")
-    public DataResult uploadAndCall(@RequestParam("params") String paramJson, @RequestParam("file") MultipartFile file, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public FlowResult uploadAndCall(@RequestParam("params") String paramJson, @RequestParam("file") MultipartFile file, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) throws IOException {
         return combineWebService.uploadAndCall(paramJson, file, domain, function, request, response);
     }
 
@@ -179,16 +181,16 @@ public class My1Component extends AbsComponent<My1InitConfig, My1LogicConfig> {
     }
 
     @Override
-    public DataResult execute() {
+    public FlowResult execute() {
         My1LogicConfig logicConfig = getLogicConfig();
         My1InitConfig initConfig = getInitConfig();
 
         try {
             ... ...
-            return DataResult.success(result);
+            return FlowResult.success(result);
         } catch (Exception e) {
             ComponentErrorHandler.print(My1ErrorEnum.FAIL, e);
-            return DataResult.fail(My1ErrorEnum.FAIL);
+            return FlowResult.fail(My1ErrorEnum.FAIL);
         }
     }
 }

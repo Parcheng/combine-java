@@ -27,7 +27,7 @@ public class ComponentTriggerProcessor extends AbstractTriggerProcessor {
         if (CheckEmptyUtil.isEmpty(this.key)) {
             this.key = UUID.randomUUID().toString();
         }
-        this.componentIds = config.componentIds();
+        this.componentIds = config.components();
         this.params = config.params();
         if (this.params == null) {
             this.params = new HashMap<>(0);
@@ -46,8 +46,8 @@ public class ComponentTriggerProcessor extends AbstractTriggerProcessor {
         @Field(key = "key", name = "自定义流程KEY", type = FieldTypeEnum.TEXT)
         String key();
 
-        @Field(key = "componentIds", name = "组件集合", type = FieldTypeEnum.TEXT, isArray = true)
-        String[] componentIds();
+        @Field(key = "components", name = "组件集合", type = FieldTypeEnum.COMPONENT, isArray = true)
+        String[] components();
 
         @Field(key = "params", name = "参数", type = FieldTypeEnum.MAP)
         Map<String, Object> params();

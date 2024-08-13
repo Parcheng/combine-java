@@ -43,16 +43,31 @@
           "triggerType": "COMPONENT",
           "componentTrigger": {
             "key": "CALL_TEST",
-            "componentIds": ["testCall"],
+            "components": [{
+              "type": "call.flow",
+              "url": "element/opt",
+              "params": {}
+            }],
             "params": {}
           }
         }
       },{
-        "id": "testCall",
-        "type": "call.flow",
-        "url": "element/opt",
-        "params": {},
-        "flags": "STATIC"
+        "type": "gui.build.control.button",
+        "elementId": "button-call-2",
+        "text": "CALL_OPTION",
+        "events": {
+          "eventType": "click",
+          "triggerType": "COMPONENT",
+          "componentTrigger": {
+            "key": "CALL_TEST_2",
+            "components": [{
+              "type": "call.flow",
+              "url": "element/optionReset",
+              "params": {}
+            }],
+            "params": {}
+          }
+        }
       },{
         "type": "gui.build.control.text",
         "elementId": "text",
@@ -233,7 +248,7 @@
         "distanceTop": 30,
         "distanceLeft": 100,
         "elements": {
-          "center": ["input", "file", "select", "radio", "checkbox", "button", "button-call", "text", "text-2", "label", "textarea",
+          "center": ["input", "file", "select", "radio", "checkbox", "button", "button-call", "button-call-2", "text", "text-2", "label", "textarea",
             "list", "panel", "panel-2", "slider", "img", "menu", "html", "dialogBox", "text2", "table", "from", "paging", "tree"]
         }
       }
@@ -281,6 +296,24 @@
         "type": "gui.operations.visible",
         "elementId": "input",
         "visible": false
+      }
+    ],
+    "element/optionReset": [
+      {
+        "type": "gui.operations.call",
+        "elementId": "select",
+        "key": "RESET_OPTION",
+        "params": [{"text": "aaa", "value": "a"},{"text": "bbb", "value": "b"},{"text": "ccc", "value": "c"}]
+      },{
+        "type": "gui.operations.call",
+        "elementId": "radio",
+        "key": "RESET_OPTION",
+        "params": [{"text": "aaa", "value": "a"},{"text": "bbb", "value": "b"},{"text": "ccc", "value": "c"}]
+      },{
+        "type": "gui.operations.call",
+        "elementId": "checkbox",
+        "key": "RESET_OPTION",
+        "params": [{"text": "aaa", "value": "a"},{"text": "bbb", "value": "b"},{"text": "ccc", "value": "c"}]
       }
     ]
   }

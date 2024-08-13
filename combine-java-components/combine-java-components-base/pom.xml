@@ -5,13 +5,10 @@
     <parent>
         <artifactId>combine-java-components</artifactId>
         <groupId>com.parch.combine</groupId>
-        <version>1.0.0</version>
-        <relativePath>../../pom.xml</relativePath>
+        <version>0.10.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>combine-java-components-base</artifactId>
-    <version>1.0.0</version>
 
     <dependencies>
         <!-- 收发邮件 -->
