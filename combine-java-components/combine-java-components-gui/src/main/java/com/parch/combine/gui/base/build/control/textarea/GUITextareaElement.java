@@ -46,7 +46,7 @@ public class GUITextareaElement extends AbstractGUIComponentElement<GUITextareaE
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             return false;
         }

@@ -1,5 +1,6 @@
 package com.parch.combine.gui.base.build.control.buttons;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
@@ -67,7 +68,7 @@ public class GUIButtonGroupElement extends AbstractGUIComponentElement<GUIButton
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null) {
             return false;
         }
@@ -81,7 +82,7 @@ public class GUIButtonGroupElement extends AbstractGUIComponentElement<GUIButton
                     configList.add(itemConfig);
                 }
             }
-            if (configList.size() > 0) {
+            if (CheckEmptyUtil.isNotEmpty(configList)) {
                 this.value = configList.toArray(new ItemConfig[0]);
             }
         } else {

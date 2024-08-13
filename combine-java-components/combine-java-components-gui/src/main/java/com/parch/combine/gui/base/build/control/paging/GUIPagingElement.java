@@ -91,7 +91,7 @@ public class GUIPagingElement extends AbstractGUIComponentElement<GUIPagingEleme
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         boolean success = false;
         if (data instanceof Map) {
             Map<String, Object> valueMap = (Map<String, Object>) data;

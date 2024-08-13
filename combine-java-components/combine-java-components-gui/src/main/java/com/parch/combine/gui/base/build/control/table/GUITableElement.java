@@ -135,7 +135,7 @@ public class GUITableElement extends AbstractGUIComponentElement<GUITableElement
 
     @Override
     @SuppressWarnings("unchecked")
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (!(data instanceof Collection)) {
             return false;
         }

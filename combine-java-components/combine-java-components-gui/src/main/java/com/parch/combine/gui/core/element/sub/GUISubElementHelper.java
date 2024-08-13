@@ -87,7 +87,9 @@ public class GUISubElementHelper {
                 itemData = config.defaultValue;
             }
 
-            config.element.setValue(itemData);
+            if (itemData == null && config.hasNullAssignment) {
+                config.element.setValue(itemData);
+            }
             config.buildResult = config.element.build(element.getFrame());
             GUIEventHandler.bindings(config.buildResult, config.events, element);
         }

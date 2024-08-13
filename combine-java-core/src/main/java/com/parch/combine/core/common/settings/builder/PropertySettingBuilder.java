@@ -12,9 +12,22 @@ import java.util.*;
 public class PropertySettingBuilder {
 
     public static List<PropertySetting> build(String scope, Class<?> propertyClass) {
+        // 构建属性集合
         Set<Class<?>> parsedClass = new HashSet<>();
         List<PropertySetting> properties = new ArrayList<>();
         buildProperties(scope, properties, propertyClass, CheckEmptyUtil.EMPTY, parsedClass);
+
+        // 清理重复
+        Set<String> keySet = new HashSet<>();
+        for (int i = properties.size() - 1; i >= 0; i--) {
+            PropertySetting obj = properties.get(i);
+            if (keySet.contains(obj.getKey())) {
+                properties.remove(i);
+            } else {
+                keySet.add(obj.getKey());
+            }
+        }
+
         return properties;
     }
 

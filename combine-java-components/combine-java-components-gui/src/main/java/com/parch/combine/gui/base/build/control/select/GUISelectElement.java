@@ -38,7 +38,7 @@ public class GUISelectElement extends AbstractGUIComponentElement<GUISelectEleme
     }
 
     @Override
-    public boolean setOptions(GUIControlOptionConfig[] options) {
+    public synchronized boolean setOptions(GUIControlOptionConfig[] options) {
         if (this.comboBox == null || options == null) {
             return false;
         }
@@ -78,7 +78,7 @@ public class GUISelectElement extends AbstractGUIComponentElement<GUISelectEleme
     }
 
     @Override
-    public boolean cleanOptions() {
+    public synchronized boolean cleanOptions() {
         if (this.comboBox == null) {
             return false;
         }
@@ -96,7 +96,7 @@ public class GUISelectElement extends AbstractGUIComponentElement<GUISelectEleme
     }
 
     @Override
-    public boolean setValue(Object data) {
+    public synchronized boolean setValue(Object data) {
         if (data == null || this.options == null) {
             return false;
         }
