@@ -105,9 +105,18 @@ public class ToolLockComponent extends AbstractComponent<ToolLockInitConfig, Too
      * @param initConfig 初始化配置
      * @return 信号量对象
      */
-    private synchronized static ReentrantLock getLock(String key, ToolLockInitConfig initConfig) {
+    private static ReentrantLock getLock(String key, ToolLockInitConfig initConfig) {
         ReentrantLock lock = LOCK_MAP.get(key);
-        if (lock == null) {
+        if (lock != null) {
+            return lock;
+        }
+
+        synchronized (LOCK_MAP) {
+            lock = LOCK_MAP.get(key);
+            if (lock != null) {
+                return lock;
+            }
+
             lock = new ReentrantLock(initConfig.fair());
             LOCK_MAP.put(key, lock);
         }

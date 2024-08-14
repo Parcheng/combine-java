@@ -18,6 +18,13 @@ public interface RedisLuaLogicConfig extends ILogicConfig {
     @FieldEg(eg = "[\"1\"]", desc = "集合中只有一个为 test_key 的脚本参数")
     String[] args();
 
+    @Field(key = "precompileKey", name = "脚本预编译KEY", type = FieldTypeEnum.TEXT)
+    @FieldDesc("默认使用脚本代码作为KEY, 需要预编译时，建议设置预编译KEY")
+    String precompileKey();
+
+    @Field(key = "hasPrecompile", name = "是否预编译", type = FieldTypeEnum.TEXT, defaultValue = "false")
+    Boolean hasPrecompile();
+
     @Field(key = "scriptLines", name = "要执行的脚本", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)
     @FieldDesc("其中集合每一项表示每一行脚本")
     @FieldEg(eg = "[\"local num = redis.call('incr', KEYS[1])\",\"return num\", \"end\"]", desc = "执行该语句")
