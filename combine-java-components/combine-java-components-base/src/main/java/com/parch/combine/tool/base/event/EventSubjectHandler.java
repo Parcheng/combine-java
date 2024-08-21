@@ -8,13 +8,7 @@ public class EventSubjectHandler {
     public static Map<String, EventObservable> SUBJECT_MAP = new HashMap<>(8);
 
     public static synchronized EventObservable register(String subject) {
-        EventObservable eventObservable = SUBJECT_MAP.get(subject);
-        if (eventObservable == null) {
-            eventObservable = new EventObservable(subject);
-            SUBJECT_MAP.put(subject, eventObservable);
-        }
-
-        return eventObservable;
+        return SUBJECT_MAP.computeIfAbsent(subject, EventObservable::new);
     }
 
     public static boolean push(String subject, Map<String, Object> msg) {

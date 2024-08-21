@@ -1,18 +1,18 @@
 package com.parch.combine.data.base.enums;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EnumCacheHandler {
 
-    public final static Map<String, List<EnumItem>> CACHE = new HashMap<>();
+    public final static Map<String, List<EnumItem>> CACHE = new ConcurrentHashMap<>(16);
 
-    public static synchronized void register(String key, List<EnumItem> items) {
+    public static void register(String key, List<EnumItem> items) {
         CACHE.put(key, items);
     }
 
-    public static synchronized List<EnumItem> get(String key) {
+    public static List<EnumItem> get(String key) {
         return CACHE.get(key);
     }
 

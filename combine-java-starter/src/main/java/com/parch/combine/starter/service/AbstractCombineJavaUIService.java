@@ -1,8 +1,11 @@
-package com.parch.combine.web.service;
+package com.parch.combine.starter.service;
 
 import com.parch.combine.ui.core.CombineJavaUIStarter;
 import com.parch.combine.ui.core.service.ICombineJavaUIService;
 
+/**
+ * CombineJavaUI - Service基类
+ */
 public abstract class AbstractCombineJavaUIService {
 
     private ICombineJavaUIService service;

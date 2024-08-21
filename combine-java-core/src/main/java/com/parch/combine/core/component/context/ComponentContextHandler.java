@@ -31,7 +31,7 @@ public class ComponentContextHandler {
         context.setFlowKey(key);
         context.setScopeKey(scopeKey);
         context.setParams(params == null ? new HashMap<>(1) : params);
-        context.setHeaders(headers == null ? new HashMap<>(0) : headers);
+        context.setHeaders(headers == null ? Collections.emptyMap() : headers);
         context.setResultMap(new LinkedHashMap<>());
         context.setData(new HashMap<>());
         context.setExecutedComponents(new ArrayList<>());

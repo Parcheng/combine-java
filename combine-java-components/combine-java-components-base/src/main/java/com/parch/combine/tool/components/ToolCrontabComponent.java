@@ -11,6 +11,7 @@ import com.parch.combine.tool.base.crontab.ToolCrontabErrorEnum;
 import com.parch.combine.tool.base.crontab.ToolCrontabInitConfig;
 import com.parch.combine.tool.base.crontab.ToolCrontabLogicConfig;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class ToolCrontabComponent extends AbstractComponent<ToolCrontabInitConfi
     protected void executeSubComponents() {
         ToolCrontabLogicConfig logicConfig = getLogicConfig();
         String jobFlowKey = logicConfig.jobFlowKey();
-        SubComponentTool.execute(manager, jobFlowKey == null ? (logicConfig.id() + "-Listen") : jobFlowKey, new HashMap<>(0), logicConfig.components());
+        SubComponentTool.execute(manager, jobFlowKey == null ? (logicConfig.id() + "-Listen") : jobFlowKey, Collections.emptyMap(), logicConfig.components());
     }
 
     protected ScheduledExecutorService getService() {

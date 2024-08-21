@@ -34,9 +34,9 @@ public class CombineJavaUIStarter {
         GlobalConfigVO config = GlobalConfigVO.build(path);
         PrintTool.printInit("=======================================================================================================================================================");
         PrintTool.printInit("初始化UI全局设置 [" + path + "] >>>");
-        PrintTool.printInit("加载配置文件设置   -> " + StringUtil.join(config.getConfigs(), ","));
-        PrintTool.printInit("根URL   -> " + config.getBaseUrl());
-        PrintTool.printInit("系统根URL -> " + config.getSystemUrl());
+        PrintTool.printInit("[加载配置文件设置] > " + StringUtil.join(config.getConfigs(), ", "));
+        PrintTool.printInit("[根URL] > " + config.getBaseUrl());
+        PrintTool.printInit("[系统根URL] > " + config.getSystemUrl());
         PrintTool.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         CombineJavaUIService service = new CombineJavaUIService(ConfigLoadingContextHandler.build(config));
