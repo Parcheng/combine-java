@@ -2,6 +2,7 @@ package com.parch.combine.gui.base.build.control.tree;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
+import com.parch.combine.gui.core.call.refresh.IGUIRefreshHandler;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 public class GUITreeElement extends AbstractGUIComponentElement<GUITreeElementTemplate, GUITreeElement.Config, String> {
 
+    private JPanel panel = null;
     private Map<String, JPanel> childrenMap;
     private Map<String, String> keyUpLevelMap;
 
@@ -28,10 +30,10 @@ public class GUITreeElement extends AbstractGUIComponentElement<GUITreeElementTe
 
     @Override
     public JComponent build() {
-        JPanel panel = new JPanel();
-        super.loadTemplates(panel, this.template.getExternal());
-        this.buildItems(panel);
-        return panel;
+        this.panel = new JPanel();
+        super.loadTemplates(this.panel, this.template.getExternal());
+        this.buildItems(this.panel);
+        return this.panel;
     }
 
     private void buildItems(JPanel parent) {

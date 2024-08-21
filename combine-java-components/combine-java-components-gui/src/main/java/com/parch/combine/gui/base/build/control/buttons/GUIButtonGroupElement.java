@@ -94,6 +94,8 @@ public class GUIButtonGroupElement extends AbstractGUIComponentElement<GUIButton
 
         this.buttonGroup.removeAll();
         this.buildButtons();
+        this.buttonGroup.revalidate();
+        this.buttonGroup.repaint();
         return true;
     }
 
