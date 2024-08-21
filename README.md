@@ -58,7 +58,7 @@ UI的API地址：http://127.0.0.1:8888/combine/page/ui-api<br>
 <dependency>
     <artifactId>combine-java-spring-web</artifactId>
     <groupId>com.parch.combine</groupId>
-    <version>0.9.0</version>
+    <version>0.10.0</version>
 </dependency>
 ```
 

@@ -1,4 +1,4 @@
-package com.parch.combine.web.dto;
+package com.parch.combine.starter.dto;
 
 import java.util.List;
 

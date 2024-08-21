@@ -8,6 +8,7 @@ import com.parch.combine.core.component.tools.SubComponentTool;
 
 import javax.swing.*;
 import java.awt.event.ComponentEvent;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class ComponentTriggerProcessor extends AbstractTriggerProcessor {
         this.componentIds = config.components();
         this.params = config.params();
         if (this.params == null) {
-            this.params = new HashMap<>(0);
+            this.params = Collections.emptyMap();
         }
 
         this.manager = manager;

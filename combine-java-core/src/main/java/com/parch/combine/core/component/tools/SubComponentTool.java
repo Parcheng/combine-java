@@ -59,6 +59,6 @@ public class SubComponentTool {
      * @return 结果
      */
     public static FlowResult execute(CombineManager combineManager, String key, Map<String, Object> data, String[] componentIds) {
-        return combineManager.execute(key, data, new HashMap<>(0), Arrays.asList(componentIds), null);
+        return combineManager.execute(key, data, Collections.emptyMap(), Arrays.asList(componentIds), null);
     }
 }
