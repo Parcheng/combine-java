@@ -25,8 +25,8 @@ public class PageElementSettingScanBuilder {
             return null;
         }
 
-        buildCommonObjectSetting(scope);
-        CommonObjectSettingBuilder.loads(scope, packageClasses);
+        // buildCommonObjectSetting(scope);
+        // CommonObjectSettingBuilder.loads(scope, packageClasses);
 
         List<PageElementSetting> settings = new ArrayList<>();
         for (Class<?> clazz : packageClasses) {
@@ -42,19 +42,17 @@ public class PageElementSettingScanBuilder {
     }
 
     private static void buildCommonObjectSetting(String scope) {
-        List<Class<?>> systemCommonObject = new ArrayList<>();
-        systemCommonObject.add(DomConfig.class);
-        systemCommonObject.add(ApiDataLoadConfig.class);
-        systemCommonObject.add(DataLoadTypeEnum.class);
-        systemCommonObject.add(FileDataLoadConfig.class);
-        systemCommonObject.add(FlowDataLoadConfig.class);
-        systemCommonObject.add(TriggerCallFlowConfig.class);
-        systemCommonObject.add(TriggerCallFuncConfig.class);
-        systemCommonObject.add(TriggerCallUrlConfig.class);
-        systemCommonObject.add(TriggerCustomConfig.class);
-        systemCommonObject.add(TriggerLoadConfig.class);
-        systemCommonObject.add(TriggerLoadDataConfig.class);
-        systemCommonObject.add(TriggerSkipConfig.class);
-        CommonObjectSettingBuilder.loads(scope, systemCommonObject);
+        CommonObjectSettingBuilder.load(scope, DomConfig.class);
+        CommonObjectSettingBuilder.load(scope, ApiDataLoadConfig.class);
+        CommonObjectSettingBuilder.load(scope, DataLoadTypeEnum.class);
+        CommonObjectSettingBuilder.load(scope, FileDataLoadConfig.class);
+        CommonObjectSettingBuilder.load(scope, FlowDataLoadConfig.class);
+        CommonObjectSettingBuilder.load(scope, TriggerCallFlowConfig.class);
+        CommonObjectSettingBuilder.load(scope, TriggerCallFuncConfig.class);
+        CommonObjectSettingBuilder.load(scope, TriggerCallUrlConfig.class);
+        CommonObjectSettingBuilder.load(scope, TriggerCustomConfig.class);
+        CommonObjectSettingBuilder.load(scope, TriggerLoadConfig.class);
+        CommonObjectSettingBuilder.load(scope, TriggerLoadDataConfig.class);
+        CommonObjectSettingBuilder.load(scope, TriggerSkipConfig.class);
     }
 }

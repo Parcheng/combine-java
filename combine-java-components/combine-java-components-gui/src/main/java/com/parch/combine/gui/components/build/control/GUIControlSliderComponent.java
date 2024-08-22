@@ -9,7 +9,7 @@ import com.parch.combine.gui.base.build.control.slider.GUISliderElement;
 import com.parch.combine.gui.base.build.control.slider.SliderOrientationEnum;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.slider", name = "GUI滑块模块", logicConfigClass = GUIControlSliderLogicConfig.class, initConfigClass = GUIControlSliderInitConfig.class)
+@Component(key = "build.control.slider", order = 100, name = "GUI滑块模块", logicConfigClass = GUIControlSliderLogicConfig.class, initConfigClass = GUIControlSliderInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlSliderComponent extends AbstractGUIControlComponent<GUIControlSliderInitConfig, GUIControlSliderLogicConfig> {
 

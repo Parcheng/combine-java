@@ -6,7 +6,13 @@ import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.trigger.Trigger;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
+import com.parch.combine.ui.core.base.trigger.TriggerCallFlowConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCallFuncConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCallUrlConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCustomConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerLoadConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerLoadDataConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerSkipConfig;
 import com.parch.combine.ui.core.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.common.SubElementConfig;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
@@ -30,7 +36,8 @@ public class WindowElementConfig extends ElementConfig<WindowElementTemplateConf
     private SubElementConfig body;
 
     @Field(key = "closeTriggers", name = "窗口关闭的触发配置", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
+    @FieldRef({TriggerCallFlowConfig.class, TriggerCallFuncConfig.class, TriggerCallUrlConfig.class,
+            TriggerCustomConfig.class, TriggerLoadConfig.class, TriggerLoadDataConfig.class, TriggerSkipConfig.class})
     @Trigger
     private Object closeTriggers;
 

@@ -8,7 +8,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
-@Component(key = "build.control.input", name = "GUI输入框控件", logicConfigClass = GUIControlInputLogicConfig.class, initConfigClass = GUIControlInputInitConfig.class)
+@Component(key = "build.control.input", order = 100, name = "GUI输入框控件", logicConfigClass = GUIControlInputLogicConfig.class, initConfigClass = GUIControlInputInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlInputComponent extends AbstractGUIControlComponent<GUIControlInputInitConfig, GUIControlInputLogicConfig> {
 

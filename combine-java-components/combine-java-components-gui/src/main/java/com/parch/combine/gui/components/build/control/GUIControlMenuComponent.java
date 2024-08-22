@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.menu.GUIControlMenuLogicConfig;
 import com.parch.combine.gui.base.build.control.menu.GUIMenuElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.menu", name = "GUI菜单模块", logicConfigClass = GUIControlMenuLogicConfig.class, initConfigClass = GUIControlMenuInitConfig.class)
+@Component(key = "build.control.menu", order = 100, name = "GUI菜单模块", logicConfigClass = GUIControlMenuLogicConfig.class, initConfigClass = GUIControlMenuInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlMenuComponent extends AbstractGUIControlComponent<GUIControlMenuInitConfig, GUIControlMenuLogicConfig> {
 

@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.operations.call.GUIOperationCallInitConfig;
 import com.parch.combine.gui.base.operations.call.GUIOperationCallLogicConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "operations.call", name = "GUI元素函数调用", logicConfigClass = GUIOperationCallLogicConfig.class, initConfigClass = GUIOperationCallInitConfig.class)
+@Component(key = "operations.call", order = 300, name = "GUI元素函数调用", logicConfigClass = GUIOperationCallLogicConfig.class, initConfigClass = GUIOperationCallInitConfig.class)
 @ComponentResult(name = "调用结果")
 public class GUIOperationCallComponent extends AbstractGUIOperationComponent<GUIOperationCallInitConfig, GUIOperationCallLogicConfig> {
 

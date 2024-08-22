@@ -5,7 +5,6 @@ import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.DomConfig;
 import com.parch.combine.ui.core.base.element.ElementTemplateConfig;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 /**
  * 配置类
@@ -13,19 +12,19 @@ import com.parch.combine.ui.core.settings.PageSettingCanstant;
 public class BreadcrumbElementTemplateConfig extends ElementTemplateConfig {
 
     @Field(key = "breadcrumb", name = "面包削DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig breadcrumb;
 
     @Field(key = "itemActive", name = "选中元素项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemActive;
 
     @Field(key = "content", name = "元素项内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig content;
 
     @Field(key = "item", name = "元素项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig item;
 
     public DomConfig getBreadcrumb() {

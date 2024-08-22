@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component(key = "cache.cleanup", name = "缓存清理", logicConfigClass = CacheCleanupLogicConfig.class, initConfigClass = CacheCleanupInitConfig.class)
+@Component(key = "cache.cleanup", order = 200, name = "缓存清理", logicConfigClass = CacheCleanupLogicConfig.class, initConfigClass = CacheCleanupInitConfig.class)
 @ComponentResult(name = "被清理的缓存数据（KEY-VALUE键值对结构）")
 public class CacheCleanupComponent extends AbstractCacheComponent<CacheCleanupInitConfig, CacheCleanupLogicConfig> {
 

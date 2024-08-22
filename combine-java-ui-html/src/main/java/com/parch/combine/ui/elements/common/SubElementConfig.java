@@ -5,7 +5,6 @@ import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.SubConfig;
 import com.parch.combine.ui.core.base.element.SubElement;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 /**
  * 下级元素配置
@@ -17,7 +16,7 @@ public class SubElementConfig {
     private String text;
 
     @Field(key = "elements", name = "元素组配置集合", type = FieldTypeEnum.ELEMENT, isArray = true)
-    @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
+    // @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
     @SubElement
     private Object elements;
 

@@ -10,7 +10,7 @@ import com.parch.combine.gui.base.build.control.from.LayoutEnum;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 
-@Component(key = "build.control.from", name = "GUI表单控件", logicConfigClass = GUIControlFromLogicConfig.class, initConfigClass = GUIControlFromInitConfig.class)
+@Component(key = "build.control.from", order = 100, name = "GUI表单控件", logicConfigClass = GUIControlFromLogicConfig.class, initConfigClass = GUIControlFromInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlFromComponent extends AbstractGUIControlComponent<GUIControlFromInitConfig, GUIControlFromLogicConfig> {
 

@@ -8,7 +8,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
-@Component(key = "build.control.radio", name = "GUI单选框控件", logicConfigClass = GUIControlRadioLogicConfig.class, initConfigClass = GUIControlRadioInitConfig.class)
+@Component(key = "build.control.radio", order = 100, name = "GUI单选框控件", logicConfigClass = GUIControlRadioLogicConfig.class, initConfigClass = GUIControlRadioInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlRadioComponent extends AbstractGUIControlComponent<GUIControlRadioInitConfig, GUIControlRadioLogicConfig> {
 

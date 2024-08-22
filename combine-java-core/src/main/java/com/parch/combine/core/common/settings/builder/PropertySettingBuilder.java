@@ -38,19 +38,20 @@ public class PropertySettingBuilder {
         }
         parsedClass.add(propertyClass);
 
-        // 解析类
+        // 解析父类
         Class<?> superclass = propertyClass.getSuperclass();
         if (superclass != null && superclass != Object.class) {
-            CommonObject componentCommonObject = superclass.getAnnotation(CommonObject.class);
-            if (componentCommonObject == null) {
-                buildProperties(scope, properties, superclass, keyPrefix, parsedClass);
-            } else {
+            boolean success = CommonObjectSettingBuilder.load(scope, propertyClass);
+            if (success) {
                 // 继承公共对象的情况
+                CommonObjectSetting commonSetting = CommonObjectSettingBuilder.get(scope, propertyClass.getName());
                 PropertySetting commonPropertyRef = new PropertySetting();
                 commonPropertyRef.setKey("提示");
-                commonPropertyRef.setName("本配置对象支持【" + componentCommonObject.name() + "】的全部配置项");
-                commonPropertyRef.setDesc(Collections.singletonList("配置项列表，请参考公共对象【" + componentCommonObject.name() + "】"));
+                commonPropertyRef.setName("本配置对象支持【" + commonSetting.getName() + "】的全部配置项");
+                commonPropertyRef.setDesc(Collections.singletonList("配置项列表，请参考公共对象【" + commonSetting.getName() + "】"));
                 properties.add(commonPropertyRef);
+            } else {
+                buildProperties(scope, properties, superclass, keyPrefix, parsedClass);
             }
         }
 
@@ -115,29 +116,34 @@ public class PropertySettingBuilder {
     }
 
     private static void setConfigProperty(String scope, List<PropertySetting> properties, PropertySetting property, AnnotatedElement field, String keyPrefix, Set<Class<?>> parsedClass) {
-        FieldObject fieldObjectAnnotation = field.getAnnotation(FieldObject.class);
-        if (fieldObjectAnnotation != null) {
-            List<PropertySetting> subProperties = new ArrayList<>();
-            buildProperties(scope, subProperties, fieldObjectAnnotation.value(), keyPrefix + property.getKey() + ".", parsedClass);
-            properties.addAll(subProperties);
-            return;
-        }
-
         FieldRef fieldRefAnnotation = field.getAnnotation(FieldRef.class);
         if (fieldRefAnnotation != null) {
-            List<CommonObjectSetting> commonObjectSettings = CommonObjectSettingBuilder.get(scope, fieldRefAnnotation.key());
-            if (CheckEmptyUtil.isEmpty(commonObjectSettings)) {
-                return;
+            StringBuilder sb = new StringBuilder("详见 ");
+
+            // 加载公共属性
+            Class<?>[] refClasses = fieldRefAnnotation.value();
+            for (Class<?> refClass : refClasses) {
+                CommonObjectSettingBuilder.load(scope, refClass);
+                CommonObjectSetting commonObjectSetting = CommonObjectSettingBuilder.get(scope, refClass.getName());
+                if (commonObjectSetting == null) {
+                    continue;
+                }
+
+                sb.append("【").append(commonObjectSetting.getName()).append("】");
             }
 
             if (property.getDesc() == null) {
                 property.setDesc(new ArrayList<>());
             }
-            StringBuilder refDesc = new StringBuilder("详见：");
-            for (CommonObjectSetting componentCommonObjectSetting : commonObjectSettings) {
-                refDesc.append("【").append(componentCommonObjectSetting.getName()).append("】");
-            }
-            property.getDesc().add(refDesc.toString());
+            property.getDesc().add(sb.toString());
+            return;
+        }
+
+        FieldObject fieldObjectAnnotation = field.getAnnotation(FieldObject.class);
+        if (fieldObjectAnnotation != null) {
+            List<PropertySetting> subProperties = new ArrayList<>();
+            buildProperties(scope, subProperties, fieldObjectAnnotation.value(), property.getKey() + ".", parsedClass);
+            properties.addAll(subProperties);
         }
     }
 

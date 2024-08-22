@@ -12,7 +12,7 @@ public class GUITextareaElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "textarea", name = "多行文本输入框元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig textarea;
 
     public ElementConfig getTextarea() {

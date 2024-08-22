@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.label.GUIControlLabelLogicConfig
 import com.parch.combine.gui.base.build.control.label.GUILabelElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.label", name = "GUI标题控件", logicConfigClass = GUIControlLabelLogicConfig.class, initConfigClass = GUIControlLabelInitConfig.class)
+@Component(key = "build.control.label", order = 100, name = "GUI标题控件", logicConfigClass = GUIControlLabelLogicConfig.class, initConfigClass = GUIControlLabelInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlLabelComponent extends AbstractGUIControlComponent<GUIControlLabelInitConfig, GUIControlLabelLogicConfig> {
 

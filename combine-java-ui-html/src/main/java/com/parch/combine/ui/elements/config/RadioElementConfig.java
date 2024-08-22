@@ -6,7 +6,13 @@ import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.element.ElementConfig;
 import com.parch.combine.ui.core.base.trigger.Trigger;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
+import com.parch.combine.ui.core.base.trigger.TriggerCallFlowConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCallFuncConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCallUrlConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCustomConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerLoadConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerLoadDataConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerSkipConfig;
 import com.parch.combine.ui.core.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.common.OptionElementConfig;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
@@ -33,7 +39,8 @@ public class RadioElementConfig extends ElementConfig<RadioElementTemplateConfig
     private Boolean disabled;
 
     @Field(key = "triggers", name = "单选框触发配置（用于实现多级联动，暂未不支持使用）", type = FieldTypeEnum.OBJECT, isArray = true)
-    @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
+    @FieldRef({TriggerCallFlowConfig.class, TriggerCallFuncConfig.class, TriggerCallUrlConfig.class,
+            TriggerCustomConfig.class, TriggerLoadConfig.class, TriggerLoadDataConfig.class, TriggerSkipConfig.class})
     @Trigger
     private Object triggers;
 

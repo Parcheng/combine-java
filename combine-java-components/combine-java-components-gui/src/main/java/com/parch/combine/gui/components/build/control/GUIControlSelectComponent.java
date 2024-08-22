@@ -8,7 +8,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
-@Component(key = "build.control.select", name = "GUI下拉框控件", logicConfigClass = GUIControSelectLogicConfig.class, initConfigClass = GUIControlSelectInitConfig.class)
+@Component(key = "build.control.select", order = 100, name = "GUI下拉框控件", logicConfigClass = GUIControSelectLogicConfig.class, initConfigClass = GUIControlSelectInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlSelectComponent extends AbstractGUIControlComponent<GUIControlSelectInitConfig, GUIControSelectLogicConfig> {
 

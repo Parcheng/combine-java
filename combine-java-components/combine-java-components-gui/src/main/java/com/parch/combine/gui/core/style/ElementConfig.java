@@ -16,7 +16,7 @@ import com.parch.combine.gui.core.style.enums.AlignmentXEnum;
 import com.parch.combine.gui.core.style.enums.AlignmentYEnum;
 import com.parch.combine.gui.core.style.enums.LayoutTypeEnum;
 
-@CommonObject(key = ElementObjectConstant.GUI_ELEMENT, name = ElementObjectConstant.GUI_ELEMENT_NAME)
+@CommonObject(name = ElementObjectConstant.GUI_ELEMENT_NAME)
 public class ElementConfig implements IMerge<ElementConfig> {
 
     @Field(key = "layout", name = "布局类型", type = FieldTypeEnum.SELECT, defaultValue = "GRID")
@@ -34,22 +34,22 @@ public class ElementConfig implements IMerge<ElementConfig> {
 
     @Field(key = "size", name = "尺寸配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementSizeConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_SIZE)
+    @FieldRef(ElementSizeConfig.class)
     private ElementSizeConfig size;
 
     @Field(key = "border", name = "边框配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementBorderConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_BORDER)
+    @FieldRef(ElementBorderConfig.class)
     private ElementBorderConfig border;
 
     @Field(key = "font", name = "字体配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementFontConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_FONT)
+    @FieldRef(ElementFontConfig.class)
     private ElementFontConfig font;
 
     @Field(key = "grid", name = "网格布局配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementGridConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT_GRID)
+    @FieldRef(ElementGridConfig.class)
     private ElementGridConfig grid;
 
     public ElementSizeConfig getSize() {

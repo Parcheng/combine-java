@@ -4,14 +4,13 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 import java.util.List;
 
 /**
  * 配置类
  */
-@CommonObject(order = 3, key = PageSettingCanstant.TRIGGER_KEY, name = "自定义触发配置", desc = "当 TYPE = CUSTOM 时的参数列表")
+@CommonObject(order = 3, name = "自定义触发配置", desc = "当 TYPE = CUSTOM 时的参数列表")
 public class TriggerCustomConfig extends TriggerConfig {
 
     @Field(key = "functionName", name = "自定义函数名", type = FieldTypeEnum.TEXT, isRequired = true)

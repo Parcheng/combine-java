@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.file.GUIControlFileInputLogicCon
 import com.parch.combine.gui.base.build.control.file.GUIFileInputElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.file", name = "GUI文件输入控件", logicConfigClass = GUIControlFileInputLogicConfig.class, initConfigClass = GUIControlFileInputInitConfig.class)
+@Component(key = "build.control.file", order = 100, name = "GUI文件输入控件", logicConfigClass = GUIControlFileInputLogicConfig.class, initConfigClass = GUIControlFileInputInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlFileInputComponent extends AbstractGUIControlComponent<GUIControlFileInputInitConfig, GUIControlFileInputLogicConfig> {
 

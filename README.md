@@ -267,7 +267,7 @@ public class MyElementTemplateConfig extends ElementTemplateConfig {
 
     // DomConfig 对象时是通用的 DOM 元素配置类，通过 FieldRef 注解可以直接引用系统内置的 DomConfig 属性 API 信息
     @Field(key = "headerDiv", name = "XXXXX", type = FieldTypeEnum.ANY)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig headerDiv;
 
     ... 其他自定义配置项和GET/SET方法 ...

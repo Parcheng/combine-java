@@ -12,7 +12,7 @@ public class GUILabelElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "label", name = "文本样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig label;
 
     public ElementConfig getLabel() {

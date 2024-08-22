@@ -12,7 +12,7 @@ public class GUIHtmlElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "page", name = "页面模块样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig page;
 
     public ElementConfig getPage() {

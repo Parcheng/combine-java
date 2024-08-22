@@ -17,12 +17,7 @@ public @interface CommonObject {
     int order() default 0;
 
     /**
-     * KEY 用于属性引用（KEY可以重复）
-     */
-    String key();
-
-    /**
-     * KEY 用于属性引用
+     * name 名称
      */
     String name();
 

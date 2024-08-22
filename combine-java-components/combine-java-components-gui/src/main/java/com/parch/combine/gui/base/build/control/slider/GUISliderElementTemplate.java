@@ -12,7 +12,7 @@ public class GUISliderElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "slider", name = "滑块样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig slider;
 
     public ElementConfig getSlider() {

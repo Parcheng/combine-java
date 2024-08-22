@@ -5,7 +5,7 @@ import com.parch.combine.core.common.settings.annotations.CommonObject;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-@CommonObject(key = ElementObjectConstant.GUI_ELEMENT_SIZE, name = ElementObjectConstant.GUI_ELEMENT_SIZE_NAME)
+@CommonObject(name = ElementObjectConstant.GUI_ELEMENT_SIZE_NAME)
 public class ElementSizeConfig {
 
     @Field(key = "width", name = "宽度", type = FieldTypeEnum.NUMBER)

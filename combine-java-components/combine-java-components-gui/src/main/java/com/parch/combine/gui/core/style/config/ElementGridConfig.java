@@ -9,7 +9,7 @@ import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 import com.parch.combine.gui.core.style.enums.GridFillEnum;
 
-@CommonObject(key = ElementObjectConstant.GUI_ELEMENT_GRID, name = ElementObjectConstant.GUI_ELEMENT_GRID_NAME)
+@CommonObject(name = ElementObjectConstant.GUI_ELEMENT_GRID_NAME)
 public class ElementGridConfig implements IMerge<ElementGridConfig> {
 
     @Field(key = "fill", name = "填充方向", type = FieldTypeEnum.SELECT, defaultValue = "NONE")

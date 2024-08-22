@@ -7,7 +7,7 @@ import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 
-@CommonObject(key = ElementObjectConstant.GUI_ELEMENT_BORDER, name = ElementObjectConstant.GUI_ELEMENT_BORDER_NAME)
+@CommonObject(name = ElementObjectConstant.GUI_ELEMENT_BORDER_NAME)
 public class ElementBorderConfig {
 
     @Field(key = "type", name = "边框类型", type = FieldTypeEnum.SELECT, defaultValue = "LINE")

@@ -4,7 +4,6 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.settings.annotations.CommonObject;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,7 @@ import java.util.Map;
 /**
  * 数据加载配置
  */
-@CommonObject(order = 2, key = PageSettingCanstant.DATA_LOAD_KEY, name = "调用外部API数据源配置", desc = "当 TYPE = URL 时的参数列表")
+@CommonObject(order = 2, name = "调用外部API数据源配置", desc = "当 TYPE = URL 时的参数列表")
 public class ApiDataLoadConfig extends DataLoadConfig {
 
     @Field(key = "url", name = "请求地址", type = FieldTypeEnum.TEXT, isRequired = true)

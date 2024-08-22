@@ -12,12 +12,12 @@ public class GUIRadioElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "radios", name = "单选元素集合样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig radios;
 
     @Field(key = "radio", name = "单选元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig radio;
 
     public ElementConfig getRadios() {

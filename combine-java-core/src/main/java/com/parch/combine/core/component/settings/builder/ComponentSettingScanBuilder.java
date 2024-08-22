@@ -22,7 +22,7 @@ public class ComponentSettingScanBuilder {
             return null;
         }
 
-        CommonObjectSettingBuilder.loads(scope, packageClasses);
+        // CommonObjectSettingBuilder.loads(scope, packageClasses);
 
         List<ComponentSetting> componentSettings = new ArrayList<>();
         for (Class<?> clazz : packageClasses) {

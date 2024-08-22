@@ -12,12 +12,12 @@ public class GUITreeElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "items", name = "每个层级样式配置", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig[] texts;
 
     @Field(key = "children", name = "子元素集合外部样式配置", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig children;
 
     public ElementConfig[] getTexts() {

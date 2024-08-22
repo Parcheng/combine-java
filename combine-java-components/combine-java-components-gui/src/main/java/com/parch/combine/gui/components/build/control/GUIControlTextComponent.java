@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.text.GUIControlTextLogicConfig;
 import com.parch.combine.gui.base.build.control.text.GUITextElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.text", name = "GUI文本控件", logicConfigClass = GUIControlTextLogicConfig.class, initConfigClass = GUIControlTextInitConfig.class)
+@Component(key = "build.control.text", order = 100, name = "GUI文本控件", logicConfigClass = GUIControlTextLogicConfig.class, initConfigClass = GUIControlTextInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlTextComponent extends AbstractGUIControlComponent<GUIControlTextInitConfig, GUIControlTextLogicConfig> {
 

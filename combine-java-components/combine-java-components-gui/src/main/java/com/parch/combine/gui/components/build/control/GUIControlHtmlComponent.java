@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.html.GUIControlHtmlLogicConfig;
 import com.parch.combine.gui.base.build.control.html.GUIHtmlElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.html", name = "GUI页面模块", logicConfigClass = GUIControlHtmlLogicConfig.class, initConfigClass = GUIControlHtmlInitConfig.class)
+@Component(key = "build.control.html", order = 100, name = "GUI页面模块", logicConfigClass = GUIControlHtmlLogicConfig.class, initConfigClass = GUIControlHtmlInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlHtmlComponent extends AbstractGUIControlComponent<GUIControlHtmlInitConfig, GUIControlHtmlLogicConfig> {
 

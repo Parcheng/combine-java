@@ -8,7 +8,7 @@ import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 import java.util.List;
 
-@CommonObject(key = ElementObjectConstant.GUI_ELEMENT_FONT, name = ElementObjectConstant.GUI_ELEMENT_FONT_NAME)
+@CommonObject(name = ElementObjectConstant.GUI_ELEMENT_FONT_NAME)
 public class ElementFontConfig {
 
     @Field(key = "names", name = "字体名称集合", type = FieldTypeEnum.SELECT)
