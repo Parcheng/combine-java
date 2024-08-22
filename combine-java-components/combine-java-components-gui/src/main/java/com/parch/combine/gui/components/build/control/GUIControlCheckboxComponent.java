@@ -8,7 +8,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
-@Component(key = "build.control.checkbox", name = "GUI多选框控件", logicConfigClass = GUIControlCheckboxLogicConfig.class, initConfigClass = GUIControlCheckboxInitConfig.class)
+@Component(key = "build.control.checkbox", order = 100, name = "GUI多选框控件", logicConfigClass = GUIControlCheckboxLogicConfig.class, initConfigClass = GUIControlCheckboxInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlCheckboxComponent extends AbstractGUIControlComponent<GUIControlCheckboxInitConfig, GUIControlCheckboxLogicConfig> {
 

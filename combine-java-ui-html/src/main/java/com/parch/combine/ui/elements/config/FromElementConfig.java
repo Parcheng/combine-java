@@ -7,7 +7,6 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.element.SubElement;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 import com.parch.combine.ui.core.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
 
@@ -82,7 +81,7 @@ public class FromElementConfig extends ElementConfig<FromElementTemplateConfig> 
         private Boolean showError;
 
         @Field(key = "element", name = "表单字段元素", type = FieldTypeEnum.ELEMENT)
-        @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
+        // @FieldRef(key = PageSettingCanstant.ELEMENT_ENTITY_KEY)
         @SubElement
         private Object element;
 

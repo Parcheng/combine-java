@@ -10,7 +10,7 @@ import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 import com.parch.combine.gui.core.element.sub.GUISubElementHelper;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.panel", name = "GUI面板控件", logicConfigClass = GUIControlPanelLogicConfig.class, initConfigClass = GUIControlPanelInitConfig.class)
+@Component(key = "build.control.panel", order = 100, name = "GUI面板控件", logicConfigClass = GUIControlPanelLogicConfig.class, initConfigClass = GUIControlPanelInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlPanelComponent extends AbstractGUIControlComponent<GUIControlPanelInitConfig, GUIControlPanelLogicConfig> {
 

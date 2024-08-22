@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.textarea.GUIControlTextareaLogic
 import com.parch.combine.gui.base.build.control.textarea.GUITextareaElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.textarea", name = "GUI多行文本输入控件", logicConfigClass = GUIControlTextareaLogicConfig.class, initConfigClass = GUIControlTextareaInitConfig.class)
+@Component(key = "build.control.textarea", order = 100, name = "GUI多行文本输入控件", logicConfigClass = GUIControlTextareaLogicConfig.class, initConfigClass = GUIControlTextareaInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlTextareaComponent extends AbstractGUIControlComponent<GUIControlTextareaInitConfig, GUIControlTextareaLogicConfig> {
 

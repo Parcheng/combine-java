@@ -10,7 +10,7 @@ import com.parch.combine.gui.core.element.IGUIElement;
 
 import java.util.UUID;
 
-@Component(key = "build.control.tree", name = "GUI树控件", logicConfigClass = GUIControlTreeLogicConfig.class, initConfigClass = GUIControlTreeInitConfig.class)
+@Component(key = "build.control.tree", order = 100, name = "GUI树控件", logicConfigClass = GUIControlTreeLogicConfig.class, initConfigClass = GUIControlTreeInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlTreeComponent extends AbstractGUIControlComponent<GUIControlTreeInitConfig, GUIControlTreeLogicConfig> {
 

@@ -11,32 +11,32 @@ public class GUIFrameTemplate {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig external;
 
     @Field(key = "top", name = "顶部样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig top;
 
     @Field(key = "bottom", name = "底部样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig bottom;
 
     @Field(key = "center", name = "中间样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig center;
 
     @Field(key = "left", name = "左侧样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig left;
 
     @Field(key = "right", name = "右侧样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig right;
 
     public ElementConfig getExternal() {

@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface FieldRef {
     /**
-     * 引用KEY
+     * 引用对象
      */
-    String key();
+    Class<?>[] value();
 }

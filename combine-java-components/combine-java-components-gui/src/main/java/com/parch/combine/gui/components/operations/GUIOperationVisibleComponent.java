@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.operations.visible.GUIOperationVisibleInitConf
 import com.parch.combine.gui.base.operations.visible.GUIOperationVisibleLogicConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "operations.visible", name = "GUI可见性设置", logicConfigClass = GUIOperationVisibleLogicConfig.class, initConfigClass = GUIOperationVisibleInitConfig.class)
+@Component(key = "operations.visible", order = 300, name = "GUI可见性设置", logicConfigClass = GUIOperationVisibleLogicConfig.class, initConfigClass = GUIOperationVisibleInitConfig.class)
 @ComponentResult(name = "异常或 true")
 public class GUIOperationVisibleComponent extends AbstractGUIOperationComponent<GUIOperationVisibleInitConfig, GUIOperationVisibleLogicConfig> {
 

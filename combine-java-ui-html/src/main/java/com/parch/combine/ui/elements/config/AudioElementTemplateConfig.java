@@ -5,24 +5,23 @@ import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.DomConfig;
 import com.parch.combine.ui.core.base.element.ElementTemplateConfig;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 public class AudioElementTemplateConfig extends ElementTemplateConfig {
 
     @Field(key = "audio", name = "音频DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig audio;
 
     @Field(key = "mp3", name = "mp3格式音频DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig mp3;
 
     @Field(key = "ogg", name = "ogg格式音频DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig ogg;
 
     @Field(key = "content", name = "不兼容展示的内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig content;
 
     public DomConfig getAudio() {

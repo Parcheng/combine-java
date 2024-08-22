@@ -5,26 +5,25 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.element.ElementTemplateConfig;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 import java.util.List;
 
 public class TextElementTemplateConfig extends ElementTemplateConfig {
 
     @Field(key = "line", name = "行通用DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig line;
 
     @Field(key = "children", name = "子文本DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig children;
 
     @Field(key = "levels", name = "每个层级的通用DOM配置集合", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private List<DomConfig> lines;
 
     @Field(key = "lines", name = "每行的DOM配置集合", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private List<DomConfig> levels;
 
     public DomConfig getLine() {

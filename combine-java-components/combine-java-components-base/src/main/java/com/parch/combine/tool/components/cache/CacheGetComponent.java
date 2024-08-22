@@ -15,7 +15,7 @@ import com.parch.combine.tool.base.cache.get.CacheGetLogicConfig;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component(key = "cache.get", name = "获取缓存数据", logicConfigClass = CacheGetLogicConfig.class, initConfigClass = CacheGetInitConfig.class)
+@Component(key = "cache.get", order = 200, name = "获取缓存数据", logicConfigClass = CacheGetLogicConfig.class, initConfigClass = CacheGetInitConfig.class)
 @ComponentResult(name = "缓存数据值")
 public class CacheGetComponent extends AbstractCacheComponent<CacheGetInitConfig, CacheGetLogicConfig> {
 

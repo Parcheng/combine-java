@@ -15,12 +15,12 @@ public class GUIButtonElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "button", name = "按钮样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig button;
 
     @Field(key = "buttonTypes", name = "按钮类型样式配置", type = FieldTypeEnum.MAP)
     @FieldMapValue(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private Map<String, ElementConfig> buttonTypes;
 
     public ElementConfig getButton() {

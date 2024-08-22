@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.operations.value.get.GUIOperationValueGetInitC
 import com.parch.combine.gui.base.operations.value.get.GUIOperationValueGetLogicConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "operations.value.get", name = "GUI元素获取值", logicConfigClass = GUIOperationValueGetLogicConfig.class, initConfigClass = GUIOperationValueGetInitConfig.class)
+@Component(key = "operations.value.get", order = 300, name = "GUI元素获取值", logicConfigClass = GUIOperationValueGetLogicConfig.class, initConfigClass = GUIOperationValueGetInitConfig.class)
 @ComponentResult(name = "GUI元素值")
 public class GUIOperationValueGetComponent extends AbstractGUIOperationComponent<GUIOperationValueGetInitConfig, GUIOperationValueGetLogicConfig> {
 

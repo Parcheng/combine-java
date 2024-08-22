@@ -9,7 +9,7 @@ import com.parch.combine.gui.base.build.control.table.GUITableElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.element.sub.GUISubElementConfig;
 
-@Component(key = "build.control.table", name = "GUI表格控件", logicConfigClass = GUIControlTableLogicConfig.class, initConfigClass = GUIControlTableInitConfig.class)
+@Component(key = "build.control.table", order = 100, name = "GUI表格控件", logicConfigClass = GUIControlTableLogicConfig.class, initConfigClass = GUIControlTableInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlTableComponent extends AbstractGUIControlComponent<GUIControlTableInitConfig, GUIControlTableLogicConfig> {
 

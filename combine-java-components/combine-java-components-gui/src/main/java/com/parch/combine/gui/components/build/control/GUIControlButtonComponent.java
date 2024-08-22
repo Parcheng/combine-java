@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.button.GUIControlButtonInitConfi
 import com.parch.combine.gui.base.build.control.button.GUIControlButtonLogicConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.button", name = "GUI按钮控件", logicConfigClass = GUIControlButtonLogicConfig.class, initConfigClass = GUIControlButtonInitConfig.class)
+@Component(key = "build.control.button", order = 100, name = "GUI按钮控件", logicConfigClass = GUIControlButtonLogicConfig.class, initConfigClass = GUIControlButtonInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlButtonComponent extends AbstractGUIControlComponent<GUIControlButtonInitConfig, GUIControlButtonLogicConfig> {
 

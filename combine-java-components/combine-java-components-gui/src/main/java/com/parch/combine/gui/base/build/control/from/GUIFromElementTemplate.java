@@ -12,17 +12,17 @@ public class GUIFromElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "item", name = "FROM项样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig item;
 
     @Field(key = "label", name = "左侧文本样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig label;
 
     @Field(key = "control", name = "右侧控件样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig control;
 
     public ElementConfig getItem() {

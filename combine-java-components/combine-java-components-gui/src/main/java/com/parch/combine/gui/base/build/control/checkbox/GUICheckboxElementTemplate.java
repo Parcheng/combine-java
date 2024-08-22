@@ -12,12 +12,12 @@ public class GUICheckboxElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "checkboxes", name = "多选元素集合样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig checkboxes;
 
     @Field(key = "checkbox", name = "多选元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig checkbox;
 
     public ElementConfig getCheckbox() {

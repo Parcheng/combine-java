@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.img.GUIControlImgLogicConfig;
 import com.parch.combine.gui.base.build.control.img.GUIImgElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.img", name = "GUI图片模块", logicConfigClass = GUIControlImgLogicConfig.class, initConfigClass = GUIControlImgInitConfig.class)
+@Component(key = "build.control.img", order = 100, name = "GUI图片模块", logicConfigClass = GUIControlImgLogicConfig.class, initConfigClass = GUIControlImgInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlImgComponent extends AbstractGUIControlComponent<GUIControlImgInitConfig, GUIControlImgLogicConfig> {
 

@@ -12,7 +12,7 @@ public class GUIImgElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "img", name = "图片元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig img;
 
     public ElementConfig getImg() {

@@ -7,9 +7,15 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.SubConfig;
 import com.parch.combine.ui.core.base.element.ElementConfig;
 import com.parch.combine.ui.core.base.trigger.Trigger;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 import com.parch.combine.ui.core.settings.annotations.PageElement;
 import com.parch.combine.ui.elements.tools.SystemElementPathTool;
+import com.parch.combine.ui.core.base.trigger.TriggerCallFlowConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCallFuncConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCallUrlConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerCustomConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerLoadConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerLoadDataConfig;
+import com.parch.combine.ui.core.base.trigger.TriggerSkipConfig;
 
 import java.util.List;
 
@@ -38,7 +44,8 @@ public class ButtonElementConfig extends ElementConfig<ButtonElementTemplateConf
         private String text;
 
         @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.TRIGGER, isArray = true)
-        @FieldRef(key = PageSettingCanstant.TRIGGER_KEY)
+        @FieldRef({TriggerCallFlowConfig.class, TriggerCallFuncConfig.class, TriggerCallUrlConfig.class, 
+            TriggerCustomConfig.class, TriggerLoadConfig.class, TriggerLoadDataConfig.class, TriggerSkipConfig.class})
         @Trigger
         private Object triggers;
 

@@ -8,7 +8,7 @@ import com.parch.combine.gui.base.build.control.paging.GUIControlPagingLogicConf
 import com.parch.combine.gui.base.build.control.paging.GUIPagingElement;
 import com.parch.combine.gui.core.element.IGUIElement;
 
-@Component(key = "build.control.paging", name = "GUI分页控件", logicConfigClass = GUIControlPagingLogicConfig.class, initConfigClass = GUIControlPagingInitConfig.class)
+@Component(key = "build.control.paging", order = 100, name = "GUI分页控件", logicConfigClass = GUIControlPagingLogicConfig.class, initConfigClass = GUIControlPagingInitConfig.class)
 @ComponentResult(name = "控件构建失败的错误信息或 true")
 public class GUIControlPagingComponent extends AbstractGUIControlComponent<GUIControlPagingInitConfig, GUIControlPagingLogicConfig> {
 

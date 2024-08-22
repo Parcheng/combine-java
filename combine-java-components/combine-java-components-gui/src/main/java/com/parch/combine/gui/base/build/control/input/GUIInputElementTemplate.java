@@ -12,12 +12,12 @@ public class GUIInputElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "input", name = "输入元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig input;
 
     @Field(key = "symbol", name = "前后缀元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig symbol;
 
     public ElementConfig getInput() {

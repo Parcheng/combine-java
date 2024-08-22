@@ -5,13 +5,12 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@CommonObject(key = PageSettingCanstant.DOM_KEY, name = "页面DOM元素配置")
+@CommonObject(name = "页面DOM元素配置")
 public class DomConfig{
 
     @Field(key = "tag", name = "DOM标签", type = FieldTypeEnum.TEXT, isRequired = true)

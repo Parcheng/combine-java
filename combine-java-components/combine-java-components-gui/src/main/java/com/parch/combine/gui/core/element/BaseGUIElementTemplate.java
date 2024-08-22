@@ -13,7 +13,7 @@ public class BaseGUIElementTemplate implements IMerge<BaseGUIElementTemplate> {
 
     @Field(key = "external", name = "外部元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig external;
 
     public ElementConfig getExternal() {

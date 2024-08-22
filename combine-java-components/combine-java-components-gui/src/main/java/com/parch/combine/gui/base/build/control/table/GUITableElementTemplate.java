@@ -14,17 +14,17 @@ public class GUITableElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "table", name = "表格配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig table;
 
     @Field(key = "header", name = "表格头样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig header;
 
     @Field(key = "cell", name = "单元格样式配置", type = FieldTypeEnum.OBJECT, isArray = true)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private List<ElementConfig> cells;
 
     public ElementConfig getHeader() {

@@ -5,20 +5,19 @@ import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.DomConfig;
 import com.parch.combine.ui.core.base.element.ElementTemplateConfig;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 public class BannerElementTemplateConfig extends ElementTemplateConfig {
 
     @Field(key = "close", name = "关闭标识DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig close;
 
     @Field(key = "img", name = "图片内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig img;
 
     @Field(key = "text", name = "文本内容DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig text;
 
     public DomConfig getClose() {

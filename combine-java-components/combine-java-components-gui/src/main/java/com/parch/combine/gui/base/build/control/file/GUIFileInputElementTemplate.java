@@ -12,12 +12,12 @@ public class GUIFileInputElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "input", name = "输入元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig input;
 
     @Field(key = "choose", name = "选择按钮样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig choose;
 
     public ElementConfig getInput() {

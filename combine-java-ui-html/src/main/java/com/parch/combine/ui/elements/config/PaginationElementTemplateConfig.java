@@ -5,44 +5,43 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.ui.core.base.element.ElementTemplateConfig;
-import com.parch.combine.ui.core.settings.PageSettingCanstant;
 
 public class PaginationElementTemplateConfig extends ElementTemplateConfig {
 
     @Field(key = "pagination", name = "分页DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig pagination;
 
     @Field(key = "item", name = "分页项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig item;
 
     @Field(key = "itemActive", name = "分页项选中时DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemActive;
 
     @Field(key = "itemDisabled", name = "分页项不可选时DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemDisabled;
 
     @Field(key = "itemContentFirst", name = "首页项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemContentFirst;
 
     @Field(key = "itemContentEnd", name = "尾页项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemContentEnd;
 
     @Field(key = "itemContentNum", name = "选页项DOM配置", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemContentNum;
 
     @Field(key = "itemContentSkip", name = "跳转指定页DOM配置（暂不支持）", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemContentSkip;
 
     @Field(key = "itemContentSkipInput", name = "跳转指定页输入框DOM配置（暂不支持）", type = FieldTypeEnum.OBJECT)
-    @FieldRef(key = PageSettingCanstant.DOM_KEY)
+    @FieldRef(DomConfig.class)
     private DomConfig itemContentSkipInput;
 
     public DomConfig getPagination() {

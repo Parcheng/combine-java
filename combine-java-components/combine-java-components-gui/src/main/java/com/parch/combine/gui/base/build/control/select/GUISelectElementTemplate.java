@@ -12,12 +12,12 @@ public class GUISelectElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "select", name = "下拉元素样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig select;
 
     @Field(key = "option", name = "下拉项样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig option;
 
     public ElementConfig getSelect() {

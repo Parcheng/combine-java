@@ -12,7 +12,7 @@ public class GUITextElementTemplate extends BaseGUIElementTemplate {
 
     @Field(key = "text", name = "文本样式配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(ElementConfig.class)
-    @FieldRef(key = ElementObjectConstant.GUI_ELEMENT)
+    @FieldRef(ElementConfig.class)
     private ElementConfig text;
 
     public ElementConfig getText() {

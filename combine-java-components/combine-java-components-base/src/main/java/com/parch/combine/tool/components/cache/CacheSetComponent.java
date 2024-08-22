@@ -10,7 +10,7 @@ import com.parch.combine.tool.base.cache.set.CacheSetErrorEnum;
 import com.parch.combine.tool.base.cache.set.CacheSetInitConfig;
 import com.parch.combine.tool.base.cache.set.CacheSetLogicConfig;
 
-@Component(key = "cache.set", name = "设置缓存", logicConfigClass = CacheSetLogicConfig.class, initConfigClass = CacheSetInitConfig.class)
+@Component(key = "cache.set", order = 200, name = "设置缓存", logicConfigClass = CacheSetLogicConfig.class, initConfigClass = CacheSetInitConfig.class)
 @ComponentResult(name = "异常信息或 true")
 public class CacheSetComponent extends AbstractCacheComponent<CacheSetInitConfig, CacheSetLogicConfig> {
 
