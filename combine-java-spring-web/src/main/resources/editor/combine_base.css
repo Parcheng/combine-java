@@ -3,7 +3,7 @@
     box-sizing: border-box;
 }
 
-:root{
+/* :root{
     --bg_color:white;
     
     --main_color:#1874CD;
@@ -18,7 +18,7 @@
     
     --anti_color: white;
     --deep_anti_color: #dddddd;
-}
+} */
 
 html,body{
     height: 100%;
@@ -86,62 +86,4 @@ hr {
     border-top: 1px solid var(--main_color);
     opacity: 0.5;
 }
-
-.c-model {
-    display: inline-block;
-    vertical-align: top;
-}
-
-/* 公共样式 */
-.c-align-left {
-    text-align: left;
-}
-.c-align-right {
-    text-align: right;
-}
-.c-align-center {
-    text-align: center;
-}
-.c-none {
-    display: none;
-}
-.c-margin-30 {
-    margin: 30px;
-}
-
-/* 排版 */
-.c-center{ text-align: center; }
-.c-col-1{ width: 5%; display: inline-block; }
-.c-col-1{ width: 5%; display: inline-block; }
-.c-col-2{ width: 10%; display: inline-block; }
-.c-col-3{ width: 15%; display: inline-block; }
-.c-col-4{ width: 20%; display: inline-block; }
-.c-col-5{ width: 25%; display: inline-block; }
-.c-col-6{ width: 30%; display: inline-block; }
-.c-col-7{ width: 35%; display: inline-block; }
-.c-col-8{ width: 40%; display: inline-block; }
-.c-col-9{ width: 45%; display: inline-block; }
-.c-col-10{ width: 50%; display: inline-block; }
-.c-col-11{ width: 55%; display: inline-block; }
-.c-col-12{ width: 60%; display: inline-block; }
-.c-col-13{ width: 65%; display: inline-block; }
-.c-col-14{ width: 70%; display: inline-block; }
-.c-col-15{ width: 75%; display: inline-block; }
-.c-col-16{ width: 80%; display: inline-block; }
-.c-col-17{ width: 85%; display: inline-block; }
-.c-col-18{ width: 90%; display: inline-block; }
-.c-col-19{ width: 95%; display: inline-block; }
-.c-col-20{ width: 100%; display: inline-block; }
-
-
-    /*--bg_color:white;
-    --main_color:#1874CD;
-    --mid_color: #7EC0EE;
-    --light_color: #BFEFFF;
-    --font_color: #444444;
-    --light_font_color: #BBBBBB;
-    --err_font_color: red;
-    --anti_color: white;
-    --deep_anti_color: #dddddd;*/
-
 
