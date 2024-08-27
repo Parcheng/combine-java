@@ -3,7 +3,9 @@
     --border_color:#313131;
     --bg_light_color:rgb(225, 225, 225);
     --bg_color:rgb(146, 144, 144);
-    --font-color: white;
+    --bg_dark_color:black;
+    --font_color: white;
+    --font_dark_color: black;
 }
 
 
@@ -31,7 +33,7 @@
     margin-left: 2px;
     margin-top: 2px;
     background-color: var(--bg_color);
-    color: var(--font-color);
+    color: var(--font_color);
     cursor: pointer; 
 }
 
@@ -51,7 +53,7 @@
     text-align: center;
     margin-bottom: 5px;
     background-color: var(--bg_color);
-    color: var(--font-color);
+    color: var(--font_color);
     cursor: pointer; 
 }
 
@@ -62,39 +64,101 @@
     float: right;
 }
 
-.board .init{
-    width: 95%;
+.board .init,
+.board .block,
+.board .before,
+.board .after,
+.board .flow {
+    width: 100%;
     height: auto;
-    padding: 10px 5px;
+    min-height: 140px;
+    padding: 10px 8px;
     word-wrap: break-word;
     background-color: var(--bg_light_color);
-    color: var(--font-color);
+    color: var(--font_color);
+    margin-bottom: 10px;
 }
 
-.board .init .item{
+.board .title {
+    width: 100%;
+    height:  auto;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0px 5px;
+    margin-bottom: 12px;
+    text-align: left;
+    color: var(--font_dark_color);
+}
+
+.board .component-item {
     width: auto;
     min-width: 60px;
-    min-height: 25px;
+    height: 35px;
     display: inline-block;
+    vertical-align: top;
     font-size: 10px;
     padding: 5px;
     text-align: center;
     margin-left: 2px;
     margin-top: 2px;
     background-color: var(--bg_color);
-    color: var(--font-color);
+    color: var(--font_color);
     cursor: pointer; 
 }
 
-
-.right-tab {
-    width: 50px;
-    position: absolute;
-    margin-top: 10px;
-    right: 0px;
+.board .line-item {
+    height: 35px;
+    line-height: 26px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px;
+    margin-left: 2px;
+    margin-top: 2px;
+    color: var(--font_dark_color);
 }
-.right-tab .tab-item {
-    width: 100px;
+
+.board .settings-item {
+    width: auto;
+    min-width: 35px;
+    height: 35px;
+    line-height: 26px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 10px;
+    text-align: center;
+    padding: 5px;
+    margin-left: 2px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background-color: var(--bg_dark_color);
+    color: var(--font_color);
+    cursor: pointer; 
+}
+
+.board .path-item{
+    width: auto;
+    min-width: 35px;
+    height: 35px;
+    line-height: 26px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 10px;
+    text-align: center;
+    padding: 5px 9px;
+    margin-left: 2px;
+    margin-top: 2px;
+    border-radius: 17px;
+    background-color: var(--bg_dark_color);
+    color: var(--font_color);
+}
+
+.board .flow-item {
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: var(--border_color);
 }
 
 hr {
