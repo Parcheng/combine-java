@@ -2,16 +2,80 @@
 // 引用暂时只允许引block的
 // flow-component，flow-item 构建 取值 序列化 封装成对象，可new
 
-var groupSettings = {};
-var componentSettings = {};
+var groupMap = {};
+var componentMap = {};
 
 var config = { init: {}, block: {}, before: {}, after: {}, flow: {} };
 
 // document.getElementsById("group");
 
+window.onload = function() {
+    // load data to groupList and componentMap
+    // buildFns.groups
+    // buildFns.components first
+};
+
 
 var buildFns = {
+    groups: function() {
+        var groupList = [];
+        for (const key in groupMap) {
+            if (Object.prototype.hasOwnProperty.call(groupMap, key)) {
+                groupList.push(groupMap[key]);
+            }
+        }
 
+        var groupDom = document.getElementById("group");
+        var doms = buildDomFns.tool.groups(groupList);
+        domTools.setAll(groupDom, doms);
+    },
+    components: function(groupKey) {
+        var group = groupMap[groupKey];
+        if (group && group.components) {
+            var componentKeys = group.components;
+            var componentList = [];
+            for (const key in componentKeys) {
+                if (Object.prototype.hasOwnProperty.call(componentKeys, key)) {
+                    const component = componentKeys[groupKey + "." + key];
+                    if (component) {
+                        componentList.push(component);
+                    }
+                }
+            }
+            var componentDom = document.getElementById("component");
+            var doms =  buildDomFns.tool.components(componentList);
+            domTools.setAll(componentDom, doms);
+        }
+    },
+    beforeFlow: function(flowId) {
+        var beforeDom = domTools.node.beforeOrAfterFlow(flowId);
+
+        
+        // settings
+        // before
+    },
+    afterFlow: function(flowId) {
+        // settings
+        // after
+    },
+    flow: function(flowId, path) {
+        // path
+        // flow
+    },
+    flowItem: function(flowId, data) {
+        // - componentLogic
+        // config.before.id ? 
+        // 这里不用 data
+        var componentLogicDom = domTools.node.componentLogic(null, data);
+    },
+    initItem: function() {
+        // componentInit
+        // init
+    },
+    blockItem: function() {
+        // componentLogic
+        // block
+    },
 }
 
 var buildDomFns = {
@@ -64,7 +128,7 @@ var buildDomFns = {
         },
         componentLogic: function(logicId, data) {
             var dom = document.createElement("div");
-            dom.name = "cn-" + data.key;
+            dom.name = "cl-" + data.key;
             dom.className = "component-item";
             dom.innerHTML = data.type + "<br>" + data.key;
             dom.ondblclick = function() {
@@ -154,4 +218,25 @@ var callFns = {
         }
     }
 
+}
+
+var domTools = {
+    clearAll: function(parentDom) {
+        if (parentDom) {
+            parentDom.innerHTML = "";
+        }
+    },
+    setAll: function(parentDom, subDoms) {
+        if (parentDom) {
+            domTools.clearAll(parentDom);
+            domTools.addAll(parentDom, subDoms);
+        }
+    },
+    addAll: function(parentDom, subDoms) {
+        if (parentDom && subDoms) {
+            for (let i = 0; i < subDoms.length; i++) {
+                parentDom.appendChild(subDoms[i]);
+            }
+        }
+    },
 }
