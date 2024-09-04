@@ -5,16 +5,43 @@
 var groupMap = {};
 var componentMap = {};
 
-var config = { init: {}, block: {}, before: {}, after: {}, flow: {} };
+var config = { componentInit: {}, componentLogic: {}, before:{}, after:{}, flow:{}};
+var idIndex = { before:1, after:1, flow:1, componentLogic:1, componentInit:1 };
+var idPrefix = { before: "b_", after: "a_", flow: "f_", componentLogic: "cl_", componentInit: "ci_" }
 
 // document.getElementsById("group");
 
 window.onload = function() {
-    // load data to groupList and componentMap
-    // buildFns.groups
-    // buildFns.components first
 };
 
+var initFns = {
+    loadData() {
+        // load data to groupList and componentMap
+    },
+    loadGroup() {
+        // buildFns.groups
+        // buildFns.components first
+    },
+    bindAddItemEvent: function() {
+        var beforeAddDom = document.getElementById("before-add");
+        dom.ondblclick = function() {
+            var flowId = buildFns.beforeFlow();
+            optFns.node.openFlowSettingsWindow(flowId);
+        }
+    
+        var afterAddDom = document.getElementById("after-add");
+        dom.ondblclick = function() {
+            var flowId = buildFns.afterFlow();
+            optFns.node.openFlowSettingsWindow(flowId);
+        }
+
+        var flowAddDom = document.getElementById("flow-add");
+        dom.ondblclick = function() {
+            var flowId = buildFns.flow();
+            optFns.node.openFlowPathWindow(flowId);
+        }
+    }
+}
 
 var buildFns = {
     groups: function() {
@@ -47,34 +74,111 @@ var buildFns = {
             domTools.setAll(componentDom, doms);
         }
     },
-    beforeFlow: function(flowId) {
-        var beforeDom = domTools.node.beforeOrAfterFlow(flowId);
+    beforeFlow: function() {
+        var flowId = idPrefix.before + (idIndex.before++);
 
-        
-        // settings
-        // before
+        var parentDom = document.getElementById("before");
+        var beforeDom = buildDomFns.node.flow(flowId);
+        domTools.setAll(parentDom, [beforeDom]);
+
+        config.before[flowId] = { 
+            id: flowId,
+            components:[] 
+        };
+        var settingsDom = buildDomFns.node.flowSettingsItem(flowId);
+        domTools.addAll(beforeDom, [settingsDom]);
+
+        return flowId;
     },
-    afterFlow: function(flowId) {
-        // settings
-        // after
+    afterFlow: function() {
+        var flowId = idPrefix.after + (idIndex.after++);
+
+        var parentDom = document.getElementById("after");
+        var beforeDom = buildDomFns.node.flow(flowId);
+        domTools.addAll(parentDom, [beforeDom]);
+
+        config.after[flowId] = { 
+            id: flowId,
+            components:[] 
+        };
+        var settingsDom = buildDomFns.node.flowSettingsItem(flowId);
+        domTools.setAll(beforeDom, [settingsDom]);
+
+        return flowId;
     },
-    flow: function(flowId, path) {
-        // path
-        // flow
+    flow: function(path) {
+        var flowId = idPrefix.flow + path;
+        if (config.flow[flowId]) {
+            alert(path + "已经存在！");
+            return;
+        }
+
+        var parentDom = document.getElementById("flow");
+        var beforeDom = buildDomFns.node.flow(flowId);
+        domTools.addAll(parentDom, [beforeDom]);
+
+        config.flow[flowId] = { 
+            id: flowId,
+            path: path,
+            components: []
+        };
+        var settingsDom = buildDomFns.node.flowPathItem(flowId, path);
+        domTools.setAll(beforeDom, [settingsDom]);
+
+        return flowId;
     },
-    flowItem: function(flowId, data) {
-        // - componentLogic
-        // config.before.id ? 
-        // 这里不用 data
-        var componentLogicDom = domTools.node.componentLogic(null, data);
+    flowItem: function(flowId, key, type) {
+        var flowDom = document.getElementById(flowId);
+        var flowNodeData = config.flow[flowId];
+        if (!flowDom || !flowNodeData) {
+            alert("流程不存在");
+            return;
+        }
+
+        var currIdIndex = idIndex.componentLogic++;
+        var logicId = idPrefix.componentLogic + currIdIndex;
+        config.componentLogic[logicId] = {
+            id: currIdIndex,
+            flowId: flowId,
+            key: key,
+            type: type,
+            config: { id: currIdIndex }
+        };
+
+        var flagDom = buildDomFns.node.flowLineItem();
+        var componentLogicDom = buildDomFns.node.componentLogic(logicId, key, type);
+        domTools.addAll(flowDom, [flagDom, componentLogicDom]);
     },
-    initItem: function() {
-        // componentInit
-        // init
+    initItem: function(key, type) {
+        var initDom = document.getElementById("init");
+
+        var currIdIndex = idIndex.componentInit++;
+        var inidId = idPrefix.componentInit + currIdIndex;
+        config.componentInit[inidId] = {
+            id: currIdIndex,
+            key: key,
+            type: type,
+            config: { id: currIdIndex }
+        };
+
+        var componentInitDom = buildDomFns.node.componentInit(inidId, key, type);
+        domTools.addAll(initDom, [componentInitDom]);
     },
     blockItem: function() {
-        // componentLogic
-        // block
+        var blockDom = document.getElementById("block");
+
+        var currIdIndex = idIndex.componentLogic++;
+        var logicId = idPrefix.componentLogic + currIdIndex;
+        config.componentLogic[logicId] = {
+            id: currIdIndex,
+            flowId: flowId,
+            key: key,
+            type: type,
+            config: { id: currIdIndex }
+        };
+
+        var componentLogicDom = buildDomFns.node.componentLogic(logicId, key, type);
+        domTools.addAll(blockDom, [flagDom, componentLogicDom]);
     },
 }
 
@@ -90,7 +194,7 @@ var buildDomFns = {
                 itemDom.className = "item";
                 itemDom.textContent = itemData.name;
                 itemDom.onclick = function() {
-                    callFns.tool.checkGroup(key);
+                    optFns.tool.checkGroup(key);
                 }
                 doms.push(itemDom);
             }
@@ -107,7 +211,7 @@ var buildDomFns = {
                 itemDom.className = "item";
                 itemDom.textContent = itemData.name;
                 itemDom.onclick = function() {
-                    callFns.tool.openCheckComponentWindow(key);
+                    optFns.tool.openCheckComponentWindow(key);
                 }
                 doms.push(itemDom);
             }
@@ -116,44 +220,38 @@ var buildDomFns = {
         },
     },
     node: {
-        componentInit: function(initId, data) {
+        componentInit: function(initId, key, type) {
             var dom = document.createElement("div");
-            dom.id = "cin-" + data.key;
+            dom.id = initId;
             dom.className = "component-item";
-            dom.innerHTML = data.type + "<br>" + data.key;
+            dom.innerHTML = type + "<br>" + key;
             dom.ondblclick = function() {
-                callFns.node.openComponentInitWindow(initId);
+                optFns.node.openComponentInitWindow(initId);
             }
             return dom;
         },
-        componentLogic: function(logicId, data) {
+        componentLogic: function(logicId, key, type) {
             var dom = document.createElement("div");
-            dom.name = "cl-" + data.key;
+            dom.name = logicId;
             dom.className = "component-item";
-            dom.innerHTML = data.type + "<br>" + data.key;
+            dom.innerHTML = type + "<br>" + key;
             dom.ondblclick = function() {
-                callFns.node.openComponentLogicWindow(logicId);
+                optFns.node.openComponentLogicWindow(logicId);
             }
-            return dom;
-        },
-        beforeOrAfterFlow: function(flowId) {
-            var dom = document.createElement("div");
-            dom.id = "boaf-" + flowId;
-            dom.className = "flow-item";
             return dom;
         },
         flow: function(flowId) {
             var dom = document.createElement("div");
-            dom.id = "f-" + flowId;
+            dom.id = flowId;
             dom.className = "flow-item";
             return dom;
         },
-        flowSettingsItem: function(flowId) {
+        flowSettingsItem: function(flowId, type) {
             var dom = document.createElement("div");
             dom.className = "settings-item";
             dom.textContent = "设置";
             dom.ondblclick = function() {
-                callFns.node.openFlowSettingsWindow(flowId);
+                optFns.node.openFlowSettingsWindow(flowId);
             }
             return dom;
         },
@@ -168,7 +266,7 @@ var buildDomFns = {
             dom.className = "path-item";
             dom.textContent = flowPath;
             dom.ondblclick = function() {
-                callFns.node.openFlowPathWindow(flowId);
+                optFns.node.openFlowPathWindow(flowId);
             }
             return dom;
         }
@@ -178,7 +276,7 @@ var buildDomFns = {
     }
 };
 
-var callFns = {
+var optFns = {
     tool: {
         checkGroup: function(key) {
         },
@@ -200,6 +298,7 @@ var callFns = {
         },
 
         openFlowSettingsWindow: function(flowId) {
+            // 解析flowId 前缀
         },
         confirmFlowSettings: function() {
         },
