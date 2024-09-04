@@ -1,54 +1,109 @@
 // ID重复检查（是否直接使用 id = xxx 的组件？）
 // 引用暂时只允许引block的
-// flow-component，flow-item 构建 取值 序列化 封装成对象，可new
 
+var firstGroup = null;
 var groupMap = {};
 var componentMap = {};
 
-var config = { componentInit: {}, componentLogic: {}, before:{}, after:{}, flow:{}};
-var idIndex = { before:1, after:1, flow:1, componentLogic:1, componentInit:1 };
-var idPrefix = { before: "b_", after: "a_", flow: "f_", componentLogic: "cl_", componentInit: "ci_" }
-
-// document.getElementsById("group");
+var config = { 
+    componentInit: {}, 
+    componentLogic: {}, 
+    before:{}, 
+    after:{}, 
+    flow:{}
+};
+var idIndex = { 
+    before:1, 
+    after:1, 
+    flow:1, 
+    componentLogic:1, 
+    componentInit:1 
+};
+var idPrefix = { 
+    group: "g_", 
+    component: "c_", 
+    before: "b_", 
+    after: "a_", 
+    flow: "f_", 
+    componentLogic: "cl_", 
+    componentInit: "ci_" 
+}
 
 window.onload = function() {
+    initFns.loadData();
+    initFns.loadGroup();
+    initFns.bindAddItemEvent();
 };
 
-var initFns = {
+const initFns = {
     loadData() {
-        // load data to groupList and componentMap
+        requestFns.file("./test.json", 
+            function(data) {
+                var groupDataArr = JSON.parse(data);
+                for (let i = 0; i < groupDataArr.length; i++) {
+                    const groupDataItem = groupDataArr[i];
+                    var currGroupData = groupMap[groupDataItem.key] = {
+                        key: groupDataItem.key,
+                        name: groupDataItem.name,
+                        components: []
+                    }
+
+                    if (i == 0) {
+                        firstGroup = currGroupData;
+                    }
+
+                    if (groupDataItem.settings && Array.isArray(groupDataItem.settings)) {
+                        for (let j = 0; j < groupDataItem.settings.length; j++) {
+                            const componentDataItem = groupDataItem.settings[j];
+                            componentMap[componentDataItem.key] = componentDataItem;
+                            currGroupData.components.push(componentDataItem.key);
+                        }
+                    }
+                }
+                console.log(groupMap);
+                console.log(componentMap);
+            },
+            function(data) {
+                alert("加载组件数据失败！")
+            }
+        );
     },
     loadGroup() {
-        // buildFns.groups
-        // buildFns.components first
+        buildFns.groups();
+        if (firstGroup) {
+            optFns.tool.checkGroup(firstGroup.key);
+        }
     },
     bindAddItemEvent: function() {
         var beforeAddDom = document.getElementById("before-add");
-        dom.ondblclick = function() {
+        beforeAddDom.onclick = function() {
             var flowId = buildFns.beforeFlow();
             optFns.node.openFlowSettingsWindow(flowId);
         }
     
         var afterAddDom = document.getElementById("after-add");
-        dom.ondblclick = function() {
+        afterAddDom.onclick = function() {
             var flowId = buildFns.afterFlow();
             optFns.node.openFlowSettingsWindow(flowId);
         }
 
         var flowAddDom = document.getElementById("flow-add");
-        dom.ondblclick = function() {
+        flowAddDom.onclick = function() {
             var flowId = buildFns.flow();
             optFns.node.openFlowPathWindow(flowId);
         }
     }
 }
 
-var buildFns = {
+const buildFns = {
     groups: function() {
         var groupList = [];
         for (const key in groupMap) {
             if (Object.prototype.hasOwnProperty.call(groupMap, key)) {
                 groupList.push(groupMap[key]);
+                if (!firstGroup) {
+                    firstGroup = groupMap[key];
+                }
             }
         }
 
@@ -61,12 +116,11 @@ var buildFns = {
         if (group && group.components) {
             var componentKeys = group.components;
             var componentList = [];
-            for (const key in componentKeys) {
-                if (Object.prototype.hasOwnProperty.call(componentKeys, key)) {
-                    const component = componentKeys[groupKey + "." + key];
-                    if (component) {
-                        componentList.push(component);
-                    }
+            for (let i = 0; i < componentKeys.length; i++) {
+                const componentKey = componentKeys[i];
+                const component = componentMap[componentKey];
+                if (component) {
+                    componentList.push(component);
                 }
             }
             var componentDom = document.getElementById("component");
@@ -79,7 +133,7 @@ var buildFns = {
 
         var parentDom = document.getElementById("before");
         var beforeDom = buildDomFns.node.flow(flowId);
-        domTools.setAll(parentDom, [beforeDom]);
+        domTools.addAll(parentDom, [beforeDom]);
 
         config.before[flowId] = { 
             id: flowId,
@@ -102,7 +156,7 @@ var buildFns = {
             components:[] 
         };
         var settingsDom = buildDomFns.node.flowSettingsItem(flowId);
-        domTools.setAll(beforeDom, [settingsDom]);
+        domTools.addAll(beforeDom, [settingsDom]);
 
         return flowId;
     },
@@ -123,7 +177,7 @@ var buildFns = {
             components: []
         };
         var settingsDom = buildDomFns.node.flowPathItem(flowId, path);
-        domTools.setAll(beforeDom, [settingsDom]);
+        domTools.addAll(beforeDom, [settingsDom]);
 
         return flowId;
     },
@@ -180,39 +234,60 @@ var buildFns = {
         var componentLogicDom = buildDomFns.node.componentLogic(logicId, key, type);
         domTools.addAll(blockDom, [flagDom, componentLogicDom]);
     },
+    checkToWindow: function() {
+
+    },
+    initComponentWindow: function() {
+
+    },
+    logicComponentWindow: function() {
+
+    },
+    flowSettingsWindow: function() {
+
+    },
+    flowPathWindow: function() {
+
+    }
 }
 
-var buildDomFns = {
+const buildDomFns = {
     tool: {
         groups: function(data) {
             var doms = [];
-            for (let index = 0; index < data.length; index++) {
+            for (let i = 0; i < data.length; i++) {
                 var itemData = data[i];
                 var key = itemData.key;
                 var itemDom = document.createElement("div");
-                itemDom.id = "g-" + key;
+                itemDom.id = idPrefix.group + key;
                 itemDom.className = "item";
                 itemDom.textContent = itemData.name;
-                itemDom.onclick = function() {
-                    optFns.tool.checkGroup(key);
-                }
+                itemDom.onclick = (function(key) {
+                    var currKey = key;
+                    return function() {
+                        optFns.tool.checkGroup(currKey);
+                    }
+                })(key);
                 doms.push(itemDom);
             }
     
             return doms;
         },
-        components: function(parentKey, data) {
+        components: function(data) {
             var doms = [];
-            for (let index = 0; index < data.length; index++) {
+            for (let i = 0; i < data.length; i++) {
                 var itemData = data[i];
                 var key = itemData.key;
                 var itemDom = document.createElement("div");
-                itemDom.id = "c-" + parentKey + "." + key;
+                itemDom.id = idPrefix.component + key;
                 itemDom.className = "item";
                 itemDom.textContent = itemData.name;
-                itemDom.onclick = function() {
-                    optFns.tool.openCheckComponentWindow(key);
-                }
+                itemDom.onclick = (function(key) {
+                    var currKey = key;
+                    return function() {
+                        optFns.tool.openCheckComponentWindow(currKey);
+                    }
+                })(key);
                 doms.push(itemDom);
             }
     
@@ -225,9 +300,12 @@ var buildDomFns = {
             dom.id = initId;
             dom.className = "component-item";
             dom.innerHTML = type + "<br>" + key;
-            dom.ondblclick = function() {
-                optFns.node.openComponentInitWindow(initId);
-            }
+            dom.ondblclick = (function(initId) {
+                var currInitId = initId;
+                return function() {
+                    optFns.node.openComponentInitWindow(currInitId);
+                }
+            })(initId);
             return dom;
         },
         componentLogic: function(logicId, key, type) {
@@ -235,9 +313,12 @@ var buildDomFns = {
             dom.name = logicId;
             dom.className = "component-item";
             dom.innerHTML = type + "<br>" + key;
-            dom.ondblclick = function() {
-                optFns.node.openComponentLogicWindow(logicId);
-            }
+            dom.ondblclick = (function(logicId) {
+                var currLogicId = logicId;
+                return function() {
+                    optFns.node.openComponentInitWindow(currLogicId);
+                }
+            })(logicId);
             return dom;
         },
         flow: function(flowId) {
@@ -250,9 +331,12 @@ var buildDomFns = {
             var dom = document.createElement("div");
             dom.className = "settings-item";
             dom.textContent = "设置";
-            dom.ondblclick = function() {
-                optFns.node.openFlowSettingsWindow(flowId);
-            }
+            dom.ondblclick = (function(flowId) {
+                var currFlowId = flowId;
+                return function() {
+                    optFns.node.openFlowSettingsWindow(currFlowId);
+                }
+            })(flowId);
             return dom;
         },
         flowLineItem: function() {
@@ -265,25 +349,45 @@ var buildDomFns = {
             var dom = document.createElement("div");
             dom.className = "path-item";
             dom.textContent = flowPath;
-            dom.ondblclick = function() {
-                optFns.node.openFlowPathWindow(flowId);
-            }
+            dom.ondblclick = (function(flowId) {
+                var currFlowId = flowId;
+                return function() {
+                    optFns.node.openFlowPathWindow(currFlowId);
+                }
+            })(flowId);
             return dom;
         }
     },
     window: {
+        fromConfirm: function() {
 
+        }
     }
 };
 
-var optFns = {
+const optFns = {
     tool: {
         checkGroup: function(key) {
+            var currGroupDom = document.getElementById(idPrefix.group + key);
+            if (!currGroupDom || currGroupDom.className == "item-checked") {
+                return;
+            }
+
+            var groupDom = document.getElementById("group");
+            for (var i = 0; i < groupDom.children.length; i++) {
+                const groupItemDom = groupDom.children[i];
+                groupItemDom.className = "item";
+            }
+            currGroupDom.className = "item-checked";
+            buildFns.components(key);
         },
 
         openCheckComponentWindow: function(key) {
+            // 选择 默认上次的/新建的
         },
         confirmCheckComponent: function(key) {
+            // add dom 
+            // add data
         }
     },
     node: {
@@ -319,7 +423,7 @@ var optFns = {
 
 }
 
-var domTools = {
+const domTools = {
     clearAll: function(parentDom) {
         if (parentDom) {
             parentDom.innerHTML = "";
@@ -339,3 +443,89 @@ var domTools = {
         }
     },
 }
+
+const requestFns = {
+    url: function (url, type, fromSubmit, params, headers, successFn, failFn, errorFn) {
+        errorFn = errorFn ? errorFn : function () {
+            console.log("Request error: ", url, headers, params);
+            alert("Request error!");
+        };
+
+        url = url.startsWith("http") ? url : (baseUrl + url);
+        const xhr = new XMLHttpRequest();
+        xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
+
+        headers = headers ? headers : {};
+        const contentType = headers["Content-Type"];
+        if (!contentType && !(fromSubmit && fromSubmit === true)) {
+            headers["Content-Type"] = "application/json";
+        }
+        for (const key in headers) {
+            if (Object.hasOwnProperty.call(headers, key)) {
+                xhr.setRequestHeader(key, headers[key]);
+            }
+        }
+
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                if (successFn) {
+                    successFn(xhr.response);
+                }
+            } else {
+                console.log("Request fail:", url, type, params, xhr);
+                if (failFn) {
+                    failFn({ status: xhr.status, text: xhr.statusText });
+                }
+            }
+        };
+
+        xhr.onerror = function () {
+            console.log("Request error: ", url, type, params, xhr);
+            if (errorFn) {
+                errorFn({ status: xhr.status, text: xhr.statusText });
+            } else if (failFn) {
+                failFn({ status: xhr.status, text: xhr.statusText });
+            }
+        };
+
+        let sendData = null;
+        if (fromSubmit && fromSubmit === true) {
+            sendData = new FormData();
+            if (params) {
+                for (const key in params) {
+                    if (Object.hasOwnProperty.call(params, key)) {
+                        let value = params[key];
+                        sendData.append(key, value instanceof Object && !(value instanceof File) ? JSON.stringify(value) : value);
+                    }
+                }
+            }
+        } else if (params){
+            sendData = JSON.stringify(params)
+        }
+
+        xhr.send(sendData);
+    },
+    file: function (path, successFn, failFn) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", path, false);
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                if (successFn) {
+                    successFn(xhr.responseText);
+                }
+            } else {
+                console.log("Request load file fail: ", path, xhr);
+                if (failFn) {
+                    failFn({ status: xhr.status, text: xhr.statusText });
+                }
+            }
+        };
+        xhr.onerror = function () {
+            console.log("Request load file error: ", path, xhr);
+            if (failFn) {
+                failFn({ status: xhr.status, text: xhr.statusText });
+            }
+        };
+        xhr.send();
+    }
+};

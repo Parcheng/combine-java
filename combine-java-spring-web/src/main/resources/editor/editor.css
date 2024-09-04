@@ -25,16 +25,32 @@
 .group .item {
     width: auto;
     min-width: 60px;
-    height: 25px;
+    height: 35px;
     line-height: 16px;
     display: inline-block;
     font-size: 10px;
-    padding: 5px;
-    margin-left: 2px;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
     margin-top: 2px;
     background-color: var(--bg_color);
     color: var(--font_color);
     cursor: pointer; 
+}
+
+.group .item-checked {
+    width: auto;
+    min-width: 60px;
+    height: 35px;
+    line-height: 16px;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+    margin-top: 2px;
+    background-color: var(--font_dark_color);
+    color: var(--font_color);
 }
 
 .component {
@@ -46,10 +62,10 @@
 .component .item {
     width: 100%;
     height: auto;
-    min-height: 25px;
+    min-height: 23px;
     word-wrap: break-word;
     font-size: 10px;
-    padding: 5px;
+    padding: 10px 5px;
     text-align: center;
     margin-bottom: 5px;
     background-color: var(--bg_color);
@@ -173,6 +189,49 @@
     width: 100%;
     padding-bottom: 10px;
     border-bottom: var(--border_color);
+}
+
+.from-window {
+    width: 60%;
+    height: auto;
+    position: absolute;
+    display: block;
+    top: 100px;
+    left: 20%;
+    border: 1px solid var(--bg_dark_color);
+}
+
+.from-window .title {
+    width: 100%;
+    height: 37px;
+    padding: 8px;
+    border-bottom: 1px solid var(--bg_dark_color);
+    background-color: var(--bg_dark_color);
+    color: var(--font_color);
+}
+
+.from-window .title .close{
+    width: 30px;
+    height: 30px;
+    margin: -5px 0;
+    padding: 5px;
+    text-align: center;
+    display: block;
+    float: right;
+    cursor: pointer; 
+}
+
+.from-window .body {
+    width: 100%;
+    height: 500px;
+    padding: 8px;
+    background-color: var(--bg_light_color);
+    overflow-y: scroll;
+}
+
+.from-window .body .item {
+    width: 100%;
+    padding: 8px;
 }
 
 hr {
