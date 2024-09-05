@@ -5,6 +5,7 @@
     --bg_color:rgb(146, 144, 144);
     --bg_dark_color:black;
     --font_color: white;
+    --font_light_color: rgb(146, 144, 144);
     --font_dark_color: black;
 }
 
@@ -196,7 +197,7 @@
     height: auto;
     position: absolute;
     display: block;
-    top: 100px;
+    top: 80px;
     left: 20%;
     border: 1px solid var(--bg_dark_color);
 }
@@ -227,11 +228,103 @@
     padding: 8px;
     background-color: var(--bg_light_color);
     overflow-y: scroll;
+    text-align: center;
 }
 
 .from-window .body .item {
     width: 100%;
-    padding: 8px;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.from-window .body .item .label{
+    width: 100%;
+}
+.from-window .body .item .label .key{
+    width: 100%;
+    font-weight: bold;
+    display: inline-block;
+}
+.from-window .body .item .label .name {
+    font-size: 10px;
+    padding: 2px 0;
+    display: inline-block;
+    color: var(--font_light_color);
+}
+.from-window .body .item .flag {
+    min-width: 16px;
+    font-size: 10px;
+    display: inline-block;
+    padding: 2px 4px;
+    margin-left: 6px;
+    text-align: center;
+    background-color: var(--bg_color);
+    color: var(--font_color);
+    cursor: pointer; 
+}
+
+.from-window .body .item .control {
+    width: 100%;
+    padding: 5px 0;
+}
+
+.from-window .body .item .control .line {
+    width: 100%;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.from-window .body .item .control .line .input {
+    width: 200px;
+}
+
+.from-window .body .item .control .line textarea {
+    width: 400px;
+    min-height: 100px;
+    display: inline-block;
+}
+
+.from-window .body .item .control .line .line-component {
+    width: auto;
+    min-width: 50px;
+    height: 35px;
+    display: inline-block;
+    padding: 5px;
+    background-color: var(--bg_color);
+    vertical-align: top;
+    color: var(--font_color);
+    font-size: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+.from-window .body .item .control .line .line-next-flag {
+    width: auto;
+    min-width: 25px;
+    height: 35px;
+    line-height: 30px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.from-window .body .item .control .line .select {
+    width: 100px;
+    height: 23px;
+    display: block;
+    font-size: 12px;
+}
+
+
+.from-window .body .continue {
+    padding: 5px;
+    width: 80px;
+    background-color: var(--bg_color);
+    color: var(--font_color);
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
 }
 
 hr {

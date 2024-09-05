@@ -5,6 +5,8 @@ var firstGroup = null;
 var groupMap = {};
 var componentMap = {};
 
+// 组件图像 右键可以编辑/前移/后移/删除/复制
+
 var config = { 
     componentInit: {}, 
     componentLogic: {}, 
@@ -378,6 +380,9 @@ const buildDomFns = {
 
         },
         fromObjectItem: function() {
+
+        },
+        fromAnyItem: function() {
 
         }
     }

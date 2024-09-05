@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="editor.css">
 </head>
 <body>
-    <h1 class="header">【配置文件编辑器】</h1><br>
+    <!-- <h1 class="header">【配置文件编辑器】</h1><br> -->
     <div id="editor">
         <div id="group" class="group">
             <div id="g-t" class="item">TTTTTTTTTTTTTTTT</div>
@@ -75,7 +75,7 @@
                 </div>
                 <div id="flow-001" class="flow-item">
                     <div class="path-item">test/test123456</div>
-                    <div class="line-item">➲</div>
+                    <div class="line-item">→</div>
                     <div name="cbf-abc-02" class="component-item">a.b.c<br>abc-02</div>
                     <div class="line-item">→</div>
                     <div name="cbf-abc-03" class="component-item">a.b.c<br>abc-03</div>
@@ -90,18 +90,143 @@
                 <span class="close">X</span>
             </div>
             <div class="body">
-                <div class="items">
-                    <div class="item">
-                        <div class="label">QWERRTTYU: 【XXXXXXXXXXXXXXXXXXXXXXXXXX】</div>
-                        <div class="control">
-                            <input type="text" /><span>添加一项</span>
-                            <span>展开子属性</span>
+                <div class="item">
+                    <div class="label">
+                        <span class="key">text: </span>
+                        <span class="name">XXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                        <span class="flag">[详细信息]</span>
+                        <span class="flag">[示例]</span>
+                    </div>
+                    <div class="control">
+                        <div class="line">
+                            <input type="text" class="input" /><span class="flag">+</span>
+                        </div>
+                        <div class="line">
+                            <input type="text" class="input" /><span class="flag">-</span>
+                        </div>
+                    </div>
+                    <div class="desc"></div>
+                    <div class="eg"></div>
+                </div>
+                <hr>
+
+                <div class="item">
+                    <div class="label">
+                        <span class="key">NUMBER: </span>
+                        <span class="name">XXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                        <span class="flag">[详细信息]</span>
+                        <span class="flag">[示例]</span>
+                    </div>
+                    <div class="control">
+                        <div class="line">
+                            <input type="number" class="input" />
+                        </div>
+                    </div>
+                    <div class="desc"></div>
+                    <div class="eg"></div>
+                </div>
+                <hr>
+
+                <div class="item">
+                    <div class="label">
+                        <span class="key">Boolean: </span>
+                        <span class="name">XXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                        <span class="flag">[详细信息]</span>
+                        <span class="flag">[示例]</span>
+                    </div>
+                    <div class="control">
+                        <div class="line">
+                            <input name="test-radio" type="radio" />True
+                            <input name="test-radio" type="radio" />False
+                        </div>
+                    </div>
+                    <div class="desc"></div>
+                    <div class="eg"></div>
+                </div>
+                <hr>
+
+                <div class="item">
+                    <div class="label">
+                        <span class="key">Component: </span>
+                        <span class="name">XXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                        <span class="flag">[详细信息]</span>
+                        <span class="flag">[示例]</span>
+                    </div>
+                    <div class="control">
+                        <div class="line">
+                            <div class="line-component">a.b.c<br>3132131-23132</div>
+                            <div class="line-next-flag">→</div>
+                            <div class="line-component">a.b.c<br>3132131-23132</div>
+                            <div class="line-next-flag">→</div>
+                            <div class="line-component">a.b.c<br>3132131-23132</div>
+                            <div class="flag">+</div>
+                        </div>
+                    </div>
+                    <div class="desc"></div>
+                    <div class="eg"></div>
+                </div>
+                <hr>
+
+                <div class="item">
+                    <div class="label">
+                        <span class="key">Map: </span>
+                        <span class="name">XXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                        <span class="flag">[详细信息]</span>
+                        <span class="flag">[示例]</span>
+                    </div>
+                    <div class="control">
+                        <div class="line">
+                            <textarea></textarea><span class="flag">+</span>
+                        </div>
+                    </div>
+                    <div class="desc"></div>
+                    <div class="eg"></div>
+                </div>
+                <hr>
+
+                <div class="item">
+                    <div class="label">
+                        <span class="key">Object: </span>
+                        <span class="name">XXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                        <span class="flag">[详细信息]</span>
+                        <span class="flag">[示例]</span>
+                    </div>
+                    <div class="control">
+                        <div class="line">
+                            <span>子属性配置</span><span class="flag">+</span>
                             <div class="sub-items">
                             </div>
                         </div>
-                        <div class="desc"></div>
                     </div>
+                    <div class="desc"></div>
+                    <div class="eg"></div>
                 </div>
+                <hr>
+
+                <div class="item">
+                    <div class="label">
+                        <span class="key">Any: </span>
+                        <span class="name">XXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                        <span class="flag">[详细信息]</span>
+                        <span class="flag">[示例]</span>
+                    </div>
+                    <div class="control">
+                        <div class="line">
+                            <select class="select">
+                                <option value="text">文本</option>
+                                <option value="number">数字</option>
+                                <option value="boolean">布尔</option>
+                                <option value="map">Map</option>
+                            </select>
+                            <textarea></textarea>
+                            <span class="flag">+</span>
+                        </div>
+                    </div>
+                    <div class="desc"></div>
+                    <div class="eg"></div>
+                </div>
+                <hr>
+                    
                 <div class="continue">确定</div>
             </div>
         </div>
