@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>FLOW EDITOR</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="editor.css">
 </head>
 <body>
     <h1 class="header">【配置文件编辑器】</h1><br>
@@ -20,8 +20,8 @@
         <div id="board" class="board">
             <div id="init" class="init">
                 <div id="init-title" class="title">★ 组件全局配置</div>
-                <div name="ci-abc-01" class="component-item">a.b.c<br>abc-01</div>
-                <div name="ci-abc-02" class="component-item">a.b.c<br>abc-02</div>
+                <div name="ci-abc.01" class="component-item">a.b.c<br>abc-01</div>
+                <div name="ci-abc.02" class="component-item">a.b.c<br>abc-02</div>
             </div>
             <div id="block" class="block">
                 <div id="block-title" class="title">★ 公共组件定义</div>
@@ -29,7 +29,10 @@
                 <div name="cb-123-02" class="component-item">1.2.4<br>XXXX-02-bbbb</div>
             </div>
             <div id="before" class="before">
-                <div id="before-title" class="title">★ 前置流程配置</div>
+                <div id="before-title" class="title">
+                    ★ 前置流程配置
+                    <span id="before-add" class="add-item">+</span>
+                </div>
                 <div class="flow-item">
                     <div class="settings-item">设置</div>
                     <div class="line-item">→</div>
@@ -53,7 +56,10 @@
                 </div>
             </div>
             <div id="after" class="after">
-                <div id="after-title" class="title">★ 后置流程配置</div>
+                <div id="after-title" class="title">
+                    ★ 后置流程配置
+                    <span id="after-add" class="add-item">+</span>
+                </div>
                 <div class="flow-item">
                     <div class="settings-item">设置</div>
                     <div class="line-item">→</div>
@@ -63,7 +69,10 @@
                 </div>
             </div>
             <div id="flow" class="flow">
-                <div id="flow-title" class="title">★ 流程配置</div>
+                <div id="flow-title" class="title">
+                    ★ 流程配置
+                    <span id="flow-add" class="add-item">+</span>
+                </div>
                 <div id="flow-001" class="flow-item">
                     <div class="path-item">test/test123456</div>
                     <div class="line-item">➲</div>
@@ -74,10 +83,29 @@
             </div>
         </div>
     </div>
+    <div id="window">
+        <div class="from-window">
+            <div class="title">
+                XXXXXXXXXXXXXXXXXXX
+                <span class="close">X</span>
+            </div>
+            <div class="body">
+                <div class="items">
+                    <div class="item">
+                        <div class="label">QWERRTTYU: 【XXXXXXXXXXXXXXXXXXXXXXXXXX】</div>
+                        <div class="control">
+                            <input type="text" /><span>添加一项</span>
+                            <span>展开子属性</span>
+                            <div class="sub-items">
+                            </div>
+                        </div>
+                        <div class="desc"></div>
+                    </div>
+                </div>
+                <div class="continue">确定</div>
+            </div>
+        </div>
+    </div>
 </body>
-<script>
-// ID重复检查（是否直接使用 id = xxx 的组件？）
-// 引用暂时只允许引block的
-// flow-component，flow-item 构建 取值 序列化 封装成对象，可new
-</script>
+<script src="editor.js"></script>
 </html>
