@@ -359,7 +359,25 @@ const buildDomFns = {
         }
     },
     window: {
-        fromConfirm: function() {
+        from: function() {
+
+        },
+        fromTextItem: function() {
+            // 多行添加标志
+        },
+        fromNumberItem: function() {
+
+        },
+        fromSelectItem: function() {
+
+        },
+        fromComponentItem: function() {
+
+        },
+        fromMapItem: function() {
+
+        },
+        fromObjectItem: function() {
 
         }
     }
