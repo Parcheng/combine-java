@@ -465,6 +465,27 @@ const domTools = {
             }
         }
     },
+    addAll: function(parentDom, subDoms) {
+        if (parentDom && subDoms) {
+            for (let i = 0; i < subDoms.length; i++) {
+                parentDom.appendChild(subDoms[i]);
+            }
+        }
+    },
+    switchDisplay: function(dom, isShow) {
+        if (isShow != null && isShow != undefined) {
+            var switchState = dom.getAttribute("switch-state");
+            isShow = switchState && switchState == "hide";
+        }
+
+        if (isShow) {
+            dom.setAttribute("switch-state", "show");
+            dom.setAttribute("style", "");
+        } else {
+            dom.setAttribute("switch-state", "hide");
+            dom.setAttribute("style", "display: none;");
+        }
+    },
 }
 
 const requestFns = {
