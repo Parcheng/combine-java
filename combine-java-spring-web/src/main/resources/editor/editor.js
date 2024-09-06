@@ -5,6 +5,8 @@ var firstGroup = null;
 var groupMap = {};
 var componentMap = {};
 
+// 组件图像 右键可以编辑/前移/后移/删除/复制
+
 var config = { 
     componentInit: {}, 
     componentLogic: {}, 
@@ -379,6 +381,9 @@ const buildDomFns = {
         },
         fromObjectItem: function() {
 
+        },
+        fromAnyItem: function() {
+
         }
     }
 };
@@ -458,6 +463,27 @@ const domTools = {
             for (let i = 0; i < subDoms.length; i++) {
                 parentDom.appendChild(subDoms[i]);
             }
+        }
+    },
+    addAll: function(parentDom, subDoms) {
+        if (parentDom && subDoms) {
+            for (let i = 0; i < subDoms.length; i++) {
+                parentDom.appendChild(subDoms[i]);
+            }
+        }
+    },
+    switchDisplay: function(dom, isShow) {
+        if (isShow != null && isShow != undefined) {
+            var switchState = dom.getAttribute("switch-state");
+            isShow = switchState && switchState == "hide";
+        }
+
+        if (isShow) {
+            dom.setAttribute("switch-state", "show");
+            dom.setAttribute("style", "");
+        } else {
+            dom.setAttribute("switch-state", "hide");
+            dom.setAttribute("style", "display: none;");
         }
     },
 }
