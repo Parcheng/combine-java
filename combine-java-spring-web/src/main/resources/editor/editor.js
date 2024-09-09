@@ -368,6 +368,7 @@ const buildDomFns = {
     settings: {
         item: function(data) {
             var dom = document.createElement("div");
+            dom.name = data.key;
             dom.className = "item";
 
             // -------------------- title --------------------------
@@ -483,68 +484,114 @@ const buildDomFns = {
             }
             domTools.addAll(lineDom, controls);
 
-            if (isFirst == true) {
-                var lineAddDom = document.createElement("span");
-                lineAddDom.className = "flag";
-                lineAddDom.textContent = "+";
-                lineAddDom.onclick = (function(lineDom) {
-                    var currLineDom = lineDom;
-                    return function() {
-                        var parentDom = currLineDom.parentNode;
-                        if (parentDom) {
-                            var itemLine = buildDomFns.settings.line(data, false);
-                            parentDom.appendChild(itemLine);
+            if (data.isArray == true) {
+                if (isFirst == true) {
+                    var lineAddDom = document.createElement("span");
+                    lineAddDom.className = "flag";
+                    lineAddDom.textContent = "+";
+                    lineAddDom.onclick = (function(lineDom) {
+                        var currLineDom = lineDom;
+                        return function() {
+                            var parentDom = currLineDom.parentNode;
+                            if (parentDom) {
+                                var itemLine = buildDomFns.settings.line(data, false);
+                                parentDom.appendChild(itemLine);
+                            }
                         }
-                    }
-                })(lineDom);
-                lineDom.appendChild(lineAddDom);
-            } else {
-                var lineSubtractDom = document.createElement("span");
-                lineSubtractDom.className = "flag";
-                lineSubtractDom.textContent = "-";
-                lineSubtractDom.onclick = (function(lineDom) {
-                    var currLineDom = lineDom;
-                    return function() {
-                        var parentDom = currLineDom.parentNode;
-                        if (parentDom) {
-                            parentDom.removeChild(lineDom);
+                    })(lineDom);
+                    lineDom.appendChild(lineAddDom);
+                } else {
+                    var lineSubtractDom = document.createElement("span");
+                    lineSubtractDom.className = "flag";
+                    lineSubtractDom.textContent = "-";
+                    lineSubtractDom.onclick = (function(lineDom) {
+                        var currLineDom = lineDom;
+                        return function() {
+                            var parentDom = currLineDom.parentNode;
+                            if (parentDom) {
+                                parentDom.removeChild(lineDom);
+                            }
                         }
-                    }
-                })(lineDom);
-                lineDom.appendChild(lineSubtractDom);
+                    })(lineDom);
+                    lineDom.appendChild(lineSubtractDom);
+                }
             }
         },
         control: {
+            // TODO isFirst默认值，item存储type，设置数据，获取数据Func，添加一行可以使用拷贝Dom
             text: function(data) {
-                //             <div class="line">
-                //                 <input type="text" class="input" /><span class="flag">+</span>
-                //             </div>
-                //             <div class="line">
-                //                 <input type="text" class="input" /><span class="flag">-</span>
-                //             </div>
+                var dom = document.createElement("input");
+                dom.className = "input";
+                dom.setAttribute("type", "text");
+                // if (data.defaultValue) {
+                //     dom.value = data.defaultValue;
+                // }
+                return [dom];
             },
-            number: function() {
+            number: function(data) {
+                var dom = document.createElement("input");
+                dom.className = "input";
+                dom.setAttribute("type", "number");
+                // if (data.defaultValue) {
+                //     dom.value = data.defaultValue;
+                // }
+                return [dom];
+            },
+            boolean: function(data) {
+                var name =  + data.key + "-" + new Date().getTime()
+
+                var trueDom = document.createElement("input");
+                trueDom.name = name;
+                trueDom.setAttribute("radio", "number");
+                
+                var trueTextDom = document.createElement("span");
+                trueTextDom.textContent = "True";
+
+                var falseDom = document.createElement("input");
+                falseDom.name = name;
+                falseDom.setAttribute("radio", "number");
+
+                var falseTextDom = document.createElement("span");
+                falseTextDom.textContent = "False";
+
+                // if (data.defaultValue) {
+                //     if (data.defaultValue == "true") {
+                //         trueDom.checked  = true;
+                //     } else {
+                //         falseDom.checked  = true;
+                //     }
+                // }
+
+                return [trueDom, trueTextDom, falseDom, falseTextDom];
+            },
+            select: function(data) {
+                var selectDom = document.createElement("select");
+                selectDom.className = "select";
+
+                if (data.options && data.options.length > 0) {
+                    for (let i = 0; i < options.length; i++) {
+                        var optionDom = document.createElement("option");
+                        optionDom.setAttribute("value", options[i].key);
+                        optionDom.textContent = options[i].name;
+                        selectDom.appendChild(optionDom);
+                    }
+                }
+
+                return [selectDom];
+            },
+            component: function(data) {
     
             },
-            boolean: function() {
+            map: function(data) {
     
             },
-            select: function() {
+            object: function(data) {
     
             },
-            component: function() {
+            any: function(data) {
     
             },
-            map: function() {
-    
-            },
-            object: function() {
-    
-            },
-            any: function() {
-    
-            },
-            none: function() {
+            none: function(data) {
 
             }
         }
