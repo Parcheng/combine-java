@@ -363,27 +363,190 @@ const buildDomFns = {
     window: {
         from: function() {
 
-        },
-        fromTextItem: function() {
-            // 多行添加标志
-        },
-        fromNumberItem: function() {
+        }
+    },
+    settings: {
+        item: function(data) {
+            var dom = document.createElement("div");
+            dom.className = "item";
 
-        },
-        fromSelectItem: function() {
+            // -------------------- title --------------------------
+            var titleDom = document.createElement("div");
+            titleDom.className = "label";
+            dom.appendChild(titleDom);
 
-        },
-        fromComponentItem: function() {
+            var titleKeyDom = document.createElement("span");
+            titleKeyDom.className = "key";
+            titleDom.appendChild(titleKeyDom);
 
-        },
-        fromMapItem: function() {
+            var titleNameDom = document.createElement("span");
+            titleNameDom.className = "name";
+            titleDom.appendChild(titleNameDom);
 
-        },
-        fromObjectItem: function() {
+            if (data.desc && data.desc.length > 0) {
+                var titleDescFlagDom = document.createElement("span");
+                titleDescFlagDom.className = "flag";
+                titleDescFlagDom.textContent = "[详细信息]";
+                titleDescFlagDom.onclick = function() {
+                    domTools.switchDisplay(titleDescFlagDom);
+                };
+                domTools.switchDisplay(titleDescFlagDom);
+                titleDom.appendChild(titleDescFlagDom);
+            }
+            
+            if (data.egs && data.egs.length > 0) {
+                var titleEgFlagDom = document.createElement("span");
+                titleEgFlagDom.className = "flag";
+                titleEgFlagDom.textContent = "[示例]";
+                titleEgFlagDom.onclick = function() {
+                    domTools.switchDisplay(titleEgFlagDom);
+                };
+                domTools.switchDisplay(titleEgFlagDom);
+                titleDom.appendChild(titleEgFlagDom);
+            }
 
-        },
-        fromAnyItem: function() {
+            if (data.desc && data.desc.length > 0) {
+                var titleDescDom = document.createElement("span");
+                titleDescDom.className = "desc";
 
+                var descText = "详细信息：";
+                if (data.desc.length > 1) {
+                    for (let i = 0; i < data.desc.length; i++) {
+                        descText += ("<br>" + data.desc[i]);
+                    }
+                } else {
+                    descText += data.desc[0];
+                }
+                titleDescDom.textContent =  descText;
+                titleDom.appendChild(titleDescDom);
+            }
+           
+            if (data.egs && data.egs.length > 0) {
+                var titleEgDom = document.createElement("span");
+                titleEgDom.className = "desc";
+
+                var egText = "示例：";
+                if (data.egs.length > 1) {
+                    for (let i = 0; i < data.egs.length; i++) {
+                        egText += ("<br>" + data.egs[i]);
+                    }
+                } else {
+                    egText += data.egs[0];
+                }
+                titleEgDom.textContent = egText;
+                titleDom.appendChild(titleEgDom);
+            }
+            
+
+            // -------------------- control --------------------------
+            var controlDom = document.createElement("div");
+            controlDom.className = "control";
+            dom.appendChild(controlDom);
+
+            var line = buildDomFns.settings.line(data, true);
+            dom.appendChild(line);
+        },
+        line: function(data, isFirst) {
+            var lineDom = document.createElement("div");
+            lineDom.className = "line";
+
+            var controls;
+            switch (data.type) {
+                case "TEXT":
+                    controls = buildDomFns.settings.control.text(data);
+                    break;
+                case "NUMBER":
+                    controls = buildDomFns.settings.control.number(data);
+                    break;
+                case "BOOLEAN":
+                    controls = buildDomFns.settings.control.boolean(data);
+                    break;
+                case "SELECT":
+                    controls = buildDomFns.settings.control.select(data);
+                    break;
+                case "COMPONENT":
+                    controls = buildDomFns.settings.control.component(data);
+                    break;
+                case "MAP":
+                    controls = buildDomFns.settings.control.map(data);
+                    break;
+                case "OBJECT":
+                case "CONFIG":
+                    controls = buildDomFns.settings.control.object(data);
+                    break;
+                case "ANY":
+                    controls = buildDomFns.settings.control.any(data);
+                    break;
+                default:
+                    controls = buildDomFns.settings.control.none(data);
+                    break;
+            }
+            domTools.addAll(lineDom, controls);
+
+            if (isFirst == true) {
+                var lineAddDom = document.createElement("span");
+                lineAddDom.className = "flag";
+                lineAddDom.textContent = "+";
+                lineAddDom.onclick = (function(lineDom) {
+                    var currLineDom = lineDom;
+                    return function() {
+                        var parentDom = currLineDom.parentNode;
+                        if (parentDom) {
+                            var itemLine = buildDomFns.settings.line(data, false);
+                            parentDom.appendChild(itemLine);
+                        }
+                    }
+                })(lineDom);
+                lineDom.appendChild(lineAddDom);
+            } else {
+                var lineSubtractDom = document.createElement("span");
+                lineSubtractDom.className = "flag";
+                lineSubtractDom.textContent = "-";
+                lineSubtractDom.onclick = (function(lineDom) {
+                    var currLineDom = lineDom;
+                    return function() {
+                        var parentDom = currLineDom.parentNode;
+                        if (parentDom) {
+                            parentDom.removeChild(lineDom);
+                        }
+                    }
+                })(lineDom);
+                lineDom.appendChild(lineSubtractDom);
+            }
+        },
+        control: {
+            text: function(data) {
+                //             <div class="line">
+                //                 <input type="text" class="input" /><span class="flag">+</span>
+                //             </div>
+                //             <div class="line">
+                //                 <input type="text" class="input" /><span class="flag">-</span>
+                //             </div>
+            },
+            number: function() {
+    
+            },
+            boolean: function() {
+    
+            },
+            select: function() {
+    
+            },
+            component: function() {
+    
+            },
+            map: function() {
+    
+            },
+            object: function() {
+    
+            },
+            any: function() {
+    
+            },
+            none: function() {
+
+            }
         }
     }
 };
@@ -456,13 +619,6 @@ const domTools = {
         if (parentDom) {
             domTools.clearAll(parentDom);
             domTools.addAll(parentDom, subDoms);
-        }
-    },
-    addAll: function(parentDom, subDoms) {
-        if (parentDom && subDoms) {
-            for (let i = 0; i < subDoms.length; i++) {
-                parentDom.appendChild(subDoms[i]);
-            }
         }
     },
     addAll: function(parentDom, subDoms) {
