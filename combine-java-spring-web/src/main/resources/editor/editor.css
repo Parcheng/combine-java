@@ -327,6 +327,13 @@
     font-size: 12px;
 }
 
+.from-window .body .item .control .line .sub-items {
+    width: 100px;
+    height: auto;
+    display: block;
+    padding-left: 10px;
+}
+
 
 .from-window .body .continue {
     padding: 5px;

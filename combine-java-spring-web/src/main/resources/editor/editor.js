@@ -19,7 +19,8 @@ var idIndex = {
     after:1, 
     flow:1, 
     componentLogic:1, 
-    componentInit:1 
+    componentInit:1,
+    window:1 
 };
 var idPrefix = { 
     group: "g_", 
@@ -28,7 +29,8 @@ var idPrefix = {
     after: "a_", 
     flow: "f_", 
     componentLogic: "cl_", 
-    componentInit: "ci_" 
+    componentInit: "ci_",
+    window: "w_" 
 }
 
 window.onload = function() {
@@ -361,11 +363,68 @@ const buildDomFns = {
         }
     },
     window: {
-        from: function() {
+        checkFlow: function() {
 
+        },
+        continueFrom: function(key, title, dataList, continueFunc) {
+            var windowId = idPrefix.window + (idIndex.window++);
+
+            var windowDom = document.createElement("div");
+            windowDom.id = windowId;
+            windowDom.className = "from-window";
+            windowDom.setAttribute("key", key);
+
+            var titleDom = document.createElement("div");
+            titleDom.className = "title";
+            titleDom.textContent = title;
+            windowDom.appendChild(titleDom);
+
+            var titleCloseDom = document.createElement("span");
+            titleCloseDom.className = "close";
+            titleCloseDom.textContent = "X";
+            titleCloseDom.onclick = function() {
+                var currWindow = document.getElementById(windowId);
+                domTools.remove(currWindow);
+            }
+            titleDom.appendChild(titleCloseDom);
+
+            var bodyDom = document.createElement("div");
+            bodyDom.className = "body";
+            windowDom.appendChild(bodyDom);
+
+            var itemDoms = buildDomFns.settings.items(dataList);
+            domTools.addAll(bodyDom, itemDoms);
+            var buttonDom = buildDomFns.settings.continueButton(windowId, continueFunc);
+            bodyDom.appendChild(buttonDom);
+
+            return windowDom;
         }
     },
     settings: {
+        items : function(dataList) {
+            var body = [];
+            if (!dataList || dataList.length == 0) {
+                return body;
+            }
+
+            for (let i = 0; i < dataList.length; i++) {
+                var itemDom = buildDomFns.settings.item(dataList[i]);
+                body.push(itemDom);
+                body.push(document.createElement("hr"));
+            }
+
+            return body;
+        },
+        continueButton: function(windowId, continueFunc) {
+            var dom = document.createElement("div");
+            dom.className = "continue";
+            dom.textContent = "确定";
+            dom.onclick = function() {
+                // TODO get from data to func
+                var data = {};
+                continueFunc(data)
+            };
+        },
         item: function(data) {
             var dom = document.createElement("div");
             dom.name = data.key;
@@ -449,37 +508,40 @@ const buildDomFns = {
 
             var line = buildDomFns.settings.line(data, true);
             dom.appendChild(line);
+
+            return dom;
         },
         line: function(data, isFirst) {
             var lineDom = document.createElement("div");
             lineDom.className = "line";
 
+            var arrayFlagDom = buildDomFns.settings.arrayFlag(lineDom, data.isArray, data.type, isFirst);
             var controls;
             switch (data.type) {
                 case "TEXT":
-                    controls = buildDomFns.settings.control.text(data, isFirst);
+                    controls = buildDomFns.settings.control.text(arrayFlagDom, data, isFirst);
                     break;
                 case "NUMBER":
-                    controls = buildDomFns.settings.control.number(data, isFirst);
+                    controls = buildDomFns.settings.control.number(arrayFlagDom, data, isFirst);
                     break;
                 case "BOOLEAN":
-                    controls = buildDomFns.settings.control.boolean(data, isFirst);
+                    controls = buildDomFns.settings.control.boolean(arrayFlagDom, data, isFirst);
                     break;
                 case "SELECT":
-                    controls = buildDomFns.settings.control.select(data, isFirst);
+                    controls = buildDomFns.settings.control.select(arrayFlagDom, data, isFirst);
                     break;
                 case "COMPONENT":
-                    controls = buildDomFns.settings.control.component(data, isFirst);
+                    controls = buildDomFns.settings.control.component(arrayFlagDom, data, isFirst);
                     break;
                 case "MAP":
-                    controls = buildDomFns.settings.control.map(data, isFirst);
+                    controls = buildDomFns.settings.control.map(arrayFlagDom, data, isFirst);
                     break;
                 case "OBJECT":
                 case "CONFIG":
-                    controls = buildDomFns.settings.control.object(data, isFirst);
+                    controls = buildDomFns.settings.control.object(arrayFlagDom, data);
                     break;
                 case "ANY":
-                    controls = buildDomFns.settings.control.any(data, isFirst);
+                    controls = buildDomFns.settings.control.any(arrayFlagDom, data, isFirst);
                     break;
                 default:
                     controls = buildDomFns.settings.control.none(data);
@@ -487,74 +549,75 @@ const buildDomFns = {
             }
             domTools.addAll(lineDom, controls);
 
-            if (data.isArray == true) {
-                if (isFirst == true) {
-                    var lineAddDom = document.createElement("span");
-                    lineAddDom.className = "flag";
-                    lineAddDom.textContent = "+";
-
-                    if (data.type != "COMPONENT") {
-                        lineAddDom.onclick = (function(lineDom) {
-                            var currLineDom = lineDom;
-                            return function() {
-                                var parentDom = currLineDom.parentNode;
-                                if (parentDom) {
-                                    var itemLine = buildDomFns.settings.line(data, false);
-                                    parentDom.appendChild(itemLine);
-                                }
-                            }
-                        })(lineDom);
-                    } else {
-                        lineAddDom.onclick = (function(lineDom) {
-                            var currLineDom = lineDom;
-                            return function() {
-                                var itemLine = buildDomFns.control.component(data, false);
-                                currLineDom.appendChild(itemLine);
-                            }
-                        })(lineDom);
-                    }
-                    
-                    lineDom.appendChild(lineAddDom);
-                } else {
-                    var lineSubtractDom = document.createElement("span");
-                    lineSubtractDom.className = "flag";
-                    lineSubtractDom.textContent = "-";
-                    lineSubtractDom.onclick = (function(lineDom) {
-                        var currLineDom = lineDom;
-                        return function() {
-                            var parentDom = currLineDom.parentNode;
-                            if (parentDom) {
-                                parentDom.removeChild(lineDom);
-                            }
-                        }
-                    })(lineDom);
-                    lineDom.appendChild(lineSubtractDom);
-                }
+            return lineDom;
+        },
+        arrayFlag: function(lineDom, isArray, dataType, isFirst) {
+            if (isArray !== true) {
+                return null;
             }
 
-            return lineDom;
+            if (isFirst !== true && dataType === "COMPONENT") {
+                return null;
+            }
+
+            var arrayFlagDom = document.createElement("span");
+            arrayFlagDom.className = "flag";
+            arrayFlagDom.textContent = isFirst === true ? "+" : "-";
+        
+            if (isFirst === true && dataType === "COMPONENT") {
+                arrayFlagDom.onclick = (function(lineDom) {
+                    var currLineDom = lineDom;
+                    return function() {
+                        var itemLine = buildDomFns.control.component(data, false);
+                        currLineDom.appendChild(itemLine);
+                    }
+                })(lineDom);
+            } else if (isFirst === true) {
+                arrayFlagDom.onclick = (function(lineDom) {
+                    var currLineDom = lineDom;
+                    return function() {
+                        var parentDom = currLineDom.parentNode;
+                        if (parentDom) {
+                            var itemLine = buildDomFns.settings.line(data, false);
+                            parentDom.appendChild(itemLine);
+                        }
+                    }
+                })(lineDom);
+            } else {
+                arrayFlagDom.onclick = (function(lineDom) {
+                    var currLineDom = lineDom;
+                    return function() {
+                        var parentDom = currLineDom.parentNode;
+                        if (parentDom) {
+                            parentDom.removeChild(lineDom);
+                        }
+                    }
+                })(lineDom);
+            }
+
+            return arrayFlagDom;
         },
         control: {
             // TODO item存储type，设置数据，获取数据Func，添加一行可以使用拷贝Dom,data.id上游设置
-            text: function(data, isFirst) {
+            text: function(arrayFlagDom, data, isFirst) {
                 var dom = document.createElement("input");
                 dom.className = "input";
                 dom.setAttribute("type", "text");
                 if (isFirst === true && data.defaultValue) {
                     dom.value = data.defaultValue;
                 }
-                return [dom];
+                return [dom, arrayFlagDom];
             },
-            number: function(data, isFirst) {
+            number: function(arrayFlagDom, data, isFirst) {
                 var dom = document.createElement("input");
                 dom.className = "input";
                 dom.setAttribute("type", "number");
                 if (isFirst === true && data.defaultValue) {
                     dom.value = data.defaultValue;
                 }
-                return [dom];
+                return [dom, arrayFlagDom];
             },
-            boolean: function(data, isFirst) {
+            boolean: function(arrayFlagDom, data, isFirst) {
                 var name =  + data.key + "-" + new Date().getTime()
 
                 var trueDom = document.createElement("input");
@@ -579,9 +642,9 @@ const buildDomFns = {
                     }
                 }
 
-                return [trueDom, trueTextDom, falseDom, falseTextDom];
+                return [trueDom, trueTextDom, falseDom, falseTextDom, arrayFlagDom];
             },
-            select: function(data, isFirst) {
+            select: function(arrayFlagDom, data, isFirst) {
                 var selectDom = document.createElement("select");
                 selectDom.className = "select";
 
@@ -598,9 +661,9 @@ const buildDomFns = {
                     selectDom.value = data.defaultValue;
                 }
 
-                return [selectDom];
+                return [selectDom, arrayFlagDom];
             },
-            component: function(data, isFirst) {
+            component: function(arrayFlagDom, data, isFirst) {
                 var body = [];
                 if (isFirst !== true) {
                     var nextDom = document.createElement("div");
@@ -614,16 +677,43 @@ const buildDomFns = {
                 componenttDom.innerHTML = data.key + "<br>" + data.id;
                 body.push(componenttDom);
 
+                body.push(arrayFlagDom);
+
+                // TODO 点击事件，右键菜单
+
                 return body;
             },
-            map: function(data, isFirst) {
+            map: function(arrayFlagDom, data, isFirst) {
                 var textareaDom = document.createElement("textarea");
-                return [textareaDom];
+                return [textareaDom, arrayFlagDom];
             },
-            object: function(data, isFirst) {
-                
+            object: function(arrayFlagDom, data) {
+                var spanDom = document.createElement("span");
+                spanDom.className = "object-fold";
+                spanDom.textContent = "<配置子属性>";
+     
+                var subItemsDom = document.createElement("div");
+                subItemsDom.className = "sub-items";
+
+                spanDom.onclick = (function(subItemsDom, childrenData) {
+                    var currSubItemsDom = subItemsDom;
+                    var currChildrenData = childrenData;
+                    return function() {
+                        var initState = currSubItemsDom.getAttribute("init-state");
+                        if (initState && initState == "1") {
+                            domTools.switchDisplay(currSubItemsDom);
+                            return;
+                        }
+
+                        currSubItemsDom.setAttribute("init-state", "1");
+                        var subDoms = buildDomFns.settings.item(currChildrenData);
+                        domTools.addAll(currSubItemsDom, subDoms);
+                    }
+                })(subItemsDom, data.children);
+
+                return [spanDom, arrayFlagDom, subItemsDom];
             },
-            any: function(data, isFirst) {
+            any: function(arrayFlagDom, data, isFirst) {
                 var selectDom = document.createElement("select");
                 selectDom.className = "select";
 
@@ -648,7 +738,7 @@ const buildDomFns = {
                 selectDom.appendChild(mapOptionDom);
                         
                 var textareaDom = document.createElement("textarea");
-                return [selectDom, textareaDom];
+                return [selectDom, textareaDom, arrayFlagDom];
             },
             none: function(data) {
                 var spanDom = document.createElement("span");
@@ -706,6 +796,7 @@ const optFns = {
         confirmFlowPath: function(flowId) {
         }
     },
+    // TODO 右键菜单，打开/关闭，编辑/左移/右移/删除
     window: {
         close: function(domId) {
             var dom = document.getElementById(domId);
@@ -714,10 +805,67 @@ const optFns = {
             }
         }
     }
+}
 
+const dataFns = {
+    load: function() {
+
+    },
+    get: function() {
+
+    },
+    init: {
+        set: function() {
+
+        },
+        add: function() {
+
+        },
+        get: function() {
+
+        }
+    },
+    afterAndBfore: {
+        set: function() {
+
+        },
+        add: function() {
+
+        },
+        get: function() {
+
+        }
+    },
+    flow: {
+        set: function() {
+
+        },
+        add: function() {
+
+        },
+        get: function() {
+
+        }
+    },
+    from: {
+        set: function() {
+
+        },
+        add: function() {
+
+        },
+        get: function() {
+
+        }
+    }
 }
 
 const domTools = {
+    remove: function(dom) {
+        if (dom) {
+            dom.parentNode.removeChild(dom);
+        }
+    },
     clearAll: function(parentDom) {
         if (parentDom) {
             parentDom.innerHTML = "";
@@ -732,7 +880,9 @@ const domTools = {
     addAll: function(parentDom, subDoms) {
         if (parentDom && subDoms) {
             for (let i = 0; i < subDoms.length; i++) {
-                parentDom.appendChild(subDoms[i]);
+                if (subDoms[i]) {
+                    parentDom.appendChild(subDoms[i]);
+                }
             }
         }
     },
