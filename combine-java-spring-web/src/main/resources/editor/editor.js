@@ -378,10 +378,13 @@ const buildDomFns = {
 
             var titleKeyDom = document.createElement("span");
             titleKeyDom.className = "key";
+            titleKeyDom.textContent = data.key + (data.isRequired ? "[*]" : "") + "：";
+            titleKeyDom.setAttribute("key", data.key);
             titleDom.appendChild(titleKeyDom);
 
             var titleNameDom = document.createElement("span");
             titleNameDom.className = "name";
+            titleNameDom.textContent = data.name;
             titleDom.appendChild(titleNameDom);
 
             if (data.desc && data.desc.length > 0) {
@@ -454,29 +457,29 @@ const buildDomFns = {
             var controls;
             switch (data.type) {
                 case "TEXT":
-                    controls = buildDomFns.settings.control.text(data);
+                    controls = buildDomFns.settings.control.text(data, isFirst);
                     break;
                 case "NUMBER":
-                    controls = buildDomFns.settings.control.number(data);
+                    controls = buildDomFns.settings.control.number(data, isFirst);
                     break;
                 case "BOOLEAN":
-                    controls = buildDomFns.settings.control.boolean(data);
+                    controls = buildDomFns.settings.control.boolean(data, isFirst);
                     break;
                 case "SELECT":
-                    controls = buildDomFns.settings.control.select(data);
+                    controls = buildDomFns.settings.control.select(data, isFirst);
                     break;
                 case "COMPONENT":
-                    controls = buildDomFns.settings.control.component(data);
+                    controls = buildDomFns.settings.control.component(data, isFirst);
                     break;
                 case "MAP":
-                    controls = buildDomFns.settings.control.map(data);
+                    controls = buildDomFns.settings.control.map(data, isFirst);
                     break;
                 case "OBJECT":
                 case "CONFIG":
-                    controls = buildDomFns.settings.control.object(data);
+                    controls = buildDomFns.settings.control.object(data, isFirst);
                     break;
                 case "ANY":
-                    controls = buildDomFns.settings.control.any(data);
+                    controls = buildDomFns.settings.control.any(data, isFirst);
                     break;
                 default:
                     controls = buildDomFns.settings.control.none(data);
@@ -489,16 +492,28 @@ const buildDomFns = {
                     var lineAddDom = document.createElement("span");
                     lineAddDom.className = "flag";
                     lineAddDom.textContent = "+";
-                    lineAddDom.onclick = (function(lineDom) {
-                        var currLineDom = lineDom;
-                        return function() {
-                            var parentDom = currLineDom.parentNode;
-                            if (parentDom) {
-                                var itemLine = buildDomFns.settings.line(data, false);
-                                parentDom.appendChild(itemLine);
+
+                    if (data.type != "COMPONENT") {
+                        lineAddDom.onclick = (function(lineDom) {
+                            var currLineDom = lineDom;
+                            return function() {
+                                var parentDom = currLineDom.parentNode;
+                                if (parentDom) {
+                                    var itemLine = buildDomFns.settings.line(data, false);
+                                    parentDom.appendChild(itemLine);
+                                }
                             }
-                        }
-                    })(lineDom);
+                        })(lineDom);
+                    } else {
+                        lineAddDom.onclick = (function(lineDom) {
+                            var currLineDom = lineDom;
+                            return function() {
+                                var itemLine = buildDomFns.control.component(data, false);
+                                currLineDom.appendChild(itemLine);
+                            }
+                        })(lineDom);
+                    }
+                    
                     lineDom.appendChild(lineAddDom);
                 } else {
                     var lineSubtractDom = document.createElement("span");
@@ -516,28 +531,30 @@ const buildDomFns = {
                     lineDom.appendChild(lineSubtractDom);
                 }
             }
+
+            return lineDom;
         },
         control: {
-            // TODO isFirst默认值，item存储type，设置数据，获取数据Func，添加一行可以使用拷贝Dom
-            text: function(data) {
+            // TODO item存储type，设置数据，获取数据Func，添加一行可以使用拷贝Dom,data.id上游设置
+            text: function(data, isFirst) {
                 var dom = document.createElement("input");
                 dom.className = "input";
                 dom.setAttribute("type", "text");
-                // if (data.defaultValue) {
-                //     dom.value = data.defaultValue;
-                // }
+                if (isFirst === true && data.defaultValue) {
+                    dom.value = data.defaultValue;
+                }
                 return [dom];
             },
-            number: function(data) {
+            number: function(data, isFirst) {
                 var dom = document.createElement("input");
                 dom.className = "input";
                 dom.setAttribute("type", "number");
-                // if (data.defaultValue) {
-                //     dom.value = data.defaultValue;
-                // }
+                if (isFirst === true && data.defaultValue) {
+                    dom.value = data.defaultValue;
+                }
                 return [dom];
             },
-            boolean: function(data) {
+            boolean: function(data, isFirst) {
                 var name =  + data.key + "-" + new Date().getTime()
 
                 var trueDom = document.createElement("input");
@@ -554,17 +571,17 @@ const buildDomFns = {
                 var falseTextDom = document.createElement("span");
                 falseTextDom.textContent = "False";
 
-                // if (data.defaultValue) {
-                //     if (data.defaultValue == "true") {
-                //         trueDom.checked  = true;
-                //     } else {
-                //         falseDom.checked  = true;
-                //     }
-                // }
+                if (isFirst === true && data.defaultValue) {
+                    if (data.defaultValue == "true") {
+                        trueDom.checked  = true;
+                    } else {
+                        falseDom.checked  = true;
+                    }
+                }
 
                 return [trueDom, trueTextDom, falseDom, falseTextDom];
             },
-            select: function(data) {
+            select: function(data, isFirst) {
                 var selectDom = document.createElement("select");
                 selectDom.className = "select";
 
@@ -577,22 +594,66 @@ const buildDomFns = {
                     }
                 }
 
+                if (isFirst === true && data.defaultValue) {
+                    selectDom.value = data.defaultValue;
+                }
+
                 return [selectDom];
             },
-            component: function(data) {
-    
+            component: function(data, isFirst) {
+                var body = [];
+                if (isFirst !== true) {
+                    var nextDom = document.createElement("div");
+                    nextDom.className = "line-next-flag";
+                    nextDom.textContent = "→";
+                    body.push(nextDom);
+                }
+     
+                var componenttDom = document.createElement("div");
+                componenttDom.className = "line-component";
+                componenttDom.innerHTML = data.key + "<br>" + data.id;
+                body.push(componenttDom);
+
+                return body;
             },
-            map: function(data) {
-    
+            map: function(data, isFirst) {
+                var textareaDom = document.createElement("textarea");
+                return [textareaDom];
             },
-            object: function(data) {
-    
+            object: function(data, isFirst) {
+                
             },
-            any: function(data) {
-    
+            any: function(data, isFirst) {
+                var selectDom = document.createElement("select");
+                selectDom.className = "select";
+
+                var textOptionDom = document.createElement("option");
+                textOptionDom.setAttribute("value", "TEXT");
+                textOptionDom.textContent = "文本";
+                selectDom.appendChild(textOptionDom);
+
+                var numOptionDom = document.createElement("option");
+                numOptionDom.setAttribute("value", "NUMBER");
+                numOptionDom.textContent = "数字";
+                selectDom.appendChild(numOptionDom);
+
+                var boolOptionDom = document.createElement("option");
+                boolOptionDom.setAttribute("value", "BOOLEAN");
+                boolOptionDom.textContent = "布尔";
+                selectDom.appendChild(boolOptionDom);
+
+                var mapOptionDom = document.createElement("option");
+                mapOptionDom.setAttribute("value", "MAP");
+                mapOptionDom.textContent = "MAP";
+                selectDom.appendChild(mapOptionDom);
+                        
+                var textareaDom = document.createElement("textarea");
+                return [selectDom, textareaDom];
             },
             none: function(data) {
-
+                var spanDom = document.createElement("span");
+                spanDom.textContent = "未知类型"
+                return [span];
             }
         }
     }
