@@ -7,6 +7,14 @@ var componentMap = {};
 
 // 组件图像 右键可以编辑/前移/后移/删除/复制
 
+var editorData = {
+    componentInit: {},
+    componentLogic: {},
+    block: {},
+    flow: {},
+    after: {},
+    before: {}
+};
 var config = { 
     componentInit: {}, 
     componentLogic: {}, 
@@ -39,7 +47,7 @@ window.onload = function() {
     initFns.loadData();
     initFns.loadGroup();
     initFns.bindAddItemEvent();
-    buildFns.logicComponentWindow("mysql.execute");
+    buildFns.logicComponentWindow(1, "mysql.execute");
     buildFns.initComponentWindow("mysql.execute");
 };
 
@@ -276,7 +284,7 @@ const buildFns = {
     checkToWindow: function() {
         // 无init配置不能选择init
     },
-    initComponentWindow: function(key) {
+    initComponentWindow: function(key, type) {
         var component = componentMap[key];
         if (!component) {
             console.log("【" + key + "】组件不存在");
@@ -293,13 +301,15 @@ const buildFns = {
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.key, component.name, initConfig,
             function(data) { 
-                // TODO 实现
-                console.log(data); 
+                editorData.componentInit[data.$id] = data;
+                var initItemDom = buildDomFns.node.componentInit(data.id, key, type);
+                var initDom = document.getElementById("init");
+                initDom.appendChild(initItemDom);
             }
         );
         windowsDom.appendChild(fromWindowDom);
     },
-    logicComponentWindow: function(key) {
+    logicComponentWindow: function(parentId, key, type) {
         var component = componentMap[key];
         if (!component) {
             console.log("【" + key + "】组件不存在");
@@ -317,8 +327,14 @@ const buildFns = {
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.key, component.name, logicConfig, 
             function(data) { 
-                // TODO 实现
-                console.log(data); 
+                editorData.componentLogic[data.$id] = data;
+                var logicItemDom = buildDomFns.node.componentLogic(data.id, key, type);
+                var parentDom = document.getElementById(parentId);
+                if (parentId !== "block") {
+                    var lineDom = buildDomFns.node.flowLineItem();
+                    blockDom.appendChild(lineDom);
+                }
+                parentDom.appendChild(logicItemDom);
             }
         );
         windowsDom.appendChild(fromWindowDom);
@@ -443,6 +459,7 @@ const buildDomFns = {
 
         },
         continueFrom: function(key, title, dataList, continueFunc) {
+            // TODO 编辑打开from窗口，要用原来的$id（windowId）
             var windowId = idPrefix.window + (idIndex.window++);
 
             var windowDom = document.createElement("div");
