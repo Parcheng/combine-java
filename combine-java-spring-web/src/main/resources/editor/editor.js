@@ -20,6 +20,7 @@ var idIndex = {
     flow:1, 
     componentLogic:1, 
     componentInit:1,
+    componentConfig:1,
     window:1 
 };
 var idPrefix = { 
@@ -30,6 +31,7 @@ var idPrefix = {
     flow: "f_", 
     componentLogic: "cl_", 
     componentInit: "ci_",
+    componentConfig: "$",
     window: "w_" 
 }
 
@@ -37,6 +39,7 @@ window.onload = function() {
     initFns.loadData();
     initFns.loadGroup();
     initFns.bindAddItemEvent();
+    buildFns.logicComponentWindow("mysql.execute");
 };
 
 const initFns = {
@@ -59,6 +62,37 @@ const initFns = {
                     if (groupDataItem.settings && Array.isArray(groupDataItem.settings)) {
                         for (let j = 0; j < groupDataItem.settings.length; j++) {
                             const componentDataItem = groupDataItem.settings[j];
+                            
+                            // 配置数据调整
+                            var dataAmend = function(configArr) {
+                                if (!configArr || configArr.length == 0) {
+                                    return configArr;
+                                }
+
+                                var configMap = {};
+                                var newConfigArr = [];
+                                for (let k = 0; k < configArr.length; k++) {
+                                    const config = configArr[k];
+                                    configMap[config.key] = config;
+
+                                    var keyArr = config.key.split(".");
+                                    if (keyArr.length == 1) {
+                                        newConfigArr.push(config);
+                                    } else {
+                                        var parentKey = config.key.replace(("." + keyArr[keyArr.length - 1]), "");
+                                        var parentConfig = configMap[parentKey];
+                                        if (!parentConfig.children) {
+                                            parentConfig.children = [];
+                                        }
+                                        parentConfig.children.push(config);
+                                    }
+                                }
+
+                                return newConfigArr;
+                            }
+                            componentDataItem.initConfig = dataAmend(componentDataItem.initConfig);
+                            componentDataItem.logicConfig = dataAmend(componentDataItem.logicConfig);
+
                             componentMap[componentDataItem.key] = componentDataItem;
                             currGroupData.components.push(componentDataItem.key);
                         }
@@ -239,13 +273,45 @@ const buildFns = {
         domTools.addAll(blockDom, [flagDom, componentLogicDom]);
     },
     checkToWindow: function() {
-
+        // 无init配置不能选择init
     },
-    initComponentWindow: function() {
+    initComponentWindow: function(key) {
+        var component = componentMap[key];
+        if (!component) {
+            console.log("【" + key + "】组件不存在");
+            alert("组件不存在");
+            return;
+        }
 
+        var initConfig = component.initConfig;
+        if (!initConfig || initConfig.length == 0) {
+            alert("该组件无需配置此项");
+            return;
+        }
+
+        var windowsDom = document.getElementById("window");
+        var fromWindowDom = buildDomFns.window.continueFrom(initConfig);
+        windowsDom.appendChild(fromWindowDom);
     },
-    logicComponentWindow: function() {
+    logicComponentWindow: function(key) {
+        var component = componentMap[key];
+        if (!component) {
+            console.log("【" + key + "】组件不存在");
+            alert("组件不存在");
+            return;
+        }
 
+        var logicConfig = component.logicConfig;
+        if (!logicConfig || logicConfig.length == 0) {
+            console.log("【" + key + "】组件逻辑配置不存在");
+            alert("该组件未定义配置项");
+            return;
+        }
+
+        var windowsDom = document.getElementById("window");
+        var fromWindowDom = buildDomFns.window.continueFrom(component.key, component.name, logicConfig, 
+            function(data) { console.log(data); });
+        windowsDom.appendChild(fromWindowDom);
     },
     flowSettingsWindow: function() {
 
@@ -424,6 +490,8 @@ const buildDomFns = {
                 var data = {};
                 continueFunc(data)
             };
+
+            return dom;
         },
         item: function(data) {
             var dom = document.createElement("div");
@@ -446,30 +514,10 @@ const buildDomFns = {
             titleNameDom.textContent = data.name;
             titleDom.appendChild(titleNameDom);
 
+            var titleDescDom, titleDescFlagDom;
             if (data.desc && data.desc.length > 0) {
-                var titleDescFlagDom = document.createElement("span");
-                titleDescFlagDom.className = "flag";
-                titleDescFlagDom.textContent = "[详细信息]";
-                titleDescFlagDom.onclick = function() {
-                    domTools.switchDisplay(titleDescFlagDom);
-                };
-                domTools.switchDisplay(titleDescFlagDom);
-                titleDom.appendChild(titleDescFlagDom);
-            }
-            
-            if (data.egs && data.egs.length > 0) {
-                var titleEgFlagDom = document.createElement("span");
-                titleEgFlagDom.className = "flag";
-                titleEgFlagDom.textContent = "[示例]";
-                titleEgFlagDom.onclick = function() {
-                    domTools.switchDisplay(titleEgFlagDom);
-                };
-                domTools.switchDisplay(titleEgFlagDom);
-                titleDom.appendChild(titleEgFlagDom);
-            }
-
-            if (data.desc && data.desc.length > 0) {
-                var titleDescDom = document.createElement("span");
+                // 详细信息
+                titleDescDom = document.createElement("span");
                 titleDescDom.className = "desc";
 
                 var descText = "详细信息：";
@@ -480,26 +528,56 @@ const buildDomFns = {
                 } else {
                     descText += data.desc[0];
                 }
-                titleDescDom.textContent =  descText;
-                titleDom.appendChild(titleDescDom);
+                titleDescDom.innerHTML =  descText;
+                domTools.switchDisplay(titleDescFlagDom);
+
+                // 详细信息标识
+                titleDescFlagDom = document.createElement("span");
+                titleDescFlagDom.className = "flag";
+                titleDescFlagDom.textContent = "[详细信息]";
+                titleDescFlagDom.onclick = function() {
+                    domTools.switchDisplay(titleDescDom);
+                };
             }
            
+            var titleEgDom, titleEgFlagDom;
             if (data.egs && data.egs.length > 0) {
-                var titleEgDom = document.createElement("span");
+                // 示例DOM
+                titleEgDom = document.createElement("span");
                 titleEgDom.className = "desc";
 
                 var egText = "示例：";
                 if (data.egs.length > 1) {
                     for (let i = 0; i < data.egs.length; i++) {
-                        egText += ("<br>" + data.egs[i]);
+                        egText += ("<br>" + data.egs[i].value + "<br>" + data.egs[i].desc);
                     }
                 } else {
                     egText += data.egs[0];
                 }
-                titleEgDom.textContent = egText;
-                titleDom.appendChild(titleEgDom);
+                titleEgDom.innerHTML = egText;
+                domTools.switchDisplay(titleEgDom);
+                
+                // 示例标识DOM
+                titleEgFlagDom = document.createElement("span");
+                titleEgFlagDom.className = "flag";
+                titleEgFlagDom.textContent = "[示例]";
+                titleEgFlagDom.onclick = function() {
+                    domTools.switchDisplay(titleEgDom);
+                };
             }
             
+            if (titleDescFlagDom) {
+                titleDom.appendChild(titleDescFlagDom);
+            }
+            if (titleEgFlagDom) {
+                titleDom.appendChild(titleEgFlagDom);
+            }
+            if (titleDescDom) {
+                titleDom.appendChild(titleDescDom);
+            }
+            if (titleEgDom) {
+                titleDom.appendChild(titleEgDom);
+            }
 
             // -------------------- control --------------------------
             var controlDom = document.createElement("div");
@@ -518,7 +596,9 @@ const buildDomFns = {
             var arrayFlagDom = buildDomFns.settings.arrayFlag(lineDom, data.isArray, data.type, isFirst);
             var controls;
             switch (data.type) {
+                case "ID":
                 case "TEXT":
+                case "EXPRESSION":
                     controls = buildDomFns.settings.control.text(arrayFlagDom, data, isFirst);
                     break;
                 case "NUMBER":
@@ -600,12 +680,18 @@ const buildDomFns = {
         control: {
             // TODO item存储type，设置数据，获取数据Func，添加一行可以使用拷贝Dom,data.id上游设置
             text: function(arrayFlagDom, data, isFirst) {
+                var defaultValue = data.defaultValue;
+                if (data.type == "ID") {
+                    defaultValue = idPrefix.componentConfig + (idIndex.componentConfig++);
+                }
+
                 var dom = document.createElement("input");
                 dom.className = "input";
                 dom.setAttribute("type", "text");
-                if (isFirst === true && data.defaultValue) {
-                    dom.value = data.defaultValue;
+                if (isFirst === true && defaultValue) {
+                    dom.value = defaultValue;
                 }
+
                 return [dom, arrayFlagDom];
             },
             number: function(arrayFlagDom, data, isFirst) {
@@ -615,6 +701,7 @@ const buildDomFns = {
                 if (isFirst === true && data.defaultValue) {
                     dom.value = data.defaultValue;
                 }
+
                 return [dom, arrayFlagDom];
             },
             boolean: function(arrayFlagDom, data, isFirst) {
@@ -622,14 +709,14 @@ const buildDomFns = {
 
                 var trueDom = document.createElement("input");
                 trueDom.name = name;
-                trueDom.setAttribute("radio", "number");
+                trueDom.setAttribute("type", "radio");
                 
                 var trueTextDom = document.createElement("span");
                 trueTextDom.textContent = "True";
 
                 var falseDom = document.createElement("input");
                 falseDom.name = name;
-                falseDom.setAttribute("radio", "number");
+                falseDom.setAttribute("type", "radio");
 
                 var falseTextDom = document.createElement("span");
                 falseTextDom.textContent = "False";
@@ -649,10 +736,10 @@ const buildDomFns = {
                 selectDom.className = "select";
 
                 if (data.options && data.options.length > 0) {
-                    for (let i = 0; i < options.length; i++) {
+                    for (let i = 0; i < data.options.length; i++) {
                         var optionDom = document.createElement("option");
-                        optionDom.setAttribute("value", options[i].key);
-                        optionDom.textContent = options[i].name;
+                        optionDom.setAttribute("value", data.options[i].key);
+                        optionDom.textContent = data.options[i].name;
                         selectDom.appendChild(optionDom);
                     }
                 }
@@ -738,6 +825,7 @@ const buildDomFns = {
                 selectDom.appendChild(mapOptionDom);
                         
                 var textareaDom = document.createElement("textarea");
+
                 return [selectDom, textareaDom, arrayFlagDom];
             },
             none: function(data) {
