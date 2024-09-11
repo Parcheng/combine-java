@@ -40,6 +40,7 @@ window.onload = function() {
     initFns.loadGroup();
     initFns.bindAddItemEvent();
     buildFns.logicComponentWindow("mysql.execute");
+    buildFns.initComponentWindow("mysql.execute");
 };
 
 const initFns = {
@@ -290,7 +291,12 @@ const buildFns = {
         }
 
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(initConfig);
+        var fromWindowDom = buildDomFns.window.continueFrom(component.key, component.name, initConfig,
+            function(data) { 
+                // TODO 实现
+                console.log(data); 
+            }
+        );
         windowsDom.appendChild(fromWindowDom);
     },
     logicComponentWindow: function(key) {
@@ -310,7 +316,11 @@ const buildFns = {
 
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.key, component.name, logicConfig, 
-            function(data) { console.log(data); });
+            function(data) { 
+                // TODO 实现
+                console.log(data); 
+            }
+        );
         windowsDom.appendChild(fromWindowDom);
     },
     flowSettingsWindow: function() {
@@ -460,7 +470,13 @@ const buildDomFns = {
 
             var itemDoms = buildDomFns.settings.items(dataList);
             domTools.addAll(bodyDom, itemDoms);
-            var buttonDom = buildDomFns.settings.continueButton(windowId, continueFunc);
+
+            bodyDom.appendChild(document.createElement("hr"));
+
+            var buttonDom = buildDomFns.settings.continueButton(windowId, function(data) {
+                continueFunc(data);
+                titleCloseDom.dispatchEvent(new Event('click'));
+            });
             bodyDom.appendChild(buttonDom);
 
             return windowDom;
@@ -476,7 +492,9 @@ const buildDomFns = {
             for (let i = 0; i < dataList.length; i++) {
                 var itemDom = buildDomFns.settings.item(dataList[i]);
                 body.push(itemDom);
-                body.push(document.createElement("hr"));
+                if (i < dataList.length - 1) {
+                    body.push(document.createElement("hr"));
+                }
             }
 
             return body;
@@ -505,7 +523,7 @@ const buildDomFns = {
 
             var titleKeyDom = document.createElement("span");
             titleKeyDom.className = "key";
-            titleKeyDom.textContent = data.key + (data.isRequired ? "[*]" : "") + "：";
+            titleKeyDom.textContent = data.key + "：";
             titleKeyDom.setAttribute("key", data.key);
             titleDom.appendChild(titleKeyDom);
 
@@ -514,7 +532,12 @@ const buildDomFns = {
             titleNameDom.textContent = data.name;
             titleDom.appendChild(titleNameDom);
 
-            var titleDescDom, titleDescFlagDom;
+            var requiredDom = document.createElement("span");
+            requiredDom.className = "flag";
+            requiredDom.textContent = data.isRequired ? "[必填]" : "[非必填]";
+            titleDom.appendChild(requiredDom);
+
+            var titleDescDom = null, titleDescFlagDom = null;
             if (data.desc && data.desc.length > 0) {
                 // 详细信息
                 titleDescDom = document.createElement("span");
@@ -529,7 +552,7 @@ const buildDomFns = {
                     descText += data.desc[0];
                 }
                 titleDescDom.innerHTML =  descText;
-                domTools.switchDisplay(titleDescFlagDom);
+                domTools.switchDisplay(titleDescDom);
 
                 // 详细信息标识
                 titleDescFlagDom = document.createElement("span");
@@ -540,19 +563,21 @@ const buildDomFns = {
                 };
             }
            
-            var titleEgDom, titleEgFlagDom;
+            var titleEgDom = null, titleEgFlagDom = null;
             if (data.egs && data.egs.length > 0) {
                 // 示例DOM
                 titleEgDom = document.createElement("span");
                 titleEgDom.className = "desc";
 
                 var egText = "示例：";
-                if (data.egs.length > 1) {
-                    for (let i = 0; i < data.egs.length; i++) {
-                        egText += ("<br>" + data.egs[i].value + "<br>" + data.egs[i].desc);
+                for (let i = 0; i < data.egs.length; i++) {
+                    if (data.egs.length > 1) {
+                        egText += "<br>";
                     }
-                } else {
-                    egText += data.egs[0];
+                    egText += data.egs[i].value;
+                    if (data.egs[i].desc) {
+                        egText += ("  【" + data.egs[i].desc + "】");
+                    }
                 }
                 titleEgDom.innerHTML = egText;
                 domTools.switchDisplay(titleEgDom);
@@ -585,7 +610,7 @@ const buildDomFns = {
             dom.appendChild(controlDom);
 
             var line = buildDomFns.settings.line(data, true);
-            dom.appendChild(line);
+            controlDom.appendChild(line);
 
             return dom;
         },
@@ -593,7 +618,7 @@ const buildDomFns = {
             var lineDom = document.createElement("div");
             lineDom.className = "line";
 
-            var arrayFlagDom = buildDomFns.settings.arrayFlag(lineDom, data.isArray, data.type, isFirst);
+            var arrayFlagDom = buildDomFns.settings.arrayFlag(lineDom, data, isFirst);
             var controls;
             switch (data.type) {
                 case "ID":
@@ -631,11 +656,13 @@ const buildDomFns = {
 
             return lineDom;
         },
-        arrayFlag: function(lineDom, isArray, dataType, isFirst) {
+        arrayFlag: function(lineDom, data, isFirst) {
+            var isArray = data.isArray;
             if (isArray !== true) {
                 return null;
             }
 
+            var dataType = data.type;
             if (isFirst !== true && dataType === "COMPONENT") {
                 return null;
             }
@@ -645,24 +672,26 @@ const buildDomFns = {
             arrayFlagDom.textContent = isFirst === true ? "+" : "-";
         
             if (isFirst === true && dataType === "COMPONENT") {
-                arrayFlagDom.onclick = (function(lineDom) {
+                arrayFlagDom.onclick = (function(lineDom, data) {
                     var currLineDom = lineDom;
+                    var currData = data;
                     return function() {
-                        var itemLine = buildDomFns.control.component(data, false);
+                        var itemLine = buildDomFns.control.component(currData, false);
                         currLineDom.appendChild(itemLine);
                     }
-                })(lineDom);
+                })(lineDom, data);
             } else if (isFirst === true) {
-                arrayFlagDom.onclick = (function(lineDom) {
+                arrayFlagDom.onclick = (function(lineDom, data) {
                     var currLineDom = lineDom;
+                    var currData = data;
                     return function() {
                         var parentDom = currLineDom.parentNode;
                         if (parentDom) {
-                            var itemLine = buildDomFns.settings.line(data, false);
+                            var itemLine = buildDomFns.settings.line(currData, false);
                             parentDom.appendChild(itemLine);
                         }
                     }
-                })(lineDom);
+                })(lineDom, data);
             } else {
                 arrayFlagDom.onclick = (function(lineDom) {
                     var currLineDom = lineDom;
@@ -776,11 +805,12 @@ const buildDomFns = {
             },
             object: function(arrayFlagDom, data) {
                 var spanDom = document.createElement("span");
-                spanDom.className = "object-fold";
-                spanDom.textContent = "<配置子属性>";
+                spanDom.className = "fold";
+                spanDom.textContent = "配置子属性";
      
                 var subItemsDom = document.createElement("div");
                 subItemsDom.className = "sub-items";
+                domTools.switchDisplay(subItemsDom);
 
                 spanDom.onclick = (function(subItemsDom, childrenData) {
                     var currSubItemsDom = subItemsDom;
@@ -793,8 +823,11 @@ const buildDomFns = {
                         }
 
                         currSubItemsDom.setAttribute("init-state", "1");
-                        var subDoms = buildDomFns.settings.item(currChildrenData);
+                        currSubItemsDom.appendChild(document.createElement("hr"));
+
+                        var subDoms = buildDomFns.settings.items(currChildrenData);
                         domTools.addAll(currSubItemsDom, subDoms);
+                        domTools.switchDisplay(currSubItemsDom);
                     }
                 })(subItemsDom, data.children);
 
@@ -824,14 +857,15 @@ const buildDomFns = {
                 mapOptionDom.textContent = "MAP";
                 selectDom.appendChild(mapOptionDom);
                         
+                var brDom = document.createElement("br")
                 var textareaDom = document.createElement("textarea");
 
-                return [selectDom, textareaDom, arrayFlagDom];
+                return [selectDom, arrayFlagDom, brDom, textareaDom];
             },
             none: function(data) {
                 var spanDom = document.createElement("span");
                 spanDom.textContent = "未知类型"
-                return [span];
+                return [spanDom];
             }
         }
     }
@@ -975,7 +1009,7 @@ const domTools = {
         }
     },
     switchDisplay: function(dom, isShow) {
-        if (isShow != null && isShow != undefined) {
+        if (isShow == null || isShow == undefined) {
             var switchState = dom.getAttribute("switch-state");
             isShow = switchState && switchState == "hide";
         }
