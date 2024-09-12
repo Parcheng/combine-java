@@ -7,17 +7,13 @@ var componentMap = {};
 
 // 组件图像 右键可以编辑/前移/后移/删除/复制
 
-var editorData = {
-    componentInit: {},
-    componentLogic: {},
-    block: {},
-    flow: {},
-    after: {},
-    before: {}
+var instance = {
+    init: {},
+    logic: {}
 };
 var config = { 
-    componentInit: {}, 
-    componentLogic: {}, 
+    inits: [], 
+    blocks: [], 
     before:{}, 
     after:{}, 
     flow:{}
@@ -47,7 +43,10 @@ window.onload = function() {
     initFns.loadData();
     initFns.loadGroup();
     initFns.bindAddItemEvent();
-    buildFns.logicComponentWindow(1, "mysql.execute", null);
+
+    // TODO 引用的处理
+    config.flow["flow-001"] = {  id: "flow-001", path: "XXX", components: []};
+    buildFns.logicComponentWindow("mysql.execute", null, "flow-001");
     buildFns.initComponentWindow("mysql.execute", null);
 };
 
@@ -228,61 +227,35 @@ const buildFns = {
 
         return flowId;
     },
-    flowItem: function(flowId, key, type) {
+    flowItem: function(flowId, id, componentId, key) {
         var flowDom = document.getElementById(flowId);
         var flowNodeData = config.flow[flowId];
         if (!flowDom || !flowNodeData) {
+            console.log("【" + flowId + "】流程不存在")
             alert("流程不存在");
             return;
         }
 
-        var currIdIndex = idIndex.componentLogic++;
-        var logicId = idPrefix.componentLogic + currIdIndex;
-        config.componentLogic[logicId] = {
-            id: currIdIndex,
-            flowId: flowId,
-            key: key,
-            type: type,
-            config: { id: currIdIndex }
-        };
-
+        flowNodeData.components.push({id: id, key: key, componentId: componentId});
         var flagDom = buildDomFns.node.flowLineItem();
-        var componentLogicDom = buildDomFns.node.componentLogic(logicId, key, type);
+        var componentLogicDom = buildDomFns.node.componentLogic(id, componentId, key);
         domTools.addAll(flowDom, [flagDom, componentLogicDom]);
     },
-    initItem: function(key, type) {
+    initItem: function(id, componentId, key) {
         var initDom = document.getElementById("init");
-
-        var currIdIndex = idIndex.componentInit++;
-        var inidId = idPrefix.componentInit + currIdIndex;
-        config.componentInit[inidId] = {
-            id: currIdIndex,
-            key: key,
-            type: type,
-            config: { id: currIdIndex }
-        };
-
-        var componentInitDom = buildDomFns.node.componentInit(inidId, key, type);
+        var componentInitDom = buildDomFns.node.componentInit(id, componentId, key);
+        config.inits.push({id: id, key: key, componentId: componentId});
         domTools.addAll(initDom, [componentInitDom]);
     },
-    blockItem: function() {
+    blockItem: function(id, componentId, key) {
         var blockDom = document.getElementById("block");
-
-        var currIdIndex = idIndex.componentLogic++;
-        var logicId = idPrefix.componentLogic + currIdIndex;
-        config.componentLogic[logicId] = {
-            id: currIdIndex,
-            flowId: flowId,
-            key: key,
-            type: type,
-            config: { id: currIdIndex }
-        };
-
-        var componentLogicDom = buildDomFns.node.componentLogic(logicId, key, type);
+        config.blocks.push({id: id, key: key, componentId: componentId});
+        var componentLogicDom = buildDomFns.node.componentLogic(id, componentId, key);
         domTools.addAll(blockDom, [flagDom, componentLogicDom]);
     },
     checkToWindow: function() {
         // 无init配置不能选择init
+        // 
     },
     initComponentWindow: function(key, value) {
         var component = componentMap[key];
@@ -298,18 +271,22 @@ const buildFns = {
             return;
         }
 
+        value = value ? value : {};
+        value.type = value.type ? value.type : component.key;
+        var id = value.$id = value.$id ? value.$id : (idPrefix.componentInit + (idIndex.componentInit++));
+
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.key, component.name, initConfig, value,
             function(data) { 
-                editorData.componentInit[data.$id] = data;
-                var initItemDom = buildDomFns.node.componentInit(data.id, component.key, component.type);
-                var initDom = document.getElementById("init");
-                initDom.appendChild(initItemDom);
+                console.log(data);
+                data.$id = id;
+                instance.init[id] = data;
+                buildFns.initItem(id, data.id, component.key);
             }
         );
         windowsDom.appendChild(fromWindowDom);
     },
-    logicComponentWindow: function(parentId, key, value) {
+    logicComponentWindow: function(key, value, flowId) {
         var component = componentMap[key];
         if (!component) {
             console.log("【" + key + "】组件不存在");
@@ -324,17 +301,21 @@ const buildFns = {
             return;
         }
 
+        value = value ? value : {};
+        value.type = value.type ? value.type : component.key;
+        var id = value.$id = value.$id ? value.$id : (idPrefix.componentLogic + (idIndex.componentLogic++));
+
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.key, component.name, logicConfig, value,
-            function(data) { 
-                editorData.componentLogic[data.$id] = data;
-                var logicItemDom = buildDomFns.node.componentLogic(data.id, component.key, component.type);
-                var parentDom = document.getElementById(parentId);
-                if (parentId !== "block") {
-                    var lineDom = buildDomFns.node.flowLineItem();
-                    parentDom.appendChild(lineDom);
+            function(data) {
+                console.log(data);
+                data.$id = id;
+                instance.logic[id] = data;
+                if (flowId) {
+                    buildFns.flowItem(flowId, id, data.id, component.key);
+                } else {
+                    buildFns.blockItem(id, data.id, component.key);
                 }
-                parentDom.appendChild(logicItemDom);
             }
         );
         windowsDom.appendChild(fromWindowDom);
@@ -391,11 +372,11 @@ const buildDomFns = {
         },
     },
     node: {
-        componentInit: function(initId, key, type) {
+        componentInit: function(initId, componentId, key) {
             var dom = document.createElement("div");
             dom.id = initId;
             dom.className = "component-item";
-            dom.innerHTML = type + "<br>" + key;
+            dom.innerHTML = componentId + "<br>" + key;
             dom.ondblclick = (function(initId) {
                 var currInitId = initId;
                 return function() {
@@ -404,11 +385,11 @@ const buildDomFns = {
             })(initId);
             return dom;
         },
-        componentLogic: function(logicId, key, type) {
+        componentLogic: function(logicId, componentId, key) {
             var dom = document.createElement("div");
             dom.name = logicId;
             dom.className = "component-item";
-            dom.innerHTML = type + "<br>" + key;
+            dom.innerHTML = componentId + "<br>" + key;
             dom.ondblclick = (function(logicId) {
                 var currLogicId = logicId;
                 return function() {
@@ -458,12 +439,13 @@ const buildDomFns = {
         checkFlow: function() {
 
         },
+        // flow path window
+        // flow settings window
+        // id ref c tip
+        // TODO 右键菜单，打开/关闭，编辑/左移/右移/删除
         continueFrom: function(key, title, dataList, value, continueFunc) {
-            // TODO 编辑打开from窗口，要用原来的$id（windowId）
-            var windowId = idPrefix.window + (idIndex.window++);
-
             var windowDom = document.createElement("div");
-            windowDom.id = windowId;
+            windowDom.id = idPrefix.window + (idIndex.window++);
             windowDom.className = "from-window";
             windowDom.setAttribute("key", key);
 
@@ -476,8 +458,7 @@ const buildDomFns = {
             titleCloseDom.className = "close";
             titleCloseDom.textContent = "X";
             titleCloseDom.onclick = function() {
-                var currWindow = document.getElementById(windowId);
-                domTools.remove(currWindow);
+                domTools.remove(windowDom);
             }
             titleDom.appendChild(titleCloseDom);
 
@@ -488,14 +469,16 @@ const buildDomFns = {
             var itemDomsConfig = buildDomFns.settings.items(dataList, value);
             domTools.addAll(bodyDom, itemDomsConfig.doms);
 
-            bodyDom.appendChild(document.createElement("hr"));
-
             var itemsGetValueFn = itemDomsConfig.getValueFn;
-            var buttonDom = buildDomFns.settings.continueButton(function() {
+            var buttonDom = document.createElement("div");
+            buttonDom.className = "continue";
+            buttonDom.textContent = "确定";
+            buttonDom.onclick = function() {
                 var valueData = itemsGetValueFn();
-                continueFunc(valueData);
+                continueFunc(valueData ? valueData : {});
                 titleCloseDom.dispatchEvent(new Event('click'));
-            });
+            };
+            bodyDom.appendChild(document.createElement("hr"));
             bodyDom.appendChild(buttonDom);
 
             return windowDom;
@@ -536,13 +519,6 @@ const buildDomFns = {
                     return data;
                 }
             };
-        },
-        continueButton: function(continueFunc) {
-            var dom = document.createElement("div");
-            dom.className = "continue";
-            dom.textContent = "确定";
-            dom.onclick = continueFunc();
-            return dom;
         },
         item: function(data, value) {
             var itemDom = document.createElement("div");
@@ -811,6 +787,12 @@ const buildDomFns = {
                     dom.value = value;
                 }
 
+                if (data.key == "type") {
+                    dom.setAttribute("readonly", true);
+                    dom.style.pointerEvents = "none";
+                    dom.style.backgroundColor = "#f0f0f0";
+                }
+
                 var arrayFlagDom = buildDomFns.settings.flag.all(data, index);
                 return {
                     doms: [dom, arrayFlagDom],
@@ -963,7 +945,7 @@ const buildDomFns = {
                         currSubItemsDom.setAttribute("init-state", "1");
                         currSubItemsDom.appendChild(document.createElement("hr"));
 
-                        domTools.addAll(currSubItemsDom, subDoms);
+                        domTools.addAll(currSubItemsDom, currSubDoms);
                         domTools.switchDisplay(currSubItemsDom);
                     }
                 })(subItemsDom, subDoms); 
@@ -972,7 +954,11 @@ const buildDomFns = {
                 return {
                     doms: [spanDom, arrayFlagDom, subItemsDom],
                     getValueFn: function() {
-                        return subDomsGetValueFn();
+                        var initState = subItemsDom.getAttribute("init-state");
+                        if (initState && initState == "1") {
+                            return subDomsGetValueFn();
+                        }
+                        return null;
                     }
                 };
             },
@@ -1046,98 +1032,14 @@ const optFns = {
             }
             currGroupDom.className = "item-checked";
             buildFns.components(key);
-        },
-
-        openCheckComponentWindow: function(key) {
-            // 选择 默认上次的/新建的
-        },
-        confirmCheckComponent: function(key) {
-            // add dom 
-            // add data
         }
     },
-    node: {
-        openComponentInitWindow: function(initId) {
-        },
-        confirmComponentInit: function() {
-        },
-        
-        openComponentLogicWindow: function(logicId) {
-        },
-        confirmComponentLogic: function(flowId) {
-        },
-
-        openFlowSettingsWindow: function(flowId) {
-            // 解析flowId 前缀
-        },
-        confirmFlowSettings: function() {
-        },
-
-        openFlowPathWindow: function(flowId) {
-        },
-        confirmFlowPath: function(flowId) {
-        }
-    },
-    // TODO 右键菜单，打开/关闭，编辑/左移/右移/删除
     window: {
         close: function(domId) {
             var dom = document.getElementById(domId);
             if (dom && dom.parentNode) {
                 dom.parentNode.removeChild(dom);
             }
-        }
-    }
-}
-
-const dataFns = {
-    load: function() {
-
-    },
-    get: function() {
-
-    },
-    init: {
-        set: function() {
-
-        },
-        add: function() {
-
-        },
-        get: function() {
-
-        }
-    },
-    afterAndBfore: {
-        set: function() {
-
-        },
-        add: function() {
-
-        },
-        get: function() {
-
-        }
-    },
-    flow: {
-        set: function() {
-
-        },
-        add: function() {
-
-        },
-        get: function() {
-
-        }
-    },
-    from: {
-        set: function() {
-
-        },
-        add: function() {
-
-        },
-        get: function() {
-
         }
     }
 }
