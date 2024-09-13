@@ -569,7 +569,7 @@ const buildDomFns = {
         },
         componentLogic: function(logicId, componentId, key) {
             var dom = document.createElement("div");
-            dom.name = logicId;
+            dom.id = logicId;
             dom.className = "component-item";
             dom.innerHTML = componentId + "<br>" + key;
             dom.ondblclick = (function(logicId) {
@@ -903,7 +903,8 @@ const buildDomFns = {
             itemDom.appendChild(controlDom);
 
             var getLineValueFns = [];
-            if (!data.isArray || (data.isArray && !Array.isArray(value))) {
+            var isArray = data.isArray;
+            if (!isArray || (isArray && !Array.isArray(value))) {
                 value = [value];
             }
             if (data.type == "COMPONENT") {
@@ -922,17 +923,15 @@ const buildDomFns = {
                     var currFn;
                     if (!getLineValueFns || getLineValueFns == 0) {
                         return null;
-                    } else if (getLineValueFns.length == 1) {
-                        currFn = getLineValueFns[0];
-                        return currFn();
-                    } else {
-                        var data = [];
-                        for (let i = 0; i < getLineValueFns.length; i++) {
-                            currFn = getLineValueFns[i];
-                            data.push(currFn());
-                        }
-                        return data;
+                    } 
+                    
+                    var currValue = [];
+                    for (let i = 0; i < getLineValueFns.length; i++) {
+                        currFn = getLineValueFns[i];
+                        currValue.push(currFn());
                     }
+
+                    return isArray ? currValue : currValue[0];
                 }
             };
         },
@@ -985,10 +984,11 @@ const buildDomFns = {
             lineDom.id = subBoardId;
             lineDom.className = "line";
 
+            var isArray = data.isArray;
             if (valueArr && valueArr.length > 0) {
                 for (let i = 0; i < valueArr.length; i++) {
-                    var componentDomConfig = buildDomFns.settings.control.component(valueArr[i], i);
-                    domTools.addAll(lineDom, componentDomConfig.doms);
+                    var componentDoms = buildDomFns.settings.control.component(valueArr[i], i);
+                    domTools.addAll(lineDom, componentDoms);
                 }
             }
             
@@ -997,8 +997,21 @@ const buildDomFns = {
 
             // TODO 点击事件，右键菜单
             getValueFns.push(function() {
-                // TODO
-                return null;
+                var currValue = [];
+                var currComponentDoms = lineDom.children;
+                if (currComponentDoms || currComponentDoms.length > 0) {
+                    for (let c = 0; c < currComponentDoms.length; c++) {
+                        const currComponentDom = currComponentDoms[c];
+                        if (currComponentDom.className == "line-component") {
+                            currValue.push(instance[currComponentDom.id]);
+                        }
+                    }
+                }
+                
+                if (currValue.length == 0) {
+                    return null;
+                }
+                return isArray ? currValue : currValue[0];
             });
             return lineDom;
         },
@@ -1190,9 +1203,15 @@ const buildDomFns = {
                         nextDom.textContent = "→";
                         body.push(nextDom);
                     }
-    
+
+                    var id = value.$id;
+                    if (!id) {
+                        id = idPrefix.componentLogic + (idIndex.componentLogic++);
+                        value.$id = id;
+                    }
+
                     var componenttDom = document.createElement("div");
-                    // TODO id
+                    componenttDom.id = id;
                     componenttDom.className = "line-component";
                     componenttDom.innerHTML = value.id + "<br>" + value.type;
                     body.push(componenttDom);
