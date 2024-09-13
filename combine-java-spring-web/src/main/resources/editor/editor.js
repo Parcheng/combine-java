@@ -7,6 +7,11 @@ var componentMap = {};
 
 // 组件图像 右键可以编辑/前移/后移/删除/复制
 
+var lastChecked = {
+    flow: null,
+    before: null,
+    after: null
+};
 var instance = {
     init: {},
     logic: {}
@@ -43,6 +48,7 @@ window.onload = function() {
     initFns.loadData();
     initFns.loadGroup();
     initFns.bindAddItemEvent();
+    initFns.initCheckBoard();
 
     // TODO 引用的处理
     config.flow["flow-001"] = {  id: "flow-001", path: "XXX", components: []};
@@ -137,6 +143,92 @@ const initFns = {
         flowAddDom.onclick = function() {
             var flowId = buildFns.flow();
             optFns.node.openFlowPathWindow(flowId);
+        }
+    },
+    initCheckBoard: function() {
+        var flowConfig = config;
+        var lastCheckedData = lastChecked;
+
+        var boardSelectDom = document.getElementById("check-board-select");
+        var boardSelectOptionDoms = buildDomFns.checkSelect.broadSelect()
+        domTools.addAll(boardSelectDom, boardSelectOptionDoms);
+
+        var flowSelectDom = document.getElementById("check-flow-select");
+        boardSelectDom.onchange = function() {
+            var selectValue = boardSelectDom.value;
+            if (selectValue == null || selectValue == "init" || selectValue == "block") {
+                domTools.switchDisplay(flowSelectDom, false);
+                return;
+            }
+            
+            var selectOptionData;
+            var lastCheckedValue;
+            if (selectValue == "before") {
+                selectOptionData = flowConfig.before;
+                lastCheckedValue = lastCheckedData.before;
+            } else if (selectValue == "flow") {
+                selectOptionData = flowConfig.flow;
+                lastCheckedValue = lastCheckedData.flow;
+            } else if (selectValue == "after") {
+                selectOptionData = flowConfig.after;
+                lastCheckedValue = lastCheckedData.after;
+            } else {
+                selectOptionData = {};
+            }
+
+            var flowSelectOptionDomsConfig = buildDomFns.checkSelect.broadSelect(selectOptionData, lastCheckedValue);
+            if (flowSelectOptionDomsConfig.checkedValue) {
+                flowSelectDom.value = flowSelectOptionDomsConfig.checkedValue;
+            }
+
+            domTools.setAll(flowSelectDom, flowSelectOptionDomsConfig.doms);
+            domTools.switchDisplay(flowSelectDom, true);
+        }
+
+        flowSelectDom.onchange = function() {
+            var flowSelectValue = flowSelectDom.value;
+            if (flowSelectValue) {
+                var boardSelectValue = boardSelectDom.value;
+                if (boardSelectValue == "before") {
+                    lastCheckedData.before = flowSelectValue;
+                } else if (boardSelectValue == "flow") {
+                    lastCheckedData.flow = flowSelectValue;
+                } else if (boardSelectValue == "after") {
+                    lastCheckedData.after = flowSelectValue;
+                }
+            }
+        }
+
+        var continueDom = document.getElementById("check-board-continue");
+        continueDom.onclick = function() {
+            var sourceKeyDom = document.getElementById("check-board-source-key");
+            if (!sourceKeyDom || !sourceKeyDom.value) {
+                return;
+            }
+
+            var componentKey = sourceKeyDom.value
+            var boardSelectValue = boardSelectDom.value;
+            if (boardSelectValue == "init") {
+                buildFns.initComponentWindow(componentKey, null);
+                return;
+            }
+
+            if (boardSelectValue == "block") {
+                buildFns.logicComponentWindow(componentKey, null, null);
+                return;
+            }
+
+            var flowSelectValue = flowSelectDom.value;
+            if (flowSelectValue) {
+                buildFns.logicComponentWindow(componentKey, null, flowSelectValue);
+                return;
+            }
+        }
+        
+        var closeDom = document.getElementById("check-board-window-close");
+        closeDom.onclick = function() {
+            var boardDom = document.getElementById("check-board-window");
+            domTools.switchDisplay(boardDom, false);
         }
     }
 }
@@ -253,9 +345,25 @@ const buildFns = {
         var componentLogicDom = buildDomFns.node.componentLogic(id, componentId, key);
         domTools.addAll(blockDom, [flagDom, componentLogicDom]);
     },
-    checkToWindow: function() {
+    checkBoardWindow: function() {
         // 无init配置不能选择init
-        // 
+        // init 时创建
+        // init/block/flow/after/before currKey
+        // group -> component currId
+
+        var boardDom = document.getElementById("check-board-window");
+        var initFlag = boardDom.getAttribute("init");
+        if (initFlag != 1) {
+            
+        }
+
+        domTools.switchDisplay(boardDom, true);
+    },
+    checkComponentWindow: function() {
+        // 无init配置不能选择init
+        // init 时创建
+        // init/block/flow/after/before currKey
+        // group -> component currId
     },
     initComponentWindow: function(key, value) {
         var component = componentMap[key];
@@ -320,11 +428,11 @@ const buildFns = {
         );
         windowsDom.appendChild(fromWindowDom);
     },
-    flowSettingsWindow: function() {
-
+    flowSettingsWindow: function(flowId) {
+        // continueFrom logicConfig={}
     },
-    flowPathWindow: function() {
-
+    flowPathWindow: function(flowId) {
+        // continueFrom logicConfig={} input
     }
 }
 
@@ -436,9 +544,6 @@ const buildDomFns = {
         }
     },
     window: {
-        checkFlow: function() {
-
-        },
         // flow path window
         // flow settings window
         // id ref c tip
@@ -482,6 +587,71 @@ const buildDomFns = {
             bodyDom.appendChild(buttonDom);
 
             return windowDom;
+        }
+    },
+    checkSelect: {
+        broadSelect: function() {
+            var options = [];
+
+            var defaultOptionDom = document.createElement("option");
+            defaultOptionDom.setAttribute("value", null);
+            defaultOptionDom.textContent = "请选择面板";
+            options.push(defaultOptionDom);
+
+            var initOptionDom = document.createElement("option");
+            initOptionDom.setAttribute("value", "init");
+            initOptionDom.textContent = "组件全局配置面板";
+            options.push(initOptionDom);
+
+            var blockOptionDom = document.createElement("option");
+            blockOptionDom.setAttribute("value", "block");
+            blockOptionDom.textContent = "公共组件定义面板";
+            options.push(blockOptionDom);
+
+            var beforeOptionDom = document.createElement("option");
+            beforeOptionDom.setAttribute("value", "before");
+            beforeOptionDom.textContent = "前置流程面板";
+            options.push(beforeOptionDom);
+
+            var flowOptionDom = document.createElement("option");
+            flowOptionDom.setAttribute("value", "flow");
+            flowOptionDom.textContent = "执行流程面板";
+            options.pushd(flowOptionDom);
+
+            var afterOptionDom = document.createElement("option");
+            afterOptionDom.setAttribute("value", "after");
+            afterOptionDom.textContent = "后置流程面板";
+            options.push(afterOptionDom);
+
+            return options;
+        },
+        flowSelect: function(selectOptionData, checkedValue) {
+            var options = [];
+
+            var defaultFlowOptionDom = document.createElement("option");
+            defaultFlowOptionDom.setAttribute("value", null);
+            defaultFlowOptionDom.textContent = "请选择流程";
+            options.push(defaultFlowOptionDom);
+
+            var defaultCheckValue;
+            for (const key in selectOptionData) {
+                if (Object.prototype.hasOwnProperty.call(selectOptionData, key)) {
+                    const currOptionData = selectOptionData[key];
+                    const currOptionDom = document.createElement("option");
+                    currOptionDom.setAttribute("value", currOptionData.id);
+                    currOptionDom.textContent = currOptionData.path ? currOptionData.path : currOptionData.id;
+                    options.push(currOptionDom);
+
+                    if (checkedValue && checkedValue == currOptionData.id) {
+                        defaultCheckValue = currOptionData.id;
+                    }
+                }
+            }
+
+            return {
+                doms: options,
+                checkedValue: defaultCheckValue
+            }
         }
     },
     settings: {

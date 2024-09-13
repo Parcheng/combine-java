@@ -60,7 +60,7 @@
                     ★ 后置流程配置
                     <span id="after-add" class="add-item">+</span>
                 </div>
-                <div class="flow-item">
+                <div id="after-001" class="flow-item">
                     <div class="settings-item">设置</div>
                     <div class="line-item">→</div>
                     <div name="cbf-abc-02" class="component-item">a.b.c<br>abc-02</div>
@@ -70,7 +70,7 @@
             </div>
             <div id="flow" class="flow">
                 <div id="flow-title" class="title">
-                    ★ 流程配置
+                    ★ 执行流程配置
                     <span id="flow-add" class="add-item">+</span>
                 </div>
                 <div id="flow-001" class="flow-item">
@@ -84,6 +84,51 @@
         </div>
     </div>
     <div id="window">
+        <div id="check-board-window" class="simply-window" style="display: none;">
+            <div class="title">
+                选择面板
+                <span id="check-board-window-close" class="close">X</span>
+            </div>
+            <div class="body">
+                <div class="item">
+                    <input id="check-board-source-key" type="hide" />
+                </div>
+                <div class="item">
+                    <div class="label">面板：</div>
+                    <div class="control">
+                        <select id="check-board-select"></select>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="label">流程：</div>
+                    <div class="control">
+                        <select id="check-flow-select"></select>
+                    </div>
+                </div>
+                <div id="check-board-continue" class="continue">确定</div>
+            </div>
+        </div>
+        <div id="check-component-window" class="simply-window" style="display: none;">
+            <div class="title">
+                选择组件
+                <span id="check-component-window-close" class="close">X</span>
+            </div>
+            <div class="body">
+                <div class="item">
+                    <div class="label">分组：</div>
+                    <div class="control">
+                        <select id="check-group-select"></select>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="label">组件：</div>
+                    <div class="control">
+                        <select id="check-component-select"></select>
+                    </div>
+                </div>
+                <div id="check-component-continue" class="continue">确定</div>
+            </div>
+        </div>
         <!-- <div class="from-window">
             <div class="title">
                 XXXXXXXXXXXXXXXXXXX
