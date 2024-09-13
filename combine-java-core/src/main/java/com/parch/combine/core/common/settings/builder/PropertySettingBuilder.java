@@ -160,11 +160,13 @@ public class PropertySettingBuilder {
 
         List<PropertyOptionSetting> options = new ArrayList<>();
         for (IOptionSetting item : optionConfigs) {
-            PropertyOptionSetting option = new PropertyOptionSetting();
-            option.setKey(item.getKey());
-            option.setName(item.getName());
-            option.setDesc(item.getDesc());
-            options.add(option);
+            if (item.isValid()) {
+                PropertyOptionSetting option = new PropertyOptionSetting();
+                option.setKey(item.getKey());
+                option.setName(item.getName());
+                option.setDesc(item.getDesc());
+                options.add(option);
+            }
         }
 
         property.setOptions(options);
