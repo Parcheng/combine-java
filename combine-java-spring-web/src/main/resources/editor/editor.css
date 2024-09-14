@@ -82,6 +82,7 @@
     float: right;
 }
 
+.board .constant,
 .board .init,
 .board .block,
 .board .before,
@@ -193,6 +194,21 @@
     border-bottom: var(--border_color);
 }
 
+.board .constant-item {
+    width: 100%;
+    min-width: 60px;
+    display: block;
+    font-size: 10px;
+    padding: 5px;
+    text-align: left;
+}
+
+.board .constant-item textarea{
+    width: 100%;
+    min-height: 200px;
+    resize: vertical;
+}
+
 .simply-window {
     width: 40%;
     height: auto;
@@ -284,7 +300,8 @@
 
 .from-window .body {
     width: 100%;
-    height: 500px;
+    min-height: 100px;
+    max-height: 500px;
     padding: 8px;
     background-color: var(--bg_light_color);
     overflow-y: scroll;

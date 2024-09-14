@@ -3,22 +3,30 @@
 var firstGroup = null;
 var groupMap = {};
 var componentMap = {};
+var commonRefMap = {}; // 组件KEY:commonKey:[...]
 
-// 组件图像 右键可以编辑/前移/后移/删除/复制
-// ID重复检查（是否直接使用 id = xxx 的组件？）
+// 1.
+// 组件单击编辑
+// 右键菜单，打开/关闭，编辑/复制/左移（左边有箭头）/右移（右边有箭头）/删除/取消
+// 复制弹窗，复制到（block,after/flow/before）
+
+// 2.
 // 引用公共对象
 // 引用组件，选择（触发输入框/选择框只能选block和前面的）
-// 配置检查按钮，输出未完成项目，检查引用组件是否存在（配置在后面的检查/未配置）
-// 未完成配置的红色角标提示
 // REF INIT 可以改成下拉选项
 
-// add flow / path window
-// add before after / settings window
+// 3.
+// id 选择可引用项（勾选REF为下拉框，否则输入框）
+// 失去焦点，ID重复检查（是否直接使用 id = xxx 的组件？）
 
-// id ref component tip
-// 右键菜单，打开/关闭，编辑/左移/右移/删除
+// 4.
+// 保存，检查按钮（基于config + instance）
+// 未完成配置的红色角标提示（流程，组件，子组件）
+// 配置检查按钮，输出未完成项目，检查引用组件是否存在（配置在后面的检查/未配置）
 
-// 常量
+// 5.
+// 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
+// ANY，根据Type类型，显示成TEXT/BOOLEAN/NUMBER/MAP，可以用span包装，动态构建
 
 var lastChecked = {
     flow: null,
@@ -27,10 +35,10 @@ var lastChecked = {
 };
 var instance = {
     init: {},
-    logic: {},
-    getValue: {}
+    logic: {}
 };
 var config = { 
+    constant: null,
     inits: [], 
     blocks: [], 
     before:{}, 
@@ -139,6 +147,17 @@ const initFns = {
         }
     },
     bindAddFlowEvent: function() {
+        var constantValueDom = document.getElementById("constant-value");
+        constantValueDom.onchange = function() {
+            var currValue = constantValueDom.value;
+            try {
+                config.constant = JSON.parse(currValue);
+            } catch (e) {
+                alert("常量配置的JSON格式错误");
+                constantValueDom.focus();
+            }
+        }
+        
         var beforeAddDom = document.getElementById("before-add");
         beforeAddDom.onclick = function() {
             buildFns.flowSettingsWindow(null, "before");
@@ -186,7 +205,7 @@ const initFns = {
                 selectOptionData = {};
             }
 
-            var flowSelectOptionDomsConfig = buildDomFns.checkSelect.flowSelect(selectOptionData, lastCheckedValue);
+            var flowSelectOptionDomsConfig = buildDomFns.checkSelect.flowSelect(selectOptionData, selectValue, lastCheckedValue);
             if (flowSelectOptionDomsConfig.checkedValue) {
                 flowSelectDom.value = flowSelectOptionDomsConfig.checkedValue;
             }
@@ -326,7 +345,7 @@ const buildFns = {
 
         config.before[flowId] = { 
             id: flowId,
-            components:[] 
+            components:[]
         };
         var settingsDom = buildDomFns.node.flowSettingsItem(flowId, "before");
         domTools.addAll(beforeDom, [settingsDom]);
@@ -369,8 +388,16 @@ const buildFns = {
         return flowId;
     },
     flowItem: function(flowId, id, componentId, key) {
+        var flowNodeData;
+        if (flowId.startsWith(idPrefix.after)) {
+            flowNodeData = config.after[flowId];
+        } else if (flowId.startsWith(idPrefix.before)) {
+            flowNodeData = config.before[flowId];
+        } else if (flowId.startsWith(idPrefix.flow)) {
+            flowNodeData = config.flow[flowId];
+        }
+
         var flowDom = document.getElementById(flowId);
-        var flowNodeData = config.flow[flowId];
         if (!flowDom || !flowNodeData) {
             console.log("【" + flowId + "】流程不存在")
             alert("流程不存在");
@@ -522,16 +549,15 @@ const buildFns = {
             flowConfig = config.after;
         }
 
-        var value = flowId ? flowConfig[flowId] : {};
+        var value = flowId ? flowConfig[flowId].data : {};
         var fromWindowDom = buildDomFns.window.continueFrom(title, addFlowConfig, value,
             function(data) { 
                 console.log(data);
-                if (flowId && flowConfig[flowId]) {
-                    flowConfig[flowId] = data;
-                } else {
-                    var newFlowId = isBfore ? idPrefix.before + (idIndex.before++) : idPrefix.after + (idIndex.after++);
-                    createFlowFn(newFlowId);
+                if (!flowId) {
+                    flowId = isBfore ? idPrefix.before + (idIndex.before++) : idPrefix.after + (idIndex.after++);
+                    createFlowFn(flowId);
                 }
+                flowConfig[flowId].data = data;
             }
         );
 
@@ -547,20 +573,19 @@ const buildFns = {
         var fromWindowDom = buildDomFns.window.continueFrom("执行流程配置", addFlowConfig, value,
             function(data) { 
                 console.log(data);
-                var newFlowId = idPrefix.flow + path;
                 if (flowId) {
                     var flowDom = document.getElementById(flowId);
                     if (flowDom && flowDom.children.length > 0) {
                         var pathDom = flowDom.children[0];
                         pathDom.textContent = data.domain + "/" + data.function;
 
-                        var newFlowConfig = config.flow[newFlowId] = config.flow[flowId];
-                        newFlowConfig.domain = data.domain;
-                        newFlowConfig.function = data.function;
-                        delete config.flow[flowId];
+                        var currFlowConfig = config.flow[flowId];
+                        currFlowConfig.domain = data.domain;
+                        currFlowConfig.function = data.function;
                     }
                 } else {
-                    buildFns.flow(newFlowId, data.domain, data.function);
+                    flowId = idPrefix.flow + (idIndex.flow++);
+                    buildFns.flow(flowId, data.domain, data.function);
                 }
             }
         );
@@ -751,7 +776,7 @@ const buildDomFns = {
 
             return options;
         },
-        flowSelect: function(selectOptionData, checkedValue) {
+        flowSelect: function(selectOptionData, type, checkedValue) {
             var options = [];
 
             var defaultFlowOptionDom = document.createElement("option");
@@ -765,7 +790,11 @@ const buildDomFns = {
                     const currOptionData = selectOptionData[key];
                     const currOptionDom = document.createElement("option");
                     currOptionDom.setAttribute("value", currOptionData.id);
-                    currOptionDom.textContent = currOptionData.path ? currOptionData.path : currOptionData.id;
+                    if (type == "flow") {
+                        currOptionDom.textContent = currOptionData.domain + "/" + currOptionData.function;
+                    } else {
+                        currOptionDom.textContent = currOptionData.data && currOptionData.data.id ? currOptionData.data.id : currOptionData.id;
+                    }
                     options.push(currOptionDom);
 
                     if (checkedValue && checkedValue == currOptionData.id) {
@@ -1282,7 +1311,18 @@ const buildDomFns = {
 
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
 
-                getValueFns.push(function() { return textareaDom.value; });
+                getValueFns.push(function() { 
+                    var currValue = textareaDom.value;
+                    if (currValue == "") {
+                        return null;
+                    }
+                    try {
+                        return JSON.parse(currValue);
+                    } catch (e) {
+                        alert(data.key + "的JSON格式错误");
+                        return null;
+                    }
+                });
                 return [textareaDom, arrayFlagDom];
             },
             object: function(getValueFns, data, value, index) {
@@ -1360,10 +1400,41 @@ const buildDomFns = {
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
 
                 getValueFns.push(function() {
-                    return {
-                        type: selectDom.value,
-                        value: textareaDom.value
-                    };
+                    var currType = selectDom.value;
+                    if (!currType || currType == "") {
+                        return null;
+                    }
+
+                    var currValue = textareaDom.value;
+                    if (currValue == "") {
+                        return null;
+                    }
+
+                    switch(currType) {
+                        case "MAP":
+                            try {
+                                return JSON.parse(currValue);
+                            } catch (e) {
+                                alert(data.key + "的对象JSON格式错误");
+                                return null;
+                            }
+                        case "BOOLEAN":
+                            var isBoolean = currValue == "true" || currValue == "false";
+                            if (!isBoolean) {
+                                alert(data.key + "的值不是一个布尔值");
+                                return null;
+                            }
+                            return currValue;
+                        case "NUMBER":
+                            var isNumber = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(currValue);
+                            if (!isNumber) {
+                                alert(data.key + "的值不是一个数字");
+                                return null;
+                            }
+                            return currValue;
+                        default:
+                            return currValue;
+                    }
                 });
                 return [selectDom, arrayFlagDom, brDom, textareaDom];
             },
