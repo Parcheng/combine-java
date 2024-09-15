@@ -72,6 +72,7 @@ window.onload = function() {
     initFns.loadData();
     initFns.loadGroup();
     initFns.bindAddFlowEvent();
+    initFns.initComponentPop();
     initFns.initCheckBoard();
     initFns.initCheckComponent();
 };
@@ -172,6 +173,70 @@ const initFns = {
         flowAddDom.onclick = function() {
             buildFns.flowPathWindow(null);
         }
+    },
+    initComponentPop: function() {
+        var componentPopDom = document.getElementById("component-pop");
+        var sourceIdDom = document.getElementById("check-component-pop-source-id");
+        var sourceTypeDom = document.getElementById("check-component-pop-source-type");
+
+        var itemDoms = componentPopDom.children;
+        for (let i = 0; i < itemDoms.length; i++) {
+            initComponentPopItem(itemDoms[i], sourceIdDom, sourceTypeDom, componentPopDom);
+        }
+
+        function initComponentPopItem(itemDom, sourceIdDom, sourceTypeDom, componentPopDom) {
+            const name = itemDom.name;
+            itemDom.onclick = function() {
+                var sourceId = sourceIdDom.value;
+                var sourceType = sourceTypeDom.value;
+                if (!sourceId || !sourceType) {
+                    console.log("数据异常，组件编辑无法获取到ID");
+                    alert("组件数据异常");
+                    return;
+                }
+
+                var sourceDom = document.getElementById(sourceId);
+                if (!sourceDom) {
+                    console.log("数据异常，组件图形不存在");
+                    alert("组件数据异常，图形不存在");
+                    return;
+                }
+
+                var isFlow = sourceType == "before" || sourceType == "after" || sourceType == "flow";
+                switch(name) {
+                    case "pop-edit":
+                        buildFns.popComponentWindow(sourceId, sourceType);
+                        break;
+                    case "pop-copy":
+                        // check to window
+                        // instance.logic[id]
+                        break;
+                    case "pop-left":
+                        if (isFlow) {
+
+                        }
+                        // 前面有 非设置 非path 箭头就再向前一个
+                        break;
+                    case "pop-right":
+                        break;
+                    case "pop-delete":
+                        if (isFlow) {
+                            var sourceAllDom = sourceDom.parentNode.children;
+                            var index = Array.prototype.indexOf.call(sourceAllDom, sourceDom);
+                            if (index > 0) {
+                                parentDom.removeChild(sourceAllDom[index - 1]);
+                            }
+                        }
+                        domTools.remove(sourceDom);
+                        break;
+                    case "pop-cancel":
+                        domTools.switchDisplay(componentPopDom, false);
+                        break;
+                }
+            }
+        }
+
+        domTools.switchDisplay(componentPopDom, false);
     },
     initCheckBoard: function() {
         var flowConfig = config;
@@ -518,6 +583,43 @@ const buildFns = {
                             subBoardDom.insertBefore(itemComponentDoms[c], flagDom);
                         }
                     }
+                }
+            }
+        );
+        windowsDom.appendChild(fromWindowDom);
+    },
+    popComponentWindow: function(id, type) {
+        var value = instance.logic[id];
+        if (!value || !value.type) {
+            console.log("【" + currId + "】组件数据不存在");
+            alert("组件数据不存在");
+            return;
+        }
+
+        var key = value.type;
+        var component = componentMap[key];
+        if (!component) {
+            console.log("【" + key + "】组件不存在");
+            alert("组件不存在");
+            return;
+        }
+
+        var isInit = type == "init";
+        var currConfig = isInit ? component.initConfig : component.logicConfig;
+        if (!currConfig || currConfig.length == 0) {
+            console.log("【" + key + "】【" + type + "】组件配置不存在");
+            alert("组件配置不存在");
+            return;
+        }
+
+        var windowsDom = document.getElementById("window");
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, currConfig, value,
+            function(data) {
+                console.log(data);
+                if (isInit) {
+                    instance.init[id] = data;
+                } else {
+                    instance.logic[id] = data;
                 }
             }
         );
@@ -1484,6 +1586,9 @@ const optFns = {
 
             var windowDom = document.getElementById("check-component-window");
             domTools.switchDisplay(windowDom, true);
+        },
+        checkComponentPop: function() {
+
         }
     },
     window: {
