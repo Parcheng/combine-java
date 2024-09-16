@@ -6,8 +6,7 @@ var componentMap = {};
 var commonRefMap = {}; // 组件KEY:commonKey:[...]
 
 // 1.
-// 组件单击编辑
-// 右键菜单，打开/关闭，编辑/复制/左移（左边有箭头）/右移（右边有箭头）/删除/取消
+// 复制/左移（左边有箭头）/右移（右边有箭头）
 // 复制弹窗，复制到（block,after/flow/before）
 
 // 2.
@@ -63,7 +62,6 @@ var idPrefix = {
     flow: "f_", 
     componentLogic: "cl_", 
     componentInit: "ci_",
-    componentConfig: "$",
     window: "w_",
     subBoard: "sb_"
 }
@@ -185,7 +183,7 @@ const initFns = {
         }
 
         function initComponentPopItem(itemDom, sourceIdDom, sourceTypeDom, componentPopDom) {
-            const name = itemDom.name;
+            const itemId = itemDom.id;
             itemDom.onclick = function() {
                 var sourceId = sourceIdDom.value;
                 var sourceType = sourceTypeDom.value;
@@ -202,37 +200,63 @@ const initFns = {
                     return;
                 }
 
-                var isFlow = sourceType == "before" || sourceType == "after" || sourceType == "flow";
-                switch(name) {
-                    case "pop-edit":
+                var isInit = sourceType == "init";
+                var isFlow = sourceType == "flow";
+                switch(itemId) {
+                    case "pop-component-edit":
                         buildFns.popComponentWindow(sourceId, sourceType);
                         break;
-                    case "pop-copy":
-                        // check to window
-                        // instance.logic[id]
+                    case "pop-component-copy":
+                        // check to window 包含子流程
+                        // init 直接 copy - init ID 拼接 coyp1/2/3
+                        // luogic 需要选择 instance.logic[id]
                         break;
-                    case "pop-left":
+                    case "pop-component-left":
                         if (isFlow) {
-
+                            const sourceAllDom = sourceDom.parentNode.children;
+                            const index = Array.prototype.indexOf.call(sourceAllDom, sourceDom);
+                            if (index > 1) {
+                                const leftNode = sourceAllDom[index - 2];
+                                const lineNode = sourceAllDom[index - 1];
+                                leftNode.before(lineNode);
+                                leftNode.before(sourceDom);
+                            }
                         }
-                        // 前面有 非设置 非path 箭头就再向前一个
                         break;
-                    case "pop-right":
-                        break;
-                    case "pop-delete":
+                    case "pop-component-right":
                         if (isFlow) {
-                            var sourceAllDom = sourceDom.parentNode.children;
+                            const sourceAllDom = sourceDom.parentNode.children;
+                            const index = Array.prototype.indexOf.call(sourceAllDom, sourceDom);
+                            if (index > 1) {
+                                const rightNode = sourceAllDom[index + 2];
+                                const lineNode = sourceAllDom[index - 1];
+                                rightNode.after(sourceDom);
+                                rightNode.after(lineNode);
+                            }
+                        }
+                        break;
+                    case "pop-component-delete":
+                        if (isFlow) {
+                            const sourceAllDom = sourceDom.parentNode.children;
                             var index = Array.prototype.indexOf.call(sourceAllDom, sourceDom);
                             if (index > 0) {
                                 parentDom.removeChild(sourceAllDom[index - 1]);
                             }
                         }
                         domTools.remove(sourceDom);
+
+                        if (isInit) {
+                            delete instance.init[sourceId];
+                        } else {
+                            delete instance.logic[sourceId];
+                        }
                         break;
-                    case "pop-cancel":
+                    case "pop-component-cancel":
                         domTools.switchDisplay(componentPopDom, false);
                         break;
                 }
+
+                domTools.switchDisplay(componentPopDom, false);
             }
         }
 
@@ -471,7 +495,7 @@ const buildFns = {
 
         flowNodeData.components.push({id: id, key: key, componentId: componentId});
         var flagDom = buildDomFns.node.flowLineItem();
-        var componentLogicDom = buildDomFns.node.componentLogic(id, componentId, key);
+        var componentLogicDom = buildDomFns.node.componentLogic(id, "flow", componentId, key);
         domTools.addAll(flowDom, [flagDom, componentLogicDom]);
     },
     initItem: function(id, componentId, key) {
@@ -483,7 +507,7 @@ const buildFns = {
     blockItem: function(id, componentId, key) {
         var blockDom = document.getElementById("block");
         config.blocks.push({id: id, key: key, componentId: componentId});
-        var componentLogicDom = buildDomFns.node.componentLogic(id, componentId, key);
+        var componentLogicDom = buildDomFns.node.componentLogic(id, "block", componentId, key);
         domTools.addAll(blockDom, [componentLogicDom]);
     },
     initComponentWindow: function(key, value) {
@@ -502,8 +526,10 @@ const buildFns = {
 
         value = value ? value : {};
         value.type = value.type ? value.type : component.key;
-        var id = value.$id = value.$id ? value.$id : (idPrefix.componentInit + (idIndex.componentInit++));
+        value.$id = value.$id ? value.$id : (idPrefix.componentInit + (idIndex.componentInit++));
+        value.id = value.id ? value.id : value.$id;
 
+        var id = value.$id;
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, initConfig, value,
             function(data) { 
@@ -532,8 +558,10 @@ const buildFns = {
 
         value = value ? value : {};
         value.type = value.type ? value.type : component.key;
-        var id = value.$id = value.$id ? value.$id : (idPrefix.componentLogic + (idIndex.componentLogic++));
+        value.$id = value.$id ? value.$id : (idPrefix.componentLogic + (idIndex.componentLogic++));
+        value.id = value.id ? value.id : value.$id;
 
+        var id = value.$id
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, logicConfig, value,
             function(data) {
@@ -564,14 +592,15 @@ const buildFns = {
             return;
         }
 
-        var id = idPrefix.componentInit + (idIndex.componentInit++)
-        var value = { type: component.key };
+        var id = idPrefix.componentLogic + (idIndex.componentLogic++)
+        var value = { id: id, type: component.key };
+
         var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, logicConfig, value,
             function(data) { 
                 console.log(data);
                 data.$id = id;
-                instance.init[id] = data;
+                instance.logic[id] = data;
 
                 var subBoardDom = document.getElementById(subBoardId);
                 if (subBoardDom && subBoardDom.children.length > 0) {
@@ -589,7 +618,8 @@ const buildFns = {
         windowsDom.appendChild(fromWindowDom);
     },
     popComponentWindow: function(id, type) {
-        var value = instance.logic[id];
+        var isInit = type == "init";
+        var value = isInit ? instance.init[id] : instance.logic[id];
         if (!value || !value.type) {
             console.log("【" + currId + "】组件数据不存在");
             alert("组件数据不存在");
@@ -604,7 +634,6 @@ const buildFns = {
             return;
         }
 
-        var isInit = type == "init";
         var currConfig = isInit ? component.initConfig : component.logicConfig;
         if (!currConfig || currConfig.length == 0) {
             console.log("【" + key + "】【" + type + "】组件配置不存在");
@@ -616,10 +645,15 @@ const buildFns = {
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, currConfig, value,
             function(data) {
                 console.log(data);
-                if (isInit) {
-                    instance.init[id] = data;
-                } else {
-                    instance.logic[id] = data;
+                var currDom = document.getElementById(id);
+                if (currDom) {
+                    data.id = data.id ? data.id : id;
+                    currDom.innerHTML = data.id + "<br>" + data.type;
+                    if (isInit) {
+                        instance.init[id] = data;
+                    } else {
+                        instance.logic[id] = data;
+                    }
                 }
             }
         );
@@ -746,25 +780,19 @@ const buildDomFns = {
             dom.id = initId;
             dom.className = "component-item";
             dom.innerHTML = componentId + "<br>" + key;
-            dom.ondblclick = (function(initId) {
-                var currInitId = initId;
-                return function() {
-                    optFns.node.openComponentInitWindow(currInitId);
-                }
-            })(initId);
+            dom.oncontextmenu = function(event) {
+                optFns.tool.checkComponentPop(initId, "init", event);
+            };
             return dom;
         },
-        componentLogic: function(logicId, componentId, key) {
+        componentLogic: function(logicId, logicType, componentId, key) {
             var dom = document.createElement("div");
             dom.id = logicId;
             dom.className = "component-item";
             dom.innerHTML = componentId + "<br>" + key;
-            dom.ondblclick = (function(logicId) {
-                var currLogicId = logicId;
-                return function() {
-                    optFns.node.openComponentInitWindow(currLogicId);
-                }
-            })(logicId);
+            dom.oncontextmenu = function(event) {
+                optFns.tool.checkComponentPop(logicId, logicType, event);
+            };
             return dom;
         },
         flow: function(flowId) {
@@ -1282,10 +1310,6 @@ const buildDomFns = {
         },
         control: {
             text: function(getValueFns, data, value, index) {
-                if (data.type == "ID") {
-                    value = idPrefix.componentConfig + (idIndex.componentConfig++);
-                }
-
                 var dom = document.createElement("input");
                 dom.className = "input";
                 dom.setAttribute("type", "text");
@@ -1391,6 +1415,7 @@ const buildDomFns = {
 
                     var id = value.$id;
                     if (!id) {
+                        // 子元素一定是flow，就一定是logic
                         id = idPrefix.componentLogic + (idIndex.componentLogic++);
                         value.$id = id;
                     }
@@ -1400,6 +1425,10 @@ const buildDomFns = {
                     componenttDom.className = "line-component";
                     componenttDom.innerHTML = value.id + "<br>" + value.type;
                     body.push(componenttDom);
+
+                    componenttDom.oncontextmenu = function(event) {
+                        optFns.tool.checkComponentPop(id, "flow", event);
+                    };
                 }
 
                 // TODO 点击事件，右键菜单，获取数据
@@ -1587,8 +1616,41 @@ const optFns = {
             var windowDom = document.getElementById("check-component-window");
             domTools.switchDisplay(windowDom, true);
         },
-        checkComponentPop: function() {
+        checkComponentPop: function(id, type, event) {
+            event.preventDefault();
+            var componentPopDom = document.getElementById("component-pop");
+            componentPopDom.style.top = event.clientY + "px";
+            componentPopDom.style.left = event.clientX + "px";
 
+            var sourceIdDom = document.getElementById("check-component-pop-source-id");
+            sourceIdDom.value = id;
+
+            var sourceTypeDom = document.getElementById("check-component-pop-source-type");
+            sourceTypeDom.value = type;
+
+            var isFlow = type == "flow";
+            var leftDom = document.getElementById("pop-component-left");
+            domTools.switchDisplay(leftDom, false);
+            var rightDom = document.getElementById("pop-component-right");
+            domTools.switchDisplay(rightDom, false);
+            if (isFlow) {
+                var checkDom = document.getElementById(id);
+                if (checkDom && checkDom.parentNode.children > 1) {
+                    const allDoms = checkDom.parentNode.children;
+                    var index = Array.prototype.indexOf.call(allDoms, checkDom);
+                    var isSubFlow = allDoms[0].className == "line-component";
+                    if (index > 1 || (isSubFlow && index == 1)) {
+                        domTools.switchDisplay(leftDom, true);
+                    }
+                    if (index < allDoms.length - 1) {
+                        domTools.switchDisplay(rightDom, true);
+                    }
+                }
+                domTools.switchDisplay(componentPopDom, true);
+                domTools.switchDisplay(componentPopDom, true);
+            }
+
+            domTools.switchDisplay(componentPopDom, true);
         }
     },
     window: {
@@ -1633,12 +1695,19 @@ const domTools = {
             isShow = switchState && switchState == "hide";
         }
 
+        var noneStyleStr = "display: none;";
+        var style = dom.getAttribute("style");
+        style = style ? style : "";
         if (isShow) {
             dom.setAttribute("switch-state", "show");
-            dom.setAttribute("style", "");
+            if (style != "" && style.indexOf(noneStyleStr) !== -1) {
+                dom.setAttribute("style", style.replace(noneStyleStr, ""));
+            }
         } else {
             dom.setAttribute("switch-state", "hide");
-            dom.setAttribute("style", "display: none;");
+            if (style == "" || style.indexOf(noneStyleStr) === -1) {
+                dom.setAttribute("style", noneStyleStr + style);
+            }
         }
     },
 }
