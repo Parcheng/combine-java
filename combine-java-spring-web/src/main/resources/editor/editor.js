@@ -1,13 +1,13 @@
 
-
-var firstGroup = null;
 var groupMap = {};
 var componentMap = {};
 var commonRefMap = {}; // 组件KEY:commonKey:[...]
 
-// 1.
-// 复制/左移（左边有箭头）/右移（右边有箭头）
-// 复制弹窗，复制到（block,after/flow/before）
+var firstGroup = null;
+var copyComponent = {
+    init: null,
+    logic: null
+}
 
 // 2.
 // 引用公共对象
@@ -204,12 +204,32 @@ const initFns = {
                 var isFlow = sourceType == "flow";
                 switch(itemId) {
                     case "pop-component-edit":
-                        buildFns.popComponentWindow(sourceId, sourceType);
+                        buildFns.editComponentWindow(sourceId, sourceType);
                         break;
                     case "pop-component-copy":
-                        // check to window 包含子流程
-                        // init 直接 copy - init ID 拼接 coyp1/2/3
-                        // luogic 需要选择 instance.logic[id]
+                        var copyValue = isInit ? instance.init[sourceId] : instance.logic[sourceId];
+                        if (!copyValue) {
+                            console.log("要拷贝的数据不存在【" + sourceId + "】");
+                            alert("数据异常");
+                            return;
+                        }
+
+                        if (isInit) {
+                            copyComponent.init = copyValue;
+                        } else {
+                            copyComponent.logic = copyValue;
+                        }
+                        break;
+                    case "pop-component-paste":
+                        var pasteValue = isInit ? copyComponent.init : copyComponent.logic;
+                        if (!pasteValue) {
+                            console.log("粘贴时，拷贝数据不存在【" + sourceId + "】");
+                            alert("数据异常，未拷贝数据");
+                            return;
+                        }
+
+                        pasteValue.id = pasteValue.id + "copy";
+                        buildFns.editComponentWindow(sourceId, sourceType, pasteValue);
                         break;
                     case "pop-component-left":
                         if (isFlow) {
@@ -218,8 +238,8 @@ const initFns = {
                             if (index > 1) {
                                 const leftNode = sourceAllDom[index - 2];
                                 const lineNode = sourceAllDom[index - 1];
-                                leftNode.before(lineNode);
-                                leftNode.before(sourceDom);
+                                sourceDom.after(leftNode);
+                                sourceDom.after(lineNode);
                             }
                         }
                         break;
@@ -295,11 +315,11 @@ const initFns = {
             }
 
             var flowSelectOptionDomsConfig = buildDomFns.checkSelect.flowSelect(selectOptionData, selectValue, lastCheckedValue);
+            domTools.setAll(flowSelectDom, flowSelectOptionDomsConfig.doms);
             if (flowSelectOptionDomsConfig.checkedValue) {
                 flowSelectDom.value = flowSelectOptionDomsConfig.checkedValue;
             }
 
-            domTools.setAll(flowSelectDom, flowSelectOptionDomsConfig.doms);
             domTools.switchDisplay(flowItemDom, true);
         }
 
@@ -540,6 +560,7 @@ const buildFns = {
             }
         );
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     logicComponentWindow: function(key, value, flowId) {
         var component = componentMap[key];
@@ -576,6 +597,7 @@ const buildFns = {
             }
         );
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     subComponentWindow: function(componentKey, subBoardId) {
         var component = componentMap[componentKey];
@@ -616,10 +638,13 @@ const buildFns = {
             }
         );
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
-    popComponentWindow: function(id, type) {
+    editComponentWindow: function(id, type, value) {
         var isInit = type == "init";
-        var value = isInit ? instance.init[id] : instance.logic[id];
+        if (value == null || value == undefined) {
+            value = isInit ? instance.init[id] : instance.logic[id];
+        }
         if (!value || !value.type) {
             console.log("【" + currId + "】组件数据不存在");
             alert("组件数据不存在");
@@ -658,6 +683,7 @@ const buildFns = {
             }
         );
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     flowSettingsWindow: function(flowId, type) {
         var isBfore = type == "before";
@@ -699,6 +725,7 @@ const buildFns = {
 
         var windowsDom = document.getElementById("window");
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     flowPathWindow: function(flowId) {
         var addFlowConfig = [
@@ -728,6 +755,7 @@ const buildFns = {
 
         var windowsDom = document.getElementById("window");
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     }
 }
 
@@ -803,7 +831,6 @@ const buildDomFns = {
         },
         flowSettingsItem: function(flowId, type) {
             var dom = document.createElement("div");
-            dom.id = flowId;
             dom.className = "settings-item";
             dom.textContent = "设置";
             dom.onclick = function() {
@@ -819,7 +846,6 @@ const buildDomFns = {
         },
         flowPathItem: function(flowId, flowPath) {
             var dom = document.createElement("div");
-            dom.id = flowId;
             dom.className = "path-item";
             dom.textContent = flowPath;
             dom.onclick = function() {
@@ -1608,6 +1634,7 @@ const optFns = {
 
             var boardDom = document.getElementById("check-board-window");
             domTools.switchDisplay(boardDom, true);
+            window.scrollTo(0, 0);
         },
         checkSubComponent: function(subBoardId) {
             var checkKeyDom = document.getElementById("check-component-source-key");
@@ -1615,12 +1642,13 @@ const optFns = {
 
             var windowDom = document.getElementById("check-component-window");
             domTools.switchDisplay(windowDom, true);
+            window.scrollTo(0, 0);
         },
         checkComponentPop: function(id, type, event) {
             event.preventDefault();
             var componentPopDom = document.getElementById("component-pop");
-            componentPopDom.style.top = event.clientY + "px";
-            componentPopDom.style.left = event.clientX + "px";
+            componentPopDom.style.top = event.pageY + "px";
+            componentPopDom.style.left = event.pageX + "px";
 
             var sourceIdDom = document.getElementById("check-component-pop-source-id");
             sourceIdDom.value = id;
@@ -1635,11 +1663,11 @@ const optFns = {
             domTools.switchDisplay(rightDom, false);
             if (isFlow) {
                 var checkDom = document.getElementById(id);
-                if (checkDom && checkDom.parentNode.children > 1) {
+                if (checkDom && checkDom.parentNode.children.length > 1) {
                     const allDoms = checkDom.parentNode.children;
                     var index = Array.prototype.indexOf.call(allDoms, checkDom);
                     var isSubFlow = allDoms[0].className == "line-component";
-                    if (index > 1 || (isSubFlow && index == 1)) {
+                    if (index > 2 || (isSubFlow && index >= 0)) {
                         domTools.switchDisplay(leftDom, true);
                     }
                     if (index < allDoms.length - 1) {
@@ -1647,9 +1675,16 @@ const optFns = {
                     }
                 }
                 domTools.switchDisplay(componentPopDom, true);
-                domTools.switchDisplay(componentPopDom, true);
             }
 
+            var pasteDom = document.getElementById("pop-component-paste");
+            var copyValue = type == "init" ? copyComponent.init : copyComponent.logic;
+            if (copyValue == null || copyValue == undefined) {
+                domTools.switchDisplay(pasteDom, false);
+            } else {
+                domTools.switchDisplay(pasteDom, true);
+            }
+            
             domTools.switchDisplay(componentPopDom, true);
         }
     },
