@@ -877,7 +877,7 @@ const buildDomFns = {
             windowDom.appendChild(bodyDom);
 
             var itemDomsConfig = buildDomFns.settings.items(dataList, value);
-            if (itemDomsConfig.idDom && configType) {
+            if (configType && itemDomsConfig.idDom) {
                 bodyDom.appendChild(itemDomsConfig.idDom);
                 optFns.tool.bindCheckIdRef(itemDomsConfig, value.type, configType);
             }
@@ -1023,7 +1023,7 @@ const buildDomFns = {
                 var itemValue = value ? value[itemKey] : null;
                 var itemDomConfig = buildDomFns.settings.item(dataList[i], itemValue);
 
-                if (itemKey == "id") {
+                if (dataList[i].type == "ID") {
                     idDom = itemDomConfig.dom;
                 } else {
                     body.push(itemDomConfig.dom);
@@ -1739,16 +1739,18 @@ const optFns = {
         bindCheckIdRef: function(itemDomsConfig, typeValue, configType) {
             var idItemDom = itemDomsConfig.idDom;
             var idLineDoms = idItemDom.children[1].children[0].children;
+
+            var selectDom = idLineDoms[1];
             var checkDom = idLineDoms[2];
             if (configType == "init") {
                 // INIT 不支持引用
                 domTools.remove(idLineDoms[3]);
                 domTools.remove(checkDom);
+                domTools.remove(selectDom);
                 return;
             }
 
             var inputDom = idLineDoms[0];
-            var selectDom = idLineDoms[1];
             var itemDoms = itemDomsConfig.doms;
 
             var orgCheckFunc = checkDom.onchange;
