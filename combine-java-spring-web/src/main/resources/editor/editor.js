@@ -14,12 +14,9 @@ var copyComponent = {
 // 引用组件，选择（触发输入框/选择框只能选block和前面的）
 // REF INIT 可以改成下拉选项
 
-// 3.
-// id 选择可引用项（勾选REF为下拉框，否则输入框）
-// 失去焦点，ID重复检查（是否直接使用 id = xxx 的组件？）
-
 // 4.
 // 保存，检查按钮（基于config + instance）
+// 保存时，按照组件加载顺序遍历配置并记录，如果先引用后配置，则引用的地方改为配置，配置的地方改为引用
 // 未完成配置的红色角标提示（流程，组件，子组件）
 // 配置检查按钮，输出未完成项目，检查引用组件是否存在（配置在后面的检查/未配置）
 
@@ -547,11 +544,11 @@ const buildFns = {
         value = value ? value : {};
         value.type = value.type ? value.type : component.key;
         value.$id = value.$id ? value.$id : (idPrefix.componentInit + (idIndex.componentInit++));
-        value.id = value.id ? value.id : value.$id;
+        value.id = value.id ? value.id : { id:value.$id, ref: false };
 
         var id = value.$id;
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(component.name, initConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, "init", initConfig, value,
             function(data) { 
                 console.log(data);
                 data.$id = id;
@@ -580,17 +577,17 @@ const buildFns = {
         value = value ? value : {};
         value.type = value.type ? value.type : component.key;
         value.$id = value.$id ? value.$id : (idPrefix.componentLogic + (idIndex.componentLogic++));
-        value.id = value.id ? value.id : value.$id;
+        value.id = value.id ? value.id : { id: value.$id, ref: false };
 
         var id = value.$id
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(component.name, logicConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, "logic", logicConfig, value,
             function(data) {
                 console.log(data);
                 data.$id = id;
                 instance.logic[id] = data;
                 if (flowId) {
-                    buildFns.flowItem(flowId, id, data.id, component.key);
+                    buildFns.flowItem(flowId, id, data.id.id, component.key);
                 } else {
                     buildFns.blockItem(id, data.id, component.key);
                 }
@@ -615,10 +612,10 @@ const buildFns = {
         }
 
         var id = idPrefix.componentLogic + (idIndex.componentLogic++)
-        var value = { id: id, type: component.key };
+        var value = { id: { id: id, ref: false } , type: component.key };
 
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(component.name, logicConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, "logic", logicConfig, value,
             function(data) { 
                 console.log(data);
                 data.$id = id;
@@ -666,14 +663,15 @@ const buildFns = {
             return;
         }
 
+        var configType = isInit ? "init" : "logic";
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(component.name, currConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, configType, currConfig, value,
             function(data) {
                 console.log(data);
                 var currDom = document.getElementById(id);
                 if (currDom) {
-                    data.id = data.id ? data.id : id;
-                    currDom.innerHTML = data.id + "<br>" + data.type;
+                    data.id = data.id ? data.id : { id: id, ref: false };
+                    currDom.innerHTML = data.id.id + "<br>" + data.type;
                     if (isInit) {
                         instance.init[id] = data;
                     } else {
@@ -712,7 +710,7 @@ const buildFns = {
         }
 
         var value = flowId ? flowConfig[flowId].data : {};
-        var fromWindowDom = buildDomFns.window.continueFrom(title, addFlowConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(title, null, addFlowConfig, value,
             function(data) { 
                 console.log(data);
                 if (!flowId) {
@@ -733,7 +731,7 @@ const buildFns = {
             { key: "function", name: "函数名称", type: "TEXT", isRequired: true, isArray: false }
         ];
         var value = flowId ? config.flow[flowId] : {};
-        var fromWindowDom = buildDomFns.window.continueFrom("执行流程配置", addFlowConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom("执行流程配置", null, addFlowConfig, value,
             function(data) { 
                 console.log(data);
                 if (flowId) {
@@ -807,7 +805,7 @@ const buildDomFns = {
             var dom = document.createElement("div");
             dom.id = initId;
             dom.className = "component-item";
-            dom.innerHTML = componentId + "<br>" + key;
+            dom.innerHTML = componentId.id + "<br>" + key;
             dom.oncontextmenu = function(event) {
                 optFns.tool.checkComponentPop(initId, "init", event);
             };
@@ -817,7 +815,7 @@ const buildDomFns = {
             var dom = document.createElement("div");
             dom.id = logicId;
             dom.className = "component-item";
-            dom.innerHTML = componentId + "<br>" + key;
+            dom.innerHTML = componentId.id + "<br>" + key;
             dom.oncontextmenu = function(event) {
                 optFns.tool.checkComponentPop(logicId, logicType, event);
             };
@@ -855,7 +853,7 @@ const buildDomFns = {
         }
     },
     window: {
-        continueFrom: function(title, dataList, value, continueFunc) {
+        continueFrom: function(title, configType, dataList, value, continueFunc) {
             var windowId = idPrefix.window + (idIndex.window++);
             var windowDom = document.createElement("div");
             windowDom.id = windowId;
@@ -879,6 +877,10 @@ const buildDomFns = {
             windowDom.appendChild(bodyDom);
 
             var itemDomsConfig = buildDomFns.settings.items(dataList, value);
+            if (itemDomsConfig.idDom && configType) {
+                bodyDom.appendChild(itemDomsConfig.idDom);
+                optFns.tool.bindCheckIdRef(itemDomsConfig, value.type, configType);
+            }
             domTools.addAll(bodyDom, itemDomsConfig.doms);
             var itemsGetValueFn = itemDomsConfig.getValueFn;
 
@@ -890,7 +892,6 @@ const buildDomFns = {
                 continueFunc(valueData ? valueData : {});
                 titleCloseDom.dispatchEvent(new Event("click"));
             };
-            bodyDom.appendChild(document.createElement("hr"));
             bodyDom.appendChild(buttonDom);
 
             return windowDom;
@@ -1015,24 +1016,27 @@ const buildDomFns = {
                 return body;
             }
 
+            var idDom = null;
             var getValueConfigs = [];
             for (let i = 0; i < dataList.length; i++) {
                 var itemKey = dataList[i].key;
                 var itemValue = value ? value[itemKey] : null;
                 var itemDomConfig = buildDomFns.settings.item(dataList[i], itemValue);
 
-                body.push(itemDomConfig.dom);
+                if (itemKey == "id") {
+                    idDom = itemDomConfig.dom;
+                } else {
+                    body.push(itemDomConfig.dom);
+                }
+                
                 getValueConfigs.push({
                     key: itemKey,
                     fn: itemDomConfig.getValueFn
                 });
-
-                if (i < dataList.length - 1) {
-                    body.push(document.createElement("hr"));
-                }
             }
 
             return {
+                idDom: idDom,
                 doms: body,
                 getValueFn: function() {
                     var data = {};
@@ -1156,6 +1160,8 @@ const buildDomFns = {
                 }
             }
 
+            itemDom.appendChild(document.createElement("hr"));
+
             return {
                 dom: itemDom,
                 getValueFn: function() {
@@ -1185,6 +1191,8 @@ const buildDomFns = {
             var controlItemDoms;
             switch (data.type) {
                 case "ID":
+                    controlItemDoms = buildDomFns.settings.control.id(getValueFns, data, value, index);
+                    break;
                 case "TEXT":
                 case "EXPRESSION":
                     controlItemDoms = buildDomFns.settings.control.text(getValueFns, data, value, index);
@@ -1335,6 +1343,48 @@ const buildDomFns = {
             }
         },
         control: {
+            id: function(getValueFns, data, value, index) {
+                var inputDom = document.createElement("input");
+                inputDom.className = "input";
+                inputDom.setAttribute("type", "text");
+                
+                var selectDom = document.createElement("select");
+                domTools.switchDisplay(selectDom, false);
+
+                var checkTextDom = document.createElement("span");
+                checkTextDom.className = "id-ref";
+                checkTextDom.textContent = "引用"
+
+                var checkDom = document.createElement("input");
+                checkDom.setAttribute("type", "checkbox");
+                checkDom.onchange = function() {
+                    if (checkDom.checked) {
+                        domTools.switchDisplay(selectDom, true);
+                        domTools.switchDisplay(inputDom, false);
+                    } else {
+                        domTools.switchDisplay(selectDom, false);
+                        domTools.switchDisplay(inputDom, true);
+                    }
+                }
+
+                if (value != null && value != undefined) {
+                    if (value.ref == true) {
+                        checkDom.checked = true;
+                    } 
+                    inputDom.value = value.id;
+                }
+
+                var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
+
+                getValueFns.push(function() { 
+                    var isChecked = checkDom.checked ? true : false;
+                    return {
+                        id: isChecked ? selectDom.value : inputDom.value,
+                        ref: isChecked
+                    };
+                });
+                return [inputDom, selectDom, checkDom, checkTextDom, arrayFlagDom];
+            },
             text: function(getValueFns, data, value, index) {
                 var dom = document.createElement("input");
                 dom.className = "input";
@@ -1449,7 +1499,7 @@ const buildDomFns = {
                     var componenttDom = document.createElement("div");
                     componenttDom.id = id;
                     componenttDom.className = "line-component";
-                    componenttDom.innerHTML = value.id + "<br>" + value.type;
+                    componenttDom.innerHTML = value.id.id + "<br>" + value.type;
                     body.push(componenttDom);
 
                     componenttDom.oncontextmenu = function(event) {
@@ -1457,7 +1507,6 @@ const buildDomFns = {
                     };
                 }
 
-                // TODO 点击事件，右键菜单，获取数据
                 return body;
             },
             map: function(getValueFns, data, value, index) {
@@ -1686,6 +1735,76 @@ const optFns = {
             }
             
             domTools.switchDisplay(componentPopDom, true);
+        },
+        bindCheckIdRef: function(itemDomsConfig, typeValue, configType) {
+            var idItemDom = itemDomsConfig.idDom;
+            var idLineDoms = idItemDom.children[1].children[0].children;
+            var checkDom = idLineDoms[2];
+            if (configType == "init") {
+                // INIT 不支持引用
+                domTools.remove(idLineDoms[3]);
+                domTools.remove(checkDom);
+                return;
+            }
+
+            var inputDom = idLineDoms[0];
+            var selectDom = idLineDoms[1];
+            var itemDoms = itemDomsConfig.doms;
+
+            var orgCheckFunc = checkDom.onchange;
+            checkDom.onchange = function() {
+                newCheckFunc();
+            };
+            if (checkDom.checked) {
+                newCheckFunc();
+            }
+            
+            function newCheckFunc() {
+                var isChecked = checkDom.checked ? true : false;
+                for (let i = 0; i < itemDoms.length; i++) {
+                    const itemDom = itemDoms[i];
+                    if (itemDom.name == "type") {
+                        continue;
+                    }
+                    domTools.switchDisplay(itemDom, !isChecked);
+                }
+    
+                if (isChecked) {
+                    var defaultValue;
+                    var selectValue = inputDom.value;
+
+                    var options = [];
+                    var defaultOptionDom = document.createElement("option");
+                    defaultOptionDom.value = "";
+                    defaultOptionDom.textContent = "请选择要引用的配置";
+                    options.push(defaultOptionDom);
+    
+                    for (const key in instance.logic) {
+                        if (Object.prototype.hasOwnProperty.call(instance.logic, key)) {
+                            const logicConfig = instance.logic[key];
+                            if (typeValue && logicConfig.type == typeValue && 
+                                    logicConfig.id && logicConfig.id.ref != true) {
+                                var optionDom = document.createElement("option");
+                                var logicConfigId = logicConfig.id.id;
+                                optionDom.value = logicConfigId;
+                                optionDom.textContent = logicConfigId;
+                                options.push(optionDom);
+
+                                if (selectValue == logicConfigId) {
+                                    defaultValue = logicConfigId;
+                                }
+                            }
+                        }
+                    }
+
+                    domTools.setAll(selectDom, options);
+                    if (defaultValue) {
+                        selectDom.value = selectValue;
+                    }
+                }
+
+                orgCheckFunc();
+            }
         }
     },
     window: {
