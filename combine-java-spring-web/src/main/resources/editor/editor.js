@@ -22,7 +22,6 @@ var copyComponent = {
 
 // 5.
 // 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
-// ANY，根据Type类型，显示成TEXT/BOOLEAN/NUMBER/MAP，可以用span包装，动态构建
 
 var lastChecked = {
     flow: null,
@@ -1414,7 +1413,15 @@ const buildDomFns = {
 
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
 
-                getValueFns.push(function() { return dom.value; });
+                getValueFns.push(function() { 
+                    var currNumber = dom.value;
+                    var isNumber = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(currNumber);
+                    if (!isNumber) {
+                        alert(data.key + "的值不是一个数字");
+                        return null;
+                    }
+                    return currNumber; 
+                });
                 return [dom, arrayFlagDom];
             },
             boolean: function(getValueFns, data, value, index) {
@@ -1575,8 +1582,8 @@ const buildDomFns = {
             },
             any: function(getValueFns, data, value, index) {
                 var selectDom = document.createElement("select");
-                selectDom.className = "select";
-
+                selectDom.className = "any-type-select"
+                
                 var textOptionDom = document.createElement("option");
                 textOptionDom.setAttribute("value", "TEXT");
                 textOptionDom.textContent = "文本";
@@ -1596,11 +1603,105 @@ const buildDomFns = {
                 mapOptionDom.setAttribute("value", "MAP");
                 mapOptionDom.textContent = "MAP";
                 selectDom.appendChild(mapOptionDom);
-                        
+
+                value = value ? value : {};
+                var currType;
+                if (value.value != null && value.value != undefined) {
+                    if (typeof value.value === "string") {
+                        currType = "TEXT";
+                    } else if (typeof value.value === "number") {
+                        currType = "NUMBER";
+                    } else if (typeof value.value === "boolean") {
+                        currType = "BOOLEAN";
+                    } else if (typeof value.value === "object") {
+                        currType = "MAP";
+                    }
+                }
+                if (currType) {
+                    selectDom.value = currType;
+                }
+                   
                 var brDom = document.createElement("br")
+
+                var textDom = document.createElement("input");
+                textDom.className = "input";
+                textDom.setAttribute("type", "text");
+                if (currType && currType != "TEXT") {
+                    domTools.switchDisplay(textDom, false);
+                }
+
+                var numberDom = document.createElement("input");
+                numberDom.className = "input";
+                numberDom.setAttribute("type", "number");
+                if (currType != "NUMBER") {
+                    domTools.switchDisplay(numberDom, false);
+                }
+                
+                var booleanSpan = document.createElement("span");
+                var name = data.key + "-" + new Date().getTime()
+                var trueDom = document.createElement("input");
+                trueDom.name = name;
+                trueDom.setAttribute("type", "radio");
+                booleanSpan.appendChild(trueDom);
+                var trueTextDom = document.createElement("span");
+                trueTextDom.textContent = "True";
+                booleanSpan.appendChild(trueTextDom);
+                var falseDom = document.createElement("input");
+                falseDom.name = name;
+                falseDom.setAttribute("type", "radio");
+                booleanSpan.appendChild(falseDom);
+                var falseTextDom = document.createElement("span");
+                falseTextDom.textContent = "False";
+                booleanSpan.appendChild(falseTextDom);
+                if (currType != "BOOLEAN") {
+                    domTools.switchDisplay(booleanSpan, false);
+                }
+
                 var textareaDom = document.createElement("textarea");
-                if (value != null && value != undefined) {
-                    textareaDom.value = value;
+                if (currType != "MAP") {
+                    domTools.switchDisplay(textareaDom, false);
+                }
+
+                selectDom.onchange = function() {
+                    domTools.switchDisplay(textDom, false);
+                    domTools.switchDisplay(numberDom, false);
+                    domTools.switchDisplay(booleanSpan, false);
+                    domTools.switchDisplay(textareaDom, false);
+                    switch(selectDom.value) {
+                        case "NUMBER":
+                            domTools.switchDisplay(numberDom, true);
+                            break;
+                        case "BOOLEAN":
+                            domTools.switchDisplay(booleanSpan, true);
+                            break;
+                        case "MAP":
+                            domTools.switchDisplay(textareaDom, true);
+                            break;
+                        default:
+                            domTools.switchDisplay(textDom, true);
+                            break;
+                    }
+                }
+                
+                if (currType && value.value != null && value.value != undefined) {
+                    switch(currType) {
+                        case "TEXT":
+                                textDom.value = value.value;
+                            break;
+                        case "NUMBER":
+                            numberDom.value = value.value;
+                            break;
+                        case "BOOLEAN":
+                            if (value === true) {
+                                trueDom.checked  = true;
+                            } else {
+                                falseDom.checked  = true;
+                            }
+                            break;
+                        case "MAP":
+                            textareaDom.value = value.value;
+                            break;
+                    }
                 }
 
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
@@ -1611,38 +1712,40 @@ const buildDomFns = {
                         return null;
                     }
 
-                    var currValue = textareaDom.value;
-                    if (currValue == "") {
-                        return null;
-                    }
-
                     switch(currType) {
                         case "MAP":
+                            var mapValue = null;
                             try {
-                                return JSON.parse(currValue);
+                                if (textareaDom.value != "") {
+                                    mapValue = JSON.parse(textareaDom.value)
+                                }
                             } catch (e) {
                                 alert(data.key + "的对象JSON格式错误");
-                                return null;
                             }
+                            return { type: currType, value: mapValue };
                         case "BOOLEAN":
-                            var isBoolean = currValue == "true" || currValue == "false";
-                            if (!isBoolean) {
-                                alert(data.key + "的值不是一个布尔值");
-                                return null;
+                            var booleanValue = null;
+                            if (trueDom.checked) {
+                                booleanValue = true;
+                            } else if (falseDom.checked) {
+                                booleanValue = false;
                             }
-                            return currValue;
+                            return { type: currType, value: booleanValue };
                         case "NUMBER":
-                            var isNumber = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(currValue);
+                            var currNumber = numberDom.value;
+                            var isNumber = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(currNumber);
                             if (!isNumber) {
                                 alert(data.key + "的值不是一个数字");
-                                return null;
+                                currNumber = null;;
                             }
-                            return currValue;
+                            return { type: currType, value: currNumber };
+                        case "TEXT":
+                            return { type: currType, value: textDom.value };
                         default:
-                            return currValue;
+                            return null;
                     }
                 });
-                return [selectDom, arrayFlagDom, brDom, textareaDom];
+                return [selectDom, arrayFlagDom, brDom, textDom, numberDom, booleanSpan, textareaDom];
             },
             none: function(data) {
                 var spanDom = document.createElement("span");

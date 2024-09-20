@@ -374,6 +374,11 @@
     vertical-align: top;
 }
 
+.from-window .body .item .control .line .any-type-select {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
 .from-window .body .item .control .line .input {
     width: 200px;
     display: inline-block;
