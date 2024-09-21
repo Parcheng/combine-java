@@ -1,6 +1,5 @@
 package com.parch.combine.core.component.settings.builder;
 
-import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.PackageScanUtil;
 import com.parch.combine.core.component.settings.config.ComponentSetting;
@@ -21,9 +20,6 @@ public class ComponentSettingScanBuilder {
         if (CheckEmptyUtil.isEmpty(packageClasses)) {
             return null;
         }
-
-        // CommonObjectSettingBuilder.loads(scope, packageClasses);
-
         List<ComponentSetting> componentSettings = new ArrayList<>();
         for (Class<?> clazz : packageClasses) {
             ComponentSetting componentSetting = ComponentSettingBuilder.build(scope, clazz);
@@ -32,7 +28,6 @@ public class ComponentSettingScanBuilder {
             }
         }
 
-        CommonObjectSettingBuilder.clear(scope);
         componentSettings.sort(Comparator.comparing(ComponentSetting::getOrder));
         return componentSettings;
     }

@@ -9,11 +9,6 @@ var copyComponent = {
     logic: null
 }
 
-// 2.
-// 引用公共对象
-// 引用组件，选择（触发输入框/选择框只能选block和前面的）
-// REF INIT 可以改成下拉选项
-
 // 4.
 // 保存，检查按钮（基于config + instance）
 // 保存时，按照组件加载顺序遍历配置并记录，如果先引用后配置，则引用的地方改为配置，配置的地方改为引用
@@ -22,6 +17,8 @@ var copyComponent = {
 
 // 5.
 // 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
+// REF INIT 可以改成下拉选项
+// REF 支持多个KEY 及条件
 
 var lastChecked = {
     flow: null,
@@ -124,6 +121,13 @@ const initFns = {
 
                             componentMap[componentDataItem.key] = componentDataItem;
                             currGroupData.components.push(componentDataItem.key);
+                        }
+                    }
+
+                    if (groupDataItem.commons && Array.isArray(groupDataItem.commons)) {
+                        for (let k = 0; k < groupDataItem.commons.length; k++) {
+                            const commonObjectData = groupDataItem.commons[k];
+                            commonRefMap[commonObjectData.key] = commonObjectData;
                         }
                     }
                 }
@@ -1547,10 +1551,21 @@ const buildDomFns = {
                 subItemsDom.className = "sub-items";
                 domTools.switchDisplay(subItemsDom);
 
-                var subDomsConfig = buildDomFns.settings.items(data.children, value);
-                var subDoms = subDomsConfig.doms;
-                var subDomsGetValueFn = subDomsConfig.getValueFn;
-
+                var subDoms;
+                var subDomsGetValueFn;
+                if (buildDomFns.refCommonKeys && buildDomFns.refCommonKeys.length > 0) {
+                    // TODO 暂不知道多 refCommonKey 及条件配置
+                    var refCommonKey = buildDomFns.refCommonKeys[0].key;
+                    var refCommon = commonRefMap[refCommonKey];
+                    var subDomsConfig = buildDomFns.settings.items(refCommon.properties, value);
+                    subDoms = subDomsConfig.doms;
+                    subDomsGetValueFn = subDomsConfig.getValueFn;
+                } else {
+                    var subDomsConfig = buildDomFns.settings.items(data.children, value);
+                    subDoms = subDomsConfig.doms;
+                    subDomsGetValueFn = subDomsConfig.getValueFn;
+                }
+                
                 spanDom.onclick = (function(subItemsDom, subDoms) {
                     var currSubItemsDom = subItemsDom;
                     var currSubDoms = subDoms;

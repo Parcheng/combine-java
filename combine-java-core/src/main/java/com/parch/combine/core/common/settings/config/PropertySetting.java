@@ -31,6 +31,8 @@ public class PropertySetting {
 
     private List<PropertySetting> children;
 
+    private List<String> refCommonKeys;
+
     public String getKey() {
         return key;
     }
@@ -125,5 +127,13 @@ public class PropertySetting {
 
     public void setRefKey(String refKey) {
         this.refKey = refKey;
+    }
+
+    public List<String> getRefCommonKeys() {
+        return refCommonKeys;
+    }
+
+    public void setRefCommonKeys(List<String> refCommonKeys) {
+        this.refCommonKeys = refCommonKeys;
     }
 }

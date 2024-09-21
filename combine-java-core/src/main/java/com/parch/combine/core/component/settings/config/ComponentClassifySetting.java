@@ -1,5 +1,7 @@
 package com.parch.combine.core.component.settings.config;
 
+import com.parch.combine.core.common.settings.config.CommonObjectSetting;
+
 import java.util.List;
 
 /**
@@ -12,6 +14,8 @@ public class ComponentClassifySetting {
     private String name;
 
     private List<ComponentSetting> settings;
+
+    private List<CommonObjectSetting> commons;
 
     public String getKey() {
         return key;
@@ -35,5 +39,13 @@ public class ComponentClassifySetting {
 
     public void setSettings(List<ComponentSetting> settings) {
         this.settings = settings;
+    }
+
+    public List<CommonObjectSetting> getCommons() {
+        return commons;
+    }
+
+    public void setCommons(List<CommonObjectSetting> commons) {
+        this.commons = commons;
     }
 }
