@@ -17,7 +17,7 @@ var copyComponent = {
 
 // 5.
 // 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
-// REF INIT 可以改成下拉选项
+// REF INIT 可以改成下拉选项（TYPE=REF_INIT）
 // REF 支持多个KEY 及条件
 
 var lastChecked = {
@@ -1043,6 +1043,7 @@ const buildDomFns = {
                 doms: body,
                 getValueFn: function() {
                     var data = {};
+                    data.$settings = dataList;
                     for (let i = 0; i < getValueConfigs.length; i++) {
                         const getValueConfig = getValueConfigs[i];
                         data[getValueConfig.key] = getValueConfig.fn();
@@ -1925,6 +1926,61 @@ const optFns = {
 
                 orgCheckFunc();
             }
+        },
+        checkConfig: function() {
+            var result = {
+                data: {},
+                errors: []
+            }
+
+            var constant = config.constant;
+            result.data.constant = constant;
+
+            var initResult = valueFns.parseComponents(config.inits, instance.init);
+            result.data.init = initResult.datas;
+            for (let ei = 0; ei < initResult.errors.length; ei++) {
+                const errConfig = initResult.errors[ei];
+                result.errors.push(logFns.error("组件全局配置", 
+                    errConfig.componentType + " | " + errConfig.componentId, 
+                    errConfig.valueKey, errConfig.msg));
+            }
+
+            var blockResult = valueFns.parseComponents(config.blocks, instance.logic);
+            result.data.blocks = blockResult.datas
+            for (let ei = 0; ei < blockResult.errors.length; ei++) {
+                const errConfig = blockResult.errors[ei];
+                result.errors.push(logFns.error("公共组件定义", 
+                    errConfig.componentType + " | " + errConfig.componentId, 
+                    errConfig.valueKey, errConfig.msg));
+            }
+
+            var beforeResult = valueFns.parseSettingFlows(config.before);
+            result.data.before = beforeResult.datas;
+            for (let ei = 0; ei < beforeResult.errors.length; ei++) {
+                const errConfig = beforeResult.errors[ei];
+                var currTitle2 = "第 " + errConfig.flowId + "项";
+                if (errConfig.componentId || errConfig.componentType) {
+                    currTitle2 += " > " + errConfig.componentType + " | " + errConfig.componentId
+                }
+                result.errors.push(logFns.error("前置流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
+            }
+
+            var afterResult = valueFns.parseSettingFlows(config.after);
+            result.data.after = afterResult.datas;
+            for (let ei = 0; ei < afterResult.errors.length; ei++) {
+                const errConfig = afterResult.errors[ei];
+                var currTitle2 = "第 " + errConfig.flowId + "项";
+                if (errConfig.componentId || errConfig.componentType) {
+                    currTitle2 += " > " + errConfig.componentType + " | " + errConfig.componentId
+                }
+                result.errors.push(logFns.error("后置流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
+            }
+
+            var blockTitle = "执行流程配置";
+            var blockValue = result.after.flows = {};
+            var flow = config.flow;
+
+            return result;
         }
     },
     window: {
@@ -1932,6 +1988,122 @@ const optFns = {
             var dom = document.getElementById(domId);
             if (dom && dom.parentNode) {
                 dom.parentNode.removeChild(dom);
+            }
+        }
+    }
+}
+const logFns = {
+    error: function(title1, title2, title3, msg) {
+        return "【" + title1 + "】【" + title2 + "】【" + title3 + "】 " + msg;
+    }
+}
+
+const valueFns = {
+    parseSettingFlows: function(flowValues) {
+        var result = {
+            datas: [],
+            errors: []
+        };
+
+        for (let i = 0; i < flowValues.length; i++) {
+            const flowValue = flowValues[i];
+            var flowValueResult = valueFns.parseValue(flowValue);
+
+            for (let fe = 0; fe < flowValueResult.errors.length; fe++) {
+                const errorConfig = flowValueResult.errors[fe];
+                errorConfig.flowId = i + 1;
+                result.errors.push(errorConfig);
+            }
+
+            if (flowValueResult.data) {
+                var finalFlowValue = flowValueResult.data;
+
+                var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
+                if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
+                    finalFlowValue.flow = componentsValueResult.datas;
+                } else {
+                    const errorConfig = {};
+                    errorConfig.flowId = i + 1;
+                    errorConfig.valueKey = null;
+                    errorConfig.msg = "未配置流程";
+                    result.errors.push(errorConfig);
+                }
+
+                for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
+                    const errorConfig = componentsValueResult.errors[ei];
+                    errorConfig.flowId = i + 1;
+                    result.errors.push(errorConfig);
+                }
+
+                beforeValue.push(finalFlowValue);
+            }
+        }
+
+        return result;
+    },
+    parseComponents: function(valueConfigs, instanceMap) {
+        var result = {
+            datas: [],
+            errors: []
+        };
+
+        for (let i = 0; i < valueConfigs.length; i++) {
+            const valueConfig = valueConfigs[i];
+            var value = instanceMap[valueConfig.componentId];
+            var valueResult = valueFns.parseValue(value);
+            if (valueResult.data) {
+                result.datas.push(valueResult.data);
+            }
+            for (let ri = 0; ri < valueResult.length; ri++) {
+                const errorConfig = valueResult[ire];
+                errorConfig.componentId = initValue.id;
+                errorConfig.componentType = initValue.type;
+                result.errors.push(errorConfig);
+            }
+        }
+
+        return result;
+    },
+    parseValue: function(value) {
+        var result = {
+            data: null,
+            errors: []
+        }
+
+        if (value == null || value == undefined) {
+            return result;
+        }
+
+        const settings = value.$settings
+        if (!settings || settings.length == 0) {
+            return result;
+        }
+        
+        result.data = {};
+        for (let s = 0; s < settings.length; s++) {
+            const setting = settings[s];
+            const settingKey = setting.key;
+            const currValue = value[settingKey];
+
+            if (currValue == null || currValue == undefined) {
+                if (setting.isRequired == true) {
+                    result.errors.push({
+                        valueKey: settingKey, 
+                        msg: "该选项为必填选项"
+                    });
+                }
+            }
+            
+            if (setting.type == "CONFIG" || setting.type == "OBJECT") {
+                const subResult = checkItem(currValue);
+                result.data[settingKey] = subResult.data;
+                for (let se = 0; se < subResult.errors.length; se++) {
+                    const subError = subResult.errors[se];
+                    subError.key = settingKey + "." + subError.key;
+                    result.errors.push(subError);
+                }
+            } else {
+                result.data[settingKey] = currValue;
             }
         }
     }
@@ -1983,7 +2155,7 @@ const domTools = {
                 dom.setAttribute("style", noneStyleStr + style);
             }
         }
-    },
+    }
 }
 
 const requestFns = {
