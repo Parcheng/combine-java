@@ -66,6 +66,7 @@ window.onload = function() {
     initFns.initComponentPop();
     initFns.initCheckBoard();
     initFns.initCheckComponent();
+    initFns.initOpts();
 };
 
 const initFns = {
@@ -411,6 +412,57 @@ const initFns = {
             domTools.switchDisplay(windowDom, false);
         }
         domTools.switchDisplay(windowDom, false);
+    },
+    initOpts: function() {
+        var checkResDom = document.getElementById("check-res-list");
+        domTools.switchDisplay(checkResDom, false);
+
+        var checkDom = document.getElementById("opt-tool-check");
+        checkDom.onclick = function() {
+            var checkResult = optFns.tool.checkConfig(config);
+            buildDomFns.checkResList(checkResult.errors);
+        }
+
+        var saveDom = document.getElementById("opt-tool-save");
+        saveDom.onclick = function() {
+            var checkResult = optFns.tool.checkConfig(config);
+            buildDomFns.checkResList(checkResult.errors);
+            if (checkResult.errors > 0) {
+                alert("配置检查不通过，无法保存！");
+                return;
+            }
+
+            requestFns.url("flow/save", "POST", false, checkResult.data, 
+                function(data) {
+                    if (data.success == true) {
+                        console.log("保存成功", data);
+                        alert("保存成功！");
+                    } else {
+                        console.log("保存失败", data);
+                        alert("保存失败！");
+                    }
+                }, 
+                function(error) {
+                    console.log("保存失败", error);
+                    alert("保存失败！");
+                }
+            );
+        }
+
+        var importDom = document.getElementById("opt-tool-import");
+        importDom.onclick = function() {
+            var checkResult = optFns.tool.checkConfig(config);
+            buildDomFns.checkResList(checkResult.errors);
+
+            const jsonStr = JSON.stringify(checkResult.data, null, 2);
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(jsonStr);;
+            link.download = 'flow-config.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
 
@@ -757,6 +809,29 @@ const buildFns = {
         var windowsDom = document.getElementById("window");
         windowsDom.appendChild(fromWindowDom);
         window.scrollTo(0, 0);
+    },
+    checkResList: function(errors) {
+        var checkResDom = document.getElementById("check-res-list");
+
+        var titleDom = checkResDom.children[0];
+        const now = new Date();
+        titleDom.textContent = "检查结果（" 
+            + now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " "
+            + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "）：";
+
+        var itemsDom = checkResDom.children[1];
+        domTools.clearAll(itemsDom);
+        if (!errors || errors.length == 0) {
+            const itemDom = buildDomFns.opt.checkListItem("检测完毕，未发现异常！");
+            itemsDom.appendChild(itemDom);
+        } else {
+            for (let i = 0; i < errors.length; i++) {
+                const itemDom = buildDomFns.opt.checkListItem(errors[i]);
+                itemsDom.appendChild(itemDom);
+            }
+        }
+
+        domTools.switchDisplay(checkResDom, true);
     }
 }
 
@@ -1774,6 +1849,14 @@ const buildDomFns = {
                 };
             }
         }
+    },
+    opt: {
+        checkListItem: function(msg) {
+            var itemDom = document.createElement("span");
+            itemDom.className = "item";
+            itemDom.textContent = msg;
+            return itemDom;
+        }
     }
 };
 
@@ -1927,7 +2010,7 @@ const optFns = {
                 orgCheckFunc();
             }
         },
-        checkConfig: function() {
+        checkConfig: function(config) {
             var result = {
                 data: {},
                 errors: []
@@ -1976,9 +2059,16 @@ const optFns = {
                 result.errors.push(logFns.error("后置流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
             }
 
-            var blockTitle = "执行流程配置";
-            var blockValue = result.after.flows = {};
-            var flow = config.flow;
+            var flowResult = valueFns.parseSettingFlows(config.flow);
+            result.data.flow = flowResult.dataMap;
+            for (let ei = 0; ei < afterResult.errors.length; ei++) {
+                const errConfig = afterResult.errors[ei];
+                var currTitle2 = errConfig.flowId;
+                if (errConfig.componentId || errConfig.componentType) {
+                    currTitle2 += " > " + errConfig.componentType + " | " + errConfig.componentId
+                }
+                result.errors.push(logFns.error("执行流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
+            }
 
             return result;
         }
@@ -1999,6 +2089,46 @@ const logFns = {
 }
 
 const valueFns = {
+    parsePathFlows: function(flowValueMap) {
+        var result = {
+            dataMap: {},
+            errors: []
+        };
+
+        for (const key in flowValueMap) {
+            if (Object.prototype.hasOwnProperty.call(flowValueMap, key)) {
+                const flowValue = flowValueMap[key];
+                const path = flowValue.domain + "/" + flowValue.function;
+
+                if (flowValue.domain == "" || flowValue.function == "") {
+                    const errorConfig = {};
+                    errorConfig.flowId = path;
+                    errorConfig.valueKey = null;
+                    errorConfig.msg = "域或函数未配置";
+                    result.errors.push(errorConfig);
+                } else {
+                    var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
+                    if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
+                        result.dataMap[path] = componentsValueResult.datas;
+                    } else {
+                        const errorConfig = {};
+                        errorConfig.flowId = path;
+                        errorConfig.valueKey = null;
+                        errorConfig.msg = "未配置流程";
+                        result.errors.push(errorConfig);
+                    }
+                    
+                    for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
+                        const errorConfig = componentsValueResult.errors[ei];
+                        errorConfig.flowId = i + 1;
+                        result.errors.push(errorConfig);
+                    }
+                }
+            }
+        }
+
+        return result;
+    },
     parseSettingFlows: function(flowValues) {
         var result = {
             datas: [],

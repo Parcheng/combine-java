@@ -494,6 +494,29 @@
     cursor: pointer;
 }
 
+.check-res-list {
+    width: 100%;
+    padding: 0 10px;
+}
+
+.check-res-list .title {
+    width: 100%;
+    min-height: 25px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px 0;
+}
+
+.check-res-list .item {
+    width: 100%;
+    min-height: 18px;
+    display: inline-block;
+    font-size: 12px;
+    color: var(--font_light_color);
+    margin: 2px 0;
+}
+
 hr {
     height: 1;
     margin-top: 10px;
