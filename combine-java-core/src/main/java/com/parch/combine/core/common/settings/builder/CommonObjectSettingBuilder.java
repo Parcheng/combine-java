@@ -1,8 +1,11 @@
 package com.parch.combine.core.common.settings.builder;
 
 import com.parch.combine.core.common.settings.annotations.CommonObject;
+import com.parch.combine.core.common.settings.annotations.Condition;
+import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.annotations.Invalid;
 import com.parch.combine.core.common.settings.config.CommonObjectSetting;
+import com.parch.combine.core.common.settings.config.ConditionSettings;
 
 import java.util.*;
 
@@ -49,6 +52,7 @@ public class CommonObjectSettingBuilder {
             return true;
         }
 
+        Condition[] conditionAnnotations = clazz.getAnnotationsByType(Condition.class);
         synchronized (CACHE) {
             commonObjectSetting = commonObjectSettingScopeMap.get(clazz.getName());
             if (commonObjectSetting != null) {
@@ -61,6 +65,17 @@ public class CommonObjectSettingBuilder {
             commonObjectSetting.setOrder(componentCommonObjectAnnotation.order());
             commonObjectSetting.setClassType(clazz);
             commonObjectSetting.setDesc(new ArrayList<>(Arrays.asList(componentCommonObjectAnnotation.desc())));
+
+            if (conditionAnnotations != null && conditionAnnotations.length > 0) {
+                commonObjectSetting.setConditions(new ArrayList<>());
+                for (Condition condition : conditionAnnotations) {
+                    ConditionSettings conditionSettings = new ConditionSettings();
+                    conditionSettings.setKey(condition.key());
+                    conditionSettings.setValue(condition.value());
+                    commonObjectSetting.getConditions().add(conditionSettings);
+                }
+            }
+
             commonObjectSettingScopeMap.put(clazz.getName(), commonObjectSetting);
         }
 
@@ -75,10 +90,6 @@ public class CommonObjectSettingBuilder {
         }
 
         List<CommonObjectSetting> result = new ArrayList<>(commonObjectSettingScopeMap.values());
-//        for (List<CommonObjectSetting> commonObjectSettingScopes : commonObjectSettingScopeMap.values()) {
-//            result.addAll(commonObjectSettingScopes);
-//        }
-
         result.sort(Comparator.comparingInt(CommonObjectSetting::getOrder));
         return result;
     }

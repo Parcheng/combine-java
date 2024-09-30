@@ -42,9 +42,6 @@ public class ComponentSettingBuilder {
             componentSetting.setInitConfig(PropertySettingBuilder.build(scope, initConfigClass));
         }
 
-        // 公共对象
-        componentSetting.setCommonObjects(CommonObjectSettingBuilder.get(scope));
-
         // 组件结果
         setResult(componentSetting, componentClass);
         return componentSetting;

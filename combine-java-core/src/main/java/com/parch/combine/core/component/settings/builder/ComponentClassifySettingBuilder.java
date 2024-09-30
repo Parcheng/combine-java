@@ -1,5 +1,6 @@
 package com.parch.combine.core.component.settings.builder;
 
+import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
 import com.parch.combine.core.component.settings.config.ComponentSetting;
 import java.util.List;
@@ -43,6 +44,9 @@ public class ComponentClassifySettingBuilder {
         classify.setKey(key);
         classify.setName(name);
         classify.setSettings(settings);
+
+        classify.setCommons(CommonObjectSettingBuilder.get(key));
+        CommonObjectSettingBuilder.clear(key);
         return classify;
     }
 }

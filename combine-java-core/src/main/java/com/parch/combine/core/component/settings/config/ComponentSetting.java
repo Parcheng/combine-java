@@ -27,8 +27,6 @@ public class ComponentSetting {
 
     private List<PropertySetting> logicConfig;
 
-    private List<CommonObjectSetting> commonObjects;
-
     private ComponentResultSetting result;
 
     public String getName() {
@@ -101,14 +99,6 @@ public class ComponentSetting {
 
     public Class<? extends AbstractComponent<?, ?>> thisComponentClass() {
         return componentClass;
-    }
-
-    public List<CommonObjectSetting> getCommonObjects() {
-        return commonObjects;
-    }
-
-    public void setCommonObjects(List<CommonObjectSetting> commonObjects) {
-        this.commonObjects = commonObjects;
     }
 
     public int getOrder() {

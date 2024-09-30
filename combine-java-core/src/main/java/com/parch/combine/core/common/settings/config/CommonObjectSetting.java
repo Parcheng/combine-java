@@ -19,6 +19,8 @@ public class CommonObjectSetting {
 
     private List<PropertySetting> properties;
 
+    private List<ConditionSettings> conditions;
+
     public String getKey() {
         return key;
     }
@@ -65,5 +67,13 @@ public class CommonObjectSetting {
 
     public void setClassType(Class<?> classType) {
         this.classType = classType;
+    }
+
+    public List<ConditionSettings> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(List<ConditionSettings> conditions) {
+        this.conditions = conditions;
     }
 }

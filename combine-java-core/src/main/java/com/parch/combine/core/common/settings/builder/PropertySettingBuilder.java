@@ -41,18 +41,18 @@ public class PropertySettingBuilder {
         // 解析父类
         Class<?> superclass = propertyClass.getSuperclass();
         if (superclass != null && superclass != Object.class) {
-            boolean success = CommonObjectSettingBuilder.load(scope, propertyClass);
-            if (success) {
-                // 继承公共对象的情况
-                CommonObjectSetting commonSetting = CommonObjectSettingBuilder.get(scope, propertyClass.getName());
-                PropertySetting commonPropertyRef = new PropertySetting();
-                commonPropertyRef.setKey("提示");
-                commonPropertyRef.setName("本配置对象支持【" + commonSetting.getName() + "】的全部配置项");
-                commonPropertyRef.setDesc(Collections.singletonList("配置项列表，请参考公共对象【" + commonSetting.getName() + "】"));
-                properties.add(commonPropertyRef);
-            } else {
-                buildProperties(scope, properties, superclass, keyPrefix, parsedClass);
-            }
+//            boolean success = CommonObjectSettingBuilder.load(scope, propertyClass);
+//            if (success) {
+//                // 继承公共对象的情况
+//                CommonObjectSetting commonSetting = CommonObjectSettingBuilder.get(scope, propertyClass.getName());
+//                PropertySetting commonPropertyRef = new PropertySetting();
+//                commonPropertyRef.setKey("提示");
+//                commonPropertyRef.setName("本配置对象支持【" + commonSetting.getName() + "】的全部配置项");
+//                commonPropertyRef.setDesc(Collections.singletonList("配置项列表，请参考公共对象【" + commonSetting.getName() + "】"));
+//                properties.add(commonPropertyRef);
+//            } else {
+            buildProperties(scope, properties, superclass, keyPrefix, parsedClass);
+//            }
         }
 
         // 解析字段
@@ -118,7 +118,7 @@ public class PropertySettingBuilder {
     private static void setConfigProperty(String scope, List<PropertySetting> properties, PropertySetting property, AnnotatedElement field, String keyPrefix, Set<Class<?>> parsedClass) {
         FieldRef fieldRefAnnotation = field.getAnnotation(FieldRef.class);
         if (fieldRefAnnotation != null) {
-            StringBuilder sb = new StringBuilder("详见 ");
+            property.setRefCommonKeys(new ArrayList<>());
 
             // 加载公共属性
             Class<?>[] refClasses = fieldRefAnnotation.value();
@@ -129,13 +129,9 @@ public class PropertySettingBuilder {
                     continue;
                 }
 
-                sb.append("【").append(commonObjectSetting.getName()).append("】");
+                property.getRefCommonKeys().add(commonObjectSetting.getKey());
             }
 
-            if (property.getDesc() == null) {
-                property.setDesc(new ArrayList<>());
-            }
-            property.getDesc().add(sb.toString());
             return;
         }
 

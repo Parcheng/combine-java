@@ -1,32 +1,24 @@
 
-
-var firstGroup = null;
 var groupMap = {};
 var componentMap = {};
 var commonRefMap = {}; // 组件KEY:commonKey:[...]
 
-// 1.
-// 组件单击编辑
-// 右键菜单，打开/关闭，编辑/复制/左移（左边有箭头）/右移（右边有箭头）/删除/取消
-// 复制弹窗，复制到（block,after/flow/before）
-
-// 2.
-// 引用公共对象
-// 引用组件，选择（触发输入框/选择框只能选block和前面的）
-// REF INIT 可以改成下拉选项
-
-// 3.
-// id 选择可引用项（勾选REF为下拉框，否则输入框）
-// 失去焦点，ID重复检查（是否直接使用 id = xxx 的组件？）
+var firstGroup = null;
+var copyComponent = {
+    init: null,
+    logic: null
+}
 
 // 4.
 // 保存，检查按钮（基于config + instance）
+// 保存时，按照组件加载顺序遍历配置并记录，如果先引用后配置，则引用的地方改为配置，配置的地方改为引用
 // 未完成配置的红色角标提示（流程，组件，子组件）
 // 配置检查按钮，输出未完成项目，检查引用组件是否存在（配置在后面的检查/未配置）
 
 // 5.
 // 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
-// ANY，根据Type类型，显示成TEXT/BOOLEAN/NUMBER/MAP，可以用span包装，动态构建
+// REF INIT 可以改成下拉选项（TYPE=REF_INIT）
+// REF 支持多个KEY 及条件
 
 var lastChecked = {
     flow: null,
@@ -63,7 +55,6 @@ var idPrefix = {
     flow: "f_", 
     componentLogic: "cl_", 
     componentInit: "ci_",
-    componentConfig: "$",
     window: "w_",
     subBoard: "sb_"
 }
@@ -72,8 +63,10 @@ window.onload = function() {
     initFns.loadData();
     initFns.loadGroup();
     initFns.bindAddFlowEvent();
+    initFns.initComponentPop();
     initFns.initCheckBoard();
     initFns.initCheckComponent();
+    initFns.initOpts();
 };
 
 const initFns = {
@@ -131,6 +124,13 @@ const initFns = {
                             currGroupData.components.push(componentDataItem.key);
                         }
                     }
+
+                    if (groupDataItem.commons && Array.isArray(groupDataItem.commons)) {
+                        for (let k = 0; k < groupDataItem.commons.length; k++) {
+                            const commonObjectData = groupDataItem.commons[k];
+                            commonRefMap[commonObjectData.key] = commonObjectData;
+                        }
+                    }
                 }
                 console.log(groupMap);
                 console.log(componentMap);
@@ -173,6 +173,116 @@ const initFns = {
             buildFns.flowPathWindow(null);
         }
     },
+    initComponentPop: function() {
+        var componentPopDom = document.getElementById("component-pop");
+        var sourceIdDom = document.getElementById("check-component-pop-source-id");
+        var sourceTypeDom = document.getElementById("check-component-pop-source-type");
+
+        var itemDoms = componentPopDom.children;
+        for (let i = 0; i < itemDoms.length; i++) {
+            initComponentPopItem(itemDoms[i], sourceIdDom, sourceTypeDom, componentPopDom);
+        }
+
+        function initComponentPopItem(itemDom, sourceIdDom, sourceTypeDom, componentPopDom) {
+            const itemId = itemDom.id;
+            itemDom.onclick = function() {
+                var sourceId = sourceIdDom.value;
+                var sourceType = sourceTypeDom.value;
+                if (!sourceId || !sourceType) {
+                    console.log("数据异常，组件编辑无法获取到ID");
+                    alert("组件数据异常");
+                    return;
+                }
+
+                var sourceDom = document.getElementById(sourceId);
+                if (!sourceDom) {
+                    console.log("数据异常，组件图形不存在");
+                    alert("组件数据异常，图形不存在");
+                    return;
+                }
+
+                var isInit = sourceType == "init";
+                var isFlow = sourceType == "flow";
+                switch(itemId) {
+                    case "pop-component-edit":
+                        buildFns.editComponentWindow(sourceId, sourceType);
+                        break;
+                    case "pop-component-copy":
+                        var copyValue = isInit ? instance.init[sourceId] : instance.logic[sourceId];
+                        if (!copyValue) {
+                            console.log("要拷贝的数据不存在【" + sourceId + "】");
+                            alert("数据异常");
+                            return;
+                        }
+
+                        if (isInit) {
+                            copyComponent.init = copyValue;
+                        } else {
+                            copyComponent.logic = copyValue;
+                        }
+                        break;
+                    case "pop-component-paste":
+                        var pasteValue = isInit ? copyComponent.init : copyComponent.logic;
+                        if (!pasteValue) {
+                            console.log("粘贴时，拷贝数据不存在【" + sourceId + "】");
+                            alert("数据异常，未拷贝数据");
+                            return;
+                        }
+
+                        pasteValue.id = pasteValue.id + "copy";
+                        buildFns.editComponentWindow(sourceId, sourceType, pasteValue);
+                        break;
+                    case "pop-component-left":
+                        if (isFlow) {
+                            const sourceAllDom = sourceDom.parentNode.children;
+                            const index = Array.prototype.indexOf.call(sourceAllDom, sourceDom);
+                            if (index > 1) {
+                                const leftNode = sourceAllDom[index - 2];
+                                const lineNode = sourceAllDom[index - 1];
+                                sourceDom.after(leftNode);
+                                sourceDom.after(lineNode);
+                            }
+                        }
+                        break;
+                    case "pop-component-right":
+                        if (isFlow) {
+                            const sourceAllDom = sourceDom.parentNode.children;
+                            const index = Array.prototype.indexOf.call(sourceAllDom, sourceDom);
+                            if (index > 1) {
+                                const rightNode = sourceAllDom[index + 2];
+                                const lineNode = sourceAllDom[index - 1];
+                                rightNode.after(sourceDom);
+                                rightNode.after(lineNode);
+                            }
+                        }
+                        break;
+                    case "pop-component-delete":
+                        if (isFlow) {
+                            const sourceAllDom = sourceDom.parentNode.children;
+                            var index = Array.prototype.indexOf.call(sourceAllDom, sourceDom);
+                            if (index > 0) {
+                                parentDom.removeChild(sourceAllDom[index - 1]);
+                            }
+                        }
+                        domTools.remove(sourceDom);
+
+                        if (isInit) {
+                            delete instance.init[sourceId];
+                        } else {
+                            delete instance.logic[sourceId];
+                        }
+                        break;
+                    case "pop-component-cancel":
+                        domTools.switchDisplay(componentPopDom, false);
+                        break;
+                }
+
+                domTools.switchDisplay(componentPopDom, false);
+            }
+        }
+
+        domTools.switchDisplay(componentPopDom, false);
+    },
     initCheckBoard: function() {
         var flowConfig = config;
         var lastCheckedData = lastChecked;
@@ -206,11 +316,11 @@ const initFns = {
             }
 
             var flowSelectOptionDomsConfig = buildDomFns.checkSelect.flowSelect(selectOptionData, selectValue, lastCheckedValue);
+            domTools.setAll(flowSelectDom, flowSelectOptionDomsConfig.doms);
             if (flowSelectOptionDomsConfig.checkedValue) {
                 flowSelectDom.value = flowSelectOptionDomsConfig.checkedValue;
             }
 
-            domTools.setAll(flowSelectDom, flowSelectOptionDomsConfig.doms);
             domTools.switchDisplay(flowItemDom, true);
         }
 
@@ -302,6 +412,57 @@ const initFns = {
             domTools.switchDisplay(windowDom, false);
         }
         domTools.switchDisplay(windowDom, false);
+    },
+    initOpts: function() {
+        var checkResDom = document.getElementById("check-res-list");
+        domTools.switchDisplay(checkResDom, false);
+
+        var checkDom = document.getElementById("opt-tool-check");
+        checkDom.onclick = function() {
+            var checkResult = optFns.tool.checkConfig(config);
+            buildDomFns.checkResList(checkResult.errors);
+        }
+
+        var saveDom = document.getElementById("opt-tool-save");
+        saveDom.onclick = function() {
+            var checkResult = optFns.tool.checkConfig(config);
+            buildDomFns.checkResList(checkResult.errors);
+            if (checkResult.errors > 0) {
+                alert("配置检查不通过，无法保存！");
+                return;
+            }
+
+            requestFns.url("flow/save", "POST", false, checkResult.data, 
+                function(data) {
+                    if (data.success == true) {
+                        console.log("保存成功", data);
+                        alert("保存成功！");
+                    } else {
+                        console.log("保存失败", data);
+                        alert("保存失败！");
+                    }
+                }, 
+                function(error) {
+                    console.log("保存失败", error);
+                    alert("保存失败！");
+                }
+            );
+        }
+
+        var importDom = document.getElementById("opt-tool-import");
+        importDom.onclick = function() {
+            var checkResult = optFns.tool.checkConfig(config);
+            buildDomFns.checkResList(checkResult.errors);
+
+            const jsonStr = JSON.stringify(checkResult.data, null, 2);
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(jsonStr);;
+            link.download = 'flow-config.json';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     }
 }
 
@@ -406,7 +567,7 @@ const buildFns = {
 
         flowNodeData.components.push({id: id, key: key, componentId: componentId});
         var flagDom = buildDomFns.node.flowLineItem();
-        var componentLogicDom = buildDomFns.node.componentLogic(id, componentId, key);
+        var componentLogicDom = buildDomFns.node.componentLogic(id, "flow", componentId, key);
         domTools.addAll(flowDom, [flagDom, componentLogicDom]);
     },
     initItem: function(id, componentId, key) {
@@ -418,7 +579,7 @@ const buildFns = {
     blockItem: function(id, componentId, key) {
         var blockDom = document.getElementById("block");
         config.blocks.push({id: id, key: key, componentId: componentId});
-        var componentLogicDom = buildDomFns.node.componentLogic(id, componentId, key);
+        var componentLogicDom = buildDomFns.node.componentLogic(id, "block", componentId, key);
         domTools.addAll(blockDom, [componentLogicDom]);
     },
     initComponentWindow: function(key, value) {
@@ -437,10 +598,12 @@ const buildFns = {
 
         value = value ? value : {};
         value.type = value.type ? value.type : component.key;
-        var id = value.$id = value.$id ? value.$id : (idPrefix.componentInit + (idIndex.componentInit++));
+        value.$id = value.$id ? value.$id : (idPrefix.componentInit + (idIndex.componentInit++));
+        value.id = value.id ? value.id : { id:value.$id, ref: false };
 
+        var id = value.$id;
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(component.name, initConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, "init", initConfig, value,
             function(data) { 
                 console.log(data);
                 data.$id = id;
@@ -449,6 +612,7 @@ const buildFns = {
             }
         );
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     logicComponentWindow: function(key, value, flowId) {
         var component = componentMap[key];
@@ -467,22 +631,25 @@ const buildFns = {
 
         value = value ? value : {};
         value.type = value.type ? value.type : component.key;
-        var id = value.$id = value.$id ? value.$id : (idPrefix.componentLogic + (idIndex.componentLogic++));
+        value.$id = value.$id ? value.$id : (idPrefix.componentLogic + (idIndex.componentLogic++));
+        value.id = value.id ? value.id : { id: value.$id, ref: false };
 
+        var id = value.$id
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(component.name, logicConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, "logic", logicConfig, value,
             function(data) {
                 console.log(data);
                 data.$id = id;
                 instance.logic[id] = data;
                 if (flowId) {
-                    buildFns.flowItem(flowId, id, data.id, component.key);
+                    buildFns.flowItem(flowId, id, data.id.id, component.key);
                 } else {
                     buildFns.blockItem(id, data.id, component.key);
                 }
             }
         );
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     subComponentWindow: function(componentKey, subBoardId) {
         var component = componentMap[componentKey];
@@ -499,14 +666,15 @@ const buildFns = {
             return;
         }
 
-        var id = idPrefix.componentInit + (idIndex.componentInit++)
-        var value = { type: component.key };
+        var id = idPrefix.componentLogic + (idIndex.componentLogic++)
+        var value = { id: { id: id, ref: false } , type: component.key };
+
         var windowsDom = document.getElementById("window");
-        var fromWindowDom = buildDomFns.window.continueFrom(component.name, logicConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, "logic", logicConfig, value,
             function(data) { 
                 console.log(data);
                 data.$id = id;
-                instance.init[id] = data;
+                instance.logic[id] = data;
 
                 var subBoardDom = document.getElementById(subBoardId);
                 if (subBoardDom && subBoardDom.children.length > 0) {
@@ -522,6 +690,53 @@ const buildFns = {
             }
         );
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
+    },
+    editComponentWindow: function(id, type, value) {
+        var isInit = type == "init";
+        if (value == null || value == undefined) {
+            value = isInit ? instance.init[id] : instance.logic[id];
+        }
+        if (!value || !value.type) {
+            console.log("【" + currId + "】组件数据不存在");
+            alert("组件数据不存在");
+            return;
+        }
+
+        var key = value.type;
+        var component = componentMap[key];
+        if (!component) {
+            console.log("【" + key + "】组件不存在");
+            alert("组件不存在");
+            return;
+        }
+
+        var currConfig = isInit ? component.initConfig : component.logicConfig;
+        if (!currConfig || currConfig.length == 0) {
+            console.log("【" + key + "】【" + type + "】组件配置不存在");
+            alert("组件配置不存在");
+            return;
+        }
+
+        var configType = isInit ? "init" : "logic";
+        var windowsDom = document.getElementById("window");
+        var fromWindowDom = buildDomFns.window.continueFrom(component.name, configType, currConfig, value,
+            function(data) {
+                console.log(data);
+                var currDom = document.getElementById(id);
+                if (currDom) {
+                    data.id = data.id ? data.id : { id: id, ref: false };
+                    currDom.innerHTML = data.id.id + "<br>" + data.type;
+                    if (isInit) {
+                        instance.init[id] = data;
+                    } else {
+                        instance.logic[id] = data;
+                    }
+                }
+            }
+        );
+        windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     flowSettingsWindow: function(flowId, type) {
         var isBfore = type == "before";
@@ -550,7 +765,7 @@ const buildFns = {
         }
 
         var value = flowId ? flowConfig[flowId].data : {};
-        var fromWindowDom = buildDomFns.window.continueFrom(title, addFlowConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom(title, null, addFlowConfig, value,
             function(data) { 
                 console.log(data);
                 if (!flowId) {
@@ -563,6 +778,7 @@ const buildFns = {
 
         var windowsDom = document.getElementById("window");
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
     },
     flowPathWindow: function(flowId) {
         var addFlowConfig = [
@@ -570,7 +786,7 @@ const buildFns = {
             { key: "function", name: "函数名称", type: "TEXT", isRequired: true, isArray: false }
         ];
         var value = flowId ? config.flow[flowId] : {};
-        var fromWindowDom = buildDomFns.window.continueFrom("执行流程配置", addFlowConfig, value,
+        var fromWindowDom = buildDomFns.window.continueFrom("执行流程配置", null, addFlowConfig, value,
             function(data) { 
                 console.log(data);
                 if (flowId) {
@@ -592,6 +808,30 @@ const buildFns = {
 
         var windowsDom = document.getElementById("window");
         windowsDom.appendChild(fromWindowDom);
+        window.scrollTo(0, 0);
+    },
+    checkResList: function(errors) {
+        var checkResDom = document.getElementById("check-res-list");
+
+        var titleDom = checkResDom.children[0];
+        const now = new Date();
+        titleDom.textContent = "检查结果（" 
+            + now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " "
+            + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + "）：";
+
+        var itemsDom = checkResDom.children[1];
+        domTools.clearAll(itemsDom);
+        if (!errors || errors.length == 0) {
+            const itemDom = buildDomFns.opt.checkListItem("检测完毕，未发现异常！");
+            itemsDom.appendChild(itemDom);
+        } else {
+            for (let i = 0; i < errors.length; i++) {
+                const itemDom = buildDomFns.opt.checkListItem(errors[i]);
+                itemsDom.appendChild(itemDom);
+            }
+        }
+
+        domTools.switchDisplay(checkResDom, true);
     }
 }
 
@@ -643,26 +883,20 @@ const buildDomFns = {
             var dom = document.createElement("div");
             dom.id = initId;
             dom.className = "component-item";
-            dom.innerHTML = componentId + "<br>" + key;
-            dom.ondblclick = (function(initId) {
-                var currInitId = initId;
-                return function() {
-                    optFns.node.openComponentInitWindow(currInitId);
-                }
-            })(initId);
+            dom.innerHTML = componentId.id + "<br>" + key;
+            dom.oncontextmenu = function(event) {
+                optFns.tool.checkComponentPop(initId, "init", event);
+            };
             return dom;
         },
-        componentLogic: function(logicId, componentId, key) {
+        componentLogic: function(logicId, logicType, componentId, key) {
             var dom = document.createElement("div");
             dom.id = logicId;
             dom.className = "component-item";
-            dom.innerHTML = componentId + "<br>" + key;
-            dom.ondblclick = (function(logicId) {
-                var currLogicId = logicId;
-                return function() {
-                    optFns.node.openComponentInitWindow(currLogicId);
-                }
-            })(logicId);
+            dom.innerHTML = componentId.id + "<br>" + key;
+            dom.oncontextmenu = function(event) {
+                optFns.tool.checkComponentPop(logicId, logicType, event);
+            };
             return dom;
         },
         flow: function(flowId) {
@@ -673,7 +907,6 @@ const buildDomFns = {
         },
         flowSettingsItem: function(flowId, type) {
             var dom = document.createElement("div");
-            dom.id = flowId;
             dom.className = "settings-item";
             dom.textContent = "设置";
             dom.onclick = function() {
@@ -689,7 +922,6 @@ const buildDomFns = {
         },
         flowPathItem: function(flowId, flowPath) {
             var dom = document.createElement("div");
-            dom.id = flowId;
             dom.className = "path-item";
             dom.textContent = flowPath;
             dom.onclick = function() {
@@ -699,7 +931,7 @@ const buildDomFns = {
         }
     },
     window: {
-        continueFrom: function(title, dataList, value, continueFunc) {
+        continueFrom: function(title, configType, dataList, value, continueFunc) {
             var windowId = idPrefix.window + (idIndex.window++);
             var windowDom = document.createElement("div");
             windowDom.id = windowId;
@@ -723,6 +955,10 @@ const buildDomFns = {
             windowDom.appendChild(bodyDom);
 
             var itemDomsConfig = buildDomFns.settings.items(dataList, value);
+            if (configType && itemDomsConfig.idDom) {
+                bodyDom.appendChild(itemDomsConfig.idDom);
+                optFns.tool.bindCheckIdRef(itemDomsConfig, value.type, configType);
+            }
             domTools.addAll(bodyDom, itemDomsConfig.doms);
             var itemsGetValueFn = itemDomsConfig.getValueFn;
 
@@ -734,7 +970,6 @@ const buildDomFns = {
                 continueFunc(valueData ? valueData : {});
                 titleCloseDom.dispatchEvent(new Event("click"));
             };
-            bodyDom.appendChild(document.createElement("hr"));
             bodyDom.appendChild(buttonDom);
 
             return windowDom;
@@ -859,27 +1094,31 @@ const buildDomFns = {
                 return body;
             }
 
+            var idDom = null;
             var getValueConfigs = [];
             for (let i = 0; i < dataList.length; i++) {
                 var itemKey = dataList[i].key;
                 var itemValue = value ? value[itemKey] : null;
                 var itemDomConfig = buildDomFns.settings.item(dataList[i], itemValue);
 
-                body.push(itemDomConfig.dom);
+                if (dataList[i].type == "ID") {
+                    idDom = itemDomConfig.dom;
+                } else {
+                    body.push(itemDomConfig.dom);
+                }
+                
                 getValueConfigs.push({
                     key: itemKey,
                     fn: itemDomConfig.getValueFn
                 });
-
-                if (i < dataList.length - 1) {
-                    body.push(document.createElement("hr"));
-                }
             }
 
             return {
+                idDom: idDom,
                 doms: body,
                 getValueFn: function() {
                     var data = {};
+                    data.$settings = dataList;
                     for (let i = 0; i < getValueConfigs.length; i++) {
                         const getValueConfig = getValueConfigs[i];
                         data[getValueConfig.key] = getValueConfig.fn();
@@ -1000,6 +1239,8 @@ const buildDomFns = {
                 }
             }
 
+            itemDom.appendChild(document.createElement("hr"));
+
             return {
                 dom: itemDom,
                 getValueFn: function() {
@@ -1029,6 +1270,8 @@ const buildDomFns = {
             var controlItemDoms;
             switch (data.type) {
                 case "ID":
+                    controlItemDoms = buildDomFns.settings.control.id(getValueFns, data, value, index);
+                    break;
                 case "TEXT":
                 case "EXPRESSION":
                     controlItemDoms = buildDomFns.settings.control.text(getValueFns, data, value, index);
@@ -1179,11 +1422,49 @@ const buildDomFns = {
             }
         },
         control: {
-            text: function(getValueFns, data, value, index) {
-                if (data.type == "ID") {
-                    value = idPrefix.componentConfig + (idIndex.componentConfig++);
+            id: function(getValueFns, data, value, index) {
+                var inputDom = document.createElement("input");
+                inputDom.className = "input";
+                inputDom.setAttribute("type", "text");
+                
+                var selectDom = document.createElement("select");
+                domTools.switchDisplay(selectDom, false);
+
+                var checkTextDom = document.createElement("span");
+                checkTextDom.className = "id-ref";
+                checkTextDom.textContent = "引用"
+
+                var checkDom = document.createElement("input");
+                checkDom.setAttribute("type", "checkbox");
+                checkDom.onchange = function() {
+                    if (checkDom.checked) {
+                        domTools.switchDisplay(selectDom, true);
+                        domTools.switchDisplay(inputDom, false);
+                    } else {
+                        domTools.switchDisplay(selectDom, false);
+                        domTools.switchDisplay(inputDom, true);
+                    }
                 }
 
+                if (value != null && value != undefined) {
+                    if (value.ref == true) {
+                        checkDom.checked = true;
+                    } 
+                    inputDom.value = value.id;
+                }
+
+                var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
+
+                getValueFns.push(function() { 
+                    var isChecked = checkDom.checked ? true : false;
+                    return {
+                        id: isChecked ? selectDom.value : inputDom.value,
+                        ref: isChecked
+                    };
+                });
+                return [inputDom, selectDom, checkDom, checkTextDom, arrayFlagDom];
+            },
+            text: function(getValueFns, data, value, index) {
                 var dom = document.createElement("input");
                 dom.className = "input";
                 dom.setAttribute("type", "text");
@@ -1212,7 +1493,15 @@ const buildDomFns = {
 
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
 
-                getValueFns.push(function() { return dom.value; });
+                getValueFns.push(function() { 
+                    var currNumber = dom.value;
+                    var isNumber = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(currNumber);
+                    if (!isNumber) {
+                        alert(data.key + "的值不是一个数字");
+                        return null;
+                    }
+                    return currNumber; 
+                });
                 return [dom, arrayFlagDom];
             },
             boolean: function(getValueFns, data, value, index) {
@@ -1289,6 +1578,7 @@ const buildDomFns = {
 
                     var id = value.$id;
                     if (!id) {
+                        // 子元素一定是flow，就一定是logic
                         id = idPrefix.componentLogic + (idIndex.componentLogic++);
                         value.$id = id;
                     }
@@ -1296,11 +1586,14 @@ const buildDomFns = {
                     var componenttDom = document.createElement("div");
                     componenttDom.id = id;
                     componenttDom.className = "line-component";
-                    componenttDom.innerHTML = value.id + "<br>" + value.type;
+                    componenttDom.innerHTML = value.id.id + "<br>" + value.type;
                     body.push(componenttDom);
+
+                    componenttDom.oncontextmenu = function(event) {
+                        optFns.tool.checkComponentPop(id, "flow", event);
+                    };
                 }
 
-                // TODO 点击事件，右键菜单，获取数据
                 return body;
             },
             map: function(getValueFns, data, value, index) {
@@ -1334,10 +1627,21 @@ const buildDomFns = {
                 subItemsDom.className = "sub-items";
                 domTools.switchDisplay(subItemsDom);
 
-                var subDomsConfig = buildDomFns.settings.items(data.children, value);
-                var subDoms = subDomsConfig.doms;
-                var subDomsGetValueFn = subDomsConfig.getValueFn;
-
+                var subDoms;
+                var subDomsGetValueFn;
+                if (buildDomFns.refCommonKeys && buildDomFns.refCommonKeys.length > 0) {
+                    // TODO 暂不知道多 refCommonKey 及条件配置
+                    var refCommonKey = buildDomFns.refCommonKeys[0].key;
+                    var refCommon = commonRefMap[refCommonKey];
+                    var subDomsConfig = buildDomFns.settings.items(refCommon.properties, value);
+                    subDoms = subDomsConfig.doms;
+                    subDomsGetValueFn = subDomsConfig.getValueFn;
+                } else {
+                    var subDomsConfig = buildDomFns.settings.items(data.children, value);
+                    subDoms = subDomsConfig.doms;
+                    subDomsGetValueFn = subDomsConfig.getValueFn;
+                }
+                
                 spanDom.onclick = (function(subItemsDom, subDoms) {
                     var currSubItemsDom = subItemsDom;
                     var currSubDoms = subDoms;
@@ -1369,8 +1673,8 @@ const buildDomFns = {
             },
             any: function(getValueFns, data, value, index) {
                 var selectDom = document.createElement("select");
-                selectDom.className = "select";
-
+                selectDom.className = "any-type-select"
+                
                 var textOptionDom = document.createElement("option");
                 textOptionDom.setAttribute("value", "TEXT");
                 textOptionDom.textContent = "文本";
@@ -1390,11 +1694,105 @@ const buildDomFns = {
                 mapOptionDom.setAttribute("value", "MAP");
                 mapOptionDom.textContent = "MAP";
                 selectDom.appendChild(mapOptionDom);
-                        
+
+                value = value ? value : {};
+                var currType;
+                if (value.value != null && value.value != undefined) {
+                    if (typeof value.value === "string") {
+                        currType = "TEXT";
+                    } else if (typeof value.value === "number") {
+                        currType = "NUMBER";
+                    } else if (typeof value.value === "boolean") {
+                        currType = "BOOLEAN";
+                    } else if (typeof value.value === "object") {
+                        currType = "MAP";
+                    }
+                }
+                if (currType) {
+                    selectDom.value = currType;
+                }
+                   
                 var brDom = document.createElement("br")
+
+                var textDom = document.createElement("input");
+                textDom.className = "input";
+                textDom.setAttribute("type", "text");
+                if (currType && currType != "TEXT") {
+                    domTools.switchDisplay(textDom, false);
+                }
+
+                var numberDom = document.createElement("input");
+                numberDom.className = "input";
+                numberDom.setAttribute("type", "number");
+                if (currType != "NUMBER") {
+                    domTools.switchDisplay(numberDom, false);
+                }
+                
+                var booleanSpan = document.createElement("span");
+                var name = data.key + "-" + new Date().getTime()
+                var trueDom = document.createElement("input");
+                trueDom.name = name;
+                trueDom.setAttribute("type", "radio");
+                booleanSpan.appendChild(trueDom);
+                var trueTextDom = document.createElement("span");
+                trueTextDom.textContent = "True";
+                booleanSpan.appendChild(trueTextDom);
+                var falseDom = document.createElement("input");
+                falseDom.name = name;
+                falseDom.setAttribute("type", "radio");
+                booleanSpan.appendChild(falseDom);
+                var falseTextDom = document.createElement("span");
+                falseTextDom.textContent = "False";
+                booleanSpan.appendChild(falseTextDom);
+                if (currType != "BOOLEAN") {
+                    domTools.switchDisplay(booleanSpan, false);
+                }
+
                 var textareaDom = document.createElement("textarea");
-                if (value != null && value != undefined) {
-                    textareaDom.value = value;
+                if (currType != "MAP") {
+                    domTools.switchDisplay(textareaDom, false);
+                }
+
+                selectDom.onchange = function() {
+                    domTools.switchDisplay(textDom, false);
+                    domTools.switchDisplay(numberDom, false);
+                    domTools.switchDisplay(booleanSpan, false);
+                    domTools.switchDisplay(textareaDom, false);
+                    switch(selectDom.value) {
+                        case "NUMBER":
+                            domTools.switchDisplay(numberDom, true);
+                            break;
+                        case "BOOLEAN":
+                            domTools.switchDisplay(booleanSpan, true);
+                            break;
+                        case "MAP":
+                            domTools.switchDisplay(textareaDom, true);
+                            break;
+                        default:
+                            domTools.switchDisplay(textDom, true);
+                            break;
+                    }
+                }
+                
+                if (currType && value.value != null && value.value != undefined) {
+                    switch(currType) {
+                        case "TEXT":
+                                textDom.value = value.value;
+                            break;
+                        case "NUMBER":
+                            numberDom.value = value.value;
+                            break;
+                        case "BOOLEAN":
+                            if (value === true) {
+                                trueDom.checked  = true;
+                            } else {
+                                falseDom.checked  = true;
+                            }
+                            break;
+                        case "MAP":
+                            textareaDom.value = value.value;
+                            break;
+                    }
                 }
 
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
@@ -1405,38 +1803,40 @@ const buildDomFns = {
                         return null;
                     }
 
-                    var currValue = textareaDom.value;
-                    if (currValue == "") {
-                        return null;
-                    }
-
                     switch(currType) {
                         case "MAP":
+                            var mapValue = null;
                             try {
-                                return JSON.parse(currValue);
+                                if (textareaDom.value != "") {
+                                    mapValue = JSON.parse(textareaDom.value)
+                                }
                             } catch (e) {
                                 alert(data.key + "的对象JSON格式错误");
-                                return null;
                             }
+                            return { type: currType, value: mapValue };
                         case "BOOLEAN":
-                            var isBoolean = currValue == "true" || currValue == "false";
-                            if (!isBoolean) {
-                                alert(data.key + "的值不是一个布尔值");
-                                return null;
+                            var booleanValue = null;
+                            if (trueDom.checked) {
+                                booleanValue = true;
+                            } else if (falseDom.checked) {
+                                booleanValue = false;
                             }
-                            return currValue;
+                            return { type: currType, value: booleanValue };
                         case "NUMBER":
-                            var isNumber = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(currValue);
+                            var currNumber = numberDom.value;
+                            var isNumber = /^[+-]?(\d+\.?\d*|\.\d+)$/.test(currNumber);
                             if (!isNumber) {
                                 alert(data.key + "的值不是一个数字");
-                                return null;
+                                currNumber = null;;
                             }
-                            return currValue;
+                            return { type: currType, value: currNumber };
+                        case "TEXT":
+                            return { type: currType, value: textDom.value };
                         default:
-                            return currValue;
+                            return null;
                     }
                 });
-                return [selectDom, arrayFlagDom, brDom, textareaDom];
+                return [selectDom, arrayFlagDom, brDom, textDom, numberDom, booleanSpan, textareaDom];
             },
             none: function(data) {
                 var spanDom = document.createElement("span");
@@ -1448,6 +1848,14 @@ const buildDomFns = {
                     }
                 };
             }
+        }
+    },
+    opt: {
+        checkListItem: function(msg) {
+            var itemDom = document.createElement("span");
+            itemDom.className = "item";
+            itemDom.textContent = msg;
+            return itemDom;
         }
     }
 };
@@ -1477,6 +1885,7 @@ const optFns = {
 
             var boardDom = document.getElementById("check-board-window");
             domTools.switchDisplay(boardDom, true);
+            window.scrollTo(0, 0);
         },
         checkSubComponent: function(subBoardId) {
             var checkKeyDom = document.getElementById("check-component-source-key");
@@ -1484,6 +1893,184 @@ const optFns = {
 
             var windowDom = document.getElementById("check-component-window");
             domTools.switchDisplay(windowDom, true);
+            window.scrollTo(0, 0);
+        },
+        checkComponentPop: function(id, type, event) {
+            event.preventDefault();
+            var componentPopDom = document.getElementById("component-pop");
+            componentPopDom.style.top = event.pageY + "px";
+            componentPopDom.style.left = event.pageX + "px";
+
+            var sourceIdDom = document.getElementById("check-component-pop-source-id");
+            sourceIdDom.value = id;
+
+            var sourceTypeDom = document.getElementById("check-component-pop-source-type");
+            sourceTypeDom.value = type;
+
+            var isFlow = type == "flow";
+            var leftDom = document.getElementById("pop-component-left");
+            domTools.switchDisplay(leftDom, false);
+            var rightDom = document.getElementById("pop-component-right");
+            domTools.switchDisplay(rightDom, false);
+            if (isFlow) {
+                var checkDom = document.getElementById(id);
+                if (checkDom && checkDom.parentNode.children.length > 1) {
+                    const allDoms = checkDom.parentNode.children;
+                    var index = Array.prototype.indexOf.call(allDoms, checkDom);
+                    var isSubFlow = allDoms[0].className == "line-component";
+                    if (index > 2 || (isSubFlow && index >= 0)) {
+                        domTools.switchDisplay(leftDom, true);
+                    }
+                    if (index < allDoms.length - 1) {
+                        domTools.switchDisplay(rightDom, true);
+                    }
+                }
+                domTools.switchDisplay(componentPopDom, true);
+            }
+
+            var pasteDom = document.getElementById("pop-component-paste");
+            var copyValue = type == "init" ? copyComponent.init : copyComponent.logic;
+            if (copyValue == null || copyValue == undefined) {
+                domTools.switchDisplay(pasteDom, false);
+            } else {
+                domTools.switchDisplay(pasteDom, true);
+            }
+            
+            domTools.switchDisplay(componentPopDom, true);
+        },
+        bindCheckIdRef: function(itemDomsConfig, typeValue, configType) {
+            var idItemDom = itemDomsConfig.idDom;
+            var idLineDoms = idItemDom.children[1].children[0].children;
+
+            var selectDom = idLineDoms[1];
+            var checkDom = idLineDoms[2];
+            if (configType == "init") {
+                // INIT 不支持引用
+                domTools.remove(idLineDoms[3]);
+                domTools.remove(checkDom);
+                domTools.remove(selectDom);
+                return;
+            }
+
+            var inputDom = idLineDoms[0];
+            var itemDoms = itemDomsConfig.doms;
+
+            var orgCheckFunc = checkDom.onchange;
+            checkDom.onchange = function() {
+                newCheckFunc();
+            };
+            if (checkDom.checked) {
+                newCheckFunc();
+            }
+            
+            function newCheckFunc() {
+                var isChecked = checkDom.checked ? true : false;
+                for (let i = 0; i < itemDoms.length; i++) {
+                    const itemDom = itemDoms[i];
+                    if (itemDom.name == "type") {
+                        continue;
+                    }
+                    domTools.switchDisplay(itemDom, !isChecked);
+                }
+    
+                if (isChecked) {
+                    var defaultValue;
+                    var selectValue = inputDom.value;
+
+                    var options = [];
+                    var defaultOptionDom = document.createElement("option");
+                    defaultOptionDom.value = "";
+                    defaultOptionDom.textContent = "请选择要引用的配置";
+                    options.push(defaultOptionDom);
+    
+                    for (const key in instance.logic) {
+                        if (Object.prototype.hasOwnProperty.call(instance.logic, key)) {
+                            const logicConfig = instance.logic[key];
+                            if (typeValue && logicConfig.type == typeValue && 
+                                    logicConfig.id && logicConfig.id.ref != true) {
+                                var optionDom = document.createElement("option");
+                                var logicConfigId = logicConfig.id.id;
+                                optionDom.value = logicConfigId;
+                                optionDom.textContent = logicConfigId;
+                                options.push(optionDom);
+
+                                if (selectValue == logicConfigId) {
+                                    defaultValue = logicConfigId;
+                                }
+                            }
+                        }
+                    }
+
+                    domTools.setAll(selectDom, options);
+                    if (defaultValue) {
+                        selectDom.value = selectValue;
+                    }
+                }
+
+                orgCheckFunc();
+            }
+        },
+        checkConfig: function(config) {
+            var result = {
+                data: {},
+                errors: []
+            }
+
+            var constant = config.constant;
+            result.data.constant = constant;
+
+            var initResult = valueFns.parseComponents(config.inits, instance.init);
+            result.data.init = initResult.datas;
+            for (let ei = 0; ei < initResult.errors.length; ei++) {
+                const errConfig = initResult.errors[ei];
+                result.errors.push(logFns.error("组件全局配置", 
+                    errConfig.componentType + " | " + errConfig.componentId, 
+                    errConfig.valueKey, errConfig.msg));
+            }
+
+            var blockResult = valueFns.parseComponents(config.blocks, instance.logic);
+            result.data.blocks = blockResult.datas
+            for (let ei = 0; ei < blockResult.errors.length; ei++) {
+                const errConfig = blockResult.errors[ei];
+                result.errors.push(logFns.error("公共组件定义", 
+                    errConfig.componentType + " | " + errConfig.componentId, 
+                    errConfig.valueKey, errConfig.msg));
+            }
+
+            var beforeResult = valueFns.parseSettingFlows(config.before);
+            result.data.before = beforeResult.datas;
+            for (let ei = 0; ei < beforeResult.errors.length; ei++) {
+                const errConfig = beforeResult.errors[ei];
+                var currTitle2 = "第 " + errConfig.flowId + "项";
+                if (errConfig.componentId || errConfig.componentType) {
+                    currTitle2 += " > " + errConfig.componentType + " | " + errConfig.componentId
+                }
+                result.errors.push(logFns.error("前置流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
+            }
+
+            var afterResult = valueFns.parseSettingFlows(config.after);
+            result.data.after = afterResult.datas;
+            for (let ei = 0; ei < afterResult.errors.length; ei++) {
+                const errConfig = afterResult.errors[ei];
+                var currTitle2 = "第 " + errConfig.flowId + "项";
+                if (errConfig.componentId || errConfig.componentType) {
+                    currTitle2 += " > " + errConfig.componentType + " | " + errConfig.componentId
+                }
+                result.errors.push(logFns.error("后置流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
+            }
+
+            var flowResult = valueFns.parseSettingFlows(config.flow);
+            result.data.flow = flowResult.dataMap;
+            for (let ei = 0; ei < afterResult.errors.length; ei++) {
+                const errConfig = afterResult.errors[ei];
+                var currTitle2 = errConfig.flowId;
+                if (errConfig.componentId || errConfig.componentType) {
+                    currTitle2 += " > " + errConfig.componentType + " | " + errConfig.componentId
+                }
+                result.errors.push(logFns.error("执行流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
+            }
+
+            return result;
         }
     },
     window: {
@@ -1491,6 +2078,162 @@ const optFns = {
             var dom = document.getElementById(domId);
             if (dom && dom.parentNode) {
                 dom.parentNode.removeChild(dom);
+            }
+        }
+    }
+}
+const logFns = {
+    error: function(title1, title2, title3, msg) {
+        return "【" + title1 + "】【" + title2 + "】【" + title3 + "】 " + msg;
+    }
+}
+
+const valueFns = {
+    parsePathFlows: function(flowValueMap) {
+        var result = {
+            dataMap: {},
+            errors: []
+        };
+
+        for (const key in flowValueMap) {
+            if (Object.prototype.hasOwnProperty.call(flowValueMap, key)) {
+                const flowValue = flowValueMap[key];
+                const path = flowValue.domain + "/" + flowValue.function;
+
+                if (flowValue.domain == "" || flowValue.function == "") {
+                    const errorConfig = {};
+                    errorConfig.flowId = path;
+                    errorConfig.valueKey = null;
+                    errorConfig.msg = "域或函数未配置";
+                    result.errors.push(errorConfig);
+                } else {
+                    var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
+                    if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
+                        result.dataMap[path] = componentsValueResult.datas;
+                    } else {
+                        const errorConfig = {};
+                        errorConfig.flowId = path;
+                        errorConfig.valueKey = null;
+                        errorConfig.msg = "未配置流程";
+                        result.errors.push(errorConfig);
+                    }
+                    
+                    for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
+                        const errorConfig = componentsValueResult.errors[ei];
+                        errorConfig.flowId = i + 1;
+                        result.errors.push(errorConfig);
+                    }
+                }
+            }
+        }
+
+        return result;
+    },
+    parseSettingFlows: function(flowValues) {
+        var result = {
+            datas: [],
+            errors: []
+        };
+
+        for (let i = 0; i < flowValues.length; i++) {
+            const flowValue = flowValues[i];
+            var flowValueResult = valueFns.parseValue(flowValue);
+
+            for (let fe = 0; fe < flowValueResult.errors.length; fe++) {
+                const errorConfig = flowValueResult.errors[fe];
+                errorConfig.flowId = i + 1;
+                result.errors.push(errorConfig);
+            }
+
+            if (flowValueResult.data) {
+                var finalFlowValue = flowValueResult.data;
+
+                var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
+                if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
+                    finalFlowValue.flow = componentsValueResult.datas;
+                } else {
+                    const errorConfig = {};
+                    errorConfig.flowId = i + 1;
+                    errorConfig.valueKey = null;
+                    errorConfig.msg = "未配置流程";
+                    result.errors.push(errorConfig);
+                }
+
+                for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
+                    const errorConfig = componentsValueResult.errors[ei];
+                    errorConfig.flowId = i + 1;
+                    result.errors.push(errorConfig);
+                }
+
+                beforeValue.push(finalFlowValue);
+            }
+        }
+
+        return result;
+    },
+    parseComponents: function(valueConfigs, instanceMap) {
+        var result = {
+            datas: [],
+            errors: []
+        };
+
+        for (let i = 0; i < valueConfigs.length; i++) {
+            const valueConfig = valueConfigs[i];
+            var value = instanceMap[valueConfig.componentId];
+            var valueResult = valueFns.parseValue(value);
+            if (valueResult.data) {
+                result.datas.push(valueResult.data);
+            }
+            for (let ri = 0; ri < valueResult.length; ri++) {
+                const errorConfig = valueResult[ire];
+                errorConfig.componentId = initValue.id;
+                errorConfig.componentType = initValue.type;
+                result.errors.push(errorConfig);
+            }
+        }
+
+        return result;
+    },
+    parseValue: function(value) {
+        var result = {
+            data: null,
+            errors: []
+        }
+
+        if (value == null || value == undefined) {
+            return result;
+        }
+
+        const settings = value.$settings
+        if (!settings || settings.length == 0) {
+            return result;
+        }
+        
+        result.data = {};
+        for (let s = 0; s < settings.length; s++) {
+            const setting = settings[s];
+            const settingKey = setting.key;
+            const currValue = value[settingKey];
+
+            if (currValue == null || currValue == undefined) {
+                if (setting.isRequired == true) {
+                    result.errors.push({
+                        valueKey: settingKey, 
+                        msg: "该选项为必填选项"
+                    });
+                }
+            }
+            
+            if (setting.type == "CONFIG" || setting.type == "OBJECT") {
+                const subResult = checkItem(currValue);
+                result.data[settingKey] = subResult.data;
+                for (let se = 0; se < subResult.errors.length; se++) {
+                    const subError = subResult.errors[se];
+                    subError.key = settingKey + "." + subError.key;
+                    result.errors.push(subError);
+                }
+            } else {
+                result.data[settingKey] = currValue;
             }
         }
     }
@@ -1528,14 +2271,21 @@ const domTools = {
             isShow = switchState && switchState == "hide";
         }
 
+        var noneStyleStr = "display: none;";
+        var style = dom.getAttribute("style");
+        style = style ? style : "";
         if (isShow) {
             dom.setAttribute("switch-state", "show");
-            dom.setAttribute("style", "");
+            if (style != "" && style.indexOf(noneStyleStr) !== -1) {
+                dom.setAttribute("style", style.replace(noneStyleStr, ""));
+            }
         } else {
             dom.setAttribute("switch-state", "hide");
-            dom.setAttribute("style", "display: none;");
+            if (style == "" || style.indexOf(noneStyleStr) === -1) {
+                dom.setAttribute("style", noneStyleStr + style);
+            }
         }
-    },
+    }
 }
 
 const requestFns = {
