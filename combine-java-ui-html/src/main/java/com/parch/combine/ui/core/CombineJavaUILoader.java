@@ -13,7 +13,7 @@ import com.parch.combine.ui.core.vo.PageElementClassInitVO;
 
 import java.util.List;
 
-public class CombineJavaUIStarter {
+public class CombineJavaUILoader {
 
     static {
         PrintTool.printInit("=======================================================================================================================================================");

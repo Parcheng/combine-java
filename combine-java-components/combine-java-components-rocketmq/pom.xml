@@ -10,12 +10,18 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>combine-java-components-rocketmq</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <rocketmq.version>4.3.2</rocketmq.version>
+    </properties>
 
     <dependencies>
         <!-- rocketmq -->
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-client</artifactId>
+            <version>${rocketmq.version}</version>
         </dependency>
     </dependencies>
 </project>

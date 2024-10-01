@@ -4,8 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.vo.FlowResult;
-import com.parch.combine.starter.dto.JsonConfigInitDTO;
-import com.parch.combine.starter.service.AbstractCombineJavaService;
+import com.parch.combine.core.BaseCombineJavaFunction;
 import com.parch.combine.web.util.ResourceFileUtil;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +25,9 @@ import java.util.Map;
 /**
  * CombineJava - Web请求Service基类
  */
-public abstract class AbstractCombineWebService extends AbstractCombineJavaService {
+public abstract class AbstractCombineWebHandler extends BaseCombineJavaFunction {
 
-    public AbstractCombineWebService(String configPath) {
+    public AbstractCombineWebHandler(String configPath) {
         super(configPath);
     }
 
@@ -75,7 +74,7 @@ public abstract class AbstractCombineWebService extends AbstractCombineJavaServi
      * @return 结果
      * @throws IOException 异常
      */
-    public List<JsonConfigInitDTO> registerByPath(String path) throws IOException {
+    public List<RegisterResult> registerByPath(String path) throws IOException {
         if (CheckEmptyUtil.isEmpty(path)) {
             return new ArrayList<>();
         }

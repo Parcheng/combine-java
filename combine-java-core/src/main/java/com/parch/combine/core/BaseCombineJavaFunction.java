@@ -1,12 +1,11 @@
-package com.parch.combine.starter.service;
+package com.parch.combine.core;
 
-import com.parch.combine.core.component.CombineJavaStarter;
+import com.parch.combine.core.component.CombineJavaLoader;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.vo.FlowResult;
-import com.parch.combine.starter.dto.JsonConfigInitDTO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,12 +16,12 @@ import java.util.function.Function;
 /**
  * CombineJava - Service基类
  */
-public abstract class AbstractCombineJavaService {
+public abstract class BaseCombineJavaFunction {
 
     private ICombineJavaService service;
 
-    public AbstractCombineJavaService(String configPath) {
-        service = CombineJavaStarter.init(configPath);
+    public BaseCombineJavaFunction(String configPath) {
+        service = CombineJavaLoader.init(configPath);
     }
 
     /**
@@ -109,8 +108,8 @@ public abstract class AbstractCombineJavaService {
      * @return 结果
      * @throws IOException 异常
      */
-    public List<JsonConfigInitDTO> register(String jsonData) {
-        List<JsonConfigInitDTO> result = new ArrayList<>();
+    public List<RegisterResult> register(String jsonData) {
+        List<RegisterResult> result = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(jsonData)) {
             return result;
         }
@@ -118,7 +117,7 @@ public abstract class AbstractCombineJavaService {
         // 读取配置文件
         service.registerFlow(jsonData, vo -> {
             // 保存每个接口的初始化结果
-            JsonConfigInitDTO initDTO = new JsonConfigInitDTO();
+            RegisterResult initDTO = new RegisterResult();
             initDTO.setKey(vo.getFlowKey());
             initDTO.setSuccess(vo.isSuccess());
             initDTO.setErrorList(vo.getErrorList());
@@ -146,5 +145,61 @@ public abstract class AbstractCombineJavaService {
         }
 
         return result;
+    }
+
+    /**
+     * 注册结果
+     */
+    public static class RegisterResult {
+
+        private boolean success;
+
+        private String key;
+
+        private List<String> errorList;
+
+        private List<String> componentIds;
+
+        private List<String> staticComponentIds;
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public List<String> getErrorList() {
+            return errorList;
+        }
+
+        public void setErrorList(List<String> errorList) {
+            this.errorList = errorList;
+        }
+
+        public List<String> getComponentIds() {
+            return componentIds;
+        }
+
+        public void setComponentIds(List<String> componentIds) {
+            this.componentIds = componentIds;
+        }
+
+        public List<String> getStaticComponentIds() {
+            return staticComponentIds;
+        }
+
+        public void setStaticComponentIds(List<String> staticComponentIds) {
+            this.staticComponentIds = staticComponentIds;
+        }
     }
 }

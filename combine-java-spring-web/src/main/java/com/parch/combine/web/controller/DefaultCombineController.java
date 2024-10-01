@@ -1,8 +1,8 @@
 package com.parch.combine.web.controller;
 
 import com.parch.combine.core.component.vo.FlowResult;
-import com.parch.combine.web.service.DefaultCombineJavaService;
-import com.parch.combine.web.service.DefaultCombineJavaUIService;
+import com.parch.combine.web.service.DefaultCombineJavaHandler;
+import com.parch.combine.web.service.DefaultCombineJavaUIHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,10 +17,10 @@ import java.util.Map;
 public class DefaultCombineController {
 
     @Autowired
-    private DefaultCombineJavaService defaultCombineWebService;
+    private DefaultCombineJavaHandler defaultCombineWebService;
 
     @Autowired
-    private DefaultCombineJavaUIService defaultCombineJavaUIService;
+    private DefaultCombineJavaUIHandler defaultCombineJavaUIService;
 
     @PostMapping("flow/{domain}/{function}")
     public FlowResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {

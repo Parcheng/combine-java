@@ -7,12 +7,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>combine-java-components-rabbitmq</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <rabbitmq.version>5.13.1</rabbitmq.version>
+    </properties>
 
     <dependencies>
         <!-- rabbitmq -->
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
+            <version>${rabbitmq.version}</version>
         </dependency>
     </dependencies>
 </project>

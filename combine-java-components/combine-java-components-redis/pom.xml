@@ -10,12 +10,18 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>combine-java-components-redis</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <jedis.version>3.6.3</jedis.version>
+    </properties>
 
     <dependencies>
         <!-- redis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
         </dependency>
     </dependencies>
 </project>
