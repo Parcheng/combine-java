@@ -1,0 +1,29 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataFilter/test": [
+      {
+        "id": "dataFilterTestData",
+        "type": "mysql.execute",
+        "sqlType": "SELECT_ONE",
+        "sql": "select * from t_component_test where id = 1;"
+      },{
+        "id": "dataFilterClearTest",
+        "type": "data.filter",
+        "items": [
+          {"target":"#{$r.dataFilterTestData.data}"},
+          {"target":"#{data1}"}
+        ]
+      },{
+        "id": "dataFilterReplaceTest",
+        "type": "data.filter",
+        "items": [
+          {"target":"#{$r.dataFilterTestData.name}", "rule":"replace", "params":"name_replace_test"},
+          {"target":"#{$r.dataFilterTestData.delete_flag}", "rule":"replace", "params":"#{deleteFlag}"},
+          {"target":"#{data2}", "rule":"replace", "params":"data_replace_test"}
+        ]
+      }
+    ]
+  }
+}

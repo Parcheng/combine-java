@@ -1,0 +1,25 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataReset/test": [
+      {
+        "id": "dataResetTestData",
+        "type": "mysql.execute",
+        "sqlType": "SELECT_ONE",
+        "sql": "select * from t_component_test where id = 1;"
+      },{
+        "id": "dataResetTest",
+        "type": "data.reset",
+        "items": [{
+          "resets": [
+            { "target": "#{$r.dataResetTestData.name}", "type": "string", "value": "name_reset_test" },
+            { "target": "#{$r.dataResetTestData.data}", "type": "string", "value": "#{data}" },
+            { "target": "#{$r.dataResetTestData.delete_flag}", "type": "number", "value": "1" },
+            { "target": "#{data}", "type": "string", "value": "data_reset_test" }
+          ]
+        }]
+      }
+    ]
+  }
+}

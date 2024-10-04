@@ -1,0 +1,48 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "logic/loop": [
+      {
+        "id": "logicLoopJudgment",
+        "type": "logic.judgment",
+        "items": [{
+          "compare": {
+            "conditions": ["#{$v.$logicLoop.$index} EQ 0"]
+          },
+          "components": [{
+            "type": "data.reset",
+            "items": [{
+              "resets": [{ "target": "#{data.[#{$v.$logicLoop.$index}]}", "type": "string", "value": "100" }]
+            }]
+          }]
+        },{
+          "components": [{
+            "type": "data.reset",
+            "items": [{
+              "resets": [{ "target": "#{data.[#{$v.$logicLoop.$index}]}", "type": "string", "value": "200" }]
+            }]
+          }]
+        }],
+        "flags": "STATIC"
+      },{
+        "id": "logicLoop",
+        "type": "logic.loop",
+        "source": "data",
+        "count": 5,
+        "condition": {
+          "skip": {
+            "relation": "AND",
+            "conditions": ["#{$v.$logicLoop.$item} IS_EMPTY"]
+          },
+          "finish": {
+            "relation": "AND",
+            "conditions": ["#{$v.$logicLoop.$index} GTE 3", "#{$v.$logicLoop.$item} IS_EMPTY"]
+          }
+        },
+        "components": ["logicLoopJudgment"],
+        "failStop": false
+      }
+    ]
+  }
+}

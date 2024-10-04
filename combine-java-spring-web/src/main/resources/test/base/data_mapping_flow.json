@@ -1,0 +1,25 @@
+{
+  "constant": {
+    "dataMappingFlag": 1
+  },
+  "init": [],
+  "flows": {
+    "dataMapping/test": [
+      {
+        "id": "dataMappingTestData",
+        "type": "mysql.execute",
+        "sqlType": "SELECT_ONE",
+        "sql": "select * from t_component_test where id = 1;"
+      },{
+        "id": "dataMapping",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"#{$r.dataMappingTestData.id}"},
+          {"fieldName":"data", "source":"#{data}"},
+          {"fieldName":"flag", "source":"#{$c.dataMappingFlag}"},
+          {"fieldName":"name", "source":"dataMapping"}
+        ]
+      }
+    ]
+  }
+}

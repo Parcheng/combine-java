@@ -1,0 +1,29 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "fileBuild/table": [
+      {
+        "id": "fileBuildTestData",
+        "type": "mysql.execute",
+        "sqlType": "SELECT_ONE",
+        "sql": "select * from t_component_test where id = 1;"
+      },{
+        "id": "buildTable",
+        "type": "file.build.table",
+        "source": "$r.fileBuildTestData",
+        "header": ["ID", "名称", "长度"],
+        "filedNames": ["id", "name", "size"]
+      }
+    ],
+    "fileBuild/text": [
+      {
+        "id": "fileBuildTestData"
+      },{
+        "id": "buildText",
+        "type": "file.build.text",
+        "source": "$r.fileBuildTestData.data"
+      }
+    ]
+  }
+}

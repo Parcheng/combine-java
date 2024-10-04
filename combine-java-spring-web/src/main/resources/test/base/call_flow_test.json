@@ -1,0 +1,13 @@
+[{
+  "domain": "callFlow",
+  "function": "call",
+  "params": {
+    "id": 1
+  },
+  "items": [{
+    "id": "1-1",
+    "source": "#{$r.callFlowCall.name}",
+    "compareType": "EQ",
+    "target": "INIT"
+  }]
+}]

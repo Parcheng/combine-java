@@ -1,0 +1,18 @@
+[{
+  "domain": "mail",
+  "function": "send",
+  "items": [{
+    "id": "1-1",
+    "source": "#{$r.mailSend}",
+    "compareType": "EQ",
+    "target": "true"
+  }]
+},{
+  "domain": "mail",
+  "function": "receive",
+  "items": [{
+    "id": "2-1",
+    "source": "#{$r.mailReceive}",
+    "compareType": "NO_NULL"
+  }]
+}]
