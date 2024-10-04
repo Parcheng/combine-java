@@ -72,7 +72,6 @@ public class TestHandler {
                                 if (CheckEmptyUtil.isNotEmpty(result.getErrorMsg())) {
                                     logInfo.setLevel(LogLevelEnum.ERROR);
                                     logInfo.setMsg("比较时发生异常 -> [" + result.getErrorMsg() + "]");
-                                    LogHandler.compareError(testItem.getId(), result.getErrorMsg());
                                 } else {
                                     logInfo.setLevel(result.isSuccess() ? LogLevelEnum.INFO : LogLevelEnum.FAIL);
                                     logInfo.setMsg("比较表达式 -> [" + testItem.getSource() + " -> " + JsonUtil.serialize(testItem.getSourceValue()) + "] " + testItem.getCompareType()
