@@ -2,7 +2,7 @@ package com.parch.combine.gui.core;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementHelper;
@@ -39,7 +39,7 @@ public class GUIElementTemplateHelper {
             }
         }
 
-        PrintUtil.printError("【GUI-TEMPLATE】【" + path + "】【加载模板数据为空】");
+        PrintLogUtil.printError("【GUI-TEMPLATE】【" + path + "】【加载模板数据为空】");
         return null;
     }
 

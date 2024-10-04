@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileParamKey;
@@ -43,9 +43,9 @@ public class PrintHelper {
     public static void printSql(String sql, List<Object> sqlParams) {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
-        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "] SQL -> " + sql);
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] SQL -> " + sql);
         if (CheckEmptyUtil.isNotEmpty(sqlParams)) {
-            PrintUtil.printInfo("[" + requestId + "][" + flowKey + "] SQL-PARAMS -> " + StringUtil.join(sqlParams, ","));
+            PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] SQL-PARAMS -> " + StringUtil.join(sqlParams, ","));
         }
     }
 
@@ -56,7 +56,7 @@ public class PrintHelper {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
         Map<String, String> header = ComponentContextHandler.getHeader();
-        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "] HEADER -> " + JsonUtil.serialize(header));
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] HEADER -> " + JsonUtil.serialize(header));
     }
 
     /**
@@ -81,7 +81,7 @@ public class PrintHelper {
             }
         });
 
-        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "] PARAMS -> " + paramJson);
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] PARAMS -> " + paramJson);
     }
 
     /**
@@ -91,11 +91,11 @@ public class PrintHelper {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
         if (component == null) {
-            PrintUtil.printInfo("[" + requestId + "][" + flowKey + "][未知组件]");
+            PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "][未知组件]");
             return;
         }
 
-        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "][" + component.getType() + "] COMPONENT-RESULT -> " + JsonUtil.serialize(result));
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "][" + component.getType() + "] COMPONENT-RESULT -> " + JsonUtil.serialize(result));
     }
 
     /**
@@ -104,13 +104,13 @@ public class PrintHelper {
     public static void printFlowResult(FlowResult result) {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
-        PrintUtil.printInfo("[" + requestId + "][" + flowKey + "] FLOW-RESULT -> " + JsonUtil.serialize(result));
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] FLOW-RESULT -> " + JsonUtil.serialize(result));
     }
 
     /**
      * 打印初始化信息
      */
     public static void printInit(String text) {
-        PrintUtil.printMark("INIT -> " + text);
+        PrintLogUtil.printMark("INIT -> " + text);
     }
 }

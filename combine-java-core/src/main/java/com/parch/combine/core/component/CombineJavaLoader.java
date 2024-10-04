@@ -2,7 +2,7 @@ package com.parch.combine.core.component;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
@@ -13,7 +13,6 @@ import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentClassInitVO;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class CombineJavaLoader {
@@ -65,7 +64,7 @@ public class CombineJavaLoader {
                 }
                 if (CheckEmptyUtil.isNotEmpty(vo.getErrorList())) {
                     for (String errorMsg : vo.getErrorList()) {
-                        PrintUtil.printError("FLOW | " + vo.getFlowKey() + " Error：" + errorMsg);
+                        PrintLogUtil.printError("FLOW | " + vo.getFlowKey() + " Error：" + errorMsg);
                     }
                 }
             });
@@ -80,7 +79,7 @@ public class CombineJavaLoader {
             String[] keyArr = FlowKeyUtil.parseKey(initFlowKey);
             List<String> componentIds = combineWebService.getComponentIds(keyArr[0], keyArr[1]);
             if (componentIds == null) {
-                PrintUtil.printError(initFlowKey + " Error：流程未注册");
+                PrintLogUtil.printError(initFlowKey + " Error：流程未注册");
             } else {
                 PrintHelper.printInit("执行流程：" + initFlowKey);
                 combineWebService.executeAny(keyArr[0], keyArr[1], Collections.emptyMap(), Collections.emptyMap());

@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.html;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
@@ -48,7 +48,7 @@ public class GUIHtmlElement extends AbstractGUIComponentElement<GUIHtmlElementTe
         } catch (Exception e) {
             this.page.setContentType("text/html");
             this.page.setText("<html><body" + config.errorText + "</body></html>");
-            PrintUtil.printError("【GUI-构建PAGE】【" + this.value + "】失败：" + e.getMessage());
+            PrintLogUtil.printError("【GUI-构建PAGE】【" + this.value + "】失败：" + e.getMessage());
         }
     }
 

@@ -1,6 +1,6 @@
 package com.parch.combine.ui.core.tools;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 
 /**
  * 组件异常处理器
@@ -8,6 +8,6 @@ import com.parch.combine.core.common.util.PrintUtil;
 public class PrintTool {
 
     public static void printInit(String text) {
-        PrintUtil.printMark("INIT UI -> " + text);
+        PrintLogUtil.printMark("INIT UI -> " + text);
     }
 }

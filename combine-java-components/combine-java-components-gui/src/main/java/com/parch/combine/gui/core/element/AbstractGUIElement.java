@@ -1,6 +1,6 @@
 package com.parch.combine.gui.core.element;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.gui.core.GUIElementTemplateHelper;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.event.EventConfig;
@@ -45,7 +45,7 @@ public abstract class AbstractGUIElement<T extends BaseGUIElementTemplate, C ext
             this.callFunctionMap = this.initCallFunction();
             this.loadTemplate(template, templateClass);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            PrintUtil.printError("【GUIElement】【" + type + "】模板加载失败！");
+            PrintLogUtil.printError("【GUIElement】【" + type + "】模板加载失败！");
         }
     }
 

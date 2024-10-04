@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.error;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 
 /**
  * 组件异常处理器
@@ -14,7 +14,7 @@ public class SystemErrorHandler {
      * @param e 异常对象
      */
     public static void print(IComponentError msg, Exception e) {
-        PrintUtil.printError("【SYSTEM】" + msg.getMsg());
+        PrintLogUtil.printError("【SYSTEM】" + msg.getMsg());
         e.printStackTrace();
     }
 }

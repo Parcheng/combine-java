@@ -3,7 +3,7 @@ package com.parch.combine.ui.core.manager;
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.ui.core.tools.ConfigTool;
 import com.parch.combine.ui.core.base.dataload.*;
 
@@ -32,7 +32,7 @@ public class DataLoadManager  {
         String id = (String) configMap.get(FieldKeyCanstant.ID);
         String type = (String) configMap.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
-            PrintUtil.printError("【ui】【dataLoad】【" + id + "】类型为空");
+            PrintLogUtil.printError("【ui】【dataLoad】【" + id + "】类型为空");
             return null;
         }
 
@@ -56,7 +56,7 @@ public class DataLoadManager  {
 
     private DataLoadConfig build(String id, String type, Map<String, Object> configMap) {
         if (configMap == null) {
-            PrintUtil.printError("【ui】【dataLoad】【" + id + "】【" + type + "】配置为空");
+            PrintLogUtil.printError("【ui】【dataLoad】【" + id + "】【" + type + "】配置为空");
             return null;
         }
 
@@ -69,7 +69,7 @@ public class DataLoadManager  {
             case FILE:
                 return DataParseUtil.parseJava(configMap, FileDataLoadConfig.class);
             default:
-                PrintUtil.printError("【ui】【dataLoad】【" + id + "】【" + type + "】类型不存在");
+                PrintLogUtil.printError("【ui】【dataLoad】【" + id + "】【" + type + "】类型不存在");
                 return null;
         }
     }

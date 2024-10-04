@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.error;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.base.AbstractComponent;
 
@@ -57,9 +57,9 @@ public class ComponentErrorHandler {
     public static void print(AbstractComponent<?, ?> component, String msg, Exception e) {
         // 拼接错误信息字符串
         if (component == null) {
-            PrintUtil.printError("【未知组件】" + msg);
+            PrintLogUtil.printError("【未知组件】" + msg);
         } else {
-            PrintUtil.printError("【" + component.getId() + "】【" + component.getType() + "】" + msg);
+            PrintLogUtil.printError("【" + component.getId() + "】【" + component.getType() + "】" + msg);
         }
 
         // 打印异常信息

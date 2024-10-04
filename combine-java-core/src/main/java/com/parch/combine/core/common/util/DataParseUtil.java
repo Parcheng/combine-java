@@ -138,7 +138,7 @@ public class DataParseUtil {
                 }
             }
         } catch (Exception e) {
-            PrintUtil.printError("日期类型转换错误: " + e.getMessage());
+            PrintLogUtil.printError("日期类型转换错误: " + e.getMessage());
             return null;
         }
 

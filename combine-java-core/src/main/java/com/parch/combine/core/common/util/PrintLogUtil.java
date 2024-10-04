@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 /**
  * 打印工具类
  */
-public class PrintUtil {
+public class PrintLogUtil {
 
     private static final Logger logger = LoggerFactory.getLogger("[combine-java]");
 
-    private PrintUtil() {}
+    private PrintLogUtil() {}
 
     /**
      * 打印
@@ -28,7 +28,7 @@ public class PrintUtil {
      */
     public static void printError(String msg) {
         System.out.print("\u001B[31m");
-        System.out.print(msg);
+        logger.error(msg);
         System.out.print("\u001B[0m");
     }
 
@@ -39,7 +39,7 @@ public class PrintUtil {
      */
     public static void printWarn(String msg) {
         System.out.print("\u001B[33m");
-        System.out.print(msg);
+        logger.warn(msg);
         System.out.print("\u001B[0m");
     }
 
@@ -49,9 +49,9 @@ public class PrintUtil {
      * @param msg 信息
      */
     public static void printInfo(String msg) {
-        System.out.print("\u001B[36m");
-        System.out.print(msg);
-        System.out.print("\u001B[0m");
+        // System.out.print("\u001B[36m");
+        logger.info(msg);
+        // System.out.print("\u001B[0m");
     }
 
     /**
@@ -60,8 +60,8 @@ public class PrintUtil {
      * @param msg 信息
      */
     public static void printMark(String msg) {
-        System.out.print("\u001B[32m");
-        System.out.print(msg);
-        System.out.print("\u001B[0m");
+        // System.out.print("\u001B[32m");
+        logger.info(msg);
+        // System.out.print("\u001B[0m");
     }
 }

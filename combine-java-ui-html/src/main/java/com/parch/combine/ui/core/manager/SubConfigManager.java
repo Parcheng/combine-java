@@ -1,7 +1,7 @@
 package com.parch.combine.ui.core.manager;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.ui.core.tools.SubConfigHelper;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ class SubConfigManager {
             suvVO = SubConfigHelper.loadAndReset(scopeKey, config);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-            PrintUtil.printError("【ui】【subconfig】【" + key + "】子元素解析异常：" + e.getMessage());
+            PrintLogUtil.printError("【ui】【subconfig】【" + key + "】子元素解析异常：" + e.getMessage());
             return;
         }
 

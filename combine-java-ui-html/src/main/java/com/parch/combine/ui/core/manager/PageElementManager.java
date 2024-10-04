@@ -3,7 +3,7 @@ package com.parch.combine.ui.core.manager;
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.ui.core.base.element.ElementConfig;
 import com.parch.combine.ui.core.handler.ElementClassHandler;
 import com.parch.combine.ui.core.tools.ConfigTool;
@@ -38,7 +38,7 @@ public class PageElementManager {
         String id = (String) configMap.get(FieldKeyCanstant.ID);
         String type = (String) configMap.get(FieldKeyCanstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
-            PrintUtil.printError("【ui】【element】【" + id + "】【" + type + "】配置为空");
+            PrintLogUtil.printError("【ui】【element】【" + id + "】【" + type + "】配置为空");
             return null;
         }
 
@@ -48,7 +48,7 @@ public class PageElementManager {
 
         Class<? extends ElementConfig<?>> elementClass = ElementClassHandler.get(type);
         if (elementClass == null) {
-            PrintUtil.printError("【ui】【element】【" + id + "】【" + type + "】元素类型未注册");
+            PrintLogUtil.printError("【ui】【element】【" + id + "】【" + type + "】元素类型未注册");
             return null;
         }
 
@@ -58,7 +58,7 @@ public class PageElementManager {
             subManager.build(id, config);
             CONFIGS.put(id, config);
         } catch (Exception e) {
-            PrintUtil.printError("【ui】【element】【" + id + "】【" + type + "】元素配置构建失败");
+            PrintLogUtil.printError("【ui】【element】【" + id + "】【" + type + "】元素配置构建失败");
             e.printStackTrace();
             return null;
         }
