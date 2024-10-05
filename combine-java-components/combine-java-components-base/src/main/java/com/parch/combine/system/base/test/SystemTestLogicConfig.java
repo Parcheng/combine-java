@@ -26,7 +26,7 @@ public interface SystemTestLogicConfig extends ILogicConfig {
     @Field(key = "hasOutput", name = "是否将日志输出到结果中", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     Boolean hasOutput();
 
-    @Field(key = "tests", name = "流程测试配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
+    @Field(key = "flowTests", name = "流程测试配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(FlowTestConfig.class)
     FlowTestConfig[] flowTests();
 

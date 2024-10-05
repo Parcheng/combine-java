@@ -3,10 +3,13 @@ package com.parch.combine.system.base.test.handler;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.context.ComponentContext;
+import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.manager.ComponentManager;
 import com.parch.combine.core.component.tools.compare.CompareResult;
 import com.parch.combine.core.component.tools.compare.CompareTool;
+import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.system.base.test.LogLevelEnum;
 import com.parch.combine.system.base.test.SystemTestLogicConfig;
 
@@ -24,6 +27,18 @@ public class TestHandler {
      * 执行测试
      */
     public static List<TestResult> test(SystemTestLogicConfig.FlowTestConfig[] flowTestConfigs, CombineManager manager) {
+        // 记录当前上下文对象
+        ComponentContext context = ComponentContextHandler.getContext();
+        List<TestResult> result = executeTests(flowTestConfigs, manager);
+        // 还原上下文对象
+        ComponentContextHandler.resetContext(context);
+        return result;
+    }
+
+    /**
+     * 执行测试
+     */
+    private static List<TestResult> executeTests(SystemTestLogicConfig.FlowTestConfig[] flowTestConfigs, CombineManager manager) {
         List<TestResult> testResults = new ArrayList<>();
         if (CheckEmptyUtil.isEmpty(flowTestConfigs)) {
             return testResults;

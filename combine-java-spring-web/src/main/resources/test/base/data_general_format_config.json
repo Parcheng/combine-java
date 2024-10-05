@@ -2,33 +2,16 @@
   "constant": {},
   "init": [],
   "flows": {
-    "dataFormat/init": [
-      {
-        "id": "dataFormatDataAdd1",
-        "type": "mysql.execute",
-        "sqlType": "INSERT",
-        "sql": "INSERT INTO `t_component_test`(`id`, `name`, `size`, `data`, `create_time`, `update_time`, `delete_flag`) VALUES (10, 'INIT', 10, '[{\"id\":1}]', NOW(), NOW(), 0);"
-      },{
-        "id": "dataFormatDataAdd2",
-        "type": "mysql.execute",
-        "sqlType": "INSERT",
-        "sql": "INSERT INTO `t_component_test`(`id`, `name`, `size`, `data`, `create_time`, `update_time`, `delete_flag`) VALUES (20, 'INIT2', 19, '[{\"id\":1},{\"id\":2}]', NOW(), NOW(), 0);"
-      },{
-        "id": "dataFormatDataAdd3",
-        "type": "mysql.execute",
-        "sqlType": "INSERT",
-        "sql": "INSERT INTO `t_component_test`(`id`, `name`, `size`, `data`, `create_time`, `update_time`, `delete_flag`) VALUES (30, 'INIT2', 29, '[{\"id\":1},{\"id\":2},{\"id\":3}]', NOW(), NOW(), 0);"
-      }
-    ],
     "dataFormat/json": [
       {
         "id": "dataFormatData1",
         "type": "data.mapping",
         "items": [
           {"fieldName":"id", "source":"30"},
-          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
           {"fieldName":"flag", "source":"0"},
-          {"fieldName":"name", "source":"INIT"}
+          {"fieldName":"size", "source":"29"},
+          {"fieldName":"name", "source":"INIT2"}
         ]
       },{
         "id": "dataFormatJson1",
@@ -55,9 +38,26 @@
     "dataFormat/clear": [
       {
         "id": "dataFormatData2",
-        "type": "mysql.execute",
-        "sqlType": "SELECT",
-        "sql": "select * from t_component_test where id in (1, 10, 20);"
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"10"},
+          {"index": 1, "fieldName":"data", "source":"[{\"id\":1}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"10"},
+          {"index": 1, "fieldName":"name", "source":"INIT"},
+
+          {"index": 2, "fieldName":"id", "source":"20"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"19"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"}
+        ]
       },{
         "id": "dataFormatClear",
         "type": "data.format",
@@ -70,9 +70,32 @@
     "dataFormat/sort": [
       {
         "id": "dataFormatData3",
-        "type": "mysql.execute",
-        "sqlType": "SELECT",
-        "sql": "select * from t_component_test;"
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"10"},
+          {"index": 1, "fieldName":"data", "source":"[{\"id\":1}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"10"},
+          {"index": 1, "fieldName":"name", "source":"INIT"},
+
+          {"index": 2, "fieldName":"id", "source":"20"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"19"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"},
+
+          {"index": 3, "fieldName":"id", "source":"30"},
+          {"index": 3, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
+          {"index": 3, "fieldName":"flag", "source":"0"},
+          {"index": 3, "fieldName":"size", "source":"29"},
+          {"index": 3, "fieldName":"name", "source":"INIT2"}
+        ]
       },{
         "id": "dataFormatSort",
         "type": "data.format",
@@ -92,9 +115,26 @@
     "dataFormat/convert1": [
       {
         "id": "dataFormatData4",
-        "type": "mysql.execute",
-        "sqlType": "SELECT",
-        "sql": "select * from t_component_test where id in (10,20,30)"
+        "type": "data.mapping",
+        "items": [
+          {"index": 0, "fieldName":"id", "source":"10"},
+          {"index": 0, "fieldName":"data", "source":"[{\"id\":1}]"},
+          {"index": 0, "fieldName":"flag", "source":"0"},
+          {"index": 0, "fieldName":"size", "source":"10"},
+          {"index": 0, "fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"20"},
+          {"index": 1, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"19"},
+          {"index": 1, "fieldName":"name", "source":"INIT2"},
+
+          {"index": 2, "fieldName":"id", "source":"30"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"29"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"}
+        ]
       },{
         "id": "dataFormatConvert1",
         "type": "data.format",
@@ -152,9 +192,32 @@
     "dataFormat/group": [
       {
         "id": "dataFormatData5",
-        "type": "mysql.execute",
-        "sqlType": "SELECT",
-        "sql": "select * from t_component_test;"
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"10"},
+          {"index": 1, "fieldName":"data", "source":"[{\\\"id\\\":1}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"10"},
+          {"index": 1, "fieldName":"name", "source":"INIT"},
+
+          {"index": 2, "fieldName":"id", "source":"20"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"19"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"},
+
+          {"index": 3, "fieldName":"id", "source":"30"},
+          {"index": 3, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
+          {"index": 3, "fieldName":"flag", "source":"0"},
+          {"index": 3, "fieldName":"size", "source":"29"},
+          {"index": 3, "fieldName":"name", "source":"INIT2"}
+        ]
       },{
         "id": "dataFormatGroup",
         "type": "data.format",

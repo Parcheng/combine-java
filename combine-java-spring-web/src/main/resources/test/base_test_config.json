@@ -269,11 +269,6 @@
         "flowTests": [
           {
             "domain": "dataFormat",
-            "function": "init",
-            "params": {},
-            "items": []
-          },{
-            "domain": "dataFormat",
             "function": "json",
             "params": {},
             "items": [{
