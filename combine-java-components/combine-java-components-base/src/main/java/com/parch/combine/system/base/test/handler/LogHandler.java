@@ -15,12 +15,12 @@ public class LogHandler {
     public static void start(Boolean isPrint, Boolean isOutput, String name, List<String> msgList) {
         if (isOutput != null && isOutput) {
             msgList.add("自动化测试【" + name + "】开始");
-            msgList.add("-------------------------------------------------------------------------------------------------------------------------");
+            msgList.add("--------------------------------------------------------------------------------------------------------------------------------------");
         }
 
         if (isPrint != null && isPrint) {
             PrintUtil.printMark("自动化测试【" + name + "】开始");
-            PrintUtil.printInfo("-------------------------------------------------------------------------------------------------------------------------");
+            PrintUtil.printInfo("--------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 
@@ -45,7 +45,7 @@ public class LogHandler {
     }
 
     public static void mark(Boolean isPrint, Boolean isOutput, String msg, List<String> msgList) {
-        String finalMsg = getTime() + " " + msg;
+        String finalMsg = getTime() + " [SYSTEM.TEST] [INFO] " + msg;
 
         if (isOutput != null && isOutput) {
             msgList.add(finalMsg);
@@ -57,7 +57,7 @@ public class LogHandler {
     }
 
     public static void log(Boolean isPrint, Boolean isOutput, LogLevelEnum level, String msg, List<String> msgList) {
-        String finalMsg = getTime() + "[" + level.name() + "] " + msg;
+        String finalMsg = getTime() + " [SYSTEM.TEST] [" + level.name() + "] " + msg;
 
         if (isOutput != null && isOutput) {
             msgList.add(finalMsg);

@@ -6,7 +6,7 @@
       {
         "id": "fileReadData1",
         "type": "file.input.open",
-        "path": "default/file/tableText.txt"
+        "path": "test/base/file/tableText.txt"
       }, {
         "id": "fileParseData1",
         "type": "file.parse.txt",
@@ -30,7 +30,7 @@
       {
         "id": "fileReadData2",
         "type": "file.input.open",
-        "path": "default/file/table.xlsx"
+        "path": "test/base/file/table.xlsx"
       }, {
         "id": "fileParseData2",
         "type": "file.parse.excel",
@@ -49,7 +49,7 @@
       {
         "id": "fileReadData3",
         "type": "file.input.open",
-        "path": "default/file/text.txt"
+        "path": "test/base/file/text.txt"
       }, {
         "id": "fileParseData3",
         "type": "file.parse.txt",

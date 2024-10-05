@@ -6,7 +6,7 @@
   "flows": {
     "dataMapping/test": [
       {
-        "id": "dataMapping",
+        "id": "dataMappingTestData",
         "type": "data.mapping",
         "items": [
           {"fieldName":"id", "source":"1"},

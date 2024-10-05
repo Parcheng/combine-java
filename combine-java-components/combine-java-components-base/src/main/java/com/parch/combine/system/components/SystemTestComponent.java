@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component(key = "test", name = "流程测试", logicConfigClass = SystemTestLogicConfig.class, initConfigClass = SystemTestInitConfig.class)
-@ComponentResult(name = "测试结果，返回数据格式：{ success: true, logs:[\"XXXXX\", \"XXXXX\"] }")
+@ComponentResult(name = "测试结果，返回数据格式：{ success: true, logs:[\"...\", \"...\"] }")
 public class SystemTestComponent extends AbstractComponent<SystemTestInitConfig, SystemTestLogicConfig> {
 
     public SystemTestComponent() {
@@ -43,12 +43,13 @@ public class SystemTestComponent extends AbstractComponent<SystemTestInitConfig,
 
         boolean success = true;
         List<String> msgList = new ArrayList<>();
+        LogHandler.blank(isPrint, isOutput, msgList);
         LogHandler.start(isPrint, isOutput, CheckEmptyUtil.isEmpty(name) ? logicConfig.id() : name, msgList);
 
         List<FlowLoadResult> initResults = FlowHandler.load(logicConfig.configPath(), manager);
         for (FlowLoadResult item : initResults) {
             success = success && item.isSuccess();
-            LogHandler.mark(isPrint, isOutput, "初始化流程[" + item.getFlowKey() + "] -> " + (item.isSuccess() ? "成功" : "失败"), msgList);
+            LogHandler.mark(isPrint, isOutput, "初始化流程【" + item.getFlowKey() + "】-> " + (item.isSuccess() ? "成功" : "失败"), msgList);
             List<FlowLoadResult.InitLogInfo> logs = item.getLogs().stream().filter(l -> l.getLevel().getLevel() >= logLevel.getLevel()).collect(Collectors.toList());
             for (FlowLoadResult.InitLogInfo log : logs) {
                 LogHandler.log(isPrint, isOutput, log.getLevel(), log.getMsg(), msgList);
@@ -58,10 +59,10 @@ public class SystemTestComponent extends AbstractComponent<SystemTestInitConfig,
         List<TestResult> testResults = TestHandler.test(logicConfig.flowTests(), manager);
         for (TestResult item : testResults) {
             success = success && item.isSuccess();
-            LogHandler.mark(isPrint, isOutput, "检测流程[" + item.getDomain() + "][" + item.getFunction() + "] -> " + (item.isSuccess() ? "成功" : "失败"), msgList);
+            LogHandler.mark(isPrint, isOutput, "检测流程【" + item.getDomain() + "/" + item.getFunction() + "】-> " + (item.isSuccess() ? "成功" : "失败"), msgList);
             List<TestResult.TestLogInfo> logs = item.getLogs().stream().filter(l -> l.getLevel().getLevel() >= logLevel.getLevel()).collect(Collectors.toList());
             for (TestResult.TestLogInfo log : logs) {
-                LogHandler.log(isPrint, isOutput, log.getLevel(), "检测项目[" + log.getItemId() + "] -> " + log.getMsg(), msgList);
+                LogHandler.log(isPrint, isOutput, log.getLevel(), "检测项目【" + log.getItemId() + "】-> " + log.getMsg(), msgList);
             }
         }
 
