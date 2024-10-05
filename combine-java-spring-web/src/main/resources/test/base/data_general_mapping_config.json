@@ -12,6 +12,7 @@
           {"fieldName":"id", "source":"1"},
           {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
           {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
           {"fieldName":"name", "source":"INIT"}
         ]
       },{
