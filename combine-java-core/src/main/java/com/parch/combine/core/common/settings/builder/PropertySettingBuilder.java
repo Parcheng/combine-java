@@ -28,6 +28,7 @@ public class PropertySettingBuilder {
             }
         }
 
+        properties.sort((o1, o2) -> Float.compare(o1.getOrder(), o2.getOrder()));
         return properties;
     }
 
@@ -62,7 +63,7 @@ public class PropertySettingBuilder {
             buildProperty(scope, properties, field, keyPrefix, parsedClass);
         }
 
-        // 解析方法
+        // 解析方法 getDeclaredMethods
         Method[] methodArr = propertyClass.getMethods();
         for (Method method : methodArr) {
             buildProperty(scope, properties, method, keyPrefix, parsedClass);
@@ -101,6 +102,7 @@ public class PropertySettingBuilder {
         property.setKey(keyPrefix + fieldAnnotation.key());
         property.setName(fieldAnnotation.name());
         property.setType(fieldAnnotation.type());
+        property.setOrder(fieldAnnotation.order());
         property.setIsRequired(fieldAnnotation.isRequired());
         property.setIsArray(fieldAnnotation.isArray());
         property.setDesc(new ArrayList<>());

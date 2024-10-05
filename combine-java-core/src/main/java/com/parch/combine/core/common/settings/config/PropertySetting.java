@@ -13,6 +13,8 @@ public class PropertySetting {
 
     private List<String> desc;
 
+    private float order;
+
     private String refKey;
 
     private Boolean isRequired;
@@ -135,5 +137,13 @@ public class PropertySetting {
 
     public void setRefCommonKeys(List<String> refCommonKeys) {
         this.refCommonKeys = refCommonKeys;
+    }
+
+    public float getOrder() {
+        return order;
+    }
+
+    public void setOrder(float order) {
+        this.order = order;
     }
 }

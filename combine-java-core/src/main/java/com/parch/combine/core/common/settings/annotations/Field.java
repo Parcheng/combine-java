@@ -24,6 +24,11 @@ public @interface Field {
     String name();
 
     /**
+     * 顺序
+     */
+    float order() default 1;
+
+    /**
      * 字段类型
      */
     FieldTypeEnum type();
