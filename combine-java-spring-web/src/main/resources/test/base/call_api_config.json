@@ -33,10 +33,10 @@
         "id": "callFlowApiTest",
         "type": "data.mapping",
         "items": [
-          "id #{id}",
-          "data aaaaaaaaaaaaaaaaaaaa",
-          "flag 3",
-          "name #{name}"
+          { "fieldName": "id", "source": "#{id}"},
+          { "fieldName": "data", "source": "aaaaaaaaaaaaaaaaaaaa"},
+          { "fieldName": "flag", "source": "3"},
+          { "fieldName": "name", "source": "#{name}"}
         ]
       }
     ]

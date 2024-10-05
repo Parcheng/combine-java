@@ -28,7 +28,7 @@ public class PrintUtil {
      */
     public static void printError(String msg) {
         System.out.print("\u001B[31m");
-        System.out.print(msg);
+        System.out.println(msg);
         System.out.print("\u001B[0m");
     }
 
@@ -39,7 +39,7 @@ public class PrintUtil {
      */
     public static void printWarn(String msg) {
         System.out.print("\u001B[33m");
-        System.out.print(msg);
+        System.out.println(msg);
         System.out.print("\u001B[0m");
     }
 
@@ -50,7 +50,7 @@ public class PrintUtil {
      */
     public static void printInfo(String msg) {
         System.out.print("\u001B[36m");
-        System.out.print(msg);
+        System.out.println(msg);
         System.out.print("\u001B[0m");
     }
 
@@ -61,7 +61,7 @@ public class PrintUtil {
      */
     public static void printMark(String msg) {
         System.out.print("\u001B[32m");
-        System.out.print(msg);
+        System.out.println(msg);
         System.out.print("\u001B[0m");
     }
 }

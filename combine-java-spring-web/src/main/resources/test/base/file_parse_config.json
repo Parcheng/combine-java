@@ -68,7 +68,7 @@
       {
         "id": "fileReadData4",
         "type": "file.input.open",
-        "path": "default/file/table.xlsx"
+        "path": "test/base/file/table.xlsx"
       },{
         "id": "fileParseData4",
         "type": "file.parse.excel",

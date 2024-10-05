@@ -4,10 +4,11 @@
   "flows": {
     "callFlow/invoked": [
       {
-        "id": "callFlowInvoked",
-        "type": "mysql.execute",
-        "sqlType": "SELECT_ONE",
-        "sql": "select * from t_component_test where id = ${id};"
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"#{id}"},
+          {"fieldName":"name", "source":"INIT"}
+        ]
       }
     ],
     "callFlow/call": [

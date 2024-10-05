@@ -1,0 +1,15 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "x/x": [
+      {
+        "type": "system.test",
+        "name": "x-x-TEST",
+        "configPath": "test/base/x",
+        "flowTests": [
+        ]
+      }
+    ]
+  }
+}

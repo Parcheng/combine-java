@@ -6,10 +6,14 @@
   "flows": {
     "dataMapping/test": [
       {
-        "id": "dataMappingTestData",
-        "type": "mysql.execute",
-        "sqlType": "SELECT_ONE",
-        "sql": "select * from t_component_test where id = 1;"
+        "id": "dataMapping",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"name", "source":"INIT"}
+        ]
       },{
         "id": "dataMapping",
         "type": "data.mapping",

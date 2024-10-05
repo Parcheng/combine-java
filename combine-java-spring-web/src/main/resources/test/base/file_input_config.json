@@ -6,14 +6,14 @@
       {
         "id": "fileOpenData1",
         "type": "file.input.open",
-        "path": "default/file/text.txt"
+        "path": "test/base/file/text.txt"
       }
     ],
     "fileOpen/diskToXlsx": [
       {
         "id": "fileOpenData2",
         "type": "file.input.open",
-        "path": "default/file/table.xlsx"
+        "path": "test/base/file/table.xlsx"
       }
     ],
     "fileOpen/upload": [
