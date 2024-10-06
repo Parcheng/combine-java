@@ -5,12 +5,13 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.html.base.ConfigErrorEnum;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.html.core.canstant.ConfigFiledConstant;
 import com.parch.combine.html.core.tool.ConfigParseTool;
 
 import java.util.Map;
 
-public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends AbstractComponent<DataLoadInitConfig, L> {
+public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> {
 
     protected DataLoadTypeEnum type;
 
@@ -18,7 +19,7 @@ public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends 
      * 构造器
      */
     public AbstractDataLoadComponent(Class<L> logicClass, DataLoadTypeEnum type) {
-        super(DataLoadInitConfig.class, logicClass);
+        super(IInvalidInitConfig.class, logicClass);
         this.type = type;
     }
 
@@ -37,7 +38,7 @@ public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends 
             return ComponentDataResult.fail(ConfigErrorEnum.ID_IS_NULL);
         }
 
-        DataloadHandler.register(id.toString(), JsonUtil.serialize(configMap));
+        DataloadConfigCache.INSTANCE.register(id.toString(), JsonUtil.serialize(configMap));
         return ComponentDataResult.success(true);
     }
 
