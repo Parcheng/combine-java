@@ -1,0 +1,95 @@
+.c-navbar {
+  width: 100%;
+
+}
+
+.c-navbar .c-main{
+  width: 100%;
+  height: 50px;
+  padding: 0 5px;
+  margin: 0;
+  border: 0;
+  background-color: var(--main_color);
+}
+
+.c-navbar .c-main .c-brand{
+  height: 50px;
+  padding: 10px 5px;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.c-navbar .c-main .c-brand img{
+  width: 40px;
+  height: 40px;
+}
+
+.c-navbar .c-main .c-brand span{
+  color: var(--anti_color);
+  font-weight: bold;
+  font-size: 16px;
+  padding: 5px 5px;
+  display: inline-block;
+}
+
+.c-navbar .c-main .c-body{
+  height: 50px;
+  padding: 0;
+  margin: 0 0 0 30px;
+  display: inline-block;
+  vertical-align: top;
+  border: 0;
+}
+
+.c-navbar .c-main .c-body .c-navs{
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+}
+
+.c-navbar .c-main .c-body .c-navs li{
+  margin-right: 10px;
+}
+
+.c-navbar .c-main .c-body .c-navs li span{
+  color: var(--anti_color);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 16px 10px 16px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.c-navbar .c-main .c-body .c-navs li .c-active{
+  background-color: var(--anti_color);
+  color: var(--main_color);
+}
+
+.c-navbar .c-main .c-opts{
+  height: 50px;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+  float: right;
+}
+
+.c-navbar .c-main .c-opts ul{
+  list-style-type: none;
+  display: flex;
+  flex-grow: 1;
+  padding: 0;
+}
+
+.c-navbar .c-main .c-opts li{
+  margin-right: 5px;
+}
+
+.c-navbar .c-main .c-opts li span{
+  color: var(--anti_color);
+  cursor: pointer;
+  padding: 13px 10px 10px;
+  display: inline-block;
+  font-size: 12px;
+}

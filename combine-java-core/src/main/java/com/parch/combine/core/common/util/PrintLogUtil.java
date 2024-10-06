@@ -35,6 +35,18 @@ public class PrintLogUtil {
     /**
      * 打印
      *
+     * @param e 异常
+     */
+    public static void printError(Exception e) {
+        System.out.print("\u001B[31m");
+        logger.error(e.getMessage());
+        System.out.print("\u001B[0m");
+        e.printStackTrace();
+    }
+
+    /**
+     * 打印
+     *
      * @param msg 信息
      */
     public static void printWarn(String msg) {

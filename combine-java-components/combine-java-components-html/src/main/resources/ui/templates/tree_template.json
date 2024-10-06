@@ -1,0 +1,38 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "c-tree",
+    "style": "",
+    "properties": {}
+  },
+  "tree": {
+    "tag": "ul",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "item": {
+    "tag": "li",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "itemAtive": {
+    "tag": "li",
+    "class": "c-active",
+    "style": "",
+    "properties": {}
+  },
+  "itemText": {
+    "tag": "label",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "itemTree": {
+    "tag": "div",
+    "class": "c-children",
+    "style": "",
+    "properties": {}
+  }
+}
