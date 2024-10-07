@@ -1,6 +1,6 @@
 package com.parch.combine.html.base.element;
 
-import com.parch.combine.html.base.UrlPathCanstant;
+import com.parch.combine.html.core.canstant.UrlPathCanstant;
 
 public class SystemElementPathTool {
 

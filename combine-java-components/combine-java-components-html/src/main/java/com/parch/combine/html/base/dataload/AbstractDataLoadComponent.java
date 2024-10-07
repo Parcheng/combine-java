@@ -1,15 +1,10 @@
 package com.parch.combine.html.base.dataload;
 
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.html.base.ConfigErrorEnum;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
-import com.parch.combine.html.core.canstant.ConfigFiledConstant;
-import com.parch.combine.html.core.tool.ConfigParseTool;
-
-import java.util.Map;
 
 public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> {
 
@@ -25,20 +20,13 @@ public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends 
 
     @Override
     protected ComponentDataResult execute() {
+        L logicConfig = getLogicConfig();
         DataLoadConfig config = getConfig();
         if (config == null) {
             return ComponentDataResult.fail(ConfigErrorEnum.CONFIG_IS_NULL);
         }
 
-        Map<String, Object> configMap =  ConfigParseTool.parseInterfaceToMap(config);
-        configMap.put("type", type.name());
-
-        Object id = configMap.get(ConfigFiledConstant.ID);
-        if(id == null) {
-            return ComponentDataResult.fail(ConfigErrorEnum.ID_IS_NULL);
-        }
-
-        DataloadConfigCache.INSTANCE.register(id.toString(), JsonUtil.serialize(configMap));
+        DataloadConfigCache.INSTANCE.register(logicConfig.id(), type, config);
         return ComponentDataResult.success(true);
     }
 

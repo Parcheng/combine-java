@@ -3,14 +3,13 @@ package com.parch.combine.html.base.dataload;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.html.base.Config;
 
 import java.util.Map;
 
 /**
  * 数据加载配置
  */
-public interface DataLoadConfig extends Config {
+public interface DataLoadConfig {
 
     @Field(key = "cache", order = 0.21F, name = "缓存时间（-1 表示永久）", type = FieldTypeEnum.NUMBER)
     Integer cache();

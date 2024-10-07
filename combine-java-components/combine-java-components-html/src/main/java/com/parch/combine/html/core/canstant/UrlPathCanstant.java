@@ -1,4 +1,4 @@
-package com.parch.combine.html.base;
+package com.parch.combine.html.core.canstant;
 
 public interface UrlPathCanstant {
 

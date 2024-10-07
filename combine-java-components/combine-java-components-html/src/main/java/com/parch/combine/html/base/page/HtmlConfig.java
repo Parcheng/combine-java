@@ -1,9 +1,10 @@
-package com.parch.combine.html.base;
+package com.parch.combine.html.base.page;
 
 import com.parch.combine.core.common.base.ICheck;
 import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.html.core.canstant.UrlPathCanstant;
 import com.parch.combine.ui.core.tools.ConfigErrorMsgTool;
 
 import java.util.ArrayList;

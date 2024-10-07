@@ -1,4 +1,4 @@
-package com.parch.combine.html.base;
+package com.parch.combine.html.base.page;
 
 import com.parch.combine.core.common.base.ICheck;
 import com.parch.combine.core.common.base.IInit;
