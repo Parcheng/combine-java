@@ -1,9 +1,9 @@
-package com.parch.combine.html.core.tool;
+package com.parch.combine.html.common.tool;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.PrintLogUtil;
-import com.parch.combine.html.core.canstant.ConfigFiledConstant;
+import com.parch.combine.html.common.canstant.ConfigFiledConstant;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

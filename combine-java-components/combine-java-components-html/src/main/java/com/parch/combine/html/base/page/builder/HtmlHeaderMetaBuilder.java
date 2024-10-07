@@ -1,8 +1,8 @@
-package com.parch.combine.html.base.page;
+package com.parch.combine.html.base.page.builder;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.ui.core.base.HtmlHeaderMetaConfig;
-import com.parch.combine.ui.core.tools.HtmlBuildTool;
+import com.parch.combine.html.base.page.config.HtmlHeaderMetaConfig;
+import com.parch.combine.html.common.tool.HtmlBuildTool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class HtmlHeaderMetaBuilder {
 
-    private List<HtmlHeaderMetaConfig> templateConfigs;
+    private HtmlHeaderMetaConfig[] templateConfigs;
 
-    private List<HtmlHeaderMetaConfig> configs;
+    private HtmlHeaderMetaConfig[] configs;
 
-    public HtmlHeaderMetaBuilder(List<HtmlHeaderMetaConfig> templateConfigs, List<HtmlHeaderMetaConfig> configs) {
+    public HtmlHeaderMetaBuilder(HtmlHeaderMetaConfig[] templateConfigs, HtmlHeaderMetaConfig[] configs) {
         this.templateConfigs = templateConfigs;
         this.configs = configs;
     }
@@ -39,8 +39,8 @@ public class HtmlHeaderMetaBuilder {
 
     public void buildItem(List<String> mates, HtmlHeaderMetaConfig config) {
         Map<String, String> metaProperties = new HashMap<>(2);
-        metaProperties.put("name", config.getName());
-        metaProperties.put("content", config.getContent());
+        metaProperties.put("name", config.name());
+        metaProperties.put("content", config.content());
         mates.add(HtmlBuildTool.build("meta", null, metaProperties, true));
     }
 }

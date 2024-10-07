@@ -2,8 +2,7 @@ package com.parch.combine.html.base.element.core;
 
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.html.base.IConfigClear;
-import com.parch.combine.html.base.template.core.ElementTemplateConfig;
-import com.parch.combine.html.core.tool.ConfigParseTool;
+import com.parch.combine.html.common.tool.ConfigParseTool;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.parch.combine.html.base.page;
+package com.parch.combine.html.base.page.builder;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
@@ -29,7 +29,7 @@ public class ElementGroupBuilder {
     private Map<String, Set<String>> dataLoadToElementIdMap = new HashMap<>();
     private Map<String, TriggerConfig> triggerMap = new HashMap<>();
 
-    public ElementGroupBuilder(List<String> groupIds) {
+    public ElementGroupBuilder(String[] groupIds) {
         scopeKey = ConfigLoadingContextHandler.getContext().getScopeKey();
         manager = CombineManagerHandler.get(scopeKey);
         initGroups(groupIds);

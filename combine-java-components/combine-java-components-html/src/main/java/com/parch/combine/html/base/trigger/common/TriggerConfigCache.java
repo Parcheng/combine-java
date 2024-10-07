@@ -1,4 +1,4 @@
-package com.parch.combine.html.base.dataload.core;
+package com.parch.combine.html.base.trigger.common;
 
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.html.base.IConfigClear;
@@ -7,23 +7,23 @@ import com.parch.combine.html.common.tool.ConfigParseTool;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataloadConfigCache implements IConfigClear {
+public class TriggerConfigCache implements IConfigClear {
 
-    public final static DataloadConfigCache INSTANCE = new DataloadConfigCache();
+    public final static TriggerConfigCache INSTANCE = new TriggerConfigCache();
 
-    private final static Map<String, DataloadCacheModel> CACHE = new HashMap<>();
+    private final static Map<String, TriggerCacheModel> CACHE = new HashMap<>();
 
-    private DataloadConfigCache() {}
+    private TriggerConfigCache() {}
 
-    public void register(String id, DataLoadTypeEnum type, DataLoadConfig config) {
-        DataloadCacheModel model = new DataloadCacheModel();
+    public void register(String id, TriggerTypeEnum type, TriggerConfig config) {
+        TriggerCacheModel model = new TriggerCacheModel();
         model.id = id;
         model.type = type;
         model.json = JsonUtil.serialize(ConfigParseTool.parseInterfaceToMap(id, type.name(), config));
         CACHE.put(id, model);
     }
 
-    public DataloadCacheModel get(String key) {
+    public TriggerCacheModel get(String key) {
         return CACHE.get(key);
     }
 
@@ -37,9 +37,9 @@ public class DataloadConfigCache implements IConfigClear {
         CACHE.clear();
     }
 
-    public static class DataloadCacheModel {
+    public static class TriggerCacheModel {
         public String id;
-        public DataLoadTypeEnum type;
+        public TriggerTypeEnum type;
         public String json;
     }
 }

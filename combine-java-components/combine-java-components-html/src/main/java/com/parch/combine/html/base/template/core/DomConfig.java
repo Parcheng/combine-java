@@ -12,7 +12,7 @@ import java.util.Map;
 @CommonObject(name = "页面DOM元素配置")
 public interface DomConfig{
 
-    @Field(key = "tag", name = "DOM标签", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "tag", name = "DOM标签", type = FieldTypeEnum.TEXT, defaultValue = "div")
     String tag();
 
     @Field(key = "id", name = "DOM的ID", type = FieldTypeEnum.TEXT)

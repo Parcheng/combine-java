@@ -1,13 +1,21 @@
-package com.parch.combine.html.base.page;
+package com.parch.combine.html.base.page.builder;
 
-import com.parch.combine.ui.core.base.HtmlConfig;
-import com.parch.combine.ui.core.base.HtmlElementConfig;
-import com.parch.combine.ui.core.base.UrlPathCanstant;
-import com.parch.combine.ui.core.context.ConfigLoadingContext;
-import com.parch.combine.ui.core.context.ConfigLoadingContextHandler;
-import com.parch.combine.ui.core.handler.CombineManagerHandler;
+import com.parch.combine.core.common.util.CharacterUtil;
+import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.ResourceFileUtil;
+import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.html.base.page.config.HtmlConfig;
+import com.parch.combine.html.base.page.config.HtmlElementConfig;
+import com.parch.combine.html.common.canstant.UrlPathCanstant;
+import com.parch.combine.html.common.tool.ConfigErrorMsgTool;
+import com.parch.combine.html.common.tool.HtmlBuildTool;
+import com.parch.combine.html.common.tool.PrintTool;
+import com.parch.combine.html.common.tool.ScriptBuildTool;
+import com.parch.combine.html.common.tool.UrlPathHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,19 +30,18 @@ public class HtmlBuilder {
 
     private HtmlConfig config;
 
-    private ElementGroupBuilder groupBuilder;
-
     private HtmlConfig templateConfig;
+
+    private ElementGroupBuilder groupBuilder;
 
     public HtmlBuilder(HtmlConfig config) {
         this.config = config;
-        this.groupBuilder = new ElementGroupBuilder(config.getGroupIds());
+        this.groupBuilder = new ElementGroupBuilder(config.groupIds());
         loadTemplate();
     }
 
     public List<String> check() {
         List<String> msg = new ArrayList<>();
-        msg.addAll(config.check());
         msg.addAll(groupBuilder.check());
         if (templateConfig == null) {
             msg.add(ConfigErrorMsgTool.fieldCheckError("templateConfig", "页面模板不存在"));
@@ -54,8 +61,8 @@ public class HtmlBuilder {
     }
 
     private String buildHead(ElementGroupBuilder.ElementGroupResult groupResult, ConfigLoadingContext context) {
-        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(templateConfig.getLinks(), config.getLinks());
-        HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateConfig.getMetas(), config.getMetas());
+        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(templateConfig.links(), config.links());
+        HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateConfig.metas(), config.metas());
 
         // 添加框架核心
         Map<String, String> coreCssProperties = new HashMap<>();
@@ -92,21 +99,21 @@ public class HtmlBuilder {
         List<String> body = new ArrayList<>();
 
         // 模板
-        List<HtmlElementConfig> templateModels = templateConfig.getModules();
+        HtmlElementConfig[] templateModels = templateConfig.modules();
         Map<String, HtmlElementConfig> templateModelMap = new HashMap<>();
         if (CheckEmptyUtil.isNotEmpty(templateModels)) {
-            templateModelMap = templateModels.stream().collect(Collectors.toMap(HtmlElementConfig::getKey, Function.identity()));
+            templateModelMap = Arrays.stream(templateModels).collect(Collectors.toMap(HtmlElementConfig::key, Function.identity()));
         }
 
         // 页面模块
-        List<HtmlElementConfig> models = config.getModules();
+        HtmlElementConfig[] models = config.modules();
         if (CheckEmptyUtil.isNotEmpty(models)) {
             for (HtmlElementConfig model : models) {
-                if (CheckEmptyUtil.isEmpty(model.getKey())) {
+                if (CheckEmptyUtil.isEmpty(model.key())) {
                     continue;
                 }
-                HtmlElementConfig tempDomConfig = templateModelMap.get(model.getKey());
-                body.add(HtmlBuildTool.build(model, tempDomConfig, false));
+                HtmlElementConfig tempDomConfig = templateModelMap.get(model.key());
+                body.add(HtmlBuildTool.build(model.config(), tempDomConfig.config(), false));
             }
         }
 
@@ -123,15 +130,17 @@ public class HtmlBuilder {
         List<String> scripts = new ArrayList<>();
 
         // 添加模板脚本
-        if (CheckEmptyUtil.isNotEmpty(templateConfig.getScripts())) {
-            for (String scriptSrc : templateConfig.getScripts()) {
+        String[] scriptArr = templateConfig.scripts();
+        if (CheckEmptyUtil.isNotEmpty(scriptArr)) {
+            for (String scriptSrc : scriptArr) {
                 scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(scriptSrc)));
             }
         }
 
         // 添加用户配置脚本
-        if (CheckEmptyUtil.isNotEmpty(config.getScripts())) {
-            for (String scriptSrc : config.getScripts()) {
+        String[] configScriptArr = config.scripts();
+        if (CheckEmptyUtil.isNotEmpty(configScriptArr)) {
+            for (String scriptSrc : configScriptArr) {
                 scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag((scriptSrc))));
             }
         }
@@ -180,12 +189,12 @@ public class HtmlBuilder {
         groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combine.group.register(\"" + k + "\"," + v + ");"));
 
         // 页面模块初始化
-        List<HtmlElementConfig> models = config.getModules();
+        HtmlElementConfig[] models = config.modules();
         if (CheckEmptyUtil.isNotEmpty(models)) {
             for (HtmlElementConfig model : models) {
-                String showGroupId = model.getDefaultShowGroupId();
+                String showGroupId = model.defaultShowGroupId();
                 if (CheckEmptyUtil.isNotEmpty(showGroupId)) {
-                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + model.getId() + "\");");
+                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + model.id() + "\");");
                 }
             }
         }
@@ -197,20 +206,21 @@ public class HtmlBuilder {
     }
 
     private void loadTemplate() {
-        if (!TEMP_MAP.containsKey(config.getTempPath())) {
+        String tempPath = config.tempPath();
+        if (!TEMP_MAP.containsKey(tempPath)) {
             try {
-                String testConfigJson = ResourceFileUtil.read(config.getTempPath());
+                String testConfigJson = ResourceFileUtil.read(tempPath);
                 if (CheckEmptyUtil.isNotEmpty(testConfigJson)) {
                     templateConfig = JsonUtil.deserialize(testConfigJson, HtmlConfig.class);
-                    TEMP_MAP.put(config.getTempPath(), templateConfig);
+                    TEMP_MAP.put(tempPath, templateConfig);
                 } else {
-                    PrintTool.printInit("【PAGE-TEMPLATE】【" + config.getTempPath() + "】【加载模板数据为空】");
+                    PrintTool.printInit("【PAGE-TEMPLATE】【" + tempPath + "】【加载模板数据为空】");
                 }
             } catch (Exception e) {
-                PrintTool.printInit("【PAGE-TEMPLATE】【" + config.getTempPath() + "】【加载模板失败】");
+                PrintTool.printInit("【PAGE-TEMPLATE】【" + tempPath + "】【加载模板失败】");
             }
         } else {
-            templateConfig = TEMP_MAP.get(config.getTempPath());
+            templateConfig = TEMP_MAP.get(tempPath);
         }
     }
 }

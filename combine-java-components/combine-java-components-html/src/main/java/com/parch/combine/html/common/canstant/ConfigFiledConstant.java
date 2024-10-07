@@ -1,4 +1,4 @@
-package com.parch.combine.html.core.canstant;
+package com.parch.combine.html.common.canstant;
 
 public interface ConfigFiledConstant {
 

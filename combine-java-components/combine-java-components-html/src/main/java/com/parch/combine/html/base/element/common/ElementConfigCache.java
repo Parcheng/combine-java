@@ -1,4 +1,4 @@
-package com.parch.combine.html.base.template.core;
+package com.parch.combine.html.base.element.common;
 
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.html.base.IConfigClear;
@@ -7,23 +7,23 @@ import com.parch.combine.html.common.tool.ConfigParseTool;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ElementTemplateConfigCache implements IConfigClear {
+public class ElementConfigCache implements IConfigClear {
 
-    public final static ElementTemplateConfigCache INSTANCE = new ElementTemplateConfigCache();
+    public final static ElementConfigCache INSTANCE = new ElementConfigCache();
 
-    private final static Map<String, TemplateCacheModel> CACHE = new HashMap<>();
+    private final static Map<String, ElementCacheModel> CACHE = new HashMap<>();
 
-    private ElementTemplateConfigCache() {}
+    private ElementConfigCache() {}
 
-    public void register(String id, String type, ElementTemplateConfig config) {
-        TemplateCacheModel model = new TemplateCacheModel();
+    public void register(String id, String type, ElementConfig config) {
+        ElementCacheModel model = new ElementCacheModel();
         model.id = id;
         model.type = type;
         model.json = JsonUtil.serialize(ConfigParseTool.parseInterfaceToMap(id, type, config));
         CACHE.put(id, model);
     }
 
-    public TemplateCacheModel get(String key) {
+    public ElementCacheModel get(String key) {
         return CACHE.get(key);
     }
 
@@ -37,7 +37,7 @@ public class ElementTemplateConfigCache implements IConfigClear {
         CACHE.clear();
     }
 
-    public static class TemplateCacheModel {
+    public static class ElementCacheModel {
         public String id;
         public String type;
         public String json;
