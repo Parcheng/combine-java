@@ -89,7 +89,11 @@ public class HtmlBuilder {
 
     private String buildPage(String head, String body, String script) {
         Map<String, String> htmlProperties = new HashMap<>();
-        htmlProperties.put("lang", CheckEmptyUtil.isEmpty(config.getLang()) ? templateConfig.getLang() : config.getLang());
+        String lang = config.lang();
+        if (CheckEmptyUtil.isEmpty(lang)) {
+            lang = templateConfig.lang();
+        }
+        htmlProperties.put("lang", lang);
 
         String htmlCode = HtmlBuildTool.build("html", head + body + script, htmlProperties, false);
         return CharacterUtil.replaceChinese(htmlCode).replaceAll("\\\\{2}", "\\\\\\\\\\\\");
@@ -164,7 +168,7 @@ public class HtmlBuilder {
 
         // 添加框架组件实例注册代码
         List<String> scriptCodeList = new ArrayList<>();
-        scriptCodeList.add("\n$combine.init(\"" + context.getBaseUrl() + "\", " + context.getFlagConfigsJson() + ");");
+        scriptCodeList.add("\n$combine.init(\"" + context.getSystemUrl() + "\", " + context.getFlagConfigsJson() + ");");
 
         // 常量注册
         String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
@@ -194,7 +198,8 @@ public class HtmlBuilder {
             for (HtmlElementConfig model : models) {
                 String showGroupId = model.defaultShowGroupId();
                 if (CheckEmptyUtil.isNotEmpty(showGroupId)) {
-                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + model.id() + "\");");
+                    // TODO 这个ID model.config().id() 不存在要随机生成
+                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + model.config().id() + "\");");
                 }
             }
         }
