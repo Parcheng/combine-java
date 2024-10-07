@@ -3,13 +3,9 @@ package com.parch.combine.html.components.template;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.html.base.dataload.AbstractDataLoadComponent;
-import com.parch.combine.html.base.dataload.ApiDataLoadLogicConfig;
-import com.parch.combine.html.base.dataload.DataLoadConfig;
-import com.parch.combine.html.base.dataload.DataLoadTypeEnum;
-import com.parch.combine.html.base.template.AbstractTemplateComponent;
+import com.parch.combine.html.base.template.core.AbstractTemplateComponent;
 import com.parch.combine.html.base.template.AudioElementTemplateLogicConfig;
-import com.parch.combine.html.base.template.ElementTemplateConfig;
+import com.parch.combine.html.base.template.core.ElementTemplateConfig;
 
 @Component(key = "template.audio.register", order = 300, name = "音频元素模板配置注册组件", logicConfigClass = AudioElementTemplateLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")

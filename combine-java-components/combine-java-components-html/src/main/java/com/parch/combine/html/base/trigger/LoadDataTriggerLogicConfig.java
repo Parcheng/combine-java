@@ -3,8 +3,7 @@ package com.parch.combine.html.base.trigger;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
-
-import java.util.List;
+import com.parch.combine.html.base.trigger.core.TriggerConfig;
 
 public interface LoadDataTriggerLogicConfig extends ILogicConfig {
 
