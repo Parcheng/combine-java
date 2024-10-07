@@ -4,24 +4,31 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.html.base.element.core.ElementConfig;
 
 public interface ContentElementLogicConfig extends ILogicConfig {
 
-    @Field(key = "top", name = "顶部图片配置", type = FieldTypeEnum.CONFIG)
-    @FieldObject(ContentImgConfig.class)
-    ContentImgConfig top();
+    @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    Config config();
 
-    @Field(key = "left", name = "左侧图片配置", type = FieldTypeEnum.CONFIG)
-    @FieldObject(ContentImgConfig.class)
-    ContentImgConfig left();
+    interface Config extends ElementConfig {
 
-    @Field(key = "right", name = "右侧图片配置", type = FieldTypeEnum.CONFIG)
-    @FieldObject(ContentImgConfig.class)
-    ContentImgConfig right();
+        @Field(key = "top", name = "顶部图片配置", type = FieldTypeEnum.CONFIG)
+        @FieldObject(ContentImgConfig.class)
+        ContentImgConfig top();
 
-    @Field(key = "content", name = "内容配置", type = FieldTypeEnum.CONFIG)
-    @FieldObject(ContentConfig.class)
-    ContentConfig content();
+        @Field(key = "left", name = "左侧图片配置", type = FieldTypeEnum.CONFIG)
+        @FieldObject(ContentImgConfig.class)
+        ContentImgConfig left();
+
+        @Field(key = "right", name = "右侧图片配置", type = FieldTypeEnum.CONFIG)
+        @FieldObject(ContentImgConfig.class)
+        ContentImgConfig right();
+
+        @Field(key = "content", name = "内容配置", type = FieldTypeEnum.CONFIG)
+        @FieldObject(ContentConfig.class)
+        ContentConfig content();
+    }
 
     interface ContentImgConfig {
 

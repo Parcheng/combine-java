@@ -3,17 +3,24 @@ package com.parch.combine.html.base.element;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.html.base.element.core.ElementConfig;
 
 public interface FromElementLogicConfig extends ILogicConfig {
 
-    @Field(key = "layout", name = "布局 VERTICAL | INLINE | HORIZONTAL", type = FieldTypeEnum.TEXT, defaultValue = "INLINE")
-    String layout();
+    @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    Config config();
 
-    @Field(key = "column", name = "列数（1-100）", type = FieldTypeEnum.NUMBER, defaultValue = "1")
-    Integer column();
+    interface Config extends ElementConfig {
 
-    @Field(key = "items", name = "表单项配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
-    ItemConfig[] items();
+        @Field(key = "layout", name = "布局 VERTICAL | INLINE | HORIZONTAL", type = FieldTypeEnum.TEXT, defaultValue = "INLINE")
+        String layout();
+
+        @Field(key = "column", name = "列数（1-100）", type = FieldTypeEnum.NUMBER, defaultValue = "1")
+        Integer column();
+
+        @Field(key = "items", name = "表单项配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+        ItemConfig[] items();
+    }
 
     interface ItemConfig {
 

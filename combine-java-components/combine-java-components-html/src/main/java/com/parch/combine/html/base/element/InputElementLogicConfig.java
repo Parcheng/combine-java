@@ -6,24 +6,30 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.html.base.element.core.ElementConfig;
 
 public interface InputElementLogicConfig extends ILogicConfig {
 
-    @Field(key = "key", name = "输入框字段KEY", type = FieldTypeEnum.TEXT, isRequired = true)
-    String key();
+    @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    Config config();
 
-    @Field(key = "inputType", name = "输入框类型", type = FieldTypeEnum.SELECT, defaultValue = "TEXT")
-    @FieldSelect(enumClass = ControlItemType.class)
-    String inputType();
+    interface Config extends ElementConfig {
+        @Field(key = "key", name = "输入框字段KEY", type = FieldTypeEnum.TEXT, isRequired = true)
+        String key();
 
-    @Field(key = "value", name = "输入框默认值", type = FieldTypeEnum.TEXT)
-    String value();
+        @Field(key = "inputType", name = "输入框类型", type = FieldTypeEnum.SELECT, defaultValue = "TEXT")
+        @FieldSelect(enumClass = ControlItemType.class)
+        String inputType();
 
-    @Field(key = "afterText", name = "前置插件文本", type = FieldTypeEnum.TEXT)
-    String afterText();
+        @Field(key = "value", name = "输入框默认值", type = FieldTypeEnum.TEXT)
+        String value();
 
-    @Field(key = "beforeText", name = "后置插件文本", type = FieldTypeEnum.TEXT)
-    String beforeText();
+        @Field(key = "afterText", name = "前置插件文本", type = FieldTypeEnum.TEXT)
+        String afterText();
+
+        @Field(key = "beforeText", name = "后置插件文本", type = FieldTypeEnum.TEXT)
+        String beforeText();
+    }
 
     enum ControlItemType implements IOptionSetting {
         TEXT("文本", true),

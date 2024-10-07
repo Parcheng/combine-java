@@ -4,13 +4,20 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.html.base.element.core.ElementConfig;
 import com.parch.combine.html.base.element.core.SubElementConfig;
 
 public interface TabElementLogicConfig extends ILogicConfig {
 
-    @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
-    @FieldObject(TabItemSettings.class)
-    TabItemSettings[] items();
+    @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    Config config();
+
+    interface Config extends ElementConfig {
+
+        @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+        @FieldObject(TabItemSettings.class)
+        TabItemSettings[] items();
+    }
 
     interface TabItemSettings {
 

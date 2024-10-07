@@ -4,21 +4,28 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.html.base.element.core.ElementConfig;
 
 public interface TextElementLogicConfig extends ILogicConfig {
 
-    @Field(key = "retract", name = "缩进数", type = FieldTypeEnum.NUMBER)
-    Integer retract();
+    @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    Config config();
 
-    @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
-    @FieldObject(TextLineSettings.class)
-    TextLineSettings[] lines();
+    interface Config extends ElementConfig {
 
-    @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT)
-    String[] children();
+        @Field(key = "retract", name = "缩进数", type = FieldTypeEnum.NUMBER)
+        Integer retract();
 
-    @Field(key = "defaultText", name = "所有文本为空时默认显示文本", type = FieldTypeEnum.TEXT)
-    String defaultText();
+        @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+        @FieldObject(TextLineSettings.class)
+        TextLineSettings[] lines();
+
+        @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT)
+        String[] children();
+
+        @Field(key = "defaultText", name = "所有文本为空时默认显示文本", type = FieldTypeEnum.TEXT)
+        String defaultText();
+    }
 
     interface TextLineSettings{
 
