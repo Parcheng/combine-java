@@ -6,7 +6,7 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.html.base.DomConfig;
+import com.parch.combine.html.base.template.DomConfig;
 import com.parch.combine.ui.core.tools.ConfigErrorMsgTool;
 
 import java.util.ArrayList;

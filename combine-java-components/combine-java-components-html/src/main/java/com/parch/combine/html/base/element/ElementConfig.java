@@ -4,6 +4,7 @@ import com.parch.combine.core.common.base.ICheck;
 import com.parch.combine.core.common.base.IInit;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.html.base.template.ElementTemplateConfig;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ import com.parch.combine.html.base.trigger.CallFlowTriggerLogicConfig;
 import com.parch.combine.html.base.trigger.TriggerConfig;
 import com.parch.combine.html.base.trigger.TriggerTypeEnum;
 
-@Component(key = "trigger.callFlow.register", name = "调用流程触发配置注册组件", logicConfigClass = ApiDataLoadLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "trigger.callFlow.register", order = 200, name = "调用流程触发配置注册组件", logicConfigClass = CallFlowTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
 public class CallFlowTriggerComponent extends AbstractTriggerComponent<CallFlowTriggerLogicConfig> {
 

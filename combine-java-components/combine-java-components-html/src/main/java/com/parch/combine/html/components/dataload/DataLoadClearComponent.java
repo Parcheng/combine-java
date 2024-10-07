@@ -7,7 +7,7 @@ import com.parch.combine.html.base.ConfigClearLogicConfig;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.html.base.dataload.DataloadConfigCache;
 
-@Component(key = "dataload.clear", name = "加载配置清除组件", logicConfigClass = ConfigClearLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "dataload.clear", order = 100, name = "加载配置清除组件", logicConfigClass = ConfigClearLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
 public class DataLoadClearComponent extends ConfigClearComponent {
 

@@ -10,15 +10,15 @@ import com.parch.combine.html.base.trigger.CustomTriggerLogicConfig;
 import com.parch.combine.html.base.trigger.TriggerConfig;
 import com.parch.combine.html.base.trigger.TriggerTypeEnum;
 
-@Component(key = "trigger.custom.register", name = "自定义触发配置注册组件", logicConfigClass = CustomTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "trigger.custom.register", order = 200, name = "自定义触发配置注册组件", logicConfigClass = CustomTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
-public class CustomTriggerComponent extends AbstractTriggerComponent<CallFlowTriggerLogicConfig> {
+public class CustomTriggerComponent extends AbstractTriggerComponent<CustomTriggerLogicConfig> {
 
     /**
      * 构造器
      */
     public CustomTriggerComponent() {
-        super(CallFlowTriggerLogicConfig.class, TriggerTypeEnum.CUSTOM);
+        super(CustomTriggerLogicConfig.class, TriggerTypeEnum.CUSTOM);
     }
 
 

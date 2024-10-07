@@ -10,15 +10,15 @@ import com.parch.combine.html.base.trigger.SkipTriggerLogicConfig;
 import com.parch.combine.html.base.trigger.TriggerConfig;
 import com.parch.combine.html.base.trigger.TriggerTypeEnum;
 
-@Component(key = "trigger.skip.register", name = "地址跳转触发配置注册组件", logicConfigClass = SkipTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "trigger.skip.register", order = 200, name = "地址跳转触发配置注册组件", logicConfigClass = SkipTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
-public class SkipTriggerComponent extends AbstractTriggerComponent<CallFlowTriggerLogicConfig> {
+public class SkipTriggerComponent extends AbstractTriggerComponent<SkipTriggerLogicConfig> {
 
     /**
      * 构造器
      */
     public SkipTriggerComponent() {
-        super(CallFlowTriggerLogicConfig.class, TriggerTypeEnum.SKIP);
+        super(SkipTriggerLogicConfig.class, TriggerTypeEnum.SKIP);
     }
 
 

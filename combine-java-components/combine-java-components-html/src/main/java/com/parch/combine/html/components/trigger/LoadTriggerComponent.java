@@ -6,18 +6,19 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.html.base.dataload.ApiDataLoadLogicConfig;
 import com.parch.combine.html.base.trigger.AbstractTriggerComponent;
 import com.parch.combine.html.base.trigger.CallFlowTriggerLogicConfig;
+import com.parch.combine.html.base.trigger.LoadTriggerLogicConfig;
 import com.parch.combine.html.base.trigger.TriggerConfig;
 import com.parch.combine.html.base.trigger.TriggerTypeEnum;
 
-@Component(key = "trigger.load.register", name = "加载页面元素触发配置注册组件", logicConfigClass = ApiDataLoadLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "trigger.load.register", order = 200, name = "加载页面元素触发配置注册组件", logicConfigClass = LoadTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
-public class LoadTriggerComponent extends AbstractTriggerComponent<CallFlowTriggerLogicConfig> {
+public class LoadTriggerComponent extends AbstractTriggerComponent<LoadTriggerLogicConfig> {
 
     /**
      * 构造器
      */
     public LoadTriggerComponent() {
-        super(CallFlowTriggerLogicConfig.class, TriggerTypeEnum.LOAD);
+        super(LoadTriggerLogicConfig.class, TriggerTypeEnum.LOAD);
     }
 
 

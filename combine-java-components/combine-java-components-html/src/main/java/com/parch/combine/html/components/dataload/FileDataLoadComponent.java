@@ -9,7 +9,7 @@ import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.html.base.dataload.DataLoadTypeEnum;
 import com.parch.combine.html.base.dataload.FileDataLoadLogicConfig;
 
-@Component(key = "dataload.file.register", name = "文件数据加载配置注册组件", logicConfigClass = FileDataLoadLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "dataload.file.register", order = 100, name = "文件数据加载配置注册组件", logicConfigClass = FileDataLoadLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
 public class FileDataLoadComponent extends AbstractDataLoadComponent<ApiDataLoadLogicConfig> {
 

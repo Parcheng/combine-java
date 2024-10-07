@@ -1,0 +1,35 @@
+package com.parch.combine.html.base.template;
+
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.ILogicConfig;
+
+
+/**
+ * 配置类
+ */
+public interface BreadcrumbElementTemplateLogicConfig extends ILogicConfig {
+
+    @Field(key = "config", name = "样式模板配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    Config config();
+
+    interface Config extends ElementTemplateConfig {
+
+        @Field(key = "breadcrumb", name = "面包削DOM配置", type = FieldTypeEnum.CONFIG)
+        @FieldRef(DomConfig.class)
+        DomConfig breadcrumb();
+
+        @Field(key = "itemActive", name = "选中元素项DOM配置", type = FieldTypeEnum.CONFIG)
+        @FieldRef(DomConfig.class)
+        DomConfig itemActive();
+
+        @Field(key = "content", name = "元素项内容DOM配置", type = FieldTypeEnum.CONFIG)
+        @FieldRef(DomConfig.class)
+        DomConfig content();
+
+        @Field(key = "item", name = "元素项DOM配置", type = FieldTypeEnum.CONFIG)
+        @FieldRef(DomConfig.class)
+        DomConfig item();
+    }
+}
