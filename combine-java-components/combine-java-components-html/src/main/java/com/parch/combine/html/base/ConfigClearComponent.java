@@ -4,6 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
+import com.parch.combine.html.common.cache.base.IConfigClear;
 
 public abstract class ConfigClearComponent extends AbstractComponent<IInvalidInitConfig, ConfigClearLogicConfig> {
 

@@ -1,4 +1,4 @@
-package com.parch.combine.html.base;
+package com.parch.combine.html.common.cache.base;
 
 public interface IConfigClear {
 

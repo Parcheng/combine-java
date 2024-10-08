@@ -6,7 +6,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.html.base.trigger.core.AbstractTriggerComponent;
 import com.parch.combine.html.base.trigger.CallUrlTriggerLogicConfig;
 import com.parch.combine.html.base.trigger.core.TriggerConfig;
-import com.parch.combine.html.base.trigger.core.TriggerTypeEnum;
+import com.parch.combine.html.common.enums.TriggerTypeEnum;
 
 @Component(key = "trigger.callUrl.register", order = 200, name = "调用URL触发配置注册组件", logicConfigClass = CallUrlTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")

@@ -2,8 +2,6 @@ package com.parch.combine.html.common.canstant;
 
 public interface UrlPathCanstant {
 
-    String SYSTEM_URL_FLAG = "${systemUrl}";
-
     String BASE_URL_FLAG = "${baseUrl}";
 
     String BASE_PATH = "/combine/ui/";

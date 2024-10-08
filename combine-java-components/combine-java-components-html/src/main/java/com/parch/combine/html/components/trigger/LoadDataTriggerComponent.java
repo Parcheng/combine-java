@@ -6,7 +6,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.html.base.trigger.core.AbstractTriggerComponent;
 import com.parch.combine.html.base.trigger.LoadDataTriggerLogicConfig;
 import com.parch.combine.html.base.trigger.core.TriggerConfig;
-import com.parch.combine.html.base.trigger.core.TriggerTypeEnum;
+import com.parch.combine.html.common.enums.TriggerTypeEnum;
 
 @Component(key = "trigger.loadData.register", order = 200, name = "加载数据触发配置注册组件", logicConfigClass = LoadDataTriggerLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")

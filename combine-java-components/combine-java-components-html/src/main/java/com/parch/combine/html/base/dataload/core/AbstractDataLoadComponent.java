@@ -5,8 +5,12 @@ import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.html.base.ConfigErrorEnum;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
+import com.parch.combine.html.common.cache.base.IRegisterComponent;
+import com.parch.combine.html.common.cache.DataloadConfigCache;
+import com.parch.combine.html.common.enums.ConfigTypeEnum;
+import com.parch.combine.html.common.enums.DataLoadTypeEnum;
 
-public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> {
+public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> implements IRegisterComponent {
 
     protected DataLoadTypeEnum type;
 
@@ -31,4 +35,9 @@ public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends 
     }
 
     protected abstract DataLoadConfig getConfig();
+
+    @Override
+    public ConfigTypeEnum getConfigType() {
+        return ConfigTypeEnum.DATA_LOAD;
+    }
 }

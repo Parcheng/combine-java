@@ -6,7 +6,7 @@ import com.parch.combine.html.base.dataload.core.AbstractDataLoadComponent;
 import com.parch.combine.html.base.dataload.ApiDataLoadLogicConfig;
 import com.parch.combine.html.base.dataload.core.DataLoadConfig;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
-import com.parch.combine.html.base.dataload.core.DataLoadTypeEnum;
+import com.parch.combine.html.common.enums.DataLoadTypeEnum;
 
 @Component(key = "dataload.api.register", order = 100, name = "外部API数据加载配置注册组件", logicConfigClass = ApiDataLoadLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")

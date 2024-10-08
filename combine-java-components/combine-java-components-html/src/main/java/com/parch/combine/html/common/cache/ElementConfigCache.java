@@ -1,8 +1,10 @@
-package com.parch.combine.html.base.element.core;
+package com.parch.combine.html.common.cache;
 
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.html.base.IConfigClear;
-import com.parch.combine.html.common.tool.ConfigParseTool;
+import com.parch.combine.html.base.element.core.ElementConfig;
+import com.parch.combine.html.common.cache.base.BaseCacheModel;
+import com.parch.combine.html.common.cache.base.CacheModelBuilder;
+import com.parch.combine.html.common.cache.base.IConfigClear;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +21,7 @@ public class ElementConfigCache implements IConfigClear {
         ElementCacheModel model = new ElementCacheModel();
         model.id = id;
         model.type = type;
-        model.json = JsonUtil.serialize(ConfigParseTool.parseInterfaceToMap(id, type, config));
+        model.json = JsonUtil.serialize(CacheModelBuilder.parseInterfaceToMap(id, type, config));
         CACHE.put(id, model);
     }
 
@@ -37,9 +39,7 @@ public class ElementConfigCache implements IConfigClear {
         CACHE.clear();
     }
 
-    public static class ElementCacheModel {
-        public String id;
+    public static class ElementCacheModel extends BaseCacheModel {
         public String type;
-        public String json;
     }
 }

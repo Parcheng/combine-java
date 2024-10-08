@@ -1,8 +1,11 @@
-package com.parch.combine.html.base.trigger.common;
+package com.parch.combine.html.common.cache;
 
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.html.base.IConfigClear;
-import com.parch.combine.html.common.tool.ConfigParseTool;
+import com.parch.combine.html.base.trigger.core.TriggerConfig;
+import com.parch.combine.html.common.cache.base.BaseCacheModel;
+import com.parch.combine.html.common.cache.base.CacheModelBuilder;
+import com.parch.combine.html.common.cache.base.IConfigClear;
+import com.parch.combine.html.common.enums.TriggerTypeEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +22,7 @@ public class TriggerConfigCache implements IConfigClear {
         TriggerCacheModel model = new TriggerCacheModel();
         model.id = id;
         model.type = type;
-        model.json = JsonUtil.serialize(ConfigParseTool.parseInterfaceToMap(id, type.name(), config));
+        model.json = JsonUtil.serialize(CacheModelBuilder.parseInterfaceToMap(id, type.name(), config));
         CACHE.put(id, model);
     }
 
@@ -37,9 +40,7 @@ public class TriggerConfigCache implements IConfigClear {
         CACHE.clear();
     }
 
-    public static class TriggerCacheModel {
-        public String id;
+    public static class TriggerCacheModel extends BaseCacheModel {
         public TriggerTypeEnum type;
-        public String json;
     }
 }

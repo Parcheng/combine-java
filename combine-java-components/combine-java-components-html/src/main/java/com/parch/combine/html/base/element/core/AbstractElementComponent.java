@@ -5,8 +5,11 @@ import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.html.base.ConfigErrorEnum;
+import com.parch.combine.html.common.cache.base.IRegisterComponent;
+import com.parch.combine.html.common.cache.ElementConfigCache;
+import com.parch.combine.html.common.enums.ConfigTypeEnum;
 
-public abstract class AbstractElementComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> {
+public abstract class AbstractElementComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> implements IRegisterComponent {
 
     protected String type;
 
@@ -31,4 +34,9 @@ public abstract class AbstractElementComponent<L extends ILogicConfig> extends A
     }
 
     protected abstract ElementConfig getConfig();
+
+    @Override
+    public ConfigTypeEnum getConfigType() {
+        return ConfigTypeEnum.ELEMENT;
+    }
 }

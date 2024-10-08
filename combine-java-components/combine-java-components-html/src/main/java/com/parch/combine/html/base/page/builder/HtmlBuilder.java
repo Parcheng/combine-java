@@ -28,15 +28,15 @@ public class HtmlBuilder {
 
     private final static Map<String, HtmlConfig> TEMP_MAP = new HashMap<>();
 
+    private String baseUrl;
+
     private HtmlConfig config;
 
     private HtmlConfig templateConfig;
 
-    private ElementGroupBuilder groupBuilder;
-
-    public HtmlBuilder(HtmlConfig config) {
+    public HtmlBuilder(HtmlConfig config, String baseUrl) {
+        this.baseUrl = baseUrl;
         this.config = config;
-        this.groupBuilder = new ElementGroupBuilder(config.groupIds());
         loadTemplate();
     }
 
@@ -51,23 +51,22 @@ public class HtmlBuilder {
 
     public String build() {
         ElementGroupBuilder.ElementGroupResult groupResult = groupBuilder.build();
-        ConfigLoadingContext context = ConfigLoadingContextHandler.getContext();
 
-        String head = buildHead(groupResult, context);
+        String head = buildHead(groupResult);
         String body = buildBody();
         String script = buildScript();
-        String elementScript = buildElementScript(groupResult, context);
+        String elementScript = buildElementScript(groupResult);
         return buildPage(head, body, script + elementScript);
     }
 
-    private String buildHead(ElementGroupBuilder.ElementGroupResult groupResult, ConfigLoadingContext context) {
+    private String buildHead(ElementGroupBuilder.ElementGroupResult groupResult) {
         HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(templateConfig.links(), config.links());
         HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateConfig.metas(), config.metas());
 
         // 添加框架核心
         Map<String, String> coreCssProperties = new HashMap<>();
         coreCssProperties.put("rel", "stylesheet");
-        coreCssProperties.put("href", context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_CSS_NAME);
+        coreCssProperties.put("href", baseUrl + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_CSS_NAME);
         String coreCssTag = HtmlBuildTool.build("link", null, coreCssProperties, true);
 
         // 添加框架中使用的页面元素JS
@@ -75,7 +74,7 @@ public class HtmlBuilder {
         for (String elementStyle : groupResult.elementStyles) {
             Map<String, String> elementCssProperties = new HashMap<>();
             elementCssProperties.put("rel", "stylesheet");
-            elementCssProperties.put("href", UrlPathHelper.replaceUrlFlag(elementStyle));
+            elementCssProperties.put("href", UrlPathHelper.replaceUrlFlag(elementStyle, baseUrl));
             elementCssTag.add(HtmlBuildTool.build("link", null, elementCssProperties, true));
         }
 
@@ -137,7 +136,7 @@ public class HtmlBuilder {
         String[] scriptArr = templateConfig.scripts();
         if (CheckEmptyUtil.isNotEmpty(scriptArr)) {
             for (String scriptSrc : scriptArr) {
-                scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(scriptSrc)));
+                scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(scriptSrc, baseUrl)));
             }
         }
 
@@ -145,34 +144,34 @@ public class HtmlBuilder {
         String[] configScriptArr = config.scripts();
         if (CheckEmptyUtil.isNotEmpty(configScriptArr)) {
             for (String scriptSrc : configScriptArr) {
-                scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag((scriptSrc))));
+                scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(scriptSrc, baseUrl)));
             }
         }
 
         return StringUtil.join(scripts, CheckEmptyUtil.EMPTY);
     }
 
-    protected String buildElementScript(ElementGroupBuilder.ElementGroupResult groupResult, ConfigLoadingContext context) {
+    protected String buildElementScript(ElementGroupBuilder.ElementGroupResult groupResult) {
         List<String> scripts = new ArrayList<>();
 
         // 添加框架核心
-        String baseJsPath = context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_JS_NAME;
-        scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseJsPath)));
-        String baseToolsJsPath = context.getSystemUrl() + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_TOOLS_JS_NAME;
-        scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseToolsJsPath)));
+        String baseJsPath = baseUrl + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_BASE_JS_NAME;
+        scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseJsPath, baseUrl)));
+        String baseToolsJsPath = baseUrl + UrlPathCanstant.BASE_PATH + UrlPathCanstant.DEFAULT_TOOLS_JS_NAME;
+        scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseToolsJsPath, baseUrl)));
 
         // 添加框架中使用的页面元素JS
         for (String elementScript : groupResult.elementScripts) {
-            scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(elementScript)));
+            scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(elementScript, baseUrl)));
         }
 
         // 添加框架组件实例注册代码
         List<String> scriptCodeList = new ArrayList<>();
-        scriptCodeList.add("\n$combine.init(\"" + context.getSystemUrl() + "\", " + context.getFlagConfigsJson() + ");");
+        scriptCodeList.add("\n$combine.init(\"" + baseUrl + "\", " + context.getFlagConfigsJson() + ");");
 
-        // 常量注册
-        String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
-        scriptCodeList.add("\n$combine.constant.register(" + contentJson + ");");
+        // 常量注册 TODO
+//        String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
+//        scriptCodeList.add("\n$combine.constant.register(" + contentJson + ");");
 
         // 元素模板注册
         groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + k + "\"," + v + ");"));

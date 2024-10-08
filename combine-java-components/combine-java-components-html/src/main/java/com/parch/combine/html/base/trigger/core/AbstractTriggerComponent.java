@@ -5,8 +5,12 @@ import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.html.base.ConfigErrorEnum;
+import com.parch.combine.html.common.cache.base.IRegisterComponent;
+import com.parch.combine.html.common.cache.TriggerConfigCache;
+import com.parch.combine.html.common.enums.ConfigTypeEnum;
+import com.parch.combine.html.common.enums.TriggerTypeEnum;
 
-public abstract class AbstractTriggerComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> {
+public abstract class AbstractTriggerComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> implements IRegisterComponent {
 
     protected TriggerTypeEnum type;
 
@@ -31,4 +35,9 @@ public abstract class AbstractTriggerComponent<L extends ILogicConfig> extends A
     }
 
     protected abstract TriggerConfig getConfig();
+
+    @Override
+    public ConfigTypeEnum getConfigType() {
+        return ConfigTypeEnum.TRIGGER;
+    }
 }
