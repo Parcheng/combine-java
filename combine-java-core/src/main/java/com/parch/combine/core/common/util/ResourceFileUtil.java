@@ -40,7 +40,7 @@ public class ResourceFileUtil {
         try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(path);
              BufferedReader reader = inputStream == null ? null : new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             if (reader == null) {
-                PrintUtil.printError("配置文件：" + path + "不存在！");
+                PrintLogUtil.printError("配置文件：" + path + "不存在！");
             } else {
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -48,7 +48,7 @@ public class ResourceFileUtil {
                 }
             }
         } catch (Exception e) {
-            PrintUtil.printError("读取配置文件异常：" + e.getMessage());
+            PrintLogUtil.printError("读取配置文件异常：" + e.getMessage());
             e.printStackTrace();
         }
 

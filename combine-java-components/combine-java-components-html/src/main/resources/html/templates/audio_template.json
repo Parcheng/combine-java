@@ -1,0 +1,39 @@
+{
+    "external": {
+        "tag": "div",
+        "class": "c-audio",
+        "style": "",
+        "properties": {}
+    },
+    "audio": {
+        "tag": "audio",
+        "class": "",
+        "style": "",
+        "properties": {
+            "controls": true
+        }
+    },
+    "mp3": {
+        "tag": "source",
+        "class": "",
+        "style": "",
+        "properties": {
+            "type": "audio/mpeg"
+        }
+    },
+    "ogg": {
+        "tag": "source",
+        "class": "",
+        "style": "",
+        "properties": {
+            "type": "audio/ogg"
+        }
+    },
+    "content": {
+        "tag": "span",
+        "class": "",
+        "style": "",
+        "text": "Your browser does not support this audio format.",
+        "properties": {}
+    }
+}

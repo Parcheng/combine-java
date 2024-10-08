@@ -1,0 +1,44 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "callFlow/apiGet": [
+      {
+        "id": "callFlowApi",
+        "type": "call.api",
+        "url": "https://blog.csdn.net/phoenix/web/v1/get-latest-comment",
+        "mode": "GET",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    ],
+    "callFlow/apiPost": [
+      {
+        "id": "callFlowApi2",
+        "type": "call.api",
+        "url": "http://127.0.0.1:8888/combine/api/a/b",
+        "mode": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "params": {
+          "id": "#{id}",
+          "name": "#{name}"
+        }
+      }
+    ],
+    "a/b": [
+      {
+        "id": "callFlowApiTest",
+        "type": "data.mapping",
+        "items": [
+          { "fieldName": "id", "source": "#{id}"},
+          { "fieldName": "data", "source": "aaaaaaaaaaaaaaaaaaaa"},
+          { "fieldName": "flag", "source": "3"},
+          { "fieldName": "name", "source": "#{name}"}
+        ]
+      }
+    ]
+  }
+}

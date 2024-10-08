@@ -10,78 +10,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>combine-java-components</artifactId>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
-
-    <modules>
-        <module>combine-java-components-base</module>
-        <module>combine-java-components-gui</module>
-        <module>combine-java-components-redis</module>
-        <module>combine-java-components-rocketmq</module>
-        <module>combine-java-components-mysql</module>
-    </modules>
-
-    <properties>
-        <poi.version>4.1.2</poi.version>
-        <mail-api.version>1.4.7</mail-api.version>
-        <compress.version>1.20</compress.version>
-        <mysql-connector.version>8.0.33</mysql-connector.version>
-        <jedis.version>3.6.3</jedis.version>
-        <rocketmq.version>4.3.2</rocketmq.version>
-        <rabbitmq.version>5.13.1</rabbitmq.version>
-        <pdfbox.version>2.0.12</pdfbox.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi</artifactId>
-                <version>${poi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml</artifactId>
-                <version>${poi.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.pdfbox</groupId>
-                <artifactId>pdfbox</artifactId>
-                <version>${pdfbox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${compress.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.mail</groupId>
-                <artifactId>mail</artifactId>
-                <version>${mail-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.mysql</groupId>
-                <artifactId>mysql-connector-j</artifactId>
-                <version>${mysql-connector.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>redis.clients</groupId>
-                <artifactId>jedis</artifactId>
-                <version>${jedis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-client</artifactId>
-                <version>${rocketmq.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.rabbitmq</groupId>
-                <artifactId>amqp-client</artifactId>
-                <version>${rabbitmq.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>

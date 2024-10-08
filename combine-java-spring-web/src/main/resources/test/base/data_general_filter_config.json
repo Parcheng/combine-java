@@ -1,0 +1,34 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataFilter/test": [
+      {
+        "id": "dataFilterTestData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"}
+        ]
+      },{
+        "id": "dataFilterClearTest",
+        "type": "data.filter",
+        "items": [
+          {"target":"#{$r.dataFilterTestData.data}"},
+          {"target":"#{data1}"}
+        ]
+      },{
+        "id": "dataFilterReplaceTest",
+        "type": "data.filter",
+        "items": [
+          {"target":"#{$r.dataFilterTestData.name}", "rule":"replace", "params":"name_replace_test"},
+          {"target":"#{$r.dataFilterTestData.delete_flag}", "rule":"replace", "params":"#{deleteFlag}"},
+          {"target":"#{data2}", "rule":"replace", "params":"data_replace_test"}
+        ]
+      }
+    ]
+  }
+}

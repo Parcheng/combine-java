@@ -1,7 +1,7 @@
 package com.parch.combine.gui.core.call.element;
 
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
 import com.parch.combine.gui.core.element.IGUIElement;
 
@@ -23,6 +23,6 @@ public abstract class AbstractGUIElementCallFunction implements IGUIElementCallF
     }
 
     protected void printError(String msg) {
-        PrintUtil.printError("【GUI CALL FUNCTION】【" + id + "】【" + key + "】 ERROR: " + msg);
+        PrintLogUtil.printError("【GUI CALL FUNCTION】【" + id + "】【" + key + "】 ERROR: " + msg);
     }
 }

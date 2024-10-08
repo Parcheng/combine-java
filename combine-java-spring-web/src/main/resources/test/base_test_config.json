@@ -1,0 +1,887 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "common/interceptor": [
+      {
+        "type": "system.test",
+        "name": "INTERCEPTOR-TEST",
+        "configPath": "test/base/interceptor_config.json",
+        "flowTests": [
+          {
+            "domain": "interceptor",
+            "function": "before1",
+            "params": {},
+            "items": [
+              { "id": "1-1", "source": "#{interceptorTest}", "compareType": "EQ", "target": "100" },
+              { "id": "1-2", "source": "#{name}", "compareType": "EQ", "target": "name" }
+            ]
+          },{
+            "domain": "interceptor",
+            "function": "before2",
+            "params": {},
+            "items": [
+              { "id": "2-1", "source": "#{interceptorTest}", "compareType": "EQ", "target": "200" },
+              { "id": "2-2", "source": "#{name}", "compareType": "EQ", "target": "name" }
+            ]
+          },{
+            "domain": "interceptor",
+            "function": "before3",
+            "params": {},
+            "items": [
+              { "id": "3-1", "source": "#{interceptorTest}", "compareType": "EQ", "target": "300" },
+              { "id": "3-2", "source": "#{name}", "compareType": "EQ", "target": "name" }
+            ]
+          },{
+            "domain": "interceptor",
+            "function": "before4",
+            "params": {},
+            "items": [
+              { "id": "4-1", "source": "#{interceptorTest}", "compareType": "EQ", "target": "300" },
+              { "id": "4-2", "source": "#{name}", "compareType": "EQ", "target": "name2" }
+            ]
+          }
+        ]
+      }
+    ],
+    "base/call": [
+      {
+        "type": "system.test",
+        "name": "CALL-API-TEST",
+        "configPath": "test/base/call_api_config.json",
+        "flowTests": [
+          {
+            "domain": "callFlow",
+            "function": "apiGet",
+            "params": {},
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.callFlowApi}",
+              "compareType": "NO_NULL"
+            }]
+          },{
+            "domain": "callFlow",
+            "function": "apiPost",
+            "params": {},
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.callFlowApi2}",
+              "compareType": "NO_NULL"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "CALL-FLOW-TEST",
+        "configPath": "test/base/call_flow_config.json",
+        "flowTests": [
+          {
+            "domain": "callFlow",
+            "function": "call",
+            "params": {
+              "id": 1
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.callFlowCall.name}",
+              "compareType": "EQ",
+              "target": "INIT"
+            }]
+          }
+        ]
+      }
+    ],
+    "base/data": [
+      {
+        "type": "system.test",
+        "name": "DATA-GENERAL-CALC-TEST",
+        "configPath": "test/base/data_general_calc_config.json",
+        "flowTests": [
+          {
+            "domain": "dataCalc",
+            "function": "test",
+            "params": {
+              "list": [1,40,50,70,80]
+            },
+            "items": [
+              { "id": "1-1", "source": "#{$r.dataCalcTest.[0]}", "compareType": "EQ", "target": "51" },
+              { "id": "1-1", "source": "#{min}", "compareType": "EQ", "target": "10" },
+              { "id": "1-1", "source": "#{max}", "compareType": "EQ", "target": "100" },
+              { "id": "1-1", "source": "#{random}", "compareType": "GT", "target": "1" },
+              { "id": "1-1", "source": "#{random}", "compareType": "LT", "target": "100" },
+              { "id": "1-1", "source": "#{uuid}", "compareType": "NO_EMPTY" }
+            ]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "DATA-GENERAL-CREATE-TEST",
+        "configPath": "test/base/data_general_create_config.json",
+        "flowTests": [
+          {
+            "domain": "dataCreate",
+            "function": "test",
+            "params": {},
+            "items": [{
+              "id": "1-1",
+              "source": "#{id}",
+              "compareType": "EQ",
+              "target": "100000"
+            },{
+              "id": "1-2",
+              "source": "#{name}",
+              "compareType": "EQ",
+              "target": "zhangsan"
+            },{
+              "id": "1-3",
+              "source": "#{deleteFlag}",
+              "compareType": "EQ",
+              "target": "true"
+            },{
+              "id": "1-4",
+              "source": "#{updateTime}",
+              "compareType": "IS_DATE"
+            },{
+              "id": "1-5",
+              "source": "#{items.[0]}",
+              "compareType": "EQ",
+              "target": "a"
+            },{
+              "id": "1-6",
+              "source": "#{items.[3]}",
+              "compareType": "EQ",
+              "target": "c"
+            },{
+              "id": "1-7",
+              "source": "#{settings.id}",
+              "compareType": "EQ",
+              "target": "1"
+            },{
+              "id": "1-8",
+              "source": "#{settings.type}",
+              "compareType": "EQ",
+              "target": "a"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "DATA-GENERAL-EDIT-TEST",
+        "configPath": "test/base/data_general_edit_config.json",
+        "flowTests": [
+          {
+            "domain": "dataEdit",
+            "function": "base",
+            "params": {},
+            "items": [
+              { "id": "1-1", "source": "#{id}", "compareType": "EQ", "target": "101" },
+              { "id": "1-2", "source": "#{name}", "compareType": "EQ", "target": "TEST" },
+              { "id": "1-3", "source": "#{time}", "compareType": "NO_NULL" }
+            ]
+          },{
+            "domain": "dataEdit",
+            "function": "list",
+            "params": {
+              "list1": [1,2,3,40,50,60],
+              "list2": ["XA","XB","XC","XD","XE"]
+            },
+            "items": [
+              { "id": "2-1", "source": "#{list1.[0]}", "compareType": "EQ", "target": "10" },
+              { "id": "2-2", "source": "#{list1.[1]}", "compareType": "EQ", "target": "20" },
+              { "id": "2-3", "source": "#{list1.[2]}", "compareType": "EQ", "target": "30" },
+              { "id": "2-4", "source": "#{list1.[3]}", "compareType": "EQ", "target": "70" },
+              { "id": "2-5", "source": "#{list1.[4]}", "compareType": "EQ", "target": "80" },
+              { "id": "2-6", "source": "#{list1.[5]}", "compareType": "EQ", "target": "90" },
+              { "id": "2-7", "source": "#{list1.[6]}", "compareType": "EQ", "target": "100" },
+              { "id": "2-8", "source": "#{list1.[7]}", "compareType": "EQ", "target": "140" },
+
+              { "id": "2-9", "source": "#{list2.[0]}", "compareType": "EQ", "target": "a" },
+              { "id": "2-10", "source": "#{list2.[1]}", "compareType": "EQ", "target": "b" },
+              { "id": "2-11", "source": "#{list2.[2]}", "compareType": "EQ", "target": "c" },
+              { "id": "2-12", "source": "#{list2.[3]}", "compareType": "EQ", "target": "aa" },
+              { "id": "2-13", "source": "#{list2.[4]}", "compareType": "EQ", "target": "bb" },
+              { "id": "2-14", "source": "#{list2.[5]}", "compareType": "EQ", "target": "cc" },
+              { "id": "2-15", "source": "#{list2.[7]}", "compareType": "EQ", "target": "ddd" }
+            ]
+          },{
+            "domain": "dataEdit",
+            "function": "object",
+            "params": {
+              "data": {}
+            },
+            "items": [
+              { "id": "3-1", "source": "#{data.dataType}", "compareType": "EQ", "target": "txt" },
+              { "id": "3-2", "source": "#{data.status}", "compareType": "EQ", "target": "1" },
+              { "id": "3-3", "source": "#{data.type}", "compareType": "EQ", "target": "init" },
+              { "id": "3-4", "source": "#{data.code}", "compareType": "IS_NULL" },
+              { "id": "3-5", "source": "#{data.code2}", "compareType": "IS_NULL" },
+              { "id": "3-6", "source": "#{data.code3}", "compareType": "IS_NULL" },
+              { "id": "3-7", "source": "#{data.code4}", "compareType": "IS_NULL" },
+              { "id": "3-8", "source": "#{data.flag}", "compareType": "IS_NULL" },
+              { "id": "3-9", "source": "#{data.id}", "compareType": "IS_NULL" },
+              { "id": "3-10", "source": "#{data.name}", "compareType": "IS_NULL" }
+            ]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "DATA-GENERAL-FILTER-TEST",
+        "configPath": "test/base/data_general_filter_config.json",
+        "flowTests": [
+          {
+            "domain": "dataFilter",
+            "function": "test",
+            "params": {
+              "data1": "DATA_1",
+              "data2": "DATA_2",
+              "deleteFlag": 1
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.dataFilterTestData.data}",
+              "compareType": "IS_NULL"
+            },{
+              "id": "1-2",
+              "source": "#{data}",
+              "compareType": "IS_NULL"
+            },{
+              "id": "1-3",
+              "source": "#{$r.dataFilterTestData.name}",
+              "compareType": "EQ",
+              "target": "name_replace_test"
+            },{
+              "id": "1-4",
+              "source": "#{$r.dataFilterTestData.delete_flag}",
+              "compareType": "EQ",
+              "target": "1"
+            },{
+              "id": "1-5",
+              "source": "#{data2}",
+              "compareType": "EQ",
+              "target": "data_replace_test"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "DATA-GENERAL-FORMAT-TEST",
+        "configPath": "test/base/data_general_format_config.json",
+        "flowTests": [
+          {
+            "domain": "dataFormat",
+            "function": "json",
+            "params": {},
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.dataFormatJson3.[0].id}",
+              "compareType": "EQ",
+              "target": "1"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "clear",
+            "params": {},
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.dataFormatClear.[0].[1].id}",
+              "compareType": "EQ",
+              "target": "20"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "sort",
+            "params": {},
+            "items": [{
+              "id": "3-1",
+              "source": "#{$r.dataFormatSort.[0].[0].id}",
+              "compareType": "EQ",
+              "target": "10"
+            },{
+              "id": "3-2",
+              "source": "#{$r.dataFormatSort2.[0].[0].id}",
+              "compareType": "EQ",
+              "target": "30"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "convert1",
+            "params": {},
+            "items": [{
+              "id": "4-1",
+              "source": "#{$r.dataFormatConvert31.[0].id}",
+              "compareType": "EQ",
+              "target": "10"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "convert2",
+            "params": {},
+            "items": [{
+              "id": "5-1",
+              "source": "#{$r.dataFormatConvert4.[0].[0].id}",
+              "compareType": "EQ",
+              "target": "10"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "convert3",
+            "params": {},
+            "items": [{
+              "id": "6-1",
+              "source": "#{$r.dataFormatConvert32.[0].[0].id}",
+              "compareType": "EQ",
+              "target": "10"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "group",
+            "params": {},
+            "items": [{
+              "id": "7-1",
+              "source": "#{$r.dataFormatGroup.[0].INIT2.[0].id}",
+              "compareType": "EQ",
+              "target": "20"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "map",
+            "params": {},
+            "items": [{
+              "id": "8-1",
+              "source": "#{$r.dataFormatMap.[0].10}",
+              "compareType": "EQ",
+              "target": "[{\"id\":1}]"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "tree",
+            "params": {
+              "list": [
+                { "id": 1, "name": "1" },
+                { "id": 2, "name": "2" },
+                { "id": 3, "name": "3" },
+                { "id": 4, "parentId": 1, "name": "4" },
+                { "id": 5, "parentId": 2, "name": "5" },
+                { "id": 6, "parentId": 3, "name": "6" },
+                { "id": 7, "parentId": 4, "name": "7" },
+                { "id": 8, "parentId": 5, "name": "8" },
+                { "id": 9, "parentId": 6, "name": "9" },
+                { "id": 10, "parentId": 7, "name": "10" }
+              ]
+            },
+            "items": [{
+              "id": "9-1",
+              "source": "#{$r.dataFormatTree.[0].[1].children.[0].children.[0].name}",
+              "compareType": "EQ",
+              "target": "8"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "rang",
+            "params": {},
+            "items": [{
+              "id": "10-1",
+              "source": "#{$r.dataFormatRang.[0].[0].id}",
+              "compareType": "EQ",
+              "target": "10"
+            }]
+          },{
+            "domain": "dataFormat",
+            "function": "md5",
+            "params": {
+              "data": "123456"
+            },
+            "items": [{
+              "id": "11-1",
+              "source": "#{data}",
+              "compareType": "EQ",
+              "target": "e10adc3949ba59abbe56e057f20f883e"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "DATA-GENERAL-MAPPING-TEST",
+        "configPath": "test/base/data_general_mapping_config.json",
+        "flowTests": [
+          {
+            "domain": "dataMapping",
+            "function": "test",
+            "params": {
+              "data": "DATA"
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.dataMapping.id}",
+              "compareType": "EQ",
+              "target": "1"
+            },{
+              "id": "1-2",
+              "source": "#{$r.dataMapping.data}",
+              "compareType": "EQ",
+              "target": "DATA"
+            },{
+              "id": "1-3",
+              "source": "#{$r.dataMapping.flag}",
+              "compareType": "EQ",
+              "target": "1"
+            },{
+              "id": "1-4",
+              "source": "#{$r.dataMapping.name}",
+              "compareType": "EQ",
+              "target": "dataMapping"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "DATA-RESET-TEST",
+        "configPath": "test/base/data_general_reset_config.json",
+        "flowTests": [
+          {
+            "domain": "dataReset",
+            "function": "test",
+            "params": {
+              "data": "DATA"
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.dataResetTestData.name}",
+              "compareType": "EQ",
+              "target": "name_reset_test"
+            },{
+              "id": "1-2",
+              "source": "#{$r.dataResetTestData.data}",
+              "compareType": "EQ",
+              "target": "DATA"
+            },{
+              "id": "1-3",
+              "source": "#{$r.dataResetTestData.delete_flag}",
+              "compareType": "EQ",
+              "target": "1"
+            },{
+              "id": "1-4",
+              "source": "#{data}",
+              "compareType": "EQ",
+              "target": "data_reset_test"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "DATA-GENERAL-VERIFY-TEST",
+        "configPath": "test/base/data_general_verify_config.json",
+        "flowTests": [
+          {
+            "domain": "dataVerify",
+            "function": "test",
+            "params": {
+              "id": "10000",
+              "name": "111111111111"
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.dataVerify.[0]}",
+              "compareType": "EQ",
+              "target": "ID必须小于等于10"
+            },{
+              "id": "1-2",
+              "source": "#{$r.dataVerify.[1]}",
+              "compareType": "EQ",
+              "target": "描述不能为空"
+            },{
+              "id": "1-3",
+              "source": "#{$r.dataVerify.[2]}",
+              "compareType": "EQ",
+              "target": "名称未包含verify"
+            }]
+          },{
+            "domain": "dataVerify",
+            "function": "test2",
+            "params": {},
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.dataVerify2.[0]}",
+              "compareType": "EQ",
+              "target": "ID必须大于等于10"
+            },{
+              "id": "1-2",
+              "source": "#{$r.dataVerify2.[1]}",
+              "compareType": "EQ",
+              "target": "名称未包含verify"
+            },{
+              "id": "1-3",
+              "source": "#{$r.dataVerify2.[2]}",
+              "compareType": "EQ",
+              "target": "描述不能为空"
+            }]
+          }
+        ]
+      }
+    ],
+    "base/file": [
+      {
+        "type": "system.test",
+        "name": "FILE-BUILD-TEST",
+        "configPath": "test/base/file_build_config.json",
+        "flowTests": [
+          {
+            "domain": "fileBuild",
+            "function": "table",
+            "params": {},
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.buildTable}",
+              "compareType": "NO_EMPTY"
+            }]
+          },{
+            "domain": "fileBuild",
+            "function": "text",
+            "params": {},
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.buildText}",
+              "compareType": "NO_EMPTY"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "FILE-INPUT-TEST",
+        "configPath": "test/base/file_input_config.json",
+        "flowTests": [
+          {
+            "domain": "fileOpen",
+            "function": "diskToText",
+            "params": {},
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.fileOpenData1}",
+              "compareType": "NO_EMPTY"
+            }]
+          },{
+            "domain": "fileOpen",
+            "function": "diskToXlsx",
+            "params": {},
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.fileOpenData2}",
+              "compareType": "NO_EMPTY"
+            }]
+          },{
+            "domain": "fileOpen",
+            "function": "upload",
+            "params": {
+              "$file": {
+                "name": "text",
+                "type": "txt",
+                "size": 9,
+                "data": "TEST_TEXT"
+              }
+            },
+            "items": [{
+              "id": "3-1",
+              "source": "#{$r.fileOpenData3}",
+              "compareType": "NO_EMPTY"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "FILE-OUTPUT-TEST",
+        "configPath": "test/base/file_output_config.json",
+        "flowTests": [
+          {
+            "domain": "fileOutput",
+            "function": "disk",
+            "params": {},
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.exportDisk}",
+              "compareType": "EQ",
+              "target": "true"
+            },{
+              "id": "1-2",
+              "source": "#{$r.exportDiskFileOpenRead.[0]}",
+              "compareType": "EQ",
+              "target": "INIT",
+              "refId": "1-1"
+            }]
+          },{
+            "domain": "fileOutput",
+            "function": "download",
+            "params": {
+              "name": "test"
+            },
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.exportDownload}",
+              "compareType": "NO_EMPTY"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "FILE-PARSE-TEST",
+        "configPath": "test/base/file_parse_config.json",
+        "flowTests": [
+          {
+            "domain": "fileRead",
+            "function": "textToTable",
+            "params": {},
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.convertTable1.[0].[0]}",
+              "compareType": "EQ",
+              "target": "INIT2"
+            },{
+              "id": "2-2",
+              "source": "#{$r.convertTable1.[0].[1]}",
+              "compareType": "EQ",
+              "target": "29"
+            },{
+              "id": "2-3",
+              "source": "#{$r.convertTable1.[0].[2]}",
+              "compareType": "EQ",
+              "target": "[{\"id\":\"200\",\"name\":\"test2\"}]"
+            }]
+          },{
+            "domain": "fileRead",
+            "function": "tableToTable",
+            "params": {},
+            "items": [{
+              "id": "3-1",
+              "source": "#{$r.dataCrop2.[0].[0]}",
+              "compareType": "EQ",
+              "target": "INIT2"
+            },{
+              "id": "3-2",
+              "source": "#{$r.dataCrop2.[0].[1]}",
+              "compareType": "EQ",
+              "target": "29"
+            },{
+              "id": "3-3",
+              "source": "#{$r.dataCrop2.[0].[2]}",
+              "compareType": "EQ",
+              "target": "[{\"id\":\"200\",\"name\":\"test2\"}]"
+            }]
+          },{
+            "domain": "fileRead",
+            "function": "textToText",
+            "params": {},
+            "items": [{
+              "id": "4-1",
+              "source": "#{$r.dataCrop3.[0]}",
+              "compareType": "EQ",
+              "target": "这是一篇测试文本"
+            }]
+          },{
+            "domain": "fileRead",
+            "function": "tableToText",
+            "params": {},
+            "items": [{
+              "id": "5-1",
+              "source": "#{$r.convertTable4.[0]}",
+              "compareType": "EQ",
+              "target": "INIT2|29|[{\"id\":\"200\",\"name\":\"test2\"}]|2023-10-24 20:34:45|2023-10-24 20:34:45"
+            }]
+          }
+        ]
+      }
+    ],
+    "base/logic": [
+      {
+        "type": "system.test",
+        "name": "LOGIC-JUDGMENT-TEST",
+        "configPath": "test/base/logic_judgment_config.json",
+        "flowTests": [
+          {
+            "domain": "logic",
+            "function": "judgment",
+            "params": {
+              "id": "1"
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.logicJudgmentResult1.result}",
+              "compareType": "EQ",
+              "target": "1"
+            }]
+          },{
+            "domain": "logic",
+            "function": "judgment",
+            "params": {
+              "id": "2"
+            },
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.logicJudgmentResult2.result}",
+              "compareType": "EQ",
+              "target": "INIT"
+            }]
+          },{
+            "domain": "logic",
+            "function": "judgment",
+            "params": {
+              "name": "test"
+            },
+            "items": [{
+              "id": "3-1",
+              "source": "#{$r.logicJudgmentResult2.result}",
+              "compareType": "EQ",
+              "target": "INIT"
+            }]
+          },{
+            "domain": "logic",
+            "function": "judgment",
+            "params": {
+              "id": "4"
+            },
+            "items": [{
+              "id": "4-1",
+              "source": "#{$r.logicJudgmentResult3.result}",
+              "compareType": "EQ",
+              "target": "28"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "LOGIC-ERROR-TEST",
+        "configPath": "test/base/logic_error_config.json",
+        "flowTests": [
+          {
+            "domain": "logic",
+            "function": "error",
+            "params": {
+              "id": "1"
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.logicError.$success}",
+              "compareType": "EQ",
+              "target": "false"
+            },{
+              "id": "1-2",
+              "source": "#{$r.logicError.$errorMsg}",
+              "compareType": "EQ",
+              "target": "错误1",
+              "refId": "1-1"
+            },{
+              "id": "1-3",
+              "source": "#{$r.logicError.$showMsg}",
+              "compareType": "EQ",
+              "target": "显示错误1",
+              "refId": "1-1"
+            }]
+          },{
+            "domain": "logic",
+            "function": "error",
+            "params": {
+              "id": "2"
+            },
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.logicError.$success}",
+              "compareType": "EQ",
+              "target": "false"
+            },{
+              "id": "2-2",
+              "source": "#{$r.logicError.$errorMsg}",
+              "compareType": "EQ",
+              "target": "错误2",
+              "refId": "2-1"
+            },{
+              "id": "2-3",
+              "source": "#{$r.logicError.$showMsg}",
+              "compareType": "EQ",
+              "target": "显示错误2",
+              "refId": "2-1"
+            }]
+          }
+        ]
+      },{
+        "type": "system.test",
+        "name": "LOGIC-LOOP-TEST",
+        "configPath": "test/base/logic_loop_config.json",
+        "flowTests": [
+          {
+            "domain": "logic",
+            "function": "loop",
+            "params": {
+              "data": ["1","","3","","5","6","7","8"]
+            },
+            "items": [{
+              "id": "1-1",
+              "source": "#{data.[0]}",
+              "compareType": "EQ",
+              "target": "100"
+            },{
+              "id": "1-2",
+              "source": "#{data.[1]}",
+              "compareType": "IS_EMPTY"
+            },{
+              "id": "1-3",
+              "source": "#{data.[2]}",
+              "compareType": "EQ",
+              "target": "200"
+            },{
+              "id": "1-4",
+              "source": "#{data.[3]}",
+              "compareType": "IS_EMPTY"
+            }]
+          },{
+            "domain": "logic",
+            "function": "loop",
+            "params": {
+              "data": ["1","2","3","4","5","6","7","8"]
+            },
+            "items": [{
+              "id": "2-1",
+              "source": "#{data.[3]}",
+              "compareType": "EQ",
+              "target": "200"
+            },{
+              "id": "1-2",
+              "source": "#{data.[4]}",
+              "compareType": "EQ",
+              "target": "200"
+            },{
+              "id": "1-3",
+              "source": "#{data.[5]}",
+              "compareType": "EQ",
+              "target": "6"
+            }]
+          }
+        ]
+      }
+    ],
+    "base/mail": [
+      {
+        "type": "system.test",
+        "name": "MAIL-TEST",
+        "configPath": "test/base/mail_config.json",
+        "flowTests": [
+          {
+            "domain": "mail",
+            "function": "send",
+            "items": [{
+              "id": "1-1",
+              "source": "#{$r.mailSend}",
+              "compareType": "EQ",
+              "target": "true"
+            }]
+          },{
+            "domain": "mail",
+            "function": "receive",
+            "items": [{
+              "id": "2-1",
+              "source": "#{$r.mailReceive}",
+              "compareType": "NO_NULL"
+            }]
+          }
+        ]
+      }
+    ]
+  }
+}

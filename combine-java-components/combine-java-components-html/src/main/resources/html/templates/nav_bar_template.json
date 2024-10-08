@@ -1,0 +1,92 @@
+{
+  "external": {
+    "tag": "nav",
+    "class": "c-navbar",
+    "style": "",
+    "properties": {}
+  },
+  "navBar": {
+    "tag": "div",
+    "class": "c-main",
+    "style": "",
+    "properties": {}
+  },
+  "brand": {
+    "tag": "div",
+    "class": "c-brand",
+    "style": "",
+    "properties": {}
+  },
+  "brandContent": {
+    "tag": "div",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "brandImgContent": {
+    "tag": "img ",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "brandTextContent": {
+    "tag": "span",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "body": {
+    "tag": "div",
+    "class": "c-body",
+    "style": "",
+    "properties": {}
+  },
+  "bodyNav": {
+    "tag": "ul",
+    "class": "c-navs",
+    "style": "",
+    "properties": {}
+  },
+  "bodyNavItem": {
+    "tag": "li",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "bodyNavItemText": {
+    "tag": "span",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "right": {
+    "tag": "ul",
+    "class": "c-opts",
+    "style": "",
+    "properties": {}
+  },
+  "rightOpts": {
+    "tag": "ul",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "rightOptItem": {
+    "tag": "li",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "rightOptItemText": {
+    "tag": "span",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "navActive": {
+    "tag": "span",
+    "class": "c-active",
+    "style": "",
+    "properties": {}
+  }
+}

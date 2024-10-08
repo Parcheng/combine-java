@@ -1,0 +1,20 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataCreate/test": [
+      {
+        "id": "dataCreateTest",
+        "type": "data.create",
+        "items": [
+          {"target":"id", "type":"NUMBER", "params":"100000"},
+          {"target":"name", "type":"STRING", "params":"zhangsan"},
+          {"target":"deleteFlag", "type":"BOOLEAN", "params":"true"},
+          {"target":"updateTime", "type":"DATE", "params":"20231023180000"},
+          {"target":"items", "type":"LIST", "params":["a","a","b","c"]},
+          {"target":"settings", "type":"OBJECT", "params":["(id:1)", "(type:a)"]}
+        ]
+      }
+    ]
+  }
+}

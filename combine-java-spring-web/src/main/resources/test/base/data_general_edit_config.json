@@ -1,0 +1,68 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataEdit/base": [
+      {
+        "id": "dataEditTest1",
+        "type": "data.edit",
+        "items": [
+          {"source":"id", "type":"SET", "dataType":"NUMBER","params":"101"},
+          {"source":"name", "type":"SET", "dataType":"STRING","params":"TEST"},
+          {"source":"time", "type":"SET", "dataType":"DATE","params":"20231101180000"}
+        ]
+      }
+    ],
+    "dataEdit/list": [
+      {
+        "id": "dataEditListData",
+        "type": "data.create",
+        "items": [
+          {"target":"$v.val1", "type":"NUMBER", "params":"30"},
+          {"target":"$v.val2", "type":"STRING", "params":"c"},
+          {"target":"$v.delVal1", "type":"NUMBER", "params":"130"},
+          {"target":"$v.delVal2", "type":"STRING", "params":"aaa"},
+          {"target":"$v.addData1", "type":"LIST", "params":["110","120","130","140"]},
+          {"target":"$v.addData2", "type":"LIST", "params":["aaa","bbb","ccc","ddd"]},
+          {"target":"$v.delData1", "type":"LIST", "params":["110","120"]},
+          {"target":"$v.delData2", "type":"LIST", "params":["bbb","ccc"]}
+        ]
+      }, {
+        "id": "dataEditTest2",
+        "type": "data.edit",
+        "items": [
+          {"source":"list1", "type":"ADD", "dataType":"NUMBER","params":"70"},
+          {"source":"list1", "type":"ADD", "dataType":"NUMBER","params":["80","90","100","#{$v.addData1}"]},
+          {"source":"list1", "type":"SET", "dataType":"NUMBER","params":"(0:10)"},
+          {"source":"list1", "type":"SET", "dataType":"NUMBER","params":["(1:20)","(2:#{$v.val1})"]},
+          {"source":"list1", "type":"REMOVE_INDEX", "params":"4"},
+          {"source":"list1", "type":"REMOVE", "params":"40"},
+          {"source":"list1", "type":"REMOVE_ALL", "params":["60","#{$v.delVal1}","#{$v.delData1}"]},
+          {"source":"list2", "type":"SET", "dataType":"STRING","params":["(0:a)","(1:b)","(2:c)","(3:aa)","(4:bb)","(5:cc)","(7:ddd)"]}
+        ]
+      }
+    ],
+    "dataEdit/object": [
+      {
+        "id": "dataEditObjectData",
+        "type": "data.create",
+        "items": [
+          {"source":"$v.addData", "type":"OBJECT", "params":["(id:1)","(code:001)","(code2:002)","(code3:003)","(code4:004)","(name:test)","(type:init)","(flag:1)"]},
+          {"source":"$v.delData", "type":"OBJECT", "params":["(id:1)","(name:test)"]},
+          {"source":"$v.delData2", "type":"LIST", "params":["code3","code4"]}
+        ]
+      }, {
+        "id": "dataEditTest3",
+        "type": "data.edit",
+        "items": [
+          {"source":"data", "type":"PUT", "dataType":"STRING","params":"(dataType:txt)"},
+          {"source":"data", "type":"PUT", "dataType":"NUMBER","params":["(status:1)", "#{$v.addData}"]},
+          {"source":"data", "type":"PUT", "dataType":"STRING","params":["(type:init)"]},
+          {"source":"data", "type":"REMOVE", "params":"code"},
+          {"source":"data", "type":"REMOVE_INDEX", "params":"code2"},
+          {"source":"data", "type":"REMOVE_ALL", "params":["flag","#{$v.delData}","#{$v.delData2}"]}
+        ]
+      }
+    ]
+  }
+}

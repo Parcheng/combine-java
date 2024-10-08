@@ -1,0 +1,51 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "c-pop",
+    "style": "",
+    "properties": {}
+  },
+  "normal": {
+    "tag": "div",
+    "class": "c-default",
+    "style": "",
+    "properties": {}
+  },
+  "success": {
+    "tag": "div",
+    "class": "c-success",
+    "style": "",
+    "properties": {}
+  },
+  "info": {
+    "tag": "div",
+    "class": "c-info",
+    "style": "",
+    "properties": {}
+  },
+  "warn": {
+    "tag": "div",
+    "class": "c-warning",
+    "style": "",
+    "properties": {}
+  },
+  "error": {
+    "tag": "div",
+    "class": "c-danger",
+    "style": "",
+    "properties": {}
+  },
+  "content": {
+    "tag": "span",
+    "class": "c-content",
+    "style": "",
+    "properties": {}
+  },
+  "close": {
+    "tag": "span",
+    "class": "c-close",
+    "style": "",
+    "text": "x",
+    "properties": {}
+  }
+}

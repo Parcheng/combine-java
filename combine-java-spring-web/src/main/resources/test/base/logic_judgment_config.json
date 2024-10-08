@@ -1,0 +1,60 @@
+{
+  "constant": {},
+  "init": [],
+  "blocks": [
+    {
+      "id": "logicJudgmentResult2",
+      "type": "data.mapping",
+      "items": [{ "fieldName": "result", "source": "#{$r.logicJudgmentTestData.name}" }]
+    }
+  ],
+  "flows": {
+    "logic/judgment": [
+      {
+        "id": "logicJudgmentTestData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"}
+        ],
+        "flags": "STATIC"
+      },{
+        "id": "logicJudgmentResult1",
+        "type": "data.mapping",
+        "items": [{ "fieldName": "result", "source": "#{$r.logicJudgmentTestData.id}" }],
+        "flags": "STATIC"
+      },{
+        "id": "logicJudgment",
+        "type": "logic.judgment",
+        "items": [{
+          "compare": {
+            "relation": "AND",
+            "conditions": ["#{id} EQ 1", "#{name} IS_NULL"]
+          },
+          "components": ["logicJudgmentTestData", "logicJudgmentResult1"]
+        },{
+          "components": [{
+            "id": "logicJudgment2",
+            "type": "logic.judgment",
+            "items": [{
+              "compare": {
+                "relation": "OR",
+                "conditions": ["#{id} EQ 2", "#{name} EQ test"]
+              },
+              "components": ["logicJudgmentTestData", "logicJudgmentResult2"]
+            },{
+              "components": ["logicJudgmentTestData", {
+                "id": "logicJudgmentResult3",
+                "type": "data.mapping",
+                "items": [{ "fieldName": "result", "source": "#{$r.logicJudgmentTestData.size}" }]
+              }]
+            }]
+          }]
+        }]
+      }
+    ]
+  }
+}

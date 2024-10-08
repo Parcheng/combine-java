@@ -1,7 +1,0 @@
-{
-  "initConfigs": ["test.json"],
-  "initFlows": [],
-  "openRegisterConfig": false,
-  "requestIdKey": "requestID",
-  "printComponentResult": true
-}

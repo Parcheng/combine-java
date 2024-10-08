@@ -1,0 +1,25 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "callFlow/invoked": [
+      {
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"#{id}"},
+          {"fieldName":"name", "source":"INIT"}
+        ]
+      }
+    ],
+    "callFlow/call": [
+      {
+        "id": "callFlowCall",
+        "type": "call.flow",
+        "url": "callFlow/invoked",
+        "params": {
+          "id": "#{id}"
+        }
+      }
+    ]
+  }
+}
