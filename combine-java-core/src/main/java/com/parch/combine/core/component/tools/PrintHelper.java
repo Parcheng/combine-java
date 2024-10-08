@@ -87,7 +87,8 @@ public class PrintHelper {
     /**
      * 打印结果信息
      */
-    public static void printComponentResult(AbstractComponent<?,?> component, ComponentDataResult result) {
+    public static void printComponentResult(ComponentDataResult result) {
+        AbstractComponent<?,?> component = ComponentContextHandler.getCurrComponent();
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
         if (component == null) {
@@ -96,6 +97,27 @@ public class PrintHelper {
         }
 
         PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "][" + component.getType() + "] COMPONENT-RESULT -> " + JsonUtil.serialize(result));
+    }
+
+    /**
+     * 打印组件异常信息
+     */
+    public static void printComponentError(String msg) {
+        AbstractComponent<?,?> component = ComponentContextHandler.getCurrComponent();
+        String requestId = ComponentContextHandler.getRequestId();
+        String flowKey = ComponentContextHandler.getFlowKey();
+        String componentInfo = component == null ? "未知组件" : (component.getType() + " - " + component.getId());
+        PrintLogUtil.printError("[" + requestId + "][" + flowKey + "][" + componentInfo + "] COMPONENT-ERROR -> " + msg);
+    }
+
+    /**
+     * 打印组件异常信息
+     */
+    public static void printComponentError(Exception e) {
+        if (e != null) {
+            printComponentError(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

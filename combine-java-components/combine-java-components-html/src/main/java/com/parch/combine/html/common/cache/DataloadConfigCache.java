@@ -1,6 +1,7 @@
 package com.parch.combine.html.common.cache;
 
 import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.html.base.dataload.core.DataLoadConfig;
 import com.parch.combine.html.common.cache.base.BaseCacheModel;
 import com.parch.combine.html.common.cache.base.CacheModelBuilder;
@@ -18,11 +19,10 @@ public class DataloadConfigCache implements IConfigClear {
 
     private DataloadConfigCache() {}
 
-    public void register(String id, DataLoadTypeEnum type, DataLoadConfig config) {
-        DataloadCacheModel model = new DataloadCacheModel();
-        model.id = id;
+    public void register(String id, DataLoadTypeEnum type, DataLoadConfig config, CombineManager manager) {
+        CacheModelBuilder builder = new CacheModelBuilder(id, type.name(), config, manager);
+        DataloadCacheModel model = builder.build(new DataloadCacheModel());
         model.type = type;
-        model.json = JsonUtil.serialize(CacheModelBuilder.parseInterfaceToMap(id, type.name(), config));
         CACHE.put(id, model);
     }
 

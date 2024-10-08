@@ -30,7 +30,7 @@ public abstract class AbstractTriggerComponent<L extends ILogicConfig> extends A
             return ComponentDataResult.fail(ConfigErrorEnum.CONFIG_IS_NULL);
         }
 
-        TriggerConfigCache.INSTANCE.register(logicConfig.id(), type, config);
+        TriggerConfigCache.INSTANCE.register(logicConfig.id(), type, config, manager);
         return ComponentDataResult.success(true);
     }
 

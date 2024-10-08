@@ -29,7 +29,7 @@ public abstract class AbstractTemplateComponent<L extends ILogicConfig> extends 
             return ComponentDataResult.fail(ConfigErrorEnum.CONFIG_IS_NULL);
         }
 
-        ElementTemplateConfigCache.INSTANCE.register(logicConfig.id(), type, config);
+        ElementTemplateConfigCache.INSTANCE.register(logicConfig.id(), type, config, manager);
         return ComponentDataResult.success(true);
     }
 

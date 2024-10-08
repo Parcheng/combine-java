@@ -30,7 +30,7 @@ public abstract class AbstractDataLoadComponent<L extends ILogicConfig> extends 
             return ComponentDataResult.fail(ConfigErrorEnum.CONFIG_IS_NULL);
         }
 
-        DataloadConfigCache.INSTANCE.register(logicConfig.id(), type, config);
+        DataloadConfigCache.INSTANCE.register(logicConfig.id(), type, config, manager);
         return ComponentDataResult.success(true);
     }
 

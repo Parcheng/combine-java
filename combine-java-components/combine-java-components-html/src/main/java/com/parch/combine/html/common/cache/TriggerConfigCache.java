@@ -1,6 +1,7 @@
 package com.parch.combine.html.common.cache;
 
 import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.html.base.trigger.core.TriggerConfig;
 import com.parch.combine.html.common.cache.base.BaseCacheModel;
 import com.parch.combine.html.common.cache.base.CacheModelBuilder;
@@ -18,11 +19,10 @@ public class TriggerConfigCache implements IConfigClear {
 
     private TriggerConfigCache() {}
 
-    public void register(String id, TriggerTypeEnum type, TriggerConfig config) {
-        TriggerCacheModel model = new TriggerCacheModel();
-        model.id = id;
+    public void register(String id, TriggerTypeEnum type, TriggerConfig config, CombineManager manager) {
+        CacheModelBuilder builder = new CacheModelBuilder(id, type.name(), config, manager);
+        TriggerCacheModel model = builder.build(new TriggerCacheModel());
         model.type = type;
-        model.json = JsonUtil.serialize(CacheModelBuilder.parseInterfaceToMap(id, type.name(), config));
         CACHE.put(id, model);
     }
 

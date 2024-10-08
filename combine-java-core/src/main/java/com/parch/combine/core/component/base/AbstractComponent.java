@@ -115,7 +115,7 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
 
                 // 打印日志
                 if (logicConfig.printResult() == null ? GlobalContextHandler.get(scopeKey).getPrintComponentResult() : logicConfig.printResult()) {
-                    PrintHelper.printComponentResult(this, result);
+                    PrintHelper.printComponentResult(result);
                 }
 
                 // 清当前执行的组件对象

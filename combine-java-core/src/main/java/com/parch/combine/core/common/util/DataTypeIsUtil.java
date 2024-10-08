@@ -163,4 +163,14 @@ public class DataTypeIsUtil {
     public static boolean isList(Object data) {
         return data instanceof List;
     }
+
+    /**
+     * 是否为数组
+     *
+     * @param data 数据
+     * @return 结果
+     */
+    public static boolean isArray(Object data) {
+        return data != null && data.getClass().isArray();
+    }
 }

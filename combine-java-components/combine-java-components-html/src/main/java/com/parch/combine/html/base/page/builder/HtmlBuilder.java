@@ -7,6 +7,7 @@ import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.html.base.page.config.HtmlConfig;
 import com.parch.combine.html.base.page.config.HtmlElementConfig;
+import com.parch.combine.html.common.cache.ElementGroupConfigCache;
 import com.parch.combine.html.common.canstant.UrlPathCanstant;
 import com.parch.combine.html.common.tool.ConfigErrorMsgTool;
 import com.parch.combine.html.common.tool.HtmlBuildTool;
@@ -42,7 +43,6 @@ public class HtmlBuilder {
 
     public List<String> check() {
         List<String> msg = new ArrayList<>();
-        msg.addAll(groupBuilder.check());
         if (templateConfig == null) {
             msg.add(ConfigErrorMsgTool.fieldCheckError("templateConfig", "页面模板不存在"));
         }
@@ -50,6 +50,8 @@ public class HtmlBuilder {
     }
 
     public String build() {
+        String[] groupIds = config.groupIds();
+        ElementGroupConfigCache.INSTANCE.get();
         ElementGroupBuilder.ElementGroupResult groupResult = groupBuilder.build();
 
         String head = buildHead(groupResult);

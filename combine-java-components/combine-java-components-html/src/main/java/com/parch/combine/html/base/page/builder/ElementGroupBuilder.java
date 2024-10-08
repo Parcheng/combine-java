@@ -2,14 +2,13 @@ package com.parch.combine.html.base.page.builder;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.ui.core.base.dataload.DataLoadConfig;
-import com.parch.combine.ui.core.base.element.ElementConfig;
-import com.parch.combine.ui.core.base.element.ElementTemplateConfig;
-import com.parch.combine.ui.core.base.trigger.TriggerConfig;
-import com.parch.combine.ui.core.context.ConfigLoadingContextHandler;
-import com.parch.combine.ui.core.handler.CombineManagerHandler;
-import com.parch.combine.ui.core.manager.CombineManager;
-import com.parch.combine.ui.core.tools.UrlPathHelper;
+import com.parch.combine.core.component.manager.CombineManager;
+import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.html.common.cache.ElementConfigCache;
+import com.parch.combine.html.common.cache.ElementGroupConfigCache;
+import com.parch.combine.html.common.cache.TriggerConfigCache;
+import com.parch.combine.html.common.cache.base.BaseCacheModel;
+import com.parch.combine.html.common.enums.ConfigTypeEnum;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,52 +16,73 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ElementGroupBuilder {
 
     private String scopeKey;
     private CombineManager manager;
-    private Map<String, List<String>> groupMap = new HashMap<>();
-    private Map<String, ElementConfig<?>> elementMap = new HashMap<>();
+    private Map<String, String[]> groupMap = new HashMap<>();
+    private Map<String, ElementConfigCache.ElementCacheModel> elementMap = new HashMap<>();
     private Map<String, ElementTemplateConfig> templateMap = new HashMap<>();
     private Map<String, DataLoadConfig> dataLoadMap = new HashMap<>();
     private Map<String, Set<String>> dataLoadToElementIdMap = new HashMap<>();
-    private Map<String, TriggerConfig> triggerMap = new HashMap<>();
+    private Map<String, TriggerConfigCache.TriggerCacheModel> triggerMap = new HashMap<>();
 
-    public ElementGroupBuilder(String[] groupIds) {
-        scopeKey = ConfigLoadingContextHandler.getContext().getScopeKey();
-        manager = CombineManagerHandler.get(scopeKey);
+    public ElementGroupBuilder(String[] groupIds, CombineManager manager) {
+        this.manager = manager;
         initGroups(groupIds);
     }
 
-    private void initGroups(List<String> groupIds) {
+    private void initGroups(String[] groupIds) {
         for (String groupId : groupIds) {
-            List<String> elementIds = manager.getPageGroup().get(groupId);
-            groupMap.put(groupId, elementIds);
-            if (CheckEmptyUtil.isEmpty(elementIds)) {
+            ElementGroupConfigCache.GroupCacheModel model = ElementGroupConfigCache.INSTANCE.get(groupId);
+            if (model == null) {
+                SubComponentTool.execute(manager, groupId);
+            }
+
+            model = ElementGroupConfigCache.INSTANCE.get(groupId);
+            if (model == null) {
+                // TODO ERROR
                 continue;
             }
 
-            initElements(elementIds);
+            groupMap.put(groupId, model.elementIds);
+            if (CheckEmptyUtil.isEmpty(model.elementIds)) {
+                continue;
+            }
+
+            initElements(model.elementIds);
         }
     }
 
-    private void initElements(List<String> elementIds) {
+    private void initElements(String[] elementIds) {
         if (CheckEmptyUtil.isEmpty(elementIds)) {
             return;
         }
 
         for (String elementId : elementIds) {
-            ElementConfig<?> element = manager.getPageElement().get(elementId);
-            elementMap.put(elementId, element);
-            if (element == null) {
+            ElementConfigCache.ElementCacheModel model = ElementConfigCache.INSTANCE.get(elementId);
+            if (model == null) {
+                SubComponentTool.execute(manager, elementId);
+            }
+
+            model = ElementConfigCache.INSTANCE.get(elementId);
+            if (model == null) {
+                // TODO ERROR
                 continue;
             }
 
-            initTemplate(element.getTemplateId(), element.getType(), element.thisTemplateConfigClass());
-            initDataLoad(element.getDataLoadId(), element.getId());
-            initElements(manager.getPageElement().getSubElements(element.getId()));
-            initTriggers(manager.getPageElement().getSubTriggers(element.getId()));
+            elementMap.put(elementId, model);
+            List<BaseCacheModel.SubCacheModel> subs = model.subCaches;
+            if (CheckEmptyUtil.isEmpty(subs)) {
+                continue;
+            }
+
+            initElements(subs.stream().filter(s -> s.type == ConfigTypeEnum.ELEMENT).map(s -> s.componentId).toArray(String[]::new));
+            initDataLoad(model.loadId, elementId);
+            initTemplate(model.templateId, model.type, elementId);
+            initTriggers(subs.stream().filter(s -> s.type == ConfigTypeEnum.TRIGGER).map(s -> s.componentId).toArray(String[]::new));
         }
     }
 
@@ -85,7 +105,7 @@ public class ElementGroupBuilder {
         elementIds.add(elementId);
     }
 
-    private void initTriggers(List<String> triggerIds) {
+    private void initTriggers(String[] triggerIds) {
         if (CheckEmptyUtil.isEmpty(triggerIds)) {
             return;
         }

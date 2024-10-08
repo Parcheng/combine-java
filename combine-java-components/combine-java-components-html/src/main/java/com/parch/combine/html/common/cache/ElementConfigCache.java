@@ -1,6 +1,7 @@
 package com.parch.combine.html.common.cache;
 
 import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.html.base.element.core.ElementConfig;
 import com.parch.combine.html.common.cache.base.BaseCacheModel;
 import com.parch.combine.html.common.cache.base.CacheModelBuilder;
@@ -17,11 +18,12 @@ public class ElementConfigCache implements IConfigClear {
 
     private ElementConfigCache() {}
 
-    public void register(String id, String type, ElementConfig config) {
-        ElementCacheModel model = new ElementCacheModel();
-        model.id = id;
+    public void register(String id, String type, ElementConfig config, CombineManager manager) {
+        CacheModelBuilder builder = new CacheModelBuilder(id, type, config, manager);
+        ElementCacheModel model = builder.build(new ElementCacheModel());
         model.type = type;
-        model.json = JsonUtil.serialize(CacheModelBuilder.parseInterfaceToMap(id, type, config));
+        model.loadId = config.dataLoadId();
+        model.templateId = config.templateId();
         CACHE.put(id, model);
     }
 
@@ -41,5 +43,7 @@ public class ElementConfigCache implements IConfigClear {
 
     public static class ElementCacheModel extends BaseCacheModel {
         public String type;
+        public String loadId;
+        public String templateId;
     }
 }
