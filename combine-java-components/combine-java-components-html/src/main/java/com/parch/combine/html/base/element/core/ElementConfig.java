@@ -20,8 +20,8 @@ public interface ElementConfig  {
     @Field(key = "defaultData", name = "默认数据", type = FieldTypeEnum.ANY)
     Object defaultData();
 
-    @Field(key = "dataLoadId", name = "数据加载配置ID", type = FieldTypeEnum.TEXT)
-    String dataLoadId();
+    @Field(key = "dataLoadId", name = "数据加载配置/配置ID", type = FieldTypeEnum.COMPONENT)
+    String dataLoad();
 
     @Field(key = "defaultLoad", name = "是否默认加载（构建元素时加载数据）", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     Boolean defaultLoad();
@@ -29,6 +29,6 @@ public interface ElementConfig  {
     @Field(key = "dataField", name = "数据二次取值的字段名", type = FieldTypeEnum.TEXT)
     String dataField();
 
-    @Field(key = "templateId", name = "引用模板ID", type = FieldTypeEnum.TEXT)
-    String templateId();
+    @Field(key = "template", name = "页面元素模板配置/配置ID", type = FieldTypeEnum.COMPONENT)
+    String template();
 }

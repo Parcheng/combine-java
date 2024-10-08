@@ -2,12 +2,18 @@ package com.parch.combine.html.base.page.builder;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.SubComponentTool;
+import com.parch.combine.html.base.template.core.ElementTemplateConfig;
+import com.parch.combine.html.common.cache.DataloadConfigCache;
 import com.parch.combine.html.common.cache.ElementConfigCache;
 import com.parch.combine.html.common.cache.ElementGroupConfigCache;
+import com.parch.combine.html.common.cache.ElementTemplateConfigCache;
 import com.parch.combine.html.common.cache.TriggerConfigCache;
 import com.parch.combine.html.common.cache.base.BaseCacheModel;
+import com.parch.combine.html.common.cache.base.IConfigGet;
+import com.parch.combine.html.common.cache.base.IRegisterComponent;
 import com.parch.combine.html.common.enums.ConfigTypeEnum;
 
 import java.util.ArrayList;
@@ -24,7 +30,7 @@ public class ElementGroupBuilder {
     private CombineManager manager;
     private Map<String, String[]> groupMap = new HashMap<>();
     private Map<String, ElementConfigCache.ElementCacheModel> elementMap = new HashMap<>();
-    private Map<String, ElementTemplateConfig> templateMap = new HashMap<>();
+    private Map<String, ElementTemplateConfigCache.TemplateCacheModel> templateMap = new HashMap<>();
     private Map<String, DataLoadConfig> dataLoadMap = new HashMap<>();
     private Map<String, Set<String>> dataLoadToElementIdMap = new HashMap<>();
     private Map<String, TriggerConfigCache.TriggerCacheModel> triggerMap = new HashMap<>();
@@ -62,14 +68,8 @@ public class ElementGroupBuilder {
         }
 
         for (String elementId : elementIds) {
-            ElementConfigCache.ElementCacheModel model = ElementConfigCache.INSTANCE.get(elementId);
+            ElementConfigCache.ElementCacheModel model = this.getCacheModel(ElementConfigCache.INSTANCE, elementId, ConfigTypeEnum.ELEMENT);
             if (model == null) {
-                SubComponentTool.execute(manager, elementId);
-            }
-
-            model = ElementConfigCache.INSTANCE.get(elementId);
-            if (model == null) {
-                // TODO ERROR
                 continue;
             }
 
@@ -91,11 +91,23 @@ public class ElementGroupBuilder {
             return;
         }
 
-        templateMap.put(templateId, manager.getPageElementTemplate().get(templateId, type, templateClass));
+        ElementTemplateConfigCache.TemplateCacheModel model = this.getCacheModel(ElementTemplateConfigCache.INSTANCE, templateId, ConfigTypeEnum.ELEMENT_TEMPLATE);
+        if (model == null) {
+            // TODO ERROR
+            return;
+        }
+
+        templateMap.put(templateId, model);
     }
 
     private void initDataLoad(String dataLoadId, String elementId) {
         if (CheckEmptyUtil.isEmpty(dataLoadId)) {
+            return;
+        }
+
+        DataloadConfigCache.DataloadCacheModel model = this.getCacheModel(DataloadConfigCache.INSTANCE, dataLoadId, ConfigTypeEnum.DATA_LOAD);
+        if (model == null) {
+            // TODO ERROR
             return;
         }
 
@@ -111,6 +123,12 @@ public class ElementGroupBuilder {
         }
 
         for (String triggerId : triggerIds) {
+            TriggerConfigCache.TriggerCacheModel model = this.getCacheModel(TriggerConfigCache.INSTANCE, triggerId, ConfigTypeEnum.TRIGGER);
+            if (model == null) {
+                // TODO ERROR
+                continue;
+            }
+
             TriggerConfig trigger = manager.getTrigger().get(triggerId);
             triggerMap.put(triggerId, trigger);
             if (trigger == null) {
@@ -120,6 +138,31 @@ public class ElementGroupBuilder {
             initElements(manager.getTrigger().getSubElements(trigger.getId()));
             initTriggers(manager.getTrigger().getSubTriggers(trigger.getId()));
         }
+    }
+
+    private <T extends BaseCacheModel> T getCacheModel(IConfigGet<T> configGet, String key, ConfigTypeEnum type) {
+        T model = configGet.get(key);
+        if (model == null) {
+            AbstractComponent<?,?> component = manager.getComponent().getComponent(key);
+            if (!(component instanceof IRegisterComponent)) {
+                // TODO ERROR
+                return null;
+            }
+
+            if (((IRegisterComponent) component).getConfigType() != type) {
+                // TODO ERROR
+                return null;
+            }
+
+            manager.getComponent().executeComponent(component);
+            model = configGet.get(key);
+            if (model == null) {
+                // TODO ERROR
+                return null;
+            }
+        }
+
+        return model;
     }
     
 //    public List<String> check() {

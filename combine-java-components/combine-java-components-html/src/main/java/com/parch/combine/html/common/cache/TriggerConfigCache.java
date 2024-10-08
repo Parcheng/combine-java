@@ -1,17 +1,17 @@
 package com.parch.combine.html.common.cache;
 
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.html.base.trigger.core.TriggerConfig;
 import com.parch.combine.html.common.cache.base.BaseCacheModel;
 import com.parch.combine.html.common.cache.base.CacheModelBuilder;
 import com.parch.combine.html.common.cache.base.IConfigClear;
+import com.parch.combine.html.common.cache.base.IConfigGet;
 import com.parch.combine.html.common.enums.TriggerTypeEnum;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TriggerConfigCache implements IConfigClear {
+public class TriggerConfigCache implements IConfigClear, IConfigGet<TriggerConfigCache.TriggerCacheModel> {
 
     public final static TriggerConfigCache INSTANCE = new TriggerConfigCache();
 
@@ -26,6 +26,7 @@ public class TriggerConfigCache implements IConfigClear {
         CACHE.put(id, model);
     }
 
+    @Override
     public TriggerCacheModel get(String key) {
         return CACHE.get(key);
     }

@@ -1,16 +1,16 @@
 package com.parch.combine.html.common.cache;
 
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.html.base.element.core.ElementConfig;
 import com.parch.combine.html.common.cache.base.BaseCacheModel;
 import com.parch.combine.html.common.cache.base.CacheModelBuilder;
 import com.parch.combine.html.common.cache.base.IConfigClear;
+import com.parch.combine.html.common.cache.base.IConfigGet;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ElementConfigCache implements IConfigClear {
+public class ElementConfigCache implements IConfigClear, IConfigGet<ElementConfigCache.ElementCacheModel> {
 
     public final static ElementConfigCache INSTANCE = new ElementConfigCache();
 
@@ -22,11 +22,12 @@ public class ElementConfigCache implements IConfigClear {
         CacheModelBuilder builder = new CacheModelBuilder(id, type, config, manager);
         ElementCacheModel model = builder.build(new ElementCacheModel());
         model.type = type;
-        model.loadId = config.dataLoadId();
-        model.templateId = config.templateId();
+        model.loadId = config.dataLoad();
+        model.templateId = config.template();
         CACHE.put(id, model);
     }
 
+    @Override
     public ElementCacheModel get(String key) {
         return CACHE.get(key);
     }
