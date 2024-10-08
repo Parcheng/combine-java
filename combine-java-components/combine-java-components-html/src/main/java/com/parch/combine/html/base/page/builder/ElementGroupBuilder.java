@@ -121,50 +121,48 @@ public class ElementGroupBuilder {
             initTriggers(manager.getTrigger().getSubTriggers(trigger.getId()));
         }
     }
-
-
-
-    public List<String> check() {
-        List<String> result = new ArrayList<>();
-        groupMap.forEach((k, v) -> {
-            if (v == null) {
-                result.add("groupId:" + k + "不存在");
-            }
-        });
-
-        elementMap.forEach((k, v) -> {
-            if (v == null) {
-                result.add("elementId:" + k + "不存在");
-            } else {
-                List<String> errors = v.check();
-                if (CheckEmptyUtil.isNotEmpty(errors)) {
-                    for (String error : errors) {
-                        result.add("elementId:" + k + " > " + error);
-                    }
-                }
-            }
-        });
-
-        templateMap.forEach((k, v) -> {
-            if (v == null) {
-                result.add("template:" + k + "不存在");
-            }
-        });
-
-        dataLoadMap.forEach((k, v) -> {
-            if (v == null) {
-                result.add("dataloadId:" + k + "不存在");
-            }
-        });
-
-        triggerMap.forEach((k, v) -> {
-            if (v == null) {
-                result.add("triggerId:" + k + "不存在");
-            }
-        });
-
-        return result;
-    }
+    
+//    public List<String> check() {
+//        List<String> result = new ArrayList<>();
+//        groupMap.forEach((k, v) -> {
+//            if (v == null) {
+//                result.add("groupId:" + k + "不存在");
+//            }
+//        });
+//
+//        elementMap.forEach((k, v) -> {
+//            if (v == null) {
+//                result.add("elementId:" + k + "不存在");
+//            } else {
+//                List<String> errors = v.check();
+//                if (CheckEmptyUtil.isNotEmpty(errors)) {
+//                    for (String error : errors) {
+//                        result.add("elementId:" + k + " > " + error);
+//                    }
+//                }
+//            }
+//        });
+//
+//        templateMap.forEach((k, v) -> {
+//            if (v == null) {
+//                result.add("template:" + k + "不存在");
+//            }
+//        });
+//
+//        dataLoadMap.forEach((k, v) -> {
+//            if (v == null) {
+//                result.add("dataloadId:" + k + "不存在");
+//            }
+//        });
+//
+//        triggerMap.forEach((k, v) -> {
+//            if (v == null) {
+//                result.add("triggerId:" + k + "不存在");
+//            }
+//        });
+//
+//        return result;
+//    }
 
     public ElementGroupResult build() {
         ElementGroupResult result = new ElementGroupResult();
