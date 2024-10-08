@@ -1,7 +1,7 @@
 
 var groupMap = {};
 var componentMap = {};
-var commonRefMap = {}; // 组件KEY:commonKey:[...]
+var commonRefMap = {};
 
 var firstGroup = null;
 var copyComponent = {
@@ -9,14 +9,13 @@ var copyComponent = {
     logic: null
 }
 
-// 4.
-// 保存，检查按钮（基于config + instance）
+// 1.
 // 保存时，按照组件加载顺序遍历配置并记录，如果先引用后配置，则引用的地方改为配置，配置的地方改为引用
 // 未完成配置的红色角标提示（流程，组件，子组件）
-// 配置检查按钮，输出未完成项目，检查引用组件是否存在（配置在后面的检查/未配置）
-
-// 5.
 // 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
+// baseUrl问题
+
+// 2.
 // REF INIT 可以改成下拉选项（TYPE=REF_INIT）
 // REF 支持多个KEY 及条件
 
@@ -420,13 +419,13 @@ const initFns = {
         var checkDom = document.getElementById("opt-tool-check");
         checkDom.onclick = function() {
             var checkResult = optFns.tool.checkConfig(config);
-            buildDomFns.checkResList(checkResult.errors);
+            buildFns.checkResList(checkResult.errors);
         }
 
         var saveDom = document.getElementById("opt-tool-save");
         saveDom.onclick = function() {
             var checkResult = optFns.tool.checkConfig(config);
-            buildDomFns.checkResList(checkResult.errors);
+            buildFns.checkResList(checkResult.errors);
             if (checkResult.errors > 0) {
                 alert("配置检查不通过，无法保存！");
                 return;
@@ -452,7 +451,7 @@ const initFns = {
         var importDom = document.getElementById("opt-tool-import");
         importDom.onclick = function() {
             var checkResult = optFns.tool.checkConfig(config);
-            buildDomFns.checkResList(checkResult.errors);
+            buildFns.checkResList(checkResult.errors);
 
             const jsonStr = JSON.stringify(checkResult.data, null, 2);
 
@@ -642,7 +641,7 @@ const buildFns = {
                 data.$id = id;
                 instance.logic[id] = data;
                 if (flowId) {
-                    buildFns.flowItem(flowId, id, data.id.id, component.key);
+                    buildFns.flowItem(flowId, id, data.id, component.key);
                 } else {
                     buildFns.blockItem(id, data.id, component.key);
                 }
@@ -743,7 +742,7 @@ const buildFns = {
         var title = isBfore ? "前置流程配置" : "后置流程配置"
         var addFlowConfig = [
             { key: "id", name: "ID", type: "TEXT", isRequired: false, isArray: false },
-            { key: "order", name: "执行顺序", type: "NUMBER", isRequired: false, isArray: false },
+            { key: "order", name: "执行顺序", type: "NUMBER", isRequired: false, isArray: false, defaultValue: 1 },
             { key: "failStop", name: "执行失败是否继续向下执行", type: "BOOLEAN", isRequired: false, isArray: false, defaultValue:"true" },
             { key: "includes", name: "包含的流程（支持“*”通配符）", type: "TEXT", isRequired: false, isArray: true, egs: [
                 { value: "user/add", desc: "表示域为 user, 函数为 add 的流程" },
@@ -764,15 +763,23 @@ const buildFns = {
             flowConfig = config.after;
         }
 
-        var value = flowId ? flowConfig[flowId].data : {};
+        var newFlowId, value;
+        if (flowId) {
+            value = flowConfig[flowId].data;
+        } else {
+            newFlowId = isBfore ? idPrefix.before + (idIndex.before++) : idPrefix.after + (idIndex.after++);
+            value = { id: newFlowId };
+        }
+
         var fromWindowDom = buildDomFns.window.continueFrom(title, null, addFlowConfig, value,
             function(data) { 
                 console.log(data);
-                if (!flowId) {
-                    flowId = isBfore ? idPrefix.before + (idIndex.before++) : idPrefix.after + (idIndex.after++);
-                    createFlowFn(flowId);
+                if (newFlowId) {
+                    createFlowFn(newFlowId);
+                    flowConfig[newFlowId].data = data;
+                } else {
+                    flowConfig[flowId].data = data;
                 }
-                flowConfig[flowId].data = data;
             }
         );
 
@@ -2059,10 +2066,10 @@ const optFns = {
                 result.errors.push(logFns.error("后置流程配置", currTitle2, errConfig.valueKey, errConfig.msg));
             }
 
-            var flowResult = valueFns.parseSettingFlows(config.flow);
+            var flowResult = valueFns.parsePathFlows(config.flow);
             result.data.flow = flowResult.dataMap;
-            for (let ei = 0; ei < afterResult.errors.length; ei++) {
-                const errConfig = afterResult.errors[ei];
+            for (let ei = 0; ei < flowResult.errors.length; ei++) {
+                const errConfig = flowResult.errors[ei];
                 var currTitle2 = errConfig.flowId;
                 if (errConfig.componentId || errConfig.componentType) {
                     currTitle2 += " > " + errConfig.componentType + " | " + errConfig.componentId
@@ -2106,66 +2113,71 @@ const valueFns = {
                     errorConfig.valueKey = null;
                     errorConfig.msg = "域或函数未配置";
                     result.errors.push(errorConfig);
+                } 
+                
+                var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
+                if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
+                    result.dataMap[path] = componentsValueResult.datas;
                 } else {
-                    var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
-                    if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
-                        result.dataMap[path] = componentsValueResult.datas;
-                    } else {
-                        const errorConfig = {};
-                        errorConfig.flowId = path;
-                        errorConfig.valueKey = null;
-                        errorConfig.msg = "未配置流程";
-                        result.errors.push(errorConfig);
-                    }
-                    
-                    for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
-                        const errorConfig = componentsValueResult.errors[ei];
-                        errorConfig.flowId = i + 1;
-                        result.errors.push(errorConfig);
-                    }
+                    const errorConfig = {};
+                    errorConfig.flowId = path;
+                    errorConfig.valueKey = null;
+                    errorConfig.msg = "未配置流程";
+                    result.errors.push(errorConfig);
+                }
+                
+                for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
+                    const errorConfig = componentsValueResult.errors[ei];
+                    errorConfig.flowId = path;
+                    result.errors.push(errorConfig);
                 }
             }
         }
 
         return result;
     },
-    parseSettingFlows: function(flowValues) {
+    parseSettingFlows: function(flowValueMap) {
         var result = {
             datas: [],
             errors: []
         };
 
-        for (let i = 0; i < flowValues.length; i++) {
-            const flowValue = flowValues[i];
-            var flowValueResult = valueFns.parseValue(flowValue);
+        var i = 0;
+        for (const key in flowValueMap) {
+            if (Object.prototype.hasOwnProperty.call(flowValueMap, key)) {
+                const flowValue = flowValueMap[key];
+                var flowValueResult = valueFns.parseValue(flowValue.data);
 
-            for (let fe = 0; fe < flowValueResult.errors.length; fe++) {
-                const errorConfig = flowValueResult.errors[fe];
-                errorConfig.flowId = i + 1;
-                result.errors.push(errorConfig);
-            }
-
-            if (flowValueResult.data) {
-                var finalFlowValue = flowValueResult.data;
-
-                var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
-                if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
-                    finalFlowValue.flow = componentsValueResult.datas;
-                } else {
-                    const errorConfig = {};
-                    errorConfig.flowId = i + 1;
-                    errorConfig.valueKey = null;
-                    errorConfig.msg = "未配置流程";
-                    result.errors.push(errorConfig);
-                }
-
-                for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
-                    const errorConfig = componentsValueResult.errors[ei];
+                for (let fe = 0; fe < flowValueResult.errors.length; fe++) {
+                    const errorConfig = flowValueResult.errors[fe];
                     errorConfig.flowId = i + 1;
                     result.errors.push(errorConfig);
                 }
 
-                beforeValue.push(finalFlowValue);
+                if (flowValueResult.data) {
+                    var finalFlowValue = flowValueResult.data;
+
+                    var componentsValueResult = valueFns.parseComponents(flowValue.components, instance.logic);
+                    if (componentsValueResult.datas && componentsValueResult.datas.length > 0) {
+                        finalFlowValue.flow = componentsValueResult.datas;
+                    } else {
+                        const errorConfig = {};
+                        errorConfig.flowId = i + 1;
+                        errorConfig.valueKey = null;
+                        errorConfig.msg = "未配置流程";
+                        result.errors.push(errorConfig);
+                    }
+
+                    for (let ei = 0; ei < componentsValueResult.errors.length; ei++) {
+                        const errorConfig = componentsValueResult.errors[ei];
+                        errorConfig.flowId = i + 1;
+                        result.errors.push(errorConfig);
+                    }
+
+                    result.datas.push(finalFlowValue);
+                }
+
+                i++;
             }
         }
 
@@ -2179,15 +2191,23 @@ const valueFns = {
 
         for (let i = 0; i < valueConfigs.length; i++) {
             const valueConfig = valueConfigs[i];
-            var value = instanceMap[valueConfig.componentId];
+            var value = instanceMap[valueConfig.id];
             var valueResult = valueFns.parseValue(value);
+
+            var currId = null;
+            var currType = null;
             if (valueResult.data) {
+                currId = valueResult.data.id;
+                currType = valueResult.data.type;
                 result.datas.push(valueResult.data);
             }
-            for (let ri = 0; ri < valueResult.length; ri++) {
-                const errorConfig = valueResult[ire];
-                errorConfig.componentId = initValue.id;
-                errorConfig.componentType = initValue.type;
+
+            // TODO 检查REF
+
+            for (let ri = 0; ri < valueResult.errors.length; ri++) {
+                const errorConfig = valueResult.errors[ri];
+                errorConfig.componentId = currId;
+                errorConfig.componentType = currType;
                 result.errors.push(errorConfig);
             }
         }
@@ -2213,7 +2233,11 @@ const valueFns = {
         for (let s = 0; s < settings.length; s++) {
             const setting = settings[s];
             const settingKey = setting.key;
-            const currValue = value[settingKey];
+            let currValue = value[settingKey];
+
+            if (currValue == "") {
+                currValue = null;
+            }
 
             if (currValue == null || currValue == undefined) {
                 if (setting.isRequired == true) {
@@ -2225,17 +2249,23 @@ const valueFns = {
             }
             
             if (setting.type == "CONFIG" || setting.type == "OBJECT") {
-                const subResult = checkItem(currValue);
+                const subResult = valueFns.parseValue(currValue);
                 result.data[settingKey] = subResult.data;
                 for (let se = 0; se < subResult.errors.length; se++) {
                     const subError = subResult.errors[se];
                     subError.key = settingKey + "." + subError.key;
                     result.errors.push(subError);
                 }
+            } else if (setting.type == "ID") {
+                result.data[settingKey] = currValue.id;
+            } else if (setting.type == "ANY") {
+                result.data[settingKey] = currValue ? currValue.value : null;
             } else {
                 result.data[settingKey] = currValue;
             }
         }
+
+        return result;
     }
 }
 
@@ -2295,7 +2325,7 @@ const requestFns = {
             alert("Request error!");
         };
 
-        url = url.startsWith("http") ? url : (baseUrl + url);
+        url = url.startsWith("http") ? url : ("http://127.0.0.1:8080/" + url);
         const xhr = new XMLHttpRequest();
         xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
 
