@@ -1,25 +1,32 @@
 package com.parch.combine.html.base.page.builder;
 
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CharacterUtil;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.component.manager.CombineManager;
+import com.parch.combine.core.component.tools.PrintHelper;
+import com.parch.combine.html.base.page.config.FlagConfig;
 import com.parch.combine.html.base.page.config.HtmlConfig;
 import com.parch.combine.html.base.page.config.HtmlElementConfig;
-import com.parch.combine.html.common.cache.ElementGroupConfigCache;
+import com.parch.combine.html.base.template.core.DomConfig;
 import com.parch.combine.html.common.canstant.UrlPathCanstant;
-import com.parch.combine.html.common.tool.ConfigErrorMsgTool;
 import com.parch.combine.html.common.tool.HtmlBuildTool;
-import com.parch.combine.html.common.tool.PrintTool;
 import com.parch.combine.html.common.tool.ScriptBuildTool;
+import com.parch.combine.html.common.tool.SystemElementPathTool;
 import com.parch.combine.html.common.tool.UrlPathHelper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,40 +36,52 @@ public class HtmlBuilder {
 
     private final static Map<String, HtmlConfig> TEMP_MAP = new HashMap<>();
 
-    private String baseUrl;
-
-    private HtmlConfig config;
-
+    private final String baseUrl;
+    private final String flagConfigJson;
+    private final HtmlConfig config;
     private HtmlConfig templateConfig;
+    private final HtmlElementGroupBuilder groupBuilder;
 
-    public HtmlBuilder(HtmlConfig config, String baseUrl) {
+    private String html;
+
+    public HtmlBuilder(HtmlConfig config, String baseUrl, FlagConfig flagConfig, CombineManager manager) {
         this.baseUrl = baseUrl;
         this.config = config;
-        loadTemplate();
+        this.groupBuilder = new HtmlElementGroupBuilder(config.groupIds(), manager);
+
+        Map<String, Object> configMap = parseConfig(flagConfig);
+        this.flagConfigJson = configMap == null ? null : JsonUtil.serialize(configMap);
     }
 
-    public List<String> check() {
-        List<String> msg = new ArrayList<>();
-        if (templateConfig == null) {
-            msg.add(ConfigErrorMsgTool.fieldCheckError("templateConfig", "页面模板不存在"));
+    public boolean build() {
+        if (flagConfigJson == null) {
+            return false;
         }
-        return msg;
-    }
 
-    public String build() {
-        String[] groupIds = config.groupIds();
-        ElementGroupConfigCache.INSTANCE.get();
-        ElementGroupBuilder.ElementGroupResult groupResult = groupBuilder.build();
+        boolean success = this.loadTemplate();
+        if (!success) {
+            return success;
+        }
 
-        String head = buildHead(groupResult);
+        success = this.groupBuilder.build();
+        if (!success) {
+            return success;
+        }
+
+        String head = buildHead();
         String body = buildBody();
         String script = buildScript();
-        String elementScript = buildElementScript(groupResult);
-        return buildPage(head, body, script + elementScript);
+        String elementScript = buildElementScript();
+        this.html = buildPage(head, body, script + elementScript);
+        return true;
     }
 
-    private String buildHead(ElementGroupBuilder.ElementGroupResult groupResult) {
-        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(templateConfig.links(), config.links());
+    public String getHtml() {
+        return html;
+    }
+
+    private String buildHead() {
+        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(baseUrl, templateConfig.links(), config.links());
         HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateConfig.metas(), config.metas());
 
         // 添加框架核心
@@ -73,12 +92,12 @@ public class HtmlBuilder {
 
         // 添加框架中使用的页面元素JS
         List<String> elementCssTag = new ArrayList<>();
-        for (String elementStyle : groupResult.elementStyles) {
+        groupBuilder.getElementMap().values().forEach(m -> {
             Map<String, String> elementCssProperties = new HashMap<>();
             elementCssProperties.put("rel", "stylesheet");
-            elementCssProperties.put("href", UrlPathHelper.replaceUrlFlag(elementStyle, baseUrl));
+            elementCssProperties.put("href", SystemElementPathTool.buildCssPath(baseUrl, m.cssLibName));
             elementCssTag.add(HtmlBuildTool.build("link", null, elementCssProperties, true));
-        }
+        });
 
         String headBody = CheckEmptyUtil.EMPTY;
         headBody += StringUtil.join(metaBuilder.build(), CheckEmptyUtil.EMPTY);
@@ -96,7 +115,7 @@ public class HtmlBuilder {
         }
         htmlProperties.put("lang", lang);
 
-        String htmlCode = HtmlBuildTool.build("html", head + body + script, htmlProperties, false);
+        String htmlCode = HtmlBuildTool.build("static/html", head + body + script, htmlProperties, false);
         return CharacterUtil.replaceChinese(htmlCode).replaceAll("\\\\{2}", "\\\\\\\\\\\\");
     }
 
@@ -153,7 +172,7 @@ public class HtmlBuilder {
         return StringUtil.join(scripts, CheckEmptyUtil.EMPTY);
     }
 
-    protected String buildElementScript(ElementGroupBuilder.ElementGroupResult groupResult) {
+    protected String buildElementScript() {
         List<String> scripts = new ArrayList<>();
 
         // 添加框架核心
@@ -163,35 +182,35 @@ public class HtmlBuilder {
         scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(baseToolsJsPath, baseUrl)));
 
         // 添加框架中使用的页面元素JS
-        for (String elementScript : groupResult.elementScripts) {
-            scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(elementScript, baseUrl)));
-        }
+        groupBuilder.getElementMap().values().forEach(m -> {
+            scripts.add(SystemElementPathTool.buildJsPath(baseUrl, m.jsLibName));
+        });
 
         // 添加框架组件实例注册代码
         List<String> scriptCodeList = new ArrayList<>();
-        scriptCodeList.add("\n$combine.init(\"" + baseUrl + "\", " + context.getFlagConfigsJson() + ");");
+        scriptCodeList.add("\n$combine.init(\"" + baseUrl + "\", " + flagConfigJson + ");");
 
         // 常量注册 TODO
 //        String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
 //        scriptCodeList.add("\n$combine.constant.register(" + contentJson + ");");
 
         // 元素模板注册
-        groupResult.templateMap.forEach((k, v) -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + k + "\"," + v + ");"));
+        groupBuilder.getTemplateMap().values().forEach(m -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + m.id + "\"," + m.json + ");"));
 
         // 数据加载配置注册
-        groupResult.dataLoadMap.forEach((k, v) -> scriptCodeList.add("\n$combine.loadData.register(\"" + k + "\"," + v + ", " + groupResult.dataLoadToElementIdMap.get(k) + ");"));
+        groupBuilder.getDataLoadMap().values().forEach(m -> scriptCodeList.add("\n$combine.loadData.register(\"" + m.id + "\"," + m.json + ", " + groupBuilder.getDataLoadToElementIdMap().get(m.id) + ");"));
 
         // trigger事件注册
-        if (groupResult.triggerMap.size() > 0) {
+        if (!groupBuilder.getTemplateMap().isEmpty()) {
             scriptCodeList.add("\n$combine.trigger.setDomId(\"" + TRIGGERS_DOM_ID + "\");");
-            groupResult.triggerMap.forEach((k, v) -> scriptCodeList.add("\n$combine.trigger.register(\"" + k + "\"," + v + ");"));
+            groupBuilder.getTemplateMap().values().forEach(m -> scriptCodeList.add("\n$combine.trigger.register(\"" + m.id + "\"," + m.json + ");"));
         }
 
         // 页面元素注册
-        groupResult.elementMap.forEach((k, v) -> scriptCodeList.add("\n$combine.instance.register(\"" + k + "\"," + v + ");"));
+        groupBuilder.getElementMap().values().forEach(m -> scriptCodeList.add("\n$combine.instance.register(\"" + m.id + "\"," + m.json + ");"));
 
         // 页面元素组注册
-        groupResult.groupMap.forEach((k, v) -> scriptCodeList.add("\n$combine.group.register(\"" + k + "\"," + v + ");"));
+        groupBuilder.getGroupMap().forEach((k, v) -> scriptCodeList.add("\n$combine.group.register(\"" + k + "\"," + v + ");"));
 
         // 页面模块初始化
         HtmlElementConfig[] models = config.modules();
@@ -199,8 +218,16 @@ public class HtmlBuilder {
             for (HtmlElementConfig model : models) {
                 String showGroupId = model.defaultShowGroupId();
                 if (CheckEmptyUtil.isNotEmpty(showGroupId)) {
-                    // TODO 这个ID model.config().id() 不存在要随机生成
-                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + model.config().id() + "\");");
+                    // TODO
+                    String domId = null;
+                    DomConfig domConfig = model.config();
+                    if (domConfig != null) {
+                        domId = domConfig.id();
+                    }
+                    if (CheckEmptyUtil.isEmpty(domId)) {
+                        domId = UUID.randomUUID().toString();
+                    }
+                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + domId + "\");");
                 }
             }
         }
@@ -211,7 +238,7 @@ public class HtmlBuilder {
         return StringUtil.join(scripts, CheckEmptyUtil.EMPTY);
     }
 
-    private void loadTemplate() {
+    private boolean loadTemplate() {
         String tempPath = config.tempPath();
         if (!TEMP_MAP.containsKey(tempPath)) {
             try {
@@ -220,13 +247,52 @@ public class HtmlBuilder {
                     templateConfig = JsonUtil.deserialize(testConfigJson, HtmlConfig.class);
                     TEMP_MAP.put(tempPath, templateConfig);
                 } else {
-                    PrintTool.printInit("【PAGE-TEMPLATE】【" + tempPath + "】【加载模板数据为空】");
+                    PrintHelper.printComponentError("【HTML-TEMPLATE】【" + tempPath + "】【加载模板数据为空】");
                 }
             } catch (Exception e) {
-                PrintTool.printInit("【PAGE-TEMPLATE】【" + tempPath + "】【加载模板失败】");
+                PrintHelper.printComponentError("【PAGE-TEMPLATE】【" + tempPath + "】【加载模板失败】");
             }
         } else {
             templateConfig = TEMP_MAP.get(tempPath);
         }
+
+        return templateConfig != null;
+    }
+
+    private Map<String, Object> parseConfig(Object interfaceObj) {
+        if (interfaceObj == null) {
+            return null;
+        }
+
+        Map<String, Object> config = new HashMap<>();
+        Method[] methods = interfaceObj.getClass().getMethods();
+        for (Method method : methods) {
+            Field field = method.getAnnotation(Field.class);
+            if (field == null) {
+                continue;
+            }
+
+            Object value;
+            try {
+                value = method.invoke(interfaceObj);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                PrintHelper.printComponentError(e);
+                return null;
+            }
+
+            if (value == null) {
+                continue;
+            }
+
+            if (field.type() == FieldTypeEnum.CONFIG) {
+                value = this.parseConfig(value);
+            }
+
+            if (value != null) {
+                config.put(method.getName(), value);
+            }
+        }
+
+        return config;
     }
 }

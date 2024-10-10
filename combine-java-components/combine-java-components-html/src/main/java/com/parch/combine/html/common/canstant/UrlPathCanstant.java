@@ -4,9 +4,9 @@ public interface UrlPathCanstant {
 
     String BASE_URL_FLAG = "${baseUrl}";
 
-    String BASE_PATH = "/combine/ui/";
+    String BASE_PATH = "/static/html/";
 
-    String BASE_FILE_PATH = "/static/combine/ui/";
+    String BASE_FILE_PATH = "/static/html/";
 
     String DEFAULT_BASE_CSS_NAME = "combine_base.css";
 

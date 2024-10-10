@@ -12,13 +12,24 @@ import com.parch.combine.html.common.enums.ConfigTypeEnum;
 public abstract class AbstractElementComponent<L extends ILogicConfig> extends AbstractComponent<IInvalidInitConfig, L> implements IRegisterComponent {
 
     protected String type;
+    protected String jsLibName;
+    protected String cssLibName;
 
     /**
      * 构造器
      */
     public AbstractElementComponent(Class<L> logicClass, String type) {
+        this(logicClass, type, null, null);
+    }
+
+    /**
+     * 构造器
+     */
+    public AbstractElementComponent(Class<L> logicClass, String type, String jsLibName, String cssLibName) {
         super(IInvalidInitConfig.class, logicClass);
         this.type = type;
+        this.jsLibName = jsLibName;
+        this.cssLibName = cssLibName;
     }
 
     @Override
@@ -29,7 +40,7 @@ public abstract class AbstractElementComponent<L extends ILogicConfig> extends A
             return ComponentDataResult.fail(ConfigErrorEnum.CONFIG_IS_NULL);
         }
 
-        ElementConfigCache.INSTANCE.register(logicConfig.id(), type, config, manager);
+        ElementConfigCache.INSTANCE.register(logicConfig.id(), type, jsLibName, cssLibName, config, manager);
         return ComponentDataResult.success(true);
     }
 

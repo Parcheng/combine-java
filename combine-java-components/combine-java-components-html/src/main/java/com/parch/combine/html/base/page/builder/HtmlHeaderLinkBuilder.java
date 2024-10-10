@@ -11,11 +11,14 @@ import java.util.Map;
 
 public class HtmlHeaderLinkBuilder {
 
-    private HtmlHeaderLinkConfig[] templateConfigs;
+    private final String baseUrl;
 
-    private HtmlHeaderLinkConfig[] configs;
+    private final HtmlHeaderLinkConfig[] templateConfigs;
 
-    public HtmlHeaderLinkBuilder(HtmlHeaderLinkConfig[] templateConfigs, HtmlHeaderLinkConfig[] configs) {
+    private final HtmlHeaderLinkConfig[] configs;
+
+    public HtmlHeaderLinkBuilder(String baseUrl, HtmlHeaderLinkConfig[] templateConfigs, HtmlHeaderLinkConfig[] configs) {
+        this.baseUrl = baseUrl;
         this.templateConfigs = templateConfigs;
         this.configs = configs;
     }
@@ -40,7 +43,7 @@ public class HtmlHeaderLinkBuilder {
     public void buildItem(List<String> linkList, HtmlHeaderLinkConfig config) {
         Map<String, String> linkProperties = new HashMap<>();
         linkProperties.put("rel", config.rel());
-        linkProperties.put("href", UrlPathHelper.replaceUrlFlag(config.href()));
+        linkProperties.put("href", UrlPathHelper.replaceUrlFlag(baseUrl, config.href()));
         linkProperties.put("crossorigin", config.crossorigin());
         linkProperties.put("integrity", config.integrity());
         linkProperties.put("media", config.media());
