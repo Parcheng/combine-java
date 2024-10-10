@@ -12,7 +12,7 @@ public class SystemElementPathTool {
         return baseUrl + UrlPathCanstant.BASE_PATH + "styles/" + path + "_element.css";
     }
 
-    public static String buildTemplatePath(String baseUrl, String path) {
-        return baseUrl + UrlPathCanstant.BASE_PATH + "templates/" + path + "_template.json";
+    public static String buildTemplatePath(String path) {
+        return UrlPathCanstant.BASE_PATH + "templates/" + path + "_template.json";
     }
 }

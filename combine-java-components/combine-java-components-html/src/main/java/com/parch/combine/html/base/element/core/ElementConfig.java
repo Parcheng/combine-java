@@ -20,8 +20,8 @@ public interface ElementConfig  {
     @Field(key = "defaultData", name = "默认数据", type = FieldTypeEnum.ANY)
     Object defaultData();
 
-    @Field(key = "dataLoadId", name = "数据加载配置/配置ID", type = FieldTypeEnum.COMPONENT)
-    String dataLoad();
+    @Field(key = "dataload", name = "数据加载配置/配置ID", type = FieldTypeEnum.COMPONENT)
+    String dataload();
 
     @Field(key = "defaultLoad", name = "是否默认加载（构建元素时加载数据）", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     Boolean defaultLoad();

@@ -5,6 +5,6 @@ import com.parch.combine.core.component.spi.AbstractGetComponents;
 public class GetHtmlComponents extends AbstractGetComponents {
 
     public GetHtmlComponents() {
-        super("static/html", "HTML页面相关", GetHtmlComponents.class);
+        super("html", "HTML页面相关", GetHtmlComponents.class);
     }
 }

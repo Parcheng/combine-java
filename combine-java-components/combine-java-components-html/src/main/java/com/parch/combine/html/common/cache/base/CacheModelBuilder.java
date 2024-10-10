@@ -85,6 +85,10 @@ public class CacheModelBuilder {
         }
     }
 
+    public void addProperty(String key, Object value) {
+        configMap.put(key, value);
+    }
+
     public <T extends BaseCacheModel> T build(T model) {
         model.id = id;
         model.json = JsonUtil.serialize(configMap);

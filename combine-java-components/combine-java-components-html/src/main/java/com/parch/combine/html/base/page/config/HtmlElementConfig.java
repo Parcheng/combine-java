@@ -15,7 +15,8 @@ public interface HtmlElementConfig {
     @Field(key = "defaultShowGroupId", name = "默认展示的元素组ID", type = FieldTypeEnum.TEXT)
     String defaultShowGroupId();
 
-    @Field(key = "defaultShowGroupId", name = "默认展示的元素组ID", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @Field(key = "config", name = "DOM元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldDesc("如果不配置DOM元素的 id 属性，则默认使用 key 属性的值")
     @FieldRef(DomConfig.class)
     DomConfig config();
 }

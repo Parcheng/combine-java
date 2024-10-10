@@ -740,7 +740,7 @@ $combine = (function () {
     const tempFns = {
         load: function (tempPath) {
             if (!temps[tempPath]) {
-                callFns.file(tempPath, true,
+                callFns.file(baseUrl + tempPath, true,
                     function (text) { temps[tempPath] = JSON.parse(text); },
                     function () { temps[tempPath] = {}; });
             }

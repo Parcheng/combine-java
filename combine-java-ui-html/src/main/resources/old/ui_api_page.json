@@ -1,0 +1,301 @@
+{
+  "constant": {},
+  "dataLoads": [
+    {
+      "id": "system_ui_elements_load",
+      "type": "flow",
+      "mode": "POST",
+      "url": "/flow/ui-elements/list"
+    },{
+      "id": "system_ui_config_load",
+      "type": "flow",
+      "mode": "POST",
+      "url": "/flow/ui-config/get"
+    },{
+      "id": "system_ui_page_config_load",
+      "type": "flow",
+      "mode": "POST",
+      "url": "/flow/ui-page/get"
+    }
+  ],
+  "templates": [],
+  "elements": [],
+  "groups": [
+    {
+      "id": "system_ui_api_nav",
+      "elements": [
+        {
+          "type": "system.nav_bar",
+          "dataLoadId": "system_ui_elements_load",
+          "brandText": "Combine-Java-UI",
+          "defaultChecked": 0,
+          "defaultNavs": [{
+            "text": "首页",
+            "index": 0,
+            "triggers": [{
+              "event": "click",
+              "type": "LOAD",
+              "groupId": "system_ui_api_home_tree",
+              "parentId": "element_left"
+            }]
+          }],
+          "nav": {
+            "text": "#{name}",
+            "triggers": [{
+              "event": "click",
+              "type": "LOAD",
+              "groupId": "system_ui_api_tree",
+              "parentId": "element_left",
+              "params": "#{settings}"
+            }]
+          }
+        }
+      ]
+    },{
+      "id": "system_ui_api_tree",
+      "elements": [
+        {
+          "type": "system.tree",
+          "textField": "name",
+          "checkFirst": true,
+          "triggers": [{
+            "event": "click",
+            "type": "LOAD",
+            "groupId": "system_ui_api_content",
+            "parentId": "element_content",
+            "params": "#{}"
+          }]
+        }
+      ]
+    },{
+      "id": "system_ui_api_home_tree",
+      "elements": [
+        {
+          "type": "system.tree",
+          "data": [
+            {
+              "name": "概要",
+              "groupId": "system_ui_api_home_content"
+            },{
+              "name": "页面配置",
+              "groupId": "system_ui_api_page_config_content"
+            },{
+              "name": "全局配置",
+              "groupId": "system_ui_api_config_content"
+            }
+          ],
+          "textField": "name",
+          "checkFirst": true,
+          "triggers": [{
+            "event": "click",
+            "type": "LOAD",
+            "groupId": "#{groupId}",
+            "parentId": "element_content",
+            "params": "#{}"
+          }]
+        }
+      ]
+    },{
+      "id": "system_ui_api_home_content",
+      "elements": [
+        {
+          "type": "system.title",
+          "text": "【#{name}】",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "system.text",
+          "lines": [
+            { "text": "使用方式：" },
+            { "text": "第一：需要一个全局配置文件 “combine.json” 放在 resource 根目录下，配置项详见 “全局配置” 菜单" },
+            { "text": "第二：需要至少一个流程配置文件，格式如下" },
+            { "text": "{" },
+            { "text": "　\"constant\": {...},　　　　　　　　　　【表示常量定义，可以自由的定义常量，并能够在UI元素配置中使用 $c.xxx 来获取它们】" },
+            { "text": "　\"dataLoads\": [{...}, ...],　　　　　　　　　　【表示UI元素的数据加载配置，配置项详见数据加载配置】" },
+            { "text": "　\"templates\": [{...}, ...],　　　　　　　　　　【表示UI元素的模板配置，可以被UI元素配置引用，配置详见对应的UI元素配置】" },
+            { "text": "　\"elements\": [{...}, ...]　　　　　　　　　　【表示UI元素配置，用于 groups 配置中引用，配置详见对应的UI元素配置】" },
+            { "text": "　\"groups\": [　　　　　　　　　　【表示一组UI元素，用于 page 配置中引用】" },
+            { "text": "　　{" },
+            { "text": "　　　\"id\": ...　　　　　　　　　　【一组UI元素的组ID，page 配置中通过该 ID 来引用】" },
+            { "text": "　　　\"elements\": [...]　　　　　　　　　　【组中包含的 UI 元素集合，集合中每一项可以是 elements 中配置的ID，也可以是直接 element UI元素配置】" },
+            { "text": "　　}, ..." },
+            { "text": "　\"pages\": {　　　　　　　　　　【表示每个页面的配置集合" },
+            { "text": "　　\"index\": {...}　　　　　　　　　　【表示每个页面的配置，其中冒号左侧表示页面名称/路径，右侧为该页面的详细配置，详见页面配置" },
+            { "text": "　　}" },
+            { "text": "<hr>" },
+            { "text": "注意：同一个ID的组件只会加载一次（配置以第一个为准），切勿使用相同的ID" },
+            { "text": "<hr>" },
+            { "text": "全局变量 $e 用于获取其它UI元素的结果" },
+            { "text": "如：$r.user_table.0.id 表示获取ID为“user_table”UI元素数据的第一行数据的 id 属性的值" },
+            { "text": "　" },
+            { "text": "全局变量 $c 用于获取 constant 中配置的常量" },
+            { "text": "如：$c.user.name 表示获取常量配置中 user 对象的 name 属性的值" },
+            { "text": "　" },
+            { "text": "全局变量 $ld 用于获取已被缓存的 dataLoads 加载数据，注意：数据加载配置必须配置为可被缓存才可获取" },
+            { "text": "如：$ld.curr_user.name 表示获取 ID 为“curr_user”的数据加载 name 属性的值" },
+            { "text": "　" },
+            { "text": "全局变量 $ls 用于浏览器的 localStorage 配置，注意：数据加载配置必须缓存到 localStorage 中才可获取" },
+            { "text": "如：$ls.user_token 表示获取 localStorage 中 user_token 属性的值" },
+            { "text": "　" },
+            { "text": "#<span>{$this}</span> 或 #<span>{}</span> 表示直接获取UI元素的当前的数据对象" },
+            { "text": "如：在 input 元素配置中使用 #<span>{$this}</span> 或 #<span>{}</span> 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据" },
+            { "text": "如：在 input 元素配置中使用 #<span>{name}</span> 表示获取当前元素 dataLoadId 加载结果数据或父元素传入的数据的 name 属性值" },
+            { "text": "<hr>" }
+          ]
+        }
+      ]
+    },{
+      "id": "system_ui_api_page_config_content",
+      "elements": [
+        {
+          "type": "system.title",
+          "text": "【#{name}】",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "system.text",
+          "dataLoadId": "system_ui_page_config_load",
+          "lines": [
+            { "text": "<b>#{key} - #{name}</b>" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "title": "描述：", "text": "#{desc}" },
+            { "text": "<hr>" }
+          ],
+          "children": ["#{children}"]
+        }
+      ]
+    },{
+      "id": "system_ui_api_config_content",
+      "elements": [
+        {
+          "type": "system.title",
+          "text": "【#{name}】",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "system.text",
+          "dataLoadId": "system_ui_config_load",
+          "lines": [
+            { "text": "<b>#{key} - #{name}</b>" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "title": "描述：", "text": "#{desc}" },
+            { "text": "<hr>" }
+          ],
+          "children": ["#{children}"]
+        }
+      ]
+    },{
+      "id": "system_ui_api_content",
+      "elements": [
+        {
+          "type": "system.content",
+          "title": "【#{name}】",
+          "text": ["#{desc}"]
+        },{
+          "type": "system.title",
+          "text": "1. UI元素配置",
+          "level": 3,
+          "top": true,
+          "bottom": true
+        },{
+          "type": "system.text",
+          "dataField": "configs",
+          "lines": [
+            { "text": "<b>#{key} - #{name}</b>" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
+            { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
+            { "title": "描述：", "text": "#{desc}" },
+            { "text": "<hr>" }
+          ],
+          "children": ["#{children}"],
+          "defaultText": "（该组件无初始化配置）"
+        },{
+          "type": "system.title",
+          "text": "2. UI元素模板配置",
+          "level": 3,
+          "top": true,
+          "bottom": true
+        },{
+          "type": "system.text",
+          "dataField": "templateConfigs",
+          "lines": [
+            { "text": "<b>#{key} - #{name}</b>" },
+            { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+            { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
+            { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
+            { "title": "描述：", "text": "#{desc}" },
+            { "text": "<hr>" }
+          ],
+          "children": ["#{children}"]
+        },{
+          "type": "system.title",
+          "text": "3. 组件公共对象",
+          "level": 3,
+          "top": true,
+          "bottom": true
+        },{
+          "type": "system.list",
+          "dataField": "commonObjects",
+          "content": {
+            "elements": [{
+              "type": "system.title",
+              "text": "【#{name}】",
+              "level": 4,
+              "top": true,
+              "bottom": true
+            },{
+              "type": "system.text",
+              "lines": [
+                {"text": "#{desc}<br/>"}
+              ]
+            },{
+              "type": "system.text",
+              "dataField": "properties",
+              "lines": [
+                { "text": "<b>#{key} - #{name}</b>" },
+                { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
+                { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
+                { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
+                { "title": "描述：", "text": "#{desc}" },
+                { "text": "<hr>" }
+              ],
+              "children": ["#{children}"]
+            }]
+          },
+          "defaultText": "（该组件无公共对象）"
+        }
+      ]
+    }
+  ],
+  "pages": {
+    "ui-api": {
+      "metas": [],
+      "links": [],
+      "groupIds": ["system_ui_api_nav", "system_ui_api_tree", "system_ui_api_home_tree", "system_ui_api_home_content",
+            "system_ui_api_page_config_content", "system_ui_api_config_content", "system_ui_api_content"],
+      "modules": [
+        {
+          "key": "header",
+          "defaultShowGroupId": "system_ui_api_nav"
+        },{
+          "key": "left",
+          "id": "element_left",
+          "classes": "c-model",
+          "style": "width:19%;"
+        },{
+          "key": "content",
+          "id": "element_content",
+          "classes": "c-model",
+          "style": "width:80%;border-left:1px solid #F5F5F5;padding-left:20px;"
+        }
+      ]
+    }
+  }
+}

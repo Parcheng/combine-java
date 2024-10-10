@@ -13,12 +13,16 @@ import java.util.Map;
 public class HtmlBuildTool {
 
     public static String build(DomConfig domConfig, DomConfig tempDomConfig, boolean isSelfClose) {
+        return build(null, domConfig, tempDomConfig, isSelfClose);
+    }
+
+    public static String build(String defaultId, DomConfig domConfig, DomConfig tempDomConfig, boolean isSelfClose) {
         String tagName = null;
         Map<String, String> properties = null;
         String body = null;
         if (domConfig != null) {
             tagName = domConfig.tag();
-            properties = buildProperties(domConfig);
+            properties = buildProperties(defaultId, domConfig);
             body = domConfig.text();
         }
 
@@ -28,9 +32,15 @@ public class HtmlBuildTool {
                 tagName = CheckEmptyUtil.isEmpty(tempTag) ? "div" : tempTag;
             }
             if (properties == null) {
-                properties = buildProperties(tempDomConfig);
+                properties = buildProperties(defaultId, tempDomConfig);
             } else {
-                properties.putAll(buildProperties(tempDomConfig));
+                Map<String, String> tempProperties = buildProperties(null, tempDomConfig);
+                for (String key : tempProperties.keySet()) {
+                    Object sourceValue = properties.get(key);
+                    if (sourceValue == null) {
+                        properties.put(key, tempProperties.get(key));
+                    }
+                }
             }
             if (CheckEmptyUtil.isEmpty(body)) {
                 body = tempDomConfig.text();
@@ -70,14 +80,15 @@ public class HtmlBuildTool {
      * @param element 元素配置
      * @return 结果
      */
-    public static Map<String, String> buildProperties(DomConfig element) {
+    public static Map<String, String> buildProperties(String defaultId, DomConfig element) {
         Map<String, String> properties = element.properties();
         if (properties == null) {
             properties = new HashMap<>();
         }
 
         // ID, name, Class
-        properties.put("id", element.id());
+        String id = element.id();
+        properties.put("id", CheckEmptyUtil.isEmpty(id) ? defaultId : id);
         properties.put("name", element.name());
         properties.put("class", element.classes());
 

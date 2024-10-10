@@ -5,13 +5,16 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CharacterUtil;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.PrintHelper;
+import com.parch.combine.html.base.page.HtmlPageInitConfig;
 import com.parch.combine.html.base.page.config.FlagConfig;
-import com.parch.combine.html.base.page.config.HtmlConfig;
+import com.parch.combine.html.base.page.HtmlPageLogicConfig;
 import com.parch.combine.html.base.page.config.HtmlElementConfig;
+import com.parch.combine.html.base.page.config.HtmlHeaderLinkConfig;
+import com.parch.combine.html.base.page.config.HtmlHeaderMetaConfig;
+import com.parch.combine.html.base.page.config.HtmlPageTemplateConfig;
 import com.parch.combine.html.base.template.core.DomConfig;
 import com.parch.combine.html.common.canstant.UrlPathCanstant;
 import com.parch.combine.html.common.tool.HtmlBuildTool;
@@ -34,22 +37,23 @@ public class HtmlBuilder {
 
     private final static String TRIGGERS_DOM_ID = "$combine-triggers";
 
-    private final static Map<String, HtmlConfig> TEMP_MAP = new HashMap<>();
-
     private final String baseUrl;
     private final String flagConfigJson;
-    private final HtmlConfig config;
-    private HtmlConfig templateConfig;
+
+    private final HtmlPageLogicConfig config;
+    private final HtmlPageTemplateConfig templateConfig;
+
     private final HtmlElementGroupBuilder groupBuilder;
 
     private String html;
 
-    public HtmlBuilder(HtmlConfig config, String baseUrl, FlagConfig flagConfig, CombineManager manager) {
-        this.baseUrl = baseUrl;
-        this.config = config;
+    public HtmlBuilder(HtmlPageLogicConfig logicConfig, HtmlPageInitConfig initConfig, CombineManager manager) {
+        this.baseUrl = initConfig.baseUrl();
+        this.config = logicConfig;
+        this.templateConfig = initConfig.templateConfig();
         this.groupBuilder = new HtmlElementGroupBuilder(config.groupIds(), manager);
 
-        Map<String, Object> configMap = parseConfig(flagConfig);
+        Map<String, Object> configMap = parseConfig(initConfig.flagConfig());
         this.flagConfigJson = configMap == null ? null : JsonUtil.serialize(configMap);
     }
 
@@ -58,12 +62,7 @@ public class HtmlBuilder {
             return false;
         }
 
-        boolean success = this.loadTemplate();
-        if (!success) {
-            return success;
-        }
-
-        success = this.groupBuilder.build();
+        boolean success = this.groupBuilder.build();
         if (!success) {
             return success;
         }
@@ -81,8 +80,14 @@ public class HtmlBuilder {
     }
 
     private String buildHead() {
-        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(baseUrl, templateConfig.links(), config.links());
-        HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateConfig.metas(), config.metas());
+        HtmlHeaderLinkConfig[] templateLinks = null;
+        HtmlHeaderMetaConfig[] templateMetas = null;
+        if (templateConfig != null) {
+            templateLinks = templateConfig.links();
+            templateMetas = templateConfig.metas();
+        }
+        HtmlHeaderLinkBuilder linkBuilder = new HtmlHeaderLinkBuilder(baseUrl, templateLinks, config.links());
+        HtmlHeaderMetaBuilder metaBuilder = new HtmlHeaderMetaBuilder(templateMetas, config.metas());
 
         // 添加框架核心
         Map<String, String> coreCssProperties = new HashMap<>();
@@ -110,12 +115,11 @@ public class HtmlBuilder {
     private String buildPage(String head, String body, String script) {
         Map<String, String> htmlProperties = new HashMap<>();
         String lang = config.lang();
-        if (CheckEmptyUtil.isEmpty(lang)) {
-            lang = templateConfig.lang();
+        if (CheckEmptyUtil.isNotEmpty(lang)) {
+            htmlProperties.put("lang", lang);
         }
-        htmlProperties.put("lang", lang);
 
-        String htmlCode = HtmlBuildTool.build("static/html", head + body + script, htmlProperties, false);
+        String htmlCode = HtmlBuildTool.build("html", head + body + script, htmlProperties, false);
         return CharacterUtil.replaceChinese(htmlCode).replaceAll("\\\\{2}", "\\\\\\\\\\\\");
     }
 
@@ -123,7 +127,7 @@ public class HtmlBuilder {
         List<String> body = new ArrayList<>();
 
         // 模板
-        HtmlElementConfig[] templateModels = templateConfig.modules();
+        HtmlElementConfig[] templateModels = templateConfig == null ? null : templateConfig.modules();
         Map<String, HtmlElementConfig> templateModelMap = new HashMap<>();
         if (CheckEmptyUtil.isNotEmpty(templateModels)) {
             templateModelMap = Arrays.stream(templateModels).collect(Collectors.toMap(HtmlElementConfig::key, Function.identity()));
@@ -133,11 +137,12 @@ public class HtmlBuilder {
         HtmlElementConfig[] models = config.modules();
         if (CheckEmptyUtil.isNotEmpty(models)) {
             for (HtmlElementConfig model : models) {
-                if (CheckEmptyUtil.isEmpty(model.key())) {
+                String key = model.key();
+                if (CheckEmptyUtil.isEmpty(key)) {
                     continue;
                 }
-                HtmlElementConfig tempDomConfig = templateModelMap.get(model.key());
-                body.add(HtmlBuildTool.build(model.config(), tempDomConfig.config(), false));
+                HtmlElementConfig tempDomConfig = templateModelMap.get(key);
+                body.add(HtmlBuildTool.build(key, model.config(), tempDomConfig.config(), false));
             }
         }
 
@@ -154,7 +159,7 @@ public class HtmlBuilder {
         List<String> scripts = new ArrayList<>();
 
         // 添加模板脚本
-        String[] scriptArr = templateConfig.scripts();
+        String[] scriptArr = templateConfig == null ? null : templateConfig.scripts();
         if (CheckEmptyUtil.isNotEmpty(scriptArr)) {
             for (String scriptSrc : scriptArr) {
                 scripts.add(ScriptBuildTool.build(UrlPathHelper.replaceUrlFlag(scriptSrc, baseUrl)));
@@ -190,9 +195,15 @@ public class HtmlBuilder {
         List<String> scriptCodeList = new ArrayList<>();
         scriptCodeList.add("\n$combine.init(\"" + baseUrl + "\", " + flagConfigJson + ");");
 
-        // 常量注册 TODO
-//        String contentJson = JsonUtil.serialize(CombineManagerHandler.get(context.getScopeKey()).getConstant().get());
-//        scriptCodeList.add("\n$combine.constant.register(" + contentJson + ");");
+        // 常量注册
+        Map<String, Object> constantMap = new HashMap<>();
+        if (templateConfig != null && templateConfig.constant() != null) {
+            constantMap.putAll(templateConfig.constant());
+        }
+        if (config.constant() != null) {
+            constantMap.putAll(config.constant());
+        }
+        scriptCodeList.add("\n$combine.constant.register(" + JsonUtil.serialize(constantMap) + ");");
 
         // 元素模板注册
         groupBuilder.getTemplateMap().values().forEach(m -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + m.id + "\"," + m.json + ");"));
@@ -216,18 +227,11 @@ public class HtmlBuilder {
         HtmlElementConfig[] models = config.modules();
         if (CheckEmptyUtil.isNotEmpty(models)) {
             for (HtmlElementConfig model : models) {
+                String key = model.key();
                 String showGroupId = model.defaultShowGroupId();
                 if (CheckEmptyUtil.isNotEmpty(showGroupId)) {
-                    // TODO
-                    String domId = null;
-                    DomConfig domConfig = model.config();
-                    if (domConfig != null) {
-                        domId = domConfig.id();
-                    }
-                    if (CheckEmptyUtil.isEmpty(domId)) {
-                        domId = UUID.randomUUID().toString();
-                    }
-                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + domId + "\");");
+                    String domId = model.config().id();
+                    scriptCodeList.add("\n$combine.group.load(\"" + showGroupId + "\",\"" + (CheckEmptyUtil.isEmpty(domId) ? key : domId) + "\");");
                 }
             }
         }
@@ -236,27 +240,6 @@ public class HtmlBuilder {
         scripts.add(ScriptBuildTool.build(scriptCodeList));
 
         return StringUtil.join(scripts, CheckEmptyUtil.EMPTY);
-    }
-
-    private boolean loadTemplate() {
-        String tempPath = config.tempPath();
-        if (!TEMP_MAP.containsKey(tempPath)) {
-            try {
-                String testConfigJson = ResourceFileUtil.read(tempPath);
-                if (CheckEmptyUtil.isNotEmpty(testConfigJson)) {
-                    templateConfig = JsonUtil.deserialize(testConfigJson, HtmlConfig.class);
-                    TEMP_MAP.put(tempPath, templateConfig);
-                } else {
-                    PrintHelper.printComponentError("【HTML-TEMPLATE】【" + tempPath + "】【加载模板数据为空】");
-                }
-            } catch (Exception e) {
-                PrintHelper.printComponentError("【PAGE-TEMPLATE】【" + tempPath + "】【加载模板失败】");
-            }
-        } else {
-            templateConfig = TEMP_MAP.get(tempPath);
-        }
-
-        return templateConfig != null;
     }
 
     private Map<String, Object> parseConfig(Object interfaceObj) {

@@ -1,19 +1,27 @@
-package com.parch.combine.html.base.page.config;
+package com.parch.combine.html.base.page;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
+import com.parch.combine.html.base.page.config.HtmlElementConfig;
+import com.parch.combine.html.base.page.config.HtmlHeaderLinkConfig;
+import com.parch.combine.html.base.page.config.HtmlHeaderMetaConfig;
 
-public interface HtmlConfig extends ILogicConfig {
+import java.util.Map;
+
+public interface HtmlPageLogicConfig extends ILogicConfig {
+
+    @Field(key ="hasCache" , name = "是否对构建后的页面缓存", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    @FieldDesc("如果为 true, 则首次生成页面代码后进行缓存, 再次调用该组件时会从缓存直接获取页面代码")
+    Boolean hasCache();
+
+    @Field(key ="constant" , name = "全局常量定义", type = FieldTypeEnum.MAP)
+    Map<String, Object> constant();
 
     @Field(key ="lang" , name = "HTML语言", type = FieldTypeEnum.TEXT, defaultValue = "en")
     String lang();
-
-    @Field(key ="tempPath" , name = "模板根路径", type = FieldTypeEnum.TEXT)
-    @FieldDesc("默认系统内置模板根路径")
-    String tempPath();
 
     @Field(key ="metas" , name = "mate标签配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(HtmlHeaderMetaConfig.class)

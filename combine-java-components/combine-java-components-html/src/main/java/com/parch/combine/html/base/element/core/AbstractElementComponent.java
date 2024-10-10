@@ -14,22 +14,24 @@ public abstract class AbstractElementComponent<L extends ILogicConfig> extends A
     protected String type;
     protected String jsLibName;
     protected String cssLibName;
+    protected String templateLibName;
 
     /**
      * 构造器
      */
     public AbstractElementComponent(Class<L> logicClass, String type) {
-        this(logicClass, type, null, null);
+        this(logicClass, type, null, null, null);
     }
 
     /**
      * 构造器
      */
-    public AbstractElementComponent(Class<L> logicClass, String type, String jsLibName, String cssLibName) {
+    public AbstractElementComponent(Class<L> logicClass, String type, String jsLibName, String cssLibName, String templateLibName) {
         super(IInvalidInitConfig.class, logicClass);
         this.type = type;
         this.jsLibName = jsLibName;
         this.cssLibName = cssLibName;
+        this.templateLibName = templateLibName;
     }
 
     @Override
@@ -40,7 +42,7 @@ public abstract class AbstractElementComponent<L extends ILogicConfig> extends A
             return ComponentDataResult.fail(ConfigErrorEnum.CONFIG_IS_NULL);
         }
 
-        ElementConfigCache.INSTANCE.register(logicConfig.id(), type, jsLibName, cssLibName, config, manager);
+        ElementConfigCache.INSTANCE.register(logicConfig.id(), type, jsLibName, cssLibName, templateLibName, config, manager);
         return ComponentDataResult.success(true);
     }
 

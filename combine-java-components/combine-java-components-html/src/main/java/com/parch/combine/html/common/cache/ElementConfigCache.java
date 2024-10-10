@@ -7,6 +7,7 @@ import com.parch.combine.html.common.cache.base.BaseCacheModel;
 import com.parch.combine.html.common.cache.base.CacheModelBuilder;
 import com.parch.combine.html.common.cache.base.IConfigClear;
 import com.parch.combine.html.common.cache.base.IConfigGet;
+import com.parch.combine.html.common.tool.SystemElementPathTool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +20,10 @@ public class ElementConfigCache implements IConfigClear, IConfigGet<ElementConfi
 
     private ElementConfigCache() {}
 
-    public void register(String id, String type, String jsLibName, String cssLibName, ElementConfig config, CombineManager manager) {
-        CacheModelBuilder builder = new CacheModelBuilder(id, type, config, manager);
-        ElementCacheModel model = builder.build(new ElementCacheModel());
+    public void register(String id, String type, String jsLibName, String cssLibName, String templateLibName, ElementConfig config, CombineManager manager) {
 
-        // 修正 jsLibName 和 cssLibName
-        if (CheckEmptyUtil.isEmpty(jsLibName) || CheckEmptyUtil.isEmpty(cssLibName)) {
+        // 修正资源文件信息
+        if (CheckEmptyUtil.isAnyEmpty(jsLibName, cssLibName, templateLibName)) {
             String defaultLibName = type.toLowerCase().replaceAll("\\.", "/");
             if (CheckEmptyUtil.isEmpty(jsLibName)) {
                 jsLibName = defaultLibName;
@@ -32,12 +31,19 @@ public class ElementConfigCache implements IConfigClear, IConfigGet<ElementConfi
             if (CheckEmptyUtil.isEmpty(cssLibName)) {
                 cssLibName = defaultLibName;
             }
+            if (CheckEmptyUtil.isEmpty(templateLibName)) {
+                templateLibName = defaultLibName;
+            }
         }
+
+        CacheModelBuilder builder = new CacheModelBuilder(id, type, config, manager);
+        builder.addProperty("elementTemplatePath", SystemElementPathTool.buildTemplatePath(templateLibName));
+        ElementCacheModel model = builder.build(new ElementCacheModel());
 
         model.type = type;
         model.jsLibName = jsLibName;
         model.cssLibName = cssLibName;
-        model.loadId = config.dataLoad();
+        model.loadId = config.dataload();
         model.templateId = config.template();
         CACHE.put(id, model);
     }

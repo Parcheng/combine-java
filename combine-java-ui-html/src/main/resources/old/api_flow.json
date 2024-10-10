@@ -1,0 +1,16 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "settings/list": [
+      {
+        "type": "system.doc.components"
+      }
+    ],
+    "config/get": [
+      {
+        "type": "system.doc.config"
+      }
+    ]
+  }
+}

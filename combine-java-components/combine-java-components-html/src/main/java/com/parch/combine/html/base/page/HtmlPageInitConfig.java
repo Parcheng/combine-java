@@ -1,11 +1,22 @@
 package com.parch.combine.html.base.page;
 
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.base.IInitConfig;
 import com.parch.combine.html.base.page.config.FlagConfig;
+import com.parch.combine.html.base.page.config.HtmlPageTemplateConfig;
 
-public interface HtmlPageInitConfig {
+public interface HtmlPageInitConfig extends IInitConfig {
 
-    // http://127.0.0.1:8888/combine
+    @Field(key = "baseUrl", name = "根URL", type = FieldTypeEnum.TEXT)
     String baseUrl();
 
+    @Field(key = "flagConfig", name = "标识符配置", type = FieldTypeEnum.CONFIG)
+    @FieldObject(FlagConfig.class)
     FlagConfig flagConfig();
+
+    @Field(key = "templateConfig", name = "页面模板配置", type = FieldTypeEnum.CONFIG)
+    @FieldObject(HtmlPageTemplateConfig.class)
+    HtmlPageTemplateConfig templateConfig();
 }
