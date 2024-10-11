@@ -1,0 +1,276 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataFormat/json": [
+      {
+        "id": "dataFormatData1",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"30"},
+          {"fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"29"},
+          {"fieldName":"name", "source":"INIT2"}
+        ]
+      },{
+        "id": "dataFormatJson1",
+        "type": "data.format",
+        "items": [
+          {"source":"#{$r.dataFormatData1.data}", "function":"JSON", "params":"JSON_TO_LIST"}
+        ]
+      },{
+        "id": "dataFormatJson2",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatJson1.[0].[0]}", "function":"JSON", "params":"TO_JSON"}
+        ]
+      },{
+        "id": "dataFormatJson3",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatJson2.[0]}", "function":"JSON", "params":"JSON_TO_OBJECT"}
+        ]
+      }
+    ],
+    "dataFormat/clear": [
+      {
+        "id": "dataFormatData2",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"10"},
+          {"index": 1, "fieldName":"data", "source":"[{\"id\":1}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"10"},
+          {"index": 1, "fieldName":"name", "source":"INIT"},
+
+          {"index": 2, "fieldName":"id", "source":"20"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"19"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"}
+        ]
+      },{
+        "id": "dataFormatClear",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData2}", "function":"CLEAR_DUPLICATE", "params":["name,delete_flag"]}
+        ]
+      }
+    ],
+    "dataFormat/sort": [
+      {
+        "id": "dataFormatData3",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"10"},
+          {"index": 1, "fieldName":"data", "source":"[{\"id\":1}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"10"},
+          {"index": 1, "fieldName":"name", "source":"INIT"},
+
+          {"index": 2, "fieldName":"id", "source":"20"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"19"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"},
+
+          {"index": 3, "fieldName":"id", "source":"30"},
+          {"index": 3, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
+          {"index": 3, "fieldName":"flag", "source":"0"},
+          {"index": 3, "fieldName":"size", "source":"29"},
+          {"index": 3, "fieldName":"name", "source":"INIT2"}
+        ]
+      },{
+        "id": "dataFormatSort",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData3}", "function":"SORT", "params":"size"}
+        ]
+      },{
+        "id": "dataFormatSort2",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData3}", "function":"SORT", "params":["size", "desc"]}
+        ]
+      }
+    ],
+    "dataFormat/convert1": [
+      {
+        "id": "dataFormatData4",
+        "type": "data.mapping",
+        "items": [
+          {"index": 0, "fieldName":"id", "source":"10"},
+          {"index": 0, "fieldName":"data", "source":"[{\"id\":1}]"},
+          {"index": 0, "fieldName":"flag", "source":"0"},
+          {"index": 0, "fieldName":"size", "source":"10"},
+          {"index": 0, "fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"20"},
+          {"index": 1, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"19"},
+          {"index": 1, "fieldName":"name", "source":"INIT2"},
+
+          {"index": 2, "fieldName":"id", "source":"30"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"29"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"}
+        ]
+      },{
+        "id": "dataFormatConvert1",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData4.[0]}", "function":"TEXT_CONVERT", "params":["MODEL_TO_TEXT", "id,name", "/"]}
+        ]
+      },{
+        "id": "dataFormatConvert31",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatConvert1.[0]}", "function":"TEXT_CONVERT", "params":["TEXT_TO_MODEL", "id,name", "/"]}
+        ]
+      }
+    ],
+    "dataFormat/convert2": [
+      {
+        "id": "dataFormatData4"
+      },{
+        "id": "dataFormatConvert21",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData4}", "function":"TEXT_CONVERT", "params":["MODELS_TO_TEXTS", "id,name", "/"]}
+        ]
+      },{
+        "id": "dataFormatConvert4",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatConvert21.[0]}", "function":"TEXT_CONVERT", "params":["TEXTS_TO_MODELS", "id,name", "/"]}
+        ]
+      }
+    ],
+    "dataFormat/convert3": [
+      {
+        "id": "dataFormatData4"
+      },{
+        "id": "dataFormatConvert22",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData4}", "function":"TEXT_CONVERT", "params":["MODELS_TO_TEXT", "id,name", "/", "&"]}
+        ]
+      },{
+        "id": "dataFormatConvert32",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatConvert22.[0]}", "function":"TEXT_CONVERT", "params":["TEXT_TO_MODELS", "id,name", "/", "&"]}
+        ]
+      }
+    ],
+    "dataFormat/group": [
+      {
+        "id": "dataFormatData5",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"},
+
+          {"index": 1, "fieldName":"id", "source":"10"},
+          {"index": 1, "fieldName":"data", "source":"[{\\\"id\\\":1}]"},
+          {"index": 1, "fieldName":"flag", "source":"0"},
+          {"index": 1, "fieldName":"size", "source":"10"},
+          {"index": 1, "fieldName":"name", "source":"INIT"},
+
+          {"index": 2, "fieldName":"id", "source":"20"},
+          {"index": 2, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2}]"},
+          {"index": 2, "fieldName":"flag", "source":"0"},
+          {"index": 2, "fieldName":"size", "source":"19"},
+          {"index": 2, "fieldName":"name", "source":"INIT2"},
+
+          {"index": 3, "fieldName":"id", "source":"30"},
+          {"index": 3, "fieldName":"data", "source":"[{\"id\":1},{\"id\":2},{\"id\":3}]"},
+          {"index": 3, "fieldName":"flag", "source":"0"},
+          {"index": 3, "fieldName":"size", "source":"29"},
+          {"index": 3, "fieldName":"name", "source":"INIT2"}
+        ]
+      },{
+        "id": "dataFormatGroup",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData5}", "function":"GROUP", "params":"name"}
+        ]
+      }
+    ],
+    "dataFormat/map": [
+      {
+        "id": "dataFormatData4"
+      },{
+        "id": "dataFormatMap",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData4}", "function":"TO_MAP", "params":["id", "data"]}
+        ]
+      }
+    ],
+    "dataFormat/rang": [
+      {
+        "id": "dataFormatData5"
+      },{
+        "id": "dataFormatRang",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{$r.dataFormatData5}", "function":"RANG", "params":["1", "2"]}
+        ]
+      }
+    ],
+    "dataFormat/tree": [
+      {
+        "id": "dataFormatTree",
+        "type": "data.format",
+        "replace": false,
+        "items": [
+          {"source":"#{list}", "function":"TO_TREE", "params":["id", "parentId", "children"]}
+        ]
+      }
+    ],
+    "dataFormat/md5": [
+      {
+        "id": "dataFormatMd5",
+        "type": "data.format",
+        "replace": true,
+        "items": [
+          {"source":"#{data}", "function":"MD5"}
+        ]
+      }
+    ]
+  }
+}
+

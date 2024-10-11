@@ -1,0 +1,30 @@
+{
+  "constant": {
+    "dataMappingFlag": 1
+  },
+  "init": [],
+  "flows": {
+    "dataMapping/test": [
+      {
+        "id": "dataMappingTestData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"}
+        ]
+      },{
+        "id": "dataMapping",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"#{$r.dataMappingTestData.id}"},
+          {"fieldName":"data", "source":"#{data}"},
+          {"fieldName":"flag", "source":"#{$c.dataMappingFlag}"},
+          {"fieldName":"name", "source":"dataMapping"}
+        ]
+      }
+    ]
+  }
+}

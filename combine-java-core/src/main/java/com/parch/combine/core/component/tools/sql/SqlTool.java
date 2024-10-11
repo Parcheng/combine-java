@@ -98,7 +98,7 @@ public class SqlTool {
         String lowerSql = sql.toLowerCase();
         int index = lowerSql.indexOf("from");
         if (index == -1) {
-            PrintUtil.printError("SQL不合规");
+            PrintLogUtil.printError("SQL不合规");
             return sql;
         }
 

@@ -1,0 +1,34 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "fileBuild/table": [
+      {
+        "id": "fileBuildTestData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"1"},
+          {"fieldName":"data", "source":"[{\"id\":\"100\",\"name\":\"test\"}]"},
+          {"fieldName":"flag", "source":"0"},
+          {"fieldName":"size", "source":"28"},
+          {"fieldName":"name", "source":"INIT"}
+        ]
+      },{
+        "id": "buildTable",
+        "type": "file.build.table",
+        "source": "$r.fileBuildTestData",
+        "header": ["ID", "名称", "长度"],
+        "filedNames": ["id", "name", "size"]
+      }
+    ],
+    "fileBuild/text": [
+      {
+        "id": "fileBuildTestData"
+      },{
+        "id": "buildText",
+        "type": "file.build.text",
+        "source": "$r.fileBuildTestData.data"
+      }
+    ]
+  }
+}

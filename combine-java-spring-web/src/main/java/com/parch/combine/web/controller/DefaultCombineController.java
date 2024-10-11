@@ -1,8 +1,7 @@
 package com.parch.combine.web.controller;
 
 import com.parch.combine.core.component.vo.FlowResult;
-import com.parch.combine.web.service.DefaultCombineJavaService;
-import com.parch.combine.web.service.DefaultCombineJavaUIService;
+import com.parch.combine.web.service.CombineJavaApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -17,10 +17,7 @@ import java.util.Map;
 public class DefaultCombineController {
 
     @Autowired
-    private DefaultCombineJavaService defaultCombineWebService;
-
-    @Autowired
-    private DefaultCombineJavaUIService defaultCombineJavaUIService;
+    private CombineJavaApiService defaultCombineWebService;
 
     @PostMapping("flow/{domain}/{function}")
     public FlowResult call(@RequestBody Map<String, Object> params, @PathVariable(name = "domain") String domain, @PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
@@ -32,8 +29,9 @@ public class DefaultCombineController {
         return defaultCombineWebService.uploadAndCall(paramJson, file, domain, function, request, response);
     }
 
-    @GetMapping("page/{pageKey}")
-    public String page(@PathVariable(name = "pageKey") String pageKey) {
-        return defaultCombineJavaUIService.getPage(pageKey);
+    @GetMapping("page-flow/{function}")
+    public String page(@PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
+        FlowResult pageResult = defaultCombineWebService.call(new HashMap<>(), "page", function, request, response);
+        return pageResult.getData() == null ? null : pageResult.getData().toString();
     }
 }

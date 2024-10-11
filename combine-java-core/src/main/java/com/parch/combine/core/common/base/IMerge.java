@@ -1,6 +1,6 @@
 package com.parch.combine.core.common.base;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public interface IMerge<T> {
                 }
             }
         } catch (IllegalAccessException e) {
-            PrintUtil.printError("Merge Error:" + e.getMessage());
+            PrintLogUtil.printError("Merge Error:" + e.getMessage());
         }
     }
 }

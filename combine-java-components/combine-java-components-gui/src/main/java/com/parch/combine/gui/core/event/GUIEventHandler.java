@@ -1,6 +1,6 @@
 package com.parch.combine.gui.core.event;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.trigger.GUITriggerBuilder;
 import com.parch.combine.gui.core.event.trigger.ITriggerProcessor;
@@ -24,13 +24,13 @@ public class GUIEventHandler {
 
     public static void binding(JComponent guiComponent, EventConfig config, IGUIElement element) {
         if (element == null) {
-            PrintUtil.printError("【GUI EVENT BINDING】ERROR: 绑定事件的 GUI 元素不存在");
+            PrintLogUtil.printError("【GUI EVENT BINDING】ERROR: 绑定事件的 GUI 元素不存在");
             return;
         }
 
         GUIEventTypeEnum event = GUIEventTypeEnum.get(config.eventType());
         if (event == null || event == GUIEventTypeEnum.NONE) {
-            PrintUtil.printError("【GUI EVENT BINDING】ERROR: " + config.eventType() + " 事件类型不合法");
+            PrintLogUtil.printError("【GUI EVENT BINDING】ERROR: " + config.eventType() + " 事件类型不合法");
             return;
         }
 

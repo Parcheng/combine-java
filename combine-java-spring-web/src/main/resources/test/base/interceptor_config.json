@@ -1,0 +1,57 @@
+{
+  "constant": {},
+  "init": [],
+  "before": [
+    {
+      "id": "before1",
+      "order": 1,
+      "flow": [{
+        "id": "before1",
+        "type": "data.create",
+        "items": [{"target":"interceptorTest", "type":"NUMBER", "params":"100"}]
+      }]
+    },{
+      "id": "before2",
+      "order": 2,
+      "flow": [{
+        "id": "before2",
+        "type": "data.edit",
+        "items": [{"source":"interceptorTest", "type":"SET", "dataType":"NUMBER","params":"200"}]
+      }],
+      "includes": ["interceptor/before2"]
+    },{
+      "id": "before3",
+      "order": 3,
+      "flow": [{
+        "id": "before3",
+        "type": "data.edit",
+        "items": [{"source":"interceptorTest", "type":"SET", "dataType":"NUMBER","params":"300"}]
+      }],
+      "excludes": ["interceptor/before1", "interceptor/before2"]
+    },{
+      "id": "before4",
+      "order": 4,
+      "flow": [{
+        "id": "before4",
+        "type": "data.edit",
+        "items": [{"source":"name", "type":"SET", "dataType":"STRING","params":"name"}]
+      }],
+      "includes": ["interceptor/*"]
+    },{
+      "id": "before5",
+      "order": 5,
+      "flow": [{
+        "id": "before5",
+        "type": "data.edit",
+        "items": [{"source":"name", "type":"SET", "dataType":"STRING","params":"name2"}]
+      }],
+      "includes": ["*/before4"]
+    }
+  ],
+  "flows": {
+    "interceptor/before1": [],
+    "interceptor/before2": [],
+    "interceptor/before3": [],
+    "interceptor/before4": []
+  }
+}

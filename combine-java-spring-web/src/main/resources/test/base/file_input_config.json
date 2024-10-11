@@ -1,0 +1,26 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "fileOpen/diskToText": [
+      {
+        "id": "fileOpenData1",
+        "type": "file.input.open",
+        "path": "test/base/file/text.txt"
+      }
+    ],
+    "fileOpen/diskToXlsx": [
+      {
+        "id": "fileOpenData2",
+        "type": "file.input.open",
+        "path": "test/base/file/table.xlsx"
+      }
+    ],
+    "fileOpen/upload": [
+      {
+        "id": "fileOpenData3",
+        "type": "file.input.upload"
+      }
+    ]
+  }
+}

@@ -1,5 +1,7 @@
 package com.parch.combine.core.component.tools.compare;
 
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.tools.calc.GroupValueTool;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
@@ -13,18 +15,13 @@ import java.util.List;
  */
 public class CompareConfig {
 
-    /**
-     * 比较来源
-     */
+    @Field(key = "source", name = "比较来源", type = FieldTypeEnum.TEXT)
     private String source;
-    /**
-     * 比较类型
-     */
+
+    @Field(key = "compareType", name = "比较类型", type = FieldTypeEnum.TEXT)
     private CompareTypeEnum compareType;
 
-    /**
-     * 比较目标
-     */
+    @Field(key = "target", name = "比较目标", type = FieldTypeEnum.TEXT)
     private String target;
 
     public String getSource() {

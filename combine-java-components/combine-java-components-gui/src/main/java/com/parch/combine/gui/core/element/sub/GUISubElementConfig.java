@@ -1,6 +1,6 @@
 package com.parch.combine.gui.core.element.sub;
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.element.IGUIElement;
 import com.parch.combine.gui.core.event.EventConfig;
@@ -9,8 +9,6 @@ import javax.swing.*;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class GUISubElementConfig {
     public String key;
@@ -46,7 +44,7 @@ public class GUISubElementConfig {
             try {
                 guiElements[i] = configClass.getDeclaredConstructor().newInstance();
             } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                PrintUtil.printError("GUISubElementConfig INIT Error: " + configClass.getName() + " New Instance Fail! " + e.getMessage());
+                PrintLogUtil.printError("GUISubElementConfig INIT Error: " + configClass.getName() + " New Instance Fail! " + e.getMessage());
                 return null;
             }
 

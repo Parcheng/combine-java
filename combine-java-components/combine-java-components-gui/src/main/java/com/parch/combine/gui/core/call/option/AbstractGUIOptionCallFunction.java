@@ -1,10 +1,9 @@
 package com.parch.combine.gui.core.call.option;
 
 
-import com.parch.combine.core.common.util.PrintUtil;
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
 import com.parch.combine.gui.core.call.IGUIElementCallFunction;
-import com.parch.combine.gui.core.element.IGUIElement;
 
 import java.util.Map;
 
@@ -56,6 +55,6 @@ public abstract class AbstractGUIOptionCallFunction implements IGUIElementCallFu
     }
 
     protected void printError(String msg) {
-        PrintUtil.printError("【GUI CALL FUNCTION】【" + id + "】【" + key + "】 ERROR: " + msg);
+        PrintLogUtil.printError("【GUI CALL FUNCTION】【" + id + "】【" + key + "】 ERROR: " + msg);
     }
 }

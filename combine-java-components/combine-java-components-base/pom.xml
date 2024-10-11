@@ -5,38 +5,52 @@
     <parent>
         <artifactId>combine-java-components</artifactId>
         <groupId>com.parch.combine</groupId>
-        <version>0.10.0</version>
+        <version>1.0.0</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>combine-java-components-base</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <poi.version>4.1.2</poi.version>
+        <mail-api.version>1.4.7</mail-api.version>
+        <compress.version>1.20</compress.version>
+        <pdfbox.version>2.0.12</pdfbox.version>
+    </properties>
 
     <dependencies>
         <!-- 收发邮件 -->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
+            <version>${mail-api.version}</version>
         </dependency>
 
         <!-- PDF -->
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
+            <version>${pdfbox.version}</version>
         </dependency>
 
         <!-- 7z和tar.gz压缩解压 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
+            <version>${compress.version}</version>
         </dependency>
 
         <!-- office -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
         </dependency>
     </dependencies>
 </project>

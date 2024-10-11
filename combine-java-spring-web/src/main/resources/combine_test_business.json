@@ -1,0 +1,6 @@
+{
+  "initConfigs": ["test/base_test_config.json", "test/mysql_test_config.json"],
+  "initFlows": [],
+  "openRegisterConfig": true,
+  "requestIdKey": "requestID"
+}
