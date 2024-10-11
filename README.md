@@ -41,7 +41,7 @@
 <dependency>
     <artifactId>combine-java-spring-web</artifactId>
     <groupId>com.parch.combine</groupId>
-    <version>0.10.0</version>
+    <version>0.11.0</version>
 </dependency>
 ```
 
