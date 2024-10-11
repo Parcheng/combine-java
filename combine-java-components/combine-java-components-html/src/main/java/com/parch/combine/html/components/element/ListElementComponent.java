@@ -3,19 +3,19 @@ package com.parch.combine.html.components.element;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.html.base.element.TextElementLogicConfig;
+import com.parch.combine.html.base.element.ListElementLogicConfig;
 import com.parch.combine.html.base.element.core.AbstractElementComponent;
 import com.parch.combine.html.base.element.core.ElementConfig;
 
-@Component(key = "element.text.register", order = 400, name = "文本元素模板配置注册组件", logicConfigClass = TextElementLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "element.list.register", order = 400, name = "列表元素模板配置注册组件", logicConfigClass = ListElementLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
-public class TextTemplateComponent extends AbstractElementComponent<TextElementLogicConfig> {
+public class ListElementComponent extends AbstractElementComponent<ListElementLogicConfig> {
 
     /**
      * 构造器
      */
-    public TextTemplateComponent() {
-        super(TextElementLogicConfig.class, "SYSTEM.TEXT");
+    public ListElementComponent() {
+        super(ListElementLogicConfig.class, "SYSTEM.LIST");
     }
 
     @Override

@@ -3,19 +3,19 @@ package com.parch.combine.html.components.element;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.html.base.element.AudioElementLogicConfig;
+import com.parch.combine.html.base.element.CheckboxElementLogicConfig;
 import com.parch.combine.html.base.element.core.AbstractElementComponent;
 import com.parch.combine.html.base.element.core.ElementConfig;
 
-@Component(key = "element.audio.register", order = 400, name = "音频元素模板配置注册组件", logicConfigClass = AudioElementLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "element.checkbox.register", order = 400, name = "多选框元素模板配置注册组件", logicConfigClass = CheckboxElementLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
-public class AudioTemplateComponent extends AbstractElementComponent<AudioElementLogicConfig> {
+public class CheckboxElementComponent extends AbstractElementComponent<CheckboxElementLogicConfig> {
 
     /**
      * 构造器
      */
-    public AudioTemplateComponent() {
-        super(AudioElementLogicConfig.class, "SYSTEM.AUDIO");
+    public CheckboxElementComponent() {
+        super(CheckboxElementLogicConfig.class, "SYSTEM.CHECKBOX");
     }
 
     @Override
