@@ -52,11 +52,6 @@
                 <artifactId>combine-java-core</artifactId>
                 <version>${combine-java-core.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.parch.combine</groupId>
-                <artifactId>combine-java-ui-html</artifactId>
-                <version>${combine-java-ui-html.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.parch.combine</groupId>
