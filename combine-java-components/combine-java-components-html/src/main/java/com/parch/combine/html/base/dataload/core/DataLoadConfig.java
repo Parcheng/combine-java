@@ -32,7 +32,7 @@ public interface DataLoadConfig {
         @Field(key = "mappings", name = "数据映射，格式为“旧值:新值”的键值对集合", type = FieldTypeEnum.MAP)
         Map<String, Object> mappings();
 
-        @Field(key = "defaultValue", name = "未命中任何映射时的默认值", type = FieldTypeEnum.TEXT)
+        @Field(key = "defaultValue", name = "未命中任何映射时的默认值", type = FieldTypeEnum.ANY)
         Object defaultValue();
     }
 }

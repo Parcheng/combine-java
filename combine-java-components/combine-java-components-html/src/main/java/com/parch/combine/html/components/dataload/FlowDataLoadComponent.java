@@ -17,7 +17,7 @@ public class FlowDataLoadComponent extends AbstractDataLoadComponent<ApiDataLoad
      * 构造器
      */
     public FlowDataLoadComponent() {
-        super(ApiDataLoadLogicConfig.class, DataLoadTypeEnum.API);
+        super(ApiDataLoadLogicConfig.class, DataLoadTypeEnum.FLOW);
     }
 
     @Override

@@ -1,7 +1,0 @@
-{
-  "initConfigs": ["configs/api_flow.json", "configs/ui_api_flow.json"],
-  "initFlows": [],
-  "openRegisterConfig": false,
-  "requestIdKey": "requestID",
-  "printComponentResult": true
-}

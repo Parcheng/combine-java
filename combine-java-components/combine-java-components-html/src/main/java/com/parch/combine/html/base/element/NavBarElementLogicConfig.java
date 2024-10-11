@@ -9,6 +9,7 @@ import com.parch.combine.html.base.element.core.ElementConfig;
 public interface NavBarElementLogicConfig extends ILogicConfig {
 
     @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldObject(Config.class)
     Config config();
 
     interface Config extends ElementConfig {
@@ -22,21 +23,22 @@ public interface NavBarElementLogicConfig extends ILogicConfig {
         @Field(key = "defaultChecked", name = "默认选择项索引（从0开始）", type = FieldTypeEnum.NUMBER)
         Integer defaultChecked();
 
-        @Field(key = "nav", name = "导航项配置", type = FieldTypeEnum.OBJECT, isRequired = true)
+        @Field(key = "nav", name = "导航项配置", type = FieldTypeEnum.CONFIG, isRequired = true)
         @FieldObject(NavSettings.class)
         NavSettings nav();
 
-        @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+        @Field(key = "defaultNavs", name = "导航默认项配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
+        @FieldObject(NavData.class)
         NavData[] defaultNavs();
 
-        @Field(key = "buttons", name = "导航右栏操作配置集合", type = FieldTypeEnum.OBJECT, isArray = true)
+        @Field(key = "opts", name = "导航右栏操作配置集合", type = FieldTypeEnum.CONFIG, isArray = true)
         @FieldObject(OptItemSettings.class)
         OptItemSettings[] opts();
     }
 
     interface OptItemSettings {
 
-        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.TEXT, isArray = true)
+        @Field(key = "text", name = "按钮文本", type = FieldTypeEnum.TEXT)
         String text();
 
         @Field(key = "triggers", name = "按钮触发配置", type = FieldTypeEnum.COMPONENT, isArray = true)

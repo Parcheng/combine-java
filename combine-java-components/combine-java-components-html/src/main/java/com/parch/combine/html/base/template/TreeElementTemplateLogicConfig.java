@@ -1,6 +1,7 @@
 package com.parch.combine.html.base.template;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
@@ -13,6 +14,7 @@ import java.util.List;
 public interface TreeElementTemplateLogicConfig extends ILogicConfig {
 
     @Field(key = "config", name = "样式模板配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldObject(Config.class)
     Config config();
 
     interface Config extends ElementTemplateConfig {
@@ -27,7 +29,7 @@ public interface TreeElementTemplateLogicConfig extends ILogicConfig {
 
         @Field(key = "levelItems", name = "每个层级的树项DOM配置", type = FieldTypeEnum.CONFIG, isArray = true)
         @FieldRef(DomConfig.class)
-        List<DomConfig> levelItems();
+        DomConfig[] levelItems();
 
         @Field(key = "itemActive", name = "树项选中时DOM配置", type = FieldTypeEnum.CONFIG)
         @FieldRef(DomConfig.class)

@@ -2,6 +2,7 @@ package com.parch.combine.core.component.tools.config;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.annotations.FieldRef;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -121,22 +122,21 @@ public class ConfigHelper {
                 }
                 break;
             case CONFIG:
-                FieldObject fieldConfig = item.getAnnotation(FieldObject.class);
-                if (fieldConfig == null) {
+                Class<?> filedClassType = getFieldObject(item);
+                if (filedClassType == null) {
                     errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类"));
                 } else {
-                    if (!fieldConfig.value().isAssignableFrom(typeClass)) {
+                    if (!filedClassType.isAssignableFrom(typeClass)) {
                         errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义与 FieldObject 注解配置不一致"));
                     }
-                    List<String> subErrors = ConfigHelper.check(fieldConfig.value(), checkedClass);
+                    List<String> subErrors = ConfigHelper.check(filedClassType, checkedClass);
                     for (String subError : subErrors) {
                         errorMsg.add(field.key() + "." + subError);
                     }
                 }
                 break;
             case OBJECT:
-                fieldConfig = item.getAnnotation(FieldObject.class);
-                if (fieldConfig == null) {
+                if (getFieldObject(item) == null) {
                     errorMsg.add(ComponentErrorHandler.buildFieldMsg(field.key(), "的类型配置定义缺少配置，请使用 FieldObject 注解指定配置类"));
                 }
                 break;
@@ -270,9 +270,9 @@ public class ConfigHelper {
                     itemData = item instanceof Map ? item : null;
                     break;
                 case CONFIG:
-                    FieldObject fieldConfig = method.getAnnotation(FieldObject.class);
-                    if (item instanceof Map && fieldConfig != null && returnType == fieldConfig.value()){
-                        ThreeTuples<Boolean, ?, List<String>> buildResult = build(scopeKey, fieldConfig.value(), (Map<String, Object>) item);
+                    Class<?> configClassType = getFieldObject(method);
+                    if (item instanceof Map && configClassType != null && returnType == configClassType){
+                        ThreeTuples<Boolean, ?, List<String>> buildResult = build(scopeKey, configClassType, (Map<String, Object>) item);
                         if (buildResult.getFirst()) {
                             itemData = buildResult.getSecond();
                         } else {
@@ -283,10 +283,10 @@ public class ConfigHelper {
                     }
                     break;
                 case OBJECT:
-                    fieldConfig = method.getAnnotation(FieldObject.class);
-                    if (item instanceof Map && fieldConfig != null && returnType == fieldConfig.value()) {
+                    Class<?> objectClassType = getFieldObject(method);
+                    if (item instanceof Map && objectClassType != null && returnType == objectClassType) {
                         try {
-                            itemData = JsonUtil.deserialize(JsonUtil.serialize(item), fieldConfig.value());
+                            itemData = JsonUtil.deserialize(JsonUtil.serialize(item), objectClassType);
                         } catch (Exception e) {
                             errors.add("JSON序列号异常-" + e.getMessage());
                         }
@@ -324,5 +324,19 @@ public class ConfigHelper {
         }
 
         return new ThreeTuples<>(CheckEmptyUtil.isEmpty(errors), isArray ? arrayData : Array.get(arrayData, 0), errors);
+    }
+
+    private static Class<?> getFieldObject(AnnotatedElement item) {
+        FieldObject fieldObject = item.getAnnotation(FieldObject.class);
+        if (fieldObject != null) {
+            return fieldObject.value();
+        }
+
+        FieldRef fieldRef = item.getAnnotation(FieldRef.class);
+        if (fieldRef != null) {
+            return fieldRef.value()[0];
+        }
+
+        return null;
     }
 }

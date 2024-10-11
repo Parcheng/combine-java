@@ -1,20 +1,26 @@
 {
   "constant": {},
-  "init": [],
+  "init": [{
+    "type": "html.page.build",
+    "baseUrl": "http://127.0.0.1:8888/combine",
+    "flagConfig": {}
+  }],
   "blocks": [
     {
       "id": "system_settings_load",
       "type": "html.dataload.flow.register",
       "config": {
         "mode": "POST",
-        "url": "/flow/settings/list"
+        "url": "/flow/settings/list",
+        "params": {}
       }
     },{
       "id": "system_config_load",
       "type": "html.dataload.flow.register",
       "config": {
         "mode": "POST",
-        "url": "/flow/config/get"
+        "url": "/flow/config/get",
+        "params": {}
       }
     },
 
@@ -33,7 +39,7 @@
       "type": "html.group.register",
       "elements": [
         {
-          "type": "html.element.nav_bar.register",
+          "type": "html.element.navBar.register",
           "config": {
             "dataload": "system_settings_load",
             "brandText": "Combine-Java",
@@ -51,14 +57,14 @@
               }]
             }],
             "nav": {
-              "text": "#{name}",
+              "text": "${name}",
               "triggers": [{
                 "type": "html.trigger.load.register",
                 "config": {
                   "event": "click",
                   "groupId": "system_api_tree",
                   "parentId": "element_left",
-                  "params": "#{settings}"
+                  "params": "${settings}"
                 }
               }]
             }
@@ -80,7 +86,7 @@
                 "event": "click",
                 "groupId": "system_api_content",
                 "parentId": "element_content",
-                "params": "#{}"
+                "params": "${}"
               }
             }]
           }
@@ -103,9 +109,9 @@
               "type": "html.trigger.load.register",
               "config": {
                 "event": "click",
-                "groupId": "#{groupId}",
+                "groupId": "${groupId}",
                 "parentId": "element_content",
-                "params": "#{}"
+                "params": "${}"
               }
             }]
           }
@@ -118,7 +124,7 @@
         {
           "type": "html.element.title.register",
           "config": {
-            "text": "【#{name}】",
+            "text": "【${name}】",
             "level": 4,
             "top": false,
             "bottom": true
@@ -186,7 +192,7 @@
         {
           "type": "html.element.title.register",
           "config": {
-            "text": "#{name}",
+            "text": "${name}",
             "level": 4,
             "top": false,
             "bottom": true
@@ -197,12 +203,12 @@
           "config": {
             "dataload": "system_config_load",
             "lines": [
-              { "text": "<b>#{key} - #{name}</b>" },
-              { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
-              { "title": "描述：", "text": "#{desc}" },
+              { "text": "<b>${key} - ${name}</b>" },
+              { "text": "类型: ${type} | 必填: ${isRequired} | 数组: ${isArray} | 默认值: ${defaultValue:无}" },
+              { "title": "描述：", "text": "${desc}" },
               { "text": "<hr>" }
             ],
-            "children": ["#{children}"]
+            "children": ["${children}"]
           }
         }
       ]
@@ -213,10 +219,10 @@
         {
           "type": "html.element.content.register",
           "config": {
-            "text": ["#{desc}"]
+            "text": ["${desc}"]
           }
         },{
-          "type": "system.title",
+          "type": "html.element.title.register",
           "config": {
             "text": "1. 组件初始化配置",
             "level": 3,
@@ -228,14 +234,14 @@
           "config": {
             "dataField": "initConfig",
             "lines": [
-              { "text": "<b>#{key} - #{name}</b>" },
-              { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
-              { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
-              { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
-              { "title": "描述：", "text": "#{desc}" },
+              { "text": "<b>${key} - ${name}</b>" },
+              { "text": "类型: ${type} | 必填: ${isRequired} | 数组: ${isArray} | 默认值: ${defaultValue:无}" },
+              { "title": "可选值：", "data": "${options}", "text": "${key}（${name}）", "separator": " |  " },
+              { "title": "示例：", "data": "${egs}", "text": "  “${value}” 表示：${desc}" },
+              { "title": "描述：", "text": "${desc}" },
               { "text": "<hr>" }
             ],
-            "children": ["#{children}"],
+            "children": ["${children}"],
             "defaultText": "（该组件无初始化配置）"
           }
         },{
@@ -247,94 +253,50 @@
             "bottom": true
           }
         },{
-          "type": "html.element.content.register",
+          "type": "html.element.text.register",
           "config": {
             "dataField": "logicConfig",
             "lines": [
-              { "text": "<b>#{key} - #{name}</b>" },
-              { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
-              { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
-              { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
-              { "title": "描述：", "text": "#{desc}" },
+              { "text": "<b>${key} - ${name}</b>" },
+              { "text": "类型: ${type} | 必填: ${isRequired} | 数组: ${isArray} | 默认值: ${defaultValue:无}" },
+              { "title": "可选值：", "data": "${options}", "text": "${key}（${name}）", "separator": " |  " },
+              { "title": "示例：", "data": "${egs}", "text": "  “${value}” 表示：${desc}" },
+              { "title": "描述：", "text": "${desc}" },
               { "text": "<hr>" }
             ],
-            "children": ["#{children}"]
-          }
-        },{
-          "type": "html.element.title.register",
-          "config": {
-            "text": "3. 组件公共对象",
-            "level": 3,
-            "top": true,
-            "bottom": true
-          }
-        },{
-          "type": "html.element.list.register",
-          "config": {
-            "template": "empty_list",
-            "dataField": "commonObjects",
-            "content": {
-              "elements": [{
-                "type": "html.element.title.register",
-                "config": {
-                  "text": "#{name}",
-                  "level": 4,
-                  "top": true,
-                  "bottom": true
-                }
-              },{
-                "type": "html.element.text.register",
-                "config": {
-                  "lines": [
-                    {"text": "#{desc}<br/>"}
-                  ]
-                }
-              },{
-                "type": "html.element.text.register",
-                "config": {
-                  "dataField": "properties",
-                  "lines": [
-                    { "text": "<b>#{key} - #{name}</b>" },
-                    { "text": "类型: #{type} | 必填: #{isRequired} | 数组: #{isArray} | 默认值: #{defaultValue:无}" },
-                    { "title": "可选值：", "data": "#{options}", "text": "#{key}（#{name}）", "separator": " |  " },
-                    { "title": "示例：", "data": "#{egs}", "text": "  “#{value}” 表示：#{desc}" },
-                    { "title": "描述：", "text": "#{desc}" },
-                    { "text": "<hr>" }
-                  ],
-                  "children": ["#{children}"]
-                }
-              }]
-            },
-            "defaultText": "（该组件无公共对象）"
+            "children": ["${children}"]
           }
         }
       ]
     }
   ],
   "flows": {
-    "page/api.html": {
-      "type": "html.page.build",
-      "groupIds": ["system_api_nav", "system_api_tree", "system_api_home_tree", "system_api_home_content", "system_api_config_content", "system_api_content"],
-      "modules": [
-        {
-          "key": "header",
-          "defaultShowGroupId": "system_api_nav"
-        },{
-          "key": "left",
-          "config": {
-            "id": "element_left",
-            "classes": "c-model",
-            "style": "width:19%;"
+    "page/api": [
+      {
+        "type": "html.page.build",
+        "groupIds": ["system_api_nav", "system_api_tree", "system_api_home_tree", "system_api_home_content", "system_api_config_content", "system_api_content"],
+        "modules": [
+          {
+            "key": "header",
+            "defaultShowGroupId": "system_api_nav",
+            "config": {}
+          },{
+            "key": "left",
+            "config": {
+              "id": "element_left",
+              "classes": "c-model",
+              "style": "width:19%;"
+            }
+          },{
+            "key": "content",
+            "config": {
+              "id": "element_content",
+              "classes": "c-model",
+              "style": "width:80%;border-left:1px solid #F5F5F5;padding-left:20px;margin-bottom:50px"
+            }
           }
-        },{
-          "key": "content",
-          "config": {
-            "id": "element_content",
-            "classes": "c-model",
-            "style": "width:80%;border-left:1px solid #F5F5F5;padding-left:20px;margin-bottom:50px"
-          }
-        }
-      ]
-    }
+        ]
+      }
+    ]
   }
 }

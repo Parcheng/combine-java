@@ -4,7 +4,6 @@
     <modules>
         <module>combine-java-core</module>
         <module>combine-java-components</module>
-        <module>combine-java-ui-html</module>
         <module>combine-java-spring-web</module>
     </modules>
 
@@ -28,6 +27,7 @@
 
         <combine-java-components-base.version>1.0.0</combine-java-components-base.version>
         <combine-java-components-gui.version>1.0.0</combine-java-components-gui.version>
+        <combine-java-components-html.version>1.0.0</combine-java-components-html.version>
         <combine-java-components-mysql.version>1.0.0</combine-java-components-mysql.version>
         <combine-java-components-rabbitmq.version>1.0.0</combine-java-components-rabbitmq.version>
         <combine-java-components-redis.version>1.0.0</combine-java-components-redis.version>
@@ -87,6 +87,11 @@
                 <groupId>com.parch.combine</groupId>
                 <artifactId>combine-java-components-rabbitmq</artifactId>
                 <version>${combine-java-components-rabbitmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.parch.combine</groupId>
+                <artifactId>combine-java-components-html</artifactId>
+                <version>${combine-java-components-html.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -9,6 +9,7 @@ import com.parch.combine.html.base.element.core.ElementConfig;
 public interface TextElementLogicConfig extends ILogicConfig {
 
     @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldObject(Config.class)
     Config config();
 
     interface Config extends ElementConfig {
@@ -16,11 +17,11 @@ public interface TextElementLogicConfig extends ILogicConfig {
         @Field(key = "retract", name = "缩进数", type = FieldTypeEnum.NUMBER)
         Integer retract();
 
-        @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+        @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
         @FieldObject(TextLineSettings.class)
         TextLineSettings[] lines();
 
-        @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT)
+        @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT, isArray = true)
         String[] children();
 
         @Field(key = "defaultText", name = "所有文本为空时默认显示文本", type = FieldTypeEnum.TEXT)
@@ -42,6 +43,7 @@ public interface TextElementLogicConfig extends ILogicConfig {
         String separator();
 
         @Field(key = "children", name = "子文本数据配置，配置项同该级相同", type = FieldTypeEnum.CONFIG)
+        @FieldObject(SubTextConfig.class)
         SubTextConfig children();
     }
 
@@ -50,11 +52,11 @@ public interface TextElementLogicConfig extends ILogicConfig {
         @Field(key = "retract", name = "缩进数", type = FieldTypeEnum.NUMBER)
         Integer retract();
 
-        @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.OBJECT, isRequired = true, isArray = true)
+        @Field(key = "lines", name = "行数据配置", type = FieldTypeEnum.CONFIG, isRequired = true, isArray = true)
         @FieldObject(TextLineSettings.class)
         TextLineSettings[] lines();
 
-        @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT)
+        @Field(key = "children", name = "子文本数据配置", type = FieldTypeEnum.TEXT, isArray = true)
         String[] children();
 
         @Field(key = "defaultText", name = "所有文本为空时默认显示文本", type = FieldTypeEnum.TEXT)

@@ -9,10 +9,10 @@ import com.parch.combine.html.base.page.config.HtmlPageTemplateConfig;
 
 public interface HtmlPageInitConfig extends IInitConfig {
 
-    @Field(key = "baseUrl", name = "根URL", type = FieldTypeEnum.TEXT)
+    @Field(key = "baseUrl", name = "根URL", type = FieldTypeEnum.TEXT, isRequired = true)
     String baseUrl();
 
-    @Field(key = "flagConfig", name = "标识符配置", type = FieldTypeEnum.CONFIG)
+    @Field(key = "flagConfig", name = "标识符配置", type = FieldTypeEnum.CONFIG, isRequired = true)
     @FieldObject(FlagConfig.class)
     FlagConfig flagConfig();
 

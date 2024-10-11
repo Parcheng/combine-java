@@ -22,7 +22,7 @@ public interface RedisLuaLogicConfig extends ILogicConfig {
     @FieldDesc("默认使用脚本代码作为KEY, 需要预编译时，建议设置预编译KEY")
     String precompileKey();
 
-    @Field(key = "hasPrecompile", name = "是否预编译", type = FieldTypeEnum.TEXT, defaultValue = "false")
+    @Field(key = "hasPrecompile", name = "是否预编译", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     Boolean hasPrecompile();
 
     @Field(key = "scriptLines", name = "要执行的脚本", type = FieldTypeEnum.TEXT, isArray = true, isRequired = true)

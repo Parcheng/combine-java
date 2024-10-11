@@ -10,11 +10,12 @@ import com.parch.combine.html.base.element.core.SubElementConfig;
 public interface TabElementLogicConfig extends ILogicConfig {
 
     @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldObject(Config.class)
     Config config();
 
     interface Config extends ElementConfig {
 
-        @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.OBJECT, isArray = true, isRequired = true)
+        @Field(key = "items", name = "页签项配置集合", type = FieldTypeEnum.CONFIG, isArray = true, isRequired = true)
         @FieldObject(TabItemSettings.class)
         TabItemSettings[] items();
     }

@@ -99,7 +99,7 @@ $combine = (function () {
             }
 
             this.initConfig(instance, data);
-            const dataLoadId = instance.dataLoadId && instance.defaultLoad !== false ? instance.dataLoadId : null;
+            const dataLoadId = instance.dataload && instance.defaultLoad !== false ? instance.dataload : null;
             return resultFns.success(element.build(instance, data), dataLoadId);
         },
         refresh: function (id, parentData) {
@@ -618,7 +618,7 @@ $combine = (function () {
 
     const configFns = {
         init: function (instance) {
-            const templateId = instance.templateId;
+            const templateId = instance.template;
             const template = instance.template = instanceTempFns.get(templateId);
 
             if (!template.external) {
@@ -849,7 +849,7 @@ $combine = (function () {
 
     const dataFns = {
         hasVariable: function (variable) {
-            return !!variable.match(/#\{(.*?)}/g);
+            return !!variable.match(/\$\{(.*?)}/g);
         },
         parseVariable: function (variable, data, defaultText, excludeFields) {
             if (!variable) {
@@ -884,7 +884,7 @@ $combine = (function () {
                 return null;
             }
 
-            const variables = text.match(/#\{(.*?)}/g);
+            const variables = text.match(/\$\{(.*?)}/g);
             if (!variables) {
                 return text;
             }

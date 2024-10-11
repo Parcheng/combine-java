@@ -10,6 +10,7 @@ import com.parch.combine.html.base.element.core.OptionElementConfig;
 public interface SelectElementLogicConfig extends ILogicConfig {
 
     @Field(key = "config", name = "页面元素配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldObject(Config.class)
     Config config();
 
     interface Config extends ElementConfig {

@@ -60,7 +60,7 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
             this.logicConfig = logicBuildResult.getSecond();
         } else {
             for (String error : logicBuildResult.getThird()) {
-                errorMsg.add("BUILD LOGIC-" + error);
+                errorMsg.add("BUILD [" + type + "] LOGIC " + error);
             }
 
             return errorMsg;
@@ -71,7 +71,7 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
             this.initConfig = initBuildResult.getSecond();
         } else {
             for (String error : initBuildResult.getThird()) {
-                errorMsg.add("BUILD INIT-" + error);
+                errorMsg.add("BUILD [" + type + "] INIT " + error);
             }
         }
 

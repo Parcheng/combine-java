@@ -51,7 +51,14 @@ public class HtmlElementGroupBuilder {
         for (String groupId : groupIds) {
             ElementGroupConfigCache.GroupCacheModel model = ElementGroupConfigCache.INSTANCE.get(groupId);
             if (model == null) {
-                SubComponentTool.execute(manager, groupId);
+                AbstractComponent<?,?> component = manager.getComponent().getComponent(groupId);
+                if (component == null) {
+                    success = false;
+                    PrintHelper.printComponentError("【HTML-GROUP】【" + groupId + "】【组件不存在】");
+                    continue;
+                }
+
+                this.executeComponent(component);
             }
 
             model = ElementGroupConfigCache.INSTANCE.get(groupId);
@@ -82,15 +89,18 @@ public class HtmlElementGroupBuilder {
             }
 
             elementMap.put(elementId, model);
-            List<BaseCacheModel.SubCacheModel> subs = model.subCaches;
-            if (CheckEmptyUtil.isEmpty(subs)) {
-                continue;
-            }
 
-            initDataLoad(model.loadId, elementId);
-            initTemplate(model.templateId);
-            initElements(subs.stream().filter(s -> s.type == ConfigTypeEnum.ELEMENT).map(s -> s.componentId).toArray(String[]::new));
-            initTriggers(subs.stream().filter(s -> s.type == ConfigTypeEnum.TRIGGER).map(s -> s.componentId).toArray(String[]::new));
+            // 关联的子配置处理
+            if (CheckEmptyUtil.isNotEmpty(model.loadId)) {
+                initDataLoad(model.loadId, elementId);
+            }
+            if (CheckEmptyUtil.isNotEmpty(model.templateId)) {
+                initTemplate(model.templateId);
+            }
+            if (CheckEmptyUtil.isNotEmpty(model.subCaches)) {
+                initElements(model.subCaches.stream().filter(s -> s.type == ConfigTypeEnum.ELEMENT).map(s -> s.componentId).toArray(String[]::new));
+                initTriggers(model.subCaches.stream().filter(s -> s.type == ConfigTypeEnum.TRIGGER).map(s -> s.componentId).toArray(String[]::new));
+            }
         }
     }
 
@@ -134,12 +144,12 @@ public class HtmlElementGroupBuilder {
             }
 
             triggerMap.put(triggerId, model);
-            if (CheckEmptyUtil.isEmpty(model.subCaches)) {
-                continue;
-            }
 
-            initElements(model.subCaches.stream().filter(s -> s.type == ConfigTypeEnum.ELEMENT).map(s -> s.componentId).toArray(String[]::new));
-            initTriggers(model.subCaches.stream().filter(s -> s.type == ConfigTypeEnum.TRIGGER).map(s -> s.componentId).toArray(String[]::new));
+            // 关联的子配置处理
+            if (CheckEmptyUtil.isNotEmpty(model.subCaches)) {
+                initElements(model.subCaches.stream().filter(s -> s.type == ConfigTypeEnum.ELEMENT).map(s -> s.componentId).toArray(String[]::new));
+                initTriggers(model.subCaches.stream().filter(s -> s.type == ConfigTypeEnum.TRIGGER).map(s -> s.componentId).toArray(String[]::new));
+            }
         }
     }
 
@@ -160,10 +170,7 @@ public class HtmlElementGroupBuilder {
                 return null;
             }
 
-            AbstractComponent<?, ?> currComponent = ComponentContextHandler.getCurrComponent();
-            manager.getComponent().executeComponent(component);
-            ComponentContextHandler.setCurrComponent(currComponent);
-
+            this.executeComponent(component);
             model = configGet.get(key);
             if (model == null) {
                 success = false;
@@ -173,6 +180,12 @@ public class HtmlElementGroupBuilder {
         }
 
         return model;
+    }
+
+    private void executeComponent(AbstractComponent<?,?> component) {
+        AbstractComponent<?, ?> currComponent = ComponentContextHandler.getCurrComponent();
+        manager.getComponent().executeComponent(component);
+        ComponentContextHandler.setCurrComponent(currComponent);
     }
 
     public Map<String, String> getGroupMap() {

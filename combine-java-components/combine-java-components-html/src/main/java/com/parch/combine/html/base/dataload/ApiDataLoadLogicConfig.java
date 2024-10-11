@@ -1,7 +1,9 @@
 package com.parch.combine.html.base.dataload;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.html.base.dataload.core.DataLoadConfig;
@@ -11,6 +13,7 @@ import java.util.Map;
 public interface ApiDataLoadLogicConfig extends ILogicConfig {
 
     @Field(key = "config", name = "数据加载配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+    @FieldObject(Config.class)
     Config config();
 
     interface Config extends DataLoadConfig {
@@ -22,7 +25,7 @@ public interface ApiDataLoadLogicConfig extends ILogicConfig {
         String mode();
 
         @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
-        Object params();
+        Map<String, Object> params();
 
         @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
         Map<String, String> headers();

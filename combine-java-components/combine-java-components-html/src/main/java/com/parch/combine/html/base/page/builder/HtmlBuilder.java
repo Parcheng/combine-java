@@ -1,6 +1,7 @@
 package com.parch.combine.html.base.page.builder;
 
 import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CharacterUtil;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -142,7 +143,7 @@ public class HtmlBuilder {
                     continue;
                 }
                 HtmlElementConfig tempDomConfig = templateModelMap.get(key);
-                body.add(HtmlBuildTool.build(key, model.config(), tempDomConfig.config(), false));
+                body.add(HtmlBuildTool.build(key, model.config(), tempDomConfig == null ? null : tempDomConfig.config(), false));
             }
         }
 
@@ -188,7 +189,7 @@ public class HtmlBuilder {
 
         // 添加框架中使用的页面元素JS
         groupBuilder.getElementMap().values().forEach(m -> {
-            scripts.add(SystemElementPathTool.buildJsPath(baseUrl, m.jsLibName));
+            scripts.add(ScriptBuildTool.build(SystemElementPathTool.buildJsPath(baseUrl, m.jsLibName)));
         });
 
         // 添加框架组件实例注册代码
@@ -209,12 +210,12 @@ public class HtmlBuilder {
         groupBuilder.getTemplateMap().values().forEach(m -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + m.id + "\"," + m.json + ");"));
 
         // 数据加载配置注册
-        groupBuilder.getDataLoadMap().values().forEach(m -> scriptCodeList.add("\n$combine.loadData.register(\"" + m.id + "\"," + m.json + ", " + groupBuilder.getDataLoadToElementIdMap().get(m.id) + ");"));
+        groupBuilder.getDataLoadMap().values().forEach(m -> scriptCodeList.add("\n$combine.loadData.register(\"" + m.id + "\"," + m.json + ", " + JsonUtil.serialize(groupBuilder.getDataLoadToElementIdMap().get(m.id)) + ");"));
 
         // trigger事件注册
-        if (!groupBuilder.getTemplateMap().isEmpty()) {
+        if (!groupBuilder.getTriggerMap().isEmpty()) {
             scriptCodeList.add("\n$combine.trigger.setDomId(\"" + TRIGGERS_DOM_ID + "\");");
-            groupBuilder.getTemplateMap().values().forEach(m -> scriptCodeList.add("\n$combine.trigger.register(\"" + m.id + "\"," + m.json + ");"));
+            groupBuilder.getTriggerMap().values().forEach(m -> scriptCodeList.add("\n$combine.trigger.register(\"" + m.id + "\"," + m.json + ");"));
         }
 
         // 页面元素注册
