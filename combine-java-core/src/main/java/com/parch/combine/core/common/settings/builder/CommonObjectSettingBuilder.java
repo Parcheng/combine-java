@@ -52,7 +52,6 @@ public class CommonObjectSettingBuilder {
             return true;
         }
 
-        Condition[] conditionAnnotations = clazz.getAnnotationsByType(Condition.class);
         synchronized (CACHE) {
             commonObjectSetting = commonObjectSettingScopeMap.get(clazz.getName());
             if (commonObjectSetting != null) {
@@ -65,17 +64,6 @@ public class CommonObjectSettingBuilder {
             commonObjectSetting.setOrder(componentCommonObjectAnnotation.order());
             commonObjectSetting.setClassType(clazz);
             commonObjectSetting.setDesc(new ArrayList<>(Arrays.asList(componentCommonObjectAnnotation.desc())));
-
-            if (conditionAnnotations != null && conditionAnnotations.length > 0) {
-                commonObjectSetting.setConditions(new ArrayList<>());
-                for (Condition condition : conditionAnnotations) {
-                    ConditionSettings conditionSettings = new ConditionSettings();
-                    conditionSettings.setKey(condition.key());
-                    conditionSettings.setValue(condition.value());
-                    commonObjectSetting.getConditions().add(conditionSettings);
-                }
-            }
-
             commonObjectSettingScopeMap.put(clazz.getName(), commonObjectSetting);
         }
 

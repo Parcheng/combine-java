@@ -1,7 +1,7 @@
 package com.parch.combine.core.common.settings.config;
 
 /**
- * 条件配置
+ * 条件配置（暂未使用）
  */
 public class ConditionSettings {
 

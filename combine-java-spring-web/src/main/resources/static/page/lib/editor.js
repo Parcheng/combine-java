@@ -17,7 +17,9 @@ var copyComponent = {
 
 // 2.
 // REF INIT 可以改成下拉选项（TYPE=REF_INIT）
-// REF 支持多个KEY 及条件
+
+// 3.
+// 加载
 
 var lastChecked = {
     flow: null,
@@ -1636,9 +1638,8 @@ const buildDomFns = {
 
                 var subDoms;
                 var subDomsGetValueFn;
-                if (buildDomFns.refCommonKeys && buildDomFns.refCommonKeys.length > 0) {
-                    // TODO 暂不知道多 refCommonKey 及条件配置
-                    var refCommonKey = buildDomFns.refCommonKeys[0].key;
+                if (buildDomFns.refCommonKey) {
+                    var refCommonKey = buildDomFns.refCommonKey;
                     var refCommon = commonRefMap[refCommonKey];
                     var subDomsConfig = buildDomFns.settings.items(refCommon.properties, value);
                     subDoms = subDomsConfig.doms;
@@ -2202,7 +2203,13 @@ const valueFns = {
                 result.datas.push(valueResult.data);
             }
 
-            // TODO 检查REF
+            // 检查REF ID
+            if (valueResult.refId) {
+                var refValue = instanceMap[valueResult.refId];
+                if (refValue == null || refValue == undefined) {
+                    result.errors.push("引用的 ID：" + valueResult.refId + " 配置不存在");
+                }
+            }
 
             for (let ri = 0; ri < valueResult.errors.length; ri++) {
                 const errorConfig = valueResult.errors[ri];
@@ -2217,6 +2224,7 @@ const valueFns = {
     parseValue: function(value) {
         var result = {
             data: null,
+            refId: null,
             errors: []
         }
 
@@ -2258,6 +2266,9 @@ const valueFns = {
                 }
             } else if (setting.type == "ID") {
                 result.data[settingKey] = currValue.id;
+                if (currValue.ref == true) {
+                    result.refId = currValue.id;
+                }
             } else if (setting.type == "ANY") {
                 result.data[settingKey] = currValue ? currValue.value : null;
             } else {

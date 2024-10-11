@@ -120,18 +120,12 @@ public class PropertySettingBuilder {
     private static void setConfigProperty(String scope, List<PropertySetting> properties, PropertySetting property, AnnotatedElement field, String keyPrefix, Set<Class<?>> parsedClass) {
         FieldRef fieldRefAnnotation = field.getAnnotation(FieldRef.class);
         if (fieldRefAnnotation != null) {
-            property.setRefCommonKeys(new ArrayList<>());
-
             // 加载公共属性
-            Class<?>[] refClasses = fieldRefAnnotation.value();
-            for (Class<?> refClass : refClasses) {
-                CommonObjectSettingBuilder.load(scope, refClass);
-                CommonObjectSetting commonObjectSetting = CommonObjectSettingBuilder.get(scope, refClass.getName());
-                if (commonObjectSetting == null) {
-                    continue;
-                }
-
-                property.getRefCommonKeys().add(commonObjectSetting.getKey());
+            Class<?> refClass = fieldRefAnnotation.value();
+            CommonObjectSettingBuilder.load(scope, refClass);
+            CommonObjectSetting commonObjectSetting = CommonObjectSettingBuilder.get(scope, refClass.getName());
+            if (commonObjectSetting != null) {
+                property.setRefCommonKey(commonObjectSetting.getKey());
             }
 
             return;

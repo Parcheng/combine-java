@@ -14,5 +14,5 @@ public @interface FieldRef {
     /**
      * 引用对象
      */
-    Class<?>[] value();
+    Class<?> value();
 }

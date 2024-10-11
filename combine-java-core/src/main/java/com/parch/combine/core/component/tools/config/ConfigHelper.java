@@ -334,7 +334,7 @@ public class ConfigHelper {
 
         FieldRef fieldRef = item.getAnnotation(FieldRef.class);
         if (fieldRef != null) {
-            return fieldRef.value()[0];
+            return fieldRef.value();
         }
 
         return null;
