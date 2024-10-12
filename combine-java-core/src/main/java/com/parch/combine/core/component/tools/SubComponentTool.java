@@ -1,6 +1,8 @@
 package com.parch.combine.core.component.tools;
 
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.context.ComponentContext;
+import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.vo.FlowResult;
@@ -25,7 +27,11 @@ public class SubComponentTool {
         }
 
         AbstractComponent<?,?> component = combineManager.getComponent().getComponent(componentId);
-        return combineManager.getComponent().executeComponent(component);
+
+        AbstractComponent<?,?> currComponent = ComponentContextHandler.getCurrComponent();
+        ComponentDataResult result = combineManager.getComponent().executeComponent(component);
+        ComponentContextHandler.setCurrComponent(currComponent);
+        return result;
     }
 
     /**

@@ -1,0 +1,58 @@
+{
+  "constant": {},
+  "init": [
+    {
+      "type": "tool.countdown",
+      "pool": {}
+    }
+  ],
+  "flows": {
+    "toolCountdown/test": [
+      {
+        "id": "toolCountdownTestData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"id", "source":"X"},
+          {"fieldName":"data", "source":"X"},
+          {"fieldName":"flag", "source":"X"},
+          {"fieldName":"name", "source":"X"},
+          {"fieldName":"size", "source":"10"}
+        ]
+      },{
+        "type": "tool.countdown",
+        "components": [
+          {
+            "type": "data.reset",
+            "items": [{
+              "resets": [{ "target": "#{$r.toolCountdownTestData.id}", "type": "string", "value": "100" }]
+            }]
+          }
+        ],
+        "items": [
+          {
+            "components": [{
+              "type": "data.reset",
+              "items": [{
+                "resets": [{ "target": "#{$r.toolCountdownTestData.data}", "type": "string", "value": "[]" }]
+              }]
+            }]
+          },{
+            "components": [{
+              "type": "data.reset",
+              "items": [{
+                "resets": [{ "target": "#{$r.toolCountdownTestData.flag}", "type": "string", "value": "1" }]
+              }]
+            }]
+          },{
+            "components": [{
+              "type": "data.reset",
+              "items": [{
+                "resets": [{ "target": "#{$r.toolCountdownTestData.name}", "type": "string", "value": "TEST" }]
+              }]
+            }]
+          }
+        ]
+      }
+    ]
+  }
+}
