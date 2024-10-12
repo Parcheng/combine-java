@@ -8,7 +8,7 @@ import com.parch.combine.core.component.tools.thread.ThreadPoolConfig;
 
 public interface ToolCountDownLatchInitConfig extends IInitConfig {
 
-    @Field(key = "pool", name = "线程池配置", type = FieldTypeEnum.OBJECT)
+    @Field(key = "pool", name = "线程池配置", type = FieldTypeEnum.OBJECT, isRequired = true)
     @FieldObject(ThreadPoolConfig.class)
     ThreadPoolConfig pool();
 

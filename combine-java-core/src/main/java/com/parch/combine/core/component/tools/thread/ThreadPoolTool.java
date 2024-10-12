@@ -31,4 +31,12 @@ public class ThreadPoolTool {
 
         return pool;
     }
+
+    public synchronized static void closeAll() {
+        POOL_MAP.forEach((k, v) -> {
+            if (v != null) {
+                v.shutdown();
+            }
+        });
+    }
 }

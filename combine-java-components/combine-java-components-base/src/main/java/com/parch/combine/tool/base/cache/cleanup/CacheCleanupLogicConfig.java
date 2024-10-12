@@ -20,7 +20,7 @@ public interface CacheCleanupLogicConfig extends CacheLogicConfig {
     @FieldSelect(enumClass = CacheCleanupModeEnum.class)
     String mode();
 
-    @Field(key = "maxCount", name = "最大清理数量", type = FieldTypeEnum.NUMBER, defaultValue = "-1（无限制）")
-    @FieldDesc("如果实际要清理的KEY数量大于该值，则实际清理数量以该值为准")
+    @Field(key = "maxCount", name = "最大清理数量", type = FieldTypeEnum.NUMBER, defaultValue = "-1")
+    @FieldDesc("如果实际要清理的KEY数量大于该值，则实际清理数量以该值为准，默认：-1 无限制")
     Integer maxCount();
 }

@@ -15,7 +15,7 @@ public abstract class AbstractCacheComponent<I extends IInitConfig, T extends Ca
         CacheLogicConfig logicConfig = getLogicConfig();
 
         String finalDomain = logicConfig.domain();
-        if (finalDomain != null) {
+        if (finalDomain == null) {
             return ComponentDataResult.fail(CacheErrorEnum.DOMAIN_IS_NULL);
         }
 

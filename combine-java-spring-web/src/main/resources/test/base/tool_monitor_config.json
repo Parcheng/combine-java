@@ -1,0 +1,15 @@
+{
+  "constant": {},
+  "init": [{
+    "type": "tool.monitor",
+    "keyConfig": {}
+  }],
+  "flows": {
+    "toolMonitor/get": [
+      {
+        "id": "toolMonitorData",
+        "type": "tool.monitor"
+      }
+    ]
+  }
+}

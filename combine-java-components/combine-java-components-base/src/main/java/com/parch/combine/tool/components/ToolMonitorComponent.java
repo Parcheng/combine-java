@@ -15,7 +15,7 @@ import java.lang.management.MemoryUsage;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component(key = "event.monitor", name = "系统监听组件", logicConfigClass = ToolMonitorLogicConfig.class, initConfigClass = ToolMonitorInitConfig.class)
+@Component(key = "monitor", name = "系统监听组件", logicConfigClass = ToolMonitorLogicConfig.class, initConfigClass = ToolMonitorInitConfig.class)
 @ComponentResult(name = "监听数据")
 public class ToolMonitorComponent extends AbstractComponent<ToolMonitorInitConfig, ToolMonitorLogicConfig> {
 
@@ -28,8 +28,8 @@ public class ToolMonitorComponent extends AbstractComponent<ToolMonitorInitConfi
         Map<String, Object> monitorData = new HashMap<>();
 
         try {
-            ToolMonitorLogicConfig logicConfig = getLogicConfig();
-            ToolMonitorLogicConfig.KeyConfig keyConfig = logicConfig.keyConfig();
+            ToolMonitorInitConfig initConfig = getInitConfig();
+            ToolMonitorInitConfig.KeyConfig keyConfig = initConfig.keyConfig();
 
             MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
             MemoryUsage heapMemoryUsage = memoryBean.getHeapMemoryUsage();

@@ -36,7 +36,7 @@ public class CacheGetComponent extends AbstractCacheComponent<CacheGetInitConfig
 
             List<CacheData> results = CacheHandler.get(domain, key, keyMatchRule, initConfig.renewal());
             if (results.isEmpty()) {
-                return ComponentDataResult.success(results);
+                return ComponentDataResult.success(null);
             }
 
             if (keyMatchRule == CacheKeyMatchRuleEnum.EXACT) {

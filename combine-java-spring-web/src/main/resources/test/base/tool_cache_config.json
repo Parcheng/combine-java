@@ -1,0 +1,25 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "toolCache/setAndGet": [
+      {
+        "type": "tool.cache.set",
+        "key": "TEST_KEY",
+        "value": "TEST"
+      }, {
+        "id": "cacheGetData",
+        "type": "tool.cache.get",
+        "key": "TEST_KEY"
+      }
+    ],
+    "toolCache/clear": [
+      {
+        "type": "tool.cache.cleanup",
+        "key": "TEST_KEY"
+      }, {
+        "id": "cacheGetData"
+      }
+    ]
+  }
+}
