@@ -11,6 +11,7 @@ import com.parch.combine.data.base.text.crop.DataCropLogicConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,15 +74,14 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
                 List<String> newCols = new ArrayList<>();
                 for (Object rowCol : rowCols) {
                     // 跳过指定列数
-                    if (colIndex >= startSkipCount && colIndex <= colCount) {
+                    if (colIndex >= startSkipCount && colIndex < colCount) {
                         newCols.add(rowCol == null ? null : rowCol.toString());
                     }
-
                     colIndex++;
                 }
                 result.add(newCols);
-            } else if (data instanceof Map) {
-                Map<String, Object> map = (Map<String, Object>) data;
+            } else if (rowObj instanceof Map) {
+                Map<String, Object> map = (Map<String, Object>) rowObj;
 
                 int colCount = map.size();
                 if (colCount > endDiscardCount + startSkipCount) {
@@ -91,10 +91,10 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
                 }
 
                 int mapIndex = 0;
-                Map<String, Object> newMap = (Map<String, Object>) data;
+                Map<String, Object> newMap = new LinkedHashMap<>();
                 for (Map.Entry<String, Object> item : map.entrySet()){
-                    if (mapIndex >= startSkipCount && mapIndex <= colCount) {
-                        map.put(item.getKey(), item.getValue());
+                    if (mapIndex >= startSkipCount && mapIndex < colCount) {
+                        newMap.put(item.getKey(), item.getValue());
                     }
                     mapIndex++;
                 }

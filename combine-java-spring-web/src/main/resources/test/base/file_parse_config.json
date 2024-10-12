@@ -80,7 +80,7 @@
         "startRow": 3,
         "startIndex": 2,
         "startSkipCount": 0,
-        "endDiscardCount": 2
+        "endDiscardCount": 1
       }, {
         "id": "convertTable4",
         "type": "data.convert.table-text",
