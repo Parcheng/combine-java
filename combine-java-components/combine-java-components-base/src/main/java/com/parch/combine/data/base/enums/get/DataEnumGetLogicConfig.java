@@ -1,4 +1,4 @@
-package com.parch.combine.data.base.enums.list;
+package com.parch.combine.data.base.enums.get;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;

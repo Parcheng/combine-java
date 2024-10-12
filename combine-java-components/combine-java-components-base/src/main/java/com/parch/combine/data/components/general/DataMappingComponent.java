@@ -10,6 +10,7 @@ import com.parch.combine.data.base.general.mapping.DataMappingLogicConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class DataMappingComponent extends AbstractComponent<DataMappingInitConfi
                     index = 0;
                 }
                 for (int i = index - result.size() + 1; i > 0; i--) {
-                    result.add(new HashMap<>());
+                    result.add(new LinkedHashMap<>());
                 }
 
                 Map<String, Object> resultItem = result.get(index);
@@ -50,7 +51,7 @@ public class DataMappingComponent extends AbstractComponent<DataMappingInitConfi
         if (isArray) {
             return ComponentDataResult.success(result);
         } else {
-            return ComponentDataResult.success(result.size() > 0 ? result.get(0) : null);
+            return ComponentDataResult.success(!result.isEmpty() ? result.get(0) : null);
         }
     }
 }

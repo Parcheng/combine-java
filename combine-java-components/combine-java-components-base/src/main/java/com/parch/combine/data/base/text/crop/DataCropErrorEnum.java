@@ -3,7 +3,7 @@ package com.parch.combine.data.base.text.crop;
 import com.parch.combine.core.component.error.IComponentError;
 
 /**
- * 文件保存异常信息
+ * 异常信息
  */
 public enum DataCropErrorEnum implements IComponentError {
 

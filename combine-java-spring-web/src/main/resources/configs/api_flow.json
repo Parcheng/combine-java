@@ -4,12 +4,14 @@
   "flows": {
     "settings/list": [
       {
-        "type": "system.doc.components"
+        "type": "system.doc.components",
+        "printResult": false
       }
     ],
     "config/get": [
       {
-        "type": "system.doc.config"
+        "type": "system.doc.config",
+        "printResult": false
       }
     ]
   }

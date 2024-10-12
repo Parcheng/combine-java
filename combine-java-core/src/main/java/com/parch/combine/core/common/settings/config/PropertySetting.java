@@ -33,7 +33,7 @@ public class PropertySetting {
 
     private List<PropertySetting> children;
 
-    private List<String> refCommonKeys;
+    private String refCommonKey;
 
     public String getKey() {
         return key;
@@ -131,12 +131,12 @@ public class PropertySetting {
         this.refKey = refKey;
     }
 
-    public List<String> getRefCommonKeys() {
-        return refCommonKeys;
+    public String getRefCommonKey() {
+        return refCommonKey;
     }
 
-    public void setRefCommonKeys(List<String> refCommonKeys) {
-        this.refCommonKeys = refCommonKeys;
+    public void setRefCommonKey(String refCommonKey) {
+        this.refCommonKey = refCommonKey;
     }
 
     public float getOrder() {

@@ -6,9 +6,9 @@ import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.error.ComponentErrorHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.data.base.enums.list.DataEnumGetErrorEnum;
-import com.parch.combine.data.base.enums.list.DataEnumGetInitConfig;
-import com.parch.combine.data.base.enums.list.DataEnumGetLogicConfig;
+import com.parch.combine.data.base.enums.get.DataEnumGetErrorEnum;
+import com.parch.combine.data.base.enums.get.DataEnumGetInitConfig;
+import com.parch.combine.data.base.enums.get.DataEnumGetLogicConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;

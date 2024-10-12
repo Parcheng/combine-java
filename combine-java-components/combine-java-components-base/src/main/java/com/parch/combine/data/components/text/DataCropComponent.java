@@ -11,7 +11,9 @@ import com.parch.combine.data.base.text.crop.DataCropLogicConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Component(order = 2, key = "text.crop", name = "文本数据裁剪组件", logicConfigClass = DataCropLogicConfig.class, initConfigClass = DataCropInitConfig.class)
@@ -58,6 +60,7 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
 
             if (rowObj instanceof Collection) {
                 Collection<Object> rowCols = (Collection<Object>) rowObj;
+
                 // 每行跳过前 startSkipCount 项，忽略掉后 endDiscardCount项
                 int colCount = rowCols.size();
                 if (colCount > endDiscardCount + startSkipCount) {
@@ -71,13 +74,31 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
                 List<String> newCols = new ArrayList<>();
                 for (Object rowCol : rowCols) {
                     // 跳过指定列数
-                    if (colIndex >= startSkipCount && colIndex <= colCount) {
+                    if (colIndex >= startSkipCount && colIndex < colCount) {
                         newCols.add(rowCol == null ? null : rowCol.toString());
                     }
-
                     colIndex++;
                 }
                 result.add(newCols);
+            } else if (rowObj instanceof Map) {
+                Map<String, Object> map = (Map<String, Object>) rowObj;
+
+                int colCount = map.size();
+                if (colCount > endDiscardCount + startSkipCount) {
+                    colCount = colCount - endDiscardCount;
+                } else {
+                    continue;
+                }
+
+                int mapIndex = 0;
+                Map<String, Object> newMap = new LinkedHashMap<>();
+                for (Map.Entry<String, Object> item : map.entrySet()){
+                    if (mapIndex >= startSkipCount && mapIndex < colCount) {
+                        newMap.put(item.getKey(), item.getValue());
+                    }
+                    mapIndex++;
+                }
+                result.add(newMap);
             } else {
                 String rowText = rowObj.toString();
                 // 跳过前 startSkipCount个字符，忽略掉最后endDiscardCount个字符
@@ -89,6 +110,6 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
             }
         };
 
-        return ComponentDataResult.success(isArray ? result : (result.size() > 0 ? result.get(0) : null));
+        return ComponentDataResult.success(isArray ? result : (!result.isEmpty() ? result.get(0) : null));
     }
 }
