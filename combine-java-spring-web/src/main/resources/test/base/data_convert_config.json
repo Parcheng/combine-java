@@ -1,0 +1,39 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataConvert/table2text": [
+      {
+        "id": "table2textData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"name", "source":"INIT2"},
+          {"fieldName":"size", "source":"29"},
+          {"fieldName":"data", "source":"[{\"id\":\"200\",\"name\":\"test2\"}]"}
+        ]
+      },{
+        "id": "table2text",
+        "type": "data.convert.table-text",
+        "source": "#{$r.table2textData}",
+        "separator": "|"
+      }
+    ],
+    "dataConvert/text2table": [
+      {
+        "id": "text2tableBuildData",
+        "type": "data.create",
+        "items": [
+          {"target":"list", "type":"LIST", "params":[
+            "1|INIT|28|[{\"id\":\"100\",\"name\":\"test\"}]|2023-10-23 20:34:45|2023-10-23 20:34:45|0",
+            "2|INIT2|29|[{\"id\":\"200\",\"name\":\"test2\"}]|2023-10-24 20:34:45|2023-10-24 20:34:45|0"
+          ]}
+        ]
+      }, {
+        "id": "text2table",
+        "type": "data.convert.text-table",
+        "source": "#{list}",
+        "separator": "\\|"
+      }
+    ]
+  }
+}

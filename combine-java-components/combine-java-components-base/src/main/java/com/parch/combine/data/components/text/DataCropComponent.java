@@ -12,6 +12,7 @@ import com.parch.combine.data.base.text.crop.DataCropLogicConfig;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 
 @Component(order = 2, key = "text.crop", name = "文本数据裁剪组件", logicConfigClass = DataCropLogicConfig.class, initConfigClass = DataCropInitConfig.class)
@@ -58,6 +59,7 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
 
             if (rowObj instanceof Collection) {
                 Collection<Object> rowCols = (Collection<Object>) rowObj;
+
                 // 每行跳过前 startSkipCount 项，忽略掉后 endDiscardCount项
                 int colCount = rowCols.size();
                 if (colCount > endDiscardCount + startSkipCount) {
@@ -78,6 +80,25 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
                     colIndex++;
                 }
                 result.add(newCols);
+            } else if (data instanceof Map) {
+                Map<String, Object> map = (Map<String, Object>) data;
+
+                int colCount = map.size();
+                if (colCount > endDiscardCount + startSkipCount) {
+                    colCount = colCount - endDiscardCount;
+                } else {
+                    continue;
+                }
+
+                int mapIndex = 0;
+                Map<String, Object> newMap = (Map<String, Object>) data;
+                for (Map.Entry<String, Object> item : map.entrySet()){
+                    if (mapIndex >= startSkipCount && mapIndex <= colCount) {
+                        map.put(item.getKey(), item.getValue());
+                    }
+                    mapIndex++;
+                }
+                result.add(newMap);
             } else {
                 String rowText = rowObj.toString();
                 // 跳过前 startSkipCount个字符，忽略掉最后endDiscardCount个字符
@@ -89,6 +110,6 @@ public class DataCropComponent extends AbstractComponent<DataCropInitConfig, Dat
             }
         };
 
-        return ComponentDataResult.success(isArray ? result : (result.size() > 0 ? result.get(0) : null));
+        return ComponentDataResult.success(isArray ? result : (!result.isEmpty() ? result.get(0) : null));
     }
 }

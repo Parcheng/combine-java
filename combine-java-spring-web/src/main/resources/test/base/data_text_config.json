@@ -1,0 +1,93 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataText/split": [
+      {
+        "id": "dataTextSplitData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"text", "source":"1,2,3,4,5,6"}
+        ]
+      },{
+        "id": "dataTextSplit",
+        "type": "data.text.split",
+        "isReplace": true,
+        "source": "#{$r.dataTextSplitData.text}",
+        "regex": ","
+      }
+    ],
+    "dataText/replace": [
+      {
+        "id": "dataTextReplaceData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"text1", "source":"TEST1TEST2TEST3"},
+          {"fieldName":"text2", "source":"TEST1TEST2TEST3"}
+        ]
+      },{
+        "type": "data.text.replace",
+        "isReplace": true,
+        "mode": "ALL",
+        "source": "#{$r.dataTextReplaceData.text1}",
+        "oldText": "TEST",
+        "newText": "NEW"
+      },{
+        "type": "data.text.replace",
+        "isReplace": true,
+        "mode": "FIRST",
+        "source": "#{$r.dataTextReplaceData.text2}",
+        "oldText": "TEST",
+        "newText": "NEW"
+      }
+    ],
+    "dataText/crop": [
+      {
+        "id": "dataTextCropData",
+        "type": "data.mapping",
+        "items": [
+          {"index": 0, "fieldName":"name", "source":"INIT1"},
+          {"index": 0, "fieldName":"size", "source":"29"},
+          {"index": 0, "fieldName":"flag", "source":"1"},
+
+          {"index": 1, "fieldName":"name", "source":"INIT2"},
+          {"index": 1, "fieldName":"size", "source":"30"},
+          {"index": 1, "fieldName":"flag", "source":"1"},
+
+          {"index": 2, "fieldName":"name", "source":"INIT3"},
+          {"index": 2, "fieldName":"size", "source":"31"},
+          {"index": 2, "fieldName":"flag", "source":"1"}
+        ]
+      },{
+        "id": "dataTextCropResult",
+        "type": "data.text.crop",
+        "source": "#{$r.dataTextCropData}",
+        "startRow": 2,
+        "startIndex": 2,
+        "startSkipCount": 0,
+        "endDiscardCount": 1
+      }
+    ],
+    "dataText/regex": [
+      {
+        "id": "dataTextRegexData",
+        "type": "data.mapping",
+        "items": [
+          {"fieldName":"text", "source":"<div>TEST</div>"}
+        ]
+      },{
+        "id": "dataTextRegex1",
+        "type": "data.text.regex",
+        "source": "#{$r.dataTextRegexData.text}",
+        "regex": ">(.*?)</",
+        "resultMode": "FULL"
+      },{
+        "id": "dataTextRegex2",
+        "type": "data.text.regex",
+        "source": "#{$r.dataTextRegexData.text}",
+        "regex": ">(.*?)</",
+        "resultMode": "GROUPS"
+      }
+    ]
+  }
+}

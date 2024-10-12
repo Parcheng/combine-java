@@ -28,7 +28,7 @@ public enum DataTextReplaceModeEnum implements IOptionSetting {
             return NONE;
         }
         for (DataTextReplaceModeEnum value : DataTextReplaceModeEnum.values()) {
-            if (value.toString().equals(mode.toUpperCase())) {
+            if (value.name().equals(mode.toUpperCase())) {
                 return value;
             }
         }

@@ -1,5 +1,6 @@
 package com.parch.combine.data.components.convert;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -11,6 +12,8 @@ import com.parch.combine.data.base.convert.table2text.DataTableToTextLogicConfig
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Component(order = 100, key = "convert.table-text", name = "表格转文本数据组件", logicConfigClass = DataTableToTextLogicConfig.class, initConfigClass = DataTableToTextInitConfig.class)
 @ComponentResult(name = "文本行集合")
@@ -25,6 +28,7 @@ public class DataTableToTextComponent extends AbstractComponent<DataTableToTextI
     protected ComponentDataResult execute() {
         List<String> text = new ArrayList<>();
         DataTableToTextLogicConfig config = getLogicConfig();
+        String separator = config.separator();
 
         Object data = config.source();
         if (data == null) {
@@ -44,20 +48,22 @@ public class DataTableToTextComponent extends AbstractComponent<DataTableToTextI
                 continue;
             }
 
-            Collection<Object> rowCols;
+            List<String> rowCols = new ArrayList<>();
             if (tableRow instanceof Collection) {
-                rowCols = (Collection<Object>) tableRow;
+                Collection<Object> list = (Collection<Object>) tableRow;
+                for (Object item : list) {
+                    rowCols.add(item == null ? CheckEmptyUtil.EMPTY : item.toString());
+                }
+            } else if (tableRow instanceof Map) {
+                Map<String, Object> map = (Map<String, Object>) tableRow;
+                for (Map.Entry<String, Object> item : map.entrySet()) {
+                    rowCols.add(item.getValue() == null ? CheckEmptyUtil.EMPTY : item.getValue().toString());
+                }
             } else {
-                rowCols = new ArrayList<>();
-                rowCols.add(tableRow);
+                rowCols.add(tableRow.toString());
             }
 
-            List<String> newCols = new ArrayList<>();
-            for (Object rowCol : rowCols) {
-                newCols.add(rowCol == null ? null : rowCol.toString());
-            }
-
-            text.add(StringUtil.join(newCols, config.separator()));
+            text.add(StringUtil.join(rowCols, separator));
         }
 
         return ComponentDataResult.success(text);

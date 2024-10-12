@@ -1,0 +1,41 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "dataEnums/registerAndGet": [
+      {
+        "type": "data.enum.register",
+        "key": "test",
+        "items": [
+          { "code": 1, "name": "TEST1", "desc": "TEST-1-TEST"},
+          { "code": 2, "name": "TEST2", "desc": "TEST-2-TEST"},
+          { "code": 3, "name": "TEST3", "desc": "TEST-3-TEST"}
+        ]
+      },{
+        "id": "dataEnumGet",
+        "type": "data.enum.get",
+        "key": "test"
+      }
+    ],
+    "dataEnums/mapping": [
+      {
+        "id": "dataEnumsMappingData",
+        "type": "data.mapping",
+        "items": [
+          {"index": 0, "fieldName":"code", "source":"1"},
+          {"index": 1, "fieldName":"code", "source":"2"}
+        ]
+      },{
+        "id": "dataEnumMapping",
+        "type": "data.enum.mapping",
+        "source": "#{$r.dataEnumsMappingData}",
+        "resultId": "dataEnumsMappingData",
+        "items": [{
+          "enumKey": "test",
+          "sourceField": "code",
+          "targetField": "name"
+        }]
+      }
+    ]
+  }
+}

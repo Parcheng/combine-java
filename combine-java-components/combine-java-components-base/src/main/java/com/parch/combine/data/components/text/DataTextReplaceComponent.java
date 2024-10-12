@@ -79,7 +79,7 @@ public class DataTextReplaceComponent extends AbstractComponent<DataTextReplaceI
         } else {
             switch (mode) {
                 case FIRST:
-                    return data.toString().replace(finalOldText, finalNewTest);
+                    return data.toString().replaceFirst(finalOldText, finalNewTest);
                 case ALL:
                     return data.toString().replaceAll(finalOldText, finalNewTest);
                 default:
