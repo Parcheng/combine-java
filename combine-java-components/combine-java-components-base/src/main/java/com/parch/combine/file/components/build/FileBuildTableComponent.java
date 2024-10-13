@@ -1,6 +1,6 @@
 package com.parch.combine.file.components.build;
 
-import com.parch.combine.file.base.build.FileBuildComponent;
+import com.parch.combine.file.base.build.DefaultFileBuildComponent;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
@@ -17,7 +17,7 @@ import java.util.*;
 @Component(order = 100, key = "build.table", name = "构建表格文件数据组件", logicConfigClass = FileBuildTableLogicConfig.class, initConfigClass = FileBuildTableInitConfig.class)
 @ComponentDesc("依赖 mail，推荐版本 1.4.7")
 @ComponentResult(name = "文件的字节数据，可以下载/保存成 xlsx 文件（其他格式不行）")
-public class FileBuildTableComponent extends FileBuildComponent<FileBuildTableInitConfig, FileBuildTableLogicConfig> {
+public class FileBuildTableComponent extends DefaultFileBuildComponent<FileBuildTableInitConfig, FileBuildTableLogicConfig> {
 
     /**
      * 文件类型（后缀）

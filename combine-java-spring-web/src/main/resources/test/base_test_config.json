@@ -576,7 +576,7 @@
             "function": "pdfToText",
             "params": {},
             "items": [
-              { "id": "5-1", "source": "#{$r.dataCropPdf.[0]}", "compareType": "EQ", "target": "这是一篇测试文本"}
+              { "id": "5-1", "source": "#{$r.dataCropPdf}", "compareType": "EQ", "target": "这是一篇测试文本"}
             ]
           }, {
             "domain": "fileRead",
