@@ -1,12 +1,12 @@
 package com.parch.combine.file.base.build.table;
 
-import com.parch.combine.file.base.build.FileBuildLogicConfig;
+import com.parch.combine.file.base.build.DefaultFileBuildLogicConfig;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
-public interface FileBuildTableLogicConfig extends FileBuildLogicConfig {
+public interface FileBuildTableLogicConfig extends DefaultFileBuildLogicConfig {
 
     @Field(key = "header", name = "表头", type = FieldTypeEnum.TEXT, isArray = true)
     @FieldDesc("个数必须与 filedNames 配置的个数一致")

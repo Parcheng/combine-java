@@ -1,6 +1,6 @@
 package com.parch.combine.file.components.build;
 
-import com.parch.combine.file.base.build.FileBuildComponent;
+import com.parch.combine.file.base.build.DefaultFileBuildComponent;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Component(order = 100, key = "build.text", name = "构建文本文件数据组件", logicConfigClass = FileBuildTextLogicConfig.class, initConfigClass = FileBuildTextInitConfig.class)
 @ComponentResult(name = "文件的字节数据，可以下载/保存成 xlsx 文件（其他格式不行）")
-public class FileBuildTextComponent extends FileBuildComponent<FileBuildTextInitConfig, FileBuildTextLogicConfig> {
+public class FileBuildTextComponent extends DefaultFileBuildComponent<FileBuildTextInitConfig, FileBuildTextLogicConfig> {
 
     /**
      * 文件类型（后缀）
