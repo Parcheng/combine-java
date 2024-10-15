@@ -1,0 +1,101 @@
+{
+  "constant": {},
+  "init": [],
+  "flows": {
+    "fileOperations/compress-7z": [
+      {
+        "type": "file.operations.compress.7z",
+        "source": "/test/base/file/",
+        "target": "/test/base/file/test.7z"
+      },{
+        "id": "fileExistData7Z1",
+        "type": "file.operations.exist",
+        "source": "/test/base/file/test.7z"
+      },{
+        "type": "file.operations.compress.7z",
+        "source": "/test/base/file/test.7z",
+        "target": "/test/base/file/7z/"
+      },{
+        "id": "fileExistData7Z2",
+        "type": "file.operations.exist",
+        "source": "/test/base/file/7z/"
+      },{
+        "id": "fileDeleteData7Z1",
+        "type": "file.operations.delete",
+        "source": "/test/base/file/7z/"
+      },{
+        "id": "fileDeleteData7Z2",
+        "type": "file.operations.delete",
+        "source": "/test/base/file/test.7z"
+      }
+    ],
+    "fileOperations/compress-targz": [
+      {
+        "type": "file.operations.compress.targz",
+        "source": "/test/base/file/",
+        "target": "/test/base/file/test.tar.gz"
+      },{
+        "id": "fileExistDataTargz1",
+        "type": "file.operations.exist",
+        "source": "/test/base/file/test.tar.gz"
+      },{
+        "type": "file.operations.compress.targz",
+        "source": "/test/base/file/test.tar.gz",
+        "target": "/test/base/file/targz/"
+      },{
+        "id": "fileExistDataTargz2",
+        "type": "file.operations.exist",
+        "source": "/test/base/file/targz/"
+      },{
+        "id": "fileDeleteDataTargz1",
+        "type": "file.operations.delete",
+        "source": "/test/base/file/targz/"
+      },{
+        "id": "fileDeleteDataTargz2",
+        "type": "file.operations.delete",
+        "source": "/test/base/file/test.tar.gz"
+      }
+    ],
+    "fileOperations/compress-zip": [
+      {
+        "type": "file.operations.compress.zip",
+        "source": "/test/base/file/",
+        "target": "/test/base/file/test.zip"
+      },{
+        "id": "fileExistDataZip1",
+        "type": "file.operations.exist",
+        "source": "/test/base/file/test.zip"
+      },{
+        "type": "file.operations.compress.zip",
+        "source": "/test/base/file/test.zip",
+        "target": "/test/base/file/zip/"
+      },{
+        "id": "fileExistDataZip2",
+        "type": "file.operations.exist",
+        "source": "/test/base/file/zip/"
+      },{
+        "id": "fileDeleteDataZip1",
+        "type": "file.operations.delete",
+        "source": "/test/base/file/zip/"
+      },{
+        "id": "fileDeleteDataZip2",
+        "type": "file.operations.delete",
+        "source": "/test/base/file/test.zip"
+      }
+    ],
+    "fileOperations/copy": [
+      {
+        "type": "file.operations.copy",
+        "source": "/test/base/file/test.txt",
+        "target": "/test/base/file/test2.txt"
+      },{
+        "id": "fileExistDataCopy",
+        "type": "file.operations.exist",
+        "source": "/test/base/file/test2.txt"
+      },{
+        "type": "file.operations.delete",
+        "source": "/test/base/file/test2.txt"
+      }
+    ]
+  }
+}

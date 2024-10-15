@@ -47,7 +47,7 @@ public class FileNameUtil {
             path = path.substring(lastIndexOf + 1);
         }
 
-        int dotIndexOf = path.lastIndexOf(".");
+        int dotIndexOf = path.indexOf(".");
         if (dotIndexOf == -1) {
             return null;
         }

@@ -30,7 +30,7 @@ import java.util.List;
 public class FileCompressTarGzComponent extends AbstractFileCompressComponent<FileCompressTarGzInitConfig, FileCompressTarGzLogicConfig> {
 
     public FileCompressTarGzComponent() {
-        super(FileCompressTarGzInitConfig.class, FileCompressTarGzLogicConfig.class, FileCompressTypeEnum.ZIP);
+        super(FileCompressTarGzInitConfig.class, FileCompressTarGzLogicConfig.class, FileCompressTypeEnum.TAR_GZ);
     }
 
     @Override
