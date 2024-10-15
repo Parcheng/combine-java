@@ -18,6 +18,7 @@ import org.apache.commons.compress.archivers.sevenz.SevenZFile;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +32,7 @@ import java.util.List;
 public class FileCompressSevenZComponent extends AbstractFileCompressComponent<FileCompressSevenZInitConfig, FileCompressSevenZLogicConfig> {
 
     public FileCompressSevenZComponent() {
-        super(FileCompressSevenZInitConfig.class, FileCompressSevenZLogicConfig.class, FileCompressTypeEnum.ZIP);
+        super(FileCompressSevenZInitConfig.class, FileCompressSevenZLogicConfig.class, FileCompressTypeEnum.SEVEN_Z);
     }
 
     @Override
@@ -54,27 +55,37 @@ public class FileCompressSevenZComponent extends AbstractFileCompressComponent<F
 
         File inputFile = new File(source);
         File outputFile = new File(target);
-        try (SevenZOutputFile sevenZ = new SevenZOutputFile(outputFile)) {
-            SevenZArchiveEntry entry = sevenZ.createArchiveEntry(inputFile, inputFile.getName());
-
-            sevenZ.putArchiveEntry(entry);
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-
-            try (InputStream inStream = Files.newInputStream(inputFile.toPath())) {
-                while ((bytesRead = inStream.read(buffer)) != -1) {
-                    sevenZ.write(buffer, 0, bytesRead);
-                }
-            }
-
-            sevenZ.closeArchiveEntry();
+        try (SevenZOutputFile out = new SevenZOutputFile(outputFile)) {
+            addToArchiveCompression(out, inputFile, ".");
         } catch (IOException e) {
             ComponentErrorHandler.print(FileCompressErrorEnum.FAIL, e);
             return false;
         }
 
         return true;
+    }
+
+    private static void addToArchiveCompression(SevenZOutputFile out, File file, String dir) throws IOException {
+        String name = dir + File.separator + file.getName();
+        if (file.isFile()) {
+            SevenZArchiveEntry entry = out.createArchiveEntry(file, name);
+            out.putArchiveEntry(entry);
+            try (FileInputStream in = new FileInputStream(file)) {
+                byte[] buffer = new byte[1024];
+                int count;
+                while ((count = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, count);
+                }
+            }
+            out.closeArchiveEntry();
+        } else if (file.isDirectory()) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File child : children) {
+                    addToArchiveCompression(out, child, name);
+                }
+            }
+        }
     }
 
     private boolean unz(String source, String target) {
