@@ -9,7 +9,7 @@ import com.parch.combine.file.base.parse.excel.FileParseExcelLogicConfig;
 import com.parch.combine.file.base.parse.txt.FileParseTxtErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -53,7 +53,7 @@ public class FileParseExcelComponent extends FileParseComponent<FileParseExcelIn
                     break;
             }
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileParseTxtErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileParseTxtErrorEnum.FAIL, e);
             return ComponentDataResult.fail(FileParseExcelErrorEnum.FAIL);
         }
 

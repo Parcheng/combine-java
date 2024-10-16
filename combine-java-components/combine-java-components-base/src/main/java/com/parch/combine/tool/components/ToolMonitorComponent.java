@@ -1,7 +1,7 @@
 package com.parch.combine.tool.components;
 
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -55,7 +55,7 @@ public class ToolMonitorComponent extends AbstractComponent<ToolMonitorInitConfi
             int threadCount = ManagementFactory.getThreadMXBean().getThreadCount();
             monitorData.put(keyConfig.threadCount(), threadCount);
         } catch (Exception e) {
-            ComponentErrorHandler.print(ToolMonitorErrorEnum.FAIL, e);
+            PrintErrorHelper.print(ToolMonitorErrorEnum.FAIL, e);
             return ComponentDataResult.fail(ToolMonitorErrorEnum.FAIL);
         }
 

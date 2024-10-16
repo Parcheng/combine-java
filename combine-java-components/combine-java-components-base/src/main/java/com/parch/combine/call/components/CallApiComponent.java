@@ -7,7 +7,7 @@ import com.parch.combine.call.base.api.CallApiInitConfig;
 import com.parch.combine.call.base.api.CallApiLogicConfig;
 import com.parch.combine.core.common.util.HttpUtil;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -48,7 +48,7 @@ public class CallApiComponent extends CallComponent<CallApiInitConfig, CallApiLo
                     break;
             }
         } catch (IOException e) {
-            ComponentErrorHandler.print(CallApiErrorEnum.FAIL, e);
+            PrintErrorHelper.print(CallApiErrorEnum.FAIL, e);
             return ComponentDataResult.fail(CallApiErrorEnum.FAIL);
         }
 

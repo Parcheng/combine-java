@@ -3,7 +3,7 @@ package com.parch.combine.tool.components.cache;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.tool.base.cache.set.CacheSetErrorEnum;
@@ -31,7 +31,7 @@ public class CacheSetComponent extends AbstractCacheComponent<CacheSetInitConfig
 
             CacheHandler.set(domain, key, finalValue, logicConfig.expires(), initConfig.domainCapacity(), initConfig.keyCapacity());
         } catch (Exception e) {
-            ComponentErrorHandler.print(CacheSetErrorEnum.FAIL, e);
+            PrintErrorHelper.print(CacheSetErrorEnum.FAIL, e);
             return ComponentDataResult.fail(CacheSetErrorEnum.FAIL);
         }
 

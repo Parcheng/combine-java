@@ -1,7 +1,7 @@
 package com.parch.combine.tool.components;
 
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -23,7 +23,7 @@ public class ToolSleepComponent extends AbstractComponent<ToolSleepInitConfig, T
         try {
             Thread.sleep(logicConfig.time());
         } catch (InterruptedException e) {
-            ComponentErrorHandler.print(ToolSleepErrorEnum.FAIL, e);
+            PrintErrorHelper.print(ToolSleepErrorEnum.FAIL, e);
             return ComponentDataResult.fail(ToolSleepErrorEnum.FAIL);
         }
 

@@ -3,7 +3,7 @@ package com.parch.combine.data.components.enums;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.enums.EnumCacheHandler;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.data.base.enums.register.DataEnumRegisterErrorEnum;
@@ -43,7 +43,7 @@ public class DataEnumRegisterComponent extends AbstractComponent<DataEnumRegiste
         try {
             EnumCacheHandler.register(key, enums);
         } catch (Exception e) {
-            ComponentErrorHandler.print(DataEnumRegisterErrorEnum.FAIL, e);
+            PrintErrorHelper.print(DataEnumRegisterErrorEnum.FAIL, e);
             return ComponentDataResult.fail(DataEnumRegisterErrorEnum.FAIL);
         }
 

@@ -1,7 +1,7 @@
 package com.parch.combine.rabbitmq.base.helper;
 
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.rabbitmq.client.Address;
 import com.rabbitmq.client.CancelCallback;
 import com.rabbitmq.client.Channel;
@@ -53,7 +53,7 @@ public class RabbitMQHelper {
 
                 return connection;
             } catch (IOException | TimeoutException e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.CREATE_CONN_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.CREATE_CONN_ERROR, e);
             }
         }
 
@@ -84,7 +84,7 @@ public class RabbitMQHelper {
 
                 return channel;
             } catch (Exception e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.CREATE_CHANNEL_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.CREATE_CHANNEL_ERROR, e);
             }
         }
 
@@ -107,7 +107,7 @@ public class RabbitMQHelper {
                 return true;
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(RabbitMQErrorEnum.PUBLISH_ERROR, e);
+            PrintErrorHelper.print(RabbitMQErrorEnum.PUBLISH_ERROR, e);
         }
 
         return false;
@@ -139,7 +139,7 @@ public class RabbitMQHelper {
             });
 
         } catch (Exception e) {
-            ComponentErrorHandler.print(RabbitMQErrorEnum.SUBSCRIBE_ERROR, e);
+            PrintErrorHelper.print(RabbitMQErrorEnum.SUBSCRIBE_ERROR, e);
         }
 
         return null;
@@ -155,7 +155,7 @@ public class RabbitMQHelper {
             channel.basicCancel(consumerTag);
             return true;
         }catch (Exception e){
-            ComponentErrorHandler.print(RabbitMQErrorEnum.CANCEL_ERROR, e);
+            PrintErrorHelper.print(RabbitMQErrorEnum.CANCEL_ERROR, e);
         }
 
         return false;
@@ -168,7 +168,7 @@ public class RabbitMQHelper {
                     channel.close();
                 }
             } catch (IOException | TimeoutException e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.DESTROY_CHANNEL_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.DESTROY_CHANNEL_ERROR, e);
             }
         });
 
@@ -178,7 +178,7 @@ public class RabbitMQHelper {
                     connection.close();
                 }
             } catch (IOException e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.DESTROY_CONN_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.DESTROY_CONN_ERROR, e);
             }
         });
     }

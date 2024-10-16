@@ -5,7 +5,7 @@ import com.parch.combine.file.base.helper.FileHelper;
 import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -51,7 +51,7 @@ public class FileCompressTarGzComponent extends AbstractFileCompressComponent<Fi
     private boolean tar(String source, String target) {
         File srcFile = new File(source);
         if (!srcFile.isDirectory()) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FILE_IS_NULL);
+            PrintErrorHelper.print(FileCompressErrorEnum.FILE_IS_NULL);
             return false;
         }
 
@@ -64,7 +64,7 @@ public class FileCompressTarGzComponent extends AbstractFileCompressComponent<Fi
 
             addFilesToTarGz(source, tarArchiveOutputStream, "");
         } catch (Exception e) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileCompressErrorEnum.FAIL, e);
             return false;
         }
 
@@ -104,7 +104,7 @@ public class FileCompressTarGzComponent extends AbstractFileCompressComponent<Fi
     private boolean untar(String source, String target) {
         Path srcPath = Paths.get(source);
         if (!Files.exists(srcPath) || Files.isDirectory(srcPath)) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FILE_IS_NULL);
+            PrintErrorHelper.print(FileCompressErrorEnum.FILE_IS_NULL);
             return false;
         }
 
@@ -127,7 +127,7 @@ public class FileCompressTarGzComponent extends AbstractFileCompressComponent<Fi
                 }
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileCompressErrorEnum.FAIL, e);
             return false;
         }
 

@@ -10,7 +10,7 @@ import com.parch.combine.tool.base.cache.cleanup.CacheCleanupInitConfig;
 import com.parch.combine.tool.base.cache.cleanup.CacheCleanupLogicConfig;
 import com.parch.combine.tool.base.cache.cleanup.CacheCleanupModeEnum;
 import com.parch.combine.tool.base.cache.get.CacheGetErrorEnum;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
@@ -68,7 +68,7 @@ public class CacheCleanupComponent extends AbstractCacheComponent<CacheCleanupIn
 
             return ComponentDataResult.success(cleanData);
         } catch (Exception e) {
-            ComponentErrorHandler.print(CacheCleanupErrorEnum.FAIL, e);
+            PrintErrorHelper.print(CacheCleanupErrorEnum.FAIL, e);
             return ComponentDataResult.fail(CacheCleanupErrorEnum.FAIL);
         }
     }

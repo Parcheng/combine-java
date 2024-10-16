@@ -4,7 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.tools.config.ConfigHelper;
 import com.parch.combine.core.component.context.GlobalContextHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -102,7 +102,7 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
                 result.setShowMsg(logicConfig.showMsg());
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(SystemErrorEnum.SYSTEM_ERROR, e);
+            PrintErrorHelper.print(SystemErrorEnum.SYSTEM_ERROR, e);
         } finally {
             try {
                 // 异常情况 result 为空

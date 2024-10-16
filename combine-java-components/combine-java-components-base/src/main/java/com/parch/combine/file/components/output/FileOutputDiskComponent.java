@@ -4,7 +4,7 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.helper.FilePathHelper;
 import com.parch.combine.file.base.output.FileOutputComponent;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.file.base.output.disk.FileOutputDiskErrorEnum;
@@ -30,7 +30,7 @@ public class FileOutputDiskComponent extends FileOutputComponent<FileOutputDiskI
 
         String targetPath = logicConfig.targetPath();
         if (targetPath == null) {
-            ComponentErrorHandler.print(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
+            PrintErrorHelper.print(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
             return ComponentDataResult.fail(FileOutputDiskErrorEnum.TARGET_PATH_IS_NULL);
         }
 
@@ -48,7 +48,7 @@ public class FileOutputDiskComponent extends FileOutputComponent<FileOutputDiskI
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(fileInfo.getData());
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileOutputDiskErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileOutputDiskErrorEnum.FAIL, e);
             return ComponentDataResult.fail(FileOutputDiskErrorEnum.FAIL);
         }
 

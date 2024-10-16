@@ -3,7 +3,7 @@ package com.parch.combine.rocketmq.components;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -56,7 +56,7 @@ public class RocketMQConsumerComponent extends AbstractRocketMQComponent<RocketM
 
                     FlowResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
                     if (!result.getSuccess()) {
-                        ComponentErrorHandler.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic
+                        PrintErrorHelper.print(this, "消息消费失败, id=" + msg.getMsgId() + " topic=" + topic
                                 + " expression=" + expression + " error=" + result.getErrMsg(), null);
                     }
                 }
@@ -65,7 +65,7 @@ public class RocketMQConsumerComponent extends AbstractRocketMQComponent<RocketM
             });
             consumer.start();
         } catch (MQClientException e) {
-            ComponentErrorHandler.print(RocketMQConsumerErrorEnum.FAIL, e);
+            PrintErrorHelper.print(RocketMQConsumerErrorEnum.FAIL, e);
             return ComponentDataResult.fail(RocketMQConsumerErrorEnum.FAIL);
         }
 

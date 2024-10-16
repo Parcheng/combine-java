@@ -2,7 +2,7 @@ package com.parch.combine.core.component.tools.sql;
 
 import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.*;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
@@ -47,7 +47,7 @@ public class SqlTool {
         // #{...} 替换为 ? 标识符
         StringUtil.matcher(sqlArr[0], "\\$\\{(.*?)}", paramStr -> {
             if (paramStr.length() <= 3) {
-                ComponentErrorHandler.print("SQL语句替换-参数值为空");
+                PrintErrorHelper.print("SQL语句替换-参数值为空");
                 return;
             }
 
@@ -75,7 +75,7 @@ public class SqlTool {
         // #{...} 直接替换数据
         StringUtil.matcher(sqlArr[0], "#\\{(.*?)}", paramStr -> {
             if (paramStr.length() <= 3) {
-                ComponentErrorHandler.print("SQL语句替换-参数值为空");
+                PrintErrorHelper.print("SQL语句替换-参数值为空");
                 return;
             }
 

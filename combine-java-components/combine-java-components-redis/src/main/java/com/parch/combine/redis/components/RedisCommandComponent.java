@@ -4,7 +4,7 @@ import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.*;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.redis.base.AbstractRedisComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -39,7 +39,7 @@ public class RedisCommandComponent extends AbstractRedisComponent<RedisCommandIn
                 try {
                     itemResult = this.executeCommand(cluster, command);
                 } catch (Exception e) {
-                    ComponentErrorHandler.print(RedisCommandErrorEnum.UNKNOWN_ERROR, e);
+                    PrintErrorHelper.print(RedisCommandErrorEnum.UNKNOWN_ERROR, e);
                     if (logicConfig.failStop()) {
                         return ComponentDataResult.fail(result, RedisCommandErrorEnum.UNKNOWN_ERROR);
                     }

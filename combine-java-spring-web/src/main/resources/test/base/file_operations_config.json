@@ -86,15 +86,15 @@
     "fileOperations/copy": [
       {
         "type": "file.operations.copy",
-        "source": "/test/base/file/test.txt",
-        "target": "/test/base/file/test2.txt"
+        "source": "/test/base/file/text.txt",
+        "target": "/test/base/file/text2.txt"
       },{
         "id": "fileExistDataCopy",
         "type": "file.operations.exist",
-        "source": "/test/base/file/test2.txt"
+        "source": "/test/base/file/text2.txt"
       },{
         "type": "file.operations.delete",
-        "source": "/test/base/file/test2.txt"
+        "source": "/test/base/file/text2.txt"
       }
     ]
   }

@@ -2,7 +2,7 @@ package com.parch.combine.mail.components;
 
 import com.parch.combine.mail.base.AbstractMailComponent;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -68,7 +68,7 @@ public class MailReceiveComponent extends AbstractMailComponent<MailReceiveInitC
             store.close();
 
         } catch (Exception e) {
-            ComponentErrorHandler.print(MailReceiveErrorEnum.FAIL, e);
+            PrintErrorHelper.print(MailReceiveErrorEnum.FAIL, e);
             return ComponentDataResult.fail(MailReceiveErrorEnum.FAIL);
         }
 

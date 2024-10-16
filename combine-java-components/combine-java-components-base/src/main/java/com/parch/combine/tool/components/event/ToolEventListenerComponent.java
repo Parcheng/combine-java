@@ -4,7 +4,7 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.event.EventSubjectHandler;
 import com.parch.combine.tool.base.event.IEventObserver;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -33,7 +33,7 @@ public class ToolEventListenerComponent extends AbstractComponent<ToolEventListe
             EventSubjectHandler.subscribe(logicConfig.eventKey(),
                     new EventObserver(getInitConfig().pool(), logicConfig.components(), manager));
         } catch (Exception e) {
-            ComponentErrorHandler.print(ToolEventListenerErrorEnum.FAIL, e);
+            PrintErrorHelper.print(ToolEventListenerErrorEnum.FAIL, e);
             return ComponentDataResult.fail(ToolEventListenerErrorEnum.FAIL);
         }
 

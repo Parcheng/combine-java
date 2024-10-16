@@ -3,7 +3,7 @@ package com.parch.combine.rabbitmq.components;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.rabbitmq.base.AbstractRabbitMQComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -39,7 +39,7 @@ public class RabbitMQSubscribeComponent extends AbstractRabbitMQComponent<Rabbit
         String consumerTag = RabbitMQHelper.subscribe(channel, initConfig.queue(), logicConfig.count(), data -> {
             FlowResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
             if (!result.getSuccess()) {
-                ComponentErrorHandler.print(this, "消息消费失败, queue=" + initConfig.queue().queueName() + " error=" + result.getErrMsg(), null);
+                PrintErrorHelper.print(this, "消息消费失败, queue=" + initConfig.queue().queueName() + " error=" + result.getErrMsg(), null);
                 return false;
             }
 

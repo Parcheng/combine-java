@@ -5,7 +5,7 @@ import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.common.canstant.SymbolConstant;
@@ -67,7 +67,7 @@ public class DataFindHandler {
      */
     private static Object findData(String path) {
         if (CheckEmptyUtil.isEmpty(path)) {
-            ComponentErrorHandler.print("查找失败：参数路径为空");
+            PrintErrorHelper.print("查找失败：参数路径为空");
             return null;
         }
 
@@ -153,12 +153,12 @@ public class DataFindHandler {
             } else if (currData instanceof Map) {
                 Object objectKey = find(dataIndexStr);
                 if (objectKey == null) {
-                    ComponentErrorHandler.print("根据路径查找数据-对象类型的KEY为空 path=" + Arrays.toString(path) + ", index=" + index);
+                    PrintErrorHelper.print("根据路径查找数据-对象类型的KEY为空 path=" + Arrays.toString(path) + ", index=" + index);
                     return null;
                 }
                 return findObject(objectKey.toString(), currData, path, index);
             } else {
-                ComponentErrorHandler.print("根据路径查找数据-非集合/对象类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
+                PrintErrorHelper.print("根据路径查找数据-非集合/对象类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
                 return null;
             }
         } else {
@@ -171,7 +171,7 @@ public class DataFindHandler {
     private static Object findList(Integer dataIndex, Object currData, String[] path, int index) {
         // 验证当前数据是否为集合
         if(!(currData instanceof List)) {
-            ComponentErrorHandler.print("根据路径查找数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
+            PrintErrorHelper.print("根据路径查找数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
             return null;
         }
         List<Object> currListData = (List<Object>) currData;
@@ -189,7 +189,7 @@ public class DataFindHandler {
             return newCurrData;
         } else {
             if (dataIndex >= currListData.size()) {
-                ComponentErrorHandler.print("根据路径查找数据-集合类型下标越界 path=" + Arrays.toString(path) + ", index=" + index);
+                PrintErrorHelper.print("根据路径查找数据-集合类型下标越界 path=" + Arrays.toString(path) + ", index=" + index);
                 return null;
             }
             currData = currListData.get(dataIndex);
@@ -205,7 +205,7 @@ public class DataFindHandler {
 
     private static Object findObject(String param, Object currData, String[] path, int index) {
         if(!(currData instanceof Map)) {
-            ComponentErrorHandler.print("根据路径查找数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
+            PrintErrorHelper.print("根据路径查找数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
             return null;
         }
         Map<String, Object> currMapData = (Map<String, Object>) currData;
@@ -278,7 +278,7 @@ public class DataFindHandler {
      */
     private static boolean replaceData(String path, GetDataFunction<?> func) {
         if (CheckEmptyUtil.isEmpty(path)) {
-            ComponentErrorHandler.print("替换失败：参数路径为空");
+            PrintErrorHelper.print("替换失败：参数路径为空");
             return false;
         }
 
@@ -324,7 +324,7 @@ public class DataFindHandler {
     private static boolean replaceData(Object data, String[] path, int index, GetDataFunction<?> func) {
         String param = path[index];
         if (data == null) {
-            ComponentErrorHandler.print("根据路径替换数据-数据无下级字段 path=" + Arrays.toString(path) + ", index=" + index);
+            PrintErrorHelper.print("根据路径替换数据-数据无下级字段 path=" + Arrays.toString(path) + ", index=" + index);
             return false;
         }
 
@@ -346,12 +346,12 @@ public class DataFindHandler {
             } else if (data instanceof Map) {
                 Object objectKey = find(dataIndexStr);
                 if (objectKey == null) {
-                    ComponentErrorHandler.print("根据路径替换数据-对象类型的KEY为空 path=" + Arrays.toString(path) + ", index=" + index);
+                    PrintErrorHelper.print("根据路径替换数据-对象类型的KEY为空 path=" + Arrays.toString(path) + ", index=" + index);
                     return false;
                 }
                 return replaceObject(objectKey.toString(), data, path, index, func);
             } else {
-                ComponentErrorHandler.print("根据路径替换数据-非集合/对象类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
+                PrintErrorHelper.print("根据路径替换数据-非集合/对象类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
                 return false;
             }
         } else {
@@ -364,7 +364,7 @@ public class DataFindHandler {
     private static boolean replaceList(Integer listIndex, Object data, String[] path, int index, GetDataFunction<?> func) {
         // 判断集合数据是否合法
         if(!(data instanceof List)) {
-            ComponentErrorHandler.print("根据路径替换数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
+            PrintErrorHelper.print("根据路径替换数据-非集合类型无法根据下标取值 path=" + Arrays.toString(path) + ", index=" + index);
             return false;
         }
         List<Object> listData = (List<Object>) data;
@@ -377,7 +377,7 @@ public class DataFindHandler {
                 try {
                     newValue = func.get(listData);
                 } catch (Exception e) {
-                    ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
+                    PrintErrorHelper.print("值替换异常：" + e.getMessage(), e);
                     return false;
                 }
 
@@ -400,7 +400,7 @@ public class DataFindHandler {
                 try {
                     newValue = func.get(listData);
                 } catch (Exception e) {
-                    ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
+                    PrintErrorHelper.print("值替换异常：" + e.getMessage(), e);
                     return false;
                 }
 
@@ -421,7 +421,7 @@ public class DataFindHandler {
     @SuppressWarnings("unchecked")
     private static boolean replaceObject(String param, Object data, String[] path, int index, GetDataFunction<?> func) {
         if(!(data instanceof Map)) {
-            ComponentErrorHandler.print("根据路径替换数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
+            PrintErrorHelper.print("根据路径替换数据-非对象类型无法获取下级字段 path=" + Arrays.toString(path) + ", index=" + index);
             return false;
         }
         Map<String, Object> currMapData = (Map<String, Object>) data;
@@ -433,7 +433,7 @@ public class DataFindHandler {
             try {
                 newValue = func.get(currData);
             } catch (Exception e) {
-                ComponentErrorHandler.print("值替换异常：" + e.getMessage(), e);
+                PrintErrorHelper.print("值替换异常：" + e.getMessage(), e);
                 return false;
             }
 

@@ -1,7 +1,7 @@
 package com.parch.combine.gui.components.build;
 
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -46,7 +46,7 @@ public class GUIBuildComponent extends AbstractComponent<GUIBuildInitConfig, GUI
         try {
             SwingUtilities.invokeLater(builder::build);
         } catch (Exception e) {
-            ComponentErrorHandler.print(GUIBuildErrorEnum.FAIL, e);
+            PrintErrorHelper.print(GUIBuildErrorEnum.FAIL, e);
             return ComponentDataResult.fail(GUIBuildErrorEnum.FAIL);
         }
 

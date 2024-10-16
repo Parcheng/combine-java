@@ -4,7 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.calc.ExpressionCalcTool;
@@ -81,7 +81,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
                     // 运算表达式
                     calcResult = ExpressionCalcTool.calc(params[0].toString());
                 } catch (Exception e) {
-                    ComponentErrorHandler.print(DataCalcErrorEnum.CALC_ERROR, e);
+                    PrintErrorHelper.print(DataCalcErrorEnum.CALC_ERROR, e);
                     return ComponentDataResult.fail(DataCalcErrorEnum.CALC_ERROR);
                 }
                 break;
@@ -104,7 +104,7 @@ public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, Dat
                 }
 
                 if (!DataTypeIsUtil.isInteger(start) || !DataTypeIsUtil.isInteger(end)) {
-                    ComponentErrorHandler.print(DataCalcErrorEnum.RANDOM_RANG_ERROR);
+                    PrintErrorHelper.print(DataCalcErrorEnum.RANDOM_RANG_ERROR);
                     return ComponentDataResult.fail(DataCalcErrorEnum.RANDOM_RANG_ERROR);
                 }
 

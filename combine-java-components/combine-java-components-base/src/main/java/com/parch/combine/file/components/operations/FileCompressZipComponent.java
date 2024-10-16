@@ -4,7 +4,7 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.helper.FileHelper;
 import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.file.base.operations.compress.zip.FileCompressZipErrorEnum;
@@ -51,7 +51,7 @@ public class FileCompressZipComponent extends AbstractFileCompressComponent<File
                 zos.write(buffer, 0, bytesRead);
             }
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileCompressZipErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileCompressZipErrorEnum.FAIL, e);
             return false;
         }
 
@@ -79,7 +79,7 @@ public class FileCompressZipComponent extends AbstractFileCompressComponent<File
                 }
             }
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileCompressZipErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileCompressZipErrorEnum.FAIL, e);
             return false;
         }
 

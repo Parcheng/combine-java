@@ -5,7 +5,7 @@ import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheData;
 import com.parch.combine.tool.base.cache.CacheHandler;
 import com.parch.combine.tool.base.cache.CacheKeyMatchRuleEnum;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.tool.base.cache.get.CacheGetErrorEnum;
@@ -45,7 +45,7 @@ public class CacheGetComponent extends AbstractCacheComponent<CacheGetInitConfig
                 return ComponentDataResult.success(results.stream().map(CacheData::getData).collect(Collectors.toList()));
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(CacheGetErrorEnum.FAIL, e);
+            PrintErrorHelper.print(CacheGetErrorEnum.FAIL, e);
             return ComponentDataResult.fail(CacheGetErrorEnum.FAIL);
         }
     }

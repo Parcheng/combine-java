@@ -7,7 +7,7 @@ import com.parch.combine.file.base.operations.copy.FileCopyInitConfig;
 import com.parch.combine.file.base.operations.copy.FileCopyLogicConfig;
 import com.parch.combine.file.base.operations.delete.FileDeleteErrorEnum;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
@@ -38,11 +38,11 @@ public class FileCopyComponent extends AbstractComponent<FileCopyInitConfig, Fil
         String sourcePath = logicConfig.source();
         String targetPath = logicConfig.target();
         if (sourcePath == null) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.SOURCE_PATH_IS_NULL);
+            PrintErrorHelper.print(FileCompressErrorEnum.SOURCE_PATH_IS_NULL);
             return false;
         }
         if (targetPath == null) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.TARGET_PATH_IS_NULL);
+            PrintErrorHelper.print(FileCompressErrorEnum.TARGET_PATH_IS_NULL);
             return false;
         }
 
@@ -50,6 +50,10 @@ public class FileCopyComponent extends AbstractComponent<FileCopyInitConfig, Fil
         String dir = initConfig.dir();
         File source = new File(FilePathHelper.getFinalPath(useSystemDir, dir, sourcePath));
         File dest = new File(FilePathHelper.getFinalPath(useSystemDir, dir, targetPath));
+        if (!source.exists() || !dest.exists()) {
+            PrintErrorHelper.print(FileCompressErrorEnum.FILE_NOT_EXIST);
+            return false;
+        }
 
         try {
             File parentDir = dest.getParentFile();
@@ -66,7 +70,7 @@ public class FileCopyComponent extends AbstractComponent<FileCopyInitConfig, Fil
                 }
             }
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileDeleteErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileDeleteErrorEnum.FAIL, e);
             return false;
         }
 

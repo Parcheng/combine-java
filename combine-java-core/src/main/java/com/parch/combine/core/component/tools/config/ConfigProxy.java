@@ -3,7 +3,7 @@ package com.parch.combine.core.component.tools.config;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -45,7 +45,7 @@ public class ConfigProxy implements InvocationHandler {
             if (configFieldData == null) {
                 // 字段必填验证
                 if (field.isRequired()) {
-                    errors.add(ComponentErrorHandler.buildFieldMsg(key, "字段不能为空"));
+                    errors.add(PrintErrorHelper.buildFieldMsg(key, "字段不能为空"));
                 }
 
                 // 设置数据为空标识
@@ -66,7 +66,7 @@ public class ConfigProxy implements InvocationHandler {
                 configFlagMap.put(key, false);
             } else {
                 for (String item : parseResult.getThird()) {
-                    errors.add(ComponentErrorHandler.buildFieldMsg(field.key(), item));
+                    errors.add(PrintErrorHelper.buildFieldMsg(field.key(), item));
                 }
             }
         }
@@ -99,8 +99,8 @@ public class ConfigProxy implements InvocationHandler {
 
         configFieldData = ConfigHelper.parseFieldData(field.type(), configFieldData, field.isArray());
         if (field.isRequired() && configFieldData == null) {
-            String msg = ComponentErrorHandler.buildFieldMsg(key, "字段不能为空");
-            ComponentErrorHandler.print(msg);
+            String msg = PrintErrorHelper.buildFieldMsg(key, "字段不能为空");
+            PrintErrorHelper.print(msg);
             throw new Exception(msg);
         }
 
@@ -110,10 +110,10 @@ public class ConfigProxy implements InvocationHandler {
                 configFieldData = parseResult.getSecond();
             } else {
                 for (String msg : parseResult.getThird()) {
-                    ComponentErrorHandler.print(ComponentErrorHandler.buildFieldMsg(key, msg));
+                    PrintErrorHelper.print(PrintErrorHelper.buildFieldMsg(key, msg));
                 }
                 if (field.throwTypeError()) {
-                    throw new Exception(ComponentErrorHandler.buildFieldMsg(key, "动态加载配置数据失败"));
+                    throw new Exception(PrintErrorHelper.buildFieldMsg(key, "动态加载配置数据失败"));
                 }
             }
         }
