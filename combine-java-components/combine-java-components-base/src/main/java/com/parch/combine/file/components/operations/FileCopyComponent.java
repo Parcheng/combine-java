@@ -12,6 +12,9 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Component(order = 320, key = "operations.copy", name = "文件/目录拷贝组件", logicConfigClass = FileCopyLogicConfig.class, initConfigClass = FileCopyInitConfig.class)
 @ComponentResult(name = "true 或抛出异常信息")
@@ -49,20 +52,27 @@ public class FileCopyComponent extends AbstractComponent<FileCopyInitConfig, Fil
         Boolean useSystemDir = initConfig.useSystemDir();
         String dir = initConfig.dir();
         File source = new File(FilePathHelper.getFinalPath(useSystemDir, dir, sourcePath));
-        File dest = new File(FilePathHelper.getFinalPath(useSystemDir, dir, targetPath));
-        if (!source.exists() || !dest.exists()) {
+        if (!source.exists()) {
             PrintErrorHelper.print(FileCompressErrorEnum.FILE_NOT_EXIST);
             return false;
         }
 
         try {
-            File parentDir = dest.getParentFile();
-            if (!parentDir.exists()) {
-                parentDir.mkdirs();
+            // 目录不存在则创建目录
+            String destPathStr = FilePathHelper.getFinalPath(useSystemDir, dir, targetPath);
+            Path destPath = Paths.get(destPathStr);
+            Path directory = destPath.getParent();
+            if (directory != null && !Files.exists(directory)) {
+                Files.createDirectories(directory);
+            }
+
+            // 创建文件（如果它不存在）
+            if (!Files.exists(destPath)) {
+                Files.createFile(destPath);
             }
 
             try (InputStream is = new FileInputStream(source);
-                 OutputStream os = new FileOutputStream(dest)) {
+                 OutputStream os = new FileOutputStream(destPathStr)) {
                 byte[] buffer = new byte[1024];
                 int length;
                 while ((length = is.read(buffer)) > 0) {

@@ -22,6 +22,9 @@ public class FilePathHelper {
             URL systemResource = ClassLoader.getSystemResource("");
             if (systemResource != null) {
                 base = systemResource.getPath();
+                if (base.indexOf(":") > 0 && base.startsWith("/")) {
+                    base = base.substring(1);
+                }
             } else {
                 URL currClassUrl = FilePathHelper.class.getResource("");
                 base = currClassUrl.getPath().substring(6).replace("/com/parch/combine/file/base/helper/", "");
@@ -29,8 +32,5 @@ public class FilePathHelper {
         }
 
         return base + (basePath == null ? CheckEmptyUtil.EMPTY : basePath) + path;
-
-//        String classLoaderPath = useResourcePath ? ClassLoader.getSystemResource("").getPath() : "";
-//        return classLoaderPath + basePath + path;
     }
 }

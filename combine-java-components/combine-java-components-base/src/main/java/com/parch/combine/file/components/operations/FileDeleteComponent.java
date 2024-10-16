@@ -55,9 +55,15 @@ public class FileDeleteComponent extends AbstractComponent<FileDeleteInitConfig,
                     count += delete(f);
                 }
             }
-        }
-        if (file.delete()) {
-            count++;
+            if (!file.delete()) {
+                PrintErrorHelper.print("目录[ " + file.getPath() + " ]删除失败");
+            }
+        } else {
+            if (file.delete()) {
+                count++;
+            } else {
+                PrintErrorHelper.print("文件[ " + file.getPath() + " ]删除失败");
+            }
         }
 
         return count;
