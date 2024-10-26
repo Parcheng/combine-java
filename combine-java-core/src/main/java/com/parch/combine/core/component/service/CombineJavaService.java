@@ -34,7 +34,7 @@ public class CombineJavaService implements ICombineJavaService {
      * @param func 自定义函数
      */
     public void registerFlowAsPath(String path, Consumer<CombineInitVO> func) {
-        String configJson = ResourceFileUtil.read(path);
+        String configJson = ResourceFileUtil.read(path, CombineJavaService.class.getClassLoader());
         registerFlow(configJson, func);
     }
 

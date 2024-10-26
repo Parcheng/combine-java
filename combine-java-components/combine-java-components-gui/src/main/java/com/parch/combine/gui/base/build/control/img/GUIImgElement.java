@@ -1,6 +1,7 @@
 package com.parch.combine.gui.base.build.control.img;
 
 import com.parch.combine.core.common.util.ResourceFileUtil;
+import com.parch.combine.gui.base.build.control.html.GUIHtmlElement;
 import com.parch.combine.gui.core.element.AbstractGUIComponentElement;
 import com.parch.combine.gui.core.element.GUIElementConfig;
 import com.parch.combine.gui.core.element.IGUIElement;
@@ -33,7 +34,7 @@ public class GUIImgElement extends AbstractGUIComponentElement<GUIImgElementTemp
 
     private JLabel buildImg() {
         JLabel label = new JLabel();
-        ImageIcon icon = new ImageIcon(ResourceFileUtil.getURL(this.value));
+        ImageIcon icon = new ImageIcon(ResourceFileUtil.getURL(this.value, GUIImgElement.class.getClassLoader()));
         if (this.config.width != null || this.config.height != null) {
             if (this.config.width == null) {
                 this.config.width = icon.getIconWidth();

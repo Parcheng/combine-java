@@ -13,12 +13,17 @@ public class ResourceFileUtil {
 
     private ResourceFileUtil() {}
 
+    @Deprecated
     public static URL getURL(String path) {
+        return getURL(path, ClassLoader.getSystemClassLoader());
+    }
+
+    public static URL getURL(String path, ClassLoader classLoader) {
         if (path.charAt(0) == '/') {
             path = path.substring(1);
         }
 
-        return ClassLoader.getSystemClassLoader().getResource(path);
+        return classLoader.getResource(path);
     }
 
     /**
@@ -27,7 +32,19 @@ public class ResourceFileUtil {
      * @param path 路径
      * @return 内容
      */
+    @Deprecated
     public static String read(String path) {
+        return read(path, ClassLoader.getSystemClassLoader());
+    }
+
+    /**
+     * 读取系统文件
+     *
+     * @param path 路径
+     * @param classLoader 类加载器
+     * @return 内容
+     */
+    public static String read(String path, ClassLoader classLoader) {
         if (CheckEmptyUtil.isEmpty(path)) {
             return null;
         }
@@ -37,7 +54,7 @@ public class ResourceFileUtil {
         }
 
         StringBuilder result = new StringBuilder();
-        try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(path);
+        try (InputStream inputStream = classLoader.getResourceAsStream(path); // ClassLoader.getSystemResourceAsStream(path)
              BufferedReader reader = inputStream == null ? null : new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             if (reader == null) {
                 PrintLogUtil.printError("配置文件：" + path + "不存在！");

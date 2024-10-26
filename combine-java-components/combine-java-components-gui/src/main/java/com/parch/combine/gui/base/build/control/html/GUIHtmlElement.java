@@ -43,7 +43,7 @@ public class GUIHtmlElement extends AbstractGUIComponentElement<GUIHtmlElementTe
             if (this.value.startsWith("http")) {
                 this.page.setPage(this.value);
             } else {
-                this.page.setPage(ResourceFileUtil.getURL(this.value));
+                this.page.setPage(ResourceFileUtil.getURL(this.value, GUIHtmlElement.class.getClassLoader()));
             }
         } catch (Exception e) {
             this.page.setContentType("text/html");

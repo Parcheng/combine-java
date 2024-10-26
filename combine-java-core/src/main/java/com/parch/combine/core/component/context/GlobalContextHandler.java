@@ -14,7 +14,7 @@ public class GlobalContextHandler {
     private static Map<String, GlobalContext> MAP = new HashMap<>(1);
 
     public static void init(String scopeKey, String path) {
-        String testConfigJson = ResourceFileUtil.read(path);
+        String testConfigJson = ResourceFileUtil.read(path, GlobalContextHandler.class.getClassLoader());
         GlobalContext context = JsonUtil.deserialize(testConfigJson, GlobalContext.class);
         if (context == null) {
             context = new GlobalContext();
