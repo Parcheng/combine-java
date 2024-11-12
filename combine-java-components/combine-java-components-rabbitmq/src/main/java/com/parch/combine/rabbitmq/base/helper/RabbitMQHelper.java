@@ -1,7 +1,10 @@
 package com.parch.combine.rabbitmq.base.helper;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
+import com.parch.combine.core.component.tools.thread.ThreadPoolConfig;
+import com.parch.combine.core.component.tools.thread.ThreadPoolTool;
 import com.rabbitmq.client.Address;
 import com.rabbitmq.client.CancelCallback;
 import com.rabbitmq.client.Channel;
@@ -36,6 +39,10 @@ public class RabbitMQHelper {
 
             try {
                 ConnectionFactory factory = new ConnectionFactory();
+                ThreadPoolConfig pool = config.pool();
+                if (pool != null) {
+                    factory.setSharedExecutor(ThreadPoolTool.getPool(pool));
+                }
                 factory.setVirtualHost(config.virtualHost());
                 factory.setUsername(config.username());
                 factory.setPassword(config.password());
@@ -53,7 +60,7 @@ public class RabbitMQHelper {
 
                 return connection;
             } catch (IOException | TimeoutException e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.CREATE_CONN_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.CREATE_CONN_ERROR, e);
             }
         }
 
@@ -76,19 +83,37 @@ public class RabbitMQHelper {
             try {
                 String queueName = queue.queueName();
                 String routeKey = queue.routeKey();
+                String exchangeName = queue.exchangeName();
 
                 channel = connection.createChannel();
+                declareExchange(channel, exchangeName, queue.exchangeConfig());
                 channel.queueDeclare(queueName, queue.durable(), false, false, getPropertiesByQueue(queue));
-                channel.queueBind(queueName, queue.exchange(), routeKey == null ? queueName : routeKey);
+                channel.queueBind(queueName, exchangeName, routeKey == null ? queueName : routeKey);
                 PRODUCER_MAP.put(key, channel);
 
                 return channel;
             } catch (Exception e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.CREATE_CHANNEL_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.CREATE_CHANNEL_ERROR, e);
             }
         }
 
         return null;
+    }
+
+    /**
+     * 声明交换机
+     */
+    public static void declareExchange(Channel channel, String name, ExchangeConfig exchangeConfig) {
+        if (channel == null || exchangeConfig == null || CheckEmptyUtil.isEmpty(name)) {
+            return;
+        }
+
+        try {
+            // 声明交换机，如果交换机不存在则会自动创建；注意：type目前都为"direct"，且都是持久化的
+            channel.exchangeDeclare(name, exchangeConfig.type(), exchangeConfig.durable(), exchangeConfig.autoDelete(), exchangeConfig.internal(), exchangeConfig.arguments());
+        } catch (Exception e) {
+            PrintErrorHelper.print(RabbitMQErrorEnum.EXCHANGE_ERROR, e);
+        }
     }
 
     /**
@@ -99,7 +124,7 @@ public class RabbitMQHelper {
             String queueName = queue.queueName();
             String routeKey = queue.routeKey();
 
-            channel.basicPublish(queue.exchange(), routeKey == null ? queueName : routeKey, queue.durable(),
+            channel.basicPublish(queue.exchangeName(), routeKey == null ? queueName : routeKey, queue.durable(),
                     null, JsonUtil.serialize(message).getBytes(StandardCharsets.UTF_8));
             if (confirm) {
                 return channel.waitForConfirms(15);
@@ -107,7 +132,7 @@ public class RabbitMQHelper {
                 return true;
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(RabbitMQErrorEnum.PUBLISH_ERROR, e);
+            PrintErrorHelper.print(RabbitMQErrorEnum.PUBLISH_ERROR, e);
         }
 
         return false;
@@ -139,7 +164,7 @@ public class RabbitMQHelper {
             });
 
         } catch (Exception e) {
-            ComponentErrorHandler.print(RabbitMQErrorEnum.SUBSCRIBE_ERROR, e);
+            PrintErrorHelper.print(RabbitMQErrorEnum.SUBSCRIBE_ERROR, e);
         }
 
         return null;
@@ -155,7 +180,7 @@ public class RabbitMQHelper {
             channel.basicCancel(consumerTag);
             return true;
         }catch (Exception e){
-            ComponentErrorHandler.print(RabbitMQErrorEnum.CANCEL_ERROR, e);
+            PrintErrorHelper.print(RabbitMQErrorEnum.CANCEL_ERROR, e);
         }
 
         return false;
@@ -168,7 +193,7 @@ public class RabbitMQHelper {
                     channel.close();
                 }
             } catch (IOException | TimeoutException e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.DESTROY_CHANNEL_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.DESTROY_CHANNEL_ERROR, e);
             }
         });
 
@@ -178,7 +203,7 @@ public class RabbitMQHelper {
                     connection.close();
                 }
             } catch (IOException e) {
-                ComponentErrorHandler.print(RabbitMQErrorEnum.DESTROY_CONN_ERROR, e);
+                PrintErrorHelper.print(RabbitMQErrorEnum.DESTROY_CONN_ERROR, e);
             }
         });
     }
@@ -192,7 +217,7 @@ public class RabbitMQHelper {
             args.put("x-message-ttl", queue.expireTime());
         }
         if (queue.deadQueueName() != null) {
-            args.put("x-dead-letter-exchange", queue.exchange());
+            args.put("x-dead-letter-exchange", queue.exchangeName());
             args.put("x-dead-letter-routing-key", queue.deadQueueName());
         }
 

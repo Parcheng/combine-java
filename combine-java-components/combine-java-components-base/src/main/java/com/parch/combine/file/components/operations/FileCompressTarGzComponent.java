@@ -5,7 +5,7 @@ import com.parch.combine.file.base.helper.FileHelper;
 import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -19,10 +19,14 @@ import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 
 import java.io.*;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 
 @Component(order = 310, key = "operations.compress.targz", name = "tar.gz压缩解压组件", logicConfigClass = FileCompressTarGzLogicConfig.class, initConfigClass = FileCompressTarGzInitConfig.class)
 @ComponentDesc("依赖 commons-compress，推荐版本 1.20")
@@ -49,62 +53,55 @@ public class FileCompressTarGzComponent extends AbstractFileCompressComponent<Fi
     }
 
     private boolean tar(String source, String target) {
-        File srcFile = new File(source);
-        if (!srcFile.isDirectory()) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FILE_IS_NULL);
+        // 创建一个GZIP输出流
+        try (GZIPOutputStream gzipOS = new GZIPOutputStream(new FileOutputStream(target));
+             TarArchiveOutputStream taos = new TarArchiveOutputStream(gzipOS)) {
+            taos.setLongFileMode(TarArchiveOutputStream.LONGFILE_GNU);
+
+            // 递归地将目录内容添加到tar.gz文件
+            tarGzCompressDirectory(Paths.get(source), Paths.get(target).getParent(), taos);
+        } catch (IOException e) {
+            PrintErrorHelper.print(FileCompressErrorEnum.FAIL, e);
             return false;
         }
-
-        FileHelper.mkdirs(target);
-        Path destPath = Paths.get(target);
-        try (OutputStream fileOutputStream = Files.newOutputStream(destPath);
-             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-             GzipCompressorOutputStream gzipOutputStream = new GzipCompressorOutputStream(bufferedOutputStream);
-             TarArchiveOutputStream tarArchiveOutputStream = new TarArchiveOutputStream(gzipOutputStream)) {
-
-            addFilesToTarGz(source, tarArchiveOutputStream, "");
-        } catch (Exception e) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FAIL, e);
-            return false;
-        }
-
 
         return true;
     }
 
-    private void addFilesToTarGz(String sourceDir, TarArchiveOutputStream tarArchiveOutputStream, String currentDir) throws IOException {
-        File sourceFile = new File(sourceDir);
-        File[] files = sourceFile.listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    String newDir = currentDir + file.getName() + "/";
-                    TarArchiveEntry tarEntry = new TarArchiveEntry(newDir);
-                    tarArchiveOutputStream.putArchiveEntry(tarEntry);
-                    tarArchiveOutputStream.closeArchiveEntry();
-                    addFilesToTarGz(file.getAbsolutePath(), tarArchiveOutputStream, newDir);
-                } else {
-                    String entryName = currentDir + file.getName();
-                    TarArchiveEntry tarEntry = new TarArchiveEntry(file, entryName);
-                    tarArchiveOutputStream.putArchiveEntry(tarEntry);
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = bufferedInputStream.read(buffer)) != -1) {
-                        tarArchiveOutputStream.write(buffer, 0, bytesRead);
-                    }
-                    bufferedInputStream.close();
-                    tarArchiveOutputStream.closeArchiveEntry();
-                }
+    private void tarGzCompressDirectory(Path sourcePath, Path outputDir, TarArchiveOutputStream taos) throws IOException {
+        Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                addFileToTar(file, taos, sourcePath, outputDir);
+                return FileVisitResult.CONTINUE;
             }
-        }
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                if (!Files.isSameFile(dir, outputDir)) {
+                    addFileToTar(dir, taos, sourcePath, outputDir);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        taos.finish();
     }
+
+    private static void addFileToTar(Path file, TarArchiveOutputStream taos, Path sourcePath, Path outputDir) throws IOException {
+        TarArchiveEntry tarEntry = new TarArchiveEntry(file.toFile(), file.toString().substring(sourcePath.toString().length() + 1).replace("\\", "/"));
+        taos.putArchiveEntry(tarEntry);
+
+        if (!Files.isDirectory(file)) {
+            Files.copy(file, taos);
+        }
+        taos.closeArchiveEntry();
+    }
+
 
     private boolean untar(String source, String target) {
         Path srcPath = Paths.get(source);
         if (!Files.exists(srcPath) || Files.isDirectory(srcPath)) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FILE_IS_NULL);
+            PrintErrorHelper.print(FileCompressErrorEnum.FILE_IS_NULL);
             return false;
         }
 
@@ -127,7 +124,7 @@ public class FileCompressTarGzComponent extends AbstractFileCompressComponent<Fi
                 }
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileCompressErrorEnum.FAIL, e);
             return false;
         }
 

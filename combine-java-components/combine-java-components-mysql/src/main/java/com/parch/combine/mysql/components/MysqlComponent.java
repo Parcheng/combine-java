@@ -2,7 +2,7 @@ package com.parch.combine.mysql.components;
 
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -75,7 +75,7 @@ public class MysqlComponent extends AbstractComponent<MysqlInitConfig, MysqlLogi
             ComponentDataResult result = ComponentContextHandler.getResultData(getLogicConfig().id());
             success = result != null && result.getSuccess();
         } catch (Exception e) {
-            ComponentErrorHandler.print(MysqlErrorEnum.END_FUNCTION_ERROR, e);
+            PrintErrorHelper.print(MysqlErrorEnum.END_FUNCTION_ERROR, e);
             return false;
         } finally {
             MysqlOperationHandler.closeConnection(connKey, success);

@@ -2,7 +2,7 @@ package com.parch.combine.tool.components;
 
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
@@ -54,7 +54,7 @@ public class ToolCrontabComponent extends AbstractComponent<ToolCrontabInitConfi
                 service.schedule(new CrontabScheduledTask(this), initialDelay, TimeUnit.MILLISECONDS);
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(ToolCrontabErrorEnum.FAIL, e);
+            PrintErrorHelper.print(ToolCrontabErrorEnum.FAIL, e);
             return ComponentDataResult.fail(ToolCrontabErrorEnum.FAIL);
         }
 

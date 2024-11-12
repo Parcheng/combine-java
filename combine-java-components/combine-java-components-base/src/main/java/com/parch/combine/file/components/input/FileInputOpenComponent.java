@@ -4,7 +4,7 @@ import com.parch.combine.file.base.helper.FilePathHelper;
 import com.parch.combine.file.base.input.FileInputComponent;
 import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -59,7 +59,7 @@ public class FileInputOpenComponent extends FileInputComponent<FileInputOpenInit
             }
             fi.close();
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileInputOpenErrorEnum.FILE_DATA_SCARCITY, e);
+            PrintErrorHelper.print(FileInputOpenErrorEnum.FILE_DATA_SCARCITY, e);
             return FileInputOpenErrorEnum.OPEN_ERROR;
         }
 

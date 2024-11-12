@@ -2,7 +2,7 @@ package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
@@ -47,7 +47,7 @@ public class DataTextSplitComponent extends AbstractComponent<DataTextSplitInitC
                 DataVariableHelper.replaceValue(source, old -> finalResult);
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(DataTextSplitErrorEnum.FAIL, e);
+            PrintErrorHelper.print(DataTextSplitErrorEnum.FAIL, e);
             return ComponentDataResult.fail(DataTextSplitErrorEnum.FAIL);
         }
 

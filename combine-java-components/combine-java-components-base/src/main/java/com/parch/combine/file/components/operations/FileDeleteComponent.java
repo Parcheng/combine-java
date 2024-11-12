@@ -2,7 +2,7 @@ package com.parch.combine.file.components.operations;
 
 import com.parch.combine.file.base.helper.FilePathHelper;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -27,13 +27,13 @@ public class FileDeleteComponent extends AbstractComponent<FileDeleteInitConfig,
 
         String sourcePath = logicConfig.source();
         if (sourcePath == null) {
-            ComponentErrorHandler.print(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
+            PrintErrorHelper.print(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
             return ComponentDataResult.fail(FileDeleteErrorEnum.SOURCE_PATH_IS_NULL);
         }
 
         File source = new File(FilePathHelper.getFinalPath(initConfig.useSystemDir(), initConfig.dir(), sourcePath));
         if (!source.exists()) {
-            ComponentErrorHandler.print(FileDeleteErrorEnum.FILE_NOT_EXIST);
+            PrintErrorHelper.print(FileDeleteErrorEnum.FILE_NOT_EXIST);
             return ComponentDataResult.fail(FileDeleteErrorEnum.FILE_NOT_EXIST);
         }
 
@@ -41,7 +41,7 @@ public class FileDeleteComponent extends AbstractComponent<FileDeleteInitConfig,
             int count = delete(source);
             return ComponentDataResult.success(count);
         } catch (Exception e) {
-            ComponentErrorHandler.print(FileDeleteErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileDeleteErrorEnum.FAIL, e);
             return ComponentDataResult.fail(FileDeleteErrorEnum.FAIL);
         }
     }
@@ -55,9 +55,15 @@ public class FileDeleteComponent extends AbstractComponent<FileDeleteInitConfig,
                     count += delete(f);
                 }
             }
-        }
-        if (file.delete()) {
-            count++;
+            if (!file.delete()) {
+                PrintErrorHelper.print("目录[ " + file.getPath() + " ]删除失败");
+            }
+        } else {
+            if (file.delete()) {
+                count++;
+            } else {
+                PrintErrorHelper.print("文件[ " + file.getPath() + " ]删除失败");
+            }
         }
 
         return count;

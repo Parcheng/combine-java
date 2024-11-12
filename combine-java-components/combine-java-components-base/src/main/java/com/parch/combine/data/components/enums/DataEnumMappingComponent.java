@@ -5,7 +5,7 @@ import com.parch.combine.data.base.enums.EnumCacheHandler;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -89,7 +89,7 @@ public class DataEnumMappingComponent extends AbstractComponent<DataEnumMappingI
             }
 
         } catch (Exception e) {
-            ComponentErrorHandler.print(DataEnumMappingErrorEnum.FAIL, e);
+            PrintErrorHelper.print(DataEnumMappingErrorEnum.FAIL, e);
             return ComponentDataResult.fail(DataEnumMappingErrorEnum.FAIL);
         }
 

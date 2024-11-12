@@ -2,6 +2,7 @@ package com.parch.combine.rabbitmq.base.helper;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 
 public interface RabbitMQQueueConfig {
@@ -9,8 +10,12 @@ public interface RabbitMQQueueConfig {
     @Field(key = "key", name = "配置KEY", type = FieldTypeEnum.TEXT, defaultValue = "$common")
     String key();
 
-    @Field(key = "exchange", name = "队列绑定的交换机", type = FieldTypeEnum.TEXT, isRequired = true)
-    String exchange();
+    @Field(key = "exchangeName", name = "队列绑定的交换机名称", type = FieldTypeEnum.TEXT, isRequired = true)
+    String exchangeName();
+
+    @Field(key = "exchangeConfig", name = "队列绑定的交换配置", type = FieldTypeEnum.CONFIG)
+    @FieldObject(ExchangeConfig.class)
+    ExchangeConfig exchangeConfig();
 
     @Field(key = "queueName", name = "队列名称", type = FieldTypeEnum.TEXT, isRequired = true)
     String queueName();

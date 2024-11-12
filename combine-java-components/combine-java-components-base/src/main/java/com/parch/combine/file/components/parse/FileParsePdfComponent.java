@@ -4,7 +4,7 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.FilePostfixEnum;
 import com.parch.combine.file.base.parse.FileParseComponent;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -35,7 +35,7 @@ public class FileParsePdfComponent extends FileParseComponent<FileParsePdfInitCo
             PDFTextStripper pdfTextStripper = new PDFTextStripper();
             result = pdfTextStripper.getText(document);
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileParsePdfErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileParsePdfErrorEnum.FAIL, e);
             return ComponentDataResult.fail(FileParsePdfErrorEnum.FAIL);
         }
 

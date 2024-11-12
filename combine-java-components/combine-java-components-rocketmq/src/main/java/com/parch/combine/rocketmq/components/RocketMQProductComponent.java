@@ -4,7 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -50,7 +50,7 @@ public class RocketMQProductComponent extends AbstractRocketMQComponent<RocketMQ
             SendResult result = producer.send(message);
             msgId = result.getMsgId();
         } catch (MQClientException | InterruptedException | RemotingException | MQBrokerException e) {
-            ComponentErrorHandler.print(RocketMQProductErrorEnum.FAIL, e);
+            PrintErrorHelper.print(RocketMQProductErrorEnum.FAIL, e);
             return ComponentDataResult.fail(RocketMQProductErrorEnum.FAIL);
         } finally {
             producer.shutdown();

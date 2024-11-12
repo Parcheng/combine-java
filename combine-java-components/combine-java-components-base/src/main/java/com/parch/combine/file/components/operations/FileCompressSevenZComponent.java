@@ -5,7 +5,7 @@ import com.parch.combine.file.base.helper.FileHelper;
 import com.parch.combine.file.base.operations.compress.AbstractFileCompressComponent;
 import com.parch.combine.file.base.operations.compress.FileCompressErrorEnum;
 import com.parch.combine.file.base.operations.compress.FileCompressTypeEnum;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -21,8 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.List;
 
 
@@ -56,18 +54,18 @@ public class FileCompressSevenZComponent extends AbstractFileCompressComponent<F
         File inputFile = new File(source);
         File outputFile = new File(target);
         try (SevenZOutputFile out = new SevenZOutputFile(outputFile)) {
-            addToArchiveCompression(out, inputFile, ".");
+            addToArchiveCompression(out, inputFile, ".", true);
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileCompressErrorEnum.FAIL, e);
             return false;
         }
 
         return true;
     }
 
-    private static void addToArchiveCompression(SevenZOutputFile out, File file, String dir) throws IOException {
-        String name = dir + File.separator + file.getName();
+    private static void addToArchiveCompression(SevenZOutputFile out, File file, String dir, boolean isFirst) throws IOException {
         if (file.isFile()) {
+            String name = dir + File.separator + file.getName();
             SevenZArchiveEntry entry = out.createArchiveEntry(file, name);
             out.putArchiveEntry(entry);
             try (FileInputStream in = new FileInputStream(file)) {
@@ -79,10 +77,11 @@ public class FileCompressSevenZComponent extends AbstractFileCompressComponent<F
             }
             out.closeArchiveEntry();
         } else if (file.isDirectory()) {
+            String name = isFirst ? dir : (dir + File.separator + file.getName());
             File[] children = file.listFiles();
             if (children != null) {
                 for (File child : children) {
-                    addToArchiveCompression(out, child, name);
+                    addToArchiveCompression(out, child, name, false);
                 }
             }
         }
@@ -105,7 +104,7 @@ public class FileCompressSevenZComponent extends AbstractFileCompressComponent<F
                 }
             }
         } catch (Exception e) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileCompressErrorEnum.FAIL, e);
             return false;
         }
 

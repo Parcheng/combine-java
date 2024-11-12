@@ -17,7 +17,7 @@ public class FlowHandler {
     public static List<FlowLoadResult> load(String path, CombineManager manager) {
         List<FlowLoadResult> initResults = new ArrayList<>();
 
-        String jsonDataStr = ResourceFileUtil.read(path);
+        String jsonDataStr = ResourceFileUtil.read(path, FlowHandler.class.getClassLoader());
         CombineConfigVO config = JsonUtil.deserialize(jsonDataStr, CombineConfigVO.class);
         if (config != null) {
             manager.init(config, vo -> FlowHandler.build(vo, initResults));

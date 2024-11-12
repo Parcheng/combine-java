@@ -1,7 +1,7 @@
 package com.parch.combine.file.components.operations;
 
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -27,7 +27,7 @@ public class FileExistComponent extends AbstractComponent<FileExistInitConfig, F
 
         String sourcePath = logicConfig.source();
         if (sourcePath == null) {
-            ComponentErrorHandler.print(FileExistErrorEnum.SOURCE_PATH_IS_NULL);
+            PrintErrorHelper.print(FileExistErrorEnum.SOURCE_PATH_IS_NULL);
             return ComponentDataResult.fail(FileExistErrorEnum.SOURCE_PATH_IS_NULL);
         }
 

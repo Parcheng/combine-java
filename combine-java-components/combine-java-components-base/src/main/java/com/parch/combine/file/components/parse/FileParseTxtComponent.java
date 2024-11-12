@@ -3,7 +3,7 @@ package com.parch.combine.file.components.parse;
 import com.parch.combine.file.base.FilePostfixEnum;
 import com.parch.combine.file.base.parse.FileParseComponent;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -39,7 +39,7 @@ public class FileParseTxtComponent extends FileParseComponent<FileParseTxtInitCo
                 result.add(line);
             }
         } catch (IOException e) {
-            ComponentErrorHandler.print(FileParseTxtErrorEnum.FAIL, e);
+            PrintErrorHelper.print(FileParseTxtErrorEnum.FAIL, e);
             return ComponentDataResult.fail(FileParseTxtErrorEnum.FAIL);
         }
 

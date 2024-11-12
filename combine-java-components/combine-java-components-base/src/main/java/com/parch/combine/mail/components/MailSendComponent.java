@@ -6,7 +6,7 @@ import com.parch.combine.mail.base.helper.MailContentTypeEnum;
 import com.parch.combine.mail.base.helper.MimeMessageHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -50,7 +50,7 @@ public class MailSendComponent extends AbstractMailComponent<MailSendInitConfig,
                 toList.add(new InternetAddress(to));
             }
         } catch (MessagingException e) {
-            ComponentErrorHandler.print(MailSendErrorEnum.ADDRESS_ERROR, e);
+            PrintErrorHelper.print(MailSendErrorEnum.ADDRESS_ERROR, e);
             return ComponentDataResult.fail(MailSendErrorEnum.ADDRESS_ERROR);
         }
 
@@ -70,7 +70,7 @@ public class MailSendComponent extends AbstractMailComponent<MailSendInitConfig,
 
             Transport.send(message);
         } catch (Exception e) {
-            ComponentErrorHandler.print(MailSendErrorEnum.FAIL, e);
+            PrintErrorHelper.print(MailSendErrorEnum.FAIL, e);
             return ComponentDataResult.fail(MailSendErrorEnum.FAIL);
         }
 

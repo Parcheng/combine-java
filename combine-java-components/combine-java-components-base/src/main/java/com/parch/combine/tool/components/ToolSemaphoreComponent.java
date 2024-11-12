@@ -3,7 +3,7 @@ package com.parch.combine.tool.components;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -35,7 +35,7 @@ public class ToolSemaphoreComponent extends AbstractComponent<ToolSemaphoreInitC
             Semaphore semaphore = getSemaphore(key, getInitConfig());
             semaphore.acquire();
         } catch (InterruptedException e) {
-            ComponentErrorHandler.print(ToolSemaphoreErrorEnum.FAIL, e);
+            PrintErrorHelper.print(ToolSemaphoreErrorEnum.FAIL, e);
             return ComponentDataResult.fail(ToolSemaphoreErrorEnum.FAIL);
         }
 

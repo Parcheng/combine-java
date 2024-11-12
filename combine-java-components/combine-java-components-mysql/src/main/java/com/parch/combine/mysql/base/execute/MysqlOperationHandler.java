@@ -2,7 +2,7 @@ package com.parch.combine.mysql.base.execute;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.conn.DbConnPoolTool;
@@ -46,10 +46,10 @@ public class MysqlOperationHandler {
             conn.setAutoCommit(false);
             return execute(conn, params, logicConfig, initConfig);
         } catch (SQLException e) {
-            ComponentErrorHandler.print(MysqlErrorEnum.CONN_ERROR, e);
+            PrintErrorHelper.print(MysqlErrorEnum.CONN_ERROR, e);
             return ComponentDataResult.fail(MysqlErrorEnum.CONN_ERROR);
         } catch (ClassNotFoundException e) {
-            ComponentErrorHandler.print(MysqlErrorEnum.LOAD_JDBC_ERROR, e);
+            PrintErrorHelper.print(MysqlErrorEnum.LOAD_JDBC_ERROR, e);
             return ComponentDataResult.fail(MysqlErrorEnum.LOAD_JDBC_ERROR);
         }
     }
@@ -152,17 +152,17 @@ public class MysqlOperationHandler {
                     result =  ComponentDataResult.success(true);
                     break;
                 default:
-                    ComponentErrorHandler.print(MysqlErrorEnum.SQL_TYPE_ERROR);
+                    PrintErrorHelper.print(MysqlErrorEnum.SQL_TYPE_ERROR);
                     result = ComponentDataResult.fail(MysqlErrorEnum.SQL_TYPE_ERROR);
                     break;
             }
 
             return result;
         } catch (SQLException e) {
-            ComponentErrorHandler.print(MysqlErrorEnum.SQL_EXECUTE_ERROR, e);
+            PrintErrorHelper.print(MysqlErrorEnum.SQL_EXECUTE_ERROR, e);
             result = ComponentDataResult.fail(MysqlErrorEnum.SQL_EXECUTE_ERROR);
         } catch (Exception e) {
-            ComponentErrorHandler.print(MysqlErrorEnum.UNKNOWN_ERROR, e);
+            PrintErrorHelper.print(MysqlErrorEnum.UNKNOWN_ERROR, e);
             result = ComponentDataResult.fail(MysqlErrorEnum.UNKNOWN_ERROR);
         } finally {
             closeStatement(ps, rs);
@@ -284,7 +284,7 @@ public class MysqlOperationHandler {
                 CONN_POOL.remove(connKey);
             }
         } catch (SQLException e) {
-            ComponentErrorHandler.print(MysqlErrorEnum.CONN_CLOSE_ERROR, e);
+            PrintErrorHelper.print(MysqlErrorEnum.CONN_CLOSE_ERROR, e);
         }
     }
 
@@ -303,7 +303,7 @@ public class MysqlOperationHandler {
                 ps.close();
             }
         } catch (SQLException e) {
-            ComponentErrorHandler.print(MysqlErrorEnum.STATEMENT_CLOSE_ERROR, e);
+            PrintErrorHelper.print(MysqlErrorEnum.STATEMENT_CLOSE_ERROR, e);
         }
     }
 }

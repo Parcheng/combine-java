@@ -3,7 +3,7 @@ package com.parch.combine.tool.components.event;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.event.EventSubjectHandler;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.tool.base.event.push.ToolEventPushErrorEnum;
@@ -24,7 +24,7 @@ public class ToolEventPushComponent extends AbstractComponent<ToolEventPushInitC
             ToolEventPushLogicConfig logicConfig = getLogicConfig();
             EventSubjectHandler.push(logicConfig.eventKey(), logicConfig.data());
         } catch (Exception e) {
-            ComponentErrorHandler.print(ToolEventPushErrorEnum.FAIL, e);
+            PrintErrorHelper.print(ToolEventPushErrorEnum.FAIL, e);
             return ComponentDataResult.fail(ToolEventPushErrorEnum.FAIL);
         }
 

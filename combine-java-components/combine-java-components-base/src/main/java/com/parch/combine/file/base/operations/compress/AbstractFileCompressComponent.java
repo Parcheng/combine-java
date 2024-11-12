@@ -5,7 +5,7 @@ import com.parch.combine.file.base.helper.FilePathHelper;
 import com.parch.combine.file.base.operations.FileOperationsInitConfig;
 import com.parch.combine.core.common.util.FileNameUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 
 import java.util.List;
 
@@ -28,11 +28,11 @@ public abstract class AbstractFileCompressComponent<T extends FileOperationsInit
         String sourcePath = logicConfig.source();
         String targetPath = logicConfig.target();
         if (sourcePath == null) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.SOURCE_PATH_IS_NULL);
+            PrintErrorHelper.print(FileCompressErrorEnum.SOURCE_PATH_IS_NULL);
             return ComponentDataResult.fail(FileCompressErrorEnum.SOURCE_PATH_IS_NULL);
         }
         if (targetPath == null) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.TARGET_PATH_IS_NULL);
+            PrintErrorHelper.print(FileCompressErrorEnum.TARGET_PATH_IS_NULL);
             return ComponentDataResult.fail(FileCompressErrorEnum.TARGET_PATH_IS_NULL);
         }
 
@@ -43,13 +43,13 @@ public abstract class AbstractFileCompressComponent<T extends FileOperationsInit
             postfix = FileNameUtil.getPostfix(targetPath);
         }
         if (postfix == null) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.NO_COMPRESS_FILE);
+            PrintErrorHelper.print(FileCompressErrorEnum.NO_COMPRESS_FILE);
             return ComponentDataResult.fail(FileCompressErrorEnum.NO_COMPRESS_FILE);
         }
 
         FileCompressTypeEnum type = FileCompressTypeEnum.get(postfix);
         if (this.type != type) {
-            ComponentErrorHandler.print(FileCompressErrorEnum.TYPE_ERROR);
+            PrintErrorHelper.print(FileCompressErrorEnum.TYPE_ERROR);
             return ComponentDataResult.fail(FileCompressErrorEnum.TYPE_ERROR, postfix);
         }
 

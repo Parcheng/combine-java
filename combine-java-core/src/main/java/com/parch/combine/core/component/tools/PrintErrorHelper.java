@@ -1,13 +1,14 @@
-package com.parch.combine.core.component.error;
+package com.parch.combine.core.component.tools;
 
 import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.error.IComponentError;
 
 /**
  * 组件异常处理器
  */
-public class ComponentErrorHandler {
+public class PrintErrorHelper {
 
     /**
      * 打印错误信息
@@ -76,22 +77,4 @@ public class ComponentErrorHandler {
     public static String buildFieldMsg(String key, String msg) {
         return key + " > " + msg;
     }
-
-//    /**
-//     * 构建检测初始化配置错误信息
-//     *
-//     * @param msg 错误信息
-//     */
-//    public static String buildCheckInitMsg(String id, String type, String msg) {
-//        return "【" + type + "】【初始化配置】【" + id + "】【" + msg + "】";
-//    }
-//
-//    /**
-//     * 构建检测逻辑配置错误信息
-//     *
-//     * @param msg 错误信息
-//     */
-//    public static String buildCheckLogicMsg(String id, String type, String msg) {
-//        return "【" + type + "】【逻辑配置】【" + id + "】【" + msg + "】";
-//    }
 }

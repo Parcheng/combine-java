@@ -1,7 +1,7 @@
 package com.parch.combine.data.base.general.format.func;
 
 import com.parch.combine.core.common.util.JsonUtil;
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -36,7 +36,7 @@ public class MD5Format implements ICustomFormat {
             }
             return sb.toString();
         } catch (Exception e){
-            ComponentErrorHandler.print(FormatFuncError.MD5_ERROR, e);
+            PrintErrorHelper.print(FormatFuncError.MD5_ERROR, e);
             throw new Exception(FormatFuncError.MD5_ERROR);
         }
     }

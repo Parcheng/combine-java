@@ -30,7 +30,7 @@ public class GUIElementTemplateHelper {
         }
 
         String path = "gui/template/" + subPath + "/" + type + "_template.json";
-        String testConfigJson = ResourceFileUtil.read(path);
+        String testConfigJson = ResourceFileUtil.read(path, GUIElementTemplateHelper.class.getClassLoader());
         if (CheckEmptyUtil.isNotEmpty(testConfigJson)) {
             T templateConfig = JsonUtil.deserialize(testConfigJson, tClass);
             if (templateConfig != null) {
@@ -50,7 +50,7 @@ public class GUIElementTemplateHelper {
         }
 
         String path = "gui/template/frame_template.json";
-        String configJson = ResourceFileUtil.read(path);
+        String configJson = ResourceFileUtil.read(path, GUIElementTemplateHelper.class.getClassLoader());
         if (CheckEmptyUtil.isNotEmpty(configJson)) {
             T templateConfig = JsonUtil.deserialize(configJson, tClass);
             if (templateConfig != null) {

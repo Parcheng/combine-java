@@ -1,6 +1,6 @@
 package com.parch.combine.data.base.general.format;
 
-import com.parch.combine.core.component.error.ComponentErrorHandler;
+import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
 import com.parch.combine.data.base.general.format.func.ClearDuplicateFormat;
 import com.parch.combine.data.base.general.format.func.GroupFormat;
@@ -54,7 +54,7 @@ public class DataFormatHandler {
     public static DataFindHandler.GetDataFunction<Object> getFunction(DataFormatFunctionEnum function, String[] params) {
         ICustomFormat format = getFormatObj(function, params);
         if (format == null) {
-            ComponentErrorHandler.print(function + " 函数不存在");
+            PrintErrorHelper.print(function + " 函数不存在");
             return null;
         }
 
@@ -138,13 +138,13 @@ public class DataFormatHandler {
                 }
             }
             if (!isImplement) {
-                ComponentErrorHandler.print("自定义实现类未实现指定接口");
+                PrintErrorHelper.print("自定义实现类未实现指定接口");
                 return null;
             }
 
             return (ICustomFormat) clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            ComponentErrorHandler.print("自定义格式化实现初始化失败", e);
+            PrintErrorHelper.print("自定义格式化实现初始化失败", e);
         }
 
         return null;
