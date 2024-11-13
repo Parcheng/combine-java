@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.tools.compare;
 
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 
 /**
  * 包含比较处理器
@@ -19,8 +19,8 @@ public class ContainCompare {
             return CompareResult.fail();
         }
 
-        String sourceJson = JsonUtil.serialize(source);
-        String targetJson = JsonUtil.serialize(target);
+        String sourceJson = JsonUtil.obj2String(source);
+        String targetJson = JsonUtil.obj2String(target);
         boolean success = sourceJson.contains(targetJson);
 
         return success ? CompareResult.success() : CompareResult.fail();

@@ -1,6 +1,6 @@
 package com.parch.combine.system.components;
 
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.ComponentSettingHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -10,6 +10,7 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.system.base.doc.components.SystemDocSettingsInitConfig;
 import com.parch.combine.system.base.doc.components.SystemDocSettingsLogicConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class SystemDocSettingsComponent extends AbstractComponent<SystemDocSetti
     @Override
     public ComponentDataResult execute() {
         List<ComponentClassifySetting> settings = ComponentSettingHandler.getSettings();
-        String json = JsonUtil.serialize(settings);
-        return ComponentDataResult.success(JsonUtil.parseArray(json, HashMap.class));
+        String json = JsonUtil.obj2String(settings);
+        return ComponentDataResult.success(JsonUtil.string2Obj(json, List.class, HashMap.class));
     }
 }

@@ -3,7 +3,7 @@ package com.parch.combine.html.common.cache.base;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.PrintHelper;
@@ -107,7 +107,7 @@ public class CacheModelBuilder {
 
     public <T extends BaseCacheModel> T build(T model) {
         model.id = id;
-        model.json = JsonUtil.serialize(configMap);
+        model.json = JsonUtil.obj2String(configMap);
         model.subCaches = subCaches;
         return model;
     }

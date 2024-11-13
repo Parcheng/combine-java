@@ -1,9 +1,9 @@
 package com.parch.combine.gui.core;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.gui.core.style.ElementConfig;
 import com.parch.combine.gui.core.style.ElementHelper;
 
@@ -32,7 +32,7 @@ public class GUIElementTemplateHelper {
         String path = "gui/template/" + subPath + "/" + type + "_template.json";
         String testConfigJson = ResourceFileUtil.read(path, GUIElementTemplateHelper.class.getClassLoader());
         if (CheckEmptyUtil.isNotEmpty(testConfigJson)) {
-            T templateConfig = JsonUtil.deserialize(testConfigJson, tClass);
+            T templateConfig = JsonUtil.string2Obj(testConfigJson, tClass);
             if (templateConfig != null) {
                 TEMPLATE_MAP.put(type, templateConfig);
                 return templateConfig;
@@ -52,7 +52,7 @@ public class GUIElementTemplateHelper {
         String path = "gui/template/frame_template.json";
         String configJson = ResourceFileUtil.read(path, GUIElementTemplateHelper.class.getClassLoader());
         if (CheckEmptyUtil.isNotEmpty(configJson)) {
-            T templateConfig = JsonUtil.deserialize(configJson, tClass);
+            T templateConfig = JsonUtil.string2Obj(configJson, tClass);
             if (templateConfig != null) {
                 frameTemplate = templateConfig;
             }

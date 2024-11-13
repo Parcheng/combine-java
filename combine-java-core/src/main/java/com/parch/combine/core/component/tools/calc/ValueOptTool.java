@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.tools.calc;
 
 import com.parch.combine.core.common.util.DataTypeIsUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -123,10 +123,10 @@ public class ValueOptTool {
 
         // 集合和Map类型要转成SJON
         if (a instanceof Collection || a instanceof Map) {
-            a = JsonUtil.serialize(a);
+            a = JsonUtil.obj2String(a);
         }
         if (b instanceof Collection || b instanceof Map) {
-            b = JsonUtil.serialize(b);
+            b = JsonUtil.obj2String(b);
         }
 
         // 数字和字符串比较方式不同

@@ -6,7 +6,7 @@ import com.parch.combine.call.base.api.CallApiErrorEnum;
 import com.parch.combine.call.base.api.CallApiInitConfig;
 import com.parch.combine.call.base.api.CallApiLogicConfig;
 import com.parch.combine.core.common.util.HttpUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -39,7 +39,7 @@ public class CallApiComponent extends CallComponent<CallApiInitConfig, CallApiLo
                     result = HttpUtil.doGet(url, params, headers, logicConfig.retry(), logicConfig.timeout());
                     break;
                 case POST:
-                    result = HttpUtil.doPost(url, JsonUtil.serialize(params), headers, logicConfig.retry(), logicConfig.timeout());
+                    result = HttpUtil.doPost(url, JsonUtil.obj2String(params), headers, logicConfig.retry(), logicConfig.timeout());
                     break;
                 case FILE:
                     result = HttpUtil.downloadFile(url, params, headers, logicConfig.retry(), logicConfig.timeout());

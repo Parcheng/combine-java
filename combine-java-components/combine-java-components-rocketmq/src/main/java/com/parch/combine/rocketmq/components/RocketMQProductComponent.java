@@ -1,7 +1,7 @@
 package com.parch.combine.rocketmq.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
@@ -41,7 +41,7 @@ public class RocketMQProductComponent extends AbstractRocketMQComponent<RocketMQ
         String topic = logicConfig.topic();
         String tags = logicConfig.tags();
         Object content = logicConfig.content();
-        String contentStr = content == null ? CheckEmptyUtil.EMPTY : JsonUtil.serialize(content);
+        String contentStr = content == null ? CheckEmptyUtil.EMPTY : JsonUtil.obj2String(content);
 
         String msgId;
         try {

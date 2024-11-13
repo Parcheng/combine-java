@@ -1,22 +1,19 @@
 package com.parch.combine.html.base.page.builder;
 
 import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CharacterUtil;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.html.base.page.HtmlPageInitConfig;
-import com.parch.combine.html.base.page.config.FlagConfig;
 import com.parch.combine.html.base.page.HtmlPageLogicConfig;
 import com.parch.combine.html.base.page.config.HtmlElementConfig;
 import com.parch.combine.html.base.page.config.HtmlHeaderLinkConfig;
 import com.parch.combine.html.base.page.config.HtmlHeaderMetaConfig;
 import com.parch.combine.html.base.page.config.HtmlPageTemplateConfig;
-import com.parch.combine.html.base.template.core.DomConfig;
 import com.parch.combine.html.common.canstant.UrlPathCanstant;
 import com.parch.combine.html.common.tool.HtmlBuildTool;
 import com.parch.combine.html.common.tool.ScriptBuildTool;
@@ -30,7 +27,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -55,7 +51,7 @@ public class HtmlBuilder {
         this.groupBuilder = new HtmlElementGroupBuilder(config.groupIds(), manager);
 
         Map<String, Object> configMap = parseConfig(initConfig.flagConfig());
-        this.flagConfigJson = configMap == null ? null : JsonUtil.serialize(configMap);
+        this.flagConfigJson = configMap == null ? null : JsonUtil.obj2String(configMap);
     }
 
     public boolean build() {
@@ -204,13 +200,13 @@ public class HtmlBuilder {
         if (config.constant() != null) {
             constantMap.putAll(config.constant());
         }
-        scriptCodeList.add("\n$combine.constant.register(" + JsonUtil.serialize(constantMap) + ");");
+        scriptCodeList.add("\n$combine.constant.register(" + JsonUtil.obj2String(constantMap) + ");");
 
         // 元素模板注册
         groupBuilder.getTemplateMap().values().forEach(m -> scriptCodeList.add("\n$combine.instanceTemp.register(\"" + m.id + "\"," + m.json + ");"));
 
         // 数据加载配置注册
-        groupBuilder.getDataLoadMap().values().forEach(m -> scriptCodeList.add("\n$combine.loadData.register(\"" + m.id + "\"," + m.json + ", " + JsonUtil.serialize(groupBuilder.getDataLoadToElementIdMap().get(m.id)) + ");"));
+        groupBuilder.getDataLoadMap().values().forEach(m -> scriptCodeList.add("\n$combine.loadData.register(\"" + m.id + "\"," + m.json + ", " + JsonUtil.obj2String(groupBuilder.getDataLoadToElementIdMap().get(m.id)) + ");"));
 
         // trigger事件注册
         if (!groupBuilder.getTriggerMap().isEmpty()) {

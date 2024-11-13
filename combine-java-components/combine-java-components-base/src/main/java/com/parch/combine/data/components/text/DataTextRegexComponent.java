@@ -1,7 +1,7 @@
 package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -45,7 +45,7 @@ public class DataTextRegexComponent extends AbstractComponent<DataTextRegexInitC
         }
 
         if (data instanceof Map || data instanceof Collection) {
-            return JsonUtil.serialize(data);
+            return JsonUtil.obj2String(data);
         } else {
             return data.toString();
         }

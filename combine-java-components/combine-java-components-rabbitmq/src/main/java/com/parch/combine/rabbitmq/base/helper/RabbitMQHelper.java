@@ -1,7 +1,7 @@
 package com.parch.combine.rabbitmq.base.helper;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.tools.thread.ThreadPoolConfig;
 import com.parch.combine.core.component.tools.thread.ThreadPoolTool;
@@ -125,7 +125,7 @@ public class RabbitMQHelper {
             String routeKey = queue.routeKey();
 
             channel.basicPublish(queue.exchangeName(), routeKey == null ? queueName : routeKey, queue.durable(),
-                    null, JsonUtil.serialize(message).getBytes(StandardCharsets.UTF_8));
+                    null, JsonUtil.obj2String(message).getBytes(StandardCharsets.UTF_8));
             if (confirm) {
                 return channel.waitForConfirms(15);
             } else {
@@ -147,7 +147,7 @@ public class RabbitMQHelper {
             boolean autoAck = queue.autoAck();
             channel.basicQos(prefetchCount == 0 ? 1 : prefetchCount);
             return channel.basicConsume(queue.queueName(), autoAck, (s, delivery) -> {
-                Map<String, Object> data = JsonUtil.deserialize(new String(delivery.getBody(),StandardCharsets.UTF_8), HashMap.class);
+                Map<String, Object> data = JsonUtil.string2Obj(new String(delivery.getBody(),StandardCharsets.UTF_8), HashMap.class);
                 boolean result = function.apply(data);
                 if (!autoAck) {
                     if (result) {

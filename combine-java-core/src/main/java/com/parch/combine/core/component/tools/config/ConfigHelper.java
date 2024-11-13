@@ -8,7 +8,7 @@ import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
@@ -286,7 +286,7 @@ public class ConfigHelper {
                     Class<?> objectClassType = getFieldObject(method);
                     if (item instanceof Map && objectClassType != null && returnType == objectClassType) {
                         try {
-                            itemData = JsonUtil.deserialize(JsonUtil.serialize(item), objectClassType);
+                            itemData = JsonUtil.treeToObj(JsonUtil.objToTree(item), objectClassType);
                         } catch (Exception e) {
                             errors.add("JSON序列号异常-" + e.getMessage());
                         }
