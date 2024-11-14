@@ -30,13 +30,13 @@ public class RabbitMQSubscribeComponent extends AbstractRabbitMQComponent<Rabbit
         RabbitMQSubscribeInitConfig initConfig = getInitConfig();
         RabbitMQSubscribeLogicConfig logicConfig = getLogicConfig();
 
-        Connection conn = RabbitMQHelper.getConnection(initConfig.mq());
-        Channel channel = RabbitMQHelper.getChannel(conn, initConfig.queue());
+        Connection conn = RabbitMQHelper.getConnection(getScopeKey(), initConfig.mq());
+        Channel channel = RabbitMQHelper.getChannel(getScopeKey(), conn, initConfig.queue(), true);
 
         String listenFlowKey = logicConfig.listenFlowKey();
         String finalListenFlowKey = listenFlowKey == null ? (logicConfig.id() + "-Listen") : listenFlowKey;
 
-        String consumerTag = RabbitMQHelper.subscribe(channel, initConfig.queue(), logicConfig.count(), data -> {
+        String consumerTag = RabbitMQHelper.subscribe(getScopeKey(), channel, initConfig.queue(), logicConfig.count(), data -> {
             FlowResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
             if (!result.getSuccess()) {
                 PrintErrorHelper.print(this, "消息消费失败, queue=" + initConfig.queue().queueName() + " error=" + result.getErrMsg(), null);

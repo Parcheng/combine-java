@@ -9,34 +9,44 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolTool {
 
-    private static final Map<String, ExecutorService> POOL_MAP = new HashMap<>(8);
+    private static final Map<String, ThreadPoolHandler> MAP = new HashMap<>(4);
 
-    public synchronized static ExecutorService register(ThreadPoolConfig config) {
-        String key = config.getKey();
-        ExecutorService pool = POOL_MAP.get(key);
-        if (pool == null) {
-            pool = new ThreadPoolExecutor(config.getCorePoolSize(), config.getMaxPoolSize(),
-                    config.getKeepAliveTime(), TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(config.getQueueCapacity()));
-            POOL_MAP.put(key, pool);
-        }
-
-        return pool;
+    public static ExecutorService register(String scope, ThreadPoolConfig config) {
+        return getHandler(scope).register(config);
     }
 
-    public static ExecutorService getPool(ThreadPoolConfig config) {
-        ExecutorService pool = POOL_MAP.get(config.getKey());
-        if (pool == null) {
-            return register(config);
-        }
+    public static ExecutorService getPool(String scope, ThreadPoolConfig config) {
+        return getHandler(scope).getPool(config);
+    }
 
-        return pool;
+    public static void closeAll(String scope) {
+        getHandler(scope).clear();
     }
 
     public synchronized static void closeAll() {
-        POOL_MAP.forEach((k, v) -> {
+        MAP.forEach((k, v) -> {
             if (v != null) {
-                v.shutdown();
+                v.clear();
             }
         });
+        MAP.clear();
+    }
+
+    public static ThreadPoolHandler getHandler(String scope) {
+        ThreadPoolHandler handler = MAP.get(scope);
+        if (handler != null) {
+            return handler;
+        }
+
+        synchronized (MAP) {
+            handler = MAP.get(scope);
+            if (handler != null) {
+                return handler;
+            }
+
+            handler = new ThreadPoolHandler();
+            MAP.put(scope, handler);
+            return handler;
+        }
     }
 }

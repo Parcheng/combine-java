@@ -1,9 +1,9 @@
 package com.parch.combine.system.base.test.handler;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.CombineInitVO;
@@ -18,7 +18,7 @@ public class FlowHandler {
         List<FlowLoadResult> initResults = new ArrayList<>();
 
         String jsonDataStr = ResourceFileUtil.read(path, FlowHandler.class.getClassLoader());
-        CombineConfigVO config = JsonUtil.deserialize(jsonDataStr, CombineConfigVO.class);
+        CombineConfigVO config = JsonUtil.string2Obj(jsonDataStr, CombineConfigVO.class);
         if (config != null) {
             manager.init(config, vo -> FlowHandler.build(vo, initResults));
         }

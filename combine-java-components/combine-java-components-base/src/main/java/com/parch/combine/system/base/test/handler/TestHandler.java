@@ -2,14 +2,13 @@ package com.parch.combine.system.base.test.handler;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.context.ComponentContext;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.manager.ComponentManager;
 import com.parch.combine.core.component.tools.compare.CompareResult;
 import com.parch.combine.core.component.tools.compare.CompareTool;
-import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.system.base.test.LogLevelEnum;
 import com.parch.combine.system.base.test.SystemTestLogicConfig;
 
@@ -89,8 +88,8 @@ public class TestHandler {
                                     logInfo.setMsg("比较时发生异常 -> [" + result.getErrorMsg() + "]");
                                 } else {
                                     logInfo.setLevel(result.isSuccess() ? LogLevelEnum.INFO : LogLevelEnum.FAIL);
-                                    logInfo.setMsg("比较表达式 -> [" + testItem.getSource() + " -> " + JsonUtil.serialize(testItem.getSourceValue()) + "] " + testItem.getCompareType()
-                                            + (testItem.getTarget() == null ? CheckEmptyUtil.EMPTY : (" [" + testItem.getTarget() + " -> " + JsonUtil.serialize(testItem.getTargetValue()) + "]")));
+                                    logInfo.setMsg("比较表达式 -> [" + testItem.getSource() + " -> " + JsonUtil.obj2String(testItem.getSourceValue()) + "] " + testItem.getCompareType()
+                                            + (testItem.getTarget() == null ? CheckEmptyUtil.EMPTY : (" [" + testItem.getTarget() + " -> " + JsonUtil.obj2String(testItem.getTargetValue()) + "]")));
                                     putResult(testItem, result.isSuccess(), checkResultMap);
                                 }
                             }

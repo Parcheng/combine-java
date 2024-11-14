@@ -2,7 +2,7 @@ package com.parch.combine.system.components;
 
 import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.common.settings.config.PropertySetting;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
@@ -37,8 +37,8 @@ public class SystemDocConfigComponent extends AbstractComponent<SystemDocConfigI
             synchronized (SystemDocConfigComponent.class) {
                 if (result == null) {
                     List<PropertySetting> properties = PropertySettingBuilder.build("global", GlobalContext.class);
-                    String json = JsonUtil.serialize(properties);
-                    result = JsonUtil.parseArray(json, HashMap.class);
+                    String json = JsonUtil.obj2String(properties);
+                    result = JsonUtil.string2Obj(json, List.class, HashMap.class);
                 }
             }
         }

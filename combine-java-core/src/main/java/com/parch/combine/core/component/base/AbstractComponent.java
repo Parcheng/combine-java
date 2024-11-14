@@ -31,9 +31,9 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
 
     private R logicConfig;
 
-    private Class<T> initConfigClass;
+    private final Class<T> initConfigClass;
 
-    private Class<R> logicConfigClass;
+    private final Class<R> logicConfigClass;
 
     protected CombineManager manager;
 

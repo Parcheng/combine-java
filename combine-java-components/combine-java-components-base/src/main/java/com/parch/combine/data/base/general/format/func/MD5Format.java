@@ -1,6 +1,6 @@
 package com.parch.combine.data.base.general.format.func;
 
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 
 import java.nio.charset.StandardCharsets;
@@ -24,7 +24,7 @@ public class MD5Format implements ICustomFormat {
         }
 
         // 数据转为JSON格式
-        String data = JsonUtil.serialize(sourceValue);
+        String data = JsonUtil.obj2String(sourceValue);
         try {
             // 验证数据类型
             MessageDigest md = MessageDigest.getInstance("MD5");

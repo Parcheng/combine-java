@@ -8,6 +8,7 @@ import com.parch.combine.core.BaseCombineJavaFunction;
 import com.parch.combine.web.util.ResourceFileUtil;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
@@ -128,5 +129,11 @@ public abstract class AbstractCombineWebHandler extends BaseCombineJavaFunction 
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    @PreDestroy
+    public void resourceClose() {
+        super.resourceClose();
     }
 }

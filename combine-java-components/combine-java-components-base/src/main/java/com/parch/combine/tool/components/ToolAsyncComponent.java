@@ -29,7 +29,7 @@ public class ToolAsyncComponent extends AbstractComponent<ToolAsyncInitConfig, T
     @Override
     public ComponentDataResult execute() {
         ToolAsyncLogicConfig logicConfig = getLogicConfig();
-        ExecutorService executor = ThreadPoolTool.getPool(getInitConfig().pool());
+        ExecutorService executor = ThreadPoolTool.getPool(getScopeKey(), getInitConfig().pool());
         executor.execute(new Task(manager, logicConfig.components(), ComponentContextHandler.getContext()));
         return ComponentDataResult.success(true);
     }

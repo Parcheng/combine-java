@@ -1,6 +1,6 @@
 package com.parch.combine.rocketmq.components;
 
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.rocketmq.base.AbstractRocketMQComponent;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
@@ -52,7 +52,7 @@ public class RocketMQConsumerComponent extends AbstractRocketMQComponent<RocketM
                 for (MessageExt msg : msgs) {
                     Map<String, Object> data = new HashMap<>();
                     data.put("msgId", msg.getMsgId());
-                    data.put("body", JsonUtil.deserialize(new String(msg.getBody()), HashMap.class));
+                    data.put("body", JsonUtil.string2Obj(new String(msg.getBody()), HashMap.class));
 
                     FlowResult result = SubComponentTool.execute(manager, finalListenFlowKey, data, logicConfig.components());
                     if (!result.getSuccess()) {

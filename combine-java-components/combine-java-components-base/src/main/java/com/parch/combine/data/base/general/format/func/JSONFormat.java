@@ -1,7 +1,7 @@
 package com.parch.combine.data.base.general.format.func;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,11 +38,11 @@ public class JSONFormat implements ICustomFormat {
         JSONFormatType type = JSONFormatType.get(params[0]);
         switch (type) {
             case TO_JSON:
-                return JsonUtil.serialize(sourceValue);
+                return JsonUtil.obj2String(sourceValue);
             case JSON_TO_LIST:
-                return JsonUtil.parseArray(sourceValue.toString(), HashMap.class);
+                return JsonUtil.string2Obj(sourceValue.toString(), List.class, HashMap.class);
             case JSON_TO_OBJECT:
-                return JsonUtil.deserialize(sourceValue.toString(), HashMap.class);
+                return JsonUtil.string2Obj(sourceValue.toString(), HashMap.class);
         }
 
         return null;

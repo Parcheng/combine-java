@@ -26,10 +26,10 @@ public class RabbitMQPublishComponent extends AbstractRabbitMQComponent<RabbitMQ
         RabbitMQPublishInitConfig initConfig = getInitConfig();
         RabbitMQPublishLogicConfig logicConfig = getLogicConfig();
 
-        Connection conn = RabbitMQHelper.getConnection(initConfig.mq());
-        Channel channel = RabbitMQHelper.getChannel(conn, initConfig.queue());
+        Connection conn = RabbitMQHelper.getConnection(getScopeKey(), initConfig.mq());
+        Channel channel = RabbitMQHelper.getChannel(getScopeKey(), conn, initConfig.queue(), false);
 
-        boolean success = RabbitMQHelper.publish(channel, initConfig.queue(), logicConfig.content(), logicConfig.confirm());
+        boolean success = RabbitMQHelper.publish(getScopeKey(), channel, initConfig.queue(), logicConfig.content(), logicConfig.confirm());
         if (!success) {
             return ComponentDataResult.fail(RabbitMQPublishErrorEnum.FAIL);
         }

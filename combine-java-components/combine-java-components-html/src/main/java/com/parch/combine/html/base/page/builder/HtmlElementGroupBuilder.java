@@ -1,12 +1,11 @@
 package com.parch.combine.html.base.page.builder;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.PrintHelper;
-import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.html.common.cache.DataloadConfigCache;
 import com.parch.combine.html.common.cache.ElementConfigCache;
 import com.parch.combine.html.common.cache.ElementGroupConfigCache;
@@ -19,7 +18,6 @@ import com.parch.combine.html.common.enums.ConfigTypeEnum;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -68,7 +66,7 @@ public class HtmlElementGroupBuilder {
                 continue;
             }
 
-            groupMap.put(groupId, JsonUtil.serialize(model.elementIds));
+            groupMap.put(groupId, JsonUtil.obj2String(model.elementIds));
             if (CheckEmptyUtil.isEmpty(model.elementIds)) {
                 continue;
             }

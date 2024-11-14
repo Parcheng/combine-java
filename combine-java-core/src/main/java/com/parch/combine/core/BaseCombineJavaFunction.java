@@ -1,8 +1,8 @@
 package com.parch.combine.core;
 
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.CombineJavaLoader;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.vo.FlowResult;
@@ -94,7 +94,7 @@ public abstract class BaseCombineJavaFunction {
         if (CheckEmptyUtil.isEmpty(paramJson)) {
             params = new HashMap<>();
         } else {
-            params = JsonUtil.deserialize(paramJson, HashMap.class);
+            params = JsonUtil.string2Obj(paramJson, HashMap.class);
         }
 
         // 执行业务逻辑
@@ -127,6 +127,13 @@ public abstract class BaseCombineJavaFunction {
         });
 
         return result;
+    }
+
+    /**
+     * 资源关闭
+     */
+    public void resourceClose() {
+        service.resourceClose();
     }
 
     private FlowResult execute(Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo, String domain, String function, Function<FileInfo, Boolean> downloadFunc) {

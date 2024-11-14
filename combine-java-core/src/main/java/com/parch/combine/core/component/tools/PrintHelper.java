@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.core.component.context.ComponentContextHandler;
@@ -16,6 +16,7 @@ import com.parch.combine.core.component.vo.FlowResult;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class PrintHelper {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
         Map<String, String> header = ComponentContextHandler.getHeader();
-        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] HEADER -> " + JsonUtil.serialize(header));
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] HEADER -> " + JsonUtil.obj2String(header));
     }
 
     /**
@@ -67,19 +68,12 @@ public class PrintHelper {
         String flowKey = ComponentContextHandler.getFlowKey();
         Map<String, Object> params = ComponentContextHandler.getParams();
 
-        // 过滤掉上传的文件信息
-        String paramJson = JsonUtil.serialize(params, Map.class, new JsonSerializer<Map>() {
-            @Override
-            public void serialize(Map map, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-                gen.writeStartObject();
-                for (Object key : map.keySet()) {
-                    if (!key.equals(FileParamKey.FILE_OBJ_KEY)) {
-                        gen.writeObjectField(key.toString(), map.get(key));
-                    }
-                }
-                gen.writeEndObject();
-            }
-        });
+        // 过滤掉文件信息不打印到params中
+        if (params.containsKey(FileParamKey.FILE_OBJ_KEY)) {
+            params = new HashMap<>(params);
+            params.remove(FileParamKey.FILE_OBJ_KEY);
+        }
+        String paramJson = JsonUtil.obj2String(params);
 
         PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] PARAMS -> " + paramJson);
     }
@@ -96,7 +90,7 @@ public class PrintHelper {
             return;
         }
 
-        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "][" + component.getType() + "] COMPONENT-RESULT -> " + JsonUtil.serialize(result));
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "][" + component.getType() + "] COMPONENT-RESULT -> " + JsonUtil.obj2String(result));
     }
 
     /**
@@ -126,7 +120,7 @@ public class PrintHelper {
     public static void printFlowResult(FlowResult result) {
         String requestId = ComponentContextHandler.getRequestId();
         String flowKey = ComponentContextHandler.getFlowKey();
-        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] FLOW-RESULT -> " + JsonUtil.serialize(result));
+        PrintLogUtil.printInfo("[" + requestId + "][" + flowKey + "] FLOW-RESULT -> " + JsonUtil.obj2String(result));
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.context;
 
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class GlobalContextHandler {
 
     public static void init(String scopeKey, String path) {
         String testConfigJson = ResourceFileUtil.read(path, GlobalContextHandler.class.getClassLoader());
-        GlobalContext context = JsonUtil.deserialize(testConfigJson, GlobalContext.class);
+        GlobalContext context = JsonUtil.string2Obj(testConfigJson, GlobalContext.class);
         if (context == null) {
             context = new GlobalContext();
         }

@@ -4,8 +4,8 @@ import com.parch.combine.core.common.exception.CommonErrorEnum;
 import com.parch.combine.core.common.exception.SysException;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
-import com.parch.combine.core.common.util.JsonUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
@@ -48,7 +48,7 @@ public class CombineJavaService implements ICombineJavaService {
             return;
         }
 
-        CombineConfigVO config = JsonUtil.deserialize(configJson, CombineConfigVO.class);
+        CombineConfigVO config = JsonUtil.string2Obj(configJson, CombineConfigVO.class);
         if (config == null) {
             return;
         }
@@ -112,6 +112,11 @@ public class CombineJavaService implements ICombineJavaService {
     @Override
     public String getScopeKey() {
         return combineManager.getScopeKey();
+    }
+
+    @Override
+    public void resourceClose() {
+        combineManager.getResourceClose().closeAll();
     }
 
     /**

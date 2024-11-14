@@ -1,6 +1,6 @@
 package com.parch.combine.data.components.text;
 
-import com.parch.combine.core.common.util.JsonUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -38,7 +38,7 @@ public class DataTextSplitComponent extends AbstractComponent<DataTextSplitInitC
             String source = logicConfig.source();
             Object data = DataVariableHelper.parseValue(source, false);
             if (data != null) {
-                String[] dataArr = JsonUtil.serialize(data).split(regex.toString());
+                String[] dataArr = JsonUtil.obj2String(data).split(regex);
                 result = new ArrayList<>(dataArr.length);
                 Collections.addAll(result, dataArr);
             }
