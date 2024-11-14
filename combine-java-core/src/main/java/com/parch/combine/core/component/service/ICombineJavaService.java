@@ -106,4 +106,9 @@ public interface ICombineJavaService {
 
 
     String getScopeKey();
+
+    /**
+     * 资源关闭
+     */
+    void resourceClose();
 }

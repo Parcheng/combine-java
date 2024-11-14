@@ -21,17 +21,19 @@ import java.util.function.Consumer;
  */
 public class CombineManager {
 
-    private String scopeKey;
+    private final String scopeKey;
 
-    private ComponentManager component;
+    private final ComponentManager component;
 
-    private ConstantManager constant;
+    private final ConstantManager constant;
 
-    private FlowAspectManager flowAspect;
+    private final FlowAspectManager flowAspect;
 
-    private FlowManager flow;
+    private final FlowManager flow;
 
-    private InitConfigManager initConfig;
+    private final InitConfigManager initConfig;
+
+    private final ResourceCloseManager resourceClose;
 
     public CombineManager() {
         scopeKey = UUID.randomUUID().toString();
@@ -40,6 +42,7 @@ public class CombineManager {
         component = new ComponentManager(scopeKey);
         flowAspect = new FlowAspectManager(scopeKey, component);
         flow = new FlowManager(scopeKey, component);
+        resourceClose = new ResourceCloseManager(scopeKey);
         CombineManagerHandler.register(scopeKey, this);
     }
 
@@ -144,5 +147,9 @@ public class CombineManager {
 
     public InitConfigManager getInitConfig() {
         return initConfig;
+    }
+
+    public ResourceCloseManager getResourceClose() {
+        return resourceClose;
     }
 }

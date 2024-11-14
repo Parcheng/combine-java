@@ -129,6 +129,13 @@ public abstract class BaseCombineJavaFunction {
         return result;
     }
 
+    /**
+     * 资源关闭
+     */
+    public void resourceClose() {
+        service.resourceClose();
+    }
+
     private FlowResult execute(Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo, String domain, String function, Function<FileInfo, Boolean> downloadFunc) {
         List<String> componentIds = service.getComponentIds(domain, function);
         if (componentIds == null) {

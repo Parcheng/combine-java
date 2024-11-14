@@ -31,7 +31,7 @@ public class ToolEventListenerComponent extends AbstractComponent<ToolEventListe
         try {
             ToolEventListenerLogicConfig logicConfig = getLogicConfig();
             EventSubjectHandler.subscribe(logicConfig.eventKey(),
-                    new EventObserver(getInitConfig().pool(), logicConfig.components(), manager));
+                    new EventObserver(getScopeKey(), getInitConfig().pool(), logicConfig.components(), manager));
         } catch (Exception e) {
             PrintErrorHelper.print(ToolEventListenerErrorEnum.FAIL, e);
             return ComponentDataResult.fail(ToolEventListenerErrorEnum.FAIL);
@@ -41,11 +41,13 @@ public class ToolEventListenerComponent extends AbstractComponent<ToolEventListe
     }
 
     private static class EventObserver implements IEventObserver {
-        private ThreadPoolConfig pool;
-        private String[] components;
-        private CombineManager combineManager;
+        private final String scope;
+        private final ThreadPoolConfig pool;
+        private final String[] components;
+        private final CombineManager combineManager;
 
-        public EventObserver(ThreadPoolConfig pool, String[] components, CombineManager combineManager) {
+        public EventObserver(String scope, ThreadPoolConfig pool, String[] components, CombineManager combineManager) {
+            this.scope = scope;
             this.pool = pool;
             this.components = components;
             this.combineManager = combineManager;
@@ -53,7 +55,7 @@ public class ToolEventListenerComponent extends AbstractComponent<ToolEventListe
 
         @Override
         public ExecutorService getPool() {
-            return ThreadPoolTool.getPool(pool);
+            return ThreadPoolTool.getPool(scope, pool);
         }
 
         @Override

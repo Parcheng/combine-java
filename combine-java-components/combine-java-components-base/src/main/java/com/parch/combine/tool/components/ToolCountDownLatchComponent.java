@@ -38,7 +38,7 @@ public class ToolCountDownLatchComponent extends AbstractComponent<ToolCountDown
             ComponentContext context = ComponentContextHandler.getContext();
 
             // 子线程
-            ExecutorService executor = ThreadPoolTool.getPool(getInitConfig().pool());
+            ExecutorService executor = ThreadPoolTool.getPool(getScopeKey(), getInitConfig().pool());
             for (ToolCountDownLatchLogicConfig.ItemConfig itemConfig : items) {
                 if (CheckEmptyUtil.isEmpty(itemConfig.components())) {
                     latch.countDown();

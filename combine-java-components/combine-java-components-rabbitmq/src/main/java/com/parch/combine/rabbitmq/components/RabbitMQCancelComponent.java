@@ -26,10 +26,10 @@ public class RabbitMQCancelComponent extends AbstractRabbitMQComponent<RabbitMQC
         RabbitMQCancelInitConfig initConfig = getInitConfig();
         RabbitMQCancelLogicConfig logicConfig = getLogicConfig();
 
-        Connection conn = RabbitMQHelper.getConnection(initConfig.mq());
-        Channel channel = RabbitMQHelper.getChannel(conn, initConfig.queue());
+        Connection conn = RabbitMQHelper.getConnection(getScopeKey(), initConfig.mq());
+        Channel channel = RabbitMQHelper.getChannel(getScopeKey(), conn, initConfig.queue(), false);
 
-        boolean success = RabbitMQHelper.unSubscribe(channel, logicConfig.key());
+        boolean success = RabbitMQHelper.unSubscribe(getScopeKey(), channel, logicConfig.key());
         if (!success) {
             return ComponentDataResult.fail(RabbitMQCancelErrorEnum.FAIL);
         }

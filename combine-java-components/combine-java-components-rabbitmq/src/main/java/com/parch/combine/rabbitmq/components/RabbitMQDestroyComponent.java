@@ -18,7 +18,7 @@ public class RabbitMQDestroyComponent extends AbstractComponent<RabbitMQDestroyI
 
     @Override
     public ComponentDataResult execute() {
-        RabbitMQHelper.destroy();
+        RabbitMQHelper.destroy(getScopeKey());
         return ComponentDataResult.success(true);
     }
 }

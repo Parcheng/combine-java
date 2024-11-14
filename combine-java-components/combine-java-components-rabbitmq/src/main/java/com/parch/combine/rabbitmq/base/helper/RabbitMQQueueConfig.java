@@ -35,4 +35,7 @@ public interface RabbitMQQueueConfig {
     @Field(key = "routeKey", name = "队列的路由KEY", type = FieldTypeEnum.TEXT)
     @FieldDesc("默认取队列名称")
     String routeKey();
+
+    @Field(key = "useShareChannel", name = "是否使用共享通道", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
+    Boolean useShareChannel();
 }

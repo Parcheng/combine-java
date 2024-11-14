@@ -114,6 +114,11 @@ public class CombineJavaService implements ICombineJavaService {
         return combineManager.getScopeKey();
     }
 
+    @Override
+    public void resourceClose() {
+        combineManager.getResourceClose().closeAll();
+    }
+
     /**
      * 设置是否开放注册
      *
