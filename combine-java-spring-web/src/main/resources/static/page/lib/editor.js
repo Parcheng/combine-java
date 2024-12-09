@@ -101,17 +101,21 @@ const initFns = {
                                 var newConfigArr = [];
                                 for (let k = 0; k < configArr.length; k++) {
                                     const config = configArr[k];
+                                    
+                                    var keyArr = config.key.split(".");
                                     configMap[config.key] = config;
 
-                                    var keyArr = config.key.split(".");
-                                    if (keyArr.length == 1) {
+                                    if (keyArr.length <= 1) {
                                         newConfigArr.push(config);
                                     } else {
-                                        var parentKey = config.key.replace(("." + keyArr[keyArr.length - 1]), "");
+                                        var lastKey = keyArr[keyArr.length - 1];
+                                        var parentKey = config.key.replace(("." + lastKey), "");
                                         var parentConfig = configMap[parentKey];
                                         if (!parentConfig.children) {
                                             parentConfig.children = [];
                                         }
+
+                                        config.key = lastKey;
                                         parentConfig.children.push(config);
                                     }
                                 }
