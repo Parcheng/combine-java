@@ -433,6 +433,8 @@ const initFns = {
                 return;
             }
 
+            
+
             requestFns.url("flow/save", "POST", false, checkResult.data, 
                 function(data) {
                     if (data.success == true) {
@@ -456,13 +458,18 @@ const initFns = {
             buildFns.checkResList(checkResult.errors);
 
             const jsonStr = JSON.stringify(checkResult.data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const downloadUrl = URL.createObjectURL(blob);
 
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(jsonStr);;
+            link.href = downloadUrl;
             link.download = 'flow-config.json';
+            
             document.body.appendChild(link);
             link.click();
+
             document.body.removeChild(link);
+            URL.revokeObjectURL(downloadUrl);
         }
     }
 }
@@ -2232,50 +2239,67 @@ const valueFns = {
             return result;
         }
 
-        const settings = value.$settings
-        if (!settings || settings.length == 0) {
-            return result;
-        }
-        
-        result.data = {};
-        for (let s = 0; s < settings.length; s++) {
-            const setting = settings[s];
-            const settingKey = setting.key;
-            let currValue = value[settingKey];
-
-            if (currValue == "") {
-                currValue = null;
+        const valueIsArray = Array.isArray(value);
+        const valueArr = valueIsArray ? value : [value];
+        const valueParseData = [];
+        for (let i = 0; i < valueArr.length; i++) {
+            const itemValue = valueArr[i];
+            if (itemValue == null || itemValue == undefined) {
+                continue;
             }
 
-            if (currValue == null || currValue == undefined) {
-                if (setting.isRequired == true) {
-                    result.errors.push({
-                        valueKey: settingKey, 
-                        msg: "该选项为必填选项"
-                    });
-                }
+            const settings = itemValue.$settings
+            if (!settings || settings.length == 0) {
+                continue;
             }
             
-            if (setting.type == "CONFIG" || setting.type == "OBJECT") {
-                const subResult = valueFns.parseValue(currValue);
-                result.data[settingKey] = subResult.data;
-                for (let se = 0; se < subResult.errors.length; se++) {
-                    const subError = subResult.errors[se];
-                    subError.key = settingKey + "." + subError.key;
-                    result.errors.push(subError);
+            var currData = {};
+            for (let s = 0; s < settings.length; s++) {
+                const setting = settings[s];
+                const settingKey = setting.key;
+                let currValue = itemValue[settingKey];
+                if (currValue == null || currValue == undefined) {
+                    if (setting.isRequired == true) {
+                        result.errors.push({
+                            valueKey: settingKey, 
+                            msg: "该选项为必填选项"
+                        });
+                    }
                 }
-            } else if (setting.type == "ID") {
-                result.data[settingKey] = currValue.id;
-                if (currValue.ref == true) {
-                    result.refId = currValue.id;
+                
+                if (setting.type == "CONFIG" || setting.type == "OBJECT") {
+                    const subResult = valueFns.parseValue(currValue);
+                    currData[settingKey] = subResult.data;
+                    for (let se = 0; se < subResult.errors.length; se++) {
+                        const subError = subResult.errors[se];
+                        subError.key = settingKey + "." + subError.key;
+                        result.errors.push(subError);
+                    }
+                } else if (setting.type == "ID") {
+                    currData[settingKey] = currValue.id;
+                    if (currValue.ref == true) {
+                        result.refId = currValue.id;
+                    }
+                } else if (setting.type == "ANY") {
+                    if (Array.isArray(value)) {
+                        currData[settingKey] = [];
+                        for (let cvi = 0; cvi < currValue.length; cvi++) {
+                            const currValueItem = currValue[cvi];
+                            currData[settingKey].push(currValueItem ? currValueItem.value : null);
+                        }
+                    } else {
+                        currData[settingKey] = currValue ? currValue.value : null;
+                    }
+                } else {
+                    currData[settingKey] = currValue;
                 }
-            } else if (setting.type == "ANY") {
-                result.data[settingKey] = currValue ? currValue.value : null;
-            } else {
-                result.data[settingKey] = currValue;
             }
-        }
 
+            valueParseData.push(currData);
+        }
+        
+        
+        result.data = valueIsArray ? valueParseData : (valueParseData.length > 0 ? valueParseData[0] : null);
         return result;
     }
 }
