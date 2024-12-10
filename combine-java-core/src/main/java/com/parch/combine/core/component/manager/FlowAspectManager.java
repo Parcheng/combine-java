@@ -122,23 +122,23 @@ class FlowAspectManager {
     /**
      * 拦截器配置
      */
-    private class AspectConfig {
-        private String id;
+    private static class AspectConfig {
+        private final String id;
 
-        private Integer order;
+        private final Integer order;
 
-        private Boolean failStop;
+        private final Boolean failStop;
 
-        private List<String> components;
+        private final List<String> components;
 
-        private List<String[]> includes;
+        private final List<String[]> includes;
 
-        private List<String[]> excludes;
+        private final List<String[]> excludes;
 
         public AspectConfig(String id, Integer order, Boolean failStop, List<String> components, List<String[]> includes, List<String[]> excludes) {
             this.id = id;
             this.order = order == null ? Integer.MAX_VALUE : order;
-            this.failStop = failStop == null ? true : failStop;
+            this.failStop = failStop == null || failStop;
             this.components = components;
             this.includes = includes;
             this.excludes = excludes;
@@ -176,12 +176,15 @@ class FlowAspectManager {
         }
 
         private boolean match(String[] flowArr, String[] config) {
-            boolean domainPass =
-                    (config[0].length() == 1 && SymbolConstant.DOLLAR_SIGN.equals(config[0]) && flowArr[0].startsWith(SymbolConstant.DOLLAR_SIGN))
-                    || SymbolConstant.ASTERISK.equals(config[0])
-                    || flowArr[0].equals(config[0]);
-            boolean functionPass = SymbolConstant.ASTERISK.equals(config[1]) || flowArr[1].equals(config[1]);
-            return domainPass && functionPass;
+            String first = config[0].replaceAll("[*]+", ".*?").replaceAll("\\$", "[\\$]+");
+            String second = config[1].replaceAll("[*]+", ".*?");
+            return flowArr[0].matches(first) && flowArr[0].matches(second);
+//            boolean domainPass =
+//                    (config[0].length() == 1 && SymbolConstant.DOLLAR_SIGN.equals(config[0]) && flowArr[0].startsWith(SymbolConstant.DOLLAR_SIGN))
+//                    || SymbolConstant.ASTERISK.equals(config[0])
+//                    || flowArr[0].equals(config[0]);
+//            boolean functionPass = SymbolConstant.ASTERISK.equals(config[1]) || flowArr[1].equals(config[1]);
+//            return domainPass && functionPass;
         }
 
         public String getId() {
