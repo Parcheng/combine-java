@@ -20,6 +20,8 @@ var copyComponent = {
 // 3.
 // 加载
 
+var baseUrl = "http://127.0.0.1:8080/";
+
 var lastChecked = {
     flow: null,
     before: null,
@@ -71,6 +73,7 @@ window.onload = function() {
 
 const initFns = {
     loadData() {
+        // requestFns.url("./settings/list", "POST", false, {}, null, 
         requestFns.file("./test.json", 
             function(data) {
                 var groupDataArr = JSON.parse(data);
@@ -455,8 +458,8 @@ const initFns = {
             );
         }
 
-        var importDom = document.getElementById("opt-tool-import");
-        importDom.onclick = function() {
+        var exportDom = document.getElementById("opt-tool-export");
+        exportDom.onclick = function() {
             var checkResult = optFns.tool.checkConfig(config);
             buildFns.checkResList(checkResult.errors);
 
@@ -473,6 +476,36 @@ const initFns = {
 
             document.body.removeChild(link);
             URL.revokeObjectURL(downloadUrl);
+        }
+
+        var importDom = document.getElementById("opt-tool-import");
+        importDom.onclick = function() {
+            var data = JSON.parse("{}");
+
+            if (data.init && data.init.length > 0) {
+
+            }
+
+            if (data.blocks && data.blocks.length > 0) {
+
+            }
+
+            if (data.before && data.before.length > 0) {
+
+            }
+
+            if (data.flows) {
+
+            }
+
+            if (data.after && data.after.length > 0) {
+
+            }
+
+            if (data.constant) {
+                var constantDom = document.getElementById("constant-value");
+                constantDom.textContent = JSON.stringify(data.constant);
+            }
         }
     }
 }
@@ -950,7 +983,7 @@ const buildDomFns = {
         }
     },
     window: {
-        continueFrom: function(title, configType, dataList, value, continueFunc) {
+        continueFrom: function(title, configType, dataList, value, continueFunc, isAutoContinue) {
             var windowId = idPrefix.window + (idIndex.window++);
             var windowDom = document.createElement("div");
             windowDom.id = windowId;
@@ -991,6 +1024,11 @@ const buildDomFns = {
             };
             bodyDom.appendChild(buttonDom);
 
+            // 是否自动触发确认
+            if (isAutoContinue && isAutoContinue === true) {
+                buttonDom.dispatchEvent(new Event("click"));
+            }
+            
             return windowDom;
         }
     },
@@ -1713,9 +1751,12 @@ const buildDomFns = {
                 mapOptionDom.textContent = "MAP";
                 selectDom.appendChild(mapOptionDom);
 
-                value = value ? value : {};
-                var currType;
-                if (value.value != null && value.value != undefined) {
+                var currType = value ? value.type : null;
+                if (currType == null || currType == undefined) {
+                    if (value.value == null || value.value == undefined) {
+                        value = { value: value };
+                    }
+
                     if (typeof value.value === "string") {
                         currType = "TEXT";
                     } else if (typeof value.value === "number") {
@@ -1726,10 +1767,11 @@ const buildDomFns = {
                         currType = "MAP";
                     }
                 }
+
                 if (currType) {
                     selectDom.value = currType;
                 }
-                   
+
                 var brDom = document.createElement("br")
 
                 var textDom = document.createElement("input");
@@ -2320,7 +2362,11 @@ const valueFns = {
 const domTools = {
     remove: function(dom) {
         if (dom) {
-            dom.parentNode.removeChild(dom);
+            if (dom.parentNode) {
+                dom.parentNode.removeChild(dom);
+            } else {
+                dom.remove();
+            }
         }
     },
     clearAll: function(parentDom) {
@@ -2373,7 +2419,7 @@ const requestFns = {
             alert("Request error!");
         };
 
-        url = url.startsWith("http") ? url : ("http://127.0.0.1:8080/" + url);
+        url = url.startsWith("http") ? url : (baseUrl + url);
         const xhr = new XMLHttpRequest();
         xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
 
