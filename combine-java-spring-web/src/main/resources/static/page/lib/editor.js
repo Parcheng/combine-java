@@ -10,7 +10,6 @@ var copyComponent = {
 }
 
 // 1.
-// 保存时，按照组件加载顺序遍历配置并记录，如果先引用后配置，则引用的地方改为配置，配置的地方改为引用
 // 未完成配置的红色角标提示（流程，组件，子组件）
 // 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
 // baseUrl问题
@@ -2257,6 +2256,8 @@ const valueFns = {
                 continue;
             }
             
+            var idKey = null;
+            var refId = null;
             var currData = {};
             for (let s = 0; s < settings.length; s++) {
                 const setting = settings[s];
@@ -2280,9 +2281,10 @@ const valueFns = {
                         result.errors.push(subError);
                     }
                 } else if (setting.type == "ID") {
+                    idKey = settingKey;
                     currData[settingKey] = currValue.id;
                     if (currValue.ref == true) {
-                        result.refId = currValue.id;
+                        refId = currValue.id;
                     }
                 } else if (setting.type == "ANY") {
                     if (Array.isArray(value)) {
@@ -2297,6 +2299,13 @@ const valueFns = {
                 } else {
                     currData[settingKey] = currValue;
                 }
+            }
+
+            // 引用场景特殊处理
+            if (refId != null) {
+                currData = {};
+                currData[idKey] = refId;
+                result.refId = refId;
             }
 
             valueParseData.push(currData);
