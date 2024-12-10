@@ -21,7 +21,7 @@ public class ComponentClassHandler {
     /**
      * 组件Class池
      */
-    private static Map<String, Class<? extends AbstractComponent<?,?>>> COMPONENT_CLASS_MAP = new HashMap<>();
+    private static final Map<String, Class<? extends AbstractComponent<?,?>>> COMPONENT_CLASS_MAP = new HashMap<>();
 
     /**
      * 初始化组件

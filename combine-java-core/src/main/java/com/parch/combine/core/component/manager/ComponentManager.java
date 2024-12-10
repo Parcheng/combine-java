@@ -2,6 +2,7 @@ package com.parch.combine.core.component.manager;
 
 import com.parch.combine.core.common.canstant.FieldKeyCanstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ComponentFlagEnum;
@@ -37,10 +38,18 @@ public class ComponentManager {
         List<String> staticComponentIds = new ArrayList<>();
         List<String> errorMsgList = new ArrayList<>();
         List<String> registerComponentIds = new ArrayList<>();
+        List<String> waitRegisterComponentIds = new ArrayList<>();
 
         // 根据逻辑配置构建组件集合
         for (Map<String, Object> logicConfig : logicConfigs) {
-            registerComponent(logicConfig, componentIds, staticComponentIds, errorMsgList, registerComponentIds);
+            this.registerComponent(logicConfig, componentIds, staticComponentIds, waitRegisterComponentIds, errorMsgList, registerComponentIds);
+        }
+
+        // 检查所有待注册注解是否已经全部注册
+        for (String componentId : waitRegisterComponentIds) {
+            if (!registerComponentIds.contains(componentId)) {
+                errorMsgList.add("【" + componentId + "】的组件未定义");
+            }
         }
 
         // 组件检测是否成功
@@ -87,13 +96,21 @@ public class ComponentManager {
      * @param logicConfig 逻辑配置
      * @param componentIds 流程包含的组件ID集合
      * @param staticComponentIds 流程包含的静态组件ID集合
+     * @param waitRegisterComponentIds 流程包含的待注册ID集合
      * @param errorMsgList 错误信息集合
      * @param registerComponentIds 当前流程已注册的组件ID集合（通过ID引用的不会在这个集合中）
      */
-    protected void registerComponent(Map<String, Object> logicConfig, List<String> componentIds,
-                                     List<String> staticComponentIds, List<String> errorMsgList, List<String> registerComponentIds) {
-        // 获取组件ID（重复ID不重复解析）
+    protected void registerComponent(Map<String, Object> logicConfig, List<String> componentIds, List<String> staticComponentIds,
+                                     List<String> waitRegisterComponentIds, List<String> errorMsgList, List<String> registerComponentIds) {
+        // 获取组件ID 和 配置
         Object componentIdObj = logicConfig.get(FieldKeyCanstant.ID);
+        Object typeObj = logicConfig.get(FieldKeyCanstant.TYPE);
+        if (typeObj == null && componentIdObj == null) {
+            errorMsgList.add("【" + JsonUtil.obj2String(logicConfig) + "】组件配置错误, 组件类型未指定");
+            return;
+        }
+
+        // 初始化组件ID
         String componentId;
         if (componentIdObj == null) {
             componentId = UUID.randomUUID().toString();
@@ -105,13 +122,13 @@ public class ComponentManager {
         // 判断组件是否已经构建过
         AbstractComponent<?,?> component = COMPONENT_MAP.get(componentId);
         if (component != null) {
-            addComponentId(componentIds, staticComponentIds, component);
+            this.addComponentId(componentIds, staticComponentIds, component);
             return;
         }
 
-        // 获取组件配置
-        Object typeObj = logicConfig.get(FieldKeyCanstant.TYPE);
+        // 组件ID没有注册，组件配置没有类型但有ID，则认为改组件配置待注册
         if (typeObj == null) {
+            waitRegisterComponentIds.add(componentId);
             return;
         }
 
@@ -126,7 +143,7 @@ public class ComponentManager {
             registerComponentIds.add(component.getId());
 
             // 添加流程组件ID集合
-            addComponentId(componentIds, staticComponentIds, component);
+            this.addComponentId(componentIds, staticComponentIds, component);
         } else {
             errorMsgList.addAll(buildResult.getThird());
         }
