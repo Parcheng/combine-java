@@ -439,8 +439,6 @@ const initFns = {
                 return;
             }
 
-            
-
             requestFns.url("flow/save", "POST", false, checkResult.data, 
                 function(data) {
                     if (data.success == true) {
@@ -479,34 +477,33 @@ const initFns = {
         }
 
         var importDom = document.getElementById("opt-tool-import");
+        var importWindowDom = document.getElementById("import-window");
         importDom.onclick = function() {
-            var data = JSON.parse("{}");
-
-            if (data.init && data.init.length > 0) {
-
-            }
-
-            if (data.blocks && data.blocks.length > 0) {
-
-            }
-
-            if (data.before && data.before.length > 0) {
-
-            }
-
-            if (data.flows) {
-
-            }
-
-            if (data.after && data.after.length > 0) {
-
-            }
-
-            if (data.constant) {
-                var constantDom = document.getElementById("constant-value");
-                constantDom.textContent = JSON.stringify(data.constant);
-            }
+            domTools.switchDisplay(importWindowDom, true);
         }
+
+        var importContinueDom = document.getElementById("import-window-continue");
+        importContinueDom.onclick = function() {
+            var jsonDataDom = document.getElementById("import-json-data");
+
+            var data = null;
+            try {
+                data = JSON.parse(jsonDataDom.value);
+            } catch (error) {
+                alert("导入数据非标准SJON格式");
+                console.error('JSON Parse Error:', error.message);
+                return;
+            }
+
+            optFns.tool.loadImportData(data);
+            domTools.switchDisplay(importWindowDom, false);
+        }
+
+        var importCloseDom = document.getElementById("import-window-close");
+        importCloseDom.onclick = function() {
+            domTools.switchDisplay(importWindowDom, false);
+        }
+        domTools.switchDisplay(importWindowDom, false);
     }
 }
 
@@ -884,6 +881,8 @@ const buildFns = {
             windowsDom.appendChild(fromWindowDom);
             window.scrollTo(0, 0);
         }
+
+        return flowId;
     },
     checkResList: function(errors) {
         var checkResDom = document.getElementById("check-res-list");
@@ -2154,6 +2153,128 @@ const optFns = {
             }
 
             return result;
+        },
+        loadImportData: function(data) {
+            if (!data || typeof obj != 'object') {
+                return;
+            }
+
+            var resetId = function(data) {
+                if (!data.id) {
+                    return;
+                }
+
+                var ref = data.refComponent && refComponent == true;
+                data.id = { ref: ref, id: data.id };
+            }
+
+            if (data.init && Array.isArray(data.init) && data.init.length > 0) {
+                for (let i = 0; i < data.init.length; i++) {
+                    const item = data.init[i];
+                    if (!item || !item.type) {
+                        continue;
+                    }
+
+                    resetId(item);
+                    buildFns.initComponentWindow(item.type, item, true);
+                }
+            }
+
+            if (data.blocks && Array.isArray(data.blocks) && data.blocks.length > 0) {
+                for (let i = 0; i < data.blocks.length; i++) {
+                    const item = data.blocks[i];
+                    if (!item || !item.type) {
+                        continue;
+                    }
+
+                    buildFns.logicComponentWindow(item.type, item, null, true);  
+                }
+            }
+
+            if (data.before && Array.isArray(data.before) && data.before.length > 0) {
+                for (let i = 0; i < data.before.length; i++) {
+                    const item = data.before[i];
+                    if (!item) {
+                        continue;
+                    }
+
+                    const flowId = buildFns.flowSettingsWindow(null, "before", item, true);
+                    if (!flowId || !item.flow || !Array.isArray(item.flow) || item.flow.length == 0) {
+                        continue;
+                    }
+                    
+                    for (let j = 0; j < item.flow.length; j++) {
+                        const flowItem = item.flow[i];
+                        if (!flowItem || !flowItem.type) {
+                            continue;
+                        }
+
+                        buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
+                    }
+                }
+            }
+
+            if (data.flows && typeof obj === 'object') {
+                var flowData = data.flows;
+                for (const key in flowData) {
+                    if (!Object.prototype.hasOwnProperty.call(flowData, key)) {
+                        continue;
+                    }
+
+                    const item = flowData[key];
+                    if (!item) {
+                        continue;
+                    }
+
+                    const keyArr = key.split("/");
+                    const value = {
+                        domain: keyArr[0],
+                        function: keyArr.length > 1 ? keyArr[1] : null
+                    }
+                    const flowId = buildFns.flowPathWindow(null, value, true);
+
+                    if (!flowId || !Array.isArray(item) || item.length == 0) {
+                        continue;
+                    }
+
+                    for (let j = 0; j < item.length; j++) {
+                        const flowItem = item[i];
+                        if (!flowItem || !flowItem.type) {
+                            continue;
+                        }
+
+                        buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
+                    }
+                }
+            }
+
+            if (data.after && Array.isArray(data.after) && data.after.length > 0) {
+                for (let i = 0; i < data.after.length; i++) {
+                    const item = data.after[i];
+                    if (!item) {
+                        continue;
+                    }
+
+                    const flowId = buildFns.flowSettingsWindow(null, "after", item, true);
+                    if (!flowId || !item.flow || !Array.isArray(item.flow) || item.flow.length == 0) {
+                        continue;
+                    }
+                    
+                    for (let j = 0; j < item.flow.length; j++) {
+                        const flowItem = item.flow[i];
+                        if (!flowItem || !flowItem.type) {
+                            continue;
+                        }
+
+                        buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
+                    }
+                }
+            }
+
+            if (data.constant) {
+                var constantDom = document.getElementById("constant-value");
+                constantDom.textContent = JSON.stringify(data.constant);
+            }
         }
     },
     window: {
@@ -2350,27 +2471,28 @@ const valueFns = {
                     currData[settingKey] = currValue.id;
                     if (currValue.ref == true) {
                         refId = currValue.id;
+                        currData.refComponent = true;
+                        
                     }
                 } else if (setting.type == "ANY") {
                     if (Array.isArray(value)) {
                         currData[settingKey] = [];
                         for (let cvi = 0; cvi < currValue.length; cvi++) {
                             const currValueItem = currValue[cvi];
-                            currData[settingKey].push(currValueItem ? currValueItem.value : null);
+                            if (currValueItem && currValueItem.value != null && currValueItem.value != undefined && currValueItem.value != "") {
+                                currData[settingKey].push(currValueItem.value);
+                            }
                         }
                     } else {
-                        currData[settingKey] = currValue ? currValue.value : null;
+                        if (currValue && currValue.value != null && currValue.value != undefined && currValue.value != "") {
+                            currData[settingKey] = currValue.value;
+                        }
                     }
                 } else {
-                    currData[settingKey] = currValue;
+                    if (currValue != null && currValue != undefined && currValue != "") {
+                        currData[settingKey] = currValue;
+                    }
                 }
-            }
-
-            // 引用场景特殊处理
-            if (refId != null) {
-                currData = {};
-                currData[idKey] = refId;
-                result.refId = refId;
             }
 
             valueParseData.push(currData);

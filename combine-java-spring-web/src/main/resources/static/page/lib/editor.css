@@ -248,11 +248,30 @@
     display: inline-block;
 }
 
-.simply-window .body .item .control select{
+.simply-window .body .item .label-line {
+    width: 100%;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.simply-window .body .item .control-line {
+    width: 100%;
+    text-align: left;
+    display: inline-block;
+}
+
+.simply-window .body .item select{
     min-width: 200px;
     height: 23px;
     display: inline-block;
     font-size: 12px;
+}
+
+.simply-window .body .item textarea{
+    width: 100%;
+    height: 200px;
+    display: inline-block;
 }
 
 .simply-window .body .continue {

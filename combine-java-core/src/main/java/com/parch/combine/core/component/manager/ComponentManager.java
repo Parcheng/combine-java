@@ -1,7 +1,9 @@
 package com.parch.combine.core.component.manager;
 
-import com.parch.combine.core.common.canstant.FieldKeyCanstant;
+import com.parch.combine.core.common.canstant.FieldKeyConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.DataParseUtil;
+import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
@@ -102,19 +104,12 @@ public class ComponentManager {
      */
     protected void registerComponent(Map<String, Object> logicConfig, List<String> componentIds, List<String> staticComponentIds,
                                      List<String> waitRegisterComponentIds, List<String> errorMsgList, List<String> registerComponentIds) {
-        // 获取组件ID 和 配置
-        Object componentIdObj = logicConfig.get(FieldKeyCanstant.ID);
-        Object typeObj = logicConfig.get(FieldKeyCanstant.TYPE);
-        if (typeObj == null && componentIdObj == null) {
-            errorMsgList.add("【" + JsonUtil.obj2String(logicConfig) + "】组件配置错误, 组件类型未指定");
-            return;
-        }
-
         // 初始化组件ID
+        Object componentIdObj = logicConfig.get(FieldKeyConstant.ID);
         String componentId;
         if (componentIdObj == null) {
             componentId = UUID.randomUUID().toString();
-            logicConfig.put(FieldKeyCanstant.ID, componentId);
+            logicConfig.put(FieldKeyConstant.ID, componentId);
         } else {
             componentId = componentIdObj.toString();
         }
@@ -126,8 +121,15 @@ public class ComponentManager {
             return;
         }
 
-        // 组件ID没有注册，组件配置没有类型但有ID，则认为改组件配置待注册
+        Object typeObj = logicConfig.get(FieldKeyConstant.TYPE);
         if (typeObj == null) {
+            errorMsgList.add("【" + JsonUtil.obj2String(logicConfig) + "】组件配置错误, 组件类型未指定");
+            return;
+        }
+
+        // 判断是否是引用组件
+        Boolean ref = DataParseUtil.parseBoolean(logicConfig.get(FieldKeyConstant.REF_COMPONENT));
+        if (componentIdObj != null && ref != null && ref) {
             waitRegisterComponentIds.add(componentId);
             return;
         }
