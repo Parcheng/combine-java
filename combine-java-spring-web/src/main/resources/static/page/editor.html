@@ -49,7 +49,8 @@
     <div class="opt-tool">
         <div id="opt-tool-check" class="button">检查</div>
         <div id="opt-tool-save" class="button">保存</div>
-        <div id="opt-tool-import" class="button">导出</div>
+        <div id="opt-tool-export" class="button">导出</div>
+        <div id="opt-tool-import" class="button">导入</div>
     </div>
     <div><hr style="width: 100%;"></div>
     
@@ -108,6 +109,23 @@
                     </div>
                 </div>
                 <div id="check-component-continue" class="continue">确定</div>
+            </div>
+        </div>
+        <div id="import-window" class="simply-window" style="display: none;">
+            <div class="title">
+                导入配置
+                <span id="import-window-close" class="close">X</span>
+            </div>
+            <div class="body">
+                <div class="item">
+                    <div class="item">
+                        <div class="label-line">配置JSON：</div>
+                    </div>
+                    <div class="control-line">
+                        <textarea id="import-json-data" ></textarea>
+                    </div>
+                </div>
+                <div id="import-window-continue" class="continue">确定</div>
             </div>
         </div>
     </div>

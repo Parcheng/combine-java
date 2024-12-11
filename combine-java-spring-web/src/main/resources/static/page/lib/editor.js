@@ -20,6 +20,8 @@ var copyComponent = {
 // 3.
 // 加载
 
+var baseUrl = "http://127.0.0.1:8080/";
+
 var lastChecked = {
     flow: null,
     before: null,
@@ -71,6 +73,7 @@ window.onload = function() {
 
 const initFns = {
     loadData() {
+        // requestFns.url("./settings/list", "POST", false, {}, null, 
         requestFns.file("./test.json", 
             function(data) {
                 var groupDataArr = JSON.parse(data);
@@ -436,8 +439,6 @@ const initFns = {
                 return;
             }
 
-            
-
             requestFns.url("flow/save", "POST", false, checkResult.data, 
                 function(data) {
                     if (data.success == true) {
@@ -455,8 +456,8 @@ const initFns = {
             );
         }
 
-        var importDom = document.getElementById("opt-tool-import");
-        importDom.onclick = function() {
+        var exportDom = document.getElementById("opt-tool-export");
+        exportDom.onclick = function() {
             var checkResult = optFns.tool.checkConfig(config);
             buildFns.checkResList(checkResult.errors);
 
@@ -474,6 +475,36 @@ const initFns = {
             document.body.removeChild(link);
             URL.revokeObjectURL(downloadUrl);
         }
+
+        var importDom = document.getElementById("opt-tool-import");
+        var importWindowDom = document.getElementById("import-window");
+        importDom.onclick = function() {
+            domTools.switchDisplay(importWindowDom, true);
+            window.scrollTo(0, 0);
+        }
+
+        var importContinueDom = document.getElementById("import-window-continue");
+        importContinueDom.onclick = function() {
+            var jsonDataDom = document.getElementById("import-json-data");
+
+            var data = null;
+            try {
+                data = JSON.parse(jsonDataDom.value);
+            } catch (error) {
+                alert("导入数据非标准SJON格式");
+                console.error('JSON Parse Error:', error.message);
+                return;
+            }
+
+            optFns.tool.loadImportData(data);
+            domTools.switchDisplay(importWindowDom, false);
+        }
+
+        var importCloseDom = document.getElementById("import-window-close");
+        importCloseDom.onclick = function() {
+            domTools.switchDisplay(importWindowDom, false);
+        }
+        domTools.switchDisplay(importWindowDom, false);
     }
 }
 
@@ -593,7 +624,7 @@ const buildFns = {
         var componentLogicDom = buildDomFns.node.componentLogic(id, "block", componentId, key);
         domTools.addAll(blockDom, [componentLogicDom]);
     },
-    initComponentWindow: function(key, value) {
+    initComponentWindow: function(key, value, isAutoContinue) {
         var component = componentMap[key];
         if (!component) {
             console.log("【" + key + "】组件不存在");
@@ -613,19 +644,21 @@ const buildFns = {
         value.id = value.id ? value.id : { id:value.$id, ref: false };
 
         var id = value.$id;
-        var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, "init", initConfig, value,
             function(data) { 
                 console.log(data);
                 data.$id = id;
                 instance.init[id] = data;
                 buildFns.initItem(id, data.id, component.key);
-            }
-        );
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+            }, isAutoContinue);
+
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
     },
-    logicComponentWindow: function(key, value, flowId) {
+    logicComponentWindow: function(key, value, flowId, isAutoContinue) {
         var component = componentMap[key];
         if (!component) {
             console.log("【" + key + "】组件不存在");
@@ -646,7 +679,6 @@ const buildFns = {
         value.id = value.id ? value.id : { id: value.$id, ref: false };
 
         var id = value.$id
-        var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, "logic", logicConfig, value,
             function(data) {
                 console.log(data);
@@ -657,10 +689,13 @@ const buildFns = {
                 } else {
                     buildFns.blockItem(id, data.id, component.key);
                 }
-            }
-        );
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+            }, isAutoContinue);
+
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
     },
     subComponentWindow: function(componentKey, subBoardId) {
         var component = componentMap[componentKey];
@@ -730,7 +765,6 @@ const buildFns = {
         }
 
         var configType = isInit ? "init" : "logic";
-        var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, configType, currConfig, value,
             function(data) {
                 console.log(data);
@@ -746,10 +780,12 @@ const buildFns = {
                 }
             }
         );
+
+        var windowsDom = document.getElementById("window");
         windowsDom.appendChild(fromWindowDom);
         window.scrollTo(0, 0);
     },
-    flowSettingsWindow: function(flowId, type) {
+    flowSettingsWindow: function(flowId, type, value, isAutoContinue) {
         var isBfore = type == "before";
         var title = isBfore ? "前置流程配置" : "后置流程配置"
         var addFlowConfig = [
@@ -780,7 +816,11 @@ const buildFns = {
             value = flowConfig[flowId].data;
         } else {
             newFlowId = isBfore ? idPrefix.before + (idIndex.before++) : idPrefix.after + (idIndex.after++);
-            value = { id: newFlowId };
+            if (value) {
+                value.id = newFlowId;
+            } else {
+                value = { id: newFlowId };
+            }
         }
 
         var fromWindowDom = buildDomFns.window.continueFrom(title, null, addFlowConfig, value,
@@ -792,23 +832,37 @@ const buildFns = {
                 } else {
                     flowConfig[flowId].data = data;
                 }
-            }
-        );
+            }, isLoadMode);
 
-        var windowsDom = document.getElementById("window");
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
+
+        return newFlowId ? newFlowId : flowId;
     },
-    flowPathWindow: function(flowId) {
+    flowPathWindow: function(flowId, value, isAutoContinue) {
         var addFlowConfig = [
             { key: "domain", name: "域名称", type: "TEXT", isRequired: true, isArray: false },
             { key: "function", name: "函数名称", type: "TEXT", isRequired: true, isArray: false }
         ];
-        var value = flowId ? config.flow[flowId] : {};
+
+        var hasFlowId = true;
+        if (flowId) {
+            value = config.flow[flowId];
+        } else {
+            hasFlowId = false;
+            flowId = idPrefix.flow + (idIndex.flow++);
+            if (!value) {
+                value = {};
+            }
+        }
+
         var fromWindowDom = buildDomFns.window.continueFrom("执行流程配置", null, addFlowConfig, value,
             function(data) { 
                 console.log(data);
-                if (flowId) {
+                if (hasFlowId) {
                     var flowDom = document.getElementById(flowId);
                     if (flowDom && flowDom.children.length > 0) {
                         var pathDom = flowDom.children[0];
@@ -819,15 +873,17 @@ const buildFns = {
                         currFlowConfig.function = data.function;
                     }
                 } else {
-                    flowId = idPrefix.flow + (idIndex.flow++);
                     buildFns.flow(flowId, data.domain, data.function);
                 }
-            }
-        );
+            }, isAutoContinue);
 
-        var windowsDom = document.getElementById("window");
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
+
+        return flowId;
     },
     checkResList: function(errors) {
         var checkResDom = document.getElementById("check-res-list");
@@ -950,7 +1006,7 @@ const buildDomFns = {
         }
     },
     window: {
-        continueFrom: function(title, configType, dataList, value, continueFunc) {
+        continueFrom: function(title, configType, dataList, value, continueFunc, isAutoContinue) {
             var windowId = idPrefix.window + (idIndex.window++);
             var windowDom = document.createElement("div");
             windowDom.id = windowId;
@@ -991,6 +1047,11 @@ const buildDomFns = {
             };
             bodyDom.appendChild(buttonDom);
 
+            // 是否自动触发确认
+            if (isAutoContinue && isAutoContinue === true) {
+                buttonDom.dispatchEvent(new Event("click"));
+            }
+            
             return windowDom;
         }
     },
@@ -1641,13 +1702,14 @@ const buildDomFns = {
                 var spanDom = document.createElement("span");
                 spanDom.className = "fold";
                 spanDom.textContent = "配置子属性";
-     
+                
                 var subItemsDom = document.createElement("div");
                 subItemsDom.className = "sub-items";
                 domTools.switchDisplay(subItemsDom);
-
+                
                 var subDoms;
                 var subDomsGetValueFn;
+                var hasValue = value != null && value != undefined;
                 if (buildDomFns.refCommonKey) {
                     var refCommonKey = buildDomFns.refCommonKey;
                     var refCommon = commonRefMap[refCommonKey];
@@ -1676,13 +1738,13 @@ const buildDomFns = {
                         domTools.addAll(currSubItemsDom, currSubDoms);
                         domTools.switchDisplay(currSubItemsDom);
                     }
-                })(subItemsDom, subDoms); 
+                })(subItemsDom, subDoms);
 
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
 
                 getValueFns.push(function() {
                     var initState = subItemsDom.getAttribute("init-state");
-                    if (initState && initState == "1") {
+                    if (hasValue || (initState && initState == "1")) {
                         return subDomsGetValueFn();
                     }
                     return null;
@@ -1713,23 +1775,31 @@ const buildDomFns = {
                 mapOptionDom.textContent = "MAP";
                 selectDom.appendChild(mapOptionDom);
 
-                value = value ? value : {};
-                var currType;
-                if (value.value != null && value.value != undefined) {
-                    if (typeof value.value === "string") {
-                        currType = "TEXT";
-                    } else if (typeof value.value === "number") {
-                        currType = "NUMBER";
-                    } else if (typeof value.value === "boolean") {
-                        currType = "BOOLEAN";
-                    } else if (typeof value.value === "object") {
-                        currType = "MAP";
+                if (value == null || value == undefined) {
+                    value = {};
+                } else if (typeof value != "object") {
+                    value = { value: value };
+                }
+
+                var currType = value ? value.type : null;
+                if (currType == null || currType == undefined) {
+                    if (value.value != null || value.value != undefined) {
+                        if (typeof value.value === "string") {
+                            currType = "TEXT";
+                        } else if (typeof value.value === "number") {
+                            currType = "NUMBER";
+                        } else if (typeof value.value === "boolean") {
+                            currType = "BOOLEAN";
+                        } else if (typeof value.value === "object") {
+                            currType = "MAP";
+                        }
                     }
                 }
+
                 if (currType) {
                     selectDom.value = currType;
                 }
-                   
+
                 var brDom = document.createElement("br")
 
                 var textDom = document.createElement("input");
@@ -2078,7 +2148,7 @@ const optFns = {
             }
 
             var flowResult = valueFns.parsePathFlows(config.flow);
-            result.data.flow = flowResult.dataMap;
+            result.data.flows = flowResult.dataMap;
             for (let ei = 0; ei < flowResult.errors.length; ei++) {
                 const errConfig = flowResult.errors[ei];
                 var currTitle2 = errConfig.flowId;
@@ -2089,6 +2159,130 @@ const optFns = {
             }
 
             return result;
+        },
+        loadImportData: function(data) {
+            if (!data || typeof data != 'object') {
+                return;
+            }
+
+            var resetId = function(data) {
+                if (data.id) {
+                    var ref = data.refComponent && refComponent == true;
+                    data.id = { ref: ref, id: data.id };
+                }
+            }
+
+            if (data.init && Array.isArray(data.init) && data.init.length > 0) {
+                for (let i = 0; i < data.init.length; i++) {
+                    const item = data.init[i];
+                    if (!item || !item.type) {
+                        continue;
+                    }
+
+                    resetId(item);
+                    buildFns.initComponentWindow(item.type, item, true);
+                }
+            }
+
+            if (data.blocks && Array.isArray(data.blocks) && data.blocks.length > 0) {
+                for (let i = 0; i < data.blocks.length; i++) {
+                    const item = data.blocks[i];
+                    if (!item || !item.type) {
+                        continue;
+                    }
+
+                    resetId(item);
+                    buildFns.logicComponentWindow(item.type, item, null, true);  
+                }
+            }
+
+            if (data.before && Array.isArray(data.before) && data.before.length > 0) {
+                for (let i = 0; i < data.before.length; i++) {
+                    const item = data.before[i];
+                    if (!item) {
+                        continue;
+                    }
+
+                    const flowId = buildFns.flowSettingsWindow(null, "before", item, true);
+                    if (!flowId || !item.flow || !Array.isArray(item.flow) || item.flow.length == 0) {
+                        continue;
+                    }
+                    
+                    for (let j = 0; j < item.flow.length; j++) {
+                        const flowItem = item.flow[i];
+                        if (!flowItem || !flowItem.type) {
+                            continue;
+                        }
+
+                        resetId(flowItem);
+                        buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
+                    }
+                }
+            }
+
+            if (data.flows && typeof data.flows === 'object') {
+                var flowData = data.flows;
+                for (const key in flowData) {
+                    if (!Object.prototype.hasOwnProperty.call(flowData, key)) {
+                        continue;
+                    }
+
+                    const item = flowData[key];
+                    if (!item) {
+                        continue;
+                    }
+
+                    const keyArr = key.split("/");
+                    const value = {
+                        domain: keyArr[0],
+                        function: keyArr.length > 1 ? keyArr[1] : null
+                    }
+                    const flowId = buildFns.flowPathWindow(null, value, true);
+
+                    if (!flowId || !Array.isArray(item) || item.length == 0) {
+                        continue;
+                    }
+
+                    for (let j = 0; j < item.length; j++) {
+                        const flowItem = item[j];
+                        if (!flowItem || !flowItem.type) {
+                            continue;
+                        }
+
+                        resetId(flowItem);
+                        buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
+                    }
+                }
+            }
+
+            if (data.after && Array.isArray(data.after) && data.after.length > 0) {
+                for (let i = 0; i < data.after.length; i++) {
+                    const item = data.after[i];
+                    if (!item) {
+                        continue;
+                    }
+
+                    const flowId = buildFns.flowSettingsWindow(null, "after", item, true);
+                    if (!flowId || !item.flow || !Array.isArray(item.flow) || item.flow.length == 0) {
+                        continue;
+                    }
+                    
+                    for (let j = 0; j < item.flow.length; j++) {
+                        const flowItem = item.flow[i];
+                        if (!flowItem || !flowItem.type) {
+                            continue;
+                        }
+
+                        resetId(flowItem);
+                        buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
+                    }
+                }
+            }
+
+            if (data.constant) {
+                var constantDom = document.getElementById("constant-value");
+                constantDom.textContent = JSON.stringify(data.constant);
+            }
         }
     },
     window: {
@@ -2256,8 +2450,6 @@ const valueFns = {
                 continue;
             }
             
-            var idKey = null;
-            var refId = null;
             var currData = {};
             for (let s = 0; s < settings.length; s++) {
                 const setting = settings[s];
@@ -2281,31 +2473,30 @@ const valueFns = {
                         result.errors.push(subError);
                     }
                 } else if (setting.type == "ID") {
-                    idKey = settingKey;
                     currData[settingKey] = currValue.id;
                     if (currValue.ref == true) {
-                        refId = currValue.id;
+                        result.refId = refId;
+                        currData.refComponent = true;
                     }
                 } else if (setting.type == "ANY") {
-                    if (Array.isArray(value)) {
+                    if (Array.isArray(currValue)) {
                         currData[settingKey] = [];
                         for (let cvi = 0; cvi < currValue.length; cvi++) {
                             const currValueItem = currValue[cvi];
-                            currData[settingKey].push(currValueItem ? currValueItem.value : null);
+                            if (currValueItem && currValueItem.value != null && currValueItem.value != undefined && currValueItem.value != "") {
+                                currData[settingKey].push(currValueItem.value);
+                            }
                         }
                     } else {
-                        currData[settingKey] = currValue ? currValue.value : null;
+                        if (currValue && currValue.value != null && currValue.value != undefined && currValue.value != "") {
+                            currData[settingKey] = currValue.value;
+                        }
                     }
                 } else {
-                    currData[settingKey] = currValue;
+                    if (currValue != null && currValue != undefined && currValue != "") {
+                        currData[settingKey] = currValue;
+                    }
                 }
-            }
-
-            // 引用场景特殊处理
-            if (refId != null) {
-                currData = {};
-                currData[idKey] = refId;
-                result.refId = refId;
             }
 
             valueParseData.push(currData);
@@ -2320,7 +2511,11 @@ const valueFns = {
 const domTools = {
     remove: function(dom) {
         if (dom) {
-            dom.parentNode.removeChild(dom);
+            if (dom.parentNode) {
+                dom.parentNode.removeChild(dom);
+            } else {
+                dom.remove();
+            }
         }
     },
     clearAll: function(parentDom) {
@@ -2373,7 +2568,7 @@ const requestFns = {
             alert("Request error!");
         };
 
-        url = url.startsWith("http") ? url : ("http://127.0.0.1:8080/" + url);
+        url = url.startsWith("http") ? url : (baseUrl + url);
         const xhr = new XMLHttpRequest();
         xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
 

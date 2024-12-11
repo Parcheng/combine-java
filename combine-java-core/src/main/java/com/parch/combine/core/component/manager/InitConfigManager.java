@@ -1,6 +1,6 @@
 package com.parch.combine.core.component.manager;
 
-import com.parch.combine.core.common.canstant.FieldKeyCanstant;
+import com.parch.combine.core.common.canstant.FieldKeyConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.IInitConfig;
@@ -36,8 +36,8 @@ public class InitConfigManager {
     }
 
     public String load(Map<String, Object> item) {
-        String id = (String) item.get(FieldKeyCanstant.ID);
-        String type = (String) item.get(FieldKeyCanstant.TYPE);
+        String id = (String) item.get(FieldKeyConstant.ID);
+        String type = (String) item.get(FieldKeyConstant.TYPE);
         if (CheckEmptyUtil.isEmpty(type)) {
             return null;
         }
@@ -61,8 +61,8 @@ public class InitConfigManager {
         Map<String, Object> preConfig = PRE_CONFIGS.get(key);
         if (preConfig == null) {
             preConfig = new HashMap<>();
-            preConfig.put(FieldKeyCanstant.ID, id);
-            preConfig.put(FieldKeyCanstant.TYPE, type);
+            preConfig.put(FieldKeyConstant.ID, id);
+            preConfig.put(FieldKeyConstant.TYPE, type);
         }
 
         ThreeTuples<Boolean, T, List<String>> buildResult = ConfigHelper.build(scopeKey, clazz, preConfig);

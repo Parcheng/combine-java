@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
+import com.parch.combine.core.common.util.json.JsonUtil;
 
 /**
  * 数据解析工具类
@@ -55,7 +56,7 @@ public class DataParseUtil {
         }
 
         if (data instanceof Map || data instanceof Collection) {
-            return JsonUtil.serialize(data);
+            return JsonUtil.obj2String(data);
         } else {
             return data.toString();
         }
@@ -212,7 +213,7 @@ public class DataParseUtil {
     }
 
     public static <T> T parseJava(Object data, Class<T> clazz) {
-        String dataString = JsonUtil.serialize(data);
-        return JsonUtil.deserialize(dataString, clazz);
+        String dataString = JsonUtil.obj2String(data);
+        return JsonUtil.string2Obj(dataString, clazz);
     }
 }
