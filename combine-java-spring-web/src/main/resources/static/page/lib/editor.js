@@ -1773,20 +1773,19 @@ const buildDomFns = {
                 mapOptionDom.textContent = "MAP";
                 selectDom.appendChild(mapOptionDom);
 
+                value = value == null || value == undefined ? {} : value;
                 var currType = value ? value.type : null;
                 if (currType == null || currType == undefined) {
-                    if (value.value == null || value.value == undefined) {
-                        value = { value: value };
-                    }
-
-                    if (typeof value.value === "string") {
-                        currType = "TEXT";
-                    } else if (typeof value.value === "number") {
-                        currType = "NUMBER";
-                    } else if (typeof value.value === "boolean") {
-                        currType = "BOOLEAN";
-                    } else if (typeof value.value === "object") {
-                        currType = "MAP";
+                    if (value.value != null || value.value != undefined) {
+                        if (typeof value.value === "string") {
+                            currType = "TEXT";
+                        } else if (typeof value.value === "number") {
+                            currType = "NUMBER";
+                        } else if (typeof value.value === "boolean") {
+                            currType = "BOOLEAN";
+                        } else if (typeof value.value === "object") {
+                            currType = "MAP";
+                        }
                     }
                 }
 
@@ -2160,12 +2159,10 @@ const optFns = {
             }
 
             var resetId = function(data) {
-                if (!data.id) {
-                    return;
+                if (data.id) {
+                    var ref = data.refComponent && refComponent == true;
+                    data.id = { ref: ref, id: data.id };
                 }
-
-                var ref = data.refComponent && refComponent == true;
-                data.id = { ref: ref, id: data.id };
             }
 
             if (data.init && Array.isArray(data.init) && data.init.length > 0) {
@@ -2187,6 +2184,7 @@ const optFns = {
                         continue;
                     }
 
+                    resetId(item);
                     buildFns.logicComponentWindow(item.type, item, null, true);  
                 }
             }
@@ -2209,6 +2207,7 @@ const optFns = {
                             continue;
                         }
 
+                        resetId(flowItem);
                         buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
                     }
                 }
@@ -2243,6 +2242,7 @@ const optFns = {
                             continue;
                         }
 
+                        resetId(flowItem);
                         buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
                     }
                 }
@@ -2266,6 +2266,7 @@ const optFns = {
                             continue;
                         }
 
+                        resetId(flowItem);
                         buildFns.logicComponentWindow(flowItem.type, flowItem, flowId, true);
                     }
                 }
@@ -2442,8 +2443,6 @@ const valueFns = {
                 continue;
             }
             
-            var idKey = null;
-            var refId = null;
             var currData = {};
             for (let s = 0; s < settings.length; s++) {
                 const setting = settings[s];
@@ -2467,12 +2466,10 @@ const valueFns = {
                         result.errors.push(subError);
                     }
                 } else if (setting.type == "ID") {
-                    idKey = settingKey;
                     currData[settingKey] = currValue.id;
                     if (currValue.ref == true) {
-                        refId = currValue.id;
+                        result.refId = refId;
                         currData.refComponent = true;
-                        
                     }
                 } else if (setting.type == "ANY") {
                     if (Array.isArray(value)) {
