@@ -626,7 +626,7 @@ const buildFns = {
         var componentLogicDom = buildDomFns.node.componentLogic(id, "block", componentId, key);
         domTools.addAll(blockDom, [componentLogicDom]);
     },
-    initComponentWindow: function(key, value) {
+    initComponentWindow: function(key, value, isAutoContinue) {
         var component = componentMap[key];
         if (!component) {
             console.log("【" + key + "】组件不存在");
@@ -646,19 +646,21 @@ const buildFns = {
         value.id = value.id ? value.id : { id:value.$id, ref: false };
 
         var id = value.$id;
-        var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, "init", initConfig, value,
             function(data) { 
                 console.log(data);
                 data.$id = id;
                 instance.init[id] = data;
                 buildFns.initItem(id, data.id, component.key);
-            }
-        );
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+            }, isAutoContinue);
+
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
     },
-    logicComponentWindow: function(key, value, flowId) {
+    logicComponentWindow: function(key, value, flowId, isAutoContinue) {
         var component = componentMap[key];
         if (!component) {
             console.log("【" + key + "】组件不存在");
@@ -679,7 +681,6 @@ const buildFns = {
         value.id = value.id ? value.id : { id: value.$id, ref: false };
 
         var id = value.$id
-        var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, "logic", logicConfig, value,
             function(data) {
                 console.log(data);
@@ -690,10 +691,13 @@ const buildFns = {
                 } else {
                     buildFns.blockItem(id, data.id, component.key);
                 }
-            }
-        );
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+            }, isAutoContinue);
+
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
     },
     subComponentWindow: function(componentKey, subBoardId) {
         var component = componentMap[componentKey];
@@ -763,7 +767,6 @@ const buildFns = {
         }
 
         var configType = isInit ? "init" : "logic";
-        var windowsDom = document.getElementById("window");
         var fromWindowDom = buildDomFns.window.continueFrom(component.name, configType, currConfig, value,
             function(data) {
                 console.log(data);
@@ -779,10 +782,12 @@ const buildFns = {
                 }
             }
         );
+
+        var windowsDom = document.getElementById("window");
         windowsDom.appendChild(fromWindowDom);
         window.scrollTo(0, 0);
     },
-    flowSettingsWindow: function(flowId, type) {
+    flowSettingsWindow: function(flowId, type, value, isAutoContinue) {
         var isBfore = type == "before";
         var title = isBfore ? "前置流程配置" : "后置流程配置"
         var addFlowConfig = [
@@ -813,7 +818,11 @@ const buildFns = {
             value = flowConfig[flowId].data;
         } else {
             newFlowId = isBfore ? idPrefix.before + (idIndex.before++) : idPrefix.after + (idIndex.after++);
-            value = { id: newFlowId };
+            if (value) {
+                value.id = newFlowId;
+            } else {
+                value = { id: newFlowId };
+            }
         }
 
         var fromWindowDom = buildDomFns.window.continueFrom(title, null, addFlowConfig, value,
@@ -825,23 +834,37 @@ const buildFns = {
                 } else {
                     flowConfig[flowId].data = data;
                 }
-            }
-        );
+            }, isLoadMode);
 
-        var windowsDom = document.getElementById("window");
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
+
+        return newFlowId ? newFlowId : flowId;
     },
-    flowPathWindow: function(flowId) {
+    flowPathWindow: function(flowId, value, isAutoContinue) {
         var addFlowConfig = [
             { key: "domain", name: "域名称", type: "TEXT", isRequired: true, isArray: false },
             { key: "function", name: "函数名称", type: "TEXT", isRequired: true, isArray: false }
         ];
-        var value = flowId ? config.flow[flowId] : {};
+
+        var hasFlowId = true;
+        if (flowId) {
+            value = config.flow[flowId];
+        } else {
+            hasFlowId = false;
+            flowId = idPrefix.flow + (idIndex.flow++);
+            if (!value) {
+                value = {};
+            }
+        }
+
         var fromWindowDom = buildDomFns.window.continueFrom("执行流程配置", null, addFlowConfig, value,
             function(data) { 
                 console.log(data);
-                if (flowId) {
+                if (hasFlowId) {
                     var flowDom = document.getElementById(flowId);
                     if (flowDom && flowDom.children.length > 0) {
                         var pathDom = flowDom.children[0];
@@ -852,15 +875,15 @@ const buildFns = {
                         currFlowConfig.function = data.function;
                     }
                 } else {
-                    flowId = idPrefix.flow + (idIndex.flow++);
                     buildFns.flow(flowId, data.domain, data.function);
                 }
-            }
-        );
+            }, isAutoContinue);
 
-        var windowsDom = document.getElementById("window");
-        windowsDom.appendChild(fromWindowDom);
-        window.scrollTo(0, 0);
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(fromWindowDom);
+            window.scrollTo(0, 0);
+        }
     },
     checkResList: function(errors) {
         var checkResDom = document.getElementById("check-res-list");
