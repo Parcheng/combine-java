@@ -480,6 +480,7 @@ const initFns = {
         var importWindowDom = document.getElementById("import-window");
         importDom.onclick = function() {
             domTools.switchDisplay(importWindowDom, true);
+            window.scrollTo(0, 0);
         }
 
         var importContinueDom = document.getElementById("import-window-continue");
@@ -1701,13 +1702,14 @@ const buildDomFns = {
                 var spanDom = document.createElement("span");
                 spanDom.className = "fold";
                 spanDom.textContent = "配置子属性";
-     
+                
                 var subItemsDom = document.createElement("div");
                 subItemsDom.className = "sub-items";
                 domTools.switchDisplay(subItemsDom);
-
+                
                 var subDoms;
                 var subDomsGetValueFn;
+                var hasValue = value != null && value != undefined;
                 if (buildDomFns.refCommonKey) {
                     var refCommonKey = buildDomFns.refCommonKey;
                     var refCommon = commonRefMap[refCommonKey];
@@ -1736,13 +1738,13 @@ const buildDomFns = {
                         domTools.addAll(currSubItemsDom, currSubDoms);
                         domTools.switchDisplay(currSubItemsDom);
                     }
-                })(subItemsDom, subDoms); 
+                })(subItemsDom, subDoms);
 
                 var arrayFlagDom = buildDomFns.settings.flag.all(getValueFns, data, index);
 
                 getValueFns.push(function() {
                     var initState = subItemsDom.getAttribute("init-state");
-                    if (initState && initState == "1") {
+                    if (hasValue || (initState && initState == "1")) {
                         return subDomsGetValueFn();
                     }
                     return null;
@@ -1773,7 +1775,12 @@ const buildDomFns = {
                 mapOptionDom.textContent = "MAP";
                 selectDom.appendChild(mapOptionDom);
 
-                value = value == null || value == undefined ? {} : value;
+                if (value == null || value == undefined) {
+                    value = {};
+                } else if (typeof value != "object") {
+                    value = { value: value };
+                }
+
                 var currType = value ? value.type : null;
                 if (currType == null || currType == undefined) {
                     if (value.value != null || value.value != undefined) {
@@ -2141,7 +2148,7 @@ const optFns = {
             }
 
             var flowResult = valueFns.parsePathFlows(config.flow);
-            result.data.flow = flowResult.dataMap;
+            result.data.flows = flowResult.dataMap;
             for (let ei = 0; ei < flowResult.errors.length; ei++) {
                 const errConfig = flowResult.errors[ei];
                 var currTitle2 = errConfig.flowId;
@@ -2154,7 +2161,7 @@ const optFns = {
             return result;
         },
         loadImportData: function(data) {
-            if (!data || typeof obj != 'object') {
+            if (!data || typeof data != 'object') {
                 return;
             }
 
@@ -2213,7 +2220,7 @@ const optFns = {
                 }
             }
 
-            if (data.flows && typeof obj === 'object') {
+            if (data.flows && typeof data.flows === 'object') {
                 var flowData = data.flows;
                 for (const key in flowData) {
                     if (!Object.prototype.hasOwnProperty.call(flowData, key)) {
@@ -2237,7 +2244,7 @@ const optFns = {
                     }
 
                     for (let j = 0; j < item.length; j++) {
-                        const flowItem = item[i];
+                        const flowItem = item[j];
                         if (!flowItem || !flowItem.type) {
                             continue;
                         }
@@ -2472,7 +2479,7 @@ const valueFns = {
                         currData.refComponent = true;
                     }
                 } else if (setting.type == "ANY") {
-                    if (Array.isArray(value)) {
+                    if (Array.isArray(currValue)) {
                         currData[settingKey] = [];
                         for (let cvi = 0; cvi < currValue.length; cvi++) {
                             const currValueItem = currValue[cvi];
