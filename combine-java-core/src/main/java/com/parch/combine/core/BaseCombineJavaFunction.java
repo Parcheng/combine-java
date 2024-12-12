@@ -5,6 +5,8 @@ import com.parch.combine.core.component.CombineJavaLoader;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.service.ICombineJavaService;
+import com.parch.combine.core.component.vo.CombineConfigVO;
+import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.vo.FlowResult;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,7 +108,6 @@ public abstract class BaseCombineJavaFunction {
      *
      * @param jsonData 配置数据JSON
      * @return 结果
-     * @throws IOException 异常
      */
     public List<RegisterResult> register(String jsonData) {
         List<RegisterResult> result = new ArrayList<>();
@@ -115,18 +116,42 @@ public abstract class BaseCombineJavaFunction {
         }
 
         // 读取配置文件
-        service.registerFlow(jsonData, vo -> {
-            // 保存每个接口的初始化结果
-            RegisterResult initDTO = new RegisterResult();
-            initDTO.setKey(vo.getFlowKey());
-            initDTO.setSuccess(vo.isSuccess());
-            initDTO.setErrorList(vo.getErrorList());
-            initDTO.setComponentIds(vo.getComponentIds());
-            initDTO.setStaticComponentIds(vo.getStaticComponentIds());
-            result.add(initDTO);
-        });
-
+        service.registerFlow(jsonData, vo -> this.registerResultHandler(result, vo));
         return result;
+    }
+
+    /**
+     * 注册配置
+     *
+     * @param config 配置对象
+     * @return 结果
+     */
+    public List<RegisterResult> register(CombineConfigVO config) {
+        List<RegisterResult> result = new ArrayList<>();
+        if (config == null) {
+            return result;
+        }
+
+        // 读取配置文件
+        service.registerFlow(config, vo -> this.registerResultHandler(result, vo));
+        return result;
+    }
+
+    /**
+     * 注册结果处理
+     *
+     * @param result 对外返回的结果集合
+     * @param vo 结果对象
+     */
+    private void registerResultHandler(List<RegisterResult> result, CombineInitVO vo) {
+        // 保存每个接口的初始化结果
+        RegisterResult initDTO = new RegisterResult();
+        initDTO.setKey(vo.getFlowKey());
+        initDTO.setSuccess(vo.isSuccess());
+        initDTO.setErrorList(vo.getErrorList());
+        initDTO.setComponentIds(vo.getComponentIds());
+        initDTO.setStaticComponentIds(vo.getStaticComponentIds());
+        result.add(initDTO);
     }
 
     /**

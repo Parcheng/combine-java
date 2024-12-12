@@ -1,6 +1,7 @@
 package com.parch.combine.core.component.service;
 
 import com.parch.combine.core.component.base.FileInfo;
+import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.manager.ComponentManager;
@@ -18,6 +19,14 @@ public interface ICombineJavaService {
      * @param func       自定义函数
      */
     void registerFlow(String configJson, Consumer<CombineInitVO> func);
+
+    /**
+     * 注册流程配置集合
+     *
+     * @param config     配置
+     * @param func       自定义函数
+     */
+    void registerFlow(CombineConfigVO config, Consumer<CombineInitVO> func);
 
     /**
      * 保存流程配置集合

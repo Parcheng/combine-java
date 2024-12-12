@@ -25,7 +25,7 @@ public class CombineJavaService implements ICombineJavaService {
 
     private boolean openRegister = true;
 
-    private CombineManager combineManager = new CombineManager();
+    private final CombineManager combineManager = new CombineManager();
 
     /**
      * 初始化流程配置集合
@@ -49,6 +49,11 @@ public class CombineJavaService implements ICombineJavaService {
         }
 
         CombineConfigVO config = JsonUtil.string2Obj(configJson, CombineConfigVO.class);
+        this.registerFlow(config, func);
+    }
+
+    @Override
+    public void registerFlow(CombineConfigVO config, Consumer<CombineInitVO> func) {
         if (config == null) {
             return;
         }

@@ -1,3 +1,4 @@
+var baseUrl = "http://127.0.0.1:8080/";
 
 var groupMap = {};
 var componentMap = {};
@@ -8,15 +9,6 @@ var copyComponent = {
     init: null,
     logic: null
 }
-
-// 1.
-// 未完成配置的红色角标提示（流程，组件，子组件）
-// baseUrl问题
-
-// 2.
-// REF INIT 可以改成下拉选项（TYPE=REF_INIT） （items上层处理）
-
-var baseUrl = "http://127.0.0.1:8080/";
 
 var lastChecked = {
     flow: null,
@@ -69,7 +61,7 @@ window.onload = function() {
 
 const initFns = {
     loadData() {
-        // requestFns.url(baseUrl + "/settings/list", "POST", false, {}, null, 
+        // requestFns.url(baseUrl + "/flow/settings/list", "POST", false, {}, null, 
         requestFns.file("./test.json", 
             function(data) {
                 var groupDataArr = JSON.parse(data);
@@ -429,7 +421,7 @@ const initFns = {
                 return;
             }
 
-            requestFns.url(baseUrl + "flow/save", "POST", false, checkResult.data, 
+            requestFns.url(baseUrl + "register", "POST", false, checkResult.data, 
                 function(data) {
                     if (data.success == true) {
                         console.log("保存成功", data);
