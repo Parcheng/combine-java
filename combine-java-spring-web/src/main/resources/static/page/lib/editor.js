@@ -11,14 +11,10 @@ var copyComponent = {
 
 // 1.
 // 未完成配置的红色角标提示（流程，组件，子组件）
-// 常量可以改成多条显示（或者KEY方块），点击弹窗KEY,TYPE=ANY-确认
 // baseUrl问题
 
 // 2.
-// REF INIT 可以改成下拉选项（TYPE=REF_INIT）
-
-// 3.
-// 加载
+// REF INIT 可以改成下拉选项（TYPE=REF_INIT） （items上层处理）
 
 var baseUrl = "http://127.0.0.1:8080/";
 
@@ -32,7 +28,7 @@ var instance = {
     logic: {}
 };
 var config = { 
-    constant: null,
+    constant: {},
     inits: [], 
     blocks: [], 
     before:{}, 
@@ -73,7 +69,7 @@ window.onload = function() {
 
 const initFns = {
     loadData() {
-        // requestFns.url("./settings/list", "POST", false, {}, null, 
+        // requestFns.url(baseUrl + "/settings/list", "POST", false, {}, null, 
         requestFns.file("./test.json", 
             function(data) {
                 var groupDataArr = JSON.parse(data);
@@ -154,17 +150,6 @@ const initFns = {
         }
     },
     bindAddFlowEvent: function() {
-        var constantValueDom = document.getElementById("constant-value");
-        constantValueDom.onchange = function() {
-            var currValue = constantValueDom.value;
-            try {
-                config.constant = JSON.parse(currValue);
-            } catch (e) {
-                alert("常量配置的JSON格式错误");
-                constantValueDom.focus();
-            }
-        }
-        
         var beforeAddDom = document.getElementById("before-add");
         beforeAddDom.onclick = function() {
             buildFns.flowSettingsWindow(null, "before");
@@ -178,6 +163,11 @@ const initFns = {
         var flowAddDom = document.getElementById("flow-add");
         flowAddDom.onclick = function() {
             buildFns.flowPathWindow(null);
+        }
+
+        var constantAddDom = document.getElementById("constant-add");
+        constantAddDom.onclick = function() {
+            buildFns.constantWindow(null);
         }
     },
     initComponentPop: function() {
@@ -439,7 +429,7 @@ const initFns = {
                 return;
             }
 
-            requestFns.url("flow/save", "POST", false, checkResult.data, 
+            requestFns.url(baseUrl + "flow/save", "POST", false, checkResult.data, 
                 function(data) {
                     if (data.success == true) {
                         console.log("保存成功", data);
@@ -832,7 +822,7 @@ const buildFns = {
                 } else {
                     flowConfig[flowId].data = data;
                 }
-            }, isLoadMode);
+            }, isAutoContinue);
 
         if (!isAutoContinue) {
             var windowsDom = document.getElementById("window");
@@ -884,6 +874,29 @@ const buildFns = {
         }
 
         return flowId;
+    },
+    constantWindow: function(value, isAutoContinue) {
+        var constantConfig = [
+            { key: "key", name: "常量KEY", type: "TEXT", isRequired: true, isArray: false },
+            { key: "value", name: "常量值", type: "ANY", isRequired: true, isArray: false }
+        ];
+
+        var constantWindowDom = buildDomFns.window.continueFrom("常量配置", null, constantConfig, value,
+            function(data) { 
+                console.log(data);
+                if (data && data.key) {
+                    config.constant[data.key] = data;
+                    var constantDom = document.getElementById("constant");
+                    var constantItemDom = buildDomFns.node.constantItem(data);
+                    constantDom.appendChild(constantItemDom);
+                }
+            }, isAutoContinue);
+
+        if (!isAutoContinue) {
+            var windowsDom = document.getElementById("window");
+            windowsDom.appendChild(constantWindowDom);
+            window.scrollTo(0, 0);
+        }
     },
     checkResList: function(errors) {
         var checkResDom = document.getElementById("check-res-list");
@@ -951,7 +964,7 @@ const buildDomFns = {
             }
     
             return doms;
-        },
+        }
     },
     node: {
         componentInit: function(initId, componentId, key) {
@@ -1002,6 +1015,50 @@ const buildDomFns = {
             dom.onclick = function() {
                 buildFns.flowPathWindow(flowId);
             }
+            return dom;
+        },
+        constantItem: function(value) {
+            var key = value.key;
+
+            var dom = document.createElement("div");
+            dom.id = key;
+            dom.className = "constant-item";
+            
+            var keyDom = document.createElement("span");
+            keyDom.className = "constant-key";
+            keyDom.textContent = key;
+            dom.appendChild(keyDom);
+
+            var typeDom = document.createElement("span");
+            typeDom.className = "constant-type";
+            typeDom.textContent = value.value && value.value.type ? value.value.type : "NONE";
+            dom.appendChild(typeDom);
+
+            var valueDom = document.createElement("span");
+            valueDom.className = "constant-value";
+            if (value.value && value.value.value != null && value.value.value != undefined) {
+                valueDom.textContent = typeof value.value.value === "string" ? value.value.value : JSON.stringify(value.value.value);
+            }
+            dom.appendChild(valueDom);
+
+            var optDom = document.createElement("span");
+            optDom.className = "constant-opt";
+            dom.appendChild(optDom);
+
+            var optUpdateDom = document.createElement("span");
+            optUpdateDom.textContent = "编辑";
+            optUpdateDom.onclick = function() {
+                buildFns.constantWindow(config.constant[key]);
+            }
+            optDom.appendChild(optUpdateDom);
+
+            var optDeleteDom = document.createElement("span");
+            optDeleteDom.textContent = "删除";
+            optDeleteDom.onclick = function() {
+                domTools.remove(dom);
+            }
+            optDom.appendChild(optDeleteDom);
+
             return dom;
         }
     },
@@ -2104,8 +2161,28 @@ const optFns = {
                 errors: []
             }
 
-            var constant = config.constant;
-            result.data.constant = constant;
+            var constantData = result.data.constant = {};
+            if (config.constant) {
+                var constants = config.constant;
+                for (const key in constants) {
+                    if (!Object.prototype.hasOwnProperty.call(constants, key)) {
+                        continue;
+                    }
+
+                    const currConstant = constants[key];
+                    if (!currConstant.key || currConstant.key == "") {
+                        result.errors.push(logFns.error("常量配置", "第" + ci + "项", "NULL", "KEY为空"));
+                        continue;
+                    }
+
+                    if (currConstant.value == null || currConstant.value == undefined) {
+                        result.errors.push(logFns.error("常量配置", "第" + ci + "项", currConstant.key, "值未定义"));
+                        continue;
+                    }
+
+                    constantData[currConstant.key] = currConstant.value.value;
+                }
+            }
 
             var initResult = valueFns.parseComponents(config.inits, instance.init);
             result.data.init = initResult.datas;
@@ -2280,8 +2357,14 @@ const optFns = {
             }
 
             if (data.constant) {
-                var constantDom = document.getElementById("constant-value");
-                constantDom.textContent = JSON.stringify(data.constant);
+                var constants = data.constant;
+                for (const key in constants) {
+                    if (!Object.prototype.hasOwnProperty.call(constants, key)) {
+                        continue;
+                    }
+
+                    buildFns.constantWindow({ key: key, value: constants[key]}, true);
+                }
             }
         }
     },
@@ -2568,7 +2651,6 @@ const requestFns = {
             alert("Request error!");
         };
 
-        url = url.startsWith("http") ? url : (baseUrl + url);
         const xhr = new XMLHttpRequest();
         xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
 

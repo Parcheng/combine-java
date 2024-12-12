@@ -199,14 +199,48 @@
     min-width: 60px;
     display: block;
     font-size: 10px;
-    padding: 5px;
-    text-align: left;
+    color: var(--border_color);
 }
 
-.board .constant-item textarea{
-    width: 100%;
-    min-height: 200px;
-    resize: vertical;
+.board .constant-item .constant-key {
+    width: 10%;
+    min-width: 6px;
+    display: inline-block;
+    padding: 5px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.board .constant-item .constant-type {
+    width: 10%;
+    min-width: 6px;
+    display: inline-block;
+    padding: 5px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.board .constant-item .constant-value {
+    width: 65%;
+    min-width: 45px;
+    display: inline-block;
+    padding: 5px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.board .constant-item .constant-opt {
+    width: 10%;
+    min-width: 6px;
+    display: inline-block;
+    padding: 5px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.board .constant-item .constant-opt span {
+    padding: 0px 8px;
+    cursor: pointer; 
 }
 
 .simply-window {
