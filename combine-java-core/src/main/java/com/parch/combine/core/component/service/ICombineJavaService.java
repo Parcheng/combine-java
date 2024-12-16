@@ -1,6 +1,7 @@
 package com.parch.combine.core.component.service;
 
 import com.parch.combine.core.component.base.FileInfo;
+import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
@@ -113,13 +114,7 @@ public interface ICombineJavaService {
      */
     FlowResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func);
 
-    /**
-     * 获取常量值
-     *
-     * @param key KEY
-     * @return 值
-     */
-    Object getConstant(String key);
+    CombineManager getManager();
 
     String getScopeKey();
 

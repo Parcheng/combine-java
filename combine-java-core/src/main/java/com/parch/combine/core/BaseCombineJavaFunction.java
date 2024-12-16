@@ -20,7 +20,7 @@ import java.util.function.Function;
  */
 public abstract class BaseCombineJavaFunction {
 
-    private ICombineJavaService service;
+    protected final ICombineJavaService service;
 
     public BaseCombineJavaFunction(String configPath) {
         service = CombineJavaLoader.init(configPath);
@@ -135,17 +135,6 @@ public abstract class BaseCombineJavaFunction {
         // 读取配置文件
         service.registerFlow(config, vo -> this.registerResultHandler(result, vo));
         return result;
-    }
-
-
-    /**
-     * 获取常量值
-     *
-     * @param key KEY
-     * @return 值
-     */
-    public Object getConstant(String key) {
-        return service.getConstant(key);
     }
 
     /**

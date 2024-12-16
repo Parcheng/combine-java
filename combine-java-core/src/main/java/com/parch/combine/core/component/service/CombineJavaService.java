@@ -115,8 +115,8 @@ public class CombineJavaService implements ICombineJavaService {
     }
 
     @Override
-    public Object getConstant(String key) {
-        return combineManager.getConstant().get().get(key);
+    public CombineManager getManager() {
+        return this.combineManager;
     }
 
     @Override
