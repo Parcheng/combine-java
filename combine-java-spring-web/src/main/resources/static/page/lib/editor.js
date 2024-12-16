@@ -1,4 +1,4 @@
-var baseUrl = "http://127.0.0.1:8080/";
+var baseUrl = "http://127.0.0.1:8080/combine";
 
 var groupMap = {};
 var componentMap = {};
@@ -421,7 +421,7 @@ const initFns = {
                 return;
             }
 
-            requestFns.url(baseUrl + "register", "POST", false, checkResult.data, 
+            requestFns.url(baseUrl + "/register", "POST", false, checkResult.data, 
                 function(data) {
                     if (data.success == true) {
                         console.log("保存成功", data);

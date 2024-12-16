@@ -113,6 +113,13 @@ public interface ICombineJavaService {
      */
     FlowResult executeAny(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func);
 
+    /**
+     * 获取常量值
+     *
+     * @param key KEY
+     * @return 值
+     */
+    Object getConstant(String key);
 
     String getScopeKey();
 

@@ -137,6 +137,17 @@ public abstract class BaseCombineJavaFunction {
         return result;
     }
 
+
+    /**
+     * 获取常量值
+     *
+     * @param key KEY
+     * @return 值
+     */
+    public Object getConstant(String key) {
+        return service.getConstant(key);
+    }
+
     /**
      * 注册结果处理
      *
