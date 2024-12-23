@@ -1,7 +1,3 @@
-var groupMap = {};
-var componentMap = {};
-var commonRefMap = {};
-
 var firstGroup = null;
 var copyComponent = {
     init: null,
@@ -48,7 +44,7 @@ var idPrefix = {
 }
 
 window.onload = function() {
-    initFns.loadData();
+    loadFns.loadData();
     initFns.loadGroup();
     initFns.bindAddFlowEvent();
     initFns.initComponentPop();
@@ -58,81 +54,6 @@ window.onload = function() {
 };
 
 const initFns = {
-    loadData() {
-        // requestFns.url(baseUrl + "/flow/settings/list", "POST", false, {}, null, 
-        requestFns.file("./test.json", 
-            function(data) {
-                var groupDataArr = JSON.parse(data);
-                for (let i = 0; i < groupDataArr.length; i++) {
-                    const groupDataItem = groupDataArr[i];
-                    var currGroupData = groupMap[groupDataItem.key] = {
-                        key: groupDataItem.key,
-                        name: groupDataItem.name,
-                        components: []
-                    }
-
-                    if (i == 0) {
-                        firstGroup = currGroupData;
-                    }
-
-                    if (groupDataItem.settings && Array.isArray(groupDataItem.settings)) {
-                        for (let j = 0; j < groupDataItem.settings.length; j++) {
-                            const componentDataItem = groupDataItem.settings[j];
-                            
-                            // 配置数据调整
-                            var dataAmend = function(configArr) {
-                                if (!configArr || configArr.length == 0) {
-                                    return configArr;
-                                }
-
-                                var configMap = {};
-                                var newConfigArr = [];
-                                for (let k = 0; k < configArr.length; k++) {
-                                    const config = configArr[k];
-                                    
-                                    var keyArr = config.key.split(".");
-                                    configMap[config.key] = config;
-
-                                    if (keyArr.length <= 1) {
-                                        newConfigArr.push(config);
-                                    } else {
-                                        var lastKey = keyArr[keyArr.length - 1];
-                                        var parentKey = config.key.replace(("." + lastKey), "");
-                                        var parentConfig = configMap[parentKey];
-                                        if (!parentConfig.children) {
-                                            parentConfig.children = [];
-                                        }
-
-                                        config.key = lastKey;
-                                        parentConfig.children.push(config);
-                                    }
-                                }
-
-                                return newConfigArr;
-                            }
-                            componentDataItem.initConfig = dataAmend(componentDataItem.initConfig);
-                            componentDataItem.logicConfig = dataAmend(componentDataItem.logicConfig);
-
-                            componentMap[componentDataItem.key] = componentDataItem;
-                            currGroupData.components.push(componentDataItem.key);
-                        }
-                    }
-
-                    if (groupDataItem.commons && Array.isArray(groupDataItem.commons)) {
-                        for (let k = 0; k < groupDataItem.commons.length; k++) {
-                            const commonObjectData = groupDataItem.commons[k];
-                            commonRefMap[commonObjectData.key] = commonObjectData;
-                        }
-                    }
-                }
-                console.log(groupMap);
-                console.log(componentMap);
-            },
-            function(data) {
-                alert("加载组件数据失败！")
-            }
-        );
-    },
     loadGroup() {
         buildFns.groups();
         if (firstGroup) {
