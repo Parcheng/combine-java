@@ -15,35 +15,58 @@ const initFns = {
         var editorDom = document.getElementById("editor");
 
         var homeNavDom = document.getElementById("home-nav");
+        var overallNavDom = document.getElementById("overall-nav");
+        var flowConfigNavDom = document.getElementById("flow-config-nav");
+        var editorNavDom = document.getElementById("editor-nav");
+
         homeNavDom.onclick = function() {
             domTools.switchDisplay(homeDom, true);
             domTools.switchDisplay(overallDom, false);
             domTools.switchDisplay(flowConfigDom, false);
             domTools.switchDisplay(editorDom, false);
+
+            homeNavDom.className = "active";
+            overallNavDom.className = "";
+            flowConfigNavDom.className = "";
+            editorNavDom.className = "";
         }
-    
-        var overallNavDom = document.getElementById("overall-nav");
+        
         overallNavDom.onclick = function() {
             domTools.switchDisplay(homeDom, false);
             domTools.switchDisplay(overallDom, true);
             domTools.switchDisplay(flowConfigDom, false);
             domTools.switchDisplay(editorDom, false);
-        }
 
-        var flowConfigNavDom = document.getElementById("flow-config-nav");
+            homeNavDom.className = "";
+            overallNavDom.className = "active";
+            flowConfigNavDom.className = "";
+            editorNavDom.className = "";
+        }
+        
         flowConfigNavDom.onclick = function() {
             domTools.switchDisplay(homeDom, false);
             domTools.switchDisplay(overallDom, false);
             domTools.switchDisplay(flowConfigDom, true);
             domTools.switchDisplay(editorDom, false);
+
+            homeNavDom.className = "";
+            overallNavDom.className = "";
+            flowConfigNavDom.className = "active";
+            editorNavDom.className = "";
         }
 
-        var editorNavDom = document.getElementById("editor-nav");
         editorNavDom.onclick = function() {
             domTools.switchDisplay(homeDom, false);
             domTools.switchDisplay(overallDom, false);
             domTools.switchDisplay(flowConfigDom, false);
             domTools.switchDisplay(editorDom, true);
+
+            homeNavDom.className = "";
+            overallNavDom.className = "";
+            flowConfigNavDom.className = "";
+            editorNavDom.className = "active";
         }
+
+        homeNavDom.dispatchEvent(new Event("click"));
     }
 }

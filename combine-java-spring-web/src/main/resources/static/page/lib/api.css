@@ -38,14 +38,15 @@ body {
 
 .nav .items span {
     display: inline-block;
-    margin-left: 20px;
-    padding: 14px 5px;
+    margin-left: 10px;
+    padding: 14px 10px;
     vertical-align: top;
 }
 
 .nav .items .active{
     background-color: var(--bg_light_color);
     color: var(--font_dark_color);
+    font-weight: bold;
 }
 
 
