@@ -1,0 +1,57 @@
+/* 变量 */
+:root{
+    --border_color:#313131;
+    --bg_light_color:rgb(225, 225, 225);
+    --bg_color:rgb(146, 144, 144);
+    --bg_dark_color:black;
+    --font_color: white;
+    --font_light_color: rgb(146, 144, 144);
+    --font_dark_color: black;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    width: 100%;
+    background-color: var(--bg_dark_color);
+    color: var(--font_color);
+    margin-bottom: 20px;
+}
+
+.nav .text {
+    padding: 8px;
+    font-size: 25px;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+}
+
+.nav .items {
+    display: inline-block;
+    font-size: 16px;
+    vertical-align: top;
+}
+
+.nav .items span {
+    display: inline-block;
+    margin-left: 20px;
+    padding: 14px 5px;
+    vertical-align: top;
+}
+
+.nav .items .active{
+    background-color: var(--bg_light_color);
+    color: var(--font_dark_color);
+}
+
+
+
+
+.home {
+    width: 90%;
+    margin-left: 5%;
+}

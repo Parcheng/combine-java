@@ -2288,11 +2288,6 @@ const optFns = {
         }
     }
 }
-const logFns = {
-    error: function(title1, title2, title3, msg) {
-        return "【" + title1 + "】【" + title2 + "】【" + title3 + "】 " + msg;
-    }
-}
 
 const valueFns = {
     parsePathFlows: function(flowValueMap) {
