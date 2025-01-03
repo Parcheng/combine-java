@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FLOW API</title>
+    <title>API</title>
     <link rel="stylesheet" href="lib/base.css">
     <link rel="stylesheet" href="lib/api.css">
 </head>
@@ -18,69 +18,79 @@
     </div>
 
     <div id="home" class="home" style="display: none;">
-        <p>使用方式：</p>
-        <p>第一：需要一个全局配置文件 “combine_java.json” 放在 resource 根目录下，配置项详见 “全局配置” 菜单</p>
-        <p>第二：需要至少一个流程配置文件，格式如下</p>
-        <p>{</p>
-        <p>&emsp; "constant": {...},　　　　　　　　　　【表示常量定义，可以自由的定义常量，并能够在流程配置中使用 $c.xxx 来获取它们】</p>
-        <p>&emsp; "init": [{...}, ...],　　　　　　　　　　【表示组件的初始化配置，配置项详见对应组件（每个组件配置项不同）】</p>
-        <p>&emsp; "blocks": [{...}, ...],　　　　　　　　　　【表示逻辑块配置，此处配置的逻辑块，可以被流程配置引用，主要用途：使需要多次使用的组件可以复用】</p>
-        <p>&emsp; "before\": [{　　　　　　　　　　【表示流程前置逻辑，在流程（接口）逻辑之前执行，也可以作为拦截器/过滤器使用】</p>
-        <p>&emsp;&emsp; "id\": \"\",　　　　　　　　　　【选填，表示前置逻辑的ID】</p>
-        <p>&emsp;&emsp; "order\": 1,　　　　　　　　　　【选填，表示执行的优先级，数字越小越先执行】</p>
-        <p>&emsp;&emsp; "failStop\": true,　　　　　　　　　　【选填，表示执行失败是否中止（不再执行后面的所有前置/后置和流程的逻辑），默认为 true】</p>
-        <p>&emsp;&emsp; "flow\": [{...}, ...],　　　　　　　　　　【必填，表示要执行的流程配置】</p>
-        <p>&emsp;&emsp; "includes\": [\"user/save\", \"user/*\", \"*/save\", \"*/*\"],　　　　　　　　　　【选填，配置要执行该前置逻辑的流程集合，可使用 * 通配符</p>
-        <p>&emsp;&emsp; "excludes\": [\"user/save\"]　　　　　　　　　　【选填，配置不需要执行该前置逻辑的流程集合，可使用 * 通配符，注意 includes 和 excludes 仅可选择一个来配置</p>
-        <p>&emsp; }, ...]</p>
-        <p>&emsp; "after\": [{　　　　　　　　　　【表示流程后置逻辑，在流程（接口）逻辑之后执行，注意后置逻辑的执行结果不会输出】</p>
-        <p>&emsp;&emsp; ....　　　　　　　　　　【同 before 相同】</p>
-        <p>&emsp; }, ...],</p>
-        <p>&emsp; "flows\": {　　　　　　　　　　【表示逻辑块配置，此处配置的逻辑块，可以被流程配置引用，主要用途：需要多次使用的组件可以复用】</p>
-        <p>&emsp;&emsp; "user/save\": [　　　　　　　　　　【表示每个流程（接口）的配置，表示接口路径（最多支持两级）</p>
-        <p>&emsp;&emsp;&emsp; {...}, ...　　　　　　　　　　【该数组表示组件的集合，组件会按照定义的顺序执行，配置项详见对应组件（每个组件配置项不同）】</p>
-        <p>&emsp;&emsp; ]</p>
-        <p>&emsp; }</p>
-        <p>}</p>
-        <hr>
-        <p>&emsp; 注意：同一个ID的组件只会加载一次（配置以第一个为准），所以当一个组件需要反复使用时可以写成如下</p>
-        <p>&emsp; "flows\": {</p>
-        <p>&emsp;&emsp; "user/save\":[</p>
-        <p>&emsp;&emsp;&emsp; { id: \"user_save_1\", type: \"access.mysql\", .... }</p>
-        <p>&emsp;&emsp; ],</p>
-        <p>&emsp;&emsp; "list\":[</p>
-        <p>&emsp;&emsp;&emsp; { id: \"user_save_1\" }　　　　　　　　　　【相当于沿用上面 id 为 user_save_1 组件的执行逻辑配置，即使在这里加了其他配置项也不会生效】</p>
-        <p>&emsp;&emsp; ]</p>
-        <p>&emsp; }</p>
-        <p>&emsp; 此功能可以理解为，同一个组件的功能需要在多个流程中使用时，只需要第一次将该组件配置定义好，其他地方引用这个ID即可（如：上面的 { id: \"user_save_1\" }）</p>
-        <hr>
-        <p>&emsp; 全局变量 $r 用于获取其它组件的结果</p>
-        <p>&emsp; 如：$r.user_query.[0].id 表示获取ID为“user_query”组件的执行结果的第一行数据的id字段的值</p>
-        <br>
-        <p>&emsp; 全局变量 $c 用于获取 constant 中配置的常量</p>
-        <p>&emsp; 如：$c.user.name 表示获取常量配置中 user 对象的 name 属性的值</p>
-        <br>
-        <p>&emsp; 全局变量 $v 用于获取和设置流程中变量，该变量的内容可以在当前流程中的各个组件中使用</p>
-        <p>&emsp; 如：$v.index 表示获取流程中 index 属性的值</p>
-        <br>
-        <p>&emsp; 全局变量 $h 用于获取请求头的内容，该变量的内容可以在当前流程中的各个组件中使用</p>
-        <p>&emsp; 如：$h.requestId 表示获取流程中 requestId 属性的值</p>
-        <hr>
+        <div class="block">
+            <p>使用方式：</p>
+            <p>第一：需要一个全局配置文件 “combine_java.json” 放在 resource 根目录下，配置项详见 “全局配置” 菜单</p>
+            <p>第二：需要至少一个流程配置文件，格式如下</p>
+            <p>{</p>
+            <p>&emsp; "constant": {...},　　　　　　　　　　【表示常量定义，可以自由的定义常量，并能够在流程配置中使用 $c.xxx 来获取它们】</p>
+            <p>&emsp; "init": [{...}, ...],　　　　　　　　　　【表示组件的初始化配置，配置项详见对应组件（每个组件配置项不同）】</p>
+            <p>&emsp; "blocks": [{...}, ...],　　　　　　　　　　【表示逻辑块配置，此处配置的逻辑块，可以被流程配置引用，主要用途：使需要多次使用的组件可以复用】</p>
+            <p>&emsp; "before\": [{　　　　　　　　　　【表示流程前置逻辑，在流程（接口）逻辑之前执行，也可以作为拦截器/过滤器使用】</p>
+            <p>&emsp;&emsp; "id\": \"\",　　　　　　　　　　【选填，表示前置逻辑的ID】</p>
+            <p>&emsp;&emsp; "order\": 1,　　　　　　　　　　【选填，表示执行的优先级，数字越小越先执行】</p>
+            <p>&emsp;&emsp; "failStop\": true,　　　　　　　　　　【选填，表示执行失败是否中止（不再执行后面的所有前置/后置和流程的逻辑），默认为 true】</p>
+            <p>&emsp;&emsp; "flow\": [{...}, ...],　　　　　　　　　　【必填，表示要执行的流程配置】</p>
+            <p>&emsp;&emsp; "includes\": [\"user/save\", \"user/*\", \"*/save\", \"*/*\"],　　　　　　　　　　【选填，配置要执行该前置逻辑的流程集合，可使用 * 通配符</p>
+            <p>&emsp;&emsp; "excludes\": [\"user/save\"]　　　　　　　　　　【选填，配置不需要执行该前置逻辑的流程集合，可使用 * 通配符，注意 includes 和 excludes 仅可选择一个来配置</p>
+            <p>&emsp; }, ...]</p>
+            <p>&emsp; "after\": [{　　　　　　　　　　【表示流程后置逻辑，在流程（接口）逻辑之后执行，注意后置逻辑的执行结果不会输出】</p>
+            <p>&emsp;&emsp; ....　　　　　　　　　　【同 before 相同】</p>
+            <p>&emsp; }, ...],</p>
+            <p>&emsp; "flows\": {　　　　　　　　　　【表示逻辑块配置，此处配置的逻辑块，可以被流程配置引用，主要用途：需要多次使用的组件可以复用】</p>
+            <p>&emsp;&emsp; "user/save\": [　　　　　　　　　　【表示每个流程（接口）的配置，表示接口路径（最多支持两级）</p>
+            <p>&emsp;&emsp;&emsp; {...}, ...　　　　　　　　　　【该数组表示组件的集合，组件会按照定义的顺序执行，配置项详见对应组件（每个组件配置项不同）】</p>
+            <p>&emsp;&emsp; ]</p>
+            <p>&emsp; }</p>
+            <p>}</p>
+        </div>
+            <div class="block">
+            <p>&emsp; 注意：同一个ID的组件只会加载一次（配置以第一个为准），所以当一个组件需要反复使用时可以写成如下</p>
+            <p>&emsp; "flows\": {</p>
+            <p>&emsp;&emsp; "user/save\":[</p>
+            <p>&emsp;&emsp;&emsp; { id: \"user_save_1\", type: \"access.mysql\", .... }</p>
+            <p>&emsp;&emsp; ],</p>
+            <p>&emsp;&emsp; "list\":[</p>
+            <p>&emsp;&emsp;&emsp; { id: \"user_save_1\" }　　　　　　　　　　【相当于沿用上面 id 为 user_save_1 组件的执行逻辑配置，即使在这里加了其他配置项也不会生效】</p>
+            <p>&emsp;&emsp; ]</p>
+            <p>&emsp; }</p>
+            <p>&emsp; 此功能可以理解为，同一个组件的功能需要在多个流程中使用时，只需要第一次将该组件配置定义好，其他地方引用这个ID即可（如：上面的 { id: \"user_save_1\" }）</p>
+        </div>
+        <div class="block">
+            <p>&emsp; 全局变量 $r 用于获取其它组件的结果</p>
+            <p>&emsp; 如：$r.user_query.[0].id 表示获取ID为“user_query”组件的执行结果的第一行数据的id字段的值</p>
+            <br>
+            <p>&emsp; 全局变量 $c 用于获取 constant 中配置的常量</p>
+            <p>&emsp; 如：$c.user.name 表示获取常量配置中 user 对象的 name 属性的值</p>
+            <br>
+            <p>&emsp; 全局变量 $v 用于获取和设置流程中变量，该变量的内容可以在当前流程中的各个组件中使用</p>
+            <p>&emsp; 如：$v.index 表示获取流程中 index 属性的值</p>
+            <br>
+            <p>&emsp; 全局变量 $h 用于获取请求头的内容，该变量的内容可以在当前流程中的各个组件中使用</p>
+            <p>&emsp; 如：$h.requestId 表示获取流程中 requestId 属性的值</p>
+        </div>
     </div>
 
     <div id="overall" style="display: none;">
 
     </div>
 
-    <div id="flow-config" style="display: none;">
-
+    <div id="flow-config" class="config" style="display: none;">
+        <div id="config-group" class="group"></div>
+        <hr>
+        <div id="config-component" class="component"></div>
     </div>
 
-    <div id="editor" style="display: none;">
-
+    <div id="editor" class="editor" style="display: none;">
+        <iframe src="./editor.html" class="editor-iframe"></iframe>
     </div>
 
-    <div id="footer"></div>
+    <div class="footer">
+        <span class="text">
+            Combine-Java API - Skip 
+            <a href="https://github.com/Parcheng/combine-java/tree/master" class="link">Github</a>
+             Source Code</span>
+    </div>
 </body>
 <script src="lib/base.js"></script>
 <script src="lib/api.js"></script>

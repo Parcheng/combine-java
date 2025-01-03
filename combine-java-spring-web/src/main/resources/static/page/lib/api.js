@@ -5,6 +5,7 @@ window.onload = function() {
     loadFns.loadData();
     loadFns.loadOverall();
     initFns.bindNavEvent();
+    initFns.loadGroup();
 };
 
 const initFns = {
@@ -68,5 +69,23 @@ const initFns = {
         }
 
         homeNavDom.dispatchEvent(new Event("click"));
-    }
+    },
+    loadGroup() {
+        componentMenuFns.config.groupDomId = "config-group";
+        componentMenuFns.config.componentDomId = "config-component";
+        componentMenuFns.opt.checkComponent = function(key) {
+            console.log(key);
+            // var checkKeyDom = document.getElementById("check-board-source-key");
+            // checkKeyDom.value = key;
+        
+            // var boardSelectDom = document.getElementById("check-board-select");
+            // boardSelectDom.dispatchEvent(new Event("change"));
+        
+            // var boardDom = document.getElementById("check-board-window");
+            // domTools.switchDisplay(boardDom, true);
+            // window.scrollTo(0, 0);
+        }
+
+        componentMenuFns.init.groups();
+    },
 }

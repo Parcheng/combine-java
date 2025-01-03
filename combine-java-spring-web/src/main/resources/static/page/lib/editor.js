@@ -32,8 +32,6 @@ var idIndex = {
     subBoard:1
 };
 var idPrefix = { 
-    group: "g_", 
-    component: "c_", 
     before: "b_", 
     after: "a_", 
     flow: "f_", 
@@ -55,9 +53,21 @@ window.onload = function() {
 
 const initFns = {
     loadGroup() {
-        buildFns.groups();
+        componentMenuFns.opt.checkComponent = function(key) {
+            var checkKeyDom = document.getElementById("check-board-source-key");
+            checkKeyDom.value = key;
+        
+            var boardSelectDom = document.getElementById("check-board-select");
+            boardSelectDom.dispatchEvent(new Event("change"));
+        
+            var boardDom = document.getElementById("check-board-window");
+            domTools.switchDisplay(boardDom, true);
+            window.scrollTo(0, 0);
+        }
+
+        componentMenuFns.init.groups();
         if (firstGroup) {
-            optFns.tool.checkGroup(firstGroup.key);
+            componentMenuFns.opt.checkGroup(firstGroup.key);
         }
     },
     bindAddFlowEvent: function() {
@@ -410,38 +420,6 @@ const initFns = {
 }
 
 const buildFns = {
-    groups: function() {
-        var groupList = [];
-        for (const key in groupMap) {
-            if (Object.prototype.hasOwnProperty.call(groupMap, key)) {
-                groupList.push(groupMap[key]);
-                if (!firstGroup) {
-                    firstGroup = groupMap[key];
-                }
-            }
-        }
-
-        var groupDom = document.getElementById("group");
-        var doms = buildDomFns.tool.groups(groupList);
-        domTools.setAll(groupDom, doms);
-    },
-    components: function(groupKey) {
-        var group = groupMap[groupKey];
-        if (group && group.components) {
-            var componentKeys = group.components;
-            var componentList = [];
-            for (let i = 0; i < componentKeys.length; i++) {
-                const componentKey = componentKeys[i];
-                const component = componentMap[componentKey];
-                if (component) {
-                    componentList.push(component);
-                }
-            }
-            var componentDom = document.getElementById("component");
-            var doms =  buildDomFns.tool.components(componentList);
-            domTools.setAll(componentDom, doms);
-        }
-    },
     beforeFlow: function(flowId) {
         var parentDom = document.getElementById("before");
         var beforeDom = buildDomFns.node.flow(flowId);
@@ -835,48 +813,6 @@ const buildFns = {
 }
 
 const buildDomFns = {
-    tool: {
-        groups: function(data) {
-            var doms = [];
-            for (let i = 0; i < data.length; i++) {
-                var itemData = data[i];
-                var key = itemData.key;
-                var itemDom = document.createElement("div");
-                itemDom.id = idPrefix.group + key;
-                itemDom.className = "item";
-                itemDom.textContent = itemData.name;
-                itemDom.onclick = (function(key) {
-                    var currKey = key;
-                    return function() {
-                        optFns.tool.checkGroup(currKey);
-                    }
-                })(key);
-                doms.push(itemDom);
-            }
-    
-            return doms;
-        },
-        components: function(data) {
-            var doms = [];
-            for (let i = 0; i < data.length; i++) {
-                var itemData = data[i];
-                var key = itemData.key;
-                var itemDom = document.createElement("div");
-                itemDom.id = idPrefix.component + key;
-                itemDom.className = "item";
-                itemDom.textContent = itemData.name;
-                itemDom.onclick = (function(key) {
-                    var currKey = key;
-                    return function() {
-                        optFns.tool.checkComponent(currKey);
-                    }
-                })(key);
-                doms.push(itemDom);
-            }
-    
-            return doms;
-        }
-    },
     node: {
         componentInit: function(initId, componentId, key) {
             var dom = document.createElement("div");
@@ -1918,31 +1854,6 @@ const buildDomFns = {
 
 const optFns = {
     tool: {
-        checkGroup: function(key) {
-            var currGroupDom = document.getElementById(idPrefix.group + key);
-            if (!currGroupDom || currGroupDom.className == "item-checked") {
-                return;
-            }
-
-            var groupDom = document.getElementById("group");
-            for (var i = 0; i < groupDom.children.length; i++) {
-                const groupItemDom = groupDom.children[i];
-                groupItemDom.className = "item";
-            }
-            currGroupDom.className = "item-checked";
-            buildFns.components(key);
-        },
-        checkComponent: function(key) {
-            var checkKeyDom = document.getElementById("check-board-source-key");
-            checkKeyDom.value = key;
-
-            var boardSelectDom = document.getElementById("check-board-select");
-            boardSelectDom.dispatchEvent(new Event("change"));
-
-            var boardDom = document.getElementById("check-board-window");
-            domTools.switchDisplay(boardDom, true);
-            window.scrollTo(0, 0);
-        },
         checkSubComponent: function(subBoardId) {
             var checkKeyDom = document.getElementById("check-component-source-key");
             checkKeyDom.value = subBoardId;
@@ -2496,4 +2407,3 @@ const valueFns = {
         return result;
     }
 }
-

@@ -84,6 +84,113 @@ const loadFns = {
     }
 }
 
+const componentMenuFns = {
+    config: {
+        groupIdPrefix: "g_", 
+        componentIdPrefix: "c_", 
+        groupDomId: "group",
+        componentDomId: "component",
+        groupItemClassName: "item",
+        componentItemClassName: "item",
+        groupCheckedClassName: "item-checked"
+    },
+    init: {
+        groups: function() {
+            var groupList = [];
+            for (const key in groupMap) {
+                if (Object.prototype.hasOwnProperty.call(groupMap, key)) {
+                    groupList.push(groupMap[key]);
+                    if (!firstGroup) {
+                        firstGroup = groupMap[key];
+                    }
+                }
+            }
+    
+            var groupDom = document.getElementById(componentMenuFns.config.groupDomId);
+            var doms = componentMenuFns.build.groups(groupList);
+            domTools.setAll(groupDom, doms);
+        },
+        components: function(groupKey) {
+            var group = groupMap[groupKey];
+            if (group && group.components) {
+                var componentKeys = group.components;
+                var componentList = [];
+                for (let i = 0; i < componentKeys.length; i++) {
+                    const componentKey = componentKeys[i];
+                    const component = componentMap[componentKey];
+                    if (component) {
+                        componentList.push(component);
+                    }
+                }
+                var componentDom = document.getElementById(componentMenuFns.config.componentDomId);
+                var doms =  componentMenuFns.build.components(componentList);
+                domTools.setAll(componentDom, doms);
+            }
+        }
+    },
+    build: {
+        groups: function(data) {
+            var doms = [];
+            for (let i = 0; i < data.length; i++) {
+                var itemData = data[i];
+                var key = itemData.key;
+                var itemDom = document.createElement("div");
+                itemDom.id = componentMenuFns.config.groupIdPrefix + key;
+                itemDom.className = componentMenuFns.config.groupItemClassName;
+                itemDom.textContent = itemData.name;
+                itemDom.onclick = (function(key) {
+                    var currKey = key;
+                    return function() {
+                        componentMenuFns.opt.checkGroup(currKey);
+                    }
+                })(key);
+                doms.push(itemDom);
+            }
+    
+            return doms;
+        },
+        components: function(data) {
+            var doms = [];
+            for (let i = 0; i < data.length; i++) {
+                var itemData = data[i];
+                var key = itemData.key;
+                var itemDom = document.createElement("div");
+                itemDom.id = componentMenuFns.config.componentIdPrefix + key;
+                itemDom.className = componentMenuFns.config.componentItemClassName;
+                itemDom.textContent = itemData.name;
+                itemDom.onclick = (function(key) {
+                    var currKey = key;
+                    return function() {
+                        componentMenuFns.opt.checkComponent(currKey);
+                    }
+                })(key);
+                doms.push(itemDom);
+            }
+    
+            return doms;
+        }
+    },
+    opt: {
+        checkGroup: function(key) {
+            var currGroupDom = document.getElementById(componentMenuFns.config.groupIdPrefix + key);
+            if (!currGroupDom || currGroupDom.className == componentMenuFns.config.groupCheckedClassName) {
+                return;
+            }
+
+            var groupDom = document.getElementById(componentMenuFns.config.groupDomId);
+            for (var i = 0; i < groupDom.children.length; i++) {
+                const groupItemDom = groupDom.children[i];
+                groupItemDom.className = componentMenuFns.config.groupItemClassName;
+            }
+            currGroupDom.className = componentMenuFns.config.groupCheckedClassName;
+            componentMenuFns.init.components(key);
+        },
+        checkComponent: function(key) {
+            console.log("Function 'checkComponent' Undefined");
+        }
+    }
+}
+
 const domTools = {
     remove: function(dom) {
         if (dom) {

@@ -20,7 +20,6 @@ body {
     color: var(--font_color);
     margin-bottom: 20px;
 }
-
 .nav .text {
     padding: 8px;
     font-size: 25px;
@@ -29,20 +28,17 @@ body {
     margin-left: 20px;
     vertical-align: top;
 }
-
 .nav .items {
     display: inline-block;
     font-size: 16px;
     vertical-align: top;
 }
-
 .nav .items span {
     display: inline-block;
     margin-left: 10px;
     padding: 14px 10px;
     vertical-align: top;
 }
-
 .nav .items .active{
     background-color: var(--bg_light_color);
     color: var(--font_dark_color);
@@ -51,8 +47,108 @@ body {
 
 
 
-
 .home {
-    width: 90%;
-    margin-left: 5%;
+    width: 94%;
+    margin-left: 3%;
+}
+.home .block{
+    width: 100%;
+    margin: 30px 0;
+    padding: 20px;
+    background-color: var(--bg_light_color);
+    font-size: 14px;
+}
+
+.config {
+    width: 100%;
+    min-height: 1200px;
+    padding: 0px 20px;
+}
+.config .group {
+    width: 100%;
+    padding: 8px 5px;
+    word-wrap: break-word;
+    background-color: var(--bg_light_color);
+}
+.config .group .item {
+    width: auto;
+    min-width: 60px;
+    height: 35px;
+    line-height: 16px;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+    margin-top: 2px;
+    background-color: var(--bg_color);
+    color: var(--font_color);
+    cursor: pointer; 
+}
+.config .group .item-checked {
+    width: auto;
+    min-width: 60px;
+    height: 35px;
+    line-height: 16px;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+    margin-top: 2px;
+    background-color: var(--font_dark_color);
+    color: var(--font_color);
+}
+.config .component {
+    width: 10%;
+    height: auto;
+    padding: 5px;
+    float: left;
+}
+.config .component .item {
+    width: 100%;
+    height: auto;
+    min-height: 23px;
+    word-wrap: break-word;
+    font-size: 10px;
+    padding: 10px 5px;
+    text-align: center;
+    margin-bottom: 5px;
+    background-color: var(--bg_color);
+    color: var(--font_color);
+    cursor: pointer; 
+}
+
+
+
+
+.editor {
+    width: 100%;
+    height: auto;
+}
+.editor .editor-iframe {
+    width: 100%;
+    min-height: 1200px;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.footer {
+    width: 100%;
+    background-color: var(--bg_dark_color);
+    color: var(--font_color);
+    margin-top: 20px;
+    padding: 30px 20px;
+}
+.footer .text{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+.footer .link{
+    color: var(--font_color);
+    font-weight: bold;
 }
