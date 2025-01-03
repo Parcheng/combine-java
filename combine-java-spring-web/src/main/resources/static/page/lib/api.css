@@ -40,7 +40,7 @@ body {
     vertical-align: top;
 }
 .nav .items .active{
-    background-color: var(--bg_light_color);
+    background-color: var(--font_color);
     color: var(--font_dark_color);
     font-weight: bold;
 }
@@ -55,20 +55,21 @@ body {
     width: 100%;
     margin: 30px 0;
     padding: 20px;
-    background-color: var(--bg_light_color);
     font-size: 14px;
+    background-color: var(--bg_light_color);
 }
+
+
 
 .config {
     width: 100%;
-    min-height: 1200px;
-    padding: 0px 20px;
+    min-height: 800px;
+    padding: 0 10px;
 }
 .config .group {
     width: 100%;
-    padding: 8px 5px;
+    padding: 2px 5px;
     word-wrap: break-word;
-    background-color: var(--bg_light_color);
 }
 .config .group .item {
     width: auto;
@@ -101,9 +102,9 @@ body {
 }
 .config .component {
     width: 10%;
-    height: auto;
     padding: 5px;
-    float: left;
+    display: inline-block;
+    vertical-align: top;
 }
 .config .component .item {
     width: 100%;
@@ -118,13 +119,53 @@ body {
     color: var(--font_color);
     cursor: pointer; 
 }
+.config .content {
+    width: 89%;
+    height: 100%;
+    padding: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+.config .content .title {
+    width: 100%;
+    padding: 0 5px;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+}
+.config .content .item {
+    width: 100%;
+    background-color: var(--bg_light_color);
+    padding: 10px;
+    display: block;
+    margin-bottom: 10px;
+}
+.config .content .sub-items {
+    width: 100%;
+    padding-left: 20px;
+    display: block;
+    margin-bottom: 10px;
+}
+.config .content .item span {
+    width: 100%;
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px;
+}
 
+
+
+.overall {
+    width: 100%;
+    min-height: 800px;
+    padding: 0 10px;
+}
 
 
 
 .editor {
     width: 100%;
-    height: auto;
+    min-height: 800px;
 }
 .editor .editor-iframe {
     width: 100%;
@@ -133,6 +174,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 
 
 .footer {
@@ -147,7 +189,6 @@ body {
     display: inline-block;
     text-align: center;
 }
-
 .footer .link{
     color: var(--font_color);
     font-weight: bold;
