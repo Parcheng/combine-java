@@ -1,5 +1,7 @@
 var baseUrl = "http://127.0.0.1:8080/combine";
 
+var firstGroup = null;
+var firstComponentDom = null;
 var groupMap = {};
 var componentMap = {};
 var commonRefMap = {};
@@ -86,13 +88,16 @@ const loadFns = {
 
 const componentMenuFns = {
     config: {
+        checkFirstGroup: true,
+        checkFirstComponent: true,
         groupIdPrefix: "g_", 
         componentIdPrefix: "c_", 
         groupDomId: "group",
         componentDomId: "component",
         groupItemClassName: "item",
         componentItemClassName: "item",
-        groupCheckedClassName: "item-checked"
+        groupCheckedClassName: "item-checked",
+        componentCheckedClassName: "item-checked"
     },
     init: {
         groups: function() {
@@ -109,6 +114,10 @@ const componentMenuFns = {
             var groupDom = document.getElementById(componentMenuFns.config.groupDomId);
             var doms = componentMenuFns.build.groups(groupList);
             domTools.setAll(groupDom, doms);
+
+            if (firstGroup && componentMenuFns.config.checkFirstGroup == true) {
+                componentMenuFns.opt.checkGroup(firstGroup.key);
+            }
         },
         components: function(groupKey) {
             var group = groupMap[groupKey];
@@ -125,6 +134,10 @@ const componentMenuFns = {
                 var componentDom = document.getElementById(componentMenuFns.config.componentDomId);
                 var doms =  componentMenuFns.build.components(componentList);
                 domTools.setAll(componentDom, doms);
+
+                if (firstComponentDom && componentMenuFns.config.checkFirstComponent == true) {
+                    firstComponentDom.dispatchEvent(new Event("click"));
+                }
             }
         }
     },
@@ -151,6 +164,7 @@ const componentMenuFns = {
         },
         components: function(data) {
             var doms = [];
+            firstComponentDom = null;
             for (let i = 0; i < data.length; i++) {
                 var itemData = data[i];
                 var key = itemData.key;
@@ -158,15 +172,32 @@ const componentMenuFns = {
                 itemDom.id = componentMenuFns.config.componentIdPrefix + key;
                 itemDom.className = componentMenuFns.config.componentItemClassName;
                 itemDom.textContent = itemData.name;
-                itemDom.onclick = (function(key) {
+                itemDom.onclick = (function(key, itemDom) {
                     var currKey = key;
+                    var currItemDom = itemDom;
                     return function() {
+                        const parentDom = currItemDom.parentNode;
+                        if (parentDom && parentDom.children && parentDom.children.length > 0) {
+                            for (let pc = 0; pc < parentDom.children.length; pc++) {
+                                const currDom = parentDom.children[pc];
+                                if (currDom) {
+                                    currDom.className = componentMenuFns.config.componentItemClassName;
+                                }
+                            }
+                            currItemDom.className = componentMenuFns.config.componentCheckedClassName;
+                        }
+
                         componentMenuFns.opt.checkComponent(currKey);
                     }
-                })(key);
+                })(key, itemDom);
+
+                if (i == 0) {
+                    firstComponentDom = itemDom;
+                }
+
                 doms.push(itemDom);
             }
-    
+
             return doms;
         }
     },

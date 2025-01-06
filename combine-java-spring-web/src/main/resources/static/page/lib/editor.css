@@ -60,7 +60,8 @@
     padding: 5px;
     float: left;
 }
-.component .item {
+.component .item, 
+.component .item-checked {
     width: 100%;
     height: auto;
     min-height: 23px;

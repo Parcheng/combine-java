@@ -80,8 +80,13 @@ const initFns = {
             }
             
             const configInitDom = document.getElementById("config-init-content");
-            const initConfigDoms = buildFns.fieldItems(currComponent.initConfig);
-            domTools.setAll(configInitDom, initConfigDoms);
+            if (currComponent.initConfig && currComponent.initConfig.length > 0) {
+                const initConfigDoms = buildFns.fieldItems(currComponent.initConfig);
+                domTools.setAll(configInitDom, initConfigDoms);
+            } else {
+                const emptyDom = buildFns.emptyItems();
+                domTools.setAll(configInitDom, [emptyDom]);
+            }
             
             const configLogicDom = document.getElementById("config-logic-content");
             const logicConfigDoms = buildFns.fieldItems(currComponent.logicConfig);
@@ -89,6 +94,16 @@ const initFns = {
         }
 
         componentMenuFns.init.groups();
+        // if (firstGroup) {
+        //     componentMenuFns.opt.checkGroup(firstGroup.key);
+        //     if (firstComponent) {
+        //         var firstComponentDom = document.getElementById(componentMenuFns.config.componentIdPrefix + firstComponent.key);
+        //         if (firstComponentDom) {
+        //             firstComponentDom.dispatchEvent(new Event("click"));
+        //         }
+        //         // componentMenuFns.opt.checkComponent(firstComponent.key);
+        //     }
+        // }
     },
 }
 
@@ -100,15 +115,23 @@ const buildFns = {
 
         const body = [];
         for (let i = 0; i < configs.length; i++) {
-            const itemDom = buildDomFns.item(configs[i]);
+            const config = configs[i];
+            const itemDom = buildDomFns.item(config);
             body.push(itemDom);
+
+            if (config.children && config.children.length > 0) {
+                const subItemsDom = buildDomFns.subItem();
+                const itemDoms = buildFns.fieldItems(config.children);
+                domTools.setAll(subItemsDom, itemDoms);
+                body.push(subItemsDom);
+            }
         }
 
         return body;
     },
     emptyItems: function() {
         var dom = document.createElement("div");
-        dom.className = "item";
+        dom.className = "item-empty";
         dom.textContent = "暂无配置"
         return dom;
     }
@@ -119,42 +142,58 @@ const buildDomFns = {
         var dom = document.createElement("div");
         dom.className = "item";
 
+        var nameSpan = document.createElement("span");
+        nameSpan.textContent = "【" + config.key + " - " + config.name + "】";
+        dom.appendChild(nameSpan);
+
         var headerSpan = document.createElement("span");
-        headerSpan.textContent = config.key + 
-            " | " + config.name + " | " + config.type + 
-            " | " + (config.isArray ? "数组 | " : "非数组 | ") + 
-            " | " + (config.isRequired ? "必填 | " : "非必填")
+        headerSpan.textContent = "【类型 - " + config.type 
+            + "】【" + (config.isArray ? "数组" : "非数组") 
+            + "】【" + (config.isRequired ? "必填" : "非必填") + "】";
         dom.appendChild(headerSpan);
 
         if (config.desc && config.desc.length > 0) {
             for (let di = 0; di < config.desc.length; di++) {
-                const descItemSpan = document.createElement("span");
-                descItemSpan.textContent = config[di];
-                dom.appendChild(descItemSpan);
+                const descItem = config[di];
+                if (descItem && descItem != "") {
+                    const descItemSpan = document.createElement("span");
+                    descItemSpan.textContent = descItem;
+                    dom.appendChild(descItemSpan);
+                }
             }
         }
         
         if (config.egs && config.egs.length > 0) {
             if (config.egs.length > 1) {
                 const egTitleSpan = document.createElement("span");
-                egTitleSpan.textContent = "示例: ";
+                egTitleSpan.textContent = "【示例】";
                 dom.appendChild(egTitleSpan);
-            } else {
-                const egFirstSpan = document.createElement("span");
-                egFirstSpan.textContent = "示例: " + config[0];
-                dom.appendChild(egFirstSpan);
+            }
 
-                for (let ei = 1; ei < config.egs.length; ei++) {
-                    const egItemSpan = document.createElement("span");
-                    egItemSpan.textContent = config[di];
-                    dom.appendChild(egItemSpan);
+            var isFirst = true;
+            for (let ei = 0; ei < config.egs.length; ei++) {
+                var egItem = config.egs[ei];
+                var egText = "";
+                if (egItem != null && egItem != undefined) {
+                    egText = (egItem.desc ? egItem.desc + " -> " : "") + egItem.value;
                 }
+
+                if (isFirst && config.egs.length == 1) {
+                    egText = "【示例】" + egText;
+                    isFirst = false;
+                }
+
+                const egItemSpan = document.createElement("span");
+                egItemSpan.textContent = egText;
+                dom.appendChild(egItemSpan);
             }
         }
 
         return dom;
     },
     subItem: function() {
-
+        var dom = document.createElement("div");
+        dom.className = "sub-items";
+        return dom;
     }
 }

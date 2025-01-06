@@ -1,4 +1,3 @@
-var firstGroup = null;
 var copyComponent = {
     init: null,
     logic: null
@@ -53,6 +52,7 @@ window.onload = function() {
 
 const initFns = {
     loadGroup() {
+        componentMenuFns.config.checkFirstComponent = false;
         componentMenuFns.opt.checkComponent = function(key) {
             var checkKeyDom = document.getElementById("check-board-source-key");
             checkKeyDom.value = key;
@@ -66,9 +66,6 @@ const initFns = {
         }
 
         componentMenuFns.init.groups();
-        if (firstGroup) {
-            componentMenuFns.opt.checkGroup(firstGroup.key);
-        }
     },
     bindAddFlowEvent: function() {
         var beforeAddDom = document.getElementById("before-add");
