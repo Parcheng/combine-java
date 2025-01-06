@@ -5,6 +5,7 @@ var firstComponentDom = null;
 var groupMap = {};
 var componentMap = {};
 var commonRefMap = {};
+var overallProperties = [];
 
 const loadFns = {
     loadData() {
@@ -83,6 +84,16 @@ const loadFns = {
         );
     },
     loadOverall() {
+        // requestFns.url(baseUrl + "/flow/settings/overall", "POST", false, {}, null, 
+        requestFns.file("./overall-test.json", 
+            function(data) {
+                overallProperties = JSON.parse(data);
+                console.log(overallProperties);
+            },
+            function(data) {
+                alert("加载全局配置数据失败！")
+            }
+        );
     }
 }
 

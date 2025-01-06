@@ -1,11 +1,9 @@
-
-
-
 window.onload = function() {
     loadFns.loadData();
-    loadFns.loadOverall();
+    // loadFns.loadOverall();
     initFns.bindNavEvent();
     initFns.loadGroup();
+    initFns.loadOverall();
 };
 
 const initFns = {
@@ -111,6 +109,9 @@ const initFns = {
 
         componentMenuFns.init.groups();
     },
+    loadOverall: function() {
+        
+    }
 }
 
 const buildFns = {
