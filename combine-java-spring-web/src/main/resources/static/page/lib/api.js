@@ -91,19 +91,25 @@ const initFns = {
             const configLogicDom = document.getElementById("config-logic-content");
             const logicConfigDoms = buildFns.fieldItems(currComponent.logicConfig);
             domTools.setAll(configLogicDom, logicConfigDoms);
+
+            const configCommonDom = document.getElementById("config-common-content");
+            const commonObjects = currComponent.commonObjects;
+            if (commonObjects && commonObjects.length > 0) {
+                for (let coi = 0; coi < commonObjects.length; coi++) {
+                    const commonItemDoms = buildFns.commonItems(commonObjects[coi]);
+                    if (coi == 0) {
+                        domTools.setAll(configCommonDom, commonItemDoms);
+                    } else {
+                        domTools.addAll(configCommonDom, commonItemDoms);
+                    }
+                }
+            } else {
+                const emptyDom = buildFns.emptyItems();
+                domTools.setAll(configCommonDom, [emptyDom]);
+            }
         }
 
         componentMenuFns.init.groups();
-        // if (firstGroup) {
-        //     componentMenuFns.opt.checkGroup(firstGroup.key);
-        //     if (firstComponent) {
-        //         var firstComponentDom = document.getElementById(componentMenuFns.config.componentIdPrefix + firstComponent.key);
-        //         if (firstComponentDom) {
-        //             firstComponentDom.dispatchEvent(new Event("click"));
-        //         }
-        //         // componentMenuFns.opt.checkComponent(firstComponent.key);
-        //     }
-        // }
     },
 }
 
@@ -127,6 +133,23 @@ const buildFns = {
             }
         }
 
+        return body;
+    },
+    commonItems: function(config) {
+        var body = [];
+
+        var titleDom = document.createElement("div");
+        titleDom.className = "item-common-title";
+        titleDom.textContent = config.name + " - " + config.key;
+        body.push(titleDom);
+
+        if (config.properties && config.properties.length > 0) {
+            const propertyDoms = buildFns.fieldItems(config.properties);
+            for (let i = 0; i < propertyDoms.length; i++) {
+                body.push(propertyDoms[i]);
+            }
+        }
+        
         return body;
     },
     emptyItems: function() {
