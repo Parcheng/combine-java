@@ -1,13 +1,12 @@
 window.onload = function() {
-    loadFns.loadData();
-    // loadFns.loadOverall();
+    loadFns.loadData(initFns.loadGroup);
+    loadFns.loadOverall(initFns.loadOverall);
     initFns.bindNavEvent();
-    initFns.loadGroup();
-    initFns.loadOverall();
 };
 
 const initFns = {
     bindNavEvent: function() {
+
         var homeDom = document.getElementById("home");
         var overallDom = document.getElementById("overall");
         var flowConfigDom = document.getElementById("flow-config");
@@ -95,7 +94,7 @@ const initFns = {
             domTools.setAll(configLogicDom, logicConfigDoms);
 
             const configCommonDom = document.getElementById("config-common-content");
-            const commonObjects = currComponent.commonObjects;
+            const commonObjects = groupMap[currComponent.groupKey].commons;
             if (commonObjects && commonObjects.length > 0) {
                 for (let coi = 0; coi < commonObjects.length; coi++) {
                     const commonItemDoms = buildFns.commonItems(commonObjects[coi]);
@@ -114,7 +113,9 @@ const initFns = {
         componentMenuFns.init.groups();
     },
     loadOverall: function() {
-        
+        const configInfoDom = document.getElementById("overall-content");
+        var overallItemDoms = buildFns.fieldItems(overallProperties);
+        domTools.setAll(configInfoDom, overallItemDoms);
     }
 }
 

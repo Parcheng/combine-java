@@ -114,7 +114,7 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
                 result.setRunTime(System.currentTimeMillis() - startTime);
 
                 // 打印日志
-                if (logicConfig.printResult() == null ? GlobalContextHandler.get(scopeKey).getPrintComponentResult() : logicConfig.printResult()) {
+                if (logicConfig.printResult() == null ? GlobalContextHandler.get(scopeKey).getPrintConfigs().getComponentResult() : logicConfig.printResult()) {
                     PrintHelper.printComponentResult(result);
                 }
 

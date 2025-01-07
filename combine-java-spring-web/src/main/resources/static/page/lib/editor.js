@@ -41,8 +41,7 @@ var idPrefix = {
 }
 
 window.onload = function() {
-    loadFns.loadData();
-    initFns.loadGroup();
+    loadFns.loadData(initFns.loadGroup);
     initFns.bindAddFlowEvent();
     initFns.initComponentPop();
     initFns.initCheckBoard();

@@ -1,9 +1,13 @@
 package com.parch.combine.core.component;
 
+import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
 import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.StringUtil;
+import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.service.CombineJavaService;
@@ -51,7 +55,9 @@ public class CombineJavaLoader {
         PrintHelper.printInit("[初始化流程设置] > " + StringUtil.join(context.getInitFlows(), ", "));
         PrintHelper.printInit("[是否开放配置注册] > " + context.getOpenRegisterConfig());
         PrintHelper.printInit("[流程链路请求ID字段] > " + context.getRequestIdKey());
-        PrintHelper.printInit("[打印组件执行结果] > " + context.getPrintComponentResult());
+        PrintHelper.printInit("[日志打印配置] > " + JsonUtil.obj2String(context.getPrintConfigs()));
+        PrintHelper.printInit("[是否加载API信息] > " + context.getLoadApiInfo());
+        PrintHelper.printInit("[变量标识配置] > " + JsonUtil.obj2String(context.getFlagConfigs()));
         PrintHelper.printInit("------------------------------------------------------------------------------------------------------------------------------------------------------");
 
 

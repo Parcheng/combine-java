@@ -51,6 +51,7 @@ body {
 .home {
     width: 94%;
     margin-left: 3%;
+    display: block;
 }
 .home .block{
     width: 100%;
@@ -126,6 +127,7 @@ body {
     padding: 5px;
     display: inline-block;
     vertical-align: top;
+    text-align: left;
 }
 .config .content .title {
     width: 100%;
@@ -170,7 +172,6 @@ body {
     font-size: 12px;
     padding: 3px;
 }
-
 .config .config-info {
     width: 100%;
     display: block;
@@ -211,6 +212,8 @@ body {
     width: 100%;
     min-height: 800px;
     padding: 0 10px;
+    display: block;
+    text-align: center;
 }
 
 

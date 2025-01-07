@@ -1,4 +1,4 @@
-var baseUrl = "http://127.0.0.1:8080/combine";
+var baseUrl = "http://127.0.0.1:8888/combine";
 
 var firstGroup = null;
 var firstComponentDom = null;
@@ -8,16 +8,19 @@ var commonRefMap = {};
 var overallProperties = [];
 
 const loadFns = {
-    loadData() {
-        // requestFns.url(baseUrl + "/flow/settings/list", "POST", false, {}, null, 
-        requestFns.file("./test.json", 
+    loadData(finishFunc) {
+        requestFns.url(baseUrl + "/flow/settings/list", "POST", false, {}, null, 
+        // requestFns.file("./test/component-test-data.json", 
             function(data) {
-                var groupDataArr = JSON.parse(data);
+                var groupResultData = JSON.parse(data);
+                var groupDataArr = groupResultData.data;
+
                 for (let i = 0; i < groupDataArr.length; i++) {
                     const groupDataItem = groupDataArr[i];
                     var currGroupData = groupMap[groupDataItem.key] = {
                         key: groupDataItem.key,
                         name: groupDataItem.name,
+                        commons: groupDataItem.commons,
                         components: []
                     }
 
@@ -28,6 +31,7 @@ const loadFns = {
                     if (groupDataItem.settings && Array.isArray(groupDataItem.settings)) {
                         for (let j = 0; j < groupDataItem.settings.length; j++) {
                             const componentDataItem = groupDataItem.settings[j];
+                            componentDataItem.groupKey = groupDataItem.key;
                             
                             // 配置数据调整
                             var dataAmend = function(configArr) {
@@ -39,23 +43,8 @@ const loadFns = {
                                 var newConfigArr = [];
                                 for (let k = 0; k < configArr.length; k++) {
                                     const config = configArr[k];
-                                    
-                                    var keyArr = config.key.split(".");
                                     configMap[config.key] = config;
-
-                                    if (keyArr.length <= 1) {
-                                        newConfigArr.push(config);
-                                    } else {
-                                        var lastKey = keyArr[keyArr.length - 1];
-                                        var parentKey = config.key.replace(("." + lastKey), "");
-                                        var parentConfig = configMap[parentKey];
-                                        if (!parentConfig.children) {
-                                            parentConfig.children = [];
-                                        }
-
-                                        config.key = lastKey;
-                                        parentConfig.children.push(config);
-                                    }
+                                    newConfigArr.push(config);
                                 }
 
                                 return newConfigArr;
@@ -75,20 +64,30 @@ const loadFns = {
                         }
                     }
                 }
-                console.log(groupMap);
-                console.log(componentMap);
+                console.log("GroupMap:", groupMap);
+                console.log("ComponentMap:", componentMap);
+                console.log("CommonRefMap:", commonRefMap);
+
+                if (finishFunc) {
+                    finishFunc();
+                }
             },
             function(data) {
                 alert("加载组件数据失败！")
             }
         );
     },
-    loadOverall() {
-        // requestFns.url(baseUrl + "/flow/settings/overall", "POST", false, {}, null, 
-        requestFns.file("./overall-test.json", 
+    loadOverall(finishFunc) {
+        requestFns.url(baseUrl + "/flow/settings/overall", "POST", false, {}, null, 
+        // requestFns.file("./test/overall-test-data.json", 
             function(data) {
-                overallProperties = JSON.parse(data);
-                console.log(overallProperties);
+                var overallResultData = JSON.parse(data);
+                overallProperties = overallResultData.data;
+                console.log("OverallProperties", overallProperties);
+
+                if (finishFunc) {
+                    finishFunc();
+                }
             },
             function(data) {
                 alert("加载全局配置数据失败！")
