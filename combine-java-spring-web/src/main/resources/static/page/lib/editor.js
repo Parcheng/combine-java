@@ -2352,7 +2352,7 @@ const valueFns = {
                 const setting = settings[s];
                 const settingKey = setting.key;
                 let currValue = itemValue[settingKey];
-                if (currValue == null || currValue == undefined) {
+                if (currValue == null || currValue == undefined || currValue == "") {
                     if (setting.isRequired == true) {
                         result.errors.push({
                             valueKey: settingKey, 
