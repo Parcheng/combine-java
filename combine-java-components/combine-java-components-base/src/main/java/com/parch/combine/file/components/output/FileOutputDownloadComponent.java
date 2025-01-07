@@ -12,7 +12,7 @@ import com.parch.combine.file.base.output.download.FileOutputDownloadInitConfig;
 import com.parch.combine.file.base.output.download.FileOutputDownloadLogicConfig;
 
 @Component(order = 400, key = "output.download", name = "文件数据下载组件", logicConfigClass = FileOutputDownloadLogicConfig.class, initConfigClass = FileOutputDownloadInitConfig.class)
-@ComponentResult(name = "文件写入磁盘是否成功", isDownload = true)
+@ComponentResult(name = "文件数据", isDownload = true)
 public class FileOutputDownloadComponent extends FileOutputComponent<FileOutputDownloadInitConfig, FileOutputDownloadLogicConfig> {
 
     public FileOutputDownloadComponent() {

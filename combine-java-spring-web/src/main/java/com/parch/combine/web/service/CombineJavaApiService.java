@@ -8,5 +8,4 @@ public class CombineJavaApiService extends AbstractCombineWebHandler {
     public CombineJavaApiService() {
         super("combine_api_business.json");
     }
-
 }

@@ -1,0 +1,250 @@
+/* 变量 */
+:root{
+    --border_color:#313131;
+    --bg_light_color:rgb(225, 225, 225);
+    --bg_color:rgb(146, 144, 144);
+    --bg_dark_color:black;
+    --font_color: white;
+    --font_light_color: rgb(146, 144, 144);
+    --font_dark_color: black;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    width: 100%;
+    background-color: var(--bg_dark_color);
+    color: var(--font_color);
+    margin-bottom: 20px;
+}
+.nav .text {
+    padding: 8px;
+    font-size: 25px;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+}
+.nav .items {
+    display: inline-block;
+    font-size: 16px;
+    vertical-align: top;
+}
+.nav .items span {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 14px 10px;
+    vertical-align: top;
+    cursor: pointer; 
+}
+.nav .items .active{
+    background-color: var(--font_color);
+    color: var(--font_dark_color);
+    font-weight: bold;
+}
+
+
+
+.home {
+    width: 94%;
+    margin-left: 3%;
+    display: block;
+}
+.home .block{
+    width: 100%;
+    margin: 30px 0;
+    padding: 20px;
+    font-size: 14px;
+    background-color: var(--bg_light_color);
+}
+
+
+
+.config {
+    width: 100%;
+    min-height: 800px;
+    padding: 0 10px;
+}
+.config .group {
+    width: 100%;
+    padding: 2px 5px;
+    word-wrap: break-word;
+}
+.config .group .item {
+    width: auto;
+    min-width: 60px;
+    height: 35px;
+    line-height: 16px;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+    margin-top: 2px;
+    background-color: var(--bg_color);
+    color: var(--font_color);
+    cursor: pointer; 
+}
+.config .group .item-checked {
+    width: auto;
+    min-width: 60px;
+    height: 35px;
+    line-height: 16px;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    padding: 10px;
+    margin-right: 5px;
+    margin-top: 2px;
+    background-color: var(--font_dark_color);
+    color: var(--font_color);
+}
+.config .component {
+    width: 10%;
+    padding: 5px;
+    display: inline-block;
+    vertical-align: top;
+}
+.config .component .item {
+    width: 100%;
+    height: auto;
+    min-height: 23px;
+    word-wrap: break-word;
+    font-size: 10px;
+    padding: 10px 5px;
+    text-align: center;
+    margin-bottom: 5px;
+    background-color: var(--bg_color);
+    color: var(--font_color);
+    cursor: pointer; 
+}
+.config .content {
+    width: 89%;
+    height: 100%;
+    padding: 5px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+.config .content .title {
+    width: 100%;
+    padding: 0 5px;
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+}
+.config .content .item {
+    width: 100%;
+    background-color: var(--bg_light_color);
+    padding: 10px;
+    display: block;
+    margin-bottom: 10px;
+}
+.config .content .item-empty {
+    width: 100%;
+    background-color: var(--bg_light_color);
+    font-size: 13px;
+    padding: 20px;
+    display: block;
+    margin-bottom: 10px;
+}
+.config .content .item-common-title {
+    width: 100%;
+    background-color: var(--bg_light_color);
+    padding: 10px;
+    display: block;
+    margin: 10px 0;
+    color: var(--font_dark_color);
+    font-weight: bold;
+}
+.config .content .sub-items {
+    width: 100%;
+    padding-left: 20px;
+    display: block;
+    margin-bottom: 10px;
+}
+.config .content .item span {
+    width: 100%;
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px;
+}
+.config .config-info {
+    width: 100%;
+    display: block;
+    background-color: var(--bg_light_color);
+    margin-bottom: 30px;
+    padding: 10px;
+}
+.config .config-info .title {
+    width: 100%;
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+}
+.config .config-info .content {
+    width: 100%;
+    display: block;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+
+.component .item-checked {
+    width: 100%;
+    height: auto;
+    min-height: 23px;
+    word-wrap: break-word;
+    font-size: 10px;
+    padding: 10px 5px;
+    text-align: center;
+    margin-bottom: 5px;
+    background-color: var(--font_dark_color);
+    color: var(--font_color);
+}
+
+
+
+.overall {
+    width: 100%;
+    min-height: 800px;
+    padding: 0 10px;
+    display: block;
+    text-align: center;
+}
+
+
+
+.editor {
+    width: 100%;
+    min-height: 800px;
+}
+.editor .editor-iframe {
+    width: 100%;
+    min-height: 1200px;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.footer {
+    width: 100%;
+    background-color: var(--bg_dark_color);
+    color: var(--font_color);
+    margin-top: 20px;
+    padding: 30px 20px;
+}
+.footer .text{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+.footer .link{
+    color: var(--font_color);
+    font-weight: bold;
+}

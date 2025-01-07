@@ -134,8 +134,9 @@ public class PropertySettingBuilder {
         FieldObject fieldObjectAnnotation = field.getAnnotation(FieldObject.class);
         if (fieldObjectAnnotation != null) {
             List<PropertySetting> subProperties = new ArrayList<>();
-            buildProperties(scope, subProperties, fieldObjectAnnotation.value(), property.getKey() + ".", parsedClass);
-            properties.addAll(subProperties);
+            buildProperties(scope, subProperties, fieldObjectAnnotation.value(), CheckEmptyUtil.EMPTY, parsedClass);
+            property.setChildren(subProperties);
+            properties.add(property);
         }
     }
 

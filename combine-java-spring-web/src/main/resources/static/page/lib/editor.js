@@ -1,22 +1,7 @@
-
-var groupMap = {};
-var componentMap = {};
-var commonRefMap = {};
-
-var firstGroup = null;
 var copyComponent = {
     init: null,
     logic: null
 }
-
-// 1.
-// 未完成配置的红色角标提示（流程，组件，子组件）
-// baseUrl问题
-
-// 2.
-// REF INIT 可以改成下拉选项（TYPE=REF_INIT） （items上层处理）
-
-var baseUrl = "http://127.0.0.1:8080/";
 
 var lastChecked = {
     flow: null,
@@ -46,8 +31,6 @@ var idIndex = {
     subBoard:1
 };
 var idPrefix = { 
-    group: "g_", 
-    component: "c_", 
     before: "b_", 
     after: "a_", 
     flow: "f_", 
@@ -58,8 +41,7 @@ var idPrefix = {
 }
 
 window.onload = function() {
-    initFns.loadData();
-    initFns.loadGroup();
+    loadFns.loadData(initFns.loadGroup);
     initFns.bindAddFlowEvent();
     initFns.initComponentPop();
     initFns.initCheckBoard();
@@ -68,86 +50,21 @@ window.onload = function() {
 };
 
 const initFns = {
-    loadData() {
-        // requestFns.url(baseUrl + "/settings/list", "POST", false, {}, null, 
-        requestFns.file("./test.json", 
-            function(data) {
-                var groupDataArr = JSON.parse(data);
-                for (let i = 0; i < groupDataArr.length; i++) {
-                    const groupDataItem = groupDataArr[i];
-                    var currGroupData = groupMap[groupDataItem.key] = {
-                        key: groupDataItem.key,
-                        name: groupDataItem.name,
-                        components: []
-                    }
-
-                    if (i == 0) {
-                        firstGroup = currGroupData;
-                    }
-
-                    if (groupDataItem.settings && Array.isArray(groupDataItem.settings)) {
-                        for (let j = 0; j < groupDataItem.settings.length; j++) {
-                            const componentDataItem = groupDataItem.settings[j];
-                            
-                            // 配置数据调整
-                            var dataAmend = function(configArr) {
-                                if (!configArr || configArr.length == 0) {
-                                    return configArr;
-                                }
-
-                                var configMap = {};
-                                var newConfigArr = [];
-                                for (let k = 0; k < configArr.length; k++) {
-                                    const config = configArr[k];
-                                    
-                                    var keyArr = config.key.split(".");
-                                    configMap[config.key] = config;
-
-                                    if (keyArr.length <= 1) {
-                                        newConfigArr.push(config);
-                                    } else {
-                                        var lastKey = keyArr[keyArr.length - 1];
-                                        var parentKey = config.key.replace(("." + lastKey), "");
-                                        var parentConfig = configMap[parentKey];
-                                        if (!parentConfig.children) {
-                                            parentConfig.children = [];
-                                        }
-
-                                        config.key = lastKey;
-                                        parentConfig.children.push(config);
-                                    }
-                                }
-
-                                return newConfigArr;
-                            }
-                            componentDataItem.initConfig = dataAmend(componentDataItem.initConfig);
-                            componentDataItem.logicConfig = dataAmend(componentDataItem.logicConfig);
-
-                            componentMap[componentDataItem.key] = componentDataItem;
-                            currGroupData.components.push(componentDataItem.key);
-                        }
-                    }
-
-                    if (groupDataItem.commons && Array.isArray(groupDataItem.commons)) {
-                        for (let k = 0; k < groupDataItem.commons.length; k++) {
-                            const commonObjectData = groupDataItem.commons[k];
-                            commonRefMap[commonObjectData.key] = commonObjectData;
-                        }
-                    }
-                }
-                console.log(groupMap);
-                console.log(componentMap);
-            },
-            function(data) {
-                alert("加载组件数据失败！")
-            }
-        );
-    },
     loadGroup() {
-        buildFns.groups();
-        if (firstGroup) {
-            optFns.tool.checkGroup(firstGroup.key);
+        componentMenuFns.config.checkFirstComponent = false;
+        componentMenuFns.opt.checkComponent = function(key) {
+            var checkKeyDom = document.getElementById("check-board-source-key");
+            checkKeyDom.value = key;
+        
+            var boardSelectDom = document.getElementById("check-board-select");
+            boardSelectDom.dispatchEvent(new Event("change"));
+        
+            var boardDom = document.getElementById("check-board-window");
+            domTools.switchDisplay(boardDom, true);
+            window.scrollTo(0, 0);
         }
+
+        componentMenuFns.init.groups();
     },
     bindAddFlowEvent: function() {
         var beforeAddDom = document.getElementById("before-add");
@@ -429,7 +346,7 @@ const initFns = {
                 return;
             }
 
-            requestFns.url(baseUrl + "flow/save", "POST", false, checkResult.data, 
+            requestFns.url(baseUrl + "/register", "POST", false, checkResult.data, 
                 function(data) {
                     if (data.success == true) {
                         console.log("保存成功", data);
@@ -499,38 +416,6 @@ const initFns = {
 }
 
 const buildFns = {
-    groups: function() {
-        var groupList = [];
-        for (const key in groupMap) {
-            if (Object.prototype.hasOwnProperty.call(groupMap, key)) {
-                groupList.push(groupMap[key]);
-                if (!firstGroup) {
-                    firstGroup = groupMap[key];
-                }
-            }
-        }
-
-        var groupDom = document.getElementById("group");
-        var doms = buildDomFns.tool.groups(groupList);
-        domTools.setAll(groupDom, doms);
-    },
-    components: function(groupKey) {
-        var group = groupMap[groupKey];
-        if (group && group.components) {
-            var componentKeys = group.components;
-            var componentList = [];
-            for (let i = 0; i < componentKeys.length; i++) {
-                const componentKey = componentKeys[i];
-                const component = componentMap[componentKey];
-                if (component) {
-                    componentList.push(component);
-                }
-            }
-            var componentDom = document.getElementById("component");
-            var doms =  buildDomFns.tool.components(componentList);
-            domTools.setAll(componentDom, doms);
-        }
-    },
     beforeFlow: function(flowId) {
         var parentDom = document.getElementById("before");
         var beforeDom = buildDomFns.node.flow(flowId);
@@ -924,48 +809,6 @@ const buildFns = {
 }
 
 const buildDomFns = {
-    tool: {
-        groups: function(data) {
-            var doms = [];
-            for (let i = 0; i < data.length; i++) {
-                var itemData = data[i];
-                var key = itemData.key;
-                var itemDom = document.createElement("div");
-                itemDom.id = idPrefix.group + key;
-                itemDom.className = "item";
-                itemDom.textContent = itemData.name;
-                itemDom.onclick = (function(key) {
-                    var currKey = key;
-                    return function() {
-                        optFns.tool.checkGroup(currKey);
-                    }
-                })(key);
-                doms.push(itemDom);
-            }
-    
-            return doms;
-        },
-        components: function(data) {
-            var doms = [];
-            for (let i = 0; i < data.length; i++) {
-                var itemData = data[i];
-                var key = itemData.key;
-                var itemDom = document.createElement("div");
-                itemDom.id = idPrefix.component + key;
-                itemDom.className = "item";
-                itemDom.textContent = itemData.name;
-                itemDom.onclick = (function(key) {
-                    var currKey = key;
-                    return function() {
-                        optFns.tool.checkComponent(currKey);
-                    }
-                })(key);
-                doms.push(itemDom);
-            }
-    
-            return doms;
-        }
-    },
     node: {
         componentInit: function(initId, componentId, key) {
             var dom = document.createElement("div");
@@ -2007,31 +1850,6 @@ const buildDomFns = {
 
 const optFns = {
     tool: {
-        checkGroup: function(key) {
-            var currGroupDom = document.getElementById(idPrefix.group + key);
-            if (!currGroupDom || currGroupDom.className == "item-checked") {
-                return;
-            }
-
-            var groupDom = document.getElementById("group");
-            for (var i = 0; i < groupDom.children.length; i++) {
-                const groupItemDom = groupDom.children[i];
-                groupItemDom.className = "item";
-            }
-            currGroupDom.className = "item-checked";
-            buildFns.components(key);
-        },
-        checkComponent: function(key) {
-            var checkKeyDom = document.getElementById("check-board-source-key");
-            checkKeyDom.value = key;
-
-            var boardSelectDom = document.getElementById("check-board-select");
-            boardSelectDom.dispatchEvent(new Event("change"));
-
-            var boardDom = document.getElementById("check-board-window");
-            domTools.switchDisplay(boardDom, true);
-            window.scrollTo(0, 0);
-        },
         checkSubComponent: function(subBoardId) {
             var checkKeyDom = document.getElementById("check-component-source-key");
             checkKeyDom.value = subBoardId;
@@ -2377,11 +2195,6 @@ const optFns = {
         }
     }
 }
-const logFns = {
-    error: function(title1, title2, title3, msg) {
-        return "【" + title1 + "】【" + title2 + "】【" + title3 + "】 " + msg;
-    }
-}
 
 const valueFns = {
     parsePathFlows: function(flowValueMap) {
@@ -2538,7 +2351,7 @@ const valueFns = {
                 const setting = settings[s];
                 const settingKey = setting.key;
                 let currValue = itemValue[settingKey];
-                if (currValue == null || currValue == undefined) {
+                if (currValue == null || currValue == undefined || currValue == "") {
                     if (setting.isRequired == true) {
                         result.errors.push({
                             valueKey: settingKey, 
@@ -2590,141 +2403,3 @@ const valueFns = {
         return result;
     }
 }
-
-const domTools = {
-    remove: function(dom) {
-        if (dom) {
-            if (dom.parentNode) {
-                dom.parentNode.removeChild(dom);
-            } else {
-                dom.remove();
-            }
-        }
-    },
-    clearAll: function(parentDom) {
-        if (parentDom) {
-            parentDom.innerHTML = "";
-        }
-    },
-    setAll: function(parentDom, subDoms) {
-        if (parentDom) {
-            domTools.clearAll(parentDom);
-            domTools.addAll(parentDom, subDoms);
-        }
-    },
-    addAll: function(parentDom, subDoms) {
-        if (parentDom && subDoms) {
-            for (let i = 0; i < subDoms.length; i++) {
-                if (subDoms[i]) {
-                    parentDom.appendChild(subDoms[i]);
-                }
-            }
-        }
-    },
-    switchDisplay: function(dom, isShow) {
-        if (isShow == null || isShow == undefined) {
-            var switchState = dom.getAttribute("switch-state");
-            isShow = switchState && switchState == "hide";
-        }
-
-        var noneStyleStr = "display: none;";
-        var style = dom.getAttribute("style");
-        style = style ? style : "";
-        if (isShow) {
-            dom.setAttribute("switch-state", "show");
-            if (style != "" && style.indexOf(noneStyleStr) !== -1) {
-                dom.setAttribute("style", style.replace(noneStyleStr, ""));
-            }
-        } else {
-            dom.setAttribute("switch-state", "hide");
-            if (style == "" || style.indexOf(noneStyleStr) === -1) {
-                dom.setAttribute("style", noneStyleStr + style);
-            }
-        }
-    }
-}
-
-const requestFns = {
-    url: function (url, type, fromSubmit, params, headers, successFn, failFn, errorFn) {
-        errorFn = errorFn ? errorFn : function () {
-            console.log("Request error: ", url, headers, params);
-            alert("Request error!");
-        };
-
-        const xhr = new XMLHttpRequest();
-        xhr.open(type.toUpperCase() === 'POST' ? 'POST' : 'GET', url);
-
-        headers = headers ? headers : {};
-        const contentType = headers["Content-Type"];
-        if (!contentType && !(fromSubmit && fromSubmit === true)) {
-            headers["Content-Type"] = "application/json";
-        }
-        for (const key in headers) {
-            if (Object.hasOwnProperty.call(headers, key)) {
-                xhr.setRequestHeader(key, headers[key]);
-            }
-        }
-
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                if (successFn) {
-                    successFn(xhr.response);
-                }
-            } else {
-                console.log("Request fail:", url, type, params, xhr);
-                if (failFn) {
-                    failFn({ status: xhr.status, text: xhr.statusText });
-                }
-            }
-        };
-
-        xhr.onerror = function () {
-            console.log("Request error: ", url, type, params, xhr);
-            if (errorFn) {
-                errorFn({ status: xhr.status, text: xhr.statusText });
-            } else if (failFn) {
-                failFn({ status: xhr.status, text: xhr.statusText });
-            }
-        };
-
-        let sendData = null;
-        if (fromSubmit && fromSubmit === true) {
-            sendData = new FormData();
-            if (params) {
-                for (const key in params) {
-                    if (Object.hasOwnProperty.call(params, key)) {
-                        let value = params[key];
-                        sendData.append(key, value instanceof Object && !(value instanceof File) ? JSON.stringify(value) : value);
-                    }
-                }
-            }
-        } else if (params){
-            sendData = JSON.stringify(params)
-        }
-
-        xhr.send(sendData);
-    },
-    file: function (path, successFn, failFn) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", path, false);
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                if (successFn) {
-                    successFn(xhr.responseText);
-                }
-            } else {
-                console.log("Request load file fail: ", path, xhr);
-                if (failFn) {
-                    failFn({ status: xhr.status, text: xhr.statusText });
-                }
-            }
-        };
-        xhr.onerror = function () {
-            console.log("Request load file error: ", path, xhr);
-            if (failFn) {
-                failFn({ status: xhr.status, text: xhr.statusText });
-            }
-        };
-        xhr.send();
-    }
-};

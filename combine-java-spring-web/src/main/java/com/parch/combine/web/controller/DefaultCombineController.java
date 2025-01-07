@@ -1,5 +1,7 @@
 package com.parch.combine.web.controller;
 
+import com.parch.combine.core.BaseCombineJavaFunction;
+import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.FlowResult;
 import com.parch.combine.web.service.CombineJavaApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,5 +36,10 @@ public class DefaultCombineController {
     public String page(@PathVariable(name = "function") String function, HttpServletRequest request, HttpServletResponse response) {
         FlowResult pageResult = defaultCombineWebService.call(new HashMap<>(), "page", function, request, response);
         return pageResult.getData() == null ? null : pageResult.getData().toString();
+    }
+
+    @PostMapping("register")
+    public List<BaseCombineJavaFunction.RegisterResult> register(@RequestBody CombineConfigVO config) {
+        return defaultCombineWebService.register(config);
     }
 }

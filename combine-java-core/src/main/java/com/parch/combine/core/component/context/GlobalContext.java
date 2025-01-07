@@ -28,15 +28,63 @@ public class GlobalContext {
     @Field(key = "requestIdKey", name = "流程请求ID的字段KEY", type = FieldTypeEnum.TEXT, defaultValue = "$requestId")
     private String requestIdKey = "$requestId";
 
-    @Field(key = "printComponentResult", name = "日志是否打印组件执行结果", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
-    private Boolean printComponentResult = true;
+    @Field(key = "printConfigs", name = "日志打印配置", type = FieldTypeEnum.OBJECT)
+    @FieldObject(PrintConfigs.class)
+    private PrintConfigs printConfigs = new PrintConfigs();
 
     @Field(key = "loadApiInfo", name = "是否加载API信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     private Boolean loadApiInfo = true;
 
-    @Field(key = "flagConfigs", name = "标识配置", type = FieldTypeEnum.CONFIG)
+    @Field(key = "flagConfigs", name = "标识配置", type = FieldTypeEnum.OBJECT)
     @FieldObject(FlagConfigs.class)
     private FlagConfigs flagConfigs = new FlagConfigs();
+
+    public static class PrintConfigs {
+
+        @Field(key = "header", name = "日志是否打印请求头信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+        private Boolean header = true;
+
+        @Field(key = "params", name = "日志是否打印请求参数信息", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+        private Boolean params = true;
+
+        @Field(key = "componentResult", name = "日志是否打印组件执行结果", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+        private Boolean componentResult = true;
+
+        @Field(key = "flowResult", name = "日志是否打印流程执行结果", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+        private Boolean flowResult = true;
+
+        public Boolean getHeader() {
+            return header;
+        }
+
+        public void setHeader(Boolean header) {
+            this.header = header;
+        }
+
+        public Boolean getParams() {
+            return params;
+        }
+
+        public void setParams(Boolean params) {
+            this.params = params;
+        }
+
+        public Boolean getComponentResult() {
+            return componentResult;
+        }
+
+        public void setComponentResult(Boolean componentResult) {
+            this.componentResult = componentResult;
+        }
+
+        public Boolean getFlowResult() {
+            return flowResult;
+        }
+
+        public void setFlowResult(Boolean flowResult) {
+            this.flowResult = flowResult;
+        }
+    }
 
     public static class FlagConfigs {
 
@@ -185,15 +233,13 @@ public class GlobalContext {
         this.requestIdKey = requestIdKey;
     }
 
-
-    public Boolean getPrintComponentResult() {
-        return printComponentResult;
+    public PrintConfigs getPrintConfigs() {
+        return printConfigs;
     }
 
-    public void setPrintComponentResult(Boolean printComponentResult) {
-        this.printComponentResult = printComponentResult;
+    public void setPrintConfigs(PrintConfigs printConfigs) {
+        this.printConfigs = printConfigs;
     }
-
 
     public FlagConfigs getFlagConfigs() {
         return flagConfigs;

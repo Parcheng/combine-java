@@ -3,5 +3,10 @@
   "initFlows": [],
   "openRegisterConfig": false,
   "requestIdKey": "requestID",
-  "printComponentResult": true
+  "printConfigs": {
+    "header": false,
+    "params": false,
+    "componentResult": false,
+    "flowResult": false
+  }
 }

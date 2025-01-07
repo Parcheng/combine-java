@@ -27,7 +27,7 @@ public interface ApiDataLoadLogicConfig extends ILogicConfig {
         @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
         Map<String, Object> params();
 
-        @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
+        @Field(key = "headers", name = "请求参数", type = FieldTypeEnum.MAP)
         Map<String, String> headers();
 
         @Field(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)
