@@ -171,6 +171,27 @@ body {
     padding: 3px;
 }
 
+.config .config-info {
+    width: 100%;
+    display: block;
+    background-color: var(--bg_light_color);
+    margin-bottom: 30px;
+    padding: 10px;
+}
+.config .config-info .title {
+    width: 100%;
+    display: block;
+    font-weight: bold;
+    font-size: 18px;
+}
+.config .config-info .content {
+    width: 100%;
+    display: block;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+
 .component .item-checked {
     width: 100%;
     height: auto;
@@ -183,6 +204,8 @@ body {
     background-color: var(--font_dark_color);
     color: var(--font_color);
 }
+
+
 
 .overall {
     width: 100%;

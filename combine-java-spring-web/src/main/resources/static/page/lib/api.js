@@ -76,7 +76,11 @@ const initFns = {
             if (!currComponent) {
                 return;
             }
-            
+
+            const configInfoDom = document.getElementById("config-info");
+            const infoItemDoms = buildFns.info(currComponent);
+            domTools.setAll(configInfoDom, infoItemDoms);
+
             const configInitDom = document.getElementById("config-init-content");
             if (currComponent.initConfig && currComponent.initConfig.length > 0) {
                 const initConfigDoms = buildFns.fieldItems(currComponent.initConfig);
@@ -115,6 +119,9 @@ const initFns = {
 }
 
 const buildFns = {
+    info: function(config) {
+        return buildDomFns.infoItem(config);
+    },
     fieldItems: function(configs) {
         if (!configs || configs.length == 0) {
             return buildFns.emptyItems();
@@ -162,6 +169,24 @@ const buildFns = {
 }
 
 const buildDomFns = {
+    infoItem: function(config) {
+        var body = [];
+
+        var titleDom = document.createElement("div");
+        titleDom.className = "title";
+        titleDom.textContent = config.name + " - " + config.key;
+        body.push(titleDom);
+
+        if (config.result) {
+            var contentDom = document.createElement("div");
+            contentDom.className = "content";
+            contentDom.textContent = "返回值 - " + config.result.info 
+                + (config.result.isDownload ? "【文件下载】" : "");
+            body.push(contentDom);
+        }
+
+        return body;
+    },
     item: function(config) {
         var dom = document.createElement("div");
         dom.className = "item";
