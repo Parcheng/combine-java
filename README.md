@@ -12,14 +12,16 @@
 **combine-java-components-base**: 系统内置组件 - 基础组件包<br>
 **combine-java-components-gui**: 系统内置组件 - SWING视图组件包<br>
 **combine-java-components-html**: 系统内置组件 - HTML组件包<br>
+**combine-java-components-email**: 系统内置组件 - Email组件包<br>
 **combine-java-components-mysql**: 系统内置组件 - MySql数据库组件包<br>
 **combine-java-components-redis**: 系统内置组件 - Redis组件包<br>
 **combine-java-components-rocketmq**: 系统内置组件 - RocketMQ组件包<br>
+**combine-java-components-rabbitmq**: 系统内置组件 - RabbitMQ组件包<br>
 <br>
 
 **本地启动并访问 API：**<br>
 启动 combine-java-spring-web 工程<br>
-组件的API地址：http://127.0.0.1:8888/combine/flow-page/api<br>
+组件的API地址：http://127.0.0.1:8888/combine/page/api.html<br>
 <br>
 
 ### 流程（FLOW）
@@ -41,7 +43,7 @@
 <dependency>
     <artifactId>combine-java-spring-web</artifactId>
     <groupId>com.parch.combine</groupId>
-    <version>0.11.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
