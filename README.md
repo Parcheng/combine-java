@@ -5,8 +5,8 @@
 
 **工程结构：**<br>
 **combine-java-core**：核心模块，所有的核心功能都在这里<br>
-**combine-java-components**：系统内置组模块 - POM工程<br>
-**combine-java-spring-web**：内置了 SpringBoot 的快速使用模块，项目直接通过 pom 引入后即可快速使用。该工程可以直接启动，仅提供了 API 相关的页面和接口<br>
+**combine-java-components**：系统内置组件模块（POM工程）<br>
+**combine-java-spring-web**：内置了 SpringBoot 的快速使用模块，可以直接启动，提供了 API 相关的页面和接口<br>
 <br>
 **系统内置组模块（combine-java-components）包含：**<br>
 **combine-java-components-base**: 系统内置组件 - 基础组件包<br>
@@ -21,7 +21,7 @@
 
 **本地启动并访问 API：**<br>
 启动 combine-java-spring-web 工程<br>
-组件的API地址：http://127.0.0.1:8888/combine/page/api.html<br>
+本地访问 API 地址：http://127.0.0.1:8888/combine/page/api.html<br>
 <br>
 
 ### 流程（FLOW）
