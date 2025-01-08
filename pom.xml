@@ -9,7 +9,7 @@
 
     <groupId>com.parch.combine</groupId>
     <artifactId>combine-java</artifactId>
-    <version>0.11.0</version>
+    <version>1.0.0</version>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 
@@ -22,12 +22,11 @@
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <logback.version>1.2.3</logback.version>
 
-        <combine-java-core.version>0.10.0</combine-java-core.version>
-        <combine-java-ui-html.version>0.10.0</combine-java-ui-html.version>
-
+        <combine-java-core.version>1.0.0</combine-java-core.version>
         <combine-java-components-base.version>1.0.0</combine-java-components-base.version>
         <combine-java-components-gui.version>1.0.0</combine-java-components-gui.version>
         <combine-java-components-html.version>1.0.0</combine-java-components-html.version>
+        <combine-java-components-email.version>1.0.0</combine-java-components-email.version>
         <combine-java-components-mysql.version>1.0.0</combine-java-components-mysql.version>
         <combine-java-components-rabbitmq.version>1.0.0</combine-java-components-rabbitmq.version>
         <combine-java-components-redis.version>1.0.0</combine-java-components-redis.version>
@@ -62,6 +61,11 @@
                 <groupId>com.parch.combine</groupId>
                 <artifactId>combine-java-components-gui</artifactId>
                 <version>${combine-java-components-gui.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.parch.combine</groupId>
+                <artifactId>combine-java-components-email</artifactId>
+                <version>${combine-java-components-email.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.parch.combine</groupId>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>combine-java-components</artifactId>
+        <groupId>com.parch.combine</groupId>
+        <version>1.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>combine-java-components-email</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <mail-api.version>1.4.7</mail-api.version>
+    </properties>
+
+    <dependencies>
+        <!-- 收发邮件 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${mail-api.version}</version>
+        </dependency>
+    </dependencies>
+</project>
