@@ -1,5 +1,5 @@
 {
-  "initConfigs": ["configs/api_flow.json", "configs/api_page_flow.json"],
+  "initConfigs": ["configs/api_flow.json"],
   "initFlows": [],
   "openRegisterConfig": false,
   "requestIdKey": "requestID",
