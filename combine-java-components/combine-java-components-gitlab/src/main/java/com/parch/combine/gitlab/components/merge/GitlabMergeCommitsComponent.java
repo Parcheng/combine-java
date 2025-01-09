@@ -14,7 +14,7 @@ import org.gitlab4j.api.models.Commit;
 
 import java.util.List;
 
-@Component(key = "merge.commits", name = "分页获取合并的提交列表组件", logicConfigClass = GitlabMergeCommitsLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.commits", name = "分页获取提交列表组件", logicConfigClass = GitlabMergeCommitsLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "提交记录列表")
 public class GitlabMergeCommitsComponent extends AbstractGitlabComponent<GitlabMergeCommitsLogicConfig> {
 

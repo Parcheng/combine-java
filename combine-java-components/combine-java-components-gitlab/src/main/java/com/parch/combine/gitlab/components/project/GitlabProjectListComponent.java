@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Gitlab Project处理组件
  */
-@Component(key = "project.list", name = "获取项目列表组件", logicConfigClass = GitlabProjectListLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "project.list", order = 400, name = "获取项目列表组件", logicConfigClass = GitlabProjectListLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "项目列表")
 public class GitlabProjectListComponent extends AbstractGitlabComponent<GitlabProjectListLogicConfig> {
 

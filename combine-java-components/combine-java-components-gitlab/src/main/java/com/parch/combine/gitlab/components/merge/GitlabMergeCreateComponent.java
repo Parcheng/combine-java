@@ -12,11 +12,10 @@ import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
 import org.gitlab4j.api.models.MergeRequestParams;
-import org.gitlab4j.api.models.Project;
 
 import java.util.List;
 
-@Component(key = "merge.create", name = "创建分支合并请求组件", logicConfigClass = GitlabMergeCreateLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.create", order = 300, name = "创建分支合并请求组件", logicConfigClass = GitlabMergeCreateLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "合并结果信息")
 public class GitlabMergeCreateComponent extends AbstractGitlabComponent<GitlabMergeCreateLogicConfig> {
 

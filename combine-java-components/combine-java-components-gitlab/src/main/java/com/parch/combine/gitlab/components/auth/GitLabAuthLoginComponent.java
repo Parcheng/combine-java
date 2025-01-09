@@ -11,7 +11,7 @@ import com.parch.combine.gitlab.base.auth.GitLabAuthLoginLoginConfig;
 import com.parch.combine.gitlab.helper.GitlabApiCache;
 import org.gitlab4j.api.GitLabApi;
 
-@Component(key = "auth.login", name = "登录验证组件", logicConfigClass = GitLabAuthLoginLoginConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "auth.login", order = 100, name = "登录验证组件", logicConfigClass = GitLabAuthLoginLoginConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "是否成功")
 public class GitLabAuthLoginComponent extends AbstractComponent<GitlabInitConfig, GitLabAuthLoginLoginConfig> {
 

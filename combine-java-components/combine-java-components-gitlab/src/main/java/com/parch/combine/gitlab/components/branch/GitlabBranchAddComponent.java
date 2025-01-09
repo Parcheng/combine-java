@@ -12,7 +12,7 @@ import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Branch;
 
-@Component(key = "branch.create", name = "创建项目分支组件", logicConfigClass = GitlabBranchAddLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "branch.create", order = 200, name = "创建项目分支组件", logicConfigClass = GitlabBranchAddLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "创建的分支信息")
 public class GitlabBranchAddComponent extends AbstractGitlabComponent<GitlabBranchAddLogicConfig> {
 

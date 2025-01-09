@@ -11,11 +11,10 @@ import com.parch.combine.gitlab.base.branch.GitlabBranchListLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Branch;
-import org.gitlab4j.api.models.Project;
 
 import java.util.List;
 
-@Component(key = "branch.list", name = "获取项目分支列表组件", logicConfigClass = GitlabBranchListLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "branch.list", order = 200, name = "获取项目分支列表组件", logicConfigClass = GitlabBranchListLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "分支列表")
 public class GitlabBranchListComponent extends AbstractGitlabComponent<GitlabBranchListLogicConfig> {
 

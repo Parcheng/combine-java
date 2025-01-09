@@ -11,10 +11,9 @@ import com.parch.combine.gitlab.base.merge.GitlabMergeCancelLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
-import org.gitlab4j.api.models.Project;
 
 
-@Component(key = "merge.cancel", name = "取消分支合并请求组件", logicConfigClass = GitlabMergeCancelLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.cancel", order = 300, name = "取消分支合并请求组件", logicConfigClass = GitlabMergeCancelLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "取消结果信息")
 public class GitlabMergeCancelComponent extends AbstractGitlabComponent<GitlabMergeCancelLogicConfig> {
 

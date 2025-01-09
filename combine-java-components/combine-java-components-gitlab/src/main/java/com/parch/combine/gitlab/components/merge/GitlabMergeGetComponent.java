@@ -11,10 +11,9 @@ import com.parch.combine.gitlab.base.merge.GitlabMergeGetLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
-import org.gitlab4j.api.models.Project;
 
 
-@Component(key = "merge.get", name = "获取合并请求组件", logicConfigClass = GitlabMergeGetLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.get", order = 300, name = "获取合并请求组件", logicConfigClass = GitlabMergeGetLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "合并请求信息")
 public class GitlabMergeGetComponent extends AbstractGitlabComponent<GitlabMergeGetLogicConfig> {
 

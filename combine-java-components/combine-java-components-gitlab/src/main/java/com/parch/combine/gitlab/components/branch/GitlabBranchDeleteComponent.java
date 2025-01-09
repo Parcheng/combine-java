@@ -10,10 +10,8 @@ import com.parch.combine.gitlab.base.auth.GitLabAuthErrorEnum;
 import com.parch.combine.gitlab.base.branch.GitlabBranchAddLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
-import org.gitlab4j.api.models.Branch;
-import org.gitlab4j.api.models.Project;
 
-@Component(key = "branch.delete", name = "删除分支组件", logicConfigClass = GitlabBranchAddLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "branch.delete", order = 200, name = "删除分支组件", logicConfigClass = GitlabBranchAddLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "是否删除成功")
 public class GitlabBranchDeleteComponent extends AbstractGitlabComponent<GitlabBranchAddLogicConfig> {
 

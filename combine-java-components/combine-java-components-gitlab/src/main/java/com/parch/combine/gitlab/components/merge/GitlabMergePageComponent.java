@@ -12,12 +12,11 @@ import org.gitlab4j.api.Constants;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
-import org.gitlab4j.api.models.Project;
 
 import java.util.List;
 
 
-@Component(key = "merge.page", name = "分页获取合并请求列表组件", logicConfigClass = GitlabMergePageLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.page", order = 300, name = "分页获取合并请求列表组件", logicConfigClass = GitlabMergePageLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "取合并请求列表")
 public class GitlabMergePageComponent extends AbstractGitlabComponent<GitlabMergePageLogicConfig> {
 

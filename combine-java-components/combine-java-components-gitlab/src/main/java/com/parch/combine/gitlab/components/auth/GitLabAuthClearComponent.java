@@ -11,7 +11,7 @@ import com.parch.combine.gitlab.base.GitlabInitConfig;
 import com.parch.combine.gitlab.helper.GitlabApiCache;
 import org.gitlab4j.api.GitLabApi;
 
-@Component(key = "auth.clear", name = "鉴权缓存清理组件", logicConfigClass = GitlabLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "auth.clear", order = 100, name = "鉴权缓存清理组件", logicConfigClass = GitlabLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "是否成功")
 public class GitLabAuthClearComponent extends AbstractComponent<GitlabInitConfig, GitlabLogicConfig> {
 

@@ -11,9 +11,8 @@ import com.parch.combine.gitlab.base.merge.GitlabMergeDoLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
-import org.gitlab4j.api.models.Project;
 
-@Component(key = "merge.do", name = "执行合并组件", logicConfigClass = GitlabMergeDoLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.do", order = 300, name = "执行合并组件", logicConfigClass = GitlabMergeDoLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "合并结果信息")
 public class GitlabMergeDoComponent extends AbstractGitlabComponent<GitlabMergeDoLogicConfig> {
 
