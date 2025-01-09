@@ -6,17 +6,17 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gitlab.base.auth.GitLabAuthErrorEnum;
-import com.parch.combine.gitlab.base.auth.GitLabAuthInitConfig;
+import com.parch.combine.gitlab.base.GitlabInitConfig;
 import com.parch.combine.gitlab.base.auth.GitLabAuthLoginLoginConfig;
 import com.parch.combine.gitlab.helper.GitlabApiCache;
 import org.gitlab4j.api.GitLabApi;
 
-@Component(key = "auth.login", name = "登录验证组件", logicConfigClass = GitLabAuthLoginLoginConfig.class, initConfigClass = GitLabAuthInitConfig.class)
+@Component(key = "auth.login", name = "登录验证组件", logicConfigClass = GitLabAuthLoginLoginConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "是否成功")
-public class GitLabAuthLoginComponent extends AbstractComponent<GitLabAuthInitConfig, GitLabAuthLoginLoginConfig> {
+public class GitLabAuthLoginComponent extends AbstractComponent<GitlabInitConfig, GitLabAuthLoginLoginConfig> {
 
     public GitLabAuthLoginComponent() {
-        super(GitLabAuthInitConfig.class, GitLabAuthLoginLoginConfig.class);
+        super(GitlabInitConfig.class, GitLabAuthLoginLoginConfig.class);
     }
 
     @Override
