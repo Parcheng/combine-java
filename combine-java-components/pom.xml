@@ -16,6 +16,7 @@
         <module>combine-java-components-rabbitmq</module>
         <module>combine-java-components-rocketmq</module>
         <module>combine-java-components-redis</module>
+        <module>combine-java-components-gitlab</module>
     </modules>
 
     <modelVersion>4.0.0</modelVersion>
