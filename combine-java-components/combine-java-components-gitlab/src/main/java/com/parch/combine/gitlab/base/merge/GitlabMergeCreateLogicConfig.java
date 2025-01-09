@@ -20,6 +20,6 @@ public interface GitlabMergeCreateLogicConfig extends GitlabMergeLogicConfig {
     @Field(key = "assigneeIds", name = "合并人ID集合", type = FieldTypeEnum.NUMBER, isArray = true, isRequired = true)
     Integer[] assigneeIds();
 
-    @Field(key = "hasMerged", name = "是否直接合并", type = FieldTypeEnum.NUMBER, defaultValue = "false")
+    @Field(key = "hasMerged", name = "是否直接合并", type = FieldTypeEnum.BOOLEAN, defaultValue = "false")
     Boolean hasMerged();
 }

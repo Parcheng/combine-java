@@ -6,6 +6,6 @@ import com.parch.combine.gitlab.base.GitlabLogicConfig;
 
 public interface GitlabMergeLogicConfig extends GitlabLogicConfig {
 
-    @Field(key = "projectIdOrName", name = "项目名称或ID", type = FieldTypeEnum.OBJECT, isRequired = true)
+    @Field(key = "projectIdOrName", name = "项目名称或ID", type = FieldTypeEnum.ANY, isRequired = true)
     Object projectIdOrName();
 }
