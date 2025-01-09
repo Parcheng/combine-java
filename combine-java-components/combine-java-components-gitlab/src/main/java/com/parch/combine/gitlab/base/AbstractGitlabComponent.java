@@ -42,6 +42,9 @@ public abstract class AbstractGitlabComponent<R extends GitlabLogicConfig> exten
     protected abstract ComponentDataResult execute(GitLabApi api) throws GitLabApiException;
 
     protected Map<?, ?> objToMap(Object obj) {
+        if (obj == null) {
+            return null;
+        }
         JsonNode dataTree = JsonUtil.objToTree(obj);
         return JsonUtil.treeToObj(dataTree, Map.class);
     }

@@ -1,4 +1,4 @@
-package com.parch.combine.gitlab.components.branch;
+package com.parch.combine.gitlab.components.merge;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -7,34 +7,30 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gitlab.base.AbstractGitlabComponent;
 import com.parch.combine.gitlab.base.GitlabInitConfig;
 import com.parch.combine.gitlab.base.auth.GitLabAuthErrorEnum;
-import com.parch.combine.gitlab.base.branch.GitlabBranchListLogicConfig;
+import com.parch.combine.gitlab.base.merge.GitlabMergeCancelLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
-import org.gitlab4j.api.models.Branch;
+import org.gitlab4j.api.models.MergeRequest;
 import org.gitlab4j.api.models.Project;
 
-import java.util.List;
 
-@Component(key = "branch.list", name = "获取项目分支列表组件", logicConfigClass = GitlabBranchListLogicConfig.class, initConfigClass = GitlabInitConfig.class)
-@ComponentResult(name = "分支列表")
-public class GitlabBranchListComponent extends AbstractGitlabComponent<GitlabBranchListLogicConfig> {
+@Component(key = "merge.cancel", name = "取消分支合并请求组件", logicConfigClass = GitlabMergeCancelLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@ComponentResult(name = "取消结果信息")
+public class GitlabMergeCancelComponent extends AbstractGitlabComponent<GitlabMergeCancelLogicConfig> {
 
     /**
      * 构造器
      */
-    public GitlabBranchListComponent() {
-        super(GitlabBranchListLogicConfig.class);
+    public GitlabMergeCancelComponent() {
+        super(GitlabMergeCancelLogicConfig.class);
     }
 
     @Override
     protected ComponentDataResult execute(GitLabApi api) {
+        GitlabMergeCancelLogicConfig logicConfig = this.getLogicConfig();
         try {
-            List<Branch> branches = api.getRepositoryApi().getBranches(getLogicConfig().projectIdOrName());
-            if (branches == null) {
-                return ComponentDataResult.success(null);
-            }
-
-            return ComponentDataResult.success(this.objToMap(branches));
+            MergeRequest res = api.getMergeRequestApi().cancelMergeRequest(logicConfig.projectIdOrName(), logicConfig.mergedRequestId());
+            return ComponentDataResult.success(this.objToMap(res));
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);
             return ComponentDataResult.fail(e.getMessage(), GitLabAuthErrorEnum.FAIL.getShowMsg());

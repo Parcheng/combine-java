@@ -1,10 +1,9 @@
-package com.parch.combine.gitlab.base.branch;
+package com.parch.combine.gitlab.base.merge;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import org.gitlab4j.api.models.MergeRequestParams;
 
-public interface GitlabBranchMergeLogicConfig extends GitlabBranchLogicConfig {
+public interface GitlabMergeCreateLogicConfig extends GitlabMergeLogicConfig {
 
     @Field(key = "source", name = "源分支名称", type = FieldTypeEnum.TEXT, isRequired = true)
     String source();
@@ -20,4 +19,7 @@ public interface GitlabBranchMergeLogicConfig extends GitlabBranchLogicConfig {
 
     @Field(key = "assigneeIds", name = "合并人ID集合", type = FieldTypeEnum.NUMBER, isArray = true, isRequired = true)
     Integer[] assigneeIds();
+
+    @Field(key = "hasMerged", name = "是否直接合并", type = FieldTypeEnum.NUMBER, defaultValue = "false")
+    Boolean hasMerged();
 }

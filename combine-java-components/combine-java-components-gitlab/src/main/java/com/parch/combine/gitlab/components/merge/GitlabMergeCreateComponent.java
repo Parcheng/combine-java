@@ -1,13 +1,13 @@
-package com.parch.combine.gitlab.components.branch;
+package com.parch.combine.gitlab.components.merge;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
+import com.parch.combine.gitlab.base.AbstractGitlabComponent;
 import com.parch.combine.gitlab.base.GitlabInitConfig;
 import com.parch.combine.gitlab.base.auth.GitLabAuthErrorEnum;
-import com.parch.combine.gitlab.base.branch.AbstractGitlabBatchComponent;
-import com.parch.combine.gitlab.base.branch.GitlabBranchMergeLogicConfig;
+import com.parch.combine.gitlab.base.merge.GitlabMergeCreateLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.MergeRequest;
@@ -16,20 +16,20 @@ import org.gitlab4j.api.models.Project;
 
 import java.util.List;
 
-@Component(key = "branch.merge", name = "提交分支合并请求组件", logicConfigClass = GitlabBranchMergeLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.create", name = "创建分支合并请求组件", logicConfigClass = GitlabMergeCreateLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "合并结果信息")
-public class GitlabBranchMergeComponent extends AbstractGitlabBatchComponent<GitlabBranchMergeLogicConfig> {
+public class GitlabMergeCreateComponent extends AbstractGitlabComponent<GitlabMergeCreateLogicConfig> {
 
     /**
      * 构造器
      */
-    public GitlabBranchMergeComponent() {
-        super(GitlabBranchMergeLogicConfig.class);
+    public GitlabMergeCreateComponent() {
+        super(GitlabMergeCreateLogicConfig.class);
     }
 
     @Override
-    protected ComponentDataResult execute(GitLabApi api, Project project) {
-        GitlabBranchMergeLogicConfig logicConfig = this.getLogicConfig();
+    protected ComponentDataResult execute(GitLabApi api) {
+        GitlabMergeCreateLogicConfig logicConfig = this.getLogicConfig();
         try {
             MergeRequestParams mr = new MergeRequestParams()
                     .withSourceBranch(logicConfig.source())
@@ -38,7 +38,11 @@ public class GitlabBranchMergeComponent extends AbstractGitlabBatchComponent<Git
                     .withDescription(logicConfig.desc())
                     .withAssigneeIds(List.of(logicConfig.assigneeIds()));
 
-            MergeRequest res = api.getMergeRequestApi().createMergeRequest(project.getId(), mr);
+            MergeRequest res = api.getMergeRequestApi().createMergeRequest(logicConfig.projectIdOrName(), mr);
+            if (res != null && logicConfig.hasMerged()) {
+                res = api.getMergeRequestApi().acceptMergeRequest(logicConfig.projectIdOrName(), res.getId());
+            }
+
             return ComponentDataResult.success(this.objToMap(res));
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);
