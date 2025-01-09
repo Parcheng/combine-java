@@ -6,6 +6,7 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gitlab.base.auth.GitLabAuthErrorEnum;
+import com.parch.combine.gitlab.base.auth.GitLabAuthInitConfig;
 import com.parch.combine.gitlab.base.auth.GitLabAuthLoginLoginConfig;
 import com.parch.combine.gitlab.helper.GitlabApiCache;
 import org.gitlab4j.api.GitLabApi;

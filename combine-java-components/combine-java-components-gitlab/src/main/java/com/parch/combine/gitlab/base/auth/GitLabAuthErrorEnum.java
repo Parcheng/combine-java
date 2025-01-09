@@ -3,6 +3,7 @@ package com.parch.combine.gitlab.base.auth;
 import com.parch.combine.core.component.error.IComponentError;
 
 public enum GitLabAuthErrorEnum implements IComponentError {
+    NO_AUTH_CACHE("鉴权信息不存在", "鉴权信息不存在"),
     CLEAR_FAIL("清理失败", "清理失败"),
     AUTH_FAIL("鉴权失败", "鉴权失败"),
     ;
