@@ -3,8 +3,8 @@ package com.parch.combine.gitlab.base.auth;
 import com.parch.combine.core.component.error.IComponentError;
 
 public enum GitLabAuthErrorEnum implements IComponentError {
-
-    FAIL("鉴权失败", "鉴权失败"),
+    CLEAR_FAIL("清理失败", "清理失败"),
+    AUTH_FAIL("鉴权失败", "鉴权失败"),
     ;
 
     private String msg;

@@ -1,8 +1,7 @@
-package com.parch.combine.gitlab.base.auth.login;
+package com.parch.combine.gitlab.base.auth;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.gitlab.base.auth.GitlabAuthConfig;
 
 public interface GitLabAuthLoginLoginConfig extends GitlabAuthConfig {
 

@@ -1,7 +1,7 @@
 package com.parch.combine.gitlab.helper;
 
-import com.parch.combine.gitlab.base.auth.login.GitLabAuthLoginLoginConfig;
-import com.parch.combine.gitlab.base.auth.token.GitlabTokenConfig;
+import com.parch.combine.gitlab.base.auth.GitLabAuthLoginLoginConfig;
+import com.parch.combine.gitlab.base.auth.GitLabAuthTokenLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 
@@ -24,7 +24,7 @@ public class GitlabApiCache {
         return api;
     }
 
-    public synchronized static GitLabApi register(GitlabTokenConfig config) {
+    public synchronized static GitLabApi register(GitLabAuthTokenLogicConfig config) {
         GitLabApi api = new GitLabApi(config.url(), config.accessToken(), config.secretToken(), config.clientConfig());
         CACHE.put(config.key(), api);
         return api;

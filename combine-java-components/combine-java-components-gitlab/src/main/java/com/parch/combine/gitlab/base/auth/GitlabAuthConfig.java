@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface GitlabAuthConfig extends ILogicConfig {
 
-    @Field(key = "key", name = "链接KEY", type = FieldTypeEnum.TEXT, isRequired = true)
+    @Field(key = "key", name = "缓存KEY", type = FieldTypeEnum.TEXT, isRequired = true)
     String key();
 
     @Field(key = "url", name = "主机地址", type = FieldTypeEnum.TEXT, isRequired = true)
