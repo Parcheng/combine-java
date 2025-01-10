@@ -78,5 +78,9 @@
             <groupId>com.parch.combine</groupId>
             <artifactId>combine-java-components-html</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.parch.combine</groupId>
+            <artifactId>combine-java-components-gitlab</artifactId>
+        </dependency>
     </dependencies>
 </project>

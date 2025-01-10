@@ -207,6 +207,20 @@ public class ComponentDataResult {
      * 失败
      *
      * @param msg 错误信息
+     * @return 结果对象
+     */
+    public static ComponentDataResult fail(String msg) {
+        ComponentDataResult result = new ComponentDataResult();
+        result.setSuccess(false);
+        result.setErrMsg(msg);
+        result.setShowMsg(msg);
+        return result;
+    }
+
+    /**
+     * 失败
+     *
+     * @param msg 错误信息
      * @param showMsg 显示错误信息
      * @return 结果对象
      */
