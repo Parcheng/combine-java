@@ -16,7 +16,7 @@ import org.gitlab4j.api.models.ApprovalRule;
 import java.util.List;
 
 
-@Component(key = "merge.approval.rules", order = 300, name = "获取合并请求的批准规则组件", logicConfigClass = GitlabMergeApprovalRulesLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "merge.approval.rules", order = 300, name = "获取批准规则组件", logicConfigClass = GitlabMergeApprovalRulesLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentDesc({
         "用于获取合并请求的批准规则信息。批准规则定义了合并请求必须满足的条件才能被合并，例如需要多少个批准者、哪些用户或组可以批准等",
         "当需要了解或管理合并请求的批准流程时，可以使用此方法获取当前的批准规则配置，以便进行查看、修改或优化"
