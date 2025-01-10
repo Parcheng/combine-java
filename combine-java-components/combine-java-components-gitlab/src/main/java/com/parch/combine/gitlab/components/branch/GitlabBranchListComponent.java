@@ -29,14 +29,10 @@ public class GitlabBranchListComponent extends AbstractGitlabComponent<GitlabBra
     protected ComponentDataResult execute(GitLabApi api) {
         try {
             List<Branch> branches = api.getRepositoryApi().getBranches(getLogicConfig().projectIdOrName());
-            if (branches == null) {
-                return ComponentDataResult.success(null);
-            }
-
             return ComponentDataResult.success(this.objToMap(branches));
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);
-            return ComponentDataResult.fail(e.getMessage(), GitLabAuthErrorEnum.FAIL.getShowMsg());
+            return ComponentDataResult.success(null);
         }
     }
 }

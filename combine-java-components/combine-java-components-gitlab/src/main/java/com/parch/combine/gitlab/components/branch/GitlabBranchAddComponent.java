@@ -31,7 +31,7 @@ public class GitlabBranchAddComponent extends AbstractGitlabComponent<GitlabBran
             return ComponentDataResult.success(this.objToMap(branch));
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);
-            return ComponentDataResult.fail(e.getMessage(), GitLabAuthErrorEnum.FAIL.getShowMsg());
+            return ComponentDataResult.success(null);
         }
     }
 }

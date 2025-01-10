@@ -37,7 +37,7 @@ public class GitlabMergeApprovalsComponent extends AbstractGitlabComponent<Gitla
             return ComponentDataResult.success(this.objToMap(res));
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);
-            return ComponentDataResult.fail(e.getMessage(), GitLabAuthErrorEnum.FAIL.getShowMsg());
+            return ComponentDataResult.success(null);
         }
     }
 }

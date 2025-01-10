@@ -13,9 +13,6 @@ import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Project;
 import java.util.List;
 
-/**
- * Gitlab Project处理组件
- */
 @Component(key = "project.list", order = 400, name = "获取项目列表组件", logicConfigClass = GitlabProjectListLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "项目列表")
 public class GitlabProjectListComponent extends AbstractGitlabComponent<GitlabProjectListLogicConfig> {
@@ -39,7 +36,7 @@ public class GitlabProjectListComponent extends AbstractGitlabComponent<GitlabPr
             return ComponentDataResult.success(this.objToMap(list));
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);
-            return ComponentDataResult.fail(e.getMessage(), GitLabAuthErrorEnum.FAIL.getShowMsg());
+            return ComponentDataResult.success(null);
         }
     }
 }
