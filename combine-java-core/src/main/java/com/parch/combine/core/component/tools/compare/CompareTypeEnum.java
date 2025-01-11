@@ -27,6 +27,7 @@ public enum CompareTypeEnum implements IOptionSetting {
     IS_DATE("是日期", true),
     IS_OBJECT("是对象结构", true),
     IS_LIST("是集合", true),
+    REGEX("正则表达式匹配", true),
     NONE("未知", false);
 
     private String name;
