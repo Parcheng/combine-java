@@ -17,6 +17,7 @@
 **combine-java-components-redis**: 系统内置组件 - Redis组件包<br>
 **combine-java-components-rocketmq**: 系统内置组件 - RocketMQ组件包<br>
 **combine-java-components-rabbitmq**: 系统内置组件 - RabbitMQ组件包<br>
+**combine-java-components-gitlab**: Gitlab组件 - Gitlab组件包<br>
 <br>
 
 **本地启动并访问 API：**<br>
