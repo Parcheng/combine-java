@@ -2,6 +2,7 @@ package com.parch.combine.mysql.base.execute;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
+import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
@@ -67,7 +68,8 @@ public class MysqlOperationHandler {
 
         SqlItem[] sqlItems = logicConfig.sqlConfigs();
         if (CheckEmptyUtil.isEmpty(sqlItems)) {
-            String sql = logicConfig.sql();
+            String[] sqlArr = logicConfig.sql();
+            String sql = StringUtil.join(sqlArr, " ");
             if (sql != null) {
                 sqlItems = new SqlItem[]{new SqlItem() {
                     @Override public String sql() { return sql; }

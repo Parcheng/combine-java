@@ -178,6 +178,24 @@ const buildDomFns = {
         titleDom.textContent = config.name + " - " + config.key;
         body.push(titleDom);
 
+        if ((config.desc && config.desc.length > 0) || config.result) {
+            var empty = document.createElement("div");
+            empty.className = "empty";
+            body.push(empty);
+        }
+
+        if (config.desc && config.desc.length > 0) {
+            for (let di = 0; di < config.desc.length; di++) {
+                const descItem = config.desc[di];
+                if (descItem && descItem != "") {
+                    var descItemDom = document.createElement("div");
+                    descItemDom.className = "content";
+                    descItemDom.textContent = "○ " + descItem;
+                    body.push(descItemDom);
+                }
+            }
+        }
+
         if (config.result) {
             var contentDom = document.createElement("div");
             contentDom.className = "content";
