@@ -12,10 +12,10 @@ public interface MysqlLogicConfig extends ILogicConfig {
     @FieldEg(eg = "SELECT_ONE", desc = "查询一条数据")
     String sqlType();
 
-    @Field(key = "sql", name = "SQL语句", type = FieldTypeEnum.TEXT)
+    @Field(key = "sql", name = "SQL语句", type = FieldTypeEnum.TEXT, isArray = true)
     @FieldDesc("简单的SQL语句，注意：sql和sqlConfigs必须只配置一项")
     @FieldEg(eg = "select * from t_user limit 1", desc = "要直接执行SQL语句")
-    String sql();
+    String[] sql();
 
     @Field(key = "sqlConfigs", name = "SQL语句配置", type = FieldTypeEnum.CONFIG, isArray = true)
     @FieldObject(SqlItem.class)
