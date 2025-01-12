@@ -1,5 +1,6 @@
 package com.parch.combine.tool.components;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -30,23 +31,24 @@ public class CmdComponent extends AbstractComponent<CmdInitConfig, CmdLogicConfi
 
         String[] commands = getLogicConfig().commands();
         for (String command : commands) {
-            int exitCode = -1;
+            int exitCode = 0;
             List<String> lines = new ArrayList<>();
             try {
-                ProcessBuilder processBuilder = new ProcessBuilder("ping", "www.baidu.com");
-                Process process = processBuilder.start();
+                if (CheckEmptyUtil.isEmpty(command)) {
+                    continue;
+                }
 
-                // 获取命令输出内容
+                ProcessBuilder processBuilder = new ProcessBuilder(command);
+                Process process = processBuilder.start();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     lines.add(line);
                 }
-
-                // 等待命令执行完成
                 exitCode = process.waitFor();
             } catch (Exception e) {
                 PrintErrorHelper.print(CmdErrorEnum.FAIL, e);
+                exitCode = -1;
             } finally {
                 Map<String, Object> itemResult = new HashMap<>();
                 itemResult.put("code", exitCode);
