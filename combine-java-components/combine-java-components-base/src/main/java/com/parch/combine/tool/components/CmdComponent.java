@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component(key = "cmd", name = "批量执行命令行组件", logicConfigClass = CmdLogicConfig.class, initConfigClass = CmdInitConfig.class)
-@ComponentResult(name = "命令执行结果")
+@ComponentResult(name = "命令执行结果，输出结构: [{ code:0, lines:[...] }]")
 public class CmdComponent extends AbstractComponent<CmdInitConfig, CmdLogicConfig> {
 
     public CmdComponent() {
