@@ -46,6 +46,9 @@ public class CompareTool {
             case IS_LIST:
                 result = DataTypeCompare.compare(config);
                 break;
+            case REGEX:
+                result = RegexCompare.compare(config);
+                break;
             default:
                 result = CompareResult.error("未知的比较类型");
         }
