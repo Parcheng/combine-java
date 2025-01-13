@@ -3,8 +3,9 @@ package com.parch.combine.gitlab.base.merge;
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
-public interface GitlabMergePageLogicConfig extends GitlabMergeLogicConfig {
+public interface GitlabMergePageLogicConfig extends GitlabProjectSubLogicConfig {
 
     @Field(key = "state", name = "状态", type = FieldTypeEnum.SELECT, defaultValue = "ALL")
     @FieldSelect(enumClass = MergeRequestStateEnum.class)
