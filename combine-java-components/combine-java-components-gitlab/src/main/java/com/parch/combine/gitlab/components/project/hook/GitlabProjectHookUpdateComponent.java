@@ -29,7 +29,7 @@ public class GitlabProjectHookUpdateComponent extends AbstractGitlabComponent<Gi
     protected ComponentDataResult execute(GitLabApi api) {
         GitlabProjectHookUpdateLogicConfig logicConfig = getLogicConfig();
         try {
-            ProjectHook hook = api.getProjectApi().getHook(logicConfig.idOrName(), logicConfig.hookId());
+            ProjectHook hook = api.getProjectApi().getHook(logicConfig.projectIdOrName(), logicConfig.hookId());
             if (hook == null) {
                 return ComponentDataResult.success(null);
             }

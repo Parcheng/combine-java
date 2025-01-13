@@ -30,7 +30,7 @@ public class GitlabProjectHookDeleteComponent extends AbstractGitlabComponent<Gi
         GitlabProjectHookDeleteLogicConfig logicConfig = getLogicConfig();
         try {
 
-            api.getProjectApi().deleteHook(logicConfig.idOrName(), logicConfig.hookId());
+            api.getProjectApi().deleteHook(logicConfig.projectIdOrName(), logicConfig.hookId());
             return ComponentDataResult.success(true);
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);

@@ -30,7 +30,7 @@ public class GitlabProjectHookAddComponent extends AbstractGitlabComponent<Gitla
         GitlabProjectHookAddLogicConfig logicConfig = getLogicConfig();
         try {
 
-            ProjectHook hook = api.getProjectApi().addHook(logicConfig.idOrName(), logicConfig.url(),
+            ProjectHook hook = api.getProjectApi().addHook(logicConfig.projectIdOrName(), logicConfig.url(),
                     logicConfig.doPushEvents(), logicConfig.doIssuesEvents(), logicConfig.doMergeRequestsEvents());
             return ComponentDataResult.success(this.objToMap(hook));
         } catch (GitLabApiException e) {
