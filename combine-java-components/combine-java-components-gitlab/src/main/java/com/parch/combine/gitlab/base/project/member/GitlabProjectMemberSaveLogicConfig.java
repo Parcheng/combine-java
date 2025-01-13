@@ -6,9 +6,7 @@ import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
-import java.util.Date;
-
-public interface GitlabProjectMemberAddLogicConfig extends GitlabProjectSubLogicConfig {
+public interface GitlabProjectMemberSaveLogicConfig extends GitlabProjectSubLogicConfig {
 
     @Field(key = "userId", name = "用户ID", type = FieldTypeEnum.NUMBER, isRequired = true)
     Integer userId();

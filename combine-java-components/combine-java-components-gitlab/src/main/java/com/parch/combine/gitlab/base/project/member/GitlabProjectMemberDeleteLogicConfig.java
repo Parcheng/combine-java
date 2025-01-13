@@ -6,6 +6,6 @@ import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
 public interface GitlabProjectMemberDeleteLogicConfig extends GitlabProjectSubLogicConfig {
 
-    @Field(key = "memberId", name = "成员ID", type = FieldTypeEnum.NUMBER, isRequired = true)
-    Integer memberId();
+    @Field(key = "userId", name = "用户ID", type = FieldTypeEnum.NUMBER, isRequired = true)
+    Integer userId();
 }
