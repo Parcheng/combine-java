@@ -4,6 +4,7 @@ import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gitlab.base.GitlabLogicConfig;
+import com.parch.combine.gitlab.base.project.hook.GitlabProjectVisibilityEnum;
 
 public interface GitlabProjectCreateLogicConfig extends GitlabLogicConfig {
 

@@ -1,4 +1,4 @@
-package com.parch.combine.gitlab.base.project;
+package com.parch.combine.gitlab.base.project.hook;
 
 import com.parch.combine.core.common.settings.config.IOptionSetting;
 

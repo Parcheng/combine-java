@@ -34,10 +34,18 @@ public class GitlabProjectUpdateComponent extends AbstractGitlabComponent<Gitlab
                 return ComponentDataResult.success(null);
             }
 
-            project.withName(logicConfig.name())
-                    .withDescription(logicConfig.desc())
-                    .withNamespaceId(logicConfig.namespaceId())
-                    .withVisibility(Visibility.forValue(logicConfig.visibility()));
+            if (logicConfig.name() != null) {
+                project.withName(logicConfig.name());
+            }
+            if (logicConfig.desc() != null) {
+                project.withDescription(logicConfig.desc());
+            }
+            if (logicConfig.namespaceId() != null) {
+                project.withNamespaceId(logicConfig.namespaceId());
+            }
+            if (logicConfig.visibility() != null) {
+                project.withVisibility(Visibility.forValue(logicConfig.visibility()));
+            }
             project = api.getProjectApi().updateProject(project);
             return ComponentDataResult.success(this.objToMap(project));
         } catch (GitLabApiException e) {
