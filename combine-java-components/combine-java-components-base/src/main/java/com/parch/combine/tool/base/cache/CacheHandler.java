@@ -23,7 +23,7 @@ public class CacheHandler {
     }
 
     public static Map<String, CacheData> get(String domain) {
-        if (CACHE == null) {
+        if (CACHE == null || domain == null) {
             return null;
         }
 
@@ -31,6 +31,10 @@ public class CacheHandler {
     }
 
     public static CacheData get(String domain, String key, boolean renewal) {
+        if (domain == null || key == null) {
+            return null;
+        }
+
         Map<String, CacheData> domainCache = get(domain);
         if (domainCache == null) {
             return null;
@@ -42,7 +46,7 @@ public class CacheHandler {
         }
 
         if (isExpired(cacheData)) {
-            // remove(domain, key);
+            remove(domain, key);
             return null;
         }
 
