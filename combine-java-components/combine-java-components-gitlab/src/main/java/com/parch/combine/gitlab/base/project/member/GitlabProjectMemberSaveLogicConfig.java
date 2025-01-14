@@ -15,8 +15,7 @@ public interface GitlabProjectMemberSaveLogicConfig extends GitlabProjectSubLogi
     @FieldSelect(enumClass = ProjectMemberAccessLevelEnum.class)
     String accessLevel();
 
-    @Field(key = "expire", name = "有效期（秒）", type = FieldTypeEnum.SELECT, defaultValue = "-1")
+    @Field(key = "expire", name = "有效期（秒）", type = FieldTypeEnum.NUMBER, defaultValue = "-1")
     @FieldDesc("不设置则默认不限期")
-    @FieldSelect(enumClass = ProjectMemberAccessLevelEnum.class)
     Long expire();
 }
