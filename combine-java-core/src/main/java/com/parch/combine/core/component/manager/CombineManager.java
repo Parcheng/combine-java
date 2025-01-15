@@ -4,8 +4,8 @@ import com.parch.combine.core.common.manager.ConstantManager;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.context.GlobalContext;
-import com.parch.combine.core.component.context.GlobalContextHandler;
+import com.parch.combine.core.component.context.ScopeContext;
+import com.parch.combine.core.component.context.ScopeContextHandler;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -88,7 +88,7 @@ public class CombineManager {
      */
     public FlowResult execute(String key, Map<String, Object> params, Map<String, String> headers, FileInfo file, List<String> componentIds, ComponentManager.Function func) {
         long startTime = System.currentTimeMillis();
-        GlobalContext.PrintConfigs printConfigs = GlobalContextHandler.get(scopeKey).getPrintConfigs();
+        ScopeContext.PrintConfigs printConfigs = ScopeContextHandler.get(scopeKey).getPrintConfigs();
 
         // 初始化流程上下文
         ComponentContextHandler.init(scopeKey, key, params, headers, file);

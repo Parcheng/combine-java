@@ -7,8 +7,8 @@ import com.parch.combine.core.common.util.FlowKeyUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.FileInfo;
-import com.parch.combine.core.component.context.GlobalContext;
-import com.parch.combine.core.component.context.GlobalContextHandler;
+import com.parch.combine.core.component.context.ScopeContext;
+import com.parch.combine.core.component.context.ScopeContextHandler;
 import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.manager.CombineManager;
@@ -82,7 +82,7 @@ public class CombineJavaService implements ICombineJavaService {
 
     @Override
     public FlowResult execute(String domain, String function, Map<String, Object> params, Map<String, String> headers, FileInfo fileInfo) {
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(getScopeKey()).getFlagConfigs();
+        ScopeContext.FlagConfigs flagConfigs = ScopeContextHandler.get(getScopeKey()).getFlagConfigs();
         if (CheckEmptyUtil.isNotEmpty(flagConfigs.getInnerFlow()) && domain.startsWith(flagConfigs.getInnerFlow())) {
             throw new SysException(CommonErrorEnum.FLOW_IS_PROTECTED);
         }

@@ -6,9 +6,7 @@ import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
 import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
-import java.util.Date;
-
-public interface GitlabProjectMemberAddLogicConfig extends GitlabProjectSubLogicConfig {
+public interface GitlabProjectMemberSaveLogicConfig extends GitlabProjectSubLogicConfig {
 
     @Field(key = "userId", name = "用户ID", type = FieldTypeEnum.NUMBER, isRequired = true)
     Integer userId();
@@ -17,8 +15,7 @@ public interface GitlabProjectMemberAddLogicConfig extends GitlabProjectSubLogic
     @FieldSelect(enumClass = ProjectMemberAccessLevelEnum.class)
     String accessLevel();
 
-    @Field(key = "expire", name = "有效期（秒）", type = FieldTypeEnum.SELECT, defaultValue = "-1")
+    @Field(key = "expire", name = "有效期（秒）", type = FieldTypeEnum.NUMBER, defaultValue = "-1")
     @FieldDesc("不设置则默认不限期")
-    @FieldSelect(enumClass = ProjectMemberAccessLevelEnum.class)
     Long expire();
 }

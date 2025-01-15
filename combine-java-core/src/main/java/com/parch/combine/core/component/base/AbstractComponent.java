@@ -3,7 +3,7 @@ package com.parch.combine.core.component.base;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.tools.config.ConfigHelper;
-import com.parch.combine.core.component.context.GlobalContextHandler;
+import com.parch.combine.core.component.context.ScopeContextHandler;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.tools.PrintHelper;
@@ -114,7 +114,7 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
                 result.setRunTime(System.currentTimeMillis() - startTime);
 
                 // 打印日志
-                if (logicConfig.printResult() == null ? GlobalContextHandler.get(scopeKey).getPrintConfigs().getComponentResult() : logicConfig.printResult()) {
+                if (logicConfig.printResult() == null ? ScopeContextHandler.get(scopeKey).getPrintConfigs().getComponentResult() : logicConfig.printResult()) {
                     PrintHelper.printComponentResult(result);
                 }
 
