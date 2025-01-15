@@ -3,6 +3,9 @@ package com.parch.combine.core.component.handler;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.context.GlobalContext;
+import com.parch.combine.core.component.context.GlobalContextHandler;
+import com.parch.combine.core.component.context.ScopeContextHandler;
 import com.parch.combine.core.component.tools.config.ConfigHelper;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.error.SystemErrorHandler;
@@ -32,6 +35,10 @@ public class ComponentClassHandler {
 
         // 注册所有组件
         for (ComponentClassInitVO vo : components) {
+            if (!hasLoad(vo.getKey())) {
+                continue;
+            }
+
             vo.setErrorMsg(register(vo.getKey(), vo.getComponent()));
         }
 
@@ -103,5 +110,44 @@ public class ComponentClassHandler {
             SystemErrorHandler.print(SystemErrorEnum.SYSTEM_ERROR, e);
             return new ThreeTuples<>(false, null, Collections.singletonList("组件构建失败"));
         }
+    }
+
+    private static boolean hasLoad(String key) {
+        GlobalContext.LoadConfigs configs = GlobalContextHandler.get().getLoadConfigs();
+        if (configs == null) {
+            return true;
+        }
+
+        if (CheckEmptyUtil.isNotEmpty(configs.getIncludes())) {
+            for (String item : configs.getIncludes()) {
+                if (CheckEmptyUtil.isEmpty(item)) {
+                    continue;
+                }
+
+                item = item.replaceAll("[*]+", ".*?");
+                if (key.matches(item)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        if (CheckEmptyUtil.isNotEmpty(configs.getExcludes())) {
+            for (String item : configs.getExcludes()) {
+                if (CheckEmptyUtil.isEmpty(item)) {
+                    continue;
+                }
+
+                item = item.replaceAll("[*]+", ".*?");
+                if (key.matches(item)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return true;
     }
 }

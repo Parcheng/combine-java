@@ -3,8 +3,8 @@ package com.parch.combine.core.component.tools.variable;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.context.GlobalContext;
-import com.parch.combine.core.component.context.GlobalContextHandler;
+import com.parch.combine.core.component.context.ScopeContext;
+import com.parch.combine.core.component.context.ScopeContextHandler;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.handler.CombineManagerHandler;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -78,7 +78,7 @@ public class DataFindHandler {
 
         // 全局配置
         String scopeKey = ComponentContextHandler.getScopeKey();
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
+        ScopeContext.FlagConfigs flagConfigs = ScopeContextHandler.get(scopeKey).getFlagConfigs();
 
         // 解析多级数据（数据来源可能是入参，可能是其他组件结果，也可能是常量池）
         int startIndex;
@@ -228,7 +228,7 @@ public class DataFindHandler {
      */
     private static Object parseFlag(Object data, String param) {
         String scopeKey = ComponentContextHandler.getScopeKey();
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
+        ScopeContext.FlagConfigs flagConfigs = ScopeContextHandler.get(scopeKey).getFlagConfigs();
         if (param.equals(flagConfigs.getSize())) {
             if (data == null) {
                 return 0;
@@ -255,7 +255,7 @@ public class DataFindHandler {
      */
     private static Object parseResultDataFlag(ComponentDataResult data, String param) {
         String scopeKey = ComponentContextHandler.getScopeKey();
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
+        ScopeContext.FlagConfigs flagConfigs = ScopeContextHandler.get(scopeKey).getFlagConfigs();
         if (param.equals(flagConfigs.getComponentResultShowMsg())) {
             return data.getShowMsg();
         } else if (param.equals(flagConfigs.getComponentResultErrorMsg())){
@@ -289,7 +289,7 @@ public class DataFindHandler {
 
         // 全局配置
         String scopeKey = ComponentContextHandler.getScopeKey();
-        GlobalContext.FlagConfigs flagConfigs = GlobalContextHandler.get(scopeKey).getFlagConfigs();
+        ScopeContext.FlagConfigs flagConfigs = ScopeContextHandler.get(scopeKey).getFlagConfigs();
 
         // 解析多级数据（数据来源可能是入参，可能是其他组件结果）
         int startIndex;

@@ -1,6 +1,5 @@
 package com.parch.combine.core.component.manager;
 
-import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -11,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * 流程切面处理器
@@ -140,8 +140,8 @@ class FlowAspectManager {
             this.order = order == null ? Integer.MAX_VALUE : order;
             this.failStop = failStop == null || failStop;
             this.components = components;
-            this.includes = includes;
-            this.excludes = excludes;
+            this.includes = CheckEmptyUtil.isEmpty(includes) ? null : includes.stream().map(this::replacePath).collect(Collectors.toList());
+            this.excludes = CheckEmptyUtil.isEmpty(excludes) ? null : excludes.stream().map(this::replacePath).collect(Collectors.toList());
         }
 
         /**
@@ -175,16 +175,24 @@ class FlowAspectManager {
             return true;
         }
 
+        private String[] replacePath(String[] configPath) {
+            if (configPath == null || configPath.length == 0) {
+                configPath = new String[]{"*", "*"};
+            } else if  (configPath.length == 1) {
+                configPath = new String[]{configPath[0], "*"};
+            }
+
+            if (CheckEmptyUtil.isEmpty(configPath[0])) {
+                configPath[0] = "*";
+            }
+
+            configPath[0] = configPath[0].replaceAll("\\$", "[\\$]+*").replaceAll("[*]+", ".*?");
+            configPath[1] = configPath[1].replaceAll("[*]+", ".*?");
+            return configPath;
+        }
+
         private boolean match(String[] flowArr, String[] config) {
-            String first = config[0].replaceAll("[*]+", ".*?").replaceAll("\\$", "[\\$]+");
-            String second = config[1].replaceAll("[*]+", ".*?");
-            return flowArr[0].matches(first) && flowArr[0].matches(second);
-//            boolean domainPass =
-//                    (config[0].length() == 1 && SymbolConstant.DOLLAR_SIGN.equals(config[0]) && flowArr[0].startsWith(SymbolConstant.DOLLAR_SIGN))
-//                    || SymbolConstant.ASTERISK.equals(config[0])
-//                    || flowArr[0].equals(config[0]);
-//            boolean functionPass = SymbolConstant.ASTERISK.equals(config[1]) || flowArr[1].equals(config[1]);
-//            return domainPass && functionPass;
+            return flowArr[0].matches(config[0]) && flowArr[0].matches(config[1]);
         }
 
         public String getId() {

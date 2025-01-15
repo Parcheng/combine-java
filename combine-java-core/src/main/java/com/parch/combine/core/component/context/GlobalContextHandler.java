@@ -1,5 +1,6 @@
 package com.parch.combine.core.component.context;
 
+import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
 
@@ -11,19 +12,21 @@ import java.util.Map;
  */
 public class GlobalContextHandler {
 
-    private static Map<String, GlobalContext> MAP = new HashMap<>(1);
+    private static GlobalContext CONTEXT = null;
 
-    public static void init(String scopeKey, String path) {
-        String testConfigJson = ResourceFileUtil.read(path, GlobalContextHandler.class.getClassLoader());
-        GlobalContext context = JsonUtil.string2Obj(testConfigJson, GlobalContext.class);
-        if (context == null) {
-            context = new GlobalContext();
+    public static GlobalContext init(String path) {
+        String configJson = ResourceFileUtil.read(path, GlobalContextHandler.class.getClassLoader());
+        if (CheckEmptyUtil.isNotEmpty(configJson)) {
+            CONTEXT = JsonUtil.string2Obj(configJson, GlobalContext.class);
+        }
+        if (CONTEXT == null) {
+            CONTEXT = new GlobalContext();
         }
 
-        MAP.put(scopeKey, context);
+        return CONTEXT;
     }
 
-    public static GlobalContext get(String scopeKey) {
-        return MAP.get(scopeKey);
+    public static GlobalContext get() {
+        return CONTEXT;
     }
 }
