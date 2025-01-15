@@ -22,6 +22,9 @@ public class RegexCompare {
             Pattern pattern = Pattern.compile(target.toString());
             Matcher matcher = pattern.matcher(source.toString());
             success = matcher.matches();
+            if (config.getCompareType() == CompareTypeEnum.NO_REGEX) {
+                success = !success;
+            }
         }
 
         return success ? CompareResult.success() : CompareResult.fail();
