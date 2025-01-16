@@ -10,8 +10,8 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.logic.base.group.LogicGroupInitConfig;
 import com.parch.combine.logic.base.group.LogicGroupLogicConfig;
 
-@Component(key = "group", name = "组件组封装组件", logicConfigClass = LogicGroupLogicConfig.class, initConfigClass = LogicGroupInitConfig.class)
-@ComponentResult(name = "组执行结果")
+@Component(key = "group", name = "组合组件", logicConfigClass = LogicGroupLogicConfig.class, initConfigClass = LogicGroupInitConfig.class)
+@ComponentResult(name = "组合执行结果")
 public class LogicGroupComponent extends AbstractComponent<LogicGroupInitConfig, LogicGroupLogicConfig> {
 
     public LogicGroupComponent() {
