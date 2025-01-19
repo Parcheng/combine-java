@@ -5,7 +5,6 @@ import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
-import com.parch.combine.core.component.context.ScopeContextHandler;
 import com.parch.combine.core.component.tools.config.ConfigHelper;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.error.SystemErrorHandler;
@@ -14,7 +13,12 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.vo.ComponentClassInitVO;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * 组件处理器

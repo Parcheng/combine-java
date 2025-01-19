@@ -8,7 +8,6 @@ import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.vo.CombineConfigVO;
 import com.parch.combine.core.component.vo.CombineInitVO;
 import com.parch.combine.core.component.vo.FlowResult;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

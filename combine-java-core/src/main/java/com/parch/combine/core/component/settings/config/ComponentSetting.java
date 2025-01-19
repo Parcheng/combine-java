@@ -1,6 +1,5 @@
 package com.parch.combine.core.component.settings.config;
 
-import com.parch.combine.core.common.settings.config.CommonObjectSetting;
 import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.component.base.AbstractComponent;
 

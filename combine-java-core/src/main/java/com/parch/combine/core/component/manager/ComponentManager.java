@@ -3,7 +3,6 @@ package com.parch.combine.core.component.manager;
 import com.parch.combine.core.common.canstant.FieldKeyConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
-import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
@@ -13,8 +12,12 @@ import com.parch.combine.core.component.handler.ComponentClassHandler;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
+import java.util.UUID;
 
 /**
  * 流程逻辑处理器

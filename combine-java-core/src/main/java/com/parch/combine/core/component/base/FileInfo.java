@@ -4,6 +4,7 @@ package com.parch.combine.core.component.base;
  * 文件信息
  */
 public class FileInfo {
+
     private String name;
     private String type;
     private Long size;
