@@ -5,7 +5,14 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.FileParamKey;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * 全局上下文对象

@@ -15,7 +15,8 @@ import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.manager.ComponentManager;
 import com.parch.combine.core.component.vo.FlowResult;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**

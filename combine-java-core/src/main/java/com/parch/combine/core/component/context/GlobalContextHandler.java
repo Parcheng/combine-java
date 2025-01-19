@@ -4,9 +4,6 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.ResourceFileUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 全局上下文处理器
  */

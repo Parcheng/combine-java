@@ -5,7 +5,6 @@ import com.parch.combine.core.common.settings.annotations.FieldDesc;
 import com.parch.combine.core.common.settings.annotations.FieldEg;
 import com.parch.combine.core.common.settings.annotations.FieldSelect;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import java.util.List;
 
 public interface ILogicConfig {
 
