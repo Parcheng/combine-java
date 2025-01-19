@@ -2,8 +2,9 @@ package com.parch.combine.gitlab.base.merge;
 
 import com.parch.combine.core.common.settings.annotations.Field;
 import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
-public interface GitlabMergeCreateLogicConfig extends GitlabMergeLogicConfig {
+public interface GitlabMergeCreateLogicConfig extends GitlabProjectSubLogicConfig {
 
     @Field(key = "source", name = "源分支名称", type = FieldTypeEnum.TEXT, isRequired = true)
     String source();

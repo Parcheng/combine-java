@@ -4,8 +4,8 @@ import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.common.settings.config.PropertySetting;
 import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.context.GlobalContext;
-import com.parch.combine.core.component.context.GlobalContextHandler;
+import com.parch.combine.core.component.context.ScopeContext;
+import com.parch.combine.core.component.context.ScopeContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
@@ -28,7 +28,7 @@ public class SystemDocConfigComponent extends AbstractComponent<SystemDocConfigI
 
     @Override
     public ComponentDataResult execute() {
-        GlobalContext context = GlobalContextHandler.get(getScopeKey());
+        ScopeContext context = ScopeContextHandler.get(getScopeKey());
         if (context == null) {
             return ComponentDataResult.fail(SystemDocConfigErrorEnum.FAIL);
         }
@@ -36,7 +36,7 @@ public class SystemDocConfigComponent extends AbstractComponent<SystemDocConfigI
         if (result == null) {
             synchronized (SystemDocConfigComponent.class) {
                 if (result == null) {
-                    List<PropertySetting> properties = PropertySettingBuilder.build("global", GlobalContext.class);
+                    List<PropertySetting> properties = PropertySettingBuilder.build("global", ScopeContext.class);
                     String json = JsonUtil.obj2String(properties);
                     result = JsonUtil.string2Obj(json, List.class, HashMap.class);
                 }

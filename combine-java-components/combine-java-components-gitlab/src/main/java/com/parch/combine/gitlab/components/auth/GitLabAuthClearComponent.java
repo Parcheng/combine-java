@@ -24,13 +24,12 @@ public class GitLabAuthClearComponent extends AbstractComponent<GitlabInitConfig
         try {
             GitLabApi api = GitlabApiCache.clear(getLogicConfig().key());
             if (api == null) {
-                ComponentDataResult.success(false);
+                return ComponentDataResult.success(false);
             }
+            return ComponentDataResult.success(true);
         } catch (Exception e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.CLEAR_FAIL, e);
             return ComponentDataResult.fail(GitLabAuthErrorEnum.CLEAR_FAIL);
         }
-
-        return ComponentDataResult.success(true);
     }
 }

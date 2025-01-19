@@ -1,4 +1,4 @@
-package com.parch.combine.gitlab.components.merge;
+package com.parch.combine.gitlab.components.merge.approval;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
@@ -8,7 +8,7 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.gitlab.base.AbstractGitlabComponent;
 import com.parch.combine.gitlab.base.GitlabInitConfig;
 import com.parch.combine.gitlab.base.auth.GitLabAuthErrorEnum;
-import com.parch.combine.gitlab.base.merge.GitlabMergeApprovalStatusLogicConfig;
+import com.parch.combine.gitlab.base.merge.approval.GitlabMergeApprovalStatusLogicConfig;
 import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Issue;
