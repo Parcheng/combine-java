@@ -1,20 +1,19 @@
-package com.parch.combine.system.base.template;
+package com.parch.combine.logic.base.execute;
 
 import com.parch.combine.core.component.error.IComponentError;
 
 /**
- * 逻辑判断异常枚举
+ * 异常枚举
  */
-public enum SystemTemplateErrorEnum implements IComponentError {
+public enum LogicExecuteErrorEnum implements IComponentError {
 
-    TEMPLATE_IS_NULL("模板不存在", "模板不存在"),
     ;
 
     private String msg;
 
     private String showMsg;
 
-    SystemTemplateErrorEnum(String msg, String showMsg) {
+    LogicExecuteErrorEnum(String msg, String showMsg) {
         this.msg = msg;
         this.showMsg = showMsg;
 
