@@ -61,7 +61,8 @@ public class MysqlComponent extends AbstractComponent<MysqlInitConfig, MysqlLogi
         }
 
         // 执行SQL逻辑
-        return MysqlOperationHandler.execute(connKeyObj.toString(), params, getLogicConfig(), getInitConfig());
+        String requestId = ComponentContextHandler.getContext().getId();
+        return MysqlOperationHandler.execute(requestId, connKeyObj.toString(), params, getLogicConfig(), getInitConfig());
     }
 
     @Override
@@ -78,7 +79,8 @@ public class MysqlComponent extends AbstractComponent<MysqlInitConfig, MysqlLogi
             PrintErrorHelper.print(MysqlErrorEnum.END_FUNCTION_ERROR, e);
             return false;
         } finally {
-            MysqlOperationHandler.closeConnection(connKey, success);
+            String requestId = ComponentContextHandler.getContext().getId();
+            MysqlOperationHandler.closeConnection(requestId, connKey, success);
         }
 
         return true;
