@@ -11,10 +11,10 @@ import java.util.*;
 
 public class ConfigProxy implements InvocationHandler {
 
-    private String scopeKey;
-    private Class<?> configClass;
-    private Map<String, Object> config;
-    private Map<String, Boolean> configFlagMap = new HashMap<>(16);
+    private final String scopeKey;
+    private final Class<?> configClass;
+    private final Map<String, Object> config;
+    private final Map<String, Boolean> configFlagMap = new HashMap<>(16);
 
     public ConfigProxy(String scopeKey, Class<?> configClass, Map<String, Object> config) {
         this.scopeKey = scopeKey;
@@ -74,8 +74,6 @@ public class ConfigProxy implements InvocationHandler {
         return errors;
     }
 
-
-
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Field field = method.getAnnotation(Field.class);
         if (field == null) {
@@ -120,6 +118,4 @@ public class ConfigProxy implements InvocationHandler {
 
         return configFieldData;
     }
-
-
 }

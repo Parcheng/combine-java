@@ -7,15 +7,15 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
-import com.parch.combine.logic.base.group.LogicGroupInitConfig;
-import com.parch.combine.logic.base.group.LogicGroupLogicConfig;
+import com.parch.combine.logic.base.module.LogicModuleInitConfig;
+import com.parch.combine.logic.base.module.LogicModuleLogicConfig;
 
-@Component(key = "group", name = "组合组件", logicConfigClass = LogicGroupLogicConfig.class, initConfigClass = LogicGroupInitConfig.class)
-@ComponentResult(name = "组合执行结果")
-public class LogicGroupComponent extends AbstractComponent<LogicGroupInitConfig, LogicGroupLogicConfig> {
+@Component(key = "module", name = "模块定义组件", logicConfigClass = LogicModuleLogicConfig.class, initConfigClass = LogicModuleInitConfig.class)
+@ComponentResult(name = "模块执行结果")
+public class LogicModuleComponent extends AbstractComponent<LogicModuleInitConfig, LogicModuleLogicConfig> {
 
-    public LogicGroupComponent() {
-        super(LogicGroupInitConfig.class, LogicGroupLogicConfig.class);
+    public LogicModuleComponent() {
+        super(LogicModuleInitConfig.class, LogicModuleLogicConfig.class);
     }
 
     @Override

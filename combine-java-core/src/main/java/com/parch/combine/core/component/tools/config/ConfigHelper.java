@@ -206,34 +206,41 @@ public class ConfigHelper {
      */
     @SuppressWarnings("unchecked")
     public static Object parseFieldData(FieldTypeEnum type, Object data, boolean isArray) {
-        boolean dataIsArray = isArray && data instanceof List;
-        List<Object> listData = dataIsArray ? (List<Object>) data : Collections.singletonList(data);
-
-        List<Object> finalData = new ArrayList<>();
-        for (Object item : listData) {
-            switch (type) {
-                case ID:
-                case TEXT:
-                case SELECT:
-                case BOOLEAN:
-                case NUMBER:
-                case CONFIG:
-                case OBJECT:
-                case COMPONENT:
-                    finalData.add(DataVariableHelper.parseValue(item, false));
-                    break;
-                case EXPRESSION:
-                    finalData.add(DataVariableHelper.parseValue(item, true));
-                    break;
-                case MAP:
-                case ANY:
-                default:
-                    finalData.add(DataVariableHelper.parse(item));
-                    break;
+        boolean dataIsArray = isArray && data instanceof Collection;
+        if (dataIsArray) {
+            return parseFieldDataItem(type, data);
+        } else {
+            List<Object> finalData = new ArrayList<>();
+            for (Object item : (Collection<Object>) data) {
+                finalData.add(parseFieldDataItem(type, item));
             }
+            return finalData;
         }
+    }
 
-        return dataIsArray ? finalData : finalData.get(0);
+    /**
+     * 解析字段数据
+     */
+    private static Object parseFieldDataItem(FieldTypeEnum type, Object item) {
+        switch (type) {
+            case ID:
+                return item;
+            case TEXT:
+                return DataVariableHelper.parseStringMultiValue(item.toString());
+            case SELECT:
+            case BOOLEAN:
+            case NUMBER:
+            case CONFIG:
+            case OBJECT:
+            case COMPONENT:
+                return DataVariableHelper.parseValue(item, false);
+            case EXPRESSION:
+                return DataVariableHelper.parseValue(item, true);
+            case MAP:
+            case ANY:
+            default:
+                return DataVariableHelper.parse(item);
+        }
     }
 
     /**

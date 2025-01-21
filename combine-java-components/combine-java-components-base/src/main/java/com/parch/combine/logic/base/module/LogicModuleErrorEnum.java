@@ -1,11 +1,11 @@
-package com.parch.combine.logic.base.group;
+package com.parch.combine.logic.base.module;
 
 import com.parch.combine.core.component.error.IComponentError;
 
 /**
  * 异常枚举
  */
-public enum LogicGroupErrorEnum implements IComponentError {
+public enum LogicModuleErrorEnum implements IComponentError {
 
     ;
 
@@ -13,7 +13,7 @@ public enum LogicGroupErrorEnum implements IComponentError {
 
     private String showMsg;
 
-    LogicGroupErrorEnum(String msg, String showMsg) {
+    LogicModuleErrorEnum(String msg, String showMsg) {
         this.msg = msg;
         this.showMsg = showMsg;
 
