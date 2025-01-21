@@ -12,7 +12,7 @@ import org.gitlab4j.api.GitLabApi;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.models.Project;
 
-@Component(key = "project.list", order = 400, name = "获取项目列表组件", logicConfigClass = GitlabProjectGetLogicConfig.class, initConfigClass = GitlabInitConfig.class)
+@Component(key = "project.get", order = 400, name = "获取项目列表组件", logicConfigClass = GitlabProjectGetLogicConfig.class, initConfigClass = GitlabInitConfig.class)
 @ComponentResult(name = "项目信息")
 public class GitlabProjectGetComponent extends AbstractGitlabComponent<GitlabProjectGetLogicConfig> {
 
