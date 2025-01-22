@@ -22,10 +22,6 @@ import java.util.*;
  */
 public class MysqlOperationHandler {
 
-    public static final String CURR_PAGE_NAME = "page";
-    public static final String PAGE_SIZE_NAME = "pageSize";
-    public static final String COUNT_NAME = "count";
-
     /**
      * 连接池
      */
@@ -93,6 +89,7 @@ public class MysqlOperationHandler {
                 PrintHelper.printSql(changeSql, sqlParams);
             }
 
+            List<Map<String, Object>> dataList;
             SqlTypeEnum sqlType = SqlTypeEnum.get(logicConfig.sqlType());
             switch (sqlType) {
                 case INSERT_INCR:
@@ -116,7 +113,7 @@ public class MysqlOperationHandler {
                 case SELECT:
                     ps = getPreparedStatement(conn, changeSql, sqlParams);
                     rs = ps.executeQuery();
-                    List<Map<String, Object>> dataList = getResultData(rs);
+                    dataList = getResultData(rs);
                     result =  ComponentDataResult.success(dataList);
                     break;
                 case SELECT_ONE:
@@ -126,14 +123,25 @@ public class MysqlOperationHandler {
                     result =  ComponentDataResult.success(!dataList.isEmpty() ? dataList.get(0) : null);
                     break;
                 case SELECT_LIMIT:
+                    // 获取属性名称
+                    MysqlInitConfig.ParamNameConfig nameConfig = initConfig.paramNameConfig();
+                    String currPageName = MysqlInitConfig.ParamNameConfig.CURR_PAGE_NAME;
+                    String pageSizeName = MysqlInitConfig.ParamNameConfig.PAGE_SIZE_NAME;
+                    String totalCountName = MysqlInitConfig.ParamNameConfig.COUNT_NAME;
+                    if (nameConfig != null) {
+                        currPageName = nameConfig.currPage();
+                        pageSizeName = nameConfig.currPage();
+                        totalCountName = nameConfig.totalCount();
+                    }
+
                     // 分页查询
-                    String limitSql = SqlTool.setLimit(changeSql, CURR_PAGE_NAME, PAGE_SIZE_NAME);
+                    String limitSql = SqlTool.setLimit(changeSql, currPageName, pageSizeName);
                     ps = getPreparedStatement(conn, limitSql, sqlParams);
                     rs = ps.executeQuery();
                     dataList = getResultData(rs);
 
                     // count 查询
-                    String countSql = SqlTool.replaceCount(changeSql, COUNT_NAME);
+                    String countSql = SqlTool.replaceCount(changeSql, totalCountName);
                     if (initConfig.printSql()) {
                         PrintHelper.printSql(countSql, sqlParams);
                     }
@@ -142,9 +150,9 @@ public class MysqlOperationHandler {
                     List<Map<String, Object>> countDataList = getResultData(rsCount);
 
                     // 组装结果集
-                    int currPage = DataParseUtil.getInteger(params.get(CURR_PAGE_NAME), 0);
-                    int pageSize = DataParseUtil.getInteger(params.get(PAGE_SIZE_NAME), 0);
-                    int count = DataParseUtil.getInteger(countDataList.get(0).get(COUNT_NAME), 0);
+                    int currPage = DataParseUtil.getInteger(params.get(currPageName), 0);
+                    int pageSize = DataParseUtil.getInteger(params.get(pageSizeName), 0);
+                    int count = DataParseUtil.getInteger(countDataList.get(0).get(totalCountName), 0);
                     result = ComponentDataResult.success(dataList, currPage, pageSize, count);
                     break;
                 case DDL:
