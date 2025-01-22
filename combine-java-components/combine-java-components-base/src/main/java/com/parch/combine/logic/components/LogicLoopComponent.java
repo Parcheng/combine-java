@@ -4,6 +4,7 @@ import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
+import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.compare.CompareTool;
@@ -18,11 +19,14 @@ import java.util.Iterator;
 import java.util.Map;
 
 @Component(key = "loop", name = "逻辑循环组件", logicConfigClass = LogicLoopLogicConfig.class, initConfigClass = LogicLoopInitConfig.class)
+@ComponentDesc({
+    "循环中变量:",
+    "$v.$组件ID.$index: 当前迭代项的索引（从0开始）",
+    "$v.$组件ID.$item: 当前迭代项对象",
+    "其中 $index 和 $item 属性名可以在初始化配置中自己指定"
+})
 @ComponentResult(name = "逻辑循环执行")
 public class LogicLoopComponent extends AbstractComponent<LogicLoopInitConfig, LogicLoopLogicConfig> {
-
-    private final static String INDEX_FILED = "$index";
-    private final static String ITEM_FILED = "$item";
 
     public LogicLoopComponent() {
         super(LogicLoopInitConfig.class, LogicLoopLogicConfig.class);
@@ -31,6 +35,7 @@ public class LogicLoopComponent extends AbstractComponent<LogicLoopInitConfig, L
     @Override
     public ComponentDataResult execute() {
         LogicLoopLogicConfig logicConfig = getLogicConfig();
+        LogicLoopInitConfig initConfig = getInitConfig();
 
         Collection<?> list = null;
         Object data = logicConfig.source();
@@ -61,9 +66,9 @@ public class LogicLoopComponent extends AbstractComponent<LogicLoopInitConfig, L
         Iterator<?> iterator = list == null ? null : list.iterator();
         for (int i = 0; i < count; i++) {
             // 设置循环中数据
-            variable.put(INDEX_FILED, i);
+            variable.put(initConfig.indexPropertyName(), i);
             if (iterator != null) {
-                variable.put(ITEM_FILED, iterator.next());
+                variable.put(initConfig.itemPropertyName(), iterator.next());
             }
             // 记录遍历次数
             loopedCont++;

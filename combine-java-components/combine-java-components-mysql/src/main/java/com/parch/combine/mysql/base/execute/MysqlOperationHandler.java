@@ -81,8 +81,6 @@ public class MysqlOperationHandler {
             }
         }
 
-
-
         PreparedStatement ps = null;
         ResultSet rs = null;
         PreparedStatement psCount = null;
