@@ -1,6 +1,5 @@
 package com.parch.combine.logic.components;
 
-import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -23,11 +22,11 @@ public class LogicModuleComponent extends AbstractComponent<LogicModuleInitConfi
         String[] componentIds = getLogicConfig().components();
         ComponentDataResult result = SubComponentTool.execute(manager, componentIds);
         if (result.getSuccess()) {
-            String out = getLogicConfig().out();
-            if (CheckEmptyUtil.isEmpty(out)) {
-                return ComponentDataResult.success(result);
+            Object out = getLogicConfig().out();
+            if (out == null) {
+                return ComponentDataResult.success(null);
             } else {
-                return ComponentDataResult.success(DataVariableHelper.parseValue(out, true));
+                return ComponentDataResult.success(DataVariableHelper.parse(out));
             }
         }
 
