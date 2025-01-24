@@ -1,4 +1,4 @@
-package com.parch.combine.core.common.manager;
+package com.parch.combine.core.component.manager;
 
 import com.parch.combine.core.common.canstant.FieldKeyConstant;
 import com.parch.combine.core.common.util.CheckEmptyUtil;

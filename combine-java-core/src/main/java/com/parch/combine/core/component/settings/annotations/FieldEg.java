@@ -1,4 +1,4 @@
-package com.parch.combine.core.common.settings.annotations;
+package com.parch.combine.core.component.settings.annotations;
 
 import java.lang.annotation.*;
 

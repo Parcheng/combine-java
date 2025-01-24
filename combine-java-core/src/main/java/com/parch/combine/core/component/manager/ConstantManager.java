@@ -1,4 +1,4 @@
-package com.parch.combine.core.common.manager;
+package com.parch.combine.core.component.manager;
 
 import java.util.HashMap;
 import java.util.Map;

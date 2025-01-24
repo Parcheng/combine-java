@@ -1,6 +1,6 @@
-package com.parch.combine.core.common.settings.annotations;
+package com.parch.combine.core.component.settings.annotations;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

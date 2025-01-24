@@ -1,7 +1,7 @@
 package com.parch.combine.system.components;
 
-import com.parch.combine.core.common.settings.builder.PropertySettingBuilder;
-import com.parch.combine.core.common.settings.config.PropertySetting;
+import com.parch.combine.core.component.settings.builder.PropertySettingBuilder;
+import com.parch.combine.core.component.settings.config.PropertySetting;
 import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.context.ScopeContext;

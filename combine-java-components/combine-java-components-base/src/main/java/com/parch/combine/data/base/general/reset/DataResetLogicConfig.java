@@ -1,14 +1,12 @@
 package com.parch.combine.data.base.general.reset;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldEg;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
-import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 
 public interface DataResetLogicConfig extends ILogicConfig {
 

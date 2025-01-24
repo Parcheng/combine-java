@@ -1,10 +1,9 @@
-package com.parch.combine.core.common.settings.annotations;
+package com.parch.combine.core.component.settings.annotations;
 
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface FieldObject {
-
-    Class<?> value();
+public @interface FieldEgs {
+    FieldEg[] value();
 }

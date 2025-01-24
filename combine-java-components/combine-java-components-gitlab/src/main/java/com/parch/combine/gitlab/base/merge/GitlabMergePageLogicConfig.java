@@ -1,8 +1,8 @@
 package com.parch.combine.gitlab.base.merge;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
 public interface GitlabMergePageLogicConfig extends GitlabProjectSubLogicConfig {

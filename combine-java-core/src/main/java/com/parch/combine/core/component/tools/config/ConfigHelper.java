@@ -1,10 +1,10 @@
 package com.parch.combine.core.component.tools.config;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldRef;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldRef;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataParseUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;

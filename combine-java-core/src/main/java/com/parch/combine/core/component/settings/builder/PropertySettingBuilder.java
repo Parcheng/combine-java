@@ -1,9 +1,20 @@
-package com.parch.combine.core.common.settings.builder;
+package com.parch.combine.core.component.settings.builder;
 
-import com.parch.combine.core.common.settings.config.*;
-import com.parch.combine.core.common.settings.helper.FieldSelectHelper;
+import com.parch.combine.core.component.settings.helper.FieldSelectHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.settings.annotations.*;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldRef;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.annotations.Invalid;
+import com.parch.combine.core.component.settings.config.CommonObjectSetting;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.PropertyEgSetting;
+import com.parch.combine.core.component.settings.config.PropertyOptionSetting;
+import com.parch.combine.core.component.settings.config.PropertySetting;
 
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;

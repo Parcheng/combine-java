@@ -1,11 +1,8 @@
-package com.parch.combine.core.common.settings.builder;
+package com.parch.combine.core.component.settings.builder;
 
-import com.parch.combine.core.common.settings.annotations.CommonObject;
-import com.parch.combine.core.common.settings.annotations.Condition;
-import com.parch.combine.core.common.settings.annotations.FieldEg;
-import com.parch.combine.core.common.settings.annotations.Invalid;
-import com.parch.combine.core.common.settings.config.CommonObjectSetting;
-import com.parch.combine.core.common.settings.config.ConditionSettings;
+import com.parch.combine.core.component.settings.annotations.CommonObject;
+import com.parch.combine.core.component.settings.annotations.Invalid;
+import com.parch.combine.core.component.settings.config.CommonObjectSetting;
 
 import java.util.*;
 

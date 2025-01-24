@@ -1,11 +1,10 @@
 package com.parch.combine.gui.core.style.config;
 
 import com.parch.combine.core.common.base.IMerge;
-import com.parch.combine.core.common.settings.annotations.CommonObject;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.gui.core.style.ElementConfig;
+import com.parch.combine.core.component.settings.annotations.CommonObject;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 import com.parch.combine.gui.core.style.enums.GridFillEnum;
 

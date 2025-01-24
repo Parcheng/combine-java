@@ -1,6 +1,5 @@
 package com.parch.combine.core.component.settings.builder;
 
-import com.parch.combine.core.common.settings.builder.CommonObjectSettingBuilder;
 import com.parch.combine.core.component.settings.config.ComponentClassifySetting;
 import com.parch.combine.core.component.settings.config.ComponentSetting;
 import java.util.List;

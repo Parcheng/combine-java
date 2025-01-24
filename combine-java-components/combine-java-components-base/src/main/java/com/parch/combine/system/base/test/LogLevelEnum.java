@@ -1,6 +1,6 @@
 package com.parch.combine.system.base.test;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 public enum LogLevelEnum implements IOptionSetting {
