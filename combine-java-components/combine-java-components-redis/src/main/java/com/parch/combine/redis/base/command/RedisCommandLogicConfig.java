@@ -1,8 +1,11 @@
 package com.parch.combine.redis.base.command;
 
-import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.ILogicConfig;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
 
 public interface RedisCommandLogicConfig extends ILogicConfig {
 

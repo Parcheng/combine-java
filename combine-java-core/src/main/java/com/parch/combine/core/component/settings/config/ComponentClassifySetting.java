@@ -1,7 +1,5 @@
 package com.parch.combine.core.component.settings.config;
 
-import com.parch.combine.core.common.settings.config.CommonObjectSetting;
-
 import java.util.List;
 
 /**

@@ -1,8 +1,12 @@
 package com.parch.combine.mysql.base.execute;
 
-import com.parch.combine.core.common.settings.annotations.*;
 import com.parch.combine.core.component.base.ILogicConfig;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
 import com.parch.combine.core.component.tools.sql.SqlItem;
 
 public interface MysqlLogicConfig extends ILogicConfig {

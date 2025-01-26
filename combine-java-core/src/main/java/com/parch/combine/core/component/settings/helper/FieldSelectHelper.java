@@ -1,6 +1,6 @@
-package com.parch.combine.core.common.settings.helper;
+package com.parch.combine.core.component.settings.helper;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 import java.lang.reflect.Method;
 

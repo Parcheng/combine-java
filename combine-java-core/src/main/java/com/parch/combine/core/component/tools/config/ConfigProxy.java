@@ -1,13 +1,16 @@
 package com.parch.combine.core.component.tools.config;
 
-import com.parch.combine.core.common.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.Field;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ConfigProxy implements InvocationHandler {
 

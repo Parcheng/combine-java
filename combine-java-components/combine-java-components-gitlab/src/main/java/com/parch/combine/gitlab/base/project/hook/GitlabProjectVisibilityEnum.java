@@ -1,6 +1,6 @@
 package com.parch.combine.gitlab.base.project.hook;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 /**
  * 项目可见性

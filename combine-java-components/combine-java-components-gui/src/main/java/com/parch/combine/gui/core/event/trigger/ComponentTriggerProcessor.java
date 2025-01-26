@@ -1,7 +1,7 @@
 package com.parch.combine.gui.core.event.trigger;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.SubComponentTool;
@@ -9,8 +9,6 @@ import com.parch.combine.core.component.tools.SubComponentTool;
 import javax.swing.*;
 import java.awt.event.ComponentEvent;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 

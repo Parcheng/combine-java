@@ -1,9 +1,9 @@
 package com.parch.combine.file.base.output.download;
 
 import com.parch.combine.file.base.output.FileOutputLogicConfig;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldEg;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 public interface FileOutputDownloadLogicConfig extends FileOutputLogicConfig {
 

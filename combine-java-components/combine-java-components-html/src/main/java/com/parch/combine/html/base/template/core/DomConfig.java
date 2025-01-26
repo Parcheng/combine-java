@@ -1,13 +1,11 @@
 package com.parch.combine.html.base.template.core;
 
-import com.parch.combine.core.common.settings.annotations.CommonObject;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.CommonObject;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
-import java.util.List;
 import java.util.Map;
 
 @CommonObject(name = "页面DOM元素配置")

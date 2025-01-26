@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.tools.variable;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 /**
  * 数据类型枚举

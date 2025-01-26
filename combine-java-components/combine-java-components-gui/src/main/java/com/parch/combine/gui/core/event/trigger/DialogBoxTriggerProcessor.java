@@ -1,16 +1,13 @@
 package com.parch.combine.gui.core.event.trigger;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.core.common.settings.config.IOptionSetting;
-import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.common.GUIAlignTypeEnum;
 
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.event.ComponentEvent;
 
 public class DialogBoxTriggerProcessor extends AbstractTriggerProcessor {

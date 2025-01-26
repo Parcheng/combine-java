@@ -1,7 +1,6 @@
 package com.parch.combine.core.component.tools;
 
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.context.ComponentContext;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.manager.CombineManager;

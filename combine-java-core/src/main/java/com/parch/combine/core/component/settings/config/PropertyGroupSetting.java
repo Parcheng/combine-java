@@ -1,4 +1,4 @@
-package com.parch.combine.core.common.settings.config;
+package com.parch.combine.core.component.settings.config;
 
 
 import java.util.List;

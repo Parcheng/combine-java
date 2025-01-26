@@ -1,6 +1,6 @@
-package com.parch.combine.core.common.settings.annotations;
+package com.parch.combine.core.component.settings.annotations;
 
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

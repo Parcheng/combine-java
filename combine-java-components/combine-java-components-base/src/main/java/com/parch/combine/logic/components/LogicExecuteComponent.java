@@ -31,11 +31,11 @@ public class LogicExecuteComponent extends AbstractComponent<LogicExecuteInitCon
         String[] componentIds = logicConfig.components();
         ComponentDataResult result = SubComponentTool.execute(manager, componentIds);
         if (result.getSuccess()) {
-            String out = getLogicConfig().out();
-            if (CheckEmptyUtil.isEmpty(out)) {
-                return ComponentDataResult.success(result);
+            Object out = getLogicConfig().out();
+            if (out == null) {
+                return ComponentDataResult.success(null);
             } else {
-                return ComponentDataResult.success(DataVariableHelper.parseValue(out, true));
+                return ComponentDataResult.success(DataVariableHelper.parse(out));
             }
         }
 

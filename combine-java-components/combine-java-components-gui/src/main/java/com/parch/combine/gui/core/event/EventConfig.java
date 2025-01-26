@@ -1,10 +1,10 @@
 package com.parch.combine.gui.core.event;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.event.trigger.ComponentTriggerProcessor;
 import com.parch.combine.gui.core.event.trigger.DialogBoxTriggerProcessor;
 import com.parch.combine.gui.core.event.trigger.GUITriggerTypeEnum;

@@ -1,7 +1,10 @@
 package com.parch.combine.core.component.tools.compare;
 
-import com.parch.combine.core.common.settings.annotations.*;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+
 import java.util.List;
 
 /**

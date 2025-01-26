@@ -2,9 +2,9 @@ package com.parch.combine.gui.base.build.control.select;
 
 import com.parch.combine.gui.base.build.GUIControlOptionConfig;
 import com.parch.combine.gui.base.build.GUIControlLogicConfig;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.event.EventConfig;
 
 public interface GUIControSelectLogicConfig extends GUIControlLogicConfig {

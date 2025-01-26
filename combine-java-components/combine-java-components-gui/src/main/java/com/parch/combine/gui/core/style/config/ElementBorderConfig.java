@@ -1,10 +1,10 @@
 package com.parch.combine.gui.core.style.config;
 
-import com.parch.combine.core.common.settings.annotations.CommonObject;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.CommonObject;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 @CommonObject(name = ElementObjectConstant.GUI_ELEMENT_BORDER_NAME)

@@ -1,13 +1,12 @@
 package com.parch.combine.gui.base.build.control.buttons;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldMapValue;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldRef;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldMapValue;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldRef;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.element.BaseGUIElementTemplate;
 import com.parch.combine.gui.core.style.ElementConfig;
-import com.parch.combine.gui.core.style.ElementObjectConstant;
 
 import java.util.Map;
 

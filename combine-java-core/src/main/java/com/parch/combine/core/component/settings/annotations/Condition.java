@@ -1,4 +1,4 @@
-package com.parch.combine.core.common.settings.annotations;
+package com.parch.combine.core.component.settings.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,23 +6,19 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 组件公共对象注解
+ * 条件配置注解（暂未使用）
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface CommonObject {
-    /**
-     * 顺序字段
-     */
-    int order() default 0;
+public @interface Condition {
 
     /**
-     * name 名称
+     * key
      */
-    String name();
+    String key();
 
     /**
-     * 详情
+     * 值
      */
-    String[] desc() default {};
+    String value();
 }
