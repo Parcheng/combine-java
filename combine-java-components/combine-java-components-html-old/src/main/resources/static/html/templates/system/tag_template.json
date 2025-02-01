@@ -1,0 +1,44 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "c-tag",
+    "style": "",
+    "properties": {}
+  },
+  "normal": {
+    "tag": "span",
+    "class": "c-default",
+    "style": "",
+    "properties": {}
+  },
+  "success": {
+    "tag": "span",
+    "class": "c-success",
+    "style": "",
+    "properties": {}
+  },
+  "info": {
+    "tag": "span",
+    "class": "c-info",
+    "style": "",
+    "properties": {}
+  },
+  "primary": {
+    "tag": "span",
+    "class": "c-primary",
+    "style": "",
+    "properties": {}
+  },
+  "warn": {
+    "tag": "span",
+    "class": "c-warning",
+    "style": "",
+    "properties": {}
+  },
+  "error": {
+    "tag": "span",
+    "class": "c-danger",
+    "style": "",
+    "properties": {}
+  }
+}
