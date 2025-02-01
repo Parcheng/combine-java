@@ -3,7 +3,7 @@ package com.parch.combine.html.base.dataload.core;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
-import com.parch.combine.html.base.ConfigErrorEnum;
+import com.parch.combine.html.old.base.ConfigErrorEnum;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.html.common.cache.base.IRegisterComponent;
 import com.parch.combine.html.common.cache.DataloadConfigCache;
