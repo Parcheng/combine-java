@@ -2,7 +2,7 @@ package com.parch.combine.html.common.cache;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.manager.CombineManager;
-import com.parch.combine.html.old.base.element.core.ElementConfig;
+import com.parch.combine.html.base.element.core.ElementConfig;
 import com.parch.combine.html.common.cache.base.BaseCacheModel;
 import com.parch.combine.html.common.cache.base.CacheModelBuilder;
 import com.parch.combine.html.common.cache.base.IConfigClear;

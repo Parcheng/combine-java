@@ -4,7 +4,7 @@ import com.parch.combine.core.component.settings.annotations.Field;
 import com.parch.combine.core.component.settings.annotations.FieldDesc;
 import com.parch.combine.core.component.settings.annotations.FieldRef;
 import com.parch.combine.core.component.settings.config.FieldTypeEnum;
-import com.parch.combine.html.old.base.template.core.DomConfig;
+import com.parch.combine.html.base.template.core.DomConfig;
 
 public interface HtmlElementConfig {
 

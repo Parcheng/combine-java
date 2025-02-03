@@ -2,8 +2,8 @@ package com.parch.combine.html.components.dataload;
 
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.html.old.base.ConfigClearComponent;
-import com.parch.combine.html.old.base.ConfigClearLogicConfig;
+import com.parch.combine.html.base.ConfigClearComponent;
+import com.parch.combine.html.base.ConfigClearLogicConfig;
 import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.html.common.cache.DataloadConfigCache;
 

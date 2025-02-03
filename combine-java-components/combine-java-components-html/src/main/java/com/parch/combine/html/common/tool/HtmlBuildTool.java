@@ -2,7 +2,7 @@ package com.parch.combine.html.common.tool;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.StringUtil;
-import com.parch.combine.html.old.base.template.core.DomConfig;
+import com.parch.combine.html.base.template.core.DomConfig;
 
 import java.util.HashMap;
 import java.util.Map;
