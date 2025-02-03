@@ -1,0 +1,14 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "c-hr",
+    "style": "",
+    "properties": {}
+  },
+  "hr": {
+    "tag": "hr",
+    "class": "",
+    "style": "",
+    "properties": {}
+  }
+}

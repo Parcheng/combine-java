@@ -1,0 +1,26 @@
+{
+  "external": {
+    "tag": "div",
+    "class": "c-list",
+    "style": "",
+    "properties": {}
+  },
+  "list": {
+    "tag": "ul",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "item": {
+    "tag": "li",
+    "class": "",
+    "style": "",
+    "properties": {}
+  },
+  "defaultText": {
+    "tag": "div",
+    "class": "c-default-text",
+    "style": "",
+    "properties": {}
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "external": {
+    "tag": "span",
+    "class": "c-button",
+    "style": "",
+    "properties": {}
+  },
+  "normal": {
+    "tag": "button",
+    "class": "c-button c-default",
+    "style": "",
+    "properties": {}
+  },
+  "primary": {
+    "tag": "button",
+    "class": "c-button c-primary",
+    "style": "",
+    "properties": {}
+  },
+  "success": {
+    "tag": "button",
+    "class": "c-button c-success",
+    "style": "",
+    "properties": {}
+  },
+  "info": {
+    "tag": "button",
+    "class": "c-button c-info",
+    "style": "",
+    "properties": {}
+  },
+  "warn": {
+    "tag": "button",
+    "class": "c-button c-warning",
+    "style": "",
+    "properties": {}
+  },
+  "error": {
+    "tag": "button",
+    "class": "c-button c-danger",
+    "style": "",
+    "properties": {}
+  }
+}
