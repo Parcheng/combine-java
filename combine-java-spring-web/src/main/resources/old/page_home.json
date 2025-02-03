@@ -1,0 +1,697 @@
+{
+  "constant": {},
+  "dataLoads": [
+    {
+      "id": "q-question-bank-libs-data-load",
+      "type": "FLOW",
+      "url": "/flow/lib/all",
+      "mode": "POST",
+      "headers": { "token": "#{$ls.user_token.token}" },
+      "toGlobal": true
+    },{
+      "id": "q-question-bank-data-load",
+      "type": "FLOW",
+      "mode": "POST",
+      "url": "/flow/exercise/search",
+      "params": {
+        "lib_code": "#{$e.q-question-bank-select-from.lib_code}",
+        "radio_count": "#{$e.q-question-bank-select-from.radio_count}",
+        "multiple_count": "#{$e.q-question-bank-select-from.multiple_count}",
+        "judge_count": "#{$e.q-question-bank-select-from.judge_count}",
+        "answer_count": "#{$e.q-question-bank-select-from.answer_count}",
+        "analysis_count": "#{$e.q-question-bank-select-from.analysis_count}"
+      },
+      "headers": { "token": "#{$ls.user_token.token}" }
+    }
+  ],
+  "templates": [
+    {
+      "id": "70-input-template",
+      "type": "SYSTEM.INPUT",
+      "input": {
+        "style": "width:70px;"
+      }
+    }
+  ],
+  "elements": [],
+  "groups": [
+    {
+      "id": "q-question-bank-nav",
+      "elements": [
+        {
+          "type": "SYSTEM.NAV_BAR",
+          "data": [{"name": "题库系统"}],
+          "brandText": "POS SYSTEM",
+          "defaultChecked": 0,
+          "nav": {
+            "text": "#{name}",
+            "triggers": [{
+              "event": "click",
+              "type": "LOAD",
+              "groupId": "q-question-bank-tree",
+              "parentId": "element_left",
+              "params": [
+                {"name": "题库管理", "groupId": "q-question-bank-product-import"},
+                {"name": "在线做题", "groupId": "q-question-bank-product-do"}
+              ]
+            }]
+          }
+        }
+      ]
+    },
+    {
+      "id": "q-question-bank-tree",
+      "type": "web.elements",
+      "elements": [{
+        "type": "SYSTEM.TREE",
+        "textField": "name",
+        "checkFirst": true,
+        "triggers": [{
+          "event": "click",
+          "type": "LOAD",
+          "groupId": "#{groupId}",
+          "parentId": "element_content"
+        }]
+      }]
+    },
+    {
+      "id": "q-question-bank-product-import",
+      "type": "web.elements",
+      "elements": [{
+        "id": "q-question-bank-product-import-from",
+        "type": "SYSTEM.FROM",
+        "layout": "inline",
+        "items": [
+          {
+            "fieldKey": "lib_name",
+            "fieldName": "题库名称",
+            "element": {
+              "type": "SYSTEM.INPUT",
+              "key": "lib_name",
+              "inputType": "TEXT"
+            }
+          }, {
+            "fieldKey": "pdf_file",
+            "fieldName": "题库文件",
+            "element": {
+              "type": "SYSTEM.INPUT",
+              "key": "pdf_file",
+              "inputType": "FILE"
+            }
+          }, {
+            "element": {
+              "type": "SYSTEM.BUTTON",
+              "items": [
+                {
+                  "type": "normal",
+                  "size": 3,
+                  "text": "提交",
+                  "triggers": [{
+                    "event": "click",
+                    "type": "CALL_FLOW",
+                    "url": "/file-flow/import/pdf",
+                    "mode": "POST",
+                    "fromSubmit": true,
+                    "params": {
+                      "params": { "lib_name": "#{$e.q-question-bank-product-import-from.lib_name}" },
+                      "file": "#{$e.q-question-bank-product-import-from.pdf_file}"
+                    },
+                    "headers": { "token": "#{$ls.user_token.token}" },
+                    "success": {
+                      "type": "SYSTEM.WINDOW",
+                      "title": "成功",
+                      "body": {
+                        "elements": [{
+                          "type": "SYSTEM.TEXT",
+                          "lines": [
+                            { "text": "导入成功！" },
+                            { "text": "单选题：#{radio} 个" },
+                            { "text": "多选题：#{multiple} 个" },
+                            { "text": "判断选题：#{judge} 个" },
+                            { "text": "简答题：#{answer} 个" },
+                            { "text": "案例分析题：#{analysis} 个" }
+                          ]
+                        }]
+                      },
+                      "closeTriggers": [{
+                        "event": "click",
+                        "type": "LOAD_DATA",
+                        "loadIds": ["q-question-bank-libs-data-load"]
+                      }]
+                    },
+                    "fail": {
+                      "type": "SYSTEM.WINDOW",
+                      "refresh": false,
+                      "title": "失败",
+                      "body": { "text": "题库解析失败" }
+                    }
+                  }]
+                }
+              ]
+            }
+          }
+        ]
+      },{
+        "type": "SYSTEM.HR"
+      },{
+        "type": "SYSTEM.TABLE",
+        "dataLoadId": "q-question-bank-libs-data-load",
+        "fieldNames": ["code","name","create_time"],
+        "dataFieldNames": ["id"],
+        "headNames": ["序号","题库编码","题库名称","创建时间", "操作"],
+        "minLength": 10,
+        "hasIndex": true,
+        "rowOpts": {
+          "type": "SYSTEM.BUTTON",
+          "items": [
+            {
+              "type": "error",
+              "size": 2,
+              "text": "删除",
+              "triggers": [{
+                "event": "click",
+                "type": "CALL_FUNC",
+                "id": "q-question-lib-delete-window",
+                "name": "open",
+                "params": "#{}"
+              }]
+            }
+          ]
+        }
+      },{
+        "id": "q-question-lib-delete-window",
+        "type": "SYSTEM.WINDOW",
+        "title": "删除",
+        "body": {
+          "elements": [{
+            "type": "SYSTEM.TEXT",
+            "lines": [{ "text": "是否确定要删除？" }]
+          },{
+            "type": "SYSTEM.BUTTON",
+            "items": [
+              {
+                "type": "error",
+                "size": 3,
+                "text": "确定",
+                "triggers": [{
+                  "event": "click",
+                  "type": "CALL_FUNC",
+                  "id": "q-question-lib-delete-window",
+                  "name": "close"
+                },{
+                  "event": "click",
+                  "type": "CALL_FLOW",
+                  "url": "/flow/lib/deleteByCode",
+                  "mode": "POST",
+                  "params": {
+                    "lib_code": "#{code}"
+                  },
+                  "headers": { "token": "#{$ls.user_token.token}" },
+                  "success": {
+                    "type": "SYSTEM.WINDOW",
+                    "refresh": false,
+                    "templateId": "small-window-template",
+                    "title": "成功",
+                    "body": { "text": "删除成功" },
+                    "closeTriggers": [{
+                      "event": "click",
+                      "type": "LOAD_DATA",
+                      "loadIds": ["q-question-bank-libs-data-load"]
+                    }]
+                  },
+                  "fail": {
+                    "type": "SYSTEM.WINDOW",
+                    "title": "失败",
+                    "body": { "text": "删除失败：#{showMsg}" }
+                  }
+                }]
+              }
+            ]
+          }]
+        }
+      }]
+    },
+    {
+      "id": "q-question-bank-product-do",
+      "type": "web.elements",
+      "elements": [
+        {
+          "id": "q-question-bank-select-from",
+          "type": "SYSTEM.FROM",
+          "layout": "inline",
+          "items": [
+            {
+              "fieldKey": "radio_count",
+              "fieldName": "单选",
+              "element": {
+                "type": "SYSTEM.INPUT",
+                "templateId": "70-input-template",
+                "key": "radio_count",
+                "inputType": "NUMBER",
+                "value":30
+              }
+            }, {
+              "fieldKey": "multiple_count",
+              "fieldName": "多选",
+              "element": {
+                "type": "SYSTEM.INPUT",
+                "templateId": "70-input-template",
+                "key": "multiple_count",
+                "inputType": "NUMBER",
+                "value":30
+              }
+            }, {
+              "fieldKey": "judge_count",
+              "fieldName": "判断",
+              "element": {
+                "type": "SYSTEM.INPUT",
+                "templateId": "70-input-template",
+                "key": "judge_count",
+                "inputType": "NUMBER",
+                "value":30
+              }
+            }, {
+              "fieldKey": "answer_count",
+              "fieldName": "简答",
+              "element": {
+                "type": "SYSTEM.INPUT",
+                "templateId": "70-input-template",
+                "key": "answer_count",
+                "inputType": "NUMBER",
+                "value":5
+              }
+            }, {
+              "fieldKey": "analysis_count",
+              "fieldName": "案例分析",
+              "element": {
+                "type": "SYSTEM.INPUT",
+                "templateId": "70-input-template",
+                "key": "analysis_count",
+                "inputType": "NUMBER",
+                "value":5
+              }
+            }, {
+              "fieldKey": "lib_code",
+              "fieldName": "题库",
+              "element": {
+                "type": "SYSTEM.SELECT",
+                "dataLoadId": "q-question-bank-libs-data-load",
+                "key": "lib_code",
+                "defaultText": "请选择",
+                "option": {
+                  "data": "#{$ld.q-question-bank-libs-data-load}",
+                  "value": "#{code}",
+                  "text": "#{name}"
+                }
+              }
+            },
+            {
+              "element": {
+                "type": "SYSTEM.BUTTON",
+                "items": [
+                  {
+                    "type": "normal",
+                    "size": 3,
+                    "text": "开始做题",
+                    "triggers": [{
+                      "event": "click",
+                      "type": "LOAD_DATA",
+                      "loadIds": ["q-question-bank-data-load"],
+                      "fail": {
+                        "type": "SYSTEM.WINDOW",
+                        "templateId": "small-window-template",
+                        "title": "失败",
+                        "body": { "text": "查询失败：#{showMsg}" }
+                      }
+                    }]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "SYSTEM.HR"
+        },
+        {
+          "type": "SYSTEM.TITLE",
+          "text": "一，单选题",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "SYSTEM.LIST",
+          "defaultLoad": false,
+          "dataLoadId": "q-question-bank-data-load",
+          "dataField": "radio",
+          "content": {
+            "elements": [
+              {
+                "type": "SYSTEM.FROM",
+                "layout": "vertical",
+                "items": [
+                  {
+                    "fieldName": "#{question}",
+                    "element": {
+                      "type": "SYSTEM.RADIO",
+                      "layout": "MULTILINE",
+                      "key": "question-radio-#{id}",
+                      "option": {
+                        "data": "#{options}",
+                        "value": "#{code}",
+                        "text": "#{code}.#{content}"
+                      }
+                    }
+                  },{
+                    "id": "question-answer-#{id}",
+                    "text": "答案：#{answer}",
+                    "hide": true
+                  },{
+                    "id": "question-show-answer-#{id}",
+                    "element": {
+                      "type": "SYSTEM.BUTTON",
+                      "items": [{
+                        "type": "warn",
+                        "size": 3,
+                        "text": "显示答案",
+                        "triggers": [{
+                          "event": "click",
+                          "type": "CUSTOM",
+                          "functionName": "$combine.dom.show",
+                          "functionParams": ["question-answer-#{id}"]
+                        },{
+                          "event": "click",
+                          "type": "CUSTOM",
+                          "functionName": "$combine.dom.hide",
+                          "functionParams": ["question-show-answer-#{id}"]
+                        }]
+                      }]
+                    }
+                  }
+                ]
+              },{
+                "type": "SYSTEM.HR"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYSTEM.TITLE",
+          "text": "二，多选题",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "SYSTEM.LIST",
+          "defaultLoad": false,
+          "dataLoadId": "q-question-bank-data-load",
+          "dataField": "multiple",
+          "content": {
+            "elements": [
+              {
+                "type": "SYSTEM.FROM",
+                "layout": "vertical",
+                "items": [{
+                  "fieldName": "#{question}",
+                  "element": {
+                    "type": "SYSTEM.CHECKBOX",
+                    "layout": "MULTILINE",
+                    "key": "question-multiple-#{id}",
+                    "option": {
+                      "data": "#{options}",
+                      "value": "#{code}",
+                      "text": "#{code}.#{content}"
+                    }
+                  }
+                },{
+                  "id": "question-answer-#{id}",
+                  "text": "答案：#{answer}",
+                  "hide": true
+                },{
+                  "id": "question-show-answer-#{id}",
+                  "element": {
+                    "type": "SYSTEM.BUTTON",
+                    "items": [
+                      {
+                        "type": "warn",
+                        "size": 3,
+                        "text": "显示答案",
+                        "triggers": [{
+                          "event": "click",
+                          "type": "CUSTOM",
+                          "functionName": "$combine.dom.show",
+                          "functionParams": ["question-answer-#{id}"]
+                        },{
+                          "event": "click",
+                          "type": "CUSTOM",
+                          "functionName": "$combine.dom.hide",
+                          "functionParams": ["question-show-answer-#{id}"]
+                        }]
+                      }
+                    ]
+                  }
+                }]
+              },{
+                "type": "SYSTEM.HR"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYSTEM.TITLE",
+          "text": "三，判断题",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "SYSTEM.LIST",
+          "dataLoadId": "q-question-bank-data-load",
+          "defaultLoad": false,
+          "dataField": "judge",
+          "content": {
+            "elements": [{
+              "type": "SYSTEM.FROM",
+              "layout": "vertical",
+              "items": [{
+                "fieldName": "#{question}",
+                "element": {
+                  "type": "SYSTEM.RADIO",
+                  "layout": "INLINE",
+                  "key": "question-judge-#{id}",
+                  "option": {
+                    "data": [
+                      { "code": "1", "content":"正确" },
+                      { "code": "0", "content":"错误" }
+                    ],
+                    "value": "#{code}",
+                    "text": "#{content}"
+                  }
+                }
+              },{
+                "id": "question-answer-#{id}",
+                "text": "答案：#{answer}",
+                "hide": true
+              },{
+                "id": "question-show-answer-#{id}",
+                "element": {
+                  "type": "SYSTEM.BUTTON",
+                  "items": [
+                    {
+                      "type": "warn",
+                      "size": 3,
+                      "text": "显示答案",
+                      "triggers": [{
+                        "event": "click",
+                        "type": "CUSTOM",
+                        "functionName": "$combine.dom.show",
+                        "functionParams": ["question-answer-#{id}"]
+                      },{
+                        "event": "click",
+                        "type": "CUSTOM",
+                        "functionName": "$combine.dom.hide",
+                        "functionParams": ["question-show-answer-#{id}"]
+                      }]
+                    }
+                  ]
+                }
+              }]
+            },{
+              "type": "SYSTEM.HR"
+            }]
+          }
+        },
+        {
+          "type": "SYSTEM.TITLE",
+          "text": "四，简答题",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "SYSTEM.LIST",
+          "dataLoadId": "q-question-bank-data-load",
+          "defaultLoad": false,
+          "dataField": "answer",
+          "content": {
+            "elements": [
+              {
+                "type": "SYSTEM.FROM",
+                "layout": "vertical",
+                "items": [
+                  {
+                    "fieldName": "#{question}",
+                    "element": {
+                      "type": "SYSTEM.TEXTAREA",
+                      "key": "question-answer-#{id}"
+                    }
+                  },{
+                    "id": "question-answer-#{id}",
+                    "text": "答案：#{answer}",
+                    "hide": true
+                  },{
+                    "id": "question-show-answer-#{id}",
+                    "element": {
+                      "type": "SYSTEM.BUTTON",
+                      "items": [
+                        {
+                          "type": "warn",
+                          "size": 3,
+                          "text": "显示答案",
+                          "triggers": [{
+                            "event": "click",
+                            "type": "CUSTOM",
+                            "functionName": "$combine.dom.show",
+                            "functionParams": ["question-answer-#{id}"]
+                          },{
+                            "event": "click",
+                            "type": "CUSTOM",
+                            "functionName": "$combine.dom.hide",
+                            "functionParams": ["question-show-answer-#{id}"]
+                          }]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },{
+                "type": "SYSTEM.HR"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYSTEM.TITLE",
+          "text": "五，案例分析题",
+          "level": 4,
+          "top": false,
+          "bottom": true
+        },
+        {
+          "type": "SYSTEM.LIST",
+          "dataLoadId": "q-question-bank-data-load",
+          "defaultLoad": false,
+          "dataField": "analysis",
+          "content": {
+            "elements": [{
+              "type": "SYSTEM.FROM",
+              "layout": "vertical",
+              "items": [
+                {
+                  "fieldName": "#{question}",
+                  "element": {
+                    "type": "SYSTEM.TEXTAREA",
+                    "key": "question-analysis-#{id}"
+                  }
+                },{
+                  "id": "question-answer-#{id}",
+                  "text": "答案：#{answer}",
+                  "hide": true
+                },{
+                  "id": "question-show-answer-#{id}",
+                  "element": {
+                    "type": "SYSTEM.BUTTON",
+                    "items": [
+                      {
+                        "type": "warn",
+                        "size": 3,
+                        "text": "显示答案",
+                        "triggers": [{
+                          "event": "click",
+                          "type": "CUSTOM",
+                          "functionName": "$combine.dom.show",
+                          "functionParams": ["question-answer-#{id}"]
+                        },{
+                          "event": "click",
+                          "type": "CUSTOM",
+                          "functionName": "$combine.dom.hide",
+                          "functionParams": ["question-show-answer-#{id}"]
+                        }]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },{
+              "type": "SYSTEM.HR"
+            }]
+          }
+        },
+        {
+          "type": "SYSTEM.BUTTON",
+          "items": [
+            {
+              "type": "info",
+              "size": 4,
+              "text": "批改",
+              "triggers": [{
+                "event": "click",
+                "type": "CALL_FUNC",
+                "id": "product_window_add",
+                "name": "open",
+                "params": {}
+              }]
+            },{
+              "type": "normal",
+              "size": 4,
+              "text": "提交",
+              "triggers": [{
+                "event": "click",
+                "type": "CALL_FUNC",
+                "id": "product_window_add",
+                "name": "open",
+                "params": {}
+              }]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pages": {
+    "home": {
+      "metas": [],
+      "links": [],
+      "groupIds": ["q-question-bank-nav", "q-question-bank-tree", "q-question-bank-product-import", "q-question-bank-product-do"],
+      "modules": [
+        {
+          "key": "header",
+          "defaultShowGroupId": "q-question-bank-nav"
+        },{
+          "key": "left",
+          "id": "element_left",
+          "classes": "c-model",
+          "style": "width:19%;"
+        },{
+          "key": "content",
+          "id": "element_content",
+          "classes": "c-model",
+          "style": "width:80%;border-left:1px solid #F5F5F5;padding-left:20px;"
+        }
+      ],
+      "scripts": []
+    }
+  }
+}
