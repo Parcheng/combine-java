@@ -1,11 +1,11 @@
-package com.parch.combine.logic.base.module;
+package com.parch.combine.logic.base.packages;
 
 import com.parch.combine.core.component.settings.annotations.Field;
 import com.parch.combine.core.component.settings.annotations.FieldDesc;
 import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
 
-public interface LogicModuleLogicConfig extends ILogicConfig {
+public interface LogicPackagesLogicConfig extends ILogicConfig {
 
     @Field(key = "components", name = "要执行的逻辑", type = FieldTypeEnum.COMPONENT, isRequired = true, isArray = true)
     String[] components();
