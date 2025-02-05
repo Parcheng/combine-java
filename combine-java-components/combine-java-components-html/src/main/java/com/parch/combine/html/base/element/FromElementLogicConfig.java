@@ -30,10 +30,10 @@ public interface FromElementLogicConfig extends ILogicConfig {
         @Field(key = "id", name = "配置项ID（DOM元素ID）", type = FieldTypeEnum.TEXT)
         String id();
 
-        @Field(key = "fieldKey", name = "表单字段KEY", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "fieldKey", name = "表单字段KEY", type = FieldTypeEnum.TEXT)
         String fieldKey();
 
-        @Field(key = "fieldName", name = "表单字段名称", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "fieldName", name = "表单字段名称", type = FieldTypeEnum.TEXT)
         String fieldName();
 
         @Field(key = "text", name = "text 和 element 配置任意一项即可", type = FieldTypeEnum.TEXT)

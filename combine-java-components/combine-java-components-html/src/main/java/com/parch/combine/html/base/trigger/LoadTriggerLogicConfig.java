@@ -14,12 +14,6 @@ public interface LoadTriggerLogicConfig extends ILogicConfig {
 
     interface Config extends TriggerConfig {
 
-        @Field(key = "groupId", name = "元素组ID", type = FieldTypeEnum.TEXT, isRequired = true)
-        String groupId();
-
-        @Field(key = "parentId", name = "要写入到的父元素DOM ID", type = FieldTypeEnum.TEXT, isRequired = true)
-        String parentId();
-
         @Field(key = "params", name = "加载元素组的数据", type = FieldTypeEnum.ANY)
         Object params();
 

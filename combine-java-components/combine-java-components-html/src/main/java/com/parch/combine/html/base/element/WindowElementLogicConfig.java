@@ -24,7 +24,7 @@ public interface WindowElementLogicConfig extends ILogicConfig {
         @Field(key = "size", name = "尺寸（宽度）px", type = FieldTypeEnum.NUMBER, defaultValue = "200")
         Integer size();
 
-        @Field(key = "content", name = "内容配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+        @Field(key = "body", name = "内容配置", type = FieldTypeEnum.CONFIG, isRequired = true)
         @FieldObject(SubElementConfig.class)
         SubElementConfig body();
 
