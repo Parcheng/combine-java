@@ -1,4 +1,4 @@
-package com.parch.combine.core.component;
+package com.parch.combine.core.component.service;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
@@ -9,23 +9,20 @@ import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.context.ScopeContext;
 import com.parch.combine.core.component.context.ScopeContextHandler;
-import com.parch.combine.core.component.service.CombineJavaService;
 import com.parch.combine.core.component.handler.ComponentClassHandler;
-import com.parch.combine.core.component.service.ICombineJavaService;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentClassInitVO;
+import com.parch.combine.core.component.vo.FlowResult;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CombineJavaLoader {
 
     static {
         PrintHelper.printInit("******************************************************************************************************************************************************");
-        String path = "global.json";
-        GlobalContext context = GlobalContextHandler.init(path);
-        PrintHelper.printInit("全局设置 [" + path + "] >>>");
-        PrintHelper.printInit("[组件加载配置] > " + JsonUtil.obj2String(context.getLoadConfigs()));
+        initGlobal();
         PrintHelper.printInit("******************************************************************************************************************************************************");
         PrintHelper.printInit("初始化组件 >>>");
         List<ComponentClassInitVO> components = ComponentClassHandler.init();
@@ -44,12 +41,23 @@ public class CombineJavaLoader {
     }
 
     /**
+     * 初始化全局配置
+     */
+    public static void initGlobal() {
+        String path = "global.json";
+        GlobalContext context = GlobalContextHandler.init(path);
+        PrintHelper.printInit("全局设置 [" + path + "] >>>");
+        PrintHelper.printInit("[组件加载配置] > " + JsonUtil.obj2String(context.getLoadConfigs()));
+    }
+
+    /**
      * 初始化
      *
      * @param path 初始化文件相对路径
      */
     public static ICombineJavaService init(String path) {
         CombineJavaService combineWebService = new CombineJavaService();
+        AtomicBoolean isInitSuccess = new AtomicBoolean(true);
 
         String scopeKey = combineWebService.getScopeKey();
         ScopeContextHandler.init(scopeKey, path);
@@ -74,6 +82,7 @@ public class CombineJavaLoader {
                         PrintHelper.printInit("FLOW | " + vo.getFlowKey() + "(STATIC) : " + StringUtil.join(vo.getStaticComponentIds(), ", "));
                     }
                     if (CheckEmptyUtil.isNotEmpty(vo.getErrorList())) {
+                        isInitSuccess.set(false);
                         for (String errorMsg : vo.getErrorList()) {
                             PrintLogUtil.printError("FLOW | " + vo.getFlowKey() + " Error：" + errorMsg);
                         }
@@ -90,10 +99,15 @@ public class CombineJavaLoader {
                 String[] keyArr = FlowKeyUtil.parseKey(initFlowKey);
                 List<String> componentIds = combineWebService.getComponentIds(keyArr[0], keyArr[1]);
                 if (componentIds == null) {
+                    isInitSuccess.set(false);
                     PrintLogUtil.printError(initFlowKey + " Error：流程未注册");
                 } else {
                     PrintHelper.printInit("执行流程：" + initFlowKey);
-                    combineWebService.executeAny(keyArr[0], keyArr[1], Collections.emptyMap(), Collections.emptyMap());
+                    FlowResult result = combineWebService.executeAny(keyArr[0], keyArr[1], Collections.emptyMap(), Collections.emptyMap());
+                    if (!result.getSuccess()) {
+                        isInitSuccess.set(false);
+                        PrintLogUtil.printError(initFlowKey + " Error：流程执行失败 - " + result.getErrMsg());
+                    }
                 }
             }
         }
@@ -102,6 +116,7 @@ public class CombineJavaLoader {
         PrintHelper.printInit(CheckEmptyUtil.EMPTY);
 
         combineWebService.setOpenRegister(context.getOpenRegisterConfig());
+        combineWebService.setInitSuccess(isInitSuccess.get());
 
         return combineWebService;
     }

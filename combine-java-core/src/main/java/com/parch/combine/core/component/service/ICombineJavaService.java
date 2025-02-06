@@ -122,4 +122,10 @@ public interface ICombineJavaService {
      * 资源关闭
      */
     void resourceClose();
+
+    /**
+     * 是否初始化成功
+     * @return 是否成功
+     */
+    boolean isInitSuccess();
 }

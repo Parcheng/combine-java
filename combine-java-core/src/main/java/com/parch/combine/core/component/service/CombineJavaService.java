@@ -25,6 +25,7 @@ import java.util.function.Consumer;
 public class CombineJavaService implements ICombineJavaService {
 
     private boolean openRegister = true;
+    private boolean initSuccess = true;
 
     private final CombineManager combineManager = new CombineManager();
 
@@ -41,7 +42,7 @@ public class CombineJavaService implements ICombineJavaService {
 
     @Override
     public void registerFlow(String configJson, Consumer<CombineInitVO> func) {
-        if (!openRegister) {
+        if (!this.openRegister) {
             throw new SysException(CommonErrorEnum.FLOW_UN_OPEN_REGISTER);
         }
 
@@ -130,12 +131,26 @@ public class CombineJavaService implements ICombineJavaService {
         combineManager.getResourceClose().closeAll();
     }
 
+    @Override
+    public boolean isInitSuccess() {
+        return initSuccess;
+    }
+
     /**
      * 设置是否开放注册
      *
      * @param openRegister 是否开放注册
      */
-    public void setOpenRegister(boolean openRegister) {
+    protected void setOpenRegister(boolean openRegister) {
         this.openRegister = openRegister;
+    }
+
+    /**
+     * 设置是否初始化成功
+     *
+     * @param initSuccess 是否初始化成功
+     */
+    protected void setInitSuccess(boolean initSuccess) {
+        this.initSuccess = initSuccess;
     }
 }
