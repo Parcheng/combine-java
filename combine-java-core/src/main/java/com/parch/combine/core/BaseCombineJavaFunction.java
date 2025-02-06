@@ -1,7 +1,8 @@
 package com.parch.combine.core;
 
+import com.parch.combine.core.common.util.PrintLogUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
-import com.parch.combine.core.component.CombineJavaLoader;
+import com.parch.combine.core.component.service.CombineJavaLoader;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.service.ICombineJavaService;
@@ -19,10 +20,38 @@ import java.util.function.Function;
  */
 public abstract class BaseCombineJavaFunction {
 
-    protected final ICombineJavaService service;
+    private final String configPath;
+    private boolean loadSuccess;
+    protected ICombineJavaService service;
 
     public BaseCombineJavaFunction(String configPath) {
-        service = CombineJavaLoader.init(configPath);
+        this.configPath = configPath;
+        this.loadSuccess = this.refresh();
+    }
+
+    /**
+     * 刷新全局配置
+     *
+     * @return 是否刷新成功
+     */
+    public static synchronized boolean refreshGlobal() {
+        CombineJavaLoader.initGlobal();
+        return true;
+    }
+
+    /**
+     * 刷新配置
+     *
+     * @return 是否刷新成功
+     */
+    public synchronized boolean refresh() {
+        if (CheckEmptyUtil.isEmpty(this.configPath)) {
+            PrintLogUtil.printError("Service Init Error：Config Path Is Empty!");
+            return this.loadSuccess = false;
+        }
+
+        this.service = CombineJavaLoader.init(this.configPath);
+        return this.loadSuccess = this.service.isInitSuccess();
     }
 
     /**
@@ -176,6 +205,15 @@ public abstract class BaseCombineJavaFunction {
         }
 
         return result;
+    }
+
+    /**
+     * 是否加载成功
+     *
+     * @return 是否加载成功
+     */
+    public boolean isLoadSuccess() {
+        return this.loadSuccess;
     }
 
     /**
