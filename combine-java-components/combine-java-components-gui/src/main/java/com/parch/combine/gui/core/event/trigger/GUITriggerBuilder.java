@@ -2,7 +2,7 @@ package com.parch.combine.gui.core.event.trigger;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.PrintLogUtil;
-import com.parch.combine.core.component.handler.CombineManagerHandler;
+import com.parch.combine.core.component.context.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.gui.core.element.GUIElementManager;
 import com.parch.combine.gui.core.element.GUIElementManagerHandler;

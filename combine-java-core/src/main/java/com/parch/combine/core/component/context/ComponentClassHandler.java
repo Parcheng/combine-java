@@ -1,10 +1,8 @@
-package com.parch.combine.core.component.handler;
+package com.parch.combine.core.component.context;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
-import com.parch.combine.core.component.context.GlobalContext;
-import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.tools.config.ConfigHelper;
 import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.error.SystemErrorHandler;

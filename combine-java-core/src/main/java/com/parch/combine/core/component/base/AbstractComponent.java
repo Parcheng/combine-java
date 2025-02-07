@@ -9,7 +9,7 @@ import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.handler.CombineManagerHandler;
+import com.parch.combine.core.component.context.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 
 import java.util.ArrayList;

@@ -8,7 +8,7 @@ import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.base.ComponentFlagEnum;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.handler.ComponentClassHandler;
+import com.parch.combine.core.component.context.ComponentClassHandler;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.vo.CombineInitVO;
 

@@ -12,7 +12,7 @@ import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.common.util.tuple.ThreeTuples;
 import com.parch.combine.core.component.base.AbstractComponent;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
-import com.parch.combine.core.component.handler.CombineManagerHandler;
+import com.parch.combine.core.component.context.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 
