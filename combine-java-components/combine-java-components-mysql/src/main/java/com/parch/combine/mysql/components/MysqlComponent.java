@@ -72,9 +72,7 @@ public class MysqlComponent extends AbstractComponent<MysqlInitConfig, MysqlLogi
         try {
             Object connKeyObj = ComponentContextHandler.getRuntimeData(CONN_KEY);
             connKey = connKeyObj == null ? null : connKeyObj.toString();
-
-            ComponentDataResult result = ComponentContextHandler.getResultData(getLogicConfig().id());
-            success = result != null && result.getSuccess();
+            success = isFlowSuccess();
         } catch (Exception e) {
             PrintErrorHelper.print(MysqlErrorEnum.END_FUNCTION_ERROR, e);
             return false;

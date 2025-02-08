@@ -22,9 +22,9 @@ public class ComponentDataResult {
 
     private String errMsg;
 
-    private String dataFlag;
-
     private Object data;
+
+    private String dataFlag;
 
     private long runTime;
 

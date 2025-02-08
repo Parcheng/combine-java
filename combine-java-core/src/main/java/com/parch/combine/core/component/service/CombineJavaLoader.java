@@ -9,7 +9,7 @@ import com.parch.combine.core.component.context.GlobalContext;
 import com.parch.combine.core.component.context.GlobalContextHandler;
 import com.parch.combine.core.component.context.ScopeContext;
 import com.parch.combine.core.component.context.ScopeContextHandler;
-import com.parch.combine.core.component.handler.ComponentClassHandler;
+import com.parch.combine.core.component.context.ComponentClassHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentClassInitVO;
 import com.parch.combine.core.component.vo.FlowResult;

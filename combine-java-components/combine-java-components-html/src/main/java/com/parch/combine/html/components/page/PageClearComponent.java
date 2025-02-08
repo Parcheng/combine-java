@@ -7,7 +7,7 @@ import com.parch.combine.html.base.ConfigClearComponent;
 import com.parch.combine.html.base.ConfigClearLogicConfig;
 import com.parch.combine.html.common.cache.PageHtmlCache;
 
-@Component(key = "page.clear", order = 499, name = "页面缓存清除组件", logicConfigClass = ConfigClearLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
+@Component(key = "page.clear", order = 601, name = "页面缓存清除组件", logicConfigClass = ConfigClearLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
 public class PageClearComponent extends ConfigClearComponent {
 

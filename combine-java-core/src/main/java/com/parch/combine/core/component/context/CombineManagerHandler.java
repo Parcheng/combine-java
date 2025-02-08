@@ -1,4 +1,4 @@
-package com.parch.combine.core.component.handler;
+package com.parch.combine.core.component.context;
 
 import com.parch.combine.core.component.manager.CombineManager;
 

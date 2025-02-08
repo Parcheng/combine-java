@@ -9,7 +9,7 @@ import com.parch.combine.core.component.error.SystemErrorEnum;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.context.ComponentContextHandler;
-import com.parch.combine.core.component.handler.CombineManagerHandler;
+import com.parch.combine.core.component.context.CombineManagerHandler;
 import com.parch.combine.core.component.manager.CombineManager;
 
 import java.util.ArrayList;
@@ -130,6 +130,16 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
         }
 
         return result;
+    }
+
+    /**
+     * 获取整个流程是否执行成功
+     *
+     * @return 流程执行结果
+     */
+    protected boolean isFlowSuccess() {
+        ComponentDataResult result = ComponentContextHandler.getLastResultData();
+        return result != null && result.getSuccess();
     }
 
     /**

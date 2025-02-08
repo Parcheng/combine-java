@@ -5,7 +5,7 @@ import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.context.ScopeContext;
 import com.parch.combine.core.component.context.ScopeContextHandler;
-import com.parch.combine.core.component.handler.CombineManagerHandler;
+import com.parch.combine.core.component.context.CombineManagerHandler;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.core.component.vo.CombineConfigVO;
