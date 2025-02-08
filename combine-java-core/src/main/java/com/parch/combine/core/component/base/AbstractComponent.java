@@ -133,6 +133,16 @@ public abstract class AbstractComponent<T extends IInitConfig, R extends ILogicC
     }
 
     /**
+     * 获取整个流程是否执行成功
+     *
+     * @return 流程执行结果
+     */
+    protected boolean isFlowSuccess() {
+        ComponentDataResult result = ComponentContextHandler.getLastResultData();
+        return result != null && result.getSuccess();
+    }
+
+    /**
      * 执行
      *
      * @return 结果
