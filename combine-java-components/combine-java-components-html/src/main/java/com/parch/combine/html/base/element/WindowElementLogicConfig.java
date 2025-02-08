@@ -1,8 +1,8 @@
 package com.parch.combine.html.base.element;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.html.base.element.core.ElementConfig;
 import com.parch.combine.html.base.element.core.SubElementConfig;
@@ -24,7 +24,7 @@ public interface WindowElementLogicConfig extends ILogicConfig {
         @Field(key = "size", name = "尺寸（宽度）px", type = FieldTypeEnum.NUMBER, defaultValue = "200")
         Integer size();
 
-        @Field(key = "content", name = "内容配置", type = FieldTypeEnum.CONFIG, isRequired = true)
+        @Field(key = "body", name = "内容配置", type = FieldTypeEnum.CONFIG, isRequired = true)
         @FieldObject(SubElementConfig.class)
         SubElementConfig body();
 

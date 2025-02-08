@@ -1,7 +1,7 @@
 package com.parch.combine.html.base.page.builder;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CharacterUtil;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.StringUtil;
@@ -10,6 +10,7 @@ import com.parch.combine.core.component.manager.CombineManager;
 import com.parch.combine.core.component.tools.PrintHelper;
 import com.parch.combine.html.base.page.HtmlPageInitConfig;
 import com.parch.combine.html.base.page.HtmlPageLogicConfig;
+import com.parch.combine.html.base.page.config.FlagConfig;
 import com.parch.combine.html.base.page.config.HtmlElementConfig;
 import com.parch.combine.html.base.page.config.HtmlHeaderLinkConfig;
 import com.parch.combine.html.base.page.config.HtmlHeaderMetaConfig;
@@ -239,40 +240,16 @@ public class HtmlBuilder {
         return StringUtil.join(scripts, CheckEmptyUtil.EMPTY);
     }
 
-    private Map<String, Object> parseConfig(Object interfaceObj) {
-        if (interfaceObj == null) {
+    private Map<String, Object> parseConfig(FlagConfig flagConfig) {
+        if (flagConfig == null) {
             return null;
         }
 
         Map<String, Object> config = new HashMap<>();
-        Method[] methods = interfaceObj.getClass().getMethods();
-        for (Method method : methods) {
-            Field field = method.getAnnotation(Field.class);
-            if (field == null) {
-                continue;
-            }
-
-            Object value;
-            try {
-                value = method.invoke(interfaceObj);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                PrintHelper.printComponentError(e);
-                return null;
-            }
-
-            if (value == null) {
-                continue;
-            }
-
-            if (field.type() == FieldTypeEnum.CONFIG) {
-                value = this.parseConfig(value);
-            }
-
-            if (value != null) {
-                config.put(method.getName(), value);
-            }
-        }
-
+        config.put("constant", flagConfig.constant());
+        config.put("dataLoad", flagConfig.dataLoad());
+        config.put("element", flagConfig.element());
+        config.put("localStorage", flagConfig.localStorage());
         return config;
     }
 }

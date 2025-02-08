@@ -1,7 +1,7 @@
 package com.parch.combine.tool.base.crontab;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.IInitConfig;
 
 public interface ToolCrontabInitConfig extends IInitConfig {

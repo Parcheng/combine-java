@@ -1,8 +1,7 @@
 package com.parch.combine.html.base.element.core;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 /**
  * 下级元素配置

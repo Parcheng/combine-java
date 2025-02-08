@@ -1,7 +1,7 @@
 package com.parch.combine.redis.base.command;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 public enum RedisCommandTypeEnum implements IOptionSetting {
 

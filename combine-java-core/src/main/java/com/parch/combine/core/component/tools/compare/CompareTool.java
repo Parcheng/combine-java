@@ -22,6 +22,9 @@ public class CompareTool {
             case CONTAINS:
                 result = ContainCompare.compare(config);
                 break;
+            case IN:
+                result = InCompare.compare(config);
+                break;
             case NO_EMPTY:
             case IS_EMPTY:
             case NO_NULL:

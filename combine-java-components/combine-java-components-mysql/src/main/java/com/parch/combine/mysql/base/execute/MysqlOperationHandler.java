@@ -22,10 +22,6 @@ import java.util.*;
  */
 public class MysqlOperationHandler {
 
-    public static final String CURR_PAGE_NAME = "page";
-    public static final String PAGE_SIZE_NAME = "pageSize";
-    public static final String COUNT_NAME = "count";
-
     /**
      * 连接池
      */
@@ -34,16 +30,17 @@ public class MysqlOperationHandler {
     /**
      * 执行Sql
      *
+     * @param requestId 请求ID
      * @param connKey 连接Key
      * @param params 入参
      * @param logicConfig 逻辑配置
      * @param initConfig 初始化配置
      * @return 结果集
      */
-    public static ComponentDataResult execute(String connKey, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
+    public static ComponentDataResult execute(String requestId, String connKey, Map<String, Object> params, MysqlLogicConfig logicConfig, MysqlInitConfig initConfig) {
         Connection conn;
         try {
-            conn = getConnection(connKey, initConfig);
+            conn = getConnection(requestId, connKey, initConfig);
             conn.setAutoCommit(false);
             return execute(conn, params, logicConfig, initConfig);
         } catch (SQLException e) {
@@ -80,8 +77,6 @@ public class MysqlOperationHandler {
             }
         }
 
-
-
         PreparedStatement ps = null;
         ResultSet rs = null;
         PreparedStatement psCount = null;
@@ -94,6 +89,7 @@ public class MysqlOperationHandler {
                 PrintHelper.printSql(changeSql, sqlParams);
             }
 
+            List<Map<String, Object>> dataList;
             SqlTypeEnum sqlType = SqlTypeEnum.get(logicConfig.sqlType());
             switch (sqlType) {
                 case INSERT_INCR:
@@ -117,7 +113,7 @@ public class MysqlOperationHandler {
                 case SELECT:
                     ps = getPreparedStatement(conn, changeSql, sqlParams);
                     rs = ps.executeQuery();
-                    List<Map<String, Object>> dataList = getResultData(rs);
+                    dataList = getResultData(rs);
                     result =  ComponentDataResult.success(dataList);
                     break;
                 case SELECT_ONE:
@@ -127,14 +123,25 @@ public class MysqlOperationHandler {
                     result =  ComponentDataResult.success(!dataList.isEmpty() ? dataList.get(0) : null);
                     break;
                 case SELECT_LIMIT:
+                    // 获取属性名称
+                    MysqlInitConfig.ParamNameConfig nameConfig = initConfig.paramNameConfig();
+                    String currPageName = MysqlInitConfig.ParamNameConfig.CURR_PAGE_NAME;
+                    String pageSizeName = MysqlInitConfig.ParamNameConfig.PAGE_SIZE_NAME;
+                    String totalCountName = MysqlInitConfig.ParamNameConfig.COUNT_NAME;
+                    if (nameConfig != null) {
+                        currPageName = nameConfig.currPage();
+                        pageSizeName = nameConfig.currPage();
+                        totalCountName = nameConfig.totalCount();
+                    }
+
                     // 分页查询
-                    String limitSql = SqlTool.setLimit(changeSql, CURR_PAGE_NAME, PAGE_SIZE_NAME);
+                    String limitSql = SqlTool.setLimit(changeSql, currPageName, pageSizeName);
                     ps = getPreparedStatement(conn, limitSql, sqlParams);
                     rs = ps.executeQuery();
                     dataList = getResultData(rs);
 
                     // count 查询
-                    String countSql = SqlTool.replaceCount(changeSql, COUNT_NAME);
+                    String countSql = SqlTool.replaceCount(changeSql, totalCountName);
                     if (initConfig.printSql()) {
                         PrintHelper.printSql(countSql, sqlParams);
                     }
@@ -143,9 +150,9 @@ public class MysqlOperationHandler {
                     List<Map<String, Object>> countDataList = getResultData(rsCount);
 
                     // 组装结果集
-                    int currPage = DataParseUtil.getInteger(params.get(CURR_PAGE_NAME), 0);
-                    int pageSize = DataParseUtil.getInteger(params.get(PAGE_SIZE_NAME), 0);
-                    int count = DataParseUtil.getInteger(countDataList.get(0).get(COUNT_NAME), 0);
+                    int currPage = DataParseUtil.getInteger(params.get(currPageName), 0);
+                    int pageSize = DataParseUtil.getInteger(params.get(pageSizeName), 0);
+                    int count = DataParseUtil.getInteger(countDataList.get(0).get(totalCountName), 0);
                     result = ComponentDataResult.success(dataList, currPage, pageSize, count);
                     break;
                 case DDL:
@@ -208,8 +215,9 @@ public class MysqlOperationHandler {
      * @return 连接对象
      * @throws SQLException 异常
      */
-    private static Connection getConnection(String connKey, MysqlInitConfig initConfig) throws SQLException, ClassNotFoundException {
-        Connection conn = CONN_POOL.get(connKey);
+    private static Connection getConnection(String requestId, String connKey, MysqlInitConfig initConfig) throws SQLException, ClassNotFoundException {
+        String finalConnKey = buildKey(requestId, connKey);
+        Connection conn = CONN_POOL.get(finalConnKey);
         if (conn != null) {
             return conn;
         }
@@ -230,7 +238,7 @@ public class MysqlOperationHandler {
             conn = data.getConnection();
         }
 
-        CONN_POOL.put(connKey, conn);
+        CONN_POOL.put(finalConnKey, conn);
         return conn;
     }
 
@@ -271,11 +279,13 @@ public class MysqlOperationHandler {
     /**
      * 关闭连接
      *
+     * @param requestId 请求ID
      * @param connKey 连接Key
      */
-    public static void closeConnection(String connKey, boolean isCommit) {
+    public static void closeConnection(String requestId, String connKey, boolean isCommit) {
         try {
-            Connection conn = CONN_POOL.get(connKey);
+            String finalConnKey = buildKey(requestId, connKey);
+            Connection conn = CONN_POOL.get(finalConnKey);
             if (conn != null) {
                 if (isCommit) {
                     conn.commit();
@@ -283,8 +293,9 @@ public class MysqlOperationHandler {
                     conn.rollback();
                 }
                 conn.close();
-                CONN_POOL.remove(connKey);
             }
+
+            CONN_POOL.remove(finalConnKey);
         } catch (SQLException e) {
             PrintErrorHelper.print(MysqlErrorEnum.CONN_CLOSE_ERROR, e);
         }
@@ -307,5 +318,9 @@ public class MysqlOperationHandler {
         } catch (SQLException e) {
             PrintErrorHelper.print(MysqlErrorEnum.STATEMENT_CLOSE_ERROR, e);
         }
+    }
+
+    private static String buildKey(String requestId, String connKey) {
+        return requestId + "-" + connKey;
     }
 }

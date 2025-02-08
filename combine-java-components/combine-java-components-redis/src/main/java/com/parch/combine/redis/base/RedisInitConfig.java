@@ -1,11 +1,11 @@
 package com.parch.combine.redis.base;
 
 import com.parch.combine.core.component.base.IInitConfig;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldEg;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 
 public interface RedisInitConfig extends IInitConfig {

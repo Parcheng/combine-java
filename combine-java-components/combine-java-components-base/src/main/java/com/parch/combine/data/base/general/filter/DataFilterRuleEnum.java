@@ -1,6 +1,6 @@
 package com.parch.combine.data.base.general.filter;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 public enum DataFilterRuleEnum implements IOptionSetting {

@@ -1,6 +1,6 @@
 package com.parch.combine.gui.base.build.control.list;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 import javax.swing.JList;

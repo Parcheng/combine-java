@@ -13,14 +13,14 @@
           "components": [{
             "type": "data.reset",
             "items": [{
-              "resets": [{ "target": "#{data.[#{$v.$logicLoop.$index}]}", "type": "string", "value": "100" }]
+              "resets": [{ "target": "#{data.[#{$v.$logicLoop.$index}]}", "value": "100" }]
             }]
           }]
         },{
           "components": [{
             "type": "data.reset",
             "items": [{
-              "resets": [{ "target": "#{data.[#{$v.$logicLoop.$index}]}", "type": "string", "value": "200" }]
+              "resets": [{ "target": "#{data.[#{$v.$logicLoop.$index}]}", "value": "200" }]
             }]
           }]
         }],

@@ -1,6 +1,6 @@
 package com.parch.combine.data.base.general.edit;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 /**

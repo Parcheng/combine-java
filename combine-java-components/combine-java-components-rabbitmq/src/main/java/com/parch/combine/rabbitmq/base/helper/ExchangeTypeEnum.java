@@ -1,6 +1,6 @@
 package com.parch.combine.rabbitmq.base.helper;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 public enum ExchangeTypeEnum implements IOptionSetting {
 

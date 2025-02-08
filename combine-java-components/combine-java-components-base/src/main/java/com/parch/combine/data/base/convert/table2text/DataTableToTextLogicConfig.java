@@ -1,9 +1,9 @@
 package com.parch.combine.data.base.convert.table2text;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldEg;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
 
 public interface DataTableToTextLogicConfig extends ILogicConfig {

@@ -1,6 +1,6 @@
 package com.parch.combine.gitlab.base.merge;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 public enum MergeRequestStateEnum implements IOptionSetting {
 

@@ -1,6 +1,7 @@
 package com.parch.combine.core.component.tools.variable;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
+import com.parch.combine.core.common.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,6 +92,22 @@ public class DataVariableHelper {
     }
 
     /**
+     * 字符串多值解析
+     *
+     * @param dataStr 可能包含取值表达式的字符串
+     * @return 解析后文本值
+     */
+    public static String parseStringMultiValue(String dataStr) {
+        String[] dataStrArr = new String[]{dataStr};
+        StringUtil.matcher(dataStrArr[0], DataVariableFlagHelper.getRegex(), matcherStr -> {
+            Object newValue = DataVariableHelper.parseValue(matcherStr, true);
+            dataStrArr[0] = dataStrArr[0].replace(matcherStr, newValue.toString());
+        });
+
+        return dataStrArr[0];
+    }
+
+    /**
      * 解析值
      *
      * @param path 字段路径
@@ -105,7 +122,7 @@ public class DataVariableHelper {
                     if (i != 0) {
                         newValueStr.append(separator);
                     }
-                    newValueStr.append(currNewValue.toString());
+                    newValueStr.append(currNewValue);
                 }
             }
         }

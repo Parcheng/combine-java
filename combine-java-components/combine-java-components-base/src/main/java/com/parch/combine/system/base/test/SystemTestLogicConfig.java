@@ -1,9 +1,9 @@
 package com.parch.combine.system.base.test;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.component.base.ILogicConfig;
 import com.parch.combine.core.component.tools.compare.CompareConfig;
 import java.util.Map;

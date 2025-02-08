@@ -1,9 +1,7 @@
 package com.parch.combine.gui.core.style.enums;
 
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-
-import java.awt.*;
 
 public enum LayoutTypeEnum implements IOptionSetting {
 

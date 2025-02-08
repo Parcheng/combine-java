@@ -1,11 +1,11 @@
 package com.parch.combine.mysql.base.execute;
 
-import com.parch.combine.core.common.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
 import com.parch.combine.core.component.base.IInitConfig;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldEg;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 public interface MysqlInitConfig extends IInitConfig {
     
@@ -34,6 +34,10 @@ public interface MysqlInitConfig extends IInitConfig {
     @FieldObject(Pool.class)
     Pool pool();
 
+    @Field(key = "paramNameConfig", name = "参数名称配置", type = FieldTypeEnum.CONFIG)
+    @FieldObject(ParamNameConfig.class)
+    ParamNameConfig paramNameConfig();
+
     @Field(key = "printSql", name = "是否打印SQL", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
     Boolean printSql();
 
@@ -50,5 +54,21 @@ public interface MysqlInitConfig extends IInitConfig {
         @Field(key = "timeout", name = "数据库连接超时时间", type = FieldTypeEnum.NUMBER, defaultValue = "30000")
         @FieldEg(eg = "10000", desc = "连接超时时间为10000毫秒")
         Long timeout();
+    }
+
+    interface ParamNameConfig {
+
+        String CURR_PAGE_NAME = "page";
+        String PAGE_SIZE_NAME = "pageSize";
+        String COUNT_NAME = "totalCount";
+
+        @Field(key = "currPage", name = "当前页参数名", type = FieldTypeEnum.TEXT, defaultValue = CURR_PAGE_NAME)
+        String currPage();
+
+        @Field(key = "pageSize", name = "每页条数参数名", type = FieldTypeEnum.TEXT, defaultValue = PAGE_SIZE_NAME)
+        String pageSize();
+
+        @Field(key = "totalCount", name = "数据总条数参数名", type = FieldTypeEnum.TEXT, defaultValue = COUNT_NAME)
+        String totalCount();
     }
 }

@@ -1,9 +1,9 @@
 package com.parch.combine.rocketmq.base.consumer;
 
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
 import com.parch.combine.rocketmq.base.RocketMQLogicConfig;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 public interface RocketMQConsumerLogicConfig extends RocketMQLogicConfig {
 

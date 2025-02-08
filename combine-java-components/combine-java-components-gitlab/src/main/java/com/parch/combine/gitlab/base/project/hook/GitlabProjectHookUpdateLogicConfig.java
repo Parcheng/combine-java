@@ -1,7 +1,7 @@
 package com.parch.combine.gitlab.base.project.hook;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
 public interface GitlabProjectHookUpdateLogicConfig extends GitlabProjectSubLogicConfig {

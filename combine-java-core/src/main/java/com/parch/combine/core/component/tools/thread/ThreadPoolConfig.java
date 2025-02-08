@@ -1,8 +1,8 @@
 package com.parch.combine.core.component.tools.thread;
 
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 
 public class ThreadPoolConfig {

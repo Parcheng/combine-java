@@ -1,19 +1,16 @@
 package com.parch.combine.gui.core.style;
 
 import com.parch.combine.core.common.base.IMerge;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
 import com.parch.combine.gui.core.style.config.ElementBorderConfig;
 import com.parch.combine.gui.core.style.config.ElementFontConfig;
 import com.parch.combine.gui.core.style.config.ElementGridConfig;
 import com.parch.combine.gui.core.style.config.ElementSizeConfig;
-import com.parch.combine.core.common.settings.annotations.CommonObject;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldRef;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
-import com.parch.combine.gui.core.style.enums.AlignmentXEnum;
-import com.parch.combine.gui.core.style.enums.AlignmentYEnum;
+import com.parch.combine.core.component.settings.annotations.CommonObject;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldRef;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 import com.parch.combine.gui.core.style.enums.LayoutTypeEnum;
 
 @CommonObject(name = ElementObjectConstant.GUI_ELEMENT_NAME)

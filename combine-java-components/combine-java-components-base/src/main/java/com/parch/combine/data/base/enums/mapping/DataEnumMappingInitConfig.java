@@ -1,6 +1,6 @@
 package com.parch.combine.data.base.enums.mapping;
 
-import com.parch.combine.core.common.settings.annotations.Invalid;
+import com.parch.combine.core.component.settings.annotations.Invalid;
 import com.parch.combine.core.component.base.IInitConfig;
 
 /**

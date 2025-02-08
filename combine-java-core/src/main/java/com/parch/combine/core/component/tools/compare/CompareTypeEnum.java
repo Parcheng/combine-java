@@ -1,7 +1,7 @@
 package com.parch.combine.core.component.tools.compare;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
-import com.parch.combine.core.common.settings.config.IOptionSetting;
+import com.parch.combine.core.component.settings.config.IOptionSetting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,7 @@ public enum CompareTypeEnum implements IOptionSetting {
     NO_EMPTY("不是空", true),
     NO_NULL("不是NULL", true),
     CONTAINS("包含", true),
+    IN("多值匹配", true),
     IS_STRING("是字符串", true),
     IS_NUMBER("是数字", true),
     IS_BOOLEAN("是布尔", true),

@@ -2,12 +2,12 @@ package com.parch.combine.mail.base.send;
 
 import com.parch.combine.mail.base.MailLogicConfig;
 import com.parch.combine.mail.base.helper.MailContentTypeEnum;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.annotations.FieldDesc;
-import com.parch.combine.core.common.settings.annotations.FieldEg;
-import com.parch.combine.core.common.settings.annotations.FieldObject;
-import com.parch.combine.core.common.settings.annotations.FieldSelect;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.annotations.FieldDesc;
+import com.parch.combine.core.component.settings.annotations.FieldEg;
+import com.parch.combine.core.component.settings.annotations.FieldObject;
+import com.parch.combine.core.component.settings.annotations.FieldSelect;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 public interface MailSendLogicConfig extends MailLogicConfig {
 

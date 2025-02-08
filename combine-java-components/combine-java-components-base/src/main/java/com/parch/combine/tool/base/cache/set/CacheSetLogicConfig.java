@@ -1,8 +1,8 @@
 package com.parch.combine.tool.base.cache.set;
 
 import com.parch.combine.tool.base.cache.CacheLogicConfig;
-import com.parch.combine.core.common.settings.annotations.Field;
-import com.parch.combine.core.common.settings.config.FieldTypeEnum;
+import com.parch.combine.core.component.settings.annotations.Field;
+import com.parch.combine.core.component.settings.config.FieldTypeEnum;
 
 public interface CacheSetLogicConfig extends CacheLogicConfig {
 
