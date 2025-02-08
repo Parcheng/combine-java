@@ -208,14 +208,14 @@ public class ConfigHelper {
     public static Object parseFieldData(FieldTypeEnum type, Object data, boolean isArray) {
         boolean dataIsArray = isArray && data instanceof Collection;
         if (dataIsArray) {
-            return parseFieldDataItem(type, data);
-        } else {
             List<Object> finalData = new ArrayList<>();
             for (Object item : (Collection<Object>) data) {
                 finalData.add(parseFieldDataItem(type, item));
             }
             return finalData;
         }
+
+        return parseFieldDataItem(type, data);
     }
 
     /**

@@ -102,10 +102,13 @@ public class PrintHelper {
     /**
      * 打印组件异常信息
      */
-    public static void printComponentError(Exception e) {
+    public static void printComponentError(Throwable e) {
         if (e != null) {
             printComponentError(e.getMessage());
-            e.printStackTrace();
+            while (e != null){
+                e.printStackTrace();
+                e = e.getCause();
+            }
         }
     }
 
