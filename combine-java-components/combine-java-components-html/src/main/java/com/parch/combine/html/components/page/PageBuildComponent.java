@@ -12,12 +12,12 @@ import com.parch.combine.html.common.cache.PageHtmlCache;
 
 @Component(key = "page.build", order = 600, name = "构建页面组件", logicConfigClass = HtmlPageLogicConfig.class, initConfigClass = HtmlPageInitConfig.class)
 @ComponentResult(name = "true 或异常信息")
-public class HtmlPageComponent extends AbstractComponent<HtmlPageInitConfig, HtmlPageLogicConfig> {
+public class PageBuildComponent extends AbstractComponent<HtmlPageInitConfig, HtmlPageLogicConfig> {
 
     /**
      * 构造器
      */
-    public HtmlPageComponent() {
+    public PageBuildComponent() {
         super(HtmlPageInitConfig.class, HtmlPageLogicConfig.class);
     }
 
