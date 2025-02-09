@@ -28,14 +28,23 @@ public class GitlabUserCreateComponent extends AbstractGitlabComponent<GitlabUse
     protected ComponentDataResult execute(GitLabApi api) {
         GitlabUserCreateLogicConfig logicConfig = getLogicConfig();
         try {
+            String username = logicConfig.username();
+            if (logicConfig.ifNotExist()) {
+                User user = api.getUserApi().getUser(username);
+                if (user != null) {
+                    return ComponentDataResult.success(this.objToMap(user));
+                }
+            }
+
             String password = logicConfig.password();
             Boolean sendResetPasswordEmail = logicConfig.sendResetPasswordEmail();
             if (sendResetPasswordEmail == null) {
                 sendResetPasswordEmail = CheckEmptyUtil.isEmpty(password);
             }
 
-            User user = new User().withEmail(logicConfig.email())
-                    .withUsername(logicConfig.username())
+            User user = new User()
+                    .withEmail(logicConfig.email())
+                    .withUsername(username)
                     .withName(logicConfig.name())
                     .withSkipConfirmation(logicConfig.skipConfirmation());
             User newUser = api.getUserApi().createUser(user, password, sendResetPasswordEmail);

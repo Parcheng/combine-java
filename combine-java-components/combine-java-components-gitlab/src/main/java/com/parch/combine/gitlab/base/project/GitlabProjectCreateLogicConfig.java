@@ -8,6 +8,9 @@ import com.parch.combine.gitlab.base.project.hook.GitlabProjectVisibilityEnum;
 
 public interface GitlabProjectCreateLogicConfig extends GitlabLogicConfig {
 
+    @Field(key = "ifNotExist", name = "如果不存在", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    Boolean ifNotExist();
+
     @Field(key = "name", name = "项目名称", type = FieldTypeEnum.TEXT, isRequired = true)
     String name();
 
