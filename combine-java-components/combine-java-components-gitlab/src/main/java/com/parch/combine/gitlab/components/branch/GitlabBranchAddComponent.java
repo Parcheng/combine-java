@@ -27,7 +27,16 @@ public class GitlabBranchAddComponent extends AbstractGitlabComponent<GitlabBran
     protected ComponentDataResult execute(GitLabApi api) {
         GitlabBranchAddLogicConfig logicConfig = this.getLogicConfig();
         try {
-            Branch branch = api.getRepositoryApi().createBranch(logicConfig.projectIdOrName(), logicConfig.name(), logicConfig.source());
+            Object projectIdOrName = logicConfig.projectIdOrName();
+            String name = logicConfig.name();
+            if (logicConfig.ifNotExist()) {
+                Branch branch = api.getRepositoryApi().getBranch(projectIdOrName, name);
+                if (branch != null) {
+                    return ComponentDataResult.success(this.objToMap(branch));
+                }
+            }
+
+            Branch branch = api.getRepositoryApi().createBranch(projectIdOrName, name, logicConfig.source());
             return ComponentDataResult.success(this.objToMap(branch));
         } catch (GitLabApiException e) {
             PrintErrorHelper.print(GitLabAuthErrorEnum.FAIL, e);

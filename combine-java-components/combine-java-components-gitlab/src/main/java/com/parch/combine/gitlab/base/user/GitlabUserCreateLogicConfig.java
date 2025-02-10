@@ -7,6 +7,9 @@ import com.parch.combine.gitlab.base.GitlabLogicConfig;
 
 public interface GitlabUserCreateLogicConfig extends GitlabLogicConfig {
 
+    @Field(key = "ifNotExist", name = "如果不存在", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    Boolean ifNotExist();
+
     @Field(key = "name", name = "用户名", type = FieldTypeEnum.TEXT, isRequired = true)
     String username();
 
