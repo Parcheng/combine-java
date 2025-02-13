@@ -27,10 +27,10 @@ public interface CallUrlTriggerLogicConfig extends ILogicConfig {
         Boolean fromSubmit();
 
         @Field(key = "headers", name = "请求头", type = FieldTypeEnum.MAP)
-        Map<String, String> params();
+        Map<String, String> headers();
 
         @Field(key = "params", name = "请求参数", type = FieldTypeEnum.MAP)
-        Map<String, String> headers();
+        Map<String, String> params();
 
         @Field(key = "localStorageKey", name = "浏览器缓存KEY", type = FieldTypeEnum.TEXT)
         @FieldDesc("以该值作为KEY将结果保存到浏览器缓存，不设置该值则不保存")

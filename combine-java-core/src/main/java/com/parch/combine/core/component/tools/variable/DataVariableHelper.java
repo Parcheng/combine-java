@@ -101,7 +101,9 @@ public class DataVariableHelper {
         String[] dataStrArr = new String[]{dataStr};
         StringUtil.matcher(dataStrArr[0], DataVariableFlagHelper.getRegex(), matcherStr -> {
             Object newValue = DataVariableHelper.parseValue(matcherStr, true);
-            dataStrArr[0] = dataStrArr[0].replace(matcherStr, newValue.toString());
+            if (newValue != null) {
+                dataStrArr[0] = dataStrArr[0].replace(matcherStr, newValue.toString());
+            }
         });
 
         return dataStrArr[0];

@@ -14,6 +14,7 @@ $combine.element.register("SYSTEM.FROM", (function () {
                 break;
             case "INLINE":
                 instance.template.from = configFns.initElement(instance.template.from, instance.template.inline);
+                instance.column = -1;
                 break;
             case "HORIZONTAL":
             default:
@@ -78,7 +79,10 @@ $combine.element.register("SYSTEM.FROM", (function () {
 
 
             const groupDom = domFns.build(instance.template.item, itemBodies)
-            groupDom.setAttribute("id", dataFns.parseVariableText(currItem.id, buildData));
+            const groupDomId = dataFns.parseVariableText(currItem.id, buildData);
+            if (groupDomId) {
+                groupDom.setAttribute("id", groupDomId);
+            }
             if (instance.column !== -1) {
                 groupDom.style.width =  Math.floor(100 / instance.column) + "%";
             }

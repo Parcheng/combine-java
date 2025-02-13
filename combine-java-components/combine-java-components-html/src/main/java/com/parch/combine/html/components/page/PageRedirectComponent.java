@@ -24,6 +24,7 @@ public class PageRedirectComponent extends AbstractComponent<IInvalidInitConfig,
 
         ComponentDataResult result = ComponentDataResult.success(logicConfig.linkTo());
         result.setDataFlag("redirect");
+        result.setStop(true);
         return result;
     }
 }
