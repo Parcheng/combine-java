@@ -14,7 +14,7 @@ public interface FromElementLogicConfig extends ILogicConfig {
 
     interface Config extends ElementConfig {
 
-        @Field(key = "layout", name = "布局 VERTICAL | INLINE | HORIZONTAL", type = FieldTypeEnum.TEXT, defaultValue = "INLINE")
+        @Field(key = "layout", name = "布局 VERTICAL | INLINE | HORIZONTAL", type = FieldTypeEnum.TEXT, defaultValue = "HORIZONTAL")
         String layout();
 
         @Field(key = "column", name = "列数（1-100）", type = FieldTypeEnum.NUMBER, defaultValue = "1")
