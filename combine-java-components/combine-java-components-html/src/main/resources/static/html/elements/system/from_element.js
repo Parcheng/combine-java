@@ -14,6 +14,7 @@ $combine.element.register("SYSTEM.FROM", (function () {
                 break;
             case "INLINE":
                 instance.template.from = configFns.initElement(instance.template.from, instance.template.inline);
+                instance.column = -1;
                 break;
             case "HORIZONTAL":
             default:
@@ -33,27 +34,30 @@ $combine.element.register("SYSTEM.FROM", (function () {
             const fieldName = dataFns.parseVariable(currItem.fieldName, buildData);
             const hide = currItem.hide === true;
 
-            const itemBodys = [];
+            const itemBodies = [];
 
             const leftBody = [fieldName];
             if (currItem.requiredFlag && currItem.requiredFlag === true) {
                 leftBody.push(domFns.build(instance.template.requestFlag, instance.template.requestFlag.text))
             }
-            itemBodys.push(domFns.build(instance.template.left, leftBody));
+            const keyDom = domFns.build(instance.template.left, leftBody);
+            itemBodies.push(keyDom);
 
 
             const rightBody = [];
+            var contentDom = null;
             if (currItem.element) {
                 const contentElementDom = buildElement(currItem.element, buildData);
                 if (contentElementDom) {
                     setData(instance.id, currKey, null, currItem.element);
                 }
-                rightBody.push(domFns.build(instance.template.rightContent, contentElementDom));
+                contentDom = domFns.build(instance.template.rightContent, contentElementDom);
             } else {
                 const text = dataFns.parseVariable(currItem.text, buildData);
                 setData(instance.id, currKey, text);
-                rightBody.push(domFns.build(instance.template.rightContent, text));
+                contentDom = domFns.build(instance.template.rightContent, text);
             }
+            rightBody.push(contentDom);
 
             if (currItem.desc) {
                 const descDom = domFns.build(instance.template.rightDesc, dataFns.parseVariable(currItem.desc, buildData));
@@ -71,12 +75,14 @@ $combine.element.register("SYSTEM.FROM", (function () {
                 }
                 rightBody.push(errorDom)
             }
+            itemBodies.push(domFns.build(instance.template.right, rightBody));
 
-            itemBodys.push(domFns.build(instance.template.right, rightBody));
 
-
-            const groupDom = domFns.build(instance.template.item, itemBodys)
-            groupDom.setAttribute("id", dataFns.parseVariableText(currItem.id, buildData));
+            const groupDom = domFns.build(instance.template.item, itemBodies)
+            const groupDomId = dataFns.parseVariableText(currItem.id, buildData);
+            if (groupDomId) {
+                groupDom.setAttribute("id", groupDomId);
+            }
             if (instance.column !== -1) {
                 groupDom.style.width =  Math.floor(100 / instance.column) + "%";
             }

@@ -6,6 +6,8 @@ public class FlowResult {
 
     private boolean download = false;
 
+    private String dataFlag;
+
     private String showMsg;
 
     private String errMsg;
@@ -65,6 +67,14 @@ public class FlowResult {
         this.runTime = runTime;
     }
 
+    public String getDataFlag() {
+        return dataFlag;
+    }
+
+    public void setDataFlag(String dataFlag) {
+        this.dataFlag = dataFlag;
+    }
+
     /**
      * 构建
      *
@@ -79,6 +89,7 @@ public class FlowResult {
             result.setShowMsg(source.getShowMsg());
             result.setErrMsg(source.getErrMsg());
             result.setData(source.getData());
+            result.setDataFlag(source.getDataFlag());
         }
         return result;
     }

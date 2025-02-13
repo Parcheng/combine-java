@@ -921,11 +921,11 @@ $combine = (function () {
                 if (isSet) {
                     text = currData;
                 } else {
-                    if (currData === null && defaultText !== null && defaultText !== undefined) {
+                    if ((currData == null || currData == undefined) && defaultText !== null && defaultText !== undefined) {
                         currData = defaultText;
                     }
 
-                    if (currData !== null) {
+                    if (currData != null && currData != undefined) {
                         if (currData instanceof Array) {
                             currData = currData.join(',');
                         } else {

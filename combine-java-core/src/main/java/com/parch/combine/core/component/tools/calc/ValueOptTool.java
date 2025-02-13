@@ -133,7 +133,8 @@ public class ValueOptTool {
         if (DataTypeIsUtil.isNumber(a) && DataTypeIsUtil.isNumber(b)) {
             return Double.compare(Double.parseDouble(a.toString()), Double.parseDouble(b.toString()));
         } else {
-            return a.toString().compareTo(b.toString());
+            // 支持日期格式
+            return JsonUtil.obj2String(a).compareTo(JsonUtil.obj2String(b));
         }
     }
 }

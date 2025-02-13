@@ -29,8 +29,16 @@ public class GitlabProjectCreateComponent extends AbstractGitlabComponent<Gitlab
     protected ComponentDataResult execute(GitLabApi api) {
         GitlabProjectCreateLogicConfig logicConfig = getLogicConfig();
         try {
+            String name = logicConfig.name();
+            if (logicConfig.ifNotExist()) {
+                Project project = api.getProjectApi().getProject(name);
+                if (project != null) {
+                    return ComponentDataResult.success(this.objToMap(project));
+                }
+            }
+
             Project newProject = new Project()
-                    .withName(logicConfig.name())
+                    .withName(name)
                     .withDescription(logicConfig.desc())
                     .withNamespaceId(logicConfig.namespaceId())
                     .withVisibility(Visibility.forValue(logicConfig.visibility()));

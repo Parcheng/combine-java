@@ -192,7 +192,7 @@ class FlowAspectManager {
         }
 
         private boolean match(String[] flowArr, String[] config) {
-            return flowArr[0].matches(config[0]) && flowArr[0].matches(config[1]);
+            return flowArr[0].matches(config[0]) && flowArr[1].matches(config[1]);
         }
 
         public String getId() {

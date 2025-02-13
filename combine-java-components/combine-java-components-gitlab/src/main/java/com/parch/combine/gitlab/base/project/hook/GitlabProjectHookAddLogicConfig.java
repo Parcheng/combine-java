@@ -6,6 +6,9 @@ import com.parch.combine.gitlab.base.GitlabProjectSubLogicConfig;
 
 public interface GitlabProjectHookAddLogicConfig extends GitlabProjectSubLogicConfig {
 
+    @Field(key = "ifNotExist", name = "如果不存在", type = FieldTypeEnum.BOOLEAN, defaultValue = "true")
+    Boolean ifNotExist();
+
     @Field(key = "url", name = "推送地址", type = FieldTypeEnum.TEXT, isRequired = true)
     String url();
 
