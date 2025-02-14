@@ -849,10 +849,13 @@ $combine = (function () {
 
     const dataFns = {
         hasVariable: function (variable) {
+            if (variable == null || variable == undefined) {
+                return false;
+            }
             return !!variable.match(/\$\{(.*?)}/g);
         },
         parseVariable: function (variable, data, defaultText, excludeFields) {
-            if (!variable) {
+            if (variable == null || variable == undefined) {
                 return variable;
             }
 
