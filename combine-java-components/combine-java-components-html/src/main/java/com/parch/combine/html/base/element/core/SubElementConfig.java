@@ -11,6 +11,9 @@ public interface SubElementConfig {
     @Field(key = "text", name = "文本内容", type = FieldTypeEnum.TEXT)
     String text();
 
+    @Field(key = "html", name = "HTML内容", type = FieldTypeEnum.TEXT)
+    String html();
+
     @Field(key = "elements", name = "元素组配置集合", type = FieldTypeEnum.COMPONENT, isArray = true)
     String[] elements();
 }

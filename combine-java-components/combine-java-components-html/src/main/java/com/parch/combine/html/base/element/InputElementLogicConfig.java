@@ -37,7 +37,10 @@ public interface InputElementLogicConfig extends ILogicConfig {
         TEXT("文本", true),
         FILE("文件", true),
         PASSWORD("密码", true),
-        NUMBER("数字", true);
+        NUMBER("数字", true),
+        DATE("日期", true),
+        TIME("日期时间", true)
+        ;
 
         String name;
         boolean isValid;

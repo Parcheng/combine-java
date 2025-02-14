@@ -726,14 +726,41 @@ $combine = (function () {
                 }
                 dom = domFns.build(domConfig, itemsBody);
             } else {
-                currData = dataFns.parseVariable(subSettings.text, buildData)
-                dom = domFns.build(domConfig, currData);
+                dom = domFns.build(domConfig);
+                if (currData != null && currData != undefined) {
+                    if (subSettings.html) {
+                        currData = dataFns.parseVariable(subSettings.text, buildData);
+                        dom.innerHTML = currData;
+                    } else {
+                        currData = dataFns.parseVariable(subSettings.text, buildData);
+                        dom.textContent = currData;
+                    }
+                }
             }
 
             if (elementDatas && elementDatas instanceof Array) {
                 elementDatas.push(currData);
             }
             return dom;
+        },
+        refreshSubElement: function (subSettings, subDom, data) {
+            if (subSettings == null || subSettings == undefined) {
+                return;
+            }
+
+            if (subSettings.elements) {
+                for (let i = 0; i < subSettings.elements.length; i++) {
+                    instanceFns.refresh(subSettings.elements[i], data);
+                }
+            } else if (subDom && (subSettings.text || subSettings.html)) {
+                if (subSettings.html) {
+                    const text = dataFns.parseVariableText(subSettings.html, data);
+                    subDom.innerHTML = text;
+                } else {
+                    const text = dataFns.parseVariableText(subSettings.text, data);
+                    subDom.textContent = text;
+                }
+            }
         }
     };
 
