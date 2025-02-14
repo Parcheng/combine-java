@@ -115,11 +115,20 @@ $combine.element.register("SYSTEM.TABLE", (function () {
     }
 
     function buildOpts(rowOpts, rowData) {
-        const result = instanceFns.build(rowOpts, rowData);
-        if (result.success) {
-            return result.data;
+        const rowOptsDom = domFns.build({ tag:"div" });
+        if (rowOpts && rowOpts.length > 0) {
+            for (let r = 0; r < rowOpts.length; r++) {
+                const item = rowOpts[r];
+                if (item) {
+                    const result = instanceFns.build(item, rowData);
+                    if (result.success) {
+                        domFns.appendBody(rowOptsDom, result.data);
+                    }
+                }
+            }
         }
-        return "";
+
+        return rowOptsDom;
     }
 
     return {

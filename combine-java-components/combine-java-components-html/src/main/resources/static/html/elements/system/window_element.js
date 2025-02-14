@@ -36,18 +36,25 @@ $combine.element.register("SYSTEM.WINDOW", (function () {
 
     function refreshBody(id, instance, data) {
         instance = init(instance, data);
+        let externalDom = document.getElementById(id);
+        configFns.refreshSubElement(instance.body, externalDom.children[0].children[1], data);
 
-        if (instance.body?.elements) {
-            for (let i = 0; i < instance.body.elements?.length; i++) {
-                instanceFns.refresh(instance.body.elements[i], data);``
-            }
-        } else if (instance.body?.text) {
-            let externalDom = document.getElementById(id);
-            if (externalDom) {
-                const text = dataFns.parseVariableText(instance.body.text, data);
-                domFns.setBody(externalDom.children[0].children[1], text);
-            }
-        }
+//        if (instance.body?.elements) {
+//            for (let i = 0; i < instance.body.elements?.length; i++) {
+//                instanceFns.refresh(instance.body.elements[i], data);``
+//            }
+//        } else if (instance.body?.text || instance.body?.html) {
+//            let externalDom = document.getElementById(id);
+//            if (externalDom) {
+//                const text = dataFns.parseVariableText(instance.body.text, data);
+//                const bodyDom = externalDom.children[0].children[1];
+//                if (instance.body?.html) {
+//                    bodyDom.innerHTML = text;
+//                } else {
+//                    bodyDom.textContent = text;
+//                }
+//            }
+//        }
     }
 
     function initWindowsDom() {
