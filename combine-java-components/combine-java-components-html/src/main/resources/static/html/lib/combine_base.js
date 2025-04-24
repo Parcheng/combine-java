@@ -323,7 +323,7 @@ $combine = (function () {
                     case "CALL_FUNC":
                         dom.addEventListener(eventKey, function () {
                             const curr = combine.trigger.parseVariable(trigger, data);
-                            combine.instance.call(curr.id, curr.name, curr.params);
+                            combine.instance.call(curr.elementId, curr.name, curr.params);
                         });
                         break;
                     case "LOAD":
