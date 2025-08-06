@@ -2,23 +2,23 @@ package com.parch.combine.logic.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
 import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.vo.ComponentDataResult;
-import com.parch.combine.logic.base.judgment.LogicJudgmentInitConfig;
 import com.parch.combine.logic.base.judgment.LogicJudgmentLogicConfig;
 
 import java.util.ArrayList;
 
-@Component(key = "judgment", name = "逻辑判断组件", logicConfigClass = LogicJudgmentLogicConfig.class, initConfigClass = LogicJudgmentInitConfig.class)
+@Component(key = "judgment", name = "逻辑判断组件", logicConfigClass = LogicJudgmentLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "被执行的组件 ID 集合")
-public class LogicJudgmentComponent extends AbstractComponent<LogicJudgmentInitConfig, LogicJudgmentLogicConfig> {
+public class LogicJudgmentComponent extends AbstractComponent<IInvalidInitConfig, LogicJudgmentLogicConfig> {
 
     public LogicJudgmentComponent() {
-        super(LogicJudgmentInitConfig.class, LogicJudgmentLogicConfig.class);
+        super(IInvalidInitConfig.class, LogicJudgmentLogicConfig.class);
     }
 
     @Override

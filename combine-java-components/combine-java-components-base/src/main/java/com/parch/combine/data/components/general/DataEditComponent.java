@@ -1,5 +1,6 @@
 package com.parch.combine.data.components.general;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.data.base.general.DataStructureHelper;
 import com.parch.combine.core.common.canstant.SymbolConstant;
 import com.parch.combine.core.common.util.DataParseUtil;
@@ -11,18 +12,17 @@ import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.edit.DataEditErrorEnum;
-import com.parch.combine.data.base.general.edit.DataEditInitConfig;
 import com.parch.combine.data.base.general.edit.DataEditLogicConfig;
 import com.parch.combine.data.base.general.edit.DataEditTypeEnum;
 
 import java.util.*;
 
-@Component(key = "edit", name = "数据修改组件", logicConfigClass = DataEditLogicConfig.class, initConfigClass = DataEditInitConfig.class)
+@Component(key = "edit", name = "数据修改组件", logicConfigClass = DataEditLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "所有被创建的数据集合")
-public class DataEditComponent extends AbstractComponent<DataEditInitConfig, DataEditLogicConfig> {
+public class DataEditComponent extends AbstractComponent<IInvalidInitConfig, DataEditLogicConfig> {
 
     public DataEditComponent() {
-        super(DataEditInitConfig.class, DataEditLogicConfig.class);
+        super(IInvalidInitConfig.class, DataEditLogicConfig.class);
     }
 
     @Override

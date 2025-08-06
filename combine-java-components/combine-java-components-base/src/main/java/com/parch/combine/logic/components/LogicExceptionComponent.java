@@ -1,24 +1,24 @@
 package com.parch.combine.logic.components;
 
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.tools.SubComponentTool;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.logic.base.exception.LogicExceptionErrorEnum;
-import com.parch.combine.logic.base.exception.LogicExceptionInitConfig;
 import com.parch.combine.logic.base.exception.LogicExceptionLogicConfig;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Component(key = "exception", name = "异常捕获组件", logicConfigClass = LogicExceptionLogicConfig.class, initConfigClass = LogicExceptionInitConfig.class)
+@Component(key = "exception", name = "异常捕获组件", logicConfigClass = LogicExceptionLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "执行结果结构: { success: false, errorMsg:\"......\", showMsg:\"......\" }")
-public class LogicExceptionComponent extends AbstractComponent<LogicExceptionInitConfig, LogicExceptionLogicConfig> {
+public class LogicExceptionComponent extends AbstractComponent<IInvalidInitConfig, LogicExceptionLogicConfig> {
 
     public LogicExceptionComponent() {
-        super(LogicExceptionInitConfig.class, LogicExceptionLogicConfig.class);
+        super(IInvalidInitConfig.class, LogicExceptionLogicConfig.class);
     }
 
     @Override

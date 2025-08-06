@@ -1,24 +1,24 @@
 package com.parch.combine.data.components.general;
 
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.verify.DataVerifyErrorEnum;
 import com.parch.combine.data.base.general.verify.DataVerifyHandler;
-import com.parch.combine.data.base.general.verify.DataVerifyInitConfig;
 import com.parch.combine.data.base.general.verify.DataVerifyLogicConfig;
 import com.parch.combine.data.base.general.verify.VerifyModeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component(key = "verify", name = "数据校验组件", logicConfigClass = DataVerifyLogicConfig.class, initConfigClass = DataVerifyInitConfig.class)
+@Component(key = "verify", name = "数据校验组件", logicConfigClass = DataVerifyLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "校验结果的错误提示信息（或错误提示信息集合）")
-public class DataVerifyComponent extends AbstractComponent<DataVerifyInitConfig, DataVerifyLogicConfig> {
+public class DataVerifyComponent extends AbstractComponent<IInvalidInitConfig, DataVerifyLogicConfig> {
 
     public DataVerifyComponent() {
-        super(DataVerifyInitConfig.class, DataVerifyLogicConfig.class);
+        super(IInvalidInitConfig.class, DataVerifyLogicConfig.class);
     }
 
     @Override

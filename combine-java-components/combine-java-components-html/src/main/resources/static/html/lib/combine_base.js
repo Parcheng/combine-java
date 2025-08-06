@@ -433,7 +433,7 @@ $combine = (function () {
             }
         },
         parseVariable(trigger, data) {
-            if (!data || !trigger) {
+            if (!trigger) {
                 return trigger;
             }
             return dataFns.parseVariable(trigger, data, null, [this.successFiledKey, this.failFiledKey, this.errorFiledKey]);

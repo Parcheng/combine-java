@@ -1,5 +1,6 @@
 package com.parch.combine.data.components.general;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.DataStructureHelper;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -11,17 +12,16 @@ import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataTypeEnum;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.data.base.general.create.DataCreateErrorEnum;
-import com.parch.combine.data.base.general.create.DataCreateInitConfig;
 import com.parch.combine.data.base.general.create.DataCreateLogicConfig;
 
 import java.util.*;
 
-@Component(key = "create", name = "数据创建组件", logicConfigClass = DataCreateLogicConfig.class, initConfigClass = DataCreateInitConfig.class)
+@Component(key = "create", name = "数据创建组件", logicConfigClass = DataCreateLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "所有被创建的数据集合")
-public class DataCreateComponent extends AbstractComponent<DataCreateInitConfig, DataCreateLogicConfig> {
+public class DataCreateComponent extends AbstractComponent<IInvalidInitConfig, DataCreateLogicConfig> {
 
     public DataCreateComponent() {
-        super(DataCreateInitConfig.class, DataCreateLogicConfig.class);
+        super(IInvalidInitConfig.class, DataCreateLogicConfig.class);
     }
 
     @Override

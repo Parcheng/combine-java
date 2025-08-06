@@ -2,6 +2,7 @@ package com.parch.combine.data.components.general;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.variable.DataFindHandler;
@@ -9,18 +10,17 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.format.DataFormatErrorEnum;
 import com.parch.combine.data.base.general.format.DataFormatFunctionEnum;
 import com.parch.combine.data.base.general.format.DataFormatHandler;
-import com.parch.combine.data.base.general.format.DataFormatInitConfig;
 import com.parch.combine.data.base.general.format.DataFormatLogicConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component(key = "format", name = "数据格式化组件", logicConfigClass = DataFormatLogicConfig.class, initConfigClass = DataFormatInitConfig.class)
+@Component(key = "format", name = "数据格式化组件", logicConfigClass = DataFormatLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "所有格式化后的新值集合")
-public class DataFormatComponent extends AbstractComponent<DataFormatInitConfig, DataFormatLogicConfig> {
+public class DataFormatComponent extends AbstractComponent<IInvalidInitConfig, DataFormatLogicConfig> {
 
     public DataFormatComponent() {
-        super(DataFormatInitConfig.class, DataFormatLogicConfig.class);
+        super(IInvalidInitConfig.class, DataFormatLogicConfig.class);
     }
 
     @Override

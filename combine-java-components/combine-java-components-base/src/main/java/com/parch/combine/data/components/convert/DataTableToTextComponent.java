@@ -3,24 +3,23 @@ package com.parch.combine.data.components.convert;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
-import com.parch.combine.data.base.convert.table2text.DataTableToTextInitConfig;
 import com.parch.combine.data.base.convert.table2text.DataTableToTextLogicConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-@Component(order = 100, key = "convert.table-text", name = "表格转文本数据组件", logicConfigClass = DataTableToTextLogicConfig.class, initConfigClass = DataTableToTextInitConfig.class)
+@Component(order = 100, key = "convert.table-text", name = "表格转文本数据组件", logicConfigClass = DataTableToTextLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "文本行集合")
-public class DataTableToTextComponent extends AbstractComponent<DataTableToTextInitConfig, DataTableToTextLogicConfig> {
+public class DataTableToTextComponent extends AbstractComponent<IInvalidInitConfig, DataTableToTextLogicConfig> {
 
     public DataTableToTextComponent() {
-        super(DataTableToTextInitConfig.class, DataTableToTextLogicConfig.class);
+        super(IInvalidInitConfig.class, DataTableToTextLogicConfig.class);
     }
 
     @Override

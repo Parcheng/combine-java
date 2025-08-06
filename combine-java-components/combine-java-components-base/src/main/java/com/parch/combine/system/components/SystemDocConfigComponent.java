@@ -1,5 +1,6 @@
 package com.parch.combine.system.components;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.builder.PropertySettingBuilder;
 import com.parch.combine.core.component.settings.config.PropertySetting;
 import com.parch.combine.core.common.util.json.JsonUtil;
@@ -10,20 +11,19 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.system.base.doc.config.SystemDocConfigErrorEnum;
-import com.parch.combine.system.base.doc.config.SystemDocConfigInitConfig;
 import com.parch.combine.system.base.doc.config.SystemDocConfigLogicConfig;
 
 import java.util.HashMap;
 import java.util.List;
 
-@Component(key = "doc.config", name = "获取系统设置API", logicConfigClass = SystemDocConfigLogicConfig.class, initConfigClass = SystemDocConfigInitConfig.class)
+@Component(key = "doc.config", name = "获取系统设置API", logicConfigClass = SystemDocConfigLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "系统设置信息API")
-public class SystemDocConfigComponent extends AbstractComponent<SystemDocConfigInitConfig, SystemDocConfigLogicConfig> {
+public class SystemDocConfigComponent extends AbstractComponent<IInvalidInitConfig, SystemDocConfigLogicConfig> {
 
     private List<HashMap> result;
 
     public SystemDocConfigComponent() {
-        super(SystemDocConfigInitConfig.class, SystemDocConfigLogicConfig.class);
+        super(IInvalidInitConfig.class, SystemDocConfigLogicConfig.class);
     }
 
     @Override

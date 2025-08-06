@@ -3,11 +3,11 @@ package com.parch.combine.data.components.text;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.text.regex.DataTextRegexErrorEnum;
-import com.parch.combine.data.base.text.regex.DataTextRegexInitConfig;
 import com.parch.combine.data.base.text.regex.DataTextRegexLogicConfig;
 import com.parch.combine.data.base.text.regex.DataTextRegexResultModeEnum;
 
@@ -18,12 +18,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Component(order = 2, key = "text.regex", name = "文本正则处理组件", logicConfigClass = DataTextRegexLogicConfig.class, initConfigClass = DataTextRegexInitConfig.class)
+@Component(order = 2, key = "text.regex", name = "文本正则处理组件", logicConfigClass = DataTextRegexLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "处理后的文本（集合）")
-public class DataTextRegexComponent extends AbstractComponent<DataTextRegexInitConfig, DataTextRegexLogicConfig> {
+public class DataTextRegexComponent extends AbstractComponent<IInvalidInitConfig, DataTextRegexLogicConfig> {
 
     public DataTextRegexComponent() {
-        super(DataTextRegexInitConfig.class, DataTextRegexLogicConfig.class);
+        super(IInvalidInitConfig.class, DataTextRegexLogicConfig.class);
     }
 
     @Override

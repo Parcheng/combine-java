@@ -3,23 +3,23 @@ package com.parch.combine.data.components.text;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
-import com.parch.combine.data.base.text.join.DataTextJoinInitConfig;
 import com.parch.combine.data.base.text.join.DataTextJoinLogicConfig;
 import com.parch.combine.data.base.text.split.DataTextSplitErrorEnum;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component(order = 2, key = "text.join", name = "批量文本拼接组件", logicConfigClass = DataTextJoinLogicConfig.class, initConfigClass = DataTextJoinInitConfig.class)
+@Component(order = 2, key = "text.join", name = "批量文本拼接组件", logicConfigClass = DataTextJoinLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "文件本拼接结果集合")
-public class DataTextJoinComponent extends AbstractComponent<DataTextJoinInitConfig, DataTextJoinLogicConfig> {
+public class DataTextJoinComponent extends AbstractComponent<IInvalidInitConfig, DataTextJoinLogicConfig> {
 
     public DataTextJoinComponent() {
-        super(DataTextJoinInitConfig.class, DataTextJoinLogicConfig.class);
+        super(IInvalidInitConfig.class, DataTextJoinLogicConfig.class);
     }
 
     @Override

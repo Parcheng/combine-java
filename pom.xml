@@ -5,6 +5,7 @@
         <module>combine-java-core</module>
         <module>combine-java-components</module>
         <module>combine-java-spring-web</module>
+        <module>combine-java-components/combine-java-components-security</module>
     </modules>
 
     <groupId>com.parch.combine</groupId>
@@ -32,6 +33,7 @@
         <combine-java-components-redis.version>1.0.0</combine-java-components-redis.version>
         <combine-java-components-rocketmq.version>1.0.0</combine-java-components-rocketmq.version>
         <combine-java-components-gitlab.version>1.0.0</combine-java-components-gitlab.version>
+        <combine-java-components-security.version>1.0.0</combine-java-components-security.version>
     </properties>
 
     <dependencyManagement>
@@ -97,6 +99,11 @@
                 <groupId>com.parch.combine</groupId>
                 <artifactId>combine-java-components-gitlab</artifactId>
                 <version>${combine-java-components-gitlab.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.parch.combine</groupId>
+                <artifactId>combine-java-components-security</artifactId>
+                <version>${combine-java-components-security.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

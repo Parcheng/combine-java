@@ -1,6 +1,7 @@
 package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -8,7 +9,6 @@ import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.text.replace.DataTextReplaceErrorEnum;
-import com.parch.combine.data.base.text.replace.DataTextReplaceInitConfig;
 import com.parch.combine.data.base.text.replace.DataTextReplaceLogicConfig;
 import com.parch.combine.data.base.text.replace.DataTextReplaceModeEnum;
 
@@ -17,15 +17,15 @@ import java.util.*;
 /**
  * 运算组件
  */
-@Component(order = 2, key = "text.replace", name = "文本替换组件", logicConfigClass = DataTextReplaceLogicConfig.class, initConfigClass = DataTextReplaceInitConfig.class)
+@Component(order = 2, key = "text.replace", name = "文本替换组件", logicConfigClass = DataTextReplaceLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "替换后的文本")
-public class DataTextReplaceComponent extends AbstractComponent<DataTextReplaceInitConfig, DataTextReplaceLogicConfig> {
+public class DataTextReplaceComponent extends AbstractComponent<IInvalidInitConfig, DataTextReplaceLogicConfig> {
 
     /**
      * 构造器
      */
     public DataTextReplaceComponent() {
-        super(DataTextReplaceInitConfig.class, DataTextReplaceLogicConfig.class);
+        super(IInvalidInitConfig.class, DataTextReplaceLogicConfig.class);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.parch.combine.data.components.text;
 
 import com.parch.combine.core.common.util.json.JsonUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -9,19 +10,18 @@ import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.text.split.DataTextSplitErrorEnum;
-import com.parch.combine.data.base.text.split.DataTextSplitInitConfig;
 import com.parch.combine.data.base.text.split.DataTextSplitLogicConfig;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Component(order = 2, key = "text.split", name = "文本拆分组件", logicConfigClass = DataTextSplitLogicConfig.class, initConfigClass = DataTextSplitInitConfig.class)
+@Component(order = 2, key = "text.split", name = "文本拆分组件", logicConfigClass = DataTextSplitLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "拆分后的文本集合")
-public class DataTextSplitComponent extends AbstractComponent<DataTextSplitInitConfig, DataTextSplitLogicConfig> {
+public class DataTextSplitComponent extends AbstractComponent<IInvalidInitConfig, DataTextSplitLogicConfig> {
 
     public DataTextSplitComponent() {
-        super(DataTextSplitInitConfig.class, DataTextSplitLogicConfig.class);
+        super(IInvalidInitConfig.class, DataTextSplitLogicConfig.class);
     }
 
     @Override

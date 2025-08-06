@@ -2,12 +2,12 @@ package com.parch.combine.system.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.system.base.test.LogLevelEnum;
 import com.parch.combine.system.base.test.SystemTestErrorEnum;
-import com.parch.combine.system.base.test.SystemTestInitConfig;
 import com.parch.combine.system.base.test.SystemTestLogicConfig;
 import com.parch.combine.system.base.test.handler.FlowHandler;
 import com.parch.combine.system.base.test.handler.FlowLoadResult;
@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component(key = "test", name = "流程测试", logicConfigClass = SystemTestLogicConfig.class, initConfigClass = SystemTestInitConfig.class)
+@Component(key = "test", name = "流程测试", logicConfigClass = SystemTestLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "测试结果，返回数据格式：{ success: true, logs:[\"...\", \"...\"] }")
-public class SystemTestComponent extends AbstractComponent<SystemTestInitConfig, SystemTestLogicConfig> {
+public class SystemTestComponent extends AbstractComponent<IInvalidInitConfig, SystemTestLogicConfig> {
 
     public SystemTestComponent() {
-        super(SystemTestInitConfig.class, SystemTestLogicConfig.class);
+        super(IInvalidInitConfig.class, SystemTestLogicConfig.class);
     }
 
     @Override

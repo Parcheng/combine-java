@@ -1,5 +1,6 @@
 package com.parch.combine.file.components.parse;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.FilePostfixEnum;
 import com.parch.combine.file.base.parse.FileParseComponent;
@@ -9,23 +10,22 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.file.base.parse.pdf.FileParsePdfErrorEnum;
-import com.parch.combine.file.base.parse.pdf.FileParsePdfInitConfig;
 import com.parch.combine.file.base.parse.pdf.FileParsePdfLogicConfig;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import java.io.IOException;
 
-@Component(order = 500, key = "parse.pdf", name = "解析PDF文件数据组件", logicConfigClass = FileParsePdfLogicConfig.class, initConfigClass = FileParsePdfInitConfig.class)
+@Component(order = 500, key = "parse.pdf", name = "解析PDF文件数据组件", logicConfigClass = FileParsePdfLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentDesc("依赖 pdfbox，推荐版本 2.0.24")
 @ComponentResult(name = "文本")
-public class FileParsePdfComponent extends FileParseComponent<FileParsePdfInitConfig, FileParsePdfLogicConfig> {
+public class FileParsePdfComponent extends FileParseComponent<IInvalidInitConfig, FileParsePdfLogicConfig> {
 
     /**
      * 构造器
      */
     public FileParsePdfComponent() {
-        super(FileParsePdfInitConfig.class, FileParsePdfLogicConfig.class, FilePostfixEnum.PDF);
+        super(IInvalidInitConfig.class, FileParsePdfLogicConfig.class, FilePostfixEnum.PDF);
     }
 
     @Override

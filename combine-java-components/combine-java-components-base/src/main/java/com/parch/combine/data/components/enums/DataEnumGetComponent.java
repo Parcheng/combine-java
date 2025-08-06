@@ -1,5 +1,6 @@
 package com.parch.combine.data.components.enums;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.enums.EnumCacheHandler;
 import com.parch.combine.core.component.base.AbstractComponent;
@@ -7,7 +8,6 @@ import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.data.base.enums.get.DataEnumGetErrorEnum;
-import com.parch.combine.data.base.enums.get.DataEnumGetInitConfig;
 import com.parch.combine.data.base.enums.get.DataEnumGetLogicConfig;
 
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component(order = 1, key = "enum.get", name = "枚举获取组件", logicConfigClass = DataEnumGetLogicConfig.class, initConfigClass = DataEnumGetInitConfig.class)
+@Component(order = 1, key = "enum.get", name = "枚举获取组件", logicConfigClass = DataEnumGetLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "枚举项集合")
-public class DataEnumGetComponent extends AbstractComponent<DataEnumGetInitConfig, DataEnumGetLogicConfig> {
+public class DataEnumGetComponent extends AbstractComponent<IInvalidInitConfig, DataEnumGetLogicConfig> {
 
     public DataEnumGetComponent() {
-        super(DataEnumGetInitConfig.class, DataEnumGetLogicConfig.class);
+        super(IInvalidInitConfig.class, DataEnumGetLogicConfig.class);
     }
 
     @Override

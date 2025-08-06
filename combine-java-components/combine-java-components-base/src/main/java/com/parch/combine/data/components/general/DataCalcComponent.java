@@ -4,6 +4,7 @@ import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.DataTypeIsUtil;
 import com.parch.combine.core.common.util.StringUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -13,7 +14,6 @@ import com.parch.combine.core.component.tools.variable.DataVariableFlagHelper;
 import com.parch.combine.core.component.tools.variable.DataVariableHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.calc.DataCalcErrorEnum;
-import com.parch.combine.data.base.general.calc.DataCalcInitConfig;
 import com.parch.combine.data.base.general.calc.DataCalcLogicConfig;
 import com.parch.combine.data.base.general.calc.DataCalcModeEnum;
 
@@ -22,12 +22,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-@Component(key = "calc", name = "数据计算组件", logicConfigClass = DataCalcLogicConfig.class, initConfigClass = DataCalcInitConfig.class)
+@Component(key = "calc", name = "数据计算组件", logicConfigClass = DataCalcLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "调用API返回的数据")
-public class DataCalcComponent extends AbstractComponent<DataCalcInitConfig, DataCalcLogicConfig> {
+public class DataCalcComponent extends AbstractComponent<IInvalidInitConfig, DataCalcLogicConfig> {
 
     public DataCalcComponent() {
-        super(DataCalcInitConfig.class, DataCalcLogicConfig.class);
+        super(IInvalidInitConfig.class, DataCalcLogicConfig.class);
     }
 
     @Override

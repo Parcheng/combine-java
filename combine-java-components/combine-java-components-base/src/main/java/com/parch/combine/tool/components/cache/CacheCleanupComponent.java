@@ -1,12 +1,12 @@
 package com.parch.combine.tool.components.cache;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.cache.AbstractCacheComponent;
 import com.parch.combine.tool.base.cache.CacheData;
 import com.parch.combine.tool.base.cache.CacheHandler;
 import com.parch.combine.tool.base.cache.CacheKeyMatchRuleEnum;
 import com.parch.combine.tool.base.cache.cleanup.CacheCleanupErrorEnum;
-import com.parch.combine.tool.base.cache.cleanup.CacheCleanupInitConfig;
 import com.parch.combine.tool.base.cache.cleanup.CacheCleanupLogicConfig;
 import com.parch.combine.tool.base.cache.cleanup.CacheCleanupModeEnum;
 import com.parch.combine.tool.base.cache.get.CacheGetErrorEnum;
@@ -20,12 +20,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component(key = "cache.cleanup", order = 200, name = "缓存清理", logicConfigClass = CacheCleanupLogicConfig.class, initConfigClass = CacheCleanupInitConfig.class)
+@Component(key = "cache.cleanup", order = 200, name = "缓存清理", logicConfigClass = CacheCleanupLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "被清理的缓存数据（KEY-VALUE键值对结构）")
-public class CacheCleanupComponent extends AbstractCacheComponent<CacheCleanupInitConfig, CacheCleanupLogicConfig> {
+public class CacheCleanupComponent extends AbstractCacheComponent<IInvalidInitConfig, CacheCleanupLogicConfig> {
 
     public CacheCleanupComponent() {
-        super(CacheCleanupInitConfig.class, CacheCleanupLogicConfig.class);
+        super(IInvalidInitConfig.class, CacheCleanupLogicConfig.class);
     }
 
     @Override

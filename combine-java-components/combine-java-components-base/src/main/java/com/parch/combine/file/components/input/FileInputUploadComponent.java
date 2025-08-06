@@ -1,5 +1,6 @@
 package com.parch.combine.file.components.input;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.file.base.input.FileInputComponent;
 import com.parch.combine.core.component.base.FileInfo;
 import com.parch.combine.core.component.base.FileParamKey;
@@ -8,17 +9,16 @@ import com.parch.combine.core.component.error.IComponentError;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.file.base.input.upload.FileInputUploadErrorEnum;
-import com.parch.combine.file.base.input.upload.FileInputUploadInitConfig;
 import com.parch.combine.file.base.input.upload.FileInputUploadLogicConfig;
 
 import java.util.Map;
 
-@Component(order = 200, key = "input.upload", name = "读取上传文件数据组件", logicConfigClass = FileInputUploadLogicConfig.class, initConfigClass = FileInputUploadInitConfig.class)
+@Component(order = 200, key = "input.upload", name = "读取上传文件数据组件", logicConfigClass = FileInputUploadLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "上传的文件字节信息")
-public class FileInputUploadComponent extends FileInputComponent<FileInputUploadInitConfig, FileInputUploadLogicConfig> {
+public class FileInputUploadComponent extends FileInputComponent<IInvalidInitConfig, FileInputUploadLogicConfig> {
 
     public FileInputUploadComponent() {
-        super(FileInputUploadInitConfig.class, FileInputUploadLogicConfig.class);
+        super(IInvalidInitConfig.class, FileInputUploadLogicConfig.class);
     }
 
     @Override

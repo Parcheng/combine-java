@@ -3,10 +3,10 @@ package com.parch.combine.call.components;
 import com.parch.combine.call.base.CallComponent;
 import com.parch.combine.call.base.CallTypeEnum;
 import com.parch.combine.call.base.api.CallApiErrorEnum;
-import com.parch.combine.call.base.api.CallApiInitConfig;
 import com.parch.combine.call.base.api.CallApiLogicConfig;
 import com.parch.combine.core.common.util.HttpUtil;
 import com.parch.combine.core.common.util.json.JsonUtil;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
@@ -15,15 +15,15 @@ import com.parch.combine.core.component.vo.ComponentDataResult;
 import java.io.IOException;
 import java.util.Map;
 
-@Component(key = "api", name = "调用外部接口组件", logicConfigClass = CallApiLogicConfig.class, initConfigClass = CallApiInitConfig.class)
+@Component(key = "api", name = "调用外部接口组件", logicConfigClass = CallApiLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "调用API返回的数据")
-public class CallApiComponent extends CallComponent<CallApiInitConfig, CallApiLogicConfig> {
+public class CallApiComponent extends CallComponent<IInvalidInitConfig, CallApiLogicConfig> {
 
     /**
      * 构造器
      */
     public CallApiComponent() {
-        super(CallApiInitConfig.class, CallApiLogicConfig.class);
+        super(IInvalidInitConfig.class, CallApiLogicConfig.class);
     }
 
     @Override

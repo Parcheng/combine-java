@@ -2,10 +2,10 @@ package com.parch.combine.call.components;
 
 import com.parch.combine.call.base.CallComponent;
 import com.parch.combine.call.base.flow.CallFlowErrorEnum;
-import com.parch.combine.call.base.flow.CallFlowInitConfig;
 import com.parch.combine.call.base.flow.CallFlowLogicConfig;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.common.util.FlowKeyUtil;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.context.ComponentContext;
 import com.parch.combine.core.component.context.ComponentContextHandler;
 import com.parch.combine.core.component.settings.annotations.Component;
@@ -16,15 +16,15 @@ import com.parch.combine.core.component.vo.FlowResult;
 import java.util.List;
 import java.util.Map;
 
-@Component(key = "flow", name = "调用内部流程组件", logicConfigClass = CallFlowLogicConfig.class, initConfigClass = CallFlowInitConfig.class)
+@Component(key = "flow", name = "调用内部流程组件", logicConfigClass = CallFlowLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "调用流程的返回结果")
-public class CallFlowComponent extends CallComponent<CallFlowInitConfig, CallFlowLogicConfig> {
+public class CallFlowComponent extends CallComponent<IInvalidInitConfig, CallFlowLogicConfig> {
 
     /**
      * 构造器
      */
     public CallFlowComponent() {
-        super(CallFlowInitConfig.class, CallFlowLogicConfig.class);
+        super(IInvalidInitConfig.class, CallFlowLogicConfig.class);
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.parch.combine.file.components.build;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.file.base.build.DefaultFileBuildComponent;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
-import com.parch.combine.file.base.build.table.FileBuildTableInitConfig;
 import com.parch.combine.file.base.build.table.FileBuildTableLogicConfig;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,10 +14,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.*;
 
-@Component(order = 100, key = "build.table", name = "构建表格文件数据组件", logicConfigClass = FileBuildTableLogicConfig.class, initConfigClass = FileBuildTableInitConfig.class)
+@Component(order = 100, key = "build.table", name = "构建表格文件数据组件", logicConfigClass = FileBuildTableLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentDesc("依赖 mail，推荐版本 1.4.7")
 @ComponentResult(name = "文件的字节数据，可以下载/保存成 xlsx 文件（其他格式不行）")
-public class FileBuildTableComponent extends DefaultFileBuildComponent<FileBuildTableInitConfig, FileBuildTableLogicConfig> {
+public class FileBuildTableComponent extends DefaultFileBuildComponent<IInvalidInitConfig, FileBuildTableLogicConfig> {
 
     /**
      * 文件类型（后缀）
@@ -25,7 +25,7 @@ public class FileBuildTableComponent extends DefaultFileBuildComponent<FileBuild
     private static final String FILE_TYPE = "xlsx";
 
     public FileBuildTableComponent() {
-        super(FileBuildTableInitConfig.class, FileBuildTableLogicConfig.class);
+        super(IInvalidInitConfig.class, FileBuildTableLogicConfig.class);
     }
 
     @Override

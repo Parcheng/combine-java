@@ -1,12 +1,9 @@
 package com.parch.combine.file.components.build;
 
 import com.parch.combine.core.common.util.StringUtil;
-import com.parch.combine.core.component.settings.annotations.Component;
-import com.parch.combine.core.component.settings.annotations.ComponentDesc;
-import com.parch.combine.core.component.settings.annotations.ComponentResult;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.file.base.build.BaseFileBuildComponent;
 import com.parch.combine.file.base.build.pdf.FileBuildPdfErrorEnum;
-import com.parch.combine.file.base.build.pdf.FileBuildPdfInitConfig;
 import com.parch.combine.file.base.build.pdf.FileBuildPdfLogicConfig;
 import com.parch.combine.file.base.build.pdf.PdfPageTypeEnum;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -23,10 +20,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Component(order = 100, key = "build.pdf", name = "构建PDF文件数据组件", logicConfigClass = FileBuildPdfLogicConfig.class, initConfigClass = FileBuildPdfInitConfig.class)
+//@Component(order = 100, key = "build.pdf", name = "构建PDF文件数据组件", logicConfigClass = FileBuildPdfLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 //@ComponentDesc("依赖 pdfbox")
 //@ComponentResult(name = "文件的字节数据，可以下载/保存成 pdf 文件（其他格式不行）")
-public class FileBuildPdfComponent extends BaseFileBuildComponent<FileBuildPdfInitConfig, FileBuildPdfLogicConfig> {
+public class FileBuildPdfComponent extends BaseFileBuildComponent<IInvalidInitConfig, FileBuildPdfLogicConfig> {
 
     /**
      * 文件类型（后缀）
@@ -34,7 +31,7 @@ public class FileBuildPdfComponent extends BaseFileBuildComponent<FileBuildPdfIn
     private static final String FILE_TYPE = "pdf";
 
     public FileBuildPdfComponent() {
-        super(FileBuildPdfInitConfig.class, FileBuildPdfLogicConfig.class);
+        super(IInvalidInitConfig.class, FileBuildPdfLogicConfig.class);
     }
 
     /**

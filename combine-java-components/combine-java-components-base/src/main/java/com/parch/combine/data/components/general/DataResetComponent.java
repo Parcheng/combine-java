@@ -2,6 +2,7 @@ package com.parch.combine.data.components.general;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.compare.CompareGroupConfig;
@@ -9,18 +10,17 @@ import com.parch.combine.core.component.tools.compare.CompareTool;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.general.reset.DataResetErrorEnum;
 import com.parch.combine.data.base.general.reset.DataResetHandler;
-import com.parch.combine.data.base.general.reset.DataResetInitConfig;
 import com.parch.combine.data.base.general.reset.DataResetLogicConfig;
 
-@Component(key = "reset", name = "数据重置组件", logicConfigClass = DataResetLogicConfig.class, initConfigClass = DataResetInitConfig.class)
+@Component(key = "reset", name = "数据重置组件", logicConfigClass = DataResetLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "是否全部赋值成功 true | false")
-public class DataResetComponent extends AbstractComponent<DataResetInitConfig, DataResetLogicConfig> {
+public class DataResetComponent extends AbstractComponent<IInvalidInitConfig, DataResetLogicConfig> {
 
     /**
      * 构造器
      */
     public DataResetComponent() {
-        super(DataResetInitConfig.class, DataResetLogicConfig.class);
+        super(IInvalidInitConfig.class, DataResetLogicConfig.class);
     }
 
     @Override

@@ -1,10 +1,10 @@
 package com.parch.combine.file.components.parse;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.file.base.FilePostfixEnum;
 import com.parch.combine.file.base.parse.FileParseComponent;
 import com.parch.combine.file.base.parse.excel.FileParseExcelErrorEnum;
-import com.parch.combine.file.base.parse.excel.FileParseExcelInitConfig;
 import com.parch.combine.file.base.parse.excel.FileParseExcelLogicConfig;
 import com.parch.combine.file.base.parse.txt.FileParseTxtErrorEnum;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -25,16 +25,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component(order = 500, key = "parse.excel", name = "解析表格文件数据组件", logicConfigClass = FileParseExcelLogicConfig.class, initConfigClass = FileParseExcelInitConfig.class)
+@Component(order = 500, key = "parse.excel", name = "解析表格文件数据组件", logicConfigClass = FileParseExcelLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentDesc("依赖 poi 和 poi-ooxml，推荐版本 4.1.2")
 @ComponentResult(name = "表格数据矩阵（二维数组）")
-public class FileParseExcelComponent extends FileParseComponent<FileParseExcelInitConfig, FileParseExcelLogicConfig> {
+public class FileParseExcelComponent extends FileParseComponent<IInvalidInitConfig, FileParseExcelLogicConfig> {
 
     /**
      * 构造器
      */
     public FileParseExcelComponent() {
-        super(FileParseExcelInitConfig.class, FileParseExcelLogicConfig.class, FilePostfixEnum.XLS, FilePostfixEnum.XLSX);
+        super(IInvalidInitConfig.class, FileParseExcelLogicConfig.class, FilePostfixEnum.XLS, FilePostfixEnum.XLSX);
     }
 
     @Override

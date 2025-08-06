@@ -1,5 +1,6 @@
 package com.parch.combine.data.components.enums;
 
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.data.base.enums.EnumCacheHandler;
 import com.parch.combine.core.common.util.CheckEmptyUtil;
@@ -10,20 +11,19 @@ import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentDesc;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.data.base.enums.mapping.DataEnumMappingErrorEnum;
-import com.parch.combine.data.base.enums.mapping.DataEnumMappingInitConfig;
 import com.parch.combine.data.base.enums.mapping.DataEnumMappingLogicConfig;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component(order = 1, key = "enum.mapping", name = "枚举映射组件", logicConfigClass = DataEnumMappingLogicConfig.class, initConfigClass = DataEnumMappingInitConfig.class)
+@Component(order = 1, key = "enum.mapping", name = "枚举映射组件", logicConfigClass = DataEnumMappingLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentDesc("将数据中的枚举编码映射为枚举名称")
 @ComponentResult(name = "映射后的数据（集）")
-public class DataEnumMappingComponent extends AbstractComponent<DataEnumMappingInitConfig, DataEnumMappingLogicConfig> {
+public class DataEnumMappingComponent extends AbstractComponent<IInvalidInitConfig, DataEnumMappingLogicConfig> {
 
     public DataEnumMappingComponent() {
-        super(DataEnumMappingInitConfig.class, DataEnumMappingLogicConfig.class);
+        super(IInvalidInitConfig.class, DataEnumMappingLogicConfig.class);
     }
 
     @Override

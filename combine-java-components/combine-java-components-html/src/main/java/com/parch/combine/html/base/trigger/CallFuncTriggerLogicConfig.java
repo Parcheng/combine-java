@@ -13,7 +13,7 @@ public interface CallFuncTriggerLogicConfig extends ILogicConfig {
     Config config();
 
     interface Config extends TriggerConfig {
-        @Field(key = "elementId", name = "页面元素ID", type = FieldTypeEnum.TEXT, isRequired = true)
+        @Field(key = "elementId", name = "元素组件ID", type = FieldTypeEnum.TEXT, isRequired = true)
         String elementId();
 
         @Field(key = "name", name = "函数名称", type = FieldTypeEnum.TEXT, isRequired = true)

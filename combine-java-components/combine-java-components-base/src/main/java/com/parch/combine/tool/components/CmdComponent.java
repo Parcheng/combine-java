@@ -2,12 +2,12 @@ package com.parch.combine.tool.components;
 
 import com.parch.combine.core.common.util.CheckEmptyUtil;
 import com.parch.combine.core.component.base.AbstractComponent;
+import com.parch.combine.core.component.base.IInvalidInitConfig;
 import com.parch.combine.core.component.settings.annotations.Component;
 import com.parch.combine.core.component.settings.annotations.ComponentResult;
 import com.parch.combine.core.component.tools.PrintErrorHelper;
 import com.parch.combine.core.component.vo.ComponentDataResult;
 import com.parch.combine.tool.base.cmd.CmdErrorEnum;
-import com.parch.combine.tool.base.cmd.CmdInitConfig;
 import com.parch.combine.tool.base.cmd.CmdLogicConfig;
 
 import java.io.BufferedReader;
@@ -17,12 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component(key = "cmd", name = "批量执行命令行组件", logicConfigClass = CmdLogicConfig.class, initConfigClass = CmdInitConfig.class)
+@Component(key = "cmd", name = "批量执行命令行组件", logicConfigClass = CmdLogicConfig.class, initConfigClass = IInvalidInitConfig.class)
 @ComponentResult(name = "命令执行结果，输出结构: [{ code:0, lines:[...] }]")
-public class CmdComponent extends AbstractComponent<CmdInitConfig, CmdLogicConfig> {
+public class CmdComponent extends AbstractComponent<IInvalidInitConfig, CmdLogicConfig> {
 
     public CmdComponent() {
-        super(CmdInitConfig.class, CmdLogicConfig.class);
+        super(IInvalidInitConfig.class, CmdLogicConfig.class);
     }
 
     @Override
